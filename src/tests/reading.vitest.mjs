@@ -23,19 +23,7 @@ describe("TEST readingDuration", () => {
   it("go 1: readingDuration function is available correctly", () => {
     assert.equal(typeof readingDuration, "function", "assert #1");
   });
-  it("go 2: *** TESTING JSDOM LIBRARY, BORING ***", () => {
-   const dom=page();
-	let str='<h2>WWWWW WWWWW</h2>';
-	appendIsland('#point1', str, dom);
-    assert.equal( dom.getElementsByTagName('body')[0].outerHTML, `<body>
-		<div class="reading" id="shareGroup"></div>
-		<div id="point1"><h2>WWWWW WWWWW</h2></div>
-		<div id="point2" class="blocker"></div>
-	
-</body>`, "assert #2" );
-    assert.equal( dom.getElementsByTagName('h2').length, 1, "assert #3");
-  });
-  it("go 3: testing content manipulation", () => {
+  it("go 2: testing content manipulation", () => {
    const dom=page();
 	let txt=`
 wer werwer wer werwer wer werwer werwer wer werwer wer
@@ -84,7 +72,7 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
 
   });
 
-  it("go 4: extra text and images", () => {
+  it("go 3: extra text and images", () => {
    const dom=page();
 	let txt=`<img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" />
 wer werwer wer werwer wer werwer werwer wer werwer wer
@@ -124,7 +112,7 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
 
   });
  
-  it("go 5: growth test (refresh flag + output value should be larger)", () => {
+  it("go 4: growth test (refresh flag + output value should be larger)", () => {
    const dom=page();
 	let txt=`<img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" />
 wer werwer wer werwer wer werwer werwer wer werwer wer

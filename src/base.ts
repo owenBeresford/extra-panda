@@ -156,7 +156,6 @@ function calcScreenDPI(dom:Document):number {
 	}
 }
 
-
 /**
  * addLineBreaks
  * Add manual wrap to a string, so the tooltips are a fixed width
@@ -188,6 +187,7 @@ export function addLineBreaks(str:string, len:number=80, token:string="↩"):str
  * pad
  * For making dates, add a leading zero to the param string if needed
  *   PURE
+ * This code would be much simpler if I could make unsigned number or exclusive counting number types
  * 
  * @param {number} num
  * @public
@@ -195,6 +195,9 @@ export function addLineBreaks(str:string, len:number=80, token:string="↩"):str
  */
 export function pad(num:number):string {
 	var r = String(num);
+	if( num ===0 || num <1) { 
+		throw new Error("Value passed must be a counting number above 0"); 
+	}
 	if ( r.length === 1 ) {
 		r = '0' + r;
 	}
@@ -284,6 +287,8 @@ export function _getCookie():Cookieable {
 }
 
 
+type BOUNDARY='top'|'bottom'|'left'|'right';
+
 /**
  * mapAttribute
  * Extract the named limit of the element
@@ -295,9 +300,9 @@ export function _getCookie():Cookieable {
  * @public
  * @return {number | string} - the value of the requested, with or without typecast
  */
-export function mapAttribute(ele:HTMLElement, attrib:string, cast:boolean=false):number|string {
+export function mapAttribute(ele:HTMLElement, attrib:BOUNDARY, cast:boolean=false):number|string {
 	try {
-		if( isFullstack() ) { 
+		if(! isFullstack() ) { 
 			return -1;
 		}
 	
@@ -309,11 +314,18 @@ export function mapAttribute(ele:HTMLElement, attrib:string, cast:boolean=false)
 			return STYL[attrib];
 		}
 	} catch(e) {
-		this.log("error", "Missing data:"+e);
-		return 0;
+		console.log("error", "Missing data:"+e);
+		return -1;
 	}
 }
 
+/**
+ * isFullstack
+ * Look at function implementations to see if this is a browser
+ 
+ * @public
+ * @return {boolean}
+ */
 export function isFullstack():boolean {
 	let isNativeWindow; 
 	if(typeof _window=="object") { 
@@ -321,7 +333,7 @@ export function isFullstack():boolean {
 	} else {
 		isNativeWindow = Object.getOwnPropertyDescriptor(window, 'window')?.get?.toString().includes('[native code]');
 	}
-	if(typeof isNativeWindow === 'boolean' ) {
+	if(typeof isNativeWindow === 'boolean' && isNativeWindow ) {
 		return true; 
 	}
 	return false;
@@ -331,67 +343,76 @@ export function isFullstack():boolean {
  * importDate
  * Convert a string of date with a format to a date
  * For details on format, please see php strtotime()
+ * NOTE output dates always in current and local TZ, even if input date isn't
  * like really small version of moment, converts ascii string to Date object 
  *    PURE
  *
  * @param {string} format
  * @param {string=""} day
- * @param {string} time
+ * @param {string=""} time
  * @public
  * @return {Date} 
  */
-export function importDate(format:string, day:string="", time:string):Date {
-	var day1, time1, fpos, bpos;
-	var year1, month1, _day1, hour1, min1, sec1;
-	if( typeof time==='undefined') {
-		var found    =false;
-		var tt       =day.split('T');
+export function importDate(format:string, day:string="", time:string=""):Date {
+	let day1:string; let time1:string; let fpos:number; let buf:Array<string>;
+	let year1:number; let month1:number; let _day1:number; let hour1:number; let min1:number; let sec1:number;
+
+	if( time==="" && day) {
+		let tt       =day.split('T');
 		if(tt.length===2) {
 			[day1, time1] =[tt[0], tt[1]];
 		}
 		tt			=day.split(' ');
 		if(tt.length===2) {
-			[day1, time1] =[tt[0], tt[1]];
+			[day1, time1] =[String(tt[0]), tt[1]];
+		}
+		if(typeof day1 === "undefined") {
+			day1   =day;
+			time1  ="";
 		}
 		
 	} else if (day && time ){
 		day1		=day; 
 		time1		=time;
-	}	
+	} 	
 
-	if(day1.indexOf('-') ){
+	if(!day1 ) {
+		throw new Error("importDate: No values supplied"); 
+	} else if(day1.indexOf('-')>0 ){ // if - is in first char position, its still bad, so skip that option
 		day1       = day1.split('-');
-	}else{       
+	} else {        
 		day1       = day1.split('/');
 	} 
 	time1          = time1.split(':');
-	for(var j =0; j<time1.length; j++) {
-		day1[day1.length]=time1[j];
-	}
+	buf			=[ ...day1, ...time1];
 
-	fpos           = 0;
+// note very clearly: this is array fragment offset, not char offset
+	fpos           = 0; 
 	while(fpos<format.length) {
+// have switch statement, as data sequence is set by the caller
+// so can't array.map or something
 		switch(format.charAt(fpos)) {
-			case 'y': { year1 = parseInt(day1[fpos], 10); break; }
-			case 'm': { month1 = parseInt(day1[fpos], 10); month1--; break; }
-			case 'd': { _day1 = parseInt(day1[fpos], 10); break; }
-			case 'h': { hour1 = parseInt(day1[fpos], 10); hour1--; break; }
-			case 'i': { min1 = parseInt(day1[fpos], 10); break; }
-			case 's': { sec1 = parseInt(day1[fpos], 10); break; }
+			case 'y': { year1 = parseInt(buf[fpos], 10); break; }
+			case 'm': { month1 = parseInt(buf[fpos], 10); month1--; break; }
+			case 'd': { _day1 = parseInt(buf[fpos], 10); break; }
+			case 'h': { hour1 = parseInt(buf[fpos], 10); break; }
+			case 'i': { min1 = parseInt(buf[fpos], 10); break; }
+			case 's': { sec1 = parseInt(buf[fpos], 10); break; }
+			default: break; // white-space etc ignored on purpose
 		}
 		fpos++;
 	}
-
+// NOTE dates always in current and local TZ, even if date isn't
 	return new Date(year1, month1, _day1, hour1, min1, sec1, 0 );
 }
 
 /**
  * dateMunge
- * Convert date object to human readable string PURE
+ * Convert Epoch to human readable string PURE
  * 
  * @param {number} din
- * @param {Date | string} ddefault
- * @param {bool =true} monthText - weather or not to pad a 1 digit month
+ * @param {Date | string} ddefault - assert tranactional data sources, filler for nulls in first src
+ * @param {bool =true} monthText - weather or not to translate month numbers to text, and whether to pad a 1 digit month
  * @public
  * @return {string}
  */
@@ -399,10 +420,10 @@ export function dateMunge(din:number, ddefault:Date|string, monthText:boolean=tr
 	var date:Date|string='';
 
 	if( Number(din)===din && din%1===0 ) {
-// second clause is to get ints, rather than floats
+// second clause above is to get ints, rather than floats
 		if(din===0) {
 			date="[No date]";
-		} else if(din < 500000000000) {
+		} else if(din < 10000000000) {
 			date=new Date(din*1000);
 		} else {
 			date=new Date(din);
@@ -412,12 +433,19 @@ export function dateMunge(din:number, ddefault:Date|string, monthText:boolean=tr
 	}
 
 	if(typeof date !== 'string') {
-		var months=["", "Jan", "Feb", "March", "April", "May", "June",
+		let months=["", "Jan", "Feb", "March", "April", "May", "June",
 			"July", "Aug", "Sept", "Oct", "Nov", "Dec" ];
+		let hours;
+		if( date.getHours() ) {
+			hours=pad( date.getHours() );
+		} else {
+			hours="00";
+		}
+
 		date=" "+ pad( date.getDate() ) + '-' + 
 			(monthText? months[ date.getMonth() + 1 ]:pad( date.getMonth()+1) ) +
 			'-' + date.getUTCFullYear() +' ' +
-			( monthText?"":pad( date.getHours()) +':00' ) ;
+			( monthText?"":hours +':00' ) ;
 	}
 	return date;
 }
@@ -427,7 +455,7 @@ export function dateMunge(din:number, ddefault:Date|string, monthText:boolean=tr
  * An important util function, which removes need to jQuery, ShadowDOM AND other innerHTML hacks.
  * I have a historic avoidance of passing DOM object around the stack as it caused bad memory leaks.
  *    IMPURE
- 
+ *
  * @param {string|HTMLElement} selector ~ where to appends the new content
  * @param {string} html ~ what to append
  * @param {Document =document} dom ~ reference to which DOM tree
@@ -452,7 +480,20 @@ export function appendIsland(selector:string|HTMLElement, html:string, dom:Docum
 	}
 }
 
-export function setIsland(selector:string|HTMLElement, html:string, dom:Document=document):any {
+/**
+ * setIsland
+ * Replace the whole of the subtree with the param
+ * I have a historic avoidance of passing DOM object around the stack as it caused bad memory leaks.
+ *    IMPURE
+ *
+ * @param {string|HTMLElement} selector
+ * @param {string} html
+ * @param {Document =document} dom
+ * @throws some sort of HTML error, if the supplied HTML is malformed.  Browser dependant
+ * @public
+ * @return {void}
+ */
+export function setIsland(selector:string|HTMLElement, html:string, dom:Document=document):void {
 	const base=dom.createElement('template');
 	base.innerHTML=html;
 	if(typeof selector === 'string') {
