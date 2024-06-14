@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "jsx": "react-jsx",
+    "noEmit": false,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "module": "esnext",
+    "strict": true,
+    "target": "esnext",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+	"esModuleInterop": true,
+    "strictPropertyInitialization": false,
+    "strictNullChecks": false,
+    "types": ["vitest/globals"]
+  },
+
+  "files": [],
+  "exclude": ["./build", "./dist", "./node_modules" ],
+  "include": ["./src/*.ts", "./src/*.mjs" ]
+}

@@ -1,0 +1,21 @@
+
+make URL HTTPS test work better
+add vite to build
+add vitest
+tests for reading duration can use Node DOM + createElement(template)
+Make some types
+Convert to TS
+replace all log() calls
+add licence headers
+non-standard syntax hilighting in sitemap-plan
+
+DONE check accessibility of currentSize
+DONE move inpage JS to pageStartup
+DONE Add further modules
+DONE move post handler in search to JS, as this can't work on mew site 
+DONE copy back the top functions for vanilla 
+DONE check base.mjs is OK
+DONE lookup fetch stuff 
+DONE, i think, in adjacent, mapping text() to html()
+
+
