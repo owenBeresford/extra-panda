@@ -13,10 +13,11 @@
 	"esModuleInterop": true,
     "strictPropertyInitialization": false,
     "strictNullChecks": false,
-    "types": ["vitest/globals"]
+    "types": [ "vitest/globals", "@types/web/index.d.ts", "@types/node-fetch/index.d.ts" ],
+	"lib":[ "es2020" ]
   },
 
-  "files": [],
+  "files": [ "./src/index.mjs" ],
   "exclude": ["./build", "./dist", "./node_modules" ],
   "include": ["./src/*.ts", "./src/*.mjs" ]
 }

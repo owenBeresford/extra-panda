@@ -1,14 +1,20 @@
-
-make URL HTTPS test work better
-add vite to build
-add vitest
-tests for reading duration can use Node DOM + createElement(template)
-Make some types
-Convert to TS
-replace all log() calls
+?? make URL HTTPS test work better ??
 add licence headers
 non-standard syntax hilighting in sitemap-plan
+I do not know how to test vanilla
+rewrite all DIALOG to use HTML .open effects -> less scripting
+i think, in adjacent, mapping text() to html()
+setup eslint after git
+performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311
+       https://www.npmjs.com/package/linkedom
+look at:: https://github.com/Xooone47/vite-plugin-deadcodes
+add https://www.npmjs.com/package/html-validate to the tests
+look at generator scripts, renderTitle => title, descrip => desc
 
+Discuss: Perl-style encapsulation by culture rather than armed enforcers
+Discuss: every time I am setting CSS vis JS, this is code smell & I need more information
+DONE: remove local scope use of global vars
+DONE: reduce use a lambda functions
 DONE check accessibility of currentSize
 DONE move inpage JS to pageStartup
 DONE Add further modules
@@ -16,6 +22,9 @@ DONE move post handler in search to JS, as this can't work on mew site
 DONE copy back the top functions for vanilla 
 DONE check base.mjs is OK
 DONE lookup fetch stuff 
-DONE, i think, in adjacent, mapping text() to html()
-
+DONE add vite to build
+DONE add vitest
+DONE replace all log() calls
+DONE Convert to TS
+DONE Make some types
 

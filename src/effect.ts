@@ -1,5 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { register, access } from './vanilla';
+import { Document, HTMLAnchorElement, HTMLElement } from 'jsdom';
+import { register, access } from './code-collection';
+import { appendIsland, pullout } from './base';
 
 "use strict";
 register('addOctoCats', addOctoCats);
@@ -15,10 +17,11 @@ register('addFancyButtonArrow', addFancyButtonArrow);
  * @public
  * @return {void}
  */ 
-function addOctoCats(dom=document) {
-	dom.querySelectorAll('article a').forEach(function(a, i) {
-		if( a.innerText.trim().toLowerCase() === 'git') {
-			a.innerText='';
+function addOctoCats(dom:Document =document):void {
+	dom.querySelectorAll('article a').forEach(function(a:HTMLAnchorElement, i:number):void {
+		let tmp=pullout(a);
+		if( tmp.trim().toLowerCase() === 'git') {
+			a.textContent='';
 			appendIsland(a, '<i class="fa fa-github" aria-hidden="true"></i>', dom);
 			a.setAttribute("title", "Link to a github project.");
 		}
@@ -33,10 +36,11 @@ function addOctoCats(dom=document) {
  * @public
  * @return {void}
  */ 
-function addBooks(dom=document) {
-	dom.querySelectorAll('article a').forEach(function(a, i) {
-		if( a.innerText.trim().toLowerCase() === 'docs') {
-			a.innerText='';
+function addBooks(dom:Document=document):void {
+	dom.querySelectorAll('article a').forEach(function(a:HTMLAnchorElement, i:number) {
+		let tmp=pullout(a);
+		if( tmp.trim().toLowerCase() === 'docs') {
+			a.textContent='';
 			appendIsland(a, '<i class="fa fa-book-open" aria-hidden="true"></i>', dom);
 			a.setAttribute("title", "Link to the project docs; it may be a git page, or a separate webpage. ");
 		}
@@ -51,9 +55,10 @@ function addBooks(dom=document) {
  * @public
  * @return {void}
  */
-function addBashSamples(dom=document) { 
-	var r1=new RegExp('`\([^`]+\)`', 'g'), r2=new RegExp('\/ \/', 'g'); 
-	var bash=dom.querySelectorAll('.addBashSamples');
+function addBashSamples(dom:Document=document):void { 
+	const r1=new RegExp('`\([^`]+\)`', 'g'); const r2=new RegExp('\/ \/', 'g'); 
+	let bash:Array<HTMLElement>=dom.querySelectorAll('.addBashSamples');
+
 	if(bash.length >0) {
 		for(let i=0; i<bash.length; i++) { 
 			bash[i].innerHTML=bash[i].innerHTML
@@ -65,15 +70,15 @@ function addBashSamples(dom=document) {
 
 /**
  * addFancyButtonArrow
- * Markup buttons as a big arrow
+ * Markup buttons as a big arrow.
+ * Maybe at some point refactor into addLeftArrow, addRightArrow
  * 
  * @param {Document =document} dom
  * @public
  * @return {void}
  */
-function addFancyButtonArrow(dom=document) {
-		// maybe at some point refactor into addLeftArrow, addRightArrow
-	let aa=dom.querySelector('.addArrow');
+function addFancyButtonArrow(dom:Document=document):void {
+	let aa:Array<HTMLElement>=dom.querySelectorAll('.addArrow');
 	for(let i=0; i<aa.length; i++) {
 		appendIsland(aa[i].parentElement, '<i class="fa fa-play specialPointer " aria-hidden="true"></i>', dom);
 	}

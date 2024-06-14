@@ -1,42 +1,15 @@
-/*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { register } from './vanilla';
-import { appendIsland } from './base';
-
-declare interface ReadingProps {
-	dataLocation:string;
-	target:string;
-	wordPerMin:number;
-	codeSelector:string;
-	timeFormat:string;
-	refresh:boolean;
-}
+/*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
+import { register } from './code-collection';
+import { appendIsland, pullout } from './base';
+import { ReadingProps } from './all-types';
 
 register("readingDuration", readingDuration);
-
-
-/**
- * _pullout
- * An isolation function, as JSDOM isn't perfect.
- 
- * @param {HTMLElement} a 
- * @public
- * @return {string}
- */
-function _pullout( a:HTMLElement ):string {
-	if('innerText' in a) {
-		return a.innerText;
-	} else if('textContent' in a) {
-		return a.textContent;
-	} else {
-		throw new Error();
-	}
-}
 
 /**
  * readingDuration
  * A function to count readable words in the current DOM, and compute expected reading time.
  *
- * Note: conversion to minutes is still hard coded, mostly as I cannot see value in other formats
+ * Note: conversion to minutes is still hard coded, mostly as I cannot see value in other formats.
  * @param {ReadingProps} opts
  * @param {Document =document} dom
  * @public
@@ -53,14 +26,15 @@ function readingDuration(opts:ReadingProps, dom=document):void {
 		refresh:false,
 	}, opts) as ReadingProps;
 	let h1="";
+// I would like to move this into the config
 	let mm=options.dataLocation+" img, "+options.dataLocation+" picture, "+options.dataLocation+" object";
-	let duration:number = ( _pullout( dom.querySelector(options.dataLocation) )
+	let duration:number = ( pullout( dom.querySelector(options.dataLocation) as HTMLElement )
 						.match(RE).length)/options.wordPerMin * 60;
 	duration += dom.querySelectorAll( mm).length * 12;
 	if(options.codeSelector && dom.querySelectorAll(options.codeSelector) ) {
 		let tt=0;
-		dom.querySelectorAll(options.codeSelector).forEach( function(a, b){
-			tt+= _pullout( a ).match(RE ).length;
+		dom.querySelectorAll(options.codeSelector).forEach( function(a:HTMLElement, b:number){
+			tt+= pullout( a ).match(RE ).length;
 		});
 		if( tt ) {
 			duration += (tt*3) /(options.wordPerMin * 60);

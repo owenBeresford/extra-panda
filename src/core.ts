@@ -1,15 +1,21 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { appendIsland, dateMunge, isMobile, runFetch, mapAttribute, articleName, addLineBreaks, _getCookie,  APPEARANCE_COOKIE, TEST_MACHINE } from './base';
-import { register, access } from './vanilla';
+import { appendIsland, dateMunge, isMobile, runFetch, mapAttribute, articleName, addLineBreaks, _getCookie } from './base';
+import { APPEARANCE_COOKIE, TEST_MACHINE, CoreProps, MiscEvent  } from './all-types';
+import { register, access } from './code-collection';
 import { listContentGroup } from './adjacent';
+import { Location, Document, HTMLElement } from 'jsdom';
 
 register('main', siteCore);
 register('siteCore', siteCore);
+register("shareMastodon", shareMastodon);
+register("copyURL",  copyURL);
+register("tabChange", tabChange);
+
 "use strict";
 
 // variables across this module
 // * @protected
-let OPTS={}; 
+let OPTS:CoreProps={} as CoreProps; 
 
 // removed:
  // CorrectionModule.prototype.columnise = function () {     << now CSS 
@@ -23,27 +29,28 @@ let OPTS={};
  * openMastodon
  * Show extra UI for selecting a Mastodon server
  * Covert a click event to a DOM change
- * 
+ * TODO: REWRITE to use the dialog open flag 
  * @param {Document =document} dom
  * @public
  * @return {false}
  */
-function openMastodon(dom=document) {
-	doc.querySelector('#popup').classList.add('open'); 
-	doc.querySelector('#popup input').focus();
+function openMastodon(dom:Document=document):boolean {
+	dom.querySelector('#popup').classList.add('open'); 
+	dom.querySelector('#popup input').focus();
 	return false;
 }
 
 /**
  * closeMastodon
  * Hide extra UI for selecting a Mastodon server
+ * TODO: REWRITE 
  * 
  * @param {Document =document} dom
  * @public
  * @return {false}
  */
-function closeMastodon(dom=document) {
-	doc.querySelector('#popup').classList.remove('open');
+function closeMastodon(dom:Document=document):boolean {
+	dom.querySelector('#popup').classList.remove('open');
 	return false;
 }
 
@@ -56,10 +63,10 @@ function closeMastodon(dom=document) {
  * @public
  * @return {false}
  */
-function openShare(dom=document,loc=location) {
-	if(loc.host!==TEST_MACHINE && !isMobile(loc)) return false;
+function openShare(dom:Document=document,loc:Location=location):boolean {
+	if(loc.host!==TEST_MACHINE && !isMobile(dom, loc)) return false;
 
-	let t= doc.querySelector('#shareMenu');
+	let t= dom.querySelector('#shareMenu');
 	if(t && !t.classList.replace('shareMenuOpen', 'shareMenu')) {
 		t.classList.replace('shareMenu', 'shareMenuOpen'); 
 	} 
@@ -69,24 +76,25 @@ function openShare(dom=document,loc=location) {
 /**
  * copyURL
  * Copy the current URL into the paste buffer, for use in mobile view
+ * @TODO  add feedback CSS when copy worked
  *
  * @param {Location =location} loc
  * @public
  * @return {void}
  */
-function copyURL(loc=location) {
+function copyURL(loc:Location=location):void {
 	try {
 		navigator.clipboard.writeText(loc.url).then(
 			() => {
-				console.log("copied url");
-				// look at edit label?
+				return;
+				// look at edit label?  ideate: text white to green for 2s
 			},
-			(e1, e2) => {
-				console.error("FAILED: copy URL ", e1, e2);
+			(err) => {
+				this.log("error", "FAILED: copy URL "+ err);
   			},
 		);
 	} catch(e0) {
-		console.error("FAILED: copy URL feature borked ", e0);
+		this.log('error', "FAILED: copy URL feature borked "+e0);
 	}
 }
 
@@ -98,19 +106,22 @@ function copyURL(loc=location) {
  * @public
  * @return {false}
  */
-function shareMastodon( dom=document) {
+function shareMastodon( dom:Document=document):boolean {
 	try {
 		let tmp=dom.querySelector('#mastodonserver');
 		let server= tmp.value;
 		let url   = tmp.getAttribute('--data-url');
-		if(server==="" || server===null) { return false; }
+		if(server==="" || server===null) { 
+			return false; 
+		}
 
 		server="https://"+server+"/share?text=I+think+this+is+important+"+url;
 		dom.querySelector('#popup').classList.remove('open');
-		console.log("Trying to open mastodon server ", server);
+		this.log("info", "Trying to open mastodon server, "+ server);
 		window.open(server, "_blank" );
-	} catch(e) { console.log("ERROR", e); }
-	// cant auto-close share bar; 'this' is DOM element due to jQuery #leSigh
+	} catch(e) { 
+		this.log("ERROR", e); 
+	}
 	openShare(); 
 	return false;
 }
@@ -125,7 +136,7 @@ function shareMastodon( dom=document) {
  * @public
  * @return {void}
  */
-function _map(where, action) {
+function _map(where:HTMLElement, action:Function):void {
 	where.addEventListener('click', action);
 	where.addEventListener('touch', action);
 	where.addEventListener('keypress', action);
@@ -139,30 +150,34 @@ function _map(where, action) {
  * @public
  * @return {void}
  */
-function initMastodon(dom=document) {
-	dom.querySelectorAll('#shareMenu #mastoTrigger').forEach(function( val, i ){
-		_map(val, openMastodon);
-	});
-	let tmp=dom.querySelector('#shareGroup .allButtons #mastoTrigger'), canSee='';
-	if(tmp.computedStyleMap ) {
-		canSee= tmp.computedStyleMap()['display'];
+function initMastodon(dom:Document=document, win:Window=window):void {
+	let BUFFER=dom.querySelectorAll('#shareMenu #mastoTrigger');
+	for(let i in BUFFER ) {
+		_map(BUFFER[i], openMastodon);
+	}
+
+	BUFFER=dom.querySelector('#shareGroup .allButtons #mastoTrigger'); 
+	let canSee='';
+	if(BUFFER.computedStyleMap ) {
+		canSee= BUFFER.computedStyleMap()['display'];
 	} else { // FF support
-		let tt=window.getComputedStyle(tmp, null);
+		let tt=win.getComputedStyle(BUFFER, null);
 		canSee= tt.getPropertyValue("display");
 	}
 
-	if( tmp.length >0 && canSee!=='none' ) {
-		tmp.forEach(function( val, i ){
-			val.addEventListener('click', openMastodon);
-			val.addEventListener('keypress', openMastodon);
-		});
+	if( BUFFER.length >0 && canSee!=='none' ) {
+		for(let i in BUFFER ) {
+			BUFFER[i].addEventListener('click', openMastodon);
+			BUFFER[i].addEventListener('keypress', openMastodon);
+		}	
 	}
-	_map(dom.querySelector('#copyURL'), copyURL);
-	_map(dom.querySelector('#popup #sendMasto'), shareMastodon );
-	dom.querySelectorAll('#shareMenuTrigger, #shareClose ').forEach(function( i, val ){
-		_map(val, openShare);
-	});
-	_map(dom.querySelector('#hideMasto '), closeMastodon );	
+	_map(dom.querySelector('#copyURL'), this.copyURL);
+	_map(dom.querySelector('#popup #sendMasto'), this.shareMastodon );
+	BUFFER= dom.querySelectorAll('#shareMenuTrigger, #shareClose ');
+	for(let i in BUFFER) {
+		_map(BUFFER[i], openShare);
+	};
+	_map(dom.querySelector('#hideMaston'), closeMastodon );	
 }
 
 /**
@@ -173,24 +188,26 @@ function initMastodon(dom=document) {
  * @public
  * @return {void}
  */
-function initPopupMobile( dom=document) {
-	if( location.host!==TEST_MACHINE && !isMobile()) { return; }
+function initPopupMobile( dom:Document=document, loc:Location=location):void {
+	if( loc.host!==TEST_MACHINE && !isMobile(dom, loc)) { return; }
 
-	if(isMobile()) {
+	if(isMobile(dom, loc)) {
 		dom.querySelector('#sendMasto').innerText="Share article";
 	}
-
 	let html=[ '<li id="shareClose"> <i class="fa fa-cancel" aria-hidden="true"></i> </li>	<li> <a class="hunchUp" id="copyURL"><i class="fa fa-copy" aria-hidden="true"></i><span class="hunchUp"> copy<br /> URL</span> </a> </li>',];
 	const bigScreenElements=["shareMenuTrigger", "siteChartLink", "rssLink" ];
-	dom.querySelectorAll('.allButtons a').forEach((thing, i ) => {
-		if(bigScreenElements.includes( thing.id) ) { return; }
+	const BUFFER=dom.querySelectorAll('.allButtons a');
+	for(let i in BUFFER) {
+		if(bigScreenElements.includes( BUFFER[i].id) ) { 
+			continue;
+		}
 
-		let local=thing.cloneNode(true);
+		let local=BUFFER[i].cloneNode(true);
 		local.classList.remove('bigScreenOnly');
 		html.push('<li>');
 		html.push(local.outerHTML);   // I don't like this line
 		html.push('</li>');
-	});
+	}
 	html.unshift('<div class="shareMenu" id="shareMenu"><menu id="mobileMenu" >' );
 	html.push('</menu></div>');
 
@@ -208,11 +225,10 @@ function initPopupMobile( dom=document) {
  * @public
  * @return {void}
  */
-function storeAppearance(ft, fs, dir, clr ) {
-	const struct= {ft:ft, fs:fs, dn:dir, cr:clr };
-	const json=JSON.stringify( struct);
+function storeAppearance(ft:string, fs:string, dir:string, clr:string ):void {
 	const COOKIE=_getCookie();
-	COOKIE.set(APPEARANCE_NAME, json, 365.254);	
+	const json=JSON.stringify( {ft:ft, fs:fs, dn:dir, cr:clr } );
+	COOKIE.set(APPEARANCE_COOKIE, json, 365.254);	
 }
 
 /**
@@ -223,38 +239,41 @@ function storeAppearance(ft, fs, dir, clr ) {
  * @public
  * @return {void}
  */
-function applyAppearance(dom=document) {
+function applyAppearance(dom:Document=document):void {
 	const COOKIE=_getCookie();
 
 	const dat=COOKIE.get( APPEARANCE_COOKIE);
-	if(dat) {
-		const dat2=JSON.parse( dat);
-		let CSS="";
-		if( dat2['ft'] && dat2['fs'] ) {
-			CSS="body, .annoyingBody { font-family: "+dat2['ft']+"; font-size: "+dat2['fs']+"; direction:"+dat2['dn']+"; }";
-		}
-		
-		const STYLE=dom.createElement('style');
-		STYLE.setAttribute('id', "client-set-css");
-		STYLE.innerText=CSS;
-		dom.getElementsByTagName('head')[0].append( STYLE);
+	if(!dat) {
+		return;
 	}
+
+	const dat2=JSON.parse( dat);
+	if(! (dat2['ft'] && dat2['fs']) ) {
+		return; 
+	}
+	let CSS="body, .annoyingBody { font-family: "+dat2['ft']+"; font-size: "+dat2['fs']+
+			"; direction:"+dat2['dn']+"; }";
+		
+	const STYLE=dom.createElement('style');
+	STYLE.setAttribute('id', "client-set-css");
+	STYLE.innerText=CSS;
+	dom.getElementsByTagName('head')[0].append( STYLE);
 }
 
 /**
  * burgerMenu
  * Util to manage state in the burgermenu
 
- * @param {string} id - HTML id for the menu
+ * @param {string =".burgerMenu"} id - HTML id for the menu
  * @param {Document =document} dom
  * @public
  * @return {void}
  */
-function burgerMenu(id=".burgerMenu", dom=document) {
+function burgerMenu(id:string=".burgerMenu", dom:Document=document):void {
 	let  t=dom.querySelector(id);
 	if( !t.getAttribute('data-state') ) {
 		t.classList.add('burgerMenuOpen');
-		t.setAttribute('data-state', 1);	
+		t.setAttribute('data-state', 1);
 	} else {
 		t.classList.remove('burgerMenuOpen');
 		t.setAttribute('data-state', null);
@@ -270,12 +289,17 @@ function burgerMenu(id=".burgerMenu", dom=document) {
  * @public
  * @return {void}
  */
-function tabChange(id, dom=document) {
-	let thing=undefined;
+function tabChange(id:string|MiscEvent, dom:Document=document):void {
+	let thing:HTMLElement|null=null;
 	if(typeof id==='string') {
-		thing=dom.querySelector(id);
+		thing=dom.querySelector(id) as HTMLElement;
 	} else {
-		thing= dom.querySelector(id.target.id);
+		let tmp:HTMLElement=id.target;
+		thing= dom.querySelector(tmp.id) as HTMLElement;
+	}
+	if(!thing) { 
+		this.log("ERROR", "Malconfigured tabs!! "+id+" matches nothing");
+		return;
 	}
 
 	let iter=dom.querySelectorAll(".tabsComponent .tabs-panel");
@@ -283,7 +307,10 @@ function tabChange(id, dom=document) {
 		iter[i].classList.remove('is-active');
 	}
 	let alive=dom.querySelectorAll(".tabsComponent "+thing.getAttribute('data-href'));	
-	alive.classList.add('is-active');
+	if(alive.length > 1) {
+		throw new Error("Labels on tabs must be unique, or tabs don't work.");
+	}
+	alive[0].classList.add('is-active');
 } 
 
 /**
@@ -296,15 +323,12 @@ function tabChange(id, dom=document) {
  * @public
  * @return {void}
  */
-export function siteCore(opts, dom=document, loc=location) {
+export function siteCore(opts:CoreProps, dom=document, loc=location):void {
 	let u=new URLSearchParams();
 	OPTS=Object.assign(
       {
-        debug: u.has('dbg') ,
-        menuTop: 170,
         tabs: {},
-        mobileWidth: 700,
-        prevCols: 0,
+		mobileWidth:700,
     }, opts);
 
     let tt=dom.querySelectorAll('.noJS');
@@ -312,6 +336,7 @@ export function siteCore(opts, dom=document, loc=location) {
 		tt[i].classList.remove('noJS');
 	}
 	const ROOT=access();
+	ROOT.debug=() => { return u.has('debug'); }
 
 	_map('#pageMenu', burgerMenu);
 	initPopupMobile(dom);
@@ -322,13 +347,13 @@ export function siteCore(opts, dom=document, loc=location) {
 	ROOT.addBashSamples(dom);
 	applyAppearance(dom);
 
-  	if (!isMobile() && loc.pathname !== '/resource/home' && dom.querySelectorAll('.reading').length<2 ) {
+  	if (!isMobile(dom. loc) && loc.pathname !== '/resource/home' && dom.querySelectorAll('.reading').length<2 ) {
 		ROOT.readingDuration({
                     dataLocation: "#main",
                     target: ".addReading",
-                    debug: OPTS.debug,
+                    debug: ROOT.debug(),
 					refresh:1,
-                    linkTo: '//owenberesford.me.uk/resource/jQuery-reading-duration'
+                    linkTo: '/resource/jQuery-reading-duration'
                 });
     }
 
@@ -336,10 +361,8 @@ export function siteCore(opts, dom=document, loc=location) {
 	ROOT.biblio({
 		tocEdit: 1,
 		width: OPTS.mobileWidth,
-		debug: OPTS.debug,
-		loosingElement: id,
+		debug: ROOT.debug(),
 		extendViaDownload: 4,
-		referencesCache: url,
 		tooltip:1,
 		renumber:1
 		});
@@ -349,7 +372,7 @@ export function siteCore(opts, dom=document, loc=location) {
 		for(let i=0; i<tabs.length; i++) {
 			let btns=tabs[i].querySelectorAll('.label.button');
 			for(let j=0; j<btns.length; j++) {
-				_map(btns[j], tabChange);
+				_map(btns[j], ROOT.tabChange);
 			}
 		}
 	}
@@ -357,13 +380,13 @@ export function siteCore(opts, dom=document, loc=location) {
 	if(loc.pathname.match('group-')) {
 		let tt=loc.pathname.split('/group-');
 		if( Array.isArray( tt) && tt.length>1 && tt[1].length ) {
-			ROOT.adjacent({group: tt[1], debug:OPTS.debug}, dom, loc);  
+			ROOT.adjacent({group: tt[1], debug:ROOT.debug}, dom, loc);  
 		}
 
 	} else {
 		let grp=listContentGroup('div#contentGroup');
 		for(let j=0; j<grp.length; j++) {
-			ROOT.adjacent({group: grp[j], debug:OPTS.debug, iteration:j, count:grp.length }, dom, loc);  
+			ROOT.adjacent({group: grp[j], debug:ROOT.debug, iteration:j, count:grp.length }, dom, loc);  
 		}
 	}
 	

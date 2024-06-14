@@ -1,7 +1,8 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
-import {access} from './vanilla';
-import * as Vanilla from './vanilla';
+import * as Types from './all-types';
+import {access} from './code-collection';
+import * as Vanilla from './code-collection';
 import * as Base from './base';
 import * as Effect from './effect';
 import * as Core from './core';

@@ -5,6 +5,7 @@ import { TEST_ONLY } from  '../reading';
 import { appendIsland } from '../base';
 const { readingDuration } = TEST_ONLY;
 
+// this function needs to be local to each test file, as the HTML will be different
 function page() {
 	const dom = new JSDOM(`<html>
 	<head><title>test1</title></head>
@@ -22,8 +23,8 @@ describe("TEST readingDuration", () => {
   it("go 1: readingDuration function is available correctly", () => {
     assert.equal(typeof readingDuration, "function", "assert #1");
   });
-  const dom=page();
   it("go 2: *** TESTING JSDOM LIBRARY, BORING ***", () => {
+   const dom=page();
 	let str='<h2>WWWWW WWWWW</h2>';
 	appendIsland('#point1', str, dom);
     assert.equal( dom.getElementsByTagName('body')[0].outerHTML, `<body>
@@ -35,6 +36,7 @@ describe("TEST readingDuration", () => {
     assert.equal( dom.getElementsByTagName('h2').length, 1, "assert #3");
   });
   it("go 3: testing content manipulation", () => {
+   const dom=page();
 	let txt=`
 wer werwer wer werwer wer werwer werwer wer werwer wer
 wer werwer wer werwer wer werwer werwer wer werwer wer
@@ -83,6 +85,7 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
   });
 
   it("go 4: extra text and images", () => {
+   const dom=page();
 	let txt=`<img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" />
 wer werwer wer werwer wer werwer werwer wer werwer wer
 wer werwer wer werwer wer werwer werwer wer werwer wer
@@ -103,17 +106,26 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
 wer werwer wer werwer wer werwer werwer wer werwer wer
 wer werwer wer werwer wer werwer werwer wer werwer wer
 wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
 `;
 	appendIsland('.blocker', txt, dom);
     assert.notEqual( dom.getElementById('point2'), null, "assert #7");
 
 	readingDuration({ refresh:true, }, dom );   
 	let tt=dom.querySelector("#shareGroup a.reading").textContent;
-	assert(tt, 'To read: 2m', "assert #8");
+	assert.equal(tt, 'To read: 2m', "assert #8");
 
   });
  
   it("go 5: growth test (refresh flag + output value should be larger)", () => {
+   const dom=page();
 	let txt=`<img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" />
 wer werwer wer werwer wer werwer werwer wer werwer wer
 wer werwer wer werwer wer werwer werwer wer werwer wer
@@ -146,6 +158,6 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
   });
  
   let ram2=process.memoryUsage();
-	console.log("RAM used to make JSDOM: "+ (ram2.heapUsed- ram1.heapUsed) );
+  console.log("RAM used to make JSDOM: "+ (ram2.heapUsed- ram1.heapUsed) );
 });
 
