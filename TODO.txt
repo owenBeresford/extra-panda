@@ -2,7 +2,6 @@
 add licence headers
 non-standard syntax hilighting in sitemap-plan
 I do not know how to test vanilla
-rewrite all DIALOG to use HTML .open effects -> less scripting
 i think, in adjacent, mapping text() to html()
 setup eslint after git
 performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311
@@ -10,6 +9,9 @@ performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative
 look at:: https://github.com/Xooone47/vite-plugin-deadcodes
 add https://www.npmjs.com/package/html-validate to the tests
 look at generator scripts, renderTitle => title, descrip => desc
+swap CSS for dialog with modal JS function + [open] attrib
+add CSS for copy label, propose text to green for 2s
+move mobile shareBar to a Nav element
 
 Discuss: Perl-style encapsulation by culture rather than armed enforcers
 Discuss: every time I am setting CSS vis JS, this is code smell & I need more information
@@ -27,4 +29,5 @@ DONE add vitest
 DONE replace all log() calls
 DONE Convert to TS
 DONE Make some types
+
 

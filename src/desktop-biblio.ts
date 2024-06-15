@@ -75,8 +75,7 @@ function normaliseData(data:Array<ReferenceType|null>):Array<string> {
 			continue;
 		}
 
-		let date =dateMunge( data[i].date, po[2], true), 
-			date2 =dateMunge( data[i].date, po[2], false);
+		let date =dateMunge( data[i].date, po[2], true); 
 		let title=data[i].title+""; // this stops errors later...
 		let desc= data[i].desc;
 
@@ -109,8 +108,8 @@ function normaliseData(data:Array<ReferenceType|null>):Array<string> {
  * @return {void}
  */
 function applyDOMpostions(ele:HTMLElement, WIDTH:number):void {
-	let left=mapAttribute(ele, 'left', true);
-	let bot=mapAttribute(ele, 'bottom', true);
+	let left=mapAttribute(ele, 'left');
+	let bot=mapAttribute(ele, 'bottom');
 	if(left === -1 && bot===-1) { return; }
 
 	if(left > WIDTH ) {
@@ -121,7 +120,7 @@ function applyDOMpostions(ele:HTMLElement, WIDTH:number):void {
 		tt=tt.parentNode;
 	}
 
-	const HEIGHT=(mapAttribute(tt, 'height', true) as number)- (3*16);
+	const HEIGHT=(mapAttribute(tt, 'height') as number)- (3*16);
 	if(bot > HEIGHT ) {
 		ele.classList.add('leanUp');
 	}
@@ -138,7 +137,7 @@ function applyDOMpostions(ele:HTMLElement, WIDTH:number):void {
  * @return {void}
  */
 function mapPositions(data:Array<string>, dom:Document=document ):void {
-	const WIDTH:number=(mapAttribute(dom.querySelector(ALL_REFERENCE), 'width', true) as number)- (32*16);
+	const WIDTH:number=(mapAttribute(dom.querySelector(ALL_REFERENCE), 'width') as number)- (32*16);
 	const REFS=dom.querySelectorAll(ALL_REFERENCE_LINKS); 
 
 	let j=1;	

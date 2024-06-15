@@ -6,6 +6,7 @@
     "sourceMap": true,
     "skipLibCheck": true,
     "module": "esnext",
+	"allowJs":true,
     "strict": true,
     "target": "esnext",
     "allowSyntheticDefaultImports": true,
@@ -13,7 +14,7 @@
 	"esModuleInterop": true,
     "strictPropertyInitialization": false,
     "strictNullChecks": false,
-    "types": [ "vitest/globals", "@types/web/index.d.ts", "@types/node-fetch/index.d.ts" ],
+    "types": [ "vitest/globals", "@types/node-fetch" ],
 	"lib":[ "es2020" ]
   },
 

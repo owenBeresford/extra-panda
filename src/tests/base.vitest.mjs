@@ -63,8 +63,8 @@ describe("TEST base", () => {
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>`;
 	appendIsland('#point2', str, dom);
 	
-	assert.equal(mapAttribute(dom.querySelector('#item1'), 'right', false), "100", "asset #10" );
-	assert.equal(mapAttribute(dom.querySelector('#item1'), 'right', true), 100, "asset #11" );
+	assert.equal(mapAttribute(dom.querySelector('#item1'), 'right'), "100", "asset #10" );
+	assert.equal(mapAttribute(dom.querySelector('#item1'), 'right'), 100, "asset #11" );
 	
   });
 

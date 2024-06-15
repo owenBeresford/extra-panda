@@ -126,9 +126,15 @@ function normaliseToList(data:Array<ReferenceType>):Array<NormalisedReference> {
 console.log("loop "+i, data[i], {me, remainder, name:OPTS.name});
 		const title= data[i].title;
 		if(title && me>=0 && remainder>0 ) {    
-			list[j]={ auth: data[i].auth, date: data[i].date, url: data[i].url, offset:i, title:"", desc: data[i].desc } as NormalisedReference;
+			list[j]={ 
+				auth: data[i].auth, 
+				date: dateMunge(data[i].date, "[Unknown time]", true), 
+				url: data[i].url, 
+				offset:i, 
+				title:data[i].title.substr(0, OPTS.titleLimit),
+				desc: data[i].desc 
+					} as NormalisedReference;
 
-			list[j].title=data[i].title.substr(0, OPTS.titleLimit);
 			if(title.length>OPTS.titleLimit) {
 				list[j].title+="...";
 			}
@@ -215,7 +221,7 @@ function convert2HTML(list:Array<NormalisedReference>, gname:string):string {
 // testLeanLeft($e.width(), $e.children(), tt.length>110?110:tt.length) 
 		let clsNm = createStyle(list[i].desc.length>110, false );
 
-		let txt='Title: '+list[i].title+'\nAuthor: '+list[i].auth+' &nbsp; &nbsp; Last edit: '+ dateMunge(list[i].date, "Unknown time", true)+'\nDescription: '+list[i].desc;
+		let txt='Title: '+list[i].title+'\nAuthor: '+list[i].auth+' &nbsp; &nbsp; Last edit: '+list[i].date+'\nDescription: '+list[i].desc;
 		html+='<li> <a class="adjacentItem button" id="link'+nui+'" class="'+clsNm+'" href="'+list[i].url+'" aria-label="'+txt+'" >'+list[i].title+'</a> </li>\n';
 	}
 	html+="</ul>";
@@ -282,7 +288,7 @@ function updateLabels( gname:string, dom:Document=document):void {
 async function createAdjacentChart(opts:AdjacentProps, dom:Document=document, loc:Location=location):Promise<void> {
 	OPTS = Object.assign(OPTS, {
         'name':articleName(loc),
-        'meta':mapURL(OPTS.group, true),
+        'meta':mapURL(OPTS.group, ".json", loc),
         'nextBar':100,
         'titleLimit':20,
 		'rendered':false,

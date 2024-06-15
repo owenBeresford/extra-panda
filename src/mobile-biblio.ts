@@ -9,12 +9,12 @@ import { URL_PLACEHOLDER, ReferenceType, NormalisedReference, BiblioProps, Mobil
 // * @protected
 let OPTS:MobileBiblioProps={} as MobileBiblioProps; 
 if(isMobile(document, location)) {
-	register("biblio", biblio);
+	register("biblio",  createBiblio);
 }
 
 /**
  * empty
- * A static fixture reponse for no-data issues
+ * A static fixture response for no-data issues
  * 
  * @param {number} offset
  * @public
@@ -50,12 +50,11 @@ function normaliseData(data:Array<ReferenceType|null>):Array<NormalisedReference
 
 	for(let i in data ) {
 		if( data[i]===null) {
-			out.push(empty(i));
+			out.push( empty( parseInt(i, 10) ) );
 			continue;
 		}
 
-		let date =dateMunge( data[i].date, po[2], true), 
-			date2 =dateMunge( data[i].date, po[2], false);
+		let date =dateMunge( data[i].date, po[2], true); 
 		let title=data[i].title+""; // this stops errors later...
 		let descrip= data[i].desc;
 
@@ -74,10 +73,10 @@ function normaliseData(data:Array<ReferenceType|null>):Array<NormalisedReference
 			auth:auth,
 			date:date,
 			desc:descrip,
-			offset:i,
+			offset:parseInt(i, 10),
 			title:title,
             url:data[i].url,
-			});
+			} as NormalisedReference );
 	}
 	return out;
 }
@@ -146,6 +145,7 @@ async function createBiblio(opts:MobileBiblioProps, dom:Document=document, loc:L
 		pageInitRun:0,
 		renumber:1, // set to 0 to disable
 		tooltip:0,
+		forceToEnd:1,
 		};	
 	OPTS = Object.assign(OPTS2, opts);
 

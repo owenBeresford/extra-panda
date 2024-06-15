@@ -1,14 +1,14 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { appendIsland, dateMunge, isMobile, runFetch, mapAttribute, articleName, addLineBreaks, _getCookie } from './base';
+import { Location, Document, HTMLElement } from 'jsdom';
+
 import { APPEARANCE_COOKIE, TEST_MACHINE, CoreProps, MiscEvent  } from './all-types';
+import { appendIsland, dateMunge, isMobile, runFetch, mapAttribute, articleName, addLineBreaks, _getCookie } from './base';
 import { register, access } from './code-collection';
 import { listContentGroup } from './adjacent';
-import { Location, Document, HTMLElement } from 'jsdom';
+import { initMastodon } from './mastodon';
 
 register('main', siteCore);
 register('siteCore', siteCore);
-register("shareMastodon", shareMastodon);
-register("copyURL",  copyURL);
 register("tabChange", tabChange);
 
 "use strict";
@@ -18,113 +18,12 @@ register("tabChange", tabChange);
 let OPTS:CoreProps={} as CoreProps; 
 
 // removed:
- // CorrectionModule.prototype.columnise = function () {     << now CSS 
- // CorrectionModule.prototype.biblioExtract = function () {  << runs HEAD
- // CorrectionModule.prototype.extractGET = function (val)  {<< UNUSED
+ // CorrectionModule.prototype.columnise = function ()    << now CSS 
+ // CorrectionModule.prototype.biblioExtract = function ()  << runs HEAD
+ // CorrectionModule.prototype.extractGET = function (val)  << UNUSED
 
  // CorrectionModule.prototype.tabChange = function ($e) {
  // CorrectionModule.prototype.tabInit = function (where) {
-
-/**
- * openMastodon
- * Show extra UI for selecting a Mastodon server
- * Covert a click event to a DOM change
- * TODO: REWRITE to use the dialog open flag 
- * @param {Document =document} dom
- * @public
- * @return {false}
- */
-function openMastodon(dom:Document=document):boolean {
-	dom.querySelector('#popup').classList.add('open'); 
-	dom.querySelector('#popup input').focus();
-	return false;
-}
-
-/**
- * closeMastodon
- * Hide extra UI for selecting a Mastodon server
- * TODO: REWRITE 
- * 
- * @param {Document =document} dom
- * @public
- * @return {false}
- */
-function closeMastodon(dom:Document=document):boolean {
-	dom.querySelector('#popup').classList.remove('open');
-	return false;
-}
-
-/**
- * openShare
- * Display/ hide the mobile share bar (both directions)
- * 
- * @param {Document =document} dom
- * @param {Location =location} loc
- * @public
- * @return {false}
- */
-function openShare(dom:Document=document,loc:Location=location):boolean {
-	if(loc.host!==TEST_MACHINE && !isMobile(dom, loc)) return false;
-
-	let t= dom.querySelector('#shareMenu');
-	if(t && !t.classList.replace('shareMenuOpen', 'shareMenu')) {
-		t.classList.replace('shareMenu', 'shareMenuOpen'); 
-	} 
-	return false;
-}
-
-/**
- * copyURL
- * Copy the current URL into the paste buffer, for use in mobile view
- * @TODO  add feedback CSS when copy worked
- *
- * @param {Location =location} loc
- * @public
- * @return {void}
- */
-function copyURL(loc:Location=location):void {
-	try {
-		navigator.clipboard.writeText(loc.url).then(
-			() => {
-				return;
-				// look at edit label?  ideate: text white to green for 2s
-			},
-			(err) => {
-				this.log("error", "FAILED: copy URL "+ err);
-  			},
-		);
-	} catch(e0) {
-		this.log('error', "FAILED: copy URL feature borked "+e0);
-	}
-}
-
-/**
- * shareMastodon
- * Effect the share to the choen mastodom server
- * 
- * @param {Document =document} dom
- * @public
- * @return {false}
- */
-function shareMastodon( dom:Document=document):boolean {
-	try {
-		let tmp=dom.querySelector('#mastodonserver');
-		let server= tmp.value;
-		let url   = tmp.getAttribute('--data-url');
-		if(server==="" || server===null) { 
-			return false; 
-		}
-
-		server="https://"+server+"/share?text=I+think+this+is+important+"+url;
-		dom.querySelector('#popup').classList.remove('open');
-		this.log("info", "Trying to open mastodon server, "+ server);
-		window.open(server, "_blank" );
-	} catch(e) { 
-		this.log("ERROR", e); 
-	}
-	openShare(); 
-	return false;
-}
 
 /**
  * _map
@@ -140,44 +39,6 @@ function _map(where:HTMLElement, action:Function):void {
 	where.addEventListener('click', action);
 	where.addEventListener('touch', action);
 	where.addEventListener('keypress', action);
-}
-
-/**
- * initMastodon
- * Register the event handlers for a mastodon sharing
- * 
- * @param {Document =document} dom
- * @public
- * @return {void}
- */
-function initMastodon(dom:Document=document, win:Window=window):void {
-	let BUFFER=dom.querySelectorAll('#shareMenu #mastoTrigger');
-	for(let i in BUFFER ) {
-		_map(BUFFER[i], openMastodon);
-	}
-
-	BUFFER=dom.querySelector('#shareGroup .allButtons #mastoTrigger'); 
-	let canSee='';
-	if(BUFFER.computedStyleMap ) {
-		canSee= BUFFER.computedStyleMap()['display'];
-	} else { // FF support
-		let tt=win.getComputedStyle(BUFFER, null);
-		canSee= tt.getPropertyValue("display");
-	}
-
-	if( BUFFER.length >0 && canSee!=='none' ) {
-		for(let i in BUFFER ) {
-			BUFFER[i].addEventListener('click', openMastodon);
-			BUFFER[i].addEventListener('keypress', openMastodon);
-		}	
-	}
-	_map(dom.querySelector('#copyURL'), this.copyURL);
-	_map(dom.querySelector('#popup #sendMasto'), this.shareMastodon );
-	BUFFER= dom.querySelectorAll('#shareMenuTrigger, #shareClose ');
-	for(let i in BUFFER) {
-		_map(BUFFER[i], openShare);
-	};
-	_map(dom.querySelector('#hideMaston'), closeMastodon );	
 }
 
 /**
@@ -323,7 +184,7 @@ function tabChange(id:string|MiscEvent, dom:Document=document):void {
  * @public
  * @return {void}
  */
-export function siteCore(opts:CoreProps, dom=document, loc=location):void {
+export function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=window):void {
 	let u=new URLSearchParams();
 	OPTS=Object.assign(
       {
@@ -340,14 +201,14 @@ export function siteCore(opts:CoreProps, dom=document, loc=location):void {
 
 	_map('#pageMenu', burgerMenu);
 	initPopupMobile(dom);
-	initMastodon(dom);
+	initMastodon(dom, loc, win);
 	ROOT.addOctoCats(dom);
 	ROOT.addBooks(dom); 
 	ROOT.addFancyButtonArrow(dom);
 	ROOT.addBashSamples(dom);
 	applyAppearance(dom);
 
-  	if (!isMobile(dom. loc) && loc.pathname !== '/resource/home' && dom.querySelectorAll('.reading').length<2 ) {
+  	if (!isMobile(dom, loc) && loc.pathname !== '/resource/home' && dom.querySelectorAll('.reading').length<2 ) {
 		ROOT.readingDuration({
                     dataLocation: "#main",
                     target: ".addReading",
@@ -399,13 +260,7 @@ export function siteCore(opts:CoreProps, dom=document, loc=location):void {
  * Only use for testing, it allows access to the entire API 
  */
 export const TEST_ONLY ={ 
- openMastodon,
- closeMastodon,
- openShare,
- copyURL,
- shareMastodon,
  _map,
- initMastodon,
  initPopupMobile,
  storeAppearance,
  applyAppearance,

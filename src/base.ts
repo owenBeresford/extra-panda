@@ -1,6 +1,6 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
-import { Cookieable, Fetchable, SimpleResponse, ScreenSizeArray, MOBILE_MIN_PPI } from './all-types';
+import { Cookieable, Fetchable, SimpleResponse, ScreenSizeArray, MOBILE_MIN_PPI, BOUNDARY, MiscEventHandler } from './all-types';
 import { register } from './code-collection';
 
 register('runFetch', runFetch);
@@ -50,7 +50,7 @@ export async function runFetch(url:string, trap:boolean):Promise<SimpleResponse>
 		let payload=""; 
 		let tmp=await trans.body.getReader().read();
 		payload+= await tmp.value;
-		if(trans.headers.get('content-type').toLower().startsWith('application/json')) {
+		if(trans.headers.get('content-type').toLowerCase().startsWith('application/json')) {
 			return {body:JSON.parse(payload), headers:trans.headers, ok:true};
 		} else {
 			return {body:payload, headers:trans.headers, ok:true};	
@@ -82,6 +82,27 @@ export function pullout( a:HTMLElement ):string {
 	}
 }
 
+/**
+ * _map
+ * Add several event listeners, just a utility
+ * 
+ * @param {HTMLElement} where
+ * @param {MiscEventHandler } action
+ * @public
+ * @return {void}
+ */
+export function _map(where:HTMLElement, action:MiscEventHandler, args:Array<any>|undefined=undefined):void {
+	if(args) {
+		where.addEventListener('click', (a:Event)=>{ return action(a, ...args); });
+		where.addEventListener('touch', (a:Event)=>{ return action(a, ...args); });
+		where.addEventListener('keypress', (a:Event)=>{ return action(a, ...args); });
+		
+	} else {
+		where.addEventListener('click', action);
+		where.addEventListener('touch', action);
+		where.addEventListener('keypress', action);
+	}
+}
 
 /**
  * articleName
@@ -269,7 +290,6 @@ class COOKIE implements Cookieable  {
 	}
 }
 
-
 /**
  * getCookie
  * Generate a cookie access object PURE 
@@ -286,33 +306,24 @@ export function _getCookie():Cookieable {
 	return new COOKIE();
 }
 
-
-type BOUNDARY='top'|'bottom'|'left'|'right';
-
 /**
  * mapAttribute
  * Extract the named limit of the element
  * PURE
  * 
  * @param {HTMLElement} ele
- * @param {string} attrib - One of top|bottom|left|right
- * @param {bool} cast - should this function force value to be an int?
+ * @param {BOUNDARY} attrib - One of top|bottom|left|right|width|height
  * @public
- * @return {number | string} - the value of the requested, with or without typecast
+ * @return {number } - the value of the requested
  */
-export function mapAttribute(ele:HTMLElement, attrib:BOUNDARY, cast:boolean=false):number|string {
+export function mapAttribute(ele:HTMLElement, attrib:BOUNDARY):number {
 	try {
 		if(! isFullstack() ) { 
 			return -1;
 		}
 	
 		let STYL = ele.getBoundingClientRect();
-		if(cast) {
-			return parseInt(STYL[attrib], 10);
-
-		} else {
-			return STYL[attrib];
-		}
+		return STYL[attrib];
 	} catch(e) {
 		console.log("error", "Missing data:"+e);
 		return -1;
@@ -356,6 +367,7 @@ export function isFullstack():boolean {
 export function importDate(format:string, day:string="", time:string=""):Date {
 	let day1:string; let time1:string; let fpos:number; let buf:Array<string>;
 	let year1:number; let month1:number; let _day1:number; let hour1:number; let min1:number; let sec1:number;
+	let day1a:Array<string>; let time1a:Array<string>;
 
 	if( time==="" && day) {
 		let tt       =day.split('T');
@@ -379,12 +391,12 @@ export function importDate(format:string, day:string="", time:string=""):Date {
 	if(!day1 ) {
 		throw new Error("importDate: No values supplied"); 
 	} else if(day1.indexOf('-')>0 ){ // if - is in first char position, its still bad, so skip that option
-		day1       = day1.split('-');
+		day1a       = day1.split('-');
 	} else {        
-		day1       = day1.split('/');
+		day1a       = day1.split('/');
 	} 
-	time1          = time1.split(':');
-	buf			=[ ...day1, ...time1];
+	time1a          = time1.split(':');
+	buf			=[ ...day1a, ...time1a];
 
 // note very clearly: this is array fragment offset, not char offset
 	fpos           = 0; 
@@ -465,8 +477,9 @@ export function dateMunge(din:number, ddefault:Date|string, monthText:boolean=tr
  */
 export function appendIsland(selector:string|HTMLElement, html:string, dom:Document=document):void {
 	try {
-	if(dom===null) { throw new Error("Oh no ! initial object"); }
-	const base:HTMLelement =dom.createElement('template');
+	if(dom===null) { throw new Error("Oh no! No DOM object"); }
+
+	const base:HTMLTemplateElement =dom.createElement('template');
 	base.innerHTML=html;
 	if(typeof selector === 'string') {
 		let tt:HTMLElement= dom.querySelector(selector) as HTMLElement;
@@ -512,5 +525,5 @@ export function setIsland(selector:string|HTMLElement, html:string, dom:Document
 }
 
 
-export const TEST_ONLY ={ getFetch, articleName, runFetch, isMobile, addLineBreaks, pad, currentSize, _getCookie, mapAttribute, importDate, dateMunge, appendIsland, setIsland, isFullstack };
+export const TEST_ONLY ={ getFetch, articleName, runFetch, isMobile, addLineBreaks, pad, currentSize, _getCookie, mapAttribute, importDate, dateMunge, appendIsland, setIsland, isFullstack, _map };
 

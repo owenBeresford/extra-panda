@@ -14,13 +14,15 @@ export interface NormalisedReference {
 	offset:number;
 	desc:string;
 	title:string;
-	date:number;
+	date:string;
 	auth:string;
 	url:string;
 }
 
 export type MisshapeComposite= Record<string,Function>;
 export type ScreenSizeArray=  [number, number]; 
+export type MiscEventHandler = (a:Event) =>void;
+export type BOUNDARY='top'|'bottom'|'left'|'right'|'height'|'width';
 
 export interface ReadingProps {
 	dataLocation:string;
@@ -68,9 +70,11 @@ export interface DesktopBiblioProps {
 export interface MobileBiblioProps {
 	referencesCache:string;
 	gainingElement:string;
+	losingElement:string;
 	pageInitRun:number;
 	renumber:number;
 	tooltip:number;
+	forceToEnd:number;
 }
 
 export interface AdjacentProps {
