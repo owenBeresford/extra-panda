@@ -147,7 +147,7 @@ describe("TEST mobile-biblio", () => {
 	date:" 01-March-2000 ", 
 	desc:`sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs f↩
 sdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs`,
-	offset:"0",
+	offset:0,
 	title:"sdfsdfs sdfsdfsfs",
 	url:"http://192.168.0.35/resource/article1",
 	},
@@ -162,7 +162,7 @@ j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs
 dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
 df sfsdfsdfs`,
 	date:" 01-April-2000 ", 
-	offset:"1",
+	offset:1,
 	title:"sdfsdfs 23423432",
 	url:"http://192.168.0.35/resource/article2",
 	},
@@ -178,7 +178,7 @@ df sfsdfsdfs`,
 		title:"sdfsdfs 23423432",
       "auth": "[No author]",
       "date": "[No date]",
-      "offset": "2",
+      "offset": 2,
 		url:"http://192.168.0.35/resource/article3",
 	},
   {
@@ -192,7 +192,7 @@ t jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrt
 j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs↩
 dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
 df sfsdfsdfs`,
-    "offset": "3",
+    "offset": 3,
     "title": "sdfsdfs 23423432",
     "url": "http://192.168.0.35/resource/article4",
   },
@@ -200,7 +200,7 @@ df sfsdfsdfs`,
     "auth": "racheal",
     "date": " 01-April-2000 ",
     "desc": "null",
-    "offset": "4",
+    "offset": 4,
     "title": "sdfsdfs w32dd2",
     "url": "http://192.168.0.35/resource/article5",
     },
@@ -247,7 +247,7 @@ df sfsdfsdfs`,
 			];
 	dat2=[
 	{
-	offset:"0",
+	offset:0,
    "desc": `sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs f↩
 sdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs`,
 	title:"sdfsdfs sdfsdfsfs",
@@ -256,7 +256,7 @@ sdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs`,
 	url:"http://192.168.0.35/resource/article1",
 	},
 	{
-	offset:"1",
+	offset:1,
     "desc": `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
 aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDG↩
 JDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdt↩
@@ -271,7 +271,7 @@ df sfsdfsdfs`,
 	url:"http://192.168.0.35/resource/article2",
 	},
 	{
-		offset:"2",
+		offset:2,
     "desc": `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
 aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDG↩
 JDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdt↩
@@ -296,7 +296,7 @@ t jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrt
 j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs↩
 dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
 df sfsdfsdfs`,
-    "offset": "3",
+    "offset": 3,
     "title": "sdfsdfs 23423432",
     "url": "http://192.168.0.35/resource/article4",
   },
@@ -304,7 +304,7 @@ df sfsdfsdfs`,
     "auth": "racheal",
     "date": " 01-April-2000 ",
     "desc": "null",
-    "offset": "4",
+    "offset": 4,
     "title": "sdfsdfs w32dd2",
     "url": "http://192.168.0.35/resource/article5",
   },
@@ -312,7 +312,7 @@ df sfsdfsdfs`,
      "auth": "[No author]",
      "date": "[No date]",
     "desc": "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
-    "offset": "5",
+    "offset": 5,
     "title": "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
     "url": "https://owenberesford.me.uk/",
   },
@@ -320,7 +320,7 @@ df sfsdfsdfs`,
      "auth": "[No author]",
      "date": "[No date]",
     "desc": "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
-    "offset": "6",
+    "offset": 6,
     "title": "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
     "url": "https://owenberesford.me.uk/",
     },

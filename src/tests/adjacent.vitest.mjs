@@ -85,21 +85,21 @@ describe("TEST adjacent", () => {
 	it("go 5: normaliseToList", ()=>{
 		let d1=[
 		{ 
-		date:"2024-03-02 09:00:00", 
+		date: new Date("2024-03-02 09:00:00").getTime()/1000, 
 		title:"DDDSFDSDF ddd 1234", 
 		desc:"sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
 		auth:"racheal", 
 		url:"http://www.firstdata.com/" 
 		},
 		{ 
-		date:"2024-03-03 09:00:00", 
+		date:new Date("2024-03-03 09:00:00").getTime()/1000, 
 		title:"DDDSFDSDF ddd 45646", 
 		desc:"sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
 		auth:"", 
 		url:"http://www.seconddata.com/" 
 		},
 		{ 
-		date:"2024-03-04 09:00:00", 
+		date:new Date("2024-03-04 09:00:00").getTime()/1000, 
 		title:"DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfgd gd gdgdg dgdg dgdg dagd dag dgadf gdagdafgdagdagdafg dgdagdagd dg dg dgd ggadfgdg dgdgadfg dadg adgd dfg dgdfg g ddg adg adgd gadgdg dg adg dgdag dd gd dg dg dg dg dgadg dag dfg dgdg dg dfgdafgd dfgdfg dgdfg dfgadfg df", 
 		desc:"sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfgdfgdg dg dg dg dgdgdfgdfgdg dg dg dag agadgdg dgdgdgd gd gdgdfgdfg dgd gdg dfg dg dfg dgdfgdg dg dfgdfgdg dg dfg dfgadgdfgdgdgdfgdg dg dgdg dg dgdgdgdg dg dfg dfg dfg dgdfg dgdfg dfg dgd dfg dgdg dgdgdfg  sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf", 
 		auth:"gdgdg", 
@@ -109,7 +109,7 @@ describe("TEST adjacent", () => {
 		let d2=[
 			{
      "auth": "racheal",
-     "date": "2024-03-02 09:00:00",
+     "date": " 02-March-2024 ",
      "desc": "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
      "offset": 0,
      "title": "DDDSFDSDF ddd 1234",
@@ -117,7 +117,7 @@ describe("TEST adjacent", () => {
 			},
 			{ 
 		auth:"", 
-		date:"2024-03-03 09:00:00", 
+		date:" 03-March-2024 ", 
 		desc:"sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf", 
      	"offset": 1,
 		title:"DDDSFDSDF ddd 45646",
@@ -125,7 +125,7 @@ describe("TEST adjacent", () => {
 			},
 			{ 
 		auth:"gdgdg", 
-		date:"2024-03-04 09:00:00", 
+		date:" 04-March-2024 ", 
 		desc:"sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg...",
      	"offset": 2,
 		"title": "DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...",
@@ -144,14 +144,13 @@ describe("TEST adjacent", () => {
 		assert.deepEqual(listContentGroup("#testbar", dom), ["engineering", "uitools"], "step9" );
  		setIsland("#point2", '<div id="testbar" data-group="engineering, uit   ools"></div>', dom );
 		assert.deepEqual(listContentGroup("#testbar", dom), ["engineering", "uit   ools"], "step10" );		
-		jsdom.window.close();
 	});
 
 	it("go 7: convert2HTML", ()=>{
 		let d1=[
 			{
      "auth": "racheal",
-     "date": new Date("2024-03-02 09:00:00").getTime()/1000,
+     "date": " 02-March-2024 ",
      "desc": "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
      "offset": 0,
      "title": "DDDSFDSDF ddd 1234",
@@ -159,7 +158,7 @@ describe("TEST adjacent", () => {
 			},
 			{ 
 		auth:"", 
-     	"date": new Date("2024-03-03 09:00:00").getTime()/1000,
+     	"date": " 03-March-2024 ",
 		desc:"sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf", 
      	"offset": 1,
 		title:"DDDSFDSDF ddd 45646",
@@ -167,7 +166,7 @@ describe("TEST adjacent", () => {
 			},
 			{ 
 		auth:"gdgdg", 
-     	"date": new Date("2024-03-04 09:00:00").getTime()/1000,
+     	"date": " 04-March-2024 ",
 		desc:"sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg...",
      	"offset": 2,
 		"title": "DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...",
@@ -176,13 +175,13 @@ describe("TEST adjacent", () => {
 				];
 
 		let d2=`<ul class="adjacentList">
-<li> <a class="adjacentItem button" id="linkengineering0" class="button" href="http://www.firstdata.com/" aria-label="Title: DDDSFDSDF ddd 1234
+<li> <a id="linkengineering0" class="button" href="http://www.firstdata.com/" aria-label="Title: DDDSFDSDF ddd 1234
 Author: racheal &nbsp; &nbsp; Last edit:  02-March-2024 
 Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf" >DDDSFDSDF ddd 1234</a> </li>
-<li> <a class="adjacentItem button" id="linkengineering1" class="button" href="http://www.seconddata.com/" aria-label="Title: DDDSFDSDF ddd 45646
+<li> <a id="linkengineering1" class="button" href="http://www.seconddata.com/" aria-label="Title: DDDSFDSDF ddd 45646
 Author:  &nbsp; &nbsp; Last edit:  03-March-2024 
 Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf" >DDDSFDSDF ddd 45646</a> </li>
-<li> <a class="adjacentItem button" id="linkengineering2" class="button lower" href="http://www.thirddata.com/" aria-label="Title: DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...
+<li> <a id="linkengineering2" class="button lower" href="http://www.thirddata.com/" aria-label="Title: DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...
 Author: gdgdg &nbsp; &nbsp; Last edit:  04-March-2024 
 Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg..." >DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...</a> </li>
 </ul>`;
@@ -190,7 +189,6 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
 	});
 
 	it("go 8: convert2IndexHTML", ()=>{
-
 		let d1=[
 			{
      "auth": "racheal",
@@ -221,7 +219,6 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
 `;
 		const [dom, loc, jsdom]=page('http://192.168.0.35/resource/code-metrics' );
 		assert.deepEqual(convert2IndexHTML(d1, "engineering", dom, loc), d2, "step13" );
-		jsdom.window.close();
 	});
 
 	it("go 9: updateLabels", ()=>{
@@ -238,11 +235,9 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
 		updateLabels("Engineering", dom);
 		assert.deepEqual(dom.querySelector('.top-bar.fullWidth header h1').textContent, "Group Engineering", "step16" );
 		assert.deepEqual(dom.querySelector('.adjacentGroup p').textContent, "Some similar articles in Engineering", "step17" );
-		jsdom.window.close();
 	});
 
 	it("go 10: createAdjacentChart", ()=>{
-		{
 		const [dom, loc, jsdom]=page( 'http://192.168.0.35/resource/code-metrics' );
 		let str=`
 <div class="adjacentGroup " id="groupengineering">
@@ -255,42 +250,41 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
 		createAdjacentChart({group:"engineering", name:"code-metrics" }, dom, loc);
 		assert.equal(dom.querySelector('.adjacentGroup p').textContent, "TEST", "step18 [negative]" );
 		assert.equal(dom.querySelectorAll('#groupengineering ul').length, 0, "step19 [negative]" );
-		jsdom.window.close();
-		}
+	});
 
-		{
+
+	it("go 10.1: createAdjacentChart", async ()=>{	
 		const [dom, loc, jsdom]=page( 'http://192.168.0.35/resource/code-metrics' );
 		let str=`
-<div class="adjacentGroup " id="groupengineering">
+<div class="adjacentGroup" id="groupengineering">
 <p>TEST</p>
 </div>`;
 		appendIsland('#point2', str, dom);
 
 		register('runFetch', mockFetch2);
-console.log("WERWER BEFORE", dom.querySelector('#groupengineering').outerHTML, "WWWWWWW", dom.body.outerHTML, "WWWWWWW WERWER");
-		createAdjacentChart({group:"engineering", name:"code-metrics" }, dom, loc);
-console.log("WERWER WERWER", dom.querySelector('#groupengineering').outerHTML, "WWWWWWW", dom.body.outerHTML, "WWWWWWW WERWER");
+		await createAdjacentChart({group:"engineering", name:"code-metrics" }, dom, loc);
+
 		assert.equal(dom.querySelector('.adjacentGroup p').textContent, "TEST", "step20 [positive]" );
-		assert.equal(dom.querySelectorAll('#groupengineering ul').length, 1, "step21 [positive]" );
+		assert.equal(dom.querySelectorAll('#groupengineering .adjacentList').length, 1, "step21 [positive]" );
 
 // fixed input data, so fixed output data
 		let sample1=`
-<li> <a class="adjacentItem button" id="linkengineering0" class="button" href="https://owenberesford.me.uk/resource/code-metrics" aria-label="Title: Code metrics
+<li> <a id="linkengineering0" class="button" href="https://owenberesford.me.uk/resource/code-metrics" aria-label="Title: Code metrics
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
-Description: A colleague didnt understand remarks about refactoring his code" >Code metrics</a> </li>
-<li> <a class="adjacentItem button" id="linkengineering1" class="button" href="https://owenberesford.me.uk/resource/paradigm-shift" aria-label="Title: Paradigm shift
+Description: A colleague didnt understand remarks about refactoring his code">Code metrics</a> </li>
+<li> <a id="linkengineering1" class="button" href="https://owenberesford.me.uk/resource/paradigm-shift" aria-label="Title: Paradigm shift
 Author: Tim Ottinger @tottinge &nbsp; &nbsp; Last edit:  26-March-2024 
-Description: Borrowed content; discussing the change in engineering approach" >Paradigm shift</a> </li>
-<li> <a class="adjacentItem button" id="linkengineering2" class="button" href="https://owenberesford.me.uk/resource/howto-API" aria-label="Title: How-to REST API
+Description: Borrowed content; discussing the change in engineering approach">Paradigm shift</a> </li>
+<li> <a id="linkengineering2" class="button" href="https://owenberesford.me.uk/resource/howto-API" aria-label="Title: How-to REST API
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
-Description: 16 Considerations for REST API, construction and why REST API are used." >How-to REST API</a> </li>
-<li> <a class="adjacentItem button" id="linkengineering3" class="button" href="https://owenberesford.me.uk/resource/goals" aria-label="Title: “Zones of developmen...
+Description: 16 Considerations for REST API, construction and why REST API are used.">How-to REST API</a> </li>
+<li> <a id="linkengineering3" class="button" href="https://owenberesford.me.uk/resource/goals" aria-label="Title: “Zones of developmen...
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
-Description: What concepts or areas of development are important.    This is a higher level chart.." >“Zones of developmen...</a> </li>
+Description: What concepts or areas of development are important.    This is a higher level chart..">“Zones of developmen...</a> </li>
 `;
-		assert.equal(dom.querySelectorAll('#groupengineering ul').innerHTML, sample1, "step21 [positive]" );
-		jsdom.window.close();
-		}
+		assert.equal(dom.querySelector('#groupengineering .adjacentList').innerHTML, sample1, "step22 [positive]" );
+	});
+
 
 /*
 		{
@@ -313,7 +307,7 @@ XXXX
 
 		}
 */
-	});	
+//	});	
 
 	function mockFetch1(url, hasExcept ) {
 		return new Promise((good, bad) => {

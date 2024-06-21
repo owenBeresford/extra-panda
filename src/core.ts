@@ -185,9 +185,7 @@ function tabChange(id:string|MiscEvent, dom:Document=document):void {
  * @return {void}
  */
 export function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=window):void {
-	let u=new URLSearchParams();
-	OPTS=Object.assign(
-      {
+	OPTS=Object.assign( {
         tabs: {},
 		mobileWidth:700,
     }, opts);
@@ -197,7 +195,6 @@ export function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=
 		tt[i].classList.remove('noJS');
 	}
 	const ROOT=access();
-	ROOT.debug=() => { return u.has('debug'); }
 
 	_map('#pageMenu', burgerMenu);
 	initPopupMobile(dom);
@@ -241,13 +238,13 @@ export function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=
 	if(loc.pathname.match('group-')) {
 		let tt=loc.pathname.split('/group-');
 		if( Array.isArray( tt) && tt.length>1 && tt[1].length ) {
-			ROOT.adjacent({group: tt[1], debug:ROOT.debug}, dom, loc);  
+			ROOT.adjacent({group: tt[1], debug:ROOT.debug()}, dom, loc);  
 		}
 
 	} else {
 		let grp=listContentGroup('div#contentGroup');
 		for(let j=0; j<grp.length; j++) {
-			ROOT.adjacent({group: grp[j], debug:ROOT.debug, iteration:j, count:grp.length }, dom, loc);  
+			ROOT.adjacent({group: grp[j], debug:ROOT.debug(), iteration:j, count:grp.length }, dom, loc);  
 		}
 	}
 	

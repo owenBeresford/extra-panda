@@ -158,10 +158,7 @@ async function createBiblio(opts:MobileBiblioProps, dom:Document=document, loc:L
 	dom.querySelector('#biblio').setAttribute('style', '');
 	dom.querySelector(OPTS.gainingElement+" *").replaceChildren([]);
 	appendIsland(OPTS.gainingElement, `<h2 class="biblioSection">References (for mobile UI)</h2> 
-<p>The references embedded in the text are displayed here. </p>
-<p><span id="mapper" class="twitterLink">Lookup extra link details</span>.</p>`, dom);
-	// IOIO do i need this? 
-	// $('#mapper').parent().css('display', 'none');
+<p>The references embedded in the text are displayed here. </p>`, dom);
 
 	const ROOT = access();	
 	const dat= await ROOT.runFetch( makeRefUrl(OPTS.referencesCache, loc ), false);

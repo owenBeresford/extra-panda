@@ -1,10 +1,18 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
 import { MisshapeComposite } from './all-types';
 
+const u=new URLSearchParams();
+let tmp= () => { return u.has('debug'); };
 // no export
 const ROOT:MisshapeComposite={
-	debug:function() { return 0; },
-	log:console.log,
+	debug:tmp,
+	log:function(typ:string, ...inputs:string[]) { 
+		if(typ in console) {
+			console[typ](`[${typ.toUpperCase()}] ${inputs.join(", ")}` );
+		} else {
+			console.log(`[${typ.toUpperCase()}] ${inputs.join(", ")}` ); 
+		}
+	},
 } ;
 
 /**

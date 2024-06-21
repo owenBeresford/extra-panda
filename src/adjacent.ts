@@ -115,15 +115,11 @@ function normaliseToList(data:Array<ReferenceType>):Array<NormalisedReference> {
 //		thispage:string=OPTS.name, 
 		remainder:number=OPTS.nextBar, 
 		list:Array<NormalisedReference>=[];
-//	if (OPTS.name === "group-"+OPTS.group) {
-//		me=0;
-//		remainder=data.length;
-//	}
+
 	let i=0; let j=0;
 	[me, remainder, i] =nextStep( extractOABName( data[0].url), OPTS.name, data.length, i, me );
 
 	for(; i<data.length; i++) { 
-console.log("loop "+i, data[i], {me, remainder, name:OPTS.name});
 		const title= data[i].title;
 		if(title && me>=0 && remainder>0 ) {    
 			list[j]={ 
@@ -146,13 +142,6 @@ console.log("loop "+i, data[i], {me, remainder, name:OPTS.name});
 		}
 		[me, remainder, i] =nextStep(extractOABName( data[i].url), OPTS.name, data.length, i, me );
 		j++;
-// note: round robin algo
-//		if(thispage === asset) {
-//			me=i;
-//		}
-//		if(me>=0 && remainder >0 && i===data.length-1 ) {
-//			i=0;
-//		}
 	}
 	return list;
 }
@@ -222,7 +211,7 @@ function convert2HTML(list:Array<NormalisedReference>, gname:string):string {
 		let clsNm = createStyle(list[i].desc.length>110, false );
 
 		let txt='Title: '+list[i].title+'\nAuthor: '+list[i].auth+' &nbsp; &nbsp; Last edit: '+list[i].date+'\nDescription: '+list[i].desc;
-		html+='<li> <a class="adjacentItem button" id="link'+nui+'" class="'+clsNm+'" href="'+list[i].url+'" aria-label="'+txt+'" >'+list[i].title+'</a> </li>\n';
+		html+='<li> <a id="link'+nui+'" class="'+clsNm+'" href="'+list[i].url+'" aria-label="'+txt+'" >'+list[i].title+'</a> </li>\n';
 	}
 	html+="</ul>";
 	return html;
@@ -295,6 +284,7 @@ async function createAdjacentChart(opts:AdjacentProps, dom:Document=document, lo
 		'iteration':0,
         'group':'system',
 		'count':1,
+		debug:0,
 	}, opts) as AdjacentProps;
 	if(OPTS.group==='system') { 
 		throw new Error("Must set the article group, and not to 'system'."); 
@@ -321,14 +311,12 @@ async function createAdjacentChart(opts:AdjacentProps, dom:Document=document, lo
 
 			let html=convert2IndexHTML(data.body as Array<ReferenceType>, GROUP, dom, loc );
 			appendIsland("#"+GROUP, html, dom );
-// console.log("WWW list view", html, "#"+GROUP, dom.querySelector('#'+GROUP).textContent );
 			updateLabels( GROUP, dom );
 		
 		} else {
 			let rendered= normaliseToList(data.body as Array<ReferenceType>);
 			let html=convert2HTML(rendered, generateGroup(loc));
 			appendIsland("#"+GROUP, html, dom);
-// console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE nav view", html, rendered, dom.body.outerHTML, "#"+GROUP, "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"); 
 
 		}
 	}

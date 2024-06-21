@@ -12,6 +12,12 @@ look at generator scripts, renderTitle => title, descrip => desc
 swap CSS for dialog with modal JS function + [open] attrib
 add CSS for copy label, propose text to green for 2s
 move mobile shareBar to a Nav element
+document known URL search param used in this project
+swap "--data..." to "data..." in templates 
+Move to import log 
+drop single unified common class as not a valuable idea
+move appendIsland + setIsland to code-collection I think
+add better adjacent css 
 
 Discuss: Perl-style encapsulation by culture rather than armed enforcers
 Discuss: every time I am setting CSS vis JS, this is code smell & I need more information
