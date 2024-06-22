@@ -2,6 +2,7 @@
 
 import { Cookieable, Fetchable, SimpleResponse, ScreenSizeArray, MOBILE_MIN_PPI, BOUNDARY, MiscEventHandler } from './all-types';
 import { register } from './code-collection';
+import { isFullstack, isMobile } from './dom-base';
 
 register('runFetch', runFetch);
 
@@ -91,7 +92,7 @@ export function pullout( a:HTMLElement ):string {
  * @public
  * @return {void}
  */
-export function _map(where:HTMLElement, action:MiscEventHandler, args:Array<any>|undefined=undefined):void {
+function _map(where:HTMLElement, action:MiscEventHandler, args:Array<any>|undefined=undefined):void {
 	if(args) {
 		where.addEventListener('click', (a:Event)=>{ return action(a, ...args); });
 		where.addEventListener('touch', (a:Event)=>{ return action(a, ...args); });
@@ -132,50 +133,6 @@ export function makeRefUrl(template:string, loc:Location=location):string {
 	return template.replace(/XXX/, tmp.pop());
 }
 
-/**
- * isMobile
- * Statically workout if this is mobile
- * 
- * @param {Document =document} dom
- * @param {Location =location} loc
- * @public
- * @return {bool} ~ is this Mobile?  
- */
-export function isMobile(dom:Document=document, loc:Location=location):boolean {
-	try{ 
-		dom.createEvent("TouchEvent"); 
-		if( calcScreenDPI(dom) > MOBILE_MIN_PPI ) {
-			return true;
-		} else {
-			return false;
-		}		
-// laptops with touch screen
-	} catch(e){ 
-		let u=new URLSearchParams(loc.search);
-		if(u.has('mobile')) { 
-			return true;
-		}
-		return false;
-	}
-};
-
-function calcScreenDPI(dom:Document):number {
-	try {
-		const el = dom.createElement('div');
-		el.setAttribute('style', 'width:1in;');
-		dom.body.appendChild(el);
-
-		// Get it's (DOM-relative) pixel width, multiplied by the device pixel ratio
-		if(!window) { throw new Error("need to define a window"); }
-		
-		const dpi = el.offsetWidth * window.devicePixelRatio;
-		el.remove();
-		return dpi;
-	} catch(e) {
-		console.error("ERROR "+ e);
-		return -1;
-	}
-}
 
 /**
  * addLineBreaks
@@ -225,34 +182,6 @@ export function pad(num:number):string {
 	return r;
 }
 
-/**
- * currentSize
- * Utility function to report the tab size...
- * I use this in debugging RWD PURE
-
- * @public
- * @return {ScreenSizeArray}
- */
-function currentSize():ScreenSizeArray {
-	var d = document, root = d.documentElement, body = d.body;
-	let wid		= window.innerWidth || root.clientWidth || body.clientWidth;
-	let hi		= window.innerHeight || root.clientHeight || body.clientHeight;
-	let wid2:number=0; let hi2:number=0;
-	if(typeof hi==="string") {
-		hi2		= parseInt(hi, 10);
-	} else {
-		hi2		= hi;
-	}
-	if(typeof wid==="string") {
-		wid2	= parseInt(wid, 10);
-	} else {
-		wid2	= wid;
-	}
-	return [wid2, hi2];
-}
-//if (typeof window !=="undefined") {
-//	window.currentSize=currentSize;
-//} 
 
 // source code copied from: then amended
 // https://www.tabnine.com/academy/javascript/how-to-set-cookies-javascript/
@@ -271,8 +200,6 @@ class COOKIE implements Cookieable  {
         	expires = "expires=" + d1.toUTCString();
 		}
         document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
-// old code inside PHP renderer
-// setcookie('storage', $data, time()+30*24*60*12, '', $conf->get(array('site_settings','cookie_domain')), $https=='https', $https!='https' );
 	}
 
 	get(cName:string):string {
@@ -328,26 +255,6 @@ export function mapAttribute(ele:HTMLElement, attrib:BOUNDARY):number {
 		console.log("error", "Missing data:"+e);
 		return -1;
 	}
-}
-
-/**
- * isFullstack
- * Look at function implementations to see if this is a browser
- 
- * @public
- * @return {boolean}
- */
-export function isFullstack():boolean {
-	let isNativeWindow; 
-	if(typeof _window=="object") { 
-		isNativeWindow = Object.getOwnPropertyDescriptor(_window, 'window')?.get?.toString().includes('[native code]');
-	} else {
-		isNativeWindow = Object.getOwnPropertyDescriptor(window, 'window')?.get?.toString().includes('[native code]');
-	}
-	if(typeof isNativeWindow === 'boolean' && isNativeWindow ) {
-		return true; 
-	}
-	return false;
 }
 
 /**
@@ -462,68 +369,6 @@ export function dateMunge(din:number, ddefault:Date|string, monthText:boolean=tr
 	return date;
 }
 
-/**
- * appendIsland
- * An important util function, which removes need to jQuery, ShadowDOM AND other innerHTML hacks.
- * I have a historic avoidance of passing DOM object around the stack as it caused bad memory leaks.
- *    IMPURE
- *
- * @param {string|HTMLElement} selector ~ where to appends the new content
- * @param {string} html ~ what to append
- * @param {Document =document} dom ~ reference to which DOM tree
- * @throws some sort of HTML error, if the supplied HTML is malformed.  Browser dependant
- * @protected
- * @return {undefined}
- */
-export function appendIsland(selector:string|HTMLElement, html:string, dom:Document=document):void {
-	try {
-	if(dom===null) { throw new Error("Oh no! No DOM object"); }
 
-	const base:HTMLTemplateElement =dom.createElement('template');
-	base.innerHTML=html;
-	if(typeof selector === 'string') {
-		let tt:HTMLElement= dom.querySelector(selector) as HTMLElement;
-		if(tt===null) { console.log("QWE QWE ", dom.body.outerHTML );  throw new Error("Oh no ! "+selector); }
-		tt.append( base.content);
-	} else {
-		return selector.append( base.content);
-	}
-	} catch(e ) {
-		console.log("ERROR ", e);
-	}
-}
-
-/**
- * setIsland
- * Replace the whole of the subtree with the param
- * I have a historic avoidance of passing DOM object around the stack as it caused bad memory leaks.
- *    IMPURE
- *
- * @param {string|HTMLElement} selector
- * @param {string} html
- * @param {Document =document} dom
- * @throws some sort of HTML error, if the supplied HTML is malformed.  Browser dependant
- * @public
- * @return {void}
- */
-export function setIsland(selector:string|HTMLElement, html:string, dom:Document=document):void {
-	const base=dom.createElement('template');
-	base.innerHTML=html;
-	if(typeof selector === 'string') {
-		let tt=dom.querySelector(selector);
-		while(tt && tt.lastChild) {
-			tt.removeChild(tt.lastChild);
-		}
-		return tt.append( base.content);
-
-	} else {
-		while(selector && selector.lastChild) {
-			selector.removeChild(selector.lastChild);
-		}
-		return selector.append( base.content);
-	}
-}
-
-
-export const TEST_ONLY ={ getFetch, articleName, runFetch, isMobile, addLineBreaks, pad, currentSize, _getCookie, mapAttribute, importDate, dateMunge, appendIsland, setIsland, isFullstack, _map };
+export const TEST_ONLY ={ getFetch, articleName, runFetch, addLineBreaks, pad, makeRefUrl,  _getCookie, mapAttribute, importDate, dateMunge, _map };
 

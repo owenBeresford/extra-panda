@@ -3,7 +3,8 @@
 import * as Types from './all-types';
 import {access} from './code-collection';
 import * as Vanilla from './code-collection';
-import * as Base from './base';
+import * as StringBase from './string-base';
+import * as DOMBase from './dom-base';
 import * as Effect from './effect';
 import * as Masto from './mastodon';
 import * as Core from './core';

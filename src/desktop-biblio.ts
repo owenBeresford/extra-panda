@@ -1,8 +1,9 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Document, Location, HTMLAnchorElement, HTMLElement } from 'jsdom';
-import { BiblioProps, MobileBiblioProps, DesktopBiblioProps, SimpleResponse, ReferenceType, ALL_REFERENCE, ALL_REFERENCE_LINKS } from './all-types';
 
-import { appendIsland, dateMunge, isMobile, runFetch, mapAttribute, articleName, addLineBreaks, makeRefUrl } from './base';
+import { BiblioProps, MobileBiblioProps, DesktopBiblioProps, SimpleResponse, ReferenceType, ALL_REFERENCE, ALL_REFERENCE_LINKS } from './all-types';
+import { isFullstack, isMobile, appendIsland } from './dom-base';
+import {  dateMunge, runFetch, mapAttribute, articleName, addLineBreaks, makeRefUrl } from './string-base';
 import { register, access } from './code-collection';
 
 // variables across this module

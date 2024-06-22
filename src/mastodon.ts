@@ -2,8 +2,9 @@
 import { Document, Location, Window, Event, HTMLAnchorElement, HTMLElement } from 'jsdom';
 
 import { register, access } from './code-collection';
-import { appendIsland, setIsland, pullout, isMobile, isFullstack } from './base';
+import { pullout  } from './string-base';
 import { MiscEventHandler, TEST_MACHINE } from './all-types';
+import { isFullstack, isMobile, appendIsland } from './dom-base';
 
 "use strict";
 register("shareMastodon", shareMastodon);
@@ -114,7 +115,6 @@ export function initMastodon(dom:Document=document, loc:Location=location, win:W
 	};
 	_map1(dom.querySelector('#hideMasto'), closeMastodon, dom );	
 }
-
 
 /**
  * openMastodon

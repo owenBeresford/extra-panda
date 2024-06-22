@@ -46,3 +46,10 @@ Pls note English is my first language #leSigh.
 * As a design principle, I have tried to avoid using global objects in my code, to make testing easier.  I can pass in, say, document as an optional param.   
 * As a very non-funny joke: the first two versions of the SM sharebar are legacy HTML, but very easy to unit-test.  Now I have much better test tech and libraries and less good tests on this feature.
 
+### Known params that this code processes
+
+* first  string  - only used in the group-indexes articles
+* debug  boolean - adjusts how many log messages are written
+* mobile boolean - force interpretation of current machine as a mobile
+
+

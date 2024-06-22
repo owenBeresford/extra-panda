@@ -1,10 +1,11 @@
 import { assert, describe, it } from "vitest";
 import { JSDOM } from 'jsdom';
 
-import { appendIsland, setIsland, isFullstack } from '../base'; 
+import { appendIsland, setIsland, isFullstack } from '../dom-base'; 
 import { register, access } from '../code-collection';
 import { ALL_REFERENCE_LINKS, ReferenceType } from '../all-types';
 import { TEST_ONLY } from '../mobile-biblio';
+
 const { injectOpts, empty, normaliseData, render, createBiblio } = TEST_ONLY;
 
 

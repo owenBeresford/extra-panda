@@ -2,7 +2,7 @@ import { assert, describe, it } from "vitest";
 import { JSDOM } from 'jsdom';
 
 import { TEST_ONLY } from '../effect';
-import { appendIsland } from '../base';
+import { appendIsland } from '../dom-base';
 const { addOctoCats, addBooks, addBashSamples, addFancyButtonArrow } = TEST_ONLY;
 
 // this function needs to be local to each test file, as the HTML will be different

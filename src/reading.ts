@@ -1,6 +1,7 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
 import { register } from './code-collection';
-import { appendIsland, pullout } from './base';
+import { appendIsland } from './dom-base';
+import { pullout } from './string-base';
 import { ReadingProps } from './all-types';
 
 register("readingDuration", readingDuration);

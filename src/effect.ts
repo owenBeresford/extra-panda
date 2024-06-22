@@ -1,7 +1,8 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Document, HTMLAnchorElement, HTMLElement } from 'jsdom';
 import { register, access } from './code-collection';
-import { appendIsland, pullout } from './base';
+import { appendIsland } from './dom-base';
+import { pullout } from './string-base';
 
 "use strict";
 register('addOctoCats', addOctoCats);

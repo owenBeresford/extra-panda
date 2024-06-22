@@ -1,8 +1,9 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { appendIsland, dateMunge, isMobile, runFetch, mapAttribute, addLineBreaks, makeRefUrl } from './base';
+import { dateMunge, runFetch, mapAttribute, addLineBreaks, makeRefUrl } from './string-base';
 import { register, access } from './code-collection';
 import { Document, Location } from 'jsdom';
 import { URL_PLACEHOLDER, ReferenceType, NormalisedReference, BiblioProps, MobileBiblioProps, DesktopBiblioProps } from './all-types';
+import { isMobile, appendIsland } from './dom-base';
 
 
 // variables across this module

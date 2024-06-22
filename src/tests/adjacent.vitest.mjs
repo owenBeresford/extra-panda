@@ -2,7 +2,7 @@ import { assert, describe, it } from "vitest";
 import { JSDOM } from 'jsdom';
 
 import { TEST_ONLY } from '../adjacent';
-import { appendIsland, setIsland } from '../base'; 
+import { appendIsland, setIsland } from '../dom-base'; 
 import { register, access } from '../code-collection';
 import { SimpleResponse, AdjacentProps } from '../all-types';
 

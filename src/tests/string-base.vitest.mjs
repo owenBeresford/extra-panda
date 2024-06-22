@@ -2,8 +2,9 @@ import { assert, describe, it, assertType } from "vitest";
 import { JSDOM } from 'jsdom';
 
 import { Fetchable, Cookieable } from '../all-types';
-import { TEST_ONLY } from '../base';
-const { getFetch, articleName, runFetch, isMobile, addLineBreaks, pad, currentSize, _getCookie, mapAttribute, importDate, dateMunge, appendIsland, setIsland, isFullstack  } = TEST_ONLY;
+import { appendIsland, setIsland, isFullstack } from '../dom-base'
+import { TEST_ONLY } from '../string-base';
+const { getFetch, articleName, pullout, makeRefUrl, runFetch, addLineBreaks, pad, _getCookie, mapAttribute, importDate, dateMunge } = TEST_ONLY;
 
 // this function needs to be local to each test file, as the HTML will be different
 function page(url ) {
@@ -18,13 +19,13 @@ function page(url ) {
 	return [dom.window.document, dom.window.location];
 }
 
-describe("TEST base", () => {
+describe("TEST string-base", () => {
   it("go 1: getFetch", () => {
     assert.equal(typeof getFetch, "function", "assert #1");
     assertType<Fetchable>(getFetch(), "assert #2");
   });
 
-  it("go 2: getFetch", (context) => {
+  it("go 2: runFetch", (context) => {
 	context.skip();
   });
 
@@ -43,20 +44,10 @@ describe("TEST base", () => {
 
   });
 
-  it("go 6: currentSize", (context) => {
-	if(process && process.env) {
-		context.skip();
-	}
-    assertType<Array<number>>(currentSize(), "assert #9");
-// i could set window size then look at it, 
-// but this needs a env test and compat test, not a logic test
-	assert.isTrue(Array.isArray( currentSize()), "got an array back, assert #9" );
-  });
-
   it("go 6: mapAttribute", (context) => {
-	if(process && process.env) {
+	if(! isFullstack() ) {
 		context.skip();
-	}
+	} 
 
 	const [dom, loc]=page("http://192.168.0.35/resource/home");
 	let str=`<h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
@@ -65,7 +56,6 @@ describe("TEST base", () => {
 	
 	assert.equal(mapAttribute(dom.querySelector('#item1'), 'right'), "100", "asset #10" );
 	assert.equal(mapAttribute(dom.querySelector('#item1'), 'right'), 100, "asset #11" );
-	
   });
 
   it("go 7: importDate", () => {
@@ -91,7 +81,6 @@ describe("TEST base", () => {
   });
 
   it("go 10: addLineBreak", () => {
-// export function addLineBreaks(str:string, len:number=80, token:string="↩"):string 
 	let str1="fgsd gdfggaz gdfgadfg agadfg agadg adfgadgad gadfgadfgadga fgaga ag aga gdgadfg";
 	let str2=str1;
     assert.equal( addLineBreaks(str1), str2, "assert #26");
@@ -120,61 +109,18 @@ dg ag aga gdgadfg`;
 
 	});
 
-  it("go 9: isFullStack", (context) => {
-	if(process && process.env) {
-		context.skip();
-	}
-	throw new Error("Dev: add unit test here");
-	});
-
-  it("go 11: isMobile", (context) => {
-	if(process && process.env) {
-		context.skip();
-	}
-	throw new Error("Dev: add unit test here");
-	});
-
-  it("go 12: appendIsland ", () => {
-   const [dom, loc]=page("http://192.168.0.35/resource/home");
-
-	let str='<h2>WWWWW WWWWW</h2>';
-	appendIsland('#point1', str, dom);
-    assert.equal( dom.getElementsByTagName('body')[0].outerHTML, `<body>
-		<div class="reading" id="shareGroup"></div>
-		<div id="point1"><h2>WWWWW WWWWW</h2></div>
-		<div id="point2" class="blocker"></div>
-	
-</body>`, "assert #2" );
-    assert.equal( dom.getElementsByTagName('h2').length, 1, "assert #30");
-	appendIsland('#point1', str, dom);
-    assert.equal( dom.getElementsByTagName('h2').length, 2, "assert #31");
-
-  });
-
-  it("go 13: setIsland ", () => {
-   const [dom, loc]=page("http://192.168.0.35/resource/home");
-
-	let str='<h2>WWWWW WWWWW</h2>';
-	appendIsland('#point1', str, dom);
-    assert.equal( dom.getElementsByTagName('body')[0].outerHTML, `<body>
-		<div class="reading" id="shareGroup"></div>
-		<div id="point1"><h2>WWWWW WWWWW</h2></div>
-		<div id="point2" class="blocker"></div>
-	
-</body>`, "assert #2" );
-    assert.equal( dom.getElementsByTagName('h2').length, 1, "assert #30");
-	setIsland('#point1', str, dom);
-    assert.equal( dom.getElementsByTagName('h2').length, 1, "assert #31");
-
-  });
-
   it("go 14: getCookie ", () => {
-   const [dom, loc]=page("http://192.168.0.35/resource/home");
-// export function _getCookie():Cookieable 
-
     assertType<Cookieable>(_getCookie( ), "assert #32");
+// would be better with more tests, but think full stack only.
+// don't want to add too much fake code
+// the cookie stuff is quite low cyclomatric complexity
+  });
 
-	});
+  it("go 15: makeRefUrl", () => {
+	  const [dom, loc]=page("http://192.168.0.35/resource/react18-notes");
+	 assert.equal( makeRefUrl("/resources/XXX-references", loc), "/resources/react18-notes-references", "assert #33"); 
+
+  });
 
 //  it("go 5: pad", () => {
 //	  const [dom, loc]=page("http://192.168.0.35/resource/home");

@@ -2,7 +2,7 @@ import { assert, describe, it } from "vitest";
 import { JSDOM } from 'jsdom';
 
 import { TEST_ONLY } from '../mastodon';
-import { appendIsland, isFullstack } from '../base';
+import { appendIsland, isFullstack } from '../dom-base';
 import { enableGetEventListeners } from './getEventListeners';
 
 const {

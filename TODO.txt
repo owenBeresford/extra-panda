@@ -1,7 +1,7 @@
 ?? make URL HTTPS test work better ??
 add licence headers
 non-standard syntax hilighting in sitemap-plan
-I do not know how to test vanilla
+I do not know how to test code-collection
 i think, in adjacent, mapping text() to html()
 setup eslint after git
 performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311
@@ -9,14 +9,14 @@ performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative
 look at:: https://github.com/Xooone47/vite-plugin-deadcodes
 add https://www.npmjs.com/package/html-validate to the tests
 look at generator scripts, renderTitle => title, descrip => desc
-swap CSS for dialog with modal JS function + [open] attrib
-add CSS for copy label, propose text to green for 2s
-move mobile shareBar to a Nav element
-document known URL search param used in this project
 swap "--data..." to "data..." in templates 
 Move to import log 
 drop single unified common class as not a valuable idea
 move appendIsland + setIsland to code-collection I think
+
+css changes
+swap CSS for dialog with modal JS function + [open] attrib
+add CSS for copy label, propose text to green for 2s
 add better adjacent css 
 
 Discuss: Perl-style encapsulation by culture rather than armed enforcers
@@ -35,5 +35,6 @@ DONE add vitest
 DONE replace all log() calls
 DONE Convert to TS
 DONE Make some types
+DONE move mobile shareBar to a Nav element
 
 

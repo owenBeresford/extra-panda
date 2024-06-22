@@ -2,10 +2,11 @@
 import { Location, Document, HTMLElement } from 'jsdom';
 
 import { APPEARANCE_COOKIE, TEST_MACHINE, CoreProps, MiscEvent  } from './all-types';
-import { appendIsland, dateMunge, isMobile, runFetch, mapAttribute, articleName, addLineBreaks, _getCookie } from './base';
+import { dateMunge, runFetch, mapAttribute, articleName, addLineBreaks, _getCookie } from './string-base';
 import { register, access } from './code-collection';
 import { listContentGroup } from './adjacent';
 import { initMastodon } from './mastodon';
+import { isFullstack, isMobile, appendIsland } from './dom-base';
 
 register('main', siteCore);
 register('siteCore', siteCore);
@@ -55,7 +56,7 @@ function initPopupMobile( dom:Document=document, loc:Location=location):void {
 	if(isMobile(dom, loc)) {
 		dom.querySelector('#sendMasto').innerText="Share article";
 	}
-	let html=[ '<li id="shareClose"> <i class="fa fa-cancel" aria-hidden="true"></i> </li>	<li> <a class="hunchUp" id="copyURL"><i class="fa fa-copy" aria-hidden="true"></i><span class="hunchUp"> copy<br /> URL</span> </a> </li>',];
+	let html=[ '<nav><li id="shareClose"> <i class="fa fa-cancel" aria-hidden="true"></i> </li>	<li> <a class="hunchUp" id="copyURL"><i class="fa fa-copy" aria-hidden="true"></i><span class="hunchUp"> copy<br /> URL</span> </a> </li>',];
 	const bigScreenElements=["shareMenuTrigger", "siteChartLink", "rssLink" ];
 	const BUFFER=dom.querySelectorAll('.allButtons a');
 	for(let i in BUFFER) {
@@ -70,7 +71,7 @@ function initPopupMobile( dom:Document=document, loc:Location=location):void {
 		html.push('</li>');
 	}
 	html.unshift('<div class="shareMenu" id="shareMenu"><menu id="mobileMenu" >' );
-	html.push('</menu></div>');
+	html.push('</menu></div></nav>');
 
 	appendIsland('#navBar', html.join(), dom); 
 }

@@ -1,8 +1,9 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { appendIsland, dateMunge, isMobile, runFetch, mapAttribute, articleName } from './base';
+import { dateMunge, runFetch, mapAttribute, articleName } from './string-base';
 import { register, access } from './code-collection';
 import { Document, Location } from 'jsdom';
 import { SimpleResponse, ReferenceType, NormalisedReference, AdjacentProps } from './all-types';
+import { isFullstack, isMobile,  appendIsland } from './dom-base';
 
 register("createAdjacentChart", createAdjacentChart );
 
