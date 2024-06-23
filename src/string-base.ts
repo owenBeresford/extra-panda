@@ -86,6 +86,7 @@ export function pullout( a:HTMLElement ):string {
 /**
  * _map
  * Add several event listeners, just a utility
+ * UNUSED till I can use Golang grade types
  * 
  * @param {HTMLElement} where
  * @param {MiscEventHandler } action

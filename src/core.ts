@@ -112,16 +112,18 @@ function storeAppearance(ft:string, fs:string, dir:string, clr:string ):void {
 function applyAppearance(dom:Document=document):void {
 	const COOKIE:Cookieable=_getCookie();
 
-	const dat=COOKIE.get( APPEARANCE_COOKIE);
+	const dat:string=COOKIE.get( APPEARANCE_COOKIE);
 	if(!dat) {
 		return;
 	}
 
 	const dat2=JSON.parse( dat);
+// IOIO FIXME add type-washing to cookie
+
 	if(! (dat2['ft'] && dat2['fs']) ) {
 		return; 
 	}
-	let CSS="body, .annoyingBody { font-family: "+dat2['ft']+"; font-size: "+dat2['fs']+
+	let CSS:string="body, .annoyingBody { font-family: "+dat2['ft']+"; font-size: "+dat2['fs']+
 			"; direction:"+dat2['dn']+"; }";
 		
 	const STYLE=dom.createElement('style');
@@ -140,8 +142,8 @@ function applyAppearance(dom:Document=document):void {
  * @return {void}
  */
 function burgerMenu(id:string=".burgerMenu", dom:Document=document):void {
-	let  t=dom.querySelector(id);
-	let ico=dom.querySelector('#pageMenu i');
+	let  t:HTMLElement=dom.querySelector(id);
+	let ico:HTMLElement=dom.querySelector('#pageMenu i');
 
 	if( !t.getAttribute('data-state') ) {
 		t.classList.add('burgerMenuOpen');
@@ -207,13 +209,13 @@ function tabChange(id:string|MiscEvent, dom:Document=document):void {
  * @public
  * @return {void}
  */
-export function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=window):void {
+export function siteCore(opts:CoreProps, dom:Document=document, loc:Location=location, win:Window=window):void {
 	OPTS=Object.assign( {
         tabs: {},
 		mobileWidth:700,
     }, opts);
 
-    let tt=dom.querySelectorAll('.noJS');
+    let tt:Array<HTMLElement>=dom.querySelectorAll('.noJS');
 	for(let i=0; i<tt.length; i++) {
 		tt[i].classList.remove('noJS');
 	}
@@ -265,7 +267,7 @@ export function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=
 		}
 
 	} else {
-		let grp=listContentGroup('div#contentGroup');
+		let grp:Array<string> =listContentGroup('div#contentGroup');
 		for(let j=0; j<grp.length; j++) {
 			ROOT.adjacent({group: grp[j], debug:ROOT.debug(), iteration:j, count:grp.length }, dom, loc);  
 		}
