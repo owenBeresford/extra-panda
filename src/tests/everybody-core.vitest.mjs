@@ -4,6 +4,18 @@ import { JSDOM } from 'jsdom';
 import { TEST_ONLY } from '../core';
 import { appendIsland, setIsland, isFullstack, isMobile } from '../dom-base';
 import { enableGetEventListeners, createEvent } from './vitest-addons';
+// So, everybody...     so auto-magic happens
+import * as Types from '../all-types';
+import * as Vanilla from '../code-collection';
+import * as StringBase from '../string-base';
+import * as DOMBase from '../dom-base';
+import * as Effect from '../effect';
+import * as Masto from '../mastodon';
+import * as Core from '../core';
+import * as Adjacent from '../adjacent';
+import * as Biblio1 from '../desktop-biblio';
+import * as Biblio2 from '../mobile-biblio';
+import * as Reading from '../reading';
 
 const {
  siteCore
@@ -28,7 +40,7 @@ describe("TEST core", () => {
 	if(process) { ram1=process.memoryUsage(); }
 
   it("go 6: siteCore", (context) => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home?mobile=0');
+	const [dom, loc, win] =page('http://192.168.0.35/resource/react18-notes?mobile=0');
 	let str=`<div id="navBar"> 
 				<span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
@@ -65,9 +77,8 @@ describe("TEST core", () => {
 </div>`;
 	appendIsland('#point2', str, dom );
 
-// function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=window):void 
 	siteCore({}, dom, loc, win);
-	assert.equal(1, 2, "assert #17");
+	assert.equal(1, 2, "NOTE Test not usable until I build a way to override runFetch() assert #17");
 	});
 
   it("go 6.1: siteCore", (context) => {
@@ -105,8 +116,10 @@ describe("TEST core", () => {
 
 // function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=window):void 
 	siteCore({} );
-	assert.equal(1, 2, "assert #18");
+// auto appear param to see what happens
+	assert.equal(1, 2, "NOTE Test not usable until I build a way to override runFetch() assert #17");
 	});
+// IOIO FIXME: more tests needed, but clear assert#1 first
 
 	let ram2=0;
 	if(process) { ram2=	process.memoryUsage(); }
@@ -116,3 +129,4 @@ describe("TEST core", () => {
 	}
 
 });
+

@@ -111,16 +111,20 @@ dg ag aga gdgadfg`;
 
   it("go 14: getCookie ", () => {
     assertType<Cookieable>(_getCookie( ), "assert #32");
-// would be better with more tests, but think full stack only.
-// don't want to add too much fake code
-// the cookie stuff is quite low cyclomatric complexity
+// would be better with more tests, but I think full stack only.
+// I don't want to add too much manual-fake code, to test deliverable-code, or I have circular problem about testing
+// the cookie stuff is quite low cyclometric complexity
   });
 
   it("go 15: makeRefUrl", () => {
 	  const [dom, loc]=page("http://192.168.0.35/resource/react18-notes");
 	 assert.equal( makeRefUrl("/resources/XXX-references", loc), "/resources/react18-notes-references", "assert #33"); 
+ });
 
-  });
+  it("go 15.1 makeRefUrl", ()=>{
+	 const [dom, loc]=page("http://192.168.0.35/resource/react18-notes?varable=value");
+	 assert.equal( makeRefUrl("/resources/XXX-references", loc), "/resources/react18-notes-references", "assert #34"); 
+  });	
 
 //  it("go 5: pad", () => {
 //	  const [dom, loc]=page("http://192.168.0.35/resource/home");
