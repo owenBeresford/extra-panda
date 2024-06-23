@@ -7,7 +7,7 @@ setup eslint after git
 performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311
        https://www.npmjs.com/package/linkedom
 look at:: https://github.com/Xooone47/vite-plugin-deadcodes
- 
+add type washing to JSON ingestion 
 Move to import log 
 drop single unified common class as not a valuable idea
 unify page() macros
