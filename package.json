@@ -11,7 +11,7 @@
   "scripts": {
     "build": "node ./node_modules/.bin/vite build",
     "test": "node ./node_modules/.bin/vitest run",
-    "lint": "node ./node_modules/.bin/eslint --exit-on-fatal-error --fix --no-cache; node ./node_modules/.bin/prettier --write . ; "
+    "lint": "node ./node_modules/.bin/eslint --exit-on-fatal-error --fix --no-cache; node ./node_modules/.bin/prettier --write ./src ; "
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "npm": "^10.8.0",
     "prettier": "^3.2.5",
     "rollup-plugin-terser": "^7.0.2",
+    "typescript-eslint": "^8.0.0-alpha.30",
     "vite": "^5.2.11",
     "vite-plugin-ts": "^1.3.2-1",
     "vitest": "^1.6.0"
