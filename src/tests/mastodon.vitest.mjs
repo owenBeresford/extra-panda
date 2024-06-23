@@ -3,7 +3,7 @@ import { JSDOM } from 'jsdom';
 
 import { TEST_ONLY } from '../mastodon';
 import { appendIsland, isFullstack } from '../dom-base';
-import { enableGetEventListeners } from './getEventListeners';
+import { enableGetEventListeners, createEvent } from './vitest-addons';
 
 const {
 	shareMastodon, 
@@ -26,7 +26,7 @@ function page(url) {
 		<div id="point2" class="blocker"></div>
 		</article>
 	</body>
-</html>`, {url:url, referrer:url });
+</html>`, {'url':url, 'referrer':url });
 	return [dom.window.document, dom.window.location, dom.window];
 }
 
@@ -36,7 +36,7 @@ describe("TEST mastodon", () => {
 	let str=`<div id="shareMenu" class="shareMenu"></div> `;
 	appendIsland("#point2", str, dom);
 
-	let vnt=new CustomEvent('click', {detail:"a special click", bubbles:false, cancelable:true });
+ 	let vnt=createEvent(dom.querySelector('#shareMenu') ); 
 	assert.equal(dom.querySelector('#shareMenu').getAttribute('class'), 'shareMenu', 'assert #1' );
     assert.equal(openShare(vnt, dom, loc), false, "assert #2");
 	assert.equal(dom.querySelector('#shareMenu').getAttribute('class'), 'shareMenuOpen', 'assert #3' );
@@ -49,22 +49,22 @@ describe("TEST mastodon", () => {
 	let str=`<div id="shareMenu" class="shareMenu">
 </div> `;
 	appendIsland("#point2", str, dom);
+ 	let vnt=createEvent(dom.querySelector('#shareMenu') ); 
 
-	let vnt=new CustomEvent('click', {detail:"a special click", bubbles:false, cancelable:true });	
 	assert.equal(dom.querySelector('#shareMenu').getAttribute('class'), 'shareMenu', 'assert #6' );
     assert.equal(openShare(vnt, dom, loc), false, "assert #2");
-	assert.equal(dom.querySelector('#shareMenu').getAttribute('class'), 'shareMenu', 'assert #7' );
+	assert.equal(dom.querySelector('#shareMenu').getAttribute('class'), 'shareMenuOpen', 'assert #7' );
   });
 
   it("go 2: shareMastodon", () => {
 	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home" );
 	let str=`<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup">
+	<input id="id1" type="submit" value="Post now" />
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
 	</dialog>`;
 	appendIsland("#point2", str, dom);
-
-	let vnt=new CustomEvent('click', {detail:"a special click", bubbles:false, cancelable:true });
+ 	let vnt=createEvent(dom.querySelector('#id1') ); 
 	assert.throws(()=>{ shareMastodon(vnt, dom, loc, win); }, /Test passed,/, "assrt #8" );
   });
 
@@ -72,11 +72,12 @@ describe("TEST mastodon", () => {
 	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home?mobile=1" );
 	let str=`<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup">
+	<input id="id1" type="submit" value="Post now" />
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?mobile=1" /> 
 	</dialog>`;
 	appendIsland("#point2", str, dom);
 
-	let vnt=new CustomEvent('click', {detail:"a special click", bubbles:false, cancelable:true });
+ 	let vnt=createEvent(dom.querySelector('#id1') ); 
 	assert.throws(()=>{ shareMastodon(vnt, dom, loc, win); }, /Test passed,/, "assrt #9" );
   });
 
@@ -84,11 +85,12 @@ describe("TEST mastodon", () => {
 	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home" );
 	let str=`<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup">
+	<input id="id1" type="submit" value="Post now" />
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
 	</dialog>`;
 	appendIsland("#point2", str, dom);
 
-	let vnt=new CustomEvent('click', {detail:"a special click", bubbles:false, cancelable:true });
+ 	let vnt=createEvent(dom.querySelector('#id1') ); 
 	assert.equal(openMastodon(vnt, dom), false, "assert #10" );
 	if(isFullstack()) {
 		assert.istrue(typeof dom.querySelector('#popup').getAttribute('open') !=='undefined', "assert #11" );		
@@ -99,11 +101,12 @@ describe("TEST mastodon", () => {
 	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home" );
 	let str=`<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup" open>
+	<input id="id1" type="submit" value="Post now" />
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
 	</dialog>`;
 	appendIsland("#point2", str, dom);
 
-	let vnt=new CustomEvent('click', {detail:"a special click", bubbles:false, cancelable:true });
+ 	let vnt=createEvent(dom.querySelector('#id1') ); 
 	assert.equal(closeMastodon(vnt, dom), false, "assert #12" );
 	if(isFullstack()) {
 		assert.istrue(typeof dom.querySelector('#popup').getAttribute('open') ==='undefined', "assert #13" );		

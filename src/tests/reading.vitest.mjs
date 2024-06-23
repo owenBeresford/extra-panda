@@ -19,7 +19,6 @@ function page() {
 }
 
 describe("TEST readingDuration", () => {
-  let ram1=process.memoryUsage(); 
   it("go 1: readingDuration function is available correctly", () => {
     assert.equal(typeof readingDuration, "function", "assert #1");
   });
@@ -145,7 +144,5 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
 
   });
  
-  let ram2=process.memoryUsage();
-  console.log("RAM used to make JSDOM: "+ (ram2.heapUsed- ram1.heapUsed) );
 });
 
