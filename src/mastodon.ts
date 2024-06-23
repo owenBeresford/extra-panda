@@ -3,7 +3,7 @@ import { Document, Location, Window, Event, HTMLAnchorElement, HTMLElement } fro
 
 import { register, access } from './code-collection';
 import { pullout  } from './string-base';
-import { MiscEventHandler, TEST_MACHINE } from './all-types';
+import { MiscEventHandler,  MiscEventHandler2, MiscEventHandler3, TEST_MACHINE } from './all-types';
 import { isFullstack, isMobile, appendIsland } from './dom-base';
 
 "use strict";
@@ -169,14 +169,16 @@ function copyURL(loc:Location=location, win:Window=window):void {
 				// add class for CSS effect
 				return;
 			},
-			(err) => {
+			(err:Error) => {
 				ROOT.log("error", "FAILED: copy URL "+ err);
   			},
 		);
-	} catch(e0) { 
+	} catch(e0:Error) { 
 		ROOT.log('error', "FAILED: copy URL feature borked "+e0 +"\nIt will fail on a HTTP site.");
 	}
 }
+
+
 
 /**
  * _map1
@@ -188,7 +190,7 @@ function copyURL(loc:Location=location, win:Window=window):void {
  * @public
  * @return {void}
  */
-function _map1(where:HTMLElement, action:MiscEventHandler, dom:Document|Location=document):void {
+function _map1(where:HTMLElement, action:MiscEventHandler2, dom:Document|Location=document):void {
 	where.addEventListener('click', (a:Event):boolean =>{ return action(a, dom); });
 	where.addEventListener('touch', (a:Event):boolean =>{ return action(a, dom); });
 	where.addEventListener('keypress', (a:Event):boolean =>{ return action(a, dom); });
@@ -205,7 +207,7 @@ function _map1(where:HTMLElement, action:MiscEventHandler, dom:Document|Location
  * @public
  * @return {void}
  */
-function _map2(where:HTMLElement, action:MiscEventHandler, dom:Document, loc:Location=location):void {
+function _map2(where:HTMLElement, action:MiscEventHandler3, dom:Document, loc:Location=location):void {
 	where.addEventListener('click', (a:Event):boolean =>{ return action(a, dom, loc); });
 	where.addEventListener('touch', (a:Event):boolean =>{ return action(a, dom, loc); });
 	where.addEventListener('keypress', (a:Event):boolean =>{ return action(a, dom, loc); });
@@ -223,7 +225,7 @@ function _map2(where:HTMLElement, action:MiscEventHandler, dom:Document, loc:Loc
  * @public
  * @return {void}
  */
-function _map3(where:HTMLElement, action:MiscEventHandler, dom:Document, loc:Location|null=location, win:Window=window):void {
+function _map3(where:HTMLElement, action:MiscEventHandler3, dom:Document, loc:Location|null=location, win:Window=window):void {
 	where.addEventListener('click', (a:Event):boolean =>{ return action(a, dom, win); });
 	where.addEventListener('touch', (a:Event):boolean =>{ return action(a, dom, win); });
 	where.addEventListener('keypress', (a:Event):boolean =>{ return action(a, dom, win); });

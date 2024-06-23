@@ -87,6 +87,35 @@ export function isFullstack():boolean {
 	return false;
 }
 
+// NOTE: js, may not be a string
+function booleanMap(str:string|number):boolean {
+	switch(str) {
+	case "1":
+	case 1:
+	case "true":
+	case "TRUE":
+	case "on":
+	case "ON":
+	case "yes":
+	case "YES":
+		return true;	
+		break;
+
+	case "0":
+	case 0:
+	case "false":
+	case "FALSE":
+	case "off":
+	case "OFF":
+	case "no":
+	case "NO":
+		return false;
+		break;
+
+	default:
+		throw new Error("Unknown data "+str); 
+	}
+}
 
 /**
  * isMobile
@@ -99,17 +128,23 @@ export function isFullstack():boolean {
  * @return {bool} ~ is this Mobile?  
  */
 export function isMobile(dom:Document=document, loc:Location=location, win:Window=window):boolean {
+	let u=new URLSearchParams(loc.search);
 	try{ 
-		dom.createEvent("TouchEvent"); 
+		let tt=dom.createEvent("TouchEvent"); 
+// if JSDom, can always make event, 
+// but if we always pass what we want to say, that is fine
+		if(u.has('mobile')) { 
+			return booleanMap(u.get('mobile'));
+		}
+
 		if( calcScreenDPI(dom, win) > MOBILE_MIN_PPI ) {
 			return true;
 		} else {
+// laptops with a touch screen should be here
 			return false;
 		}		
-// laptops with touch screen
-	} catch(e){ 
-		let u=new URLSearchParams(loc.search);
-		if(u.has('mobile')) { 
+	} catch(e) { 
+		if(u.has('mobile') && booleanMap(u.get('mobile'))) { 
 			return true;
 		}
 		return false;
@@ -125,7 +160,7 @@ export function isMobile(dom:Document=document, loc:Location=location, win:Windo
  * @public
  * @return {number}
  */
-function calcScreenDPI(dom:Documenti=document, win:Window=window):number {
+function calcScreenDPI(dom:Document=document, win:Window=window):number {
 	try {
 		const el = dom.createElement('div');
 		el.setAttribute('style', 'width:1in;');

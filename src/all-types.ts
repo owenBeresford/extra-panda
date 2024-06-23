@@ -22,6 +22,8 @@ export interface NormalisedReference {
 export type MisshapeComposite= Record<string,Function>;
 export type ScreenSizeArray=  [number, number]; 
 export type MiscEventHandler = (a:Event) =>void;
+export type MiscEventHandler3 = (a:Event, dom:Document, loc:Location|Window) =>void;
+export type MiscEventHandler2 = (a:Event, dom:Document) =>void;
 export type BOUNDARY='top'|'bottom'|'left'|'right'|'height'|'width';
 
 export interface ReadingProps {

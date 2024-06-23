@@ -35,7 +35,7 @@ function readingDuration(opts:ReadingProps, dom=document):void {
 
 	if(options.codeSelector && dom.querySelectorAll(options.codeSelector) ) {
 		let tt=0;
-		dom.querySelectorAll(options.codeSelector).forEach( function(a:Element, b:number){
+		dom.querySelectorAll(options.codeSelector).forEach( function(a:HTMLElement, b:number){
 			tt+= pullout( a ).match(RE ).length;
 		});
 		if( tt ) {
