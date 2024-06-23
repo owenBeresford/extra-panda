@@ -1,6 +1,7 @@
 import { assert, describe, it } from "vitest";
 import { JSDOM } from 'jsdom';
 
+import { page } from './page-seed';
 import { TEST_ONLY } from '../mastodon';
 import { appendIsland, isFullstack } from '../dom-base';
 import { enableGetEventListeners, createEvent } from './vitest-addons';
@@ -16,23 +17,9 @@ const {
 	openShare,
   } = TEST_ONLY;
 
-// this function needs to be local to each test file, as the HTML will be different
-function page(url) {
-	const dom = new JSDOM(`<html>
-	<head><title>test1</title></head>
-	<body>
-		<article>
-		<div id="point1"></div>
-		<div id="point2" class="blocker"></div>
-		</article>
-	</body>
-</html>`, {'url':url, 'referrer':url });
-	return [dom.window.document, dom.window.location, dom.window];
-}
-
 describe("TEST mastodon", () => {
   it("go 1: openShare", () => {
-	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home?mobile=1" );
+	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home?mobile=1", 3);
 	let str=`<div id="shareMenu" class="shareMenu"></div> `;
 	appendIsland("#point2", str, dom);
 
@@ -45,7 +32,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 1.1: openShare", () => {
-	const [dom, loc, win ] =  page("http://192.168.0.66/resource/home?mobile=1" );
+	const [dom, loc, win ] =  page("http://192.168.0.66/resource/home?mobile=1", 3);
 	let str=`<div id="shareMenu" class="shareMenu">
 </div> `;
 	appendIsland("#point2", str, dom);
@@ -57,7 +44,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 2: shareMastodon", () => {
-	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home" );
+	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home", 3 );
 	let str=`<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup">
 	<input id="id1" type="submit" value="Post now" />
@@ -69,7 +56,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 2.1: shareMastodon", () => {
-	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home?mobile=1" );
+	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home?mobile=1", 3);
 	let str=`<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup">
 	<input id="id1" type="submit" value="Post now" />
@@ -82,7 +69,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 3: openMastodon", () => {
-	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home" );
+	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home", 3);
 	let str=`<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup">
 	<input id="id1" type="submit" value="Post now" />
@@ -98,7 +85,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 4: closeMastodon", () => {
-	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home" );
+	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home", 3);
 	let str=`<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup" open>
 	<input id="id1" type="submit" value="Post now" />
@@ -114,7 +101,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 5:  copyURL ", async (context) => {
-	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home" );
+	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home", 3);
 	let str=`<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup" open>
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
@@ -133,7 +120,7 @@ describe("TEST mastodon", () => {
 	if(! isFullstack())  {
 		context.skip();
 	} 
-	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home" );
+	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home", 3);
 	let str=`<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup" open>
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
@@ -147,7 +134,7 @@ describe("TEST mastodon", () => {
 	if(! isFullstack())  {
 		context.skip();
 	} 
-	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home" );
+	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home", 3);
 
 	let str=`<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup" >
@@ -159,7 +146,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 7: _map1", (context ) => {
-	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home" );
+	const [dom, loc, win ] =  page("http://192.168.0.35/resource/home", 3);
 	let str=`<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup" >
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
@@ -179,7 +166,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 8: initMastodon", (context) => {
-		const [dom, loc, win ] =  page("http://192.168.0.35/resource/home" ); 
+		const [dom, loc, win ] =  page("http://192.168.0.35/resource/home", 3); 
 		let str=`<div id="shareGroup"> 
 	<div id="shareMenu" class="shareMenu allButtons">
 		<span class="shareMenutrigger">BTN[1]</span>  
@@ -189,11 +176,11 @@ describe("TEST mastodon", () => {
 		<span id="shareClose">BTN[4]</span>  
 		<span id="copyURL">BTN[3]</span>  
 	</div>
-	<dialog id="popup" >
+	<dialog id="popup">
 	<span id="sendMasto">TICK</span> <span id="hideMasto">CROSS</span>
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
 	</dialog> 
-	</div> `;
+	</div>`;
 
 		appendIsland("#point2", str, dom);
 		enableGetEventListeners(dom); 

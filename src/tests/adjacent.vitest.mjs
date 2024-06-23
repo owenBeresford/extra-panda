@@ -1,6 +1,6 @@
 import { assert, describe, it } from "vitest";
-import { JSDOM } from 'jsdom';
 
+import { page } from './page-seed';
 import { TEST_ONLY } from '../adjacent';
 import { appendIsland, setIsland } from '../dom-base'; 
 import { register, access } from '../code-collection';
@@ -19,19 +19,6 @@ convert2HTML,
 convert2IndexHTML,
 createAdjacentChart,
  } = TEST_ONLY;
-
-// this function needs to be local to each test file, as the HTML will be different
-function page(url='') {
-	const dom = new JSDOM(`<html>
-	<head><title>test1</title></head>
-	<body>
-		<div class="reading" id="shareGroup"></div>
-		<div id="point1"></div>
-		<div id="point2" class="blocker"></div>
-	</body>
-</html>`, {url:url, referrer:url }); 
-	return [dom.window.document, dom.window.location, dom];
-}
 
 
 // This is checking all the formatting visible in the result as text has been applied as
@@ -137,7 +124,7 @@ describe("TEST adjacent", () => {
 	});
 
 	it("go 6: listContentGroup", ()=>{
-		const [dom, loc, jsdom]=page('http://192.168.0.35/resource/code-metrics' );
+		const [dom, loc, jsdom]=page('http://192.168.0.35/resource/code-metrics', 3 );
  		setIsland("#point2", '<div id="testbar" data-group="engineering, uitools"></div>', dom );
 		assert.deepEqual(listContentGroup("#testbar", dom), ["engineering", "uitools"], "step8" );
  		setIsland("#point2", '<div id="testbar" data-group="\tengineering,              uitools       "></div>', dom );
@@ -217,12 +204,12 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
 <a class="adjacentItem" href="http://www.seconddata.com/" title="sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf">DDDSFDSDF ddd 45646 <span class="button">DDDSFDSDF ddd 45646</span><p id="adjacentengineering1" >Author:  &nbsp; &nbsp; &nbsp;  Last edit:  03-March-2024  <br />Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf </a>
 <a class="adjacentItem" href="http://www.thirddata.com/" title="sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg...">DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg <span class="button">DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg</span><p id="adjacentengineering2" >Author: gdgdg &nbsp; &nbsp; &nbsp;  Last edit:  04-March-2024  <br />Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg... </a>
 `;
-		const [dom, loc, jsdom]=page('http://192.168.0.35/resource/code-metrics' );
+		const [dom, loc, jsdom]=page('http://192.168.0.35/resource/code-metrics', 3 );
 		assert.deepEqual(convert2IndexHTML(d1, "engineering", dom, loc), d2, "step13" );
 	});
 
 	it("go 9: updateLabels", ()=>{
-		const [dom, loc, jsdom]=page('http://192.168.0.35/resource/code-metrics' );
+		const [dom, loc, jsdom]=page('http://192.168.0.35/resource/code-metrics', 3 );
 		let str=`<div class=" top-bar fullWidth"><header><h1>I'm set</h1> </header> </div>  
 				<div class="adjacentGroup"><p>Im set too</p> </div> `; 
 		appendIsland("#point2", str, dom);
@@ -238,7 +225,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
 	});
 
 	it("go 10: createAdjacentChart", ()=>{
-		const [dom, loc, jsdom]=page( 'http://192.168.0.35/resource/code-metrics' );
+		const [dom, loc, jsdom]=page( 'http://192.168.0.35/resource/code-metrics', 3 );
 		let str=`
 <div class="adjacentGroup " id="groupengineering">
 <p>TEST</p>
@@ -254,7 +241,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
 
 
 	it("go 10.1: createAdjacentChart", async ()=>{	
-		const [dom, loc, jsdom]=page( 'http://192.168.0.35/resource/code-metrics' );
+		const [dom, loc, jsdom]=page( 'http://192.168.0.35/resource/code-metrics', 3 );
 		let str=`
 <div class="adjacentGroup" id="groupengineering">
 <p>TEST</p>
@@ -285,10 +272,8 @@ Description: What concepts or areas of development are important.    This is a h
 		assert.equal(dom.querySelector('#groupengineering .adjacentList').innerHTML, sample1, "step22 [positive]" );
 	});
 
-
-/*
-		{
-		const [dom, loc]=page( 'http://192.168.0.35/resource/code-metrics' );
+	it("go 10.2: createAdjacentChart", async ()=>{	
+		const [dom, loc]=page( 'http://192.168.0.35/resource/code-metrics', 3);
 		let str=`
 <div class="adjacentGroup " id="groupengineering">
 <p>TEST</p>
@@ -305,9 +290,7 @@ XXXX
 `;
 		assert.equal(dom.querySelectorAll('#groupengineering ul').textContent, sample2, "step24 [positive]" );
 
-		}
-*/
-//	});	
+	});	
 
 	function mockFetch1(url, hasExcept ) {
 		return new Promise((good, bad) => {

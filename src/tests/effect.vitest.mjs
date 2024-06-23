@@ -1,31 +1,17 @@
 import { assert, describe, it } from "vitest";
 import { JSDOM } from 'jsdom';
 
+import { page } from './page-seed';
 import { TEST_ONLY } from '../effect';
 import { appendIsland } from '../dom-base';
 const { addOctoCats, addBooks, addBashSamples, addFancyButtonArrow } = TEST_ONLY;
-
-// this function needs to be local to each test file, as the HTML will be different
-function page() {
-	const dom = new JSDOM(`<html>
-	<head><title>test1</title></head>
-	<body>
-		<div class="reading" id="shareGroup"></div>
-		<article>
-		<div id="point1"></div>
-		<div id="point2" class="blocker"></div>
-		</article>
-	</body>
-</html>`);
-	return dom.window.document;
-}
 
 // all the intelligence on this module is in the selection of graphics, not the simple code
 describe("TEST effects", () => {
   it("go 1: addOctoCats", () => {
     assert.equal(typeof addOctoCats, "function", "assert #1");
 	{
-	  const dom=page();
+	  const dom=page('http://192.68.0.35/', 1);
 	let str1=`
 <p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</a>
 	 sfsdfs sfsfs sfsfs sfsdf sfsdfsf <a href="sdfsdf" title="sdfsdfsdf">TEST2</a> 
@@ -47,7 +33,7 @@ describe("TEST effects", () => {
 	}
 
 	{
-	 const dom=page();
+	  const dom=page('http://192.68.0.35/', 1);
 	let str1=`
 <p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</a>
 	 sfsdfs sfsfs sfsfs sfsdf sfsdfsf <a href="sdfsdf" title="sdfsdfsdf">TEST2</a> 
@@ -81,7 +67,7 @@ describe("TEST effects", () => {
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">git</a>
 `;
 
-	 const dom=page();
+	 const dom=page('http://192.68.0.35/', 1);
 	appendIsland('#point2', str1, dom);
 	addBooks( dom);
 	assert(dom.querySelector('#point2').textContent, str2, "added books logo" );
@@ -106,7 +92,7 @@ describe("TEST effects", () => {
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">git</a>
 	 <p> sdfsfds <code class="bashSample" title="Quote from a bash; will add copy button">gdfgdgd1dfgdfgdfgd</code>  sdfs fsf s sfsdfsdfsdfs</p><p>fsdfsdfsd <code class="bashSample" title="Quote from a bash; will add copy button">sdfsdfsdf</code> `;
 
-	 const dom=page();
+	 const dom=page('http://192.68.0.35/', 1);
 	appendIsland('#point2', str1, dom);
 	appendIsland('#point2', str2, dom);
 	addBashSamples( dom);
@@ -114,7 +100,7 @@ describe("TEST effects", () => {
 	});
 
  it("go 4: addArrows", () => {
-	 const dom=page();
+	 const dom=page('http://192.68.0.35/', 1);
 	let str1=`
 <p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</>
 <div class="addArrow">

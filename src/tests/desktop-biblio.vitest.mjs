@@ -1,25 +1,12 @@
 import { assert, describe, it } from "vitest";
 import { JSDOM } from 'jsdom';
 
+import { page } from './page-seed';
 import { appendIsland, setIsland, isFullstack } from '../dom-base'; 
 import { register, access } from '../code-collection';
 import { ALL_REFERENCE_LINKS, ReferenceType } from '../all-types';
 import { TEST_ONLY } from '../desktop-biblio';
 const { injectOpts, markAllLinksUnknown, generateEmpty, normaliseData, applyDOMpostions, mapPositions, addMetaAge, createBiblio } = TEST_ONLY;
-
-// this function needs to be local to each test file, as the HTML will be different
-function page(url) {
-	const dom = new JSDOM(`<html>
-	<head><title>test1</title></head>
-	<body>
-		<div class="addReading" id="shareGroup"><span class="ultraSkinny"></span> </div>
-		<div id="point1"></div>
-		<div id="point2" class="blocker addReferences"></div>
-	</body>
-</html>`, { url:url, referrer:url });
-
-	return [dom.window.document, dom.window.location];
-}
 
 describe("TEST desktop-biblio", () => {
   it("go 1: generateEmptys", () => { // this item is abit pointless 
@@ -29,7 +16,7 @@ describe("TEST desktop-biblio", () => {
   });
 
   it("go 2: markAllLinksUnknown", () => { 
-	const [dom, loc]=page('http://192.168.0.35/resource/reading-list');
+	const [dom, loc]=page('http://192.168.0.35/resource/reading-list', 2);
 	let str=`
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">2</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
@@ -45,7 +32,7 @@ describe("TEST desktop-biblio", () => {
   });	  	
 
   it("go 3: mapPositions", () => { 
-	const [dom, loc]=page('http://192.168.0.35/resource/reading-list');
+	const [dom, loc]=page('http://192.168.0.35/resource/reading-list', 2);
 	let str=`
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
@@ -96,7 +83,7 @@ describe("TEST desktop-biblio", () => {
   });
 
   it("go 4: addMetaAge", () => { 
-	const [dom, loc]=page('http://192.168.0.35/resource/reading-list');
+	const [dom, loc]=page('http://192.168.0.35/resource/reading-list', 2);
 	let str=`
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
@@ -118,8 +105,7 @@ describe("TEST desktop-biblio", () => {
   });
 
   it("go 5: normaliseData", () => { 
-	const [dom, loc]=page('http://192.168.0.35/resource/reading-list');
-// function normaliseData(data:Array<ReferenceType|null>):Array<string>
+	const [dom, loc]=page('http://192.168.0.35/resource/reading-list', 2);
 	let dat=[
 {
 	date:+new Date('2024-03-01 09:00:00.0Z'),
@@ -219,7 +205,7 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
   });
 
   it("go 6: applyDOMpostions", (context ) => { 
-	const [dom, loc]=page('http://192.168.0.35/resource/reading-list');
+	const [dom, loc]=page('http://192.168.0.35/resource/reading-list', 2);
  	let str=`<span id="uniq1">GDG</span>
 <span id="uniq2">WER</span>
 <span id="uniq3">IOP</span>
@@ -242,7 +228,7 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
   });
 
   it("go 7: createBiblio", async ( ) => { 
-	const [dom, loc]=page('http://192.168.0.35/resource/reading-list');
+	const [dom, loc]=page('http://192.168.0.35/resource/reading-list', 2);
 	let str=`
 <div id="biblio" style="display:none;"></div>
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
@@ -265,7 +251,6 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
     		assert.isTrue(tt>=0 && tt<17 , "assert #13");
 			assert.isTrue(a.getAttribute('aria-label') && !a.getAttribute('aria-label').includes("HTTP_ERROR"), "assert #14");
 		});
-
 
 	});
 

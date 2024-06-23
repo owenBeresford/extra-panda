@@ -1,29 +1,17 @@
 import { assert, describe, it } from "vitest";
 import { JSDOM } from 'jsdom';
 
+import { page } from './page-seed';
 import { TEST_ONLY } from  '../reading';
 import { appendIsland } from '../dom-base';
 const { readingDuration } = TEST_ONLY;
-
-// this function needs to be local to each test file, as the HTML will be different
-function page() {
-	const dom = new JSDOM(`<html>
-	<head><title>test1</title></head>
-	<body>
-		<div class="reading" id="shareGroup"></div>
-		<div id="point1"></div>
-		<div id="point2" class="blocker"></div>
-	</body>
-</html>`);
-	return dom.window.document;
-}
 
 describe("TEST readingDuration", () => {
   it("go 1: readingDuration function is available correctly", () => {
     assert.equal(typeof readingDuration, "function", "assert #1");
   });
   it("go 2: testing content manipulation", () => {
-   const dom=page();
+   const dom=page('https://192.168.0.35/', 1);
 	let txt=`
 wer werwer wer werwer wer werwer werwer wer werwer wer
 wer werwer wer werwer wer werwer werwer wer werwer wer
@@ -72,7 +60,8 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
   });
 
   it("go 3: extra text and images", () => {
-   const dom=page();
+
+   const dom=page('https://192.168.0.35/', 1);
 	let txt=`<img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" />
 wer werwer wer werwer wer werwer werwer wer werwer wer
 wer werwer wer werwer wer werwer werwer wer werwer wer
@@ -112,7 +101,7 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
   });
  
   it("go 4: growth test (refresh flag + output value should be larger)", () => {
-   const dom=page();
+   const dom=page('https://192.168.0.35/', 1);
 	let txt=`<img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" />
 wer werwer wer werwer wer werwer werwer wer werwer wer
 wer werwer wer werwer wer werwer werwer wer werwer wer

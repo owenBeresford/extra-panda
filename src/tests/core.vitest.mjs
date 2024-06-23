@@ -1,6 +1,7 @@
 import { assert, describe, it } from "vitest";
 import { JSDOM } from 'jsdom';
 
+import { page } from './page-seed';
 import { TEST_ONLY } from '../core';
 import { appendIsland, setIsland, isFullstack, isMobile } from '../dom-base';
 import { enableGetEventListeners, createEvent } from './vitest-addons';
@@ -13,23 +14,9 @@ const {
  tabChange,
 } = TEST_ONLY;
 
-// this function needs to be local to each test file, as the HTML will be different
-function page(url ) {
-	const dom = new JSDOM(`<!DOCTYPE html>
-<html>
-	<head><title>test1</title></head>
-	<body>
-		<div class="reading" id="shareGroup"></div>
-		<div id="point1"></div>
-		<div id="point2" class="blocker"></div>
-	</body>
-</html>`, { url:url, referrer:url });
-	return [dom.window.document, dom.window.location, dom.window];
-}
-
 describe("TEST core", () => {
   it("go 1: burgerMeu", () => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home');
+	const [dom, loc, win] =page('http://192.168.0.35/resource/home', 3);
 	let str=`<fieldset class="h4_menu column bigScreenOnly">
 <legend><span id="pageMenu"><i class="fa fa-ob1burger" aria-hidden="true"></i> </span></legend>
 <menu class="h4_lean">
@@ -57,7 +44,7 @@ describe("TEST core", () => {
 
 
   it("go 4: tabChange ", (context) => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home');
+	const [dom, loc, win] =page('http://192.168.0.35/resource/home', 3);
 	let str=`<div class="chunkArticles column">
 <ul class="tabList tabs" data-tab="" role="tablist">
 <li id="clickArticles" class="tab-title is-active" role="presentation"> <a id="annoying1" href="#blockArticles" role="tab" aria-selected="true" aria-controls="blockArticles"> Articles</a></li>
@@ -115,7 +102,7 @@ describe("TEST core", () => {
 	});
 
   it("go 5: initPopupMobile", (context) => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home?mobile=1');
+	const [dom, loc, win] =page('http://192.168.0.35/resource/home?mobile=1', 3);
 	let str=`<div id="navBar"> 
 <span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
@@ -144,7 +131,7 @@ describe("TEST core", () => {
   });
 
   it("go 5.1: initPopupMobile", (context) => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home?mobile=0');
+	const [dom, loc, win] =page('http://192.168.0.35/resource/home?mobile=0', 3);
 	let str=`<div id="navBar">
 <span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
@@ -173,7 +160,7 @@ describe("TEST core", () => {
   });
 
   it("go 5.2: initPopupMobile", (context) => {
-	const [dom, loc, win] =page('http://6.6.6.6/resource/home?mobile=1');
+	const [dom, loc, win] =page('http://6.6.6.6/resource/home?mobile=1', 3);
 	let str=`<div id="navBar">
 				<span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
@@ -202,7 +189,7 @@ describe("TEST core", () => {
 
 
   it("go 2: storeAppearance ", (context) => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home');
+	const [dom, loc, win] =page('http://192.168.0.35/resource/home', 3);
 	if(!isFullstack()) {
 		context.skip();
 	}
@@ -210,7 +197,7 @@ describe("TEST core", () => {
 	});
 
   it("go 3: applyAppearance ", (context) => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home');
+	const [dom, loc, win] =page('http://192.168.0.35/resource/home', 3);
 	if(!isFullstack()) {
 		context.skip();
 	}

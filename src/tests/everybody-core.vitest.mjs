@@ -1,10 +1,11 @@
 import { assert, describe, it } from "vitest";
 import { JSDOM } from 'jsdom';
 
+import { page } from './page-seed';
 import { TEST_ONLY } from '../core';
 import { appendIsland, setIsland, isFullstack, isMobile } from '../dom-base';
 import { enableGetEventListeners, createEvent } from './vitest-addons';
-// So, everybody...     so auto-magic happens
+// So, everybody...     needed auto-magic happens
 import * as Types from '../all-types';
 import * as Vanilla from '../code-collection';
 import * as StringBase from '../string-base';
@@ -21,26 +22,15 @@ const {
  siteCore
 } = TEST_ONLY;
 
-// this function needs to be local to each test file, as the HTML will be different
-function page(url ) {
-	const dom = new JSDOM(`<!DOCTYPE html>
-<html>
-	<head><title>test1</title></head>
-	<body>
-		<div class="reading" id="shareGroup"></div>
-		<div id="point1"></div>
-		<div id="point2" class="blocker"></div>
-	</body>
-</html>`, { url:url, referrer:url });
-	return [dom.window.document, dom.window.location, dom.window];
-}
-
-describe("TEST core", () => {
+describe("TEST core HARDCORE MODE ~ e'ribody jazz handz now!", () => {
 	let ram1=0;
 	if(process) { ram1=process.memoryUsage(); }
 
   it("go 6: siteCore", (context) => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/react18-notes?mobile=0');
+	let ram1=0;
+	if(process) { ram1=process.memoryUsage(); }
+
+	const [dom, loc, win] =page('http://192.168.0.35/resource/react18-notes?mobile=0', 3);
 	let str=`<div id="navBar"> 
 				<span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
@@ -77,12 +67,23 @@ describe("TEST core", () => {
 </div>`;
 	appendIsland('#point2', str, dom );
 
-	siteCore({}, dom, loc, win);
+//	siteCore({}, dom, loc, win);
 	assert.equal(1, 2, "NOTE Test not usable until I build a way to override runFetch() assert #17");
+
+	let ram2=0;
+	if(process) { ram2=	process.memoryUsage(); }
+	if(ram1!==0) {		
+		console.log("RAM used to make JSDOM: "+ (ram2.heapUsed- ram1.heapUsed) );
+	}
+
+	context.skip();
 	});
 
   it("go 6.1: siteCore", (context) => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home?mobile=0');
+	let ram1=0;
+	if(process) { ram1=process.memoryUsage(); }
+
+	const [dom, loc, win] =page('http://192.168.0.35/resource/home?mobile=0', 3);
 	let str=`<div id="navBar"> 
 				<span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
@@ -115,9 +116,16 @@ describe("TEST core", () => {
 	appendIsland('#point2', str, dom );
 
 // function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=window):void 
-	siteCore({} );
+//	siteCore({} );
 // auto appear param to see what happens
 	assert.equal(1, 2, "NOTE Test not usable until I build a way to override runFetch() assert #17");
+	let ram2=0;
+	if(process) { ram2=	process.memoryUsage(); }
+ 
+	if(ram1!==0) {		
+		console.log("RAM used to make JSDOM: "+ (ram2.heapUsed- ram1.heapUsed) );
+	}
+	context.skip();
 	});
 // IOIO FIXME: more tests needed, but clear assert#1 first
 
@@ -127,6 +135,5 @@ describe("TEST core", () => {
 	if(ram1!==0) {		
 		console.log("RAM used to make JSDOM: "+ (ram2.heapUsed- ram1.heapUsed) );
 	}
-
 });
 

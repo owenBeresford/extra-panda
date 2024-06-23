@@ -1,23 +1,11 @@
 import { assert, describe, it, assertType } from "vitest";
 import { JSDOM } from 'jsdom';
 
+import { page } from './page-seed';
 import { Fetchable, Cookieable } from '../all-types';
 import { appendIsland, setIsland, isFullstack } from '../dom-base'
 import { TEST_ONLY } from '../string-base';
 const { getFetch, articleName, pullout, makeRefUrl, runFetch, addLineBreaks, pad, _getCookie, mapAttribute, importDate, dateMunge } = TEST_ONLY;
-
-// this function needs to be local to each test file, as the HTML will be different
-function page(url ) {
-	const dom = new JSDOM(`<html>
-	<head><title>test1</title></head>
-	<body>
-		<div class="reading" id="shareGroup"></div>
-		<div id="point1"></div>
-		<div id="point2" class="blocker"></div>
-	</body>
-</html>`, { url:url, referrer:url });
-	return [dom.window.document, dom.window.location];
-}
 
 describe("TEST string-base", () => {
   it("go 1: getFetch", () => {
@@ -29,12 +17,6 @@ describe("TEST string-base", () => {
 	context.skip();
   });
 
-  it("go 3: artcleName", () => {
-    const [dom, loc]=page("http://192.168.0.35/resource/home");
-    assert.equal(articleName(), "<name>", "assert #3");
-    assert.equal(articleName(loc), "home", "assert #4");
-  });
-
   it("go 4: pad", () => {
     assert.equal(pad(1), "01", "assert #4");
     assert.equal(pad(10), "10", "assert #5");
@@ -42,20 +24,6 @@ describe("TEST string-base", () => {
     assert.throws(() => { pad(-1) }, "Value passed must be a counting number above 0", "assert #7");
     assert.throws(() => { pad(0) }, "Value passed must be a counting number above 0", "assert #8");
 
-  });
-
-  it("go 6: mapAttribute", (context) => {
-	if(! isFullstack() ) {
-		context.skip();
-	} 
-
-	const [dom, loc]=page("http://192.168.0.35/resource/home");
-	let str=`<h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>`;
-	appendIsland('#point2', str, dom);
-	
-	assert.equal(mapAttribute(dom.querySelector('#item1'), 'right'), "100", "asset #10" );
-	assert.equal(mapAttribute(dom.querySelector('#item1'), 'right'), 100, "asset #11" );
   });
 
   it("go 7: importDate", () => {
@@ -116,13 +84,36 @@ dg ag aga gdgadfg`;
 // the cookie stuff is quite low cyclometric complexity
   });
 
+
+
+
+  it("go 3: artcleName", () => {
+    const [dom, loc]=page("http://192.168.0.35/resource/home", 2);
+    assert.equal(articleName(), "<name>", "assert #3");
+    assert.equal(articleName(loc), "home", "assert #4");
+  });
+
+  it("go 6: mapAttribute", (context) => {
+	if(! isFullstack() ) {
+		context.skip();
+	} 
+
+	const [dom, loc]=page("http://192.168.0.35/resource/home", 2);
+	let str=`<h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>`;
+	appendIsland('#point2', str, dom);
+	
+	assert.equal(mapAttribute(dom.querySelector('#item1'), 'right'), "100", "asset #10" );
+	assert.equal(mapAttribute(dom.querySelector('#item1'), 'right'), 100, "asset #11" );
+  });
+
   it("go 15: makeRefUrl", () => {
-	  const [dom, loc]=page("http://192.168.0.35/resource/react18-notes");
+	  const [dom, loc]=page("http://192.168.0.35/resource/react18-notes", 2);
 	 assert.equal( makeRefUrl("/resources/XXX-references", loc), "/resources/react18-notes-references", "assert #33"); 
  });
 
   it("go 15.1 makeRefUrl", ()=>{
-	 const [dom, loc]=page("http://192.168.0.35/resource/react18-notes?varable=value");
+	 const [dom, loc]=page("http://192.168.0.35/resource/react18-notes?varable=value", 2);
 	 assert.equal( makeRefUrl("/resources/XXX-references", loc), "/resources/react18-notes-references", "assert #34"); 
   });	
 

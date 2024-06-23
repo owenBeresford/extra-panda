@@ -1,27 +1,13 @@
 import { assert, describe, it } from "vitest";
 import { JSDOM } from 'jsdom';
 
+import { page } from './page-seed';
 import { appendIsland, setIsland, isFullstack } from '../dom-base'; 
 import { register, access } from '../code-collection';
 import { ALL_REFERENCE_LINKS, ReferenceType } from '../all-types';
 import { TEST_ONLY } from '../mobile-biblio';
 
 const { injectOpts, empty, normaliseData, render, createBiblio } = TEST_ONLY;
-
-
-// this function needs to be local to each test file, as the HTML will be different
-function page(url) {
-	const dom = new JSDOM(`<html>
-	<head><title>test1</title></head>
-	<body>
-		<div class="addReading" id="shareGroup"><span class="ultraSkinny"></span> </div>
-		<div id="point1"></div>
-		<div id="point2" class="blocker addReferences"></div>
-	</body>
-</html>`, { url:url, referrer:url });
-
-	return [dom.window.document, dom.window.location];
-}
 
 describe("TEST mobile-biblio", () => {
 
@@ -330,7 +316,7 @@ df sfsdfsdfs`,
   });	
 
   it("go 3: createBiblio", async ( ) => { 
-	const [dom, loc]=page('http://192.168.0.35/resource/reading-list');
+	const [dom, loc]=page('http://192.168.0.35/resource/reading-list', 2);
 	let str=`
 <div id="biblio" style="display:none;">
 <p> here is old stuff

@@ -1,23 +1,11 @@
 import { assert, describe, it, assertType } from "vitest";
 import { JSDOM } from 'jsdom';
 
+import { page } from './page-seed';
 import { Fetchable, Cookieable } from '../all-types';
 
 import { TEST_ONLY } from '../dom-base';
 const { isMobile, appendIsland, setIsland, isFullstack, currentSize  } = TEST_ONLY;
-
-// this function needs to be local to each test file, as the HTML will be different
-function page(url ) {
-	const dom = new JSDOM(`<html>
-	<head><title>test1</title></head>
-	<body>
-		<div class="reading" id="shareGroup"></div>
-		<div id="point1"></div>
-		<div id="point2" class="blocker"></div>
-	</body>
-</html>`, { url:url, referrer:url });
-	return [dom.window.document, dom.window.location];
-}
 
 describe("TEST dom-base", () => {
   it("go 6: currentSize", (context) => {
@@ -45,15 +33,19 @@ describe("TEST dom-base", () => {
 	});
 
   it("go 12: appendIsland ", () => {
-   const [dom, loc]=page("http://192.168.0.35/resource/home");
+   const [dom, loc]=page("http://192.168.0.35/resource/home", 2);
 
 	let str='<h2>WWWWW WWWWW</h2>';
 	appendIsland('#point1', str, dom);
     assert.equal( dom.getElementsByTagName('body')[0].outerHTML, `<body>
-		<div class="reading" id="shareGroup"></div>
+	<div class="addReading" id="shareGroup">
+		<div class="allButtons"> <span class="ultraSkinny"></span> </div>
+	</div>
+	<article>
 		<div id="point1"><h2>WWWWW WWWWW</h2></div>
-		<div id="point2" class="blocker"></div>
-	
+		<div id="point2" class="blocker addReferences"></div>
+	</article>
+
 </body>`, "assert #2" );
     assert.equal( dom.getElementsByTagName('h2').length, 1, "assert #30");
 	appendIsland('#point1', str, dom);
@@ -62,15 +54,19 @@ describe("TEST dom-base", () => {
   });
 
   it("go 13: setIsland ", () => {
-   const [dom, loc]=page("http://192.168.0.35/resource/home");
+   const [dom, loc]=page("http://192.168.0.35/resource/home", 2);
 
 	let str='<h2>WWWWW WWWWW</h2>';
 	appendIsland('#point1', str, dom);
     assert.equal( dom.getElementsByTagName('body')[0].outerHTML, `<body>
-		<div class="reading" id="shareGroup"></div>
+	<div class="addReading" id="shareGroup">
+		<div class="allButtons"> <span class="ultraSkinny"></span> </div>
+	</div>
+	<article>
 		<div id="point1"><h2>WWWWW WWWWW</h2></div>
-		<div id="point2" class="blocker"></div>
-	
+		<div id="point2" class="blocker addReferences"></div>
+	</article>
+
 </body>`, "assert #2" );
     assert.equal( dom.getElementsByTagName('h2').length, 1, "assert #30");
 	setIsland('#point1', str, dom);
@@ -78,6 +74,5 @@ describe("TEST dom-base", () => {
 
   });
 
-
-
 }); 
+

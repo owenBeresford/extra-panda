@@ -1,5 +1,3 @@
-import { HtmlValidate } from "html-validate";
-
 import { isFullstack } from '../dom-base';
 'use strict';
 
@@ -70,7 +68,7 @@ export function enableGetEventListeners(dom=document) {
 }
 
 /**
- * exportcreateEvent
+ * createEvent
  * Code to isolate the creation of artifical mouse events ousaide of Vue
  
  * @param {HTMLElement} tar - where the fake event is about
@@ -86,31 +84,8 @@ export function createEvent(tar) {
 	} else {
 		vnt=new TouchEvent('click', { bubbles:false, cancelable:true });
 		Object.defineProperty(vnt, 'target', {writable: false, value: tar});
-//		vnt.initTouchEvent('touchstart');
+//		vnt.initTouchEvent('touchstart');  // from old docs, not supported  
 	}
 	return vnt;
-}
-
-
-/**
- * exportvalidateHTML
- * Build 1 code to check HTML
-
- * @link https://html-validate.org/dev/using-api.html 
- * @param {string} html
- * @param {boolean} emit
- * @public
- * @return {boolean}
- */
-export async function validateHTML(html, emit) {
-	const htmlvalidate = new HtmlValidate({
- 	 extends: ["html-validate:recommended"],
-	});
-	const report = await htmlvalidate.validateString(html);
-
-	if (!report.valid && emit) {
-	  console.log(report.results);
-	}
-	return report.valid;
 }
 
