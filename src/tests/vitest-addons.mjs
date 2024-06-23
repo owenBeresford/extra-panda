@@ -1,11 +1,22 @@
+import { HtmlValidate } from "html-validate";
+
+import { isFullstack } from '../dom-base';
 'use strict';
 
+/**
+ * enableGetEventListeners
+ * Monkey patch a getEventListener() method into HTMLElement, *inside ES2020*
+
 // "Kunning haX0r" as I am not using a real browser DOM in tests,
-// which is the only location or use for this code
-// this code is NPM package getEventListeners, but packed as a module, and ES2020
+// which are the only location or use for this code
+// this code is NPM package getEventListeners, but here, is packed as a module, and ES2020
 // I have tweaked the access to use structures from the DOM I pass in, 
 //     so it is more likely to affect the JSDOM or the browser DOM
 
+ * @param {Document =document} dom
+ * @public
+ * @return {void}
+ */
 export function enableGetEventListeners(dom=document) {
 	const step1=dom.getElementsByTagName('body')[0];
 	const step2=Object.getPrototypeOf(Object.getPrototypeOf( Object.getPrototypeOf(step1))); 
@@ -54,8 +65,52 @@ export function enableGetEventListeners(dom=document) {
 		}
         return this.eventListenerList[type];
     };
-
 	
 	Object.setPrototypeOf(step2, step3);
+}
+
+/**
+ * exportcreateEvent
+ * Code to isolate the creation of artifical mouse events ousaide of Vue
+ 
+ * @param {HTMLElement} tar - where the fake event is about
+ * @public
+ * @return {MiscEvent}
+ */
+export function createEvent(tar) {
+	let vnt=null;
+	if(isFullstack()) { 
+		// I hope the target is still present after type washing
+		vnt=new CustomEvent('click', {detail:"a special click", bubbles:false, cancelable:true });
+		Object.defineProperty(vnt, 'target', {writable: false, value: tar});
+	} else {
+		vnt=new TouchEvent('click', { bubbles:false, cancelable:true });
+		Object.defineProperty(vnt, 'target', {writable: false, value: tar});
+//		vnt.initTouchEvent('touchstart');
+	}
+	return vnt;
+}
+
+
+/**
+ * exportvalidateHTML
+ * Build 1 code to check HTML
+
+ * @link https://html-validate.org/dev/using-api.html 
+ * @param {string} html
+ * @param {boolean} emit
+ * @public
+ * @return {boolean}
+ */
+export async function validateHTML(html, emit) {
+	const htmlvalidate = new HtmlValidate({
+ 	 extends: ["html-validate:recommended"],
+	});
+	const report = await htmlvalidate.validateString(html);
+
+	if (!report.valid && emit) {
+	  console.log(report.results);
+	}
+	return report.valid;
 }
 

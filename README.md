@@ -50,6 +50,6 @@ Pls note English is my first language #leSigh.
 
 * first  string  - only used in the group-indexes articles
 * debug  boolean - adjusts how many log messages are written
-* mobile boolean - force interpretation of current machine as a mobile
+* mobile boolean - force interpretation of current machine as a mobile device.  In unit tests this MUST BE SET, as JSdom isn't a phone
 
 

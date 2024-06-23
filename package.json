@@ -9,7 +9,7 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "node ./node_module/.bin/vite build",
+    "build": "node ./node_modules/.bin/vite build",
     "test": "node ./node_modules/.bin/vitest run",
     "lint": "node ./node_modules/.bin/eslint --exit-on-fatal-error --fix --no-cache; node ./node_modules/.bin/prettier --write . ; "
   },
@@ -24,6 +24,7 @@
     "@types/node": "^20.12.12",
     "@types/node-fetch": "^2.6.11",
     "eslint": "^9.3.0",
+    "html-validate": "^8.20.1",
     "jsdom": "^24.0.0",
     "npm": "^10.8.0",
     "prettier": "^3.2.5",

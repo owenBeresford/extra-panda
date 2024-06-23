@@ -7,12 +7,10 @@ setup eslint after git
 performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311
        https://www.npmjs.com/package/linkedom
 look at:: https://github.com/Xooone47/vite-plugin-deadcodes
-add https://www.npmjs.com/package/html-validate to the tests
-look at generator scripts, renderTitle => title, descrip => desc
-swap "--data..." to "data..." in templates 
+ 
 Move to import log 
 drop single unified common class as not a valuable idea
-move appendIsland + setIsland to code-collection I think
+unify page() macros
 
 css changes
 swap CSS for dialog with modal JS function + [open] attrib
@@ -34,7 +32,8 @@ DONE add vite to build
 DONE add vitest
 DONE replace all log() calls
 DONE Convert to TS
-DONE Make some types
 DONE move mobile shareBar to a Nav element
+DONE move appendIsland + setIsland to code-collection 
+
 
 
