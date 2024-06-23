@@ -1,7 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Location, Document, HTMLElement } from 'jsdom';
 
-import { APPEARANCE_COOKIE, TEST_MACHINE, CoreProps, MiscEvent  } from './all-types';
+import { APPEARANCE_COOKIE, TEST_MACHINE, CoreProps, MiscEvent, Cookieable  } from './all-types';
 import { dateMunge, runFetch, mapAttribute, articleName, addLineBreaks, _getCookie } from './string-base';
 import { register, access } from './code-collection';
 import { listContentGroup } from './adjacent';
@@ -23,9 +23,6 @@ let OPTS:CoreProps={} as CoreProps;
  // CorrectionModule.prototype.biblioExtract = function ()  << runs HEAD
  // CorrectionModule.prototype.extractGET = function (val)  << UNUSED
 
- // CorrectionModule.prototype.tabChange = function ($e) {
- // CorrectionModule.prototype.tabInit = function (where) {
-
 /**
  * _map
  * Add several event listeners, just a utility
@@ -42,6 +39,17 @@ function _map(where:HTMLElement, action:Function):void {
 	where.addEventListener('keypress', action);
 }
 
+function isLocal(str:string):boolean {
+	if( str.startsWith('192.168.') ||
+		str === "127.0.0.1" ||
+		str === "::1" ||
+		str === "0:0:0:0:0:0:0:1" ||
+		str === "localhost" ) {
+		return true;
+	}
+	return false;
+}
+
 /**
  * initPopupMobile
  * Create the popup bar for mobile
@@ -51,29 +59,29 @@ function _map(where:HTMLElement, action:Function):void {
  * @return {void}
  */
 function initPopupMobile( dom:Document=document, loc:Location=location):void {
-	if( loc.host!==TEST_MACHINE && !isMobile(dom, loc)) { return; }
+	if( !isLocal(loc.host) && !isMobile(dom, loc)) { return; }
 
 	if(isMobile(dom, loc)) {
-		dom.querySelector('#sendMasto').innerText="Share article";
+		dom.querySelector('#sendMasto').textContent="Share article";
 	}
-	let html=[ '<nav><li id="shareClose"> <i class="fa fa-cancel" aria-hidden="true"></i> </li>	<li> <a class="hunchUp" id="copyURL"><i class="fa fa-copy" aria-hidden="true"></i><span class="hunchUp"> copy<br /> URL</span> </a> </li>',];
-	const bigScreenElements=["shareMenuTrigger", "siteChartLink", "rssLink" ];
-	const BUFFER=dom.querySelectorAll('.allButtons a');
+	let html:Array<string> =[ `<li id="shareClose"> <i class="fa fa-cancel" aria-hidden="true"></i> </li>	<li> <a class="hunchUp" id="copyURL"><i class="fa fa-copy" aria-hidden="true"></i><span class="hunchUp"> copy<br /> URL</span> </a> </li>`,];
+	const bigScreenElements:Array<string> =["shareMenuTrigger", "siteChartLink", "rssLink" ];
+	const BUFFER:Array<HTMLAnchorElement> =Array.from(dom.querySelectorAll('.allButtons a'));
 	for(let i in BUFFER) {
 		if(bigScreenElements.includes( BUFFER[i].id) ) { 
 			continue;
 		}
 
-		let local=BUFFER[i].cloneNode(true);
+		let local:HTMLAnchorElement=BUFFER[i].cloneNode(true);
 		local.classList.remove('bigScreenOnly');
 		html.push('<li>');
 		html.push(local.outerHTML);   // I don't like this line
 		html.push('</li>');
 	}
-	html.unshift('<div class="shareMenu" id="shareMenu"><menu id="mobileMenu" >' );
-	html.push('</menu></div></nav>');
+	html.unshift( '<nav><div class="shareMenu" id="shareMenu"><menu id="mobileMenu">' );
+	html.push( '</menu></div></nav>' );
 
-	appendIsland('#navBar', html.join(), dom); 
+	appendIsland('#navBar', html.join('\n'), dom); 
 }
 
 /**
@@ -88,8 +96,8 @@ function initPopupMobile( dom:Document=document, loc:Location=location):void {
  * @return {void}
  */
 function storeAppearance(ft:string, fs:string, dir:string, clr:string ):void {
-	const COOKIE=_getCookie();
-	const json=JSON.stringify( {ft:ft, fs:fs, dn:dir, cr:clr } );
+	const COOKIE:Cookieable=_getCookie();
+	const json:string=JSON.stringify( {ft:ft, fs:fs, dn:dir, cr:clr } );
 	COOKIE.set(APPEARANCE_COOKIE, json, 365.254);	
 }
 
@@ -102,7 +110,7 @@ function storeAppearance(ft:string, fs:string, dir:string, clr:string ):void {
  * @return {void}
  */
 function applyAppearance(dom:Document=document):void {
-	const COOKIE=_getCookie();
+	const COOKIE:Cookieable=_getCookie();
 
 	const dat=COOKIE.get( APPEARANCE_COOKIE);
 	if(!dat) {
@@ -133,18 +141,26 @@ function applyAppearance(dom:Document=document):void {
  */
 function burgerMenu(id:string=".burgerMenu", dom:Document=document):void {
 	let  t=dom.querySelector(id);
+	let ico=dom.querySelector('#pageMenu i');
+
 	if( !t.getAttribute('data-state') ) {
 		t.classList.add('burgerMenuOpen');
 		t.setAttribute('data-state', 1);
+		ico.classList.remove('fa-ob1burger');
+		ico.classList.add('fa-cancel')
+
 	} else {
 		t.classList.remove('burgerMenuOpen');
 		t.setAttribute('data-state', null);
+		ico.classList.add('fa-ob1burger');
+		ico.classList.remove('fa-cancel')
 	}
 }
 
 /**
  * tabChange
- * Change which tab is visible
+ * Change which tab is visible  
+ * IOIO REWRITE when tabs are replaced
  * 
  * @param {string} id - HTML id for the menu
  * @param {Document =document} dom
@@ -153,25 +169,31 @@ function burgerMenu(id:string=".burgerMenu", dom:Document=document):void {
  */
 function tabChange(id:string|MiscEvent, dom:Document=document):void {
 	let thing:HTMLElement|null=null;
+	let target:string='';
+	
 	if(typeof id==='string') {
+		target=id;
 		thing=dom.querySelector(id) as HTMLElement;
 	} else {
 		let tmp:HTMLElement=id.target;
-		thing= dom.querySelector(tmp.id) as HTMLElement;
+		thing= dom.querySelector("#"+tmp.id) as HTMLElement;
+		target=""+thing.getAttribute('href');
 	}
 	if(!thing) { 
 		this.log("ERROR", "Malconfigured tabs!! "+id+" matches nothing");
 		return;
 	}
 
-	let iter=dom.querySelectorAll(".tabsComponent .tabs-panel");
+	let iter=dom.querySelectorAll(".tabs-content .tabs-panel");
 	for(let i=0; i< iter.length; i++) {
 		iter[i].classList.remove('is-active');
 	}
-	let alive=dom.querySelectorAll(".tabsComponent "+thing.getAttribute('data-href'));	
+//	target=target.substring(1);
+	let alive=dom.querySelectorAll(".tabs-content "+target);
 	if(alive.length > 1) {
 		throw new Error("Labels on tabs must be unique, or tabs don't work.");
 	}
+
 	alive[0].classList.add('is-active');
 } 
 
@@ -179,7 +201,7 @@ function tabChange(id:string|MiscEvent, dom:Document=document):void {
  * siteCore
  * Applies all the functions in this file to the DOM
  * 
- * @param {CoreProps} opts -see docs, at top of file
+ * @param {CoreProps} opts - see docs, at top of file
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @public
@@ -197,8 +219,8 @@ export function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=
 	}
 	const ROOT=access();
 
-	_map('#pageMenu', burgerMenu);
-	initPopupMobile(dom);
+	_map(dom.querySelector( '#pageMenu'), burgerMenu);
+	initPopupMobile(dom, loc);
 	initMastodon(dom, loc, win);
 	ROOT.addOctoCats(dom);
 	ROOT.addBooks(dom); 
@@ -213,7 +235,7 @@ export function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=
                     debug: ROOT.debug(),
 					refresh:1,
                     linkTo: '/resource/jQuery-reading-duration'
-                });
+                }, dom);
     }
 
 // pull this out
@@ -224,7 +246,7 @@ export function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=
 		extendViaDownload: 4,
 		tooltip:1,
 		renumber:1
-		});
+		}, dom, loc);
 
 	{ 
 		let tabs=dom.querySelectorAll('.tabsComponent');
@@ -253,6 +275,8 @@ export function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=
 		pageStartup();
 	}
 }
+
+///////////////////////////////////////////////// testing /////////////////////////////////////////////////////////
 
 /** 
  * Only use for testing, it allows access to the entire API 
