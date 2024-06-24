@@ -6,18 +6,7 @@ import { TEST_ONLY } from "../core";
 import { appendIsland, setIsland, isFullstack, isMobile } from "../dom-base";
 import { enableGetEventListeners, createEvent } from "./vitest-addons";
 // So, everybody...     needed auto-magic happens
-import * as Types from "../all-types";
-import * as Vanilla from "../code-collection";
-import * as StringBase from "../string-base";
-import * as DOMBase from "../dom-base";
-import * as Effect from "../effect";
-import * as Masto from "../mastodon";
-import * as Core from "../core";
-import * as Adjacent from "../adjacent";
-import * as Biblio1 from "../desktop-biblio";
-import * as Biblio2 from "../mobile-biblio";
-import * as Reading from "../reading";
-
+ 
 const { siteCore } = TEST_ONLY;
 
 describe("TEST core HARDCORE MODE ~ e'ribody jazz handz now!", () => {

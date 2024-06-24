@@ -20,14 +20,6 @@ const {
 } = TEST_ONLY;
 
 describe("TEST string-base", () => {
-  it("go 1: getFetch", () => {
-    assert.equal(typeof getFetch, "function", "assert #1");
-    assertType < Fetchable > (getFetch(), "assert #2");
-  });
-
-  it("go 2: runFetch", (context) => {
-    context.skip();
-  });
 
   it("go 4: pad", () => {
     assert.equal(pad(1), "01", "assert #4");
@@ -175,14 +167,9 @@ dg ag aga gdgadfg`;
     assert.equal(addLineBreaks(str1, 60, "PING"), str2, "assert #29");
   });
 
-  it("go 14: getCookie ", () => {
-    assertType < Cookieable > (_getCookie(), "assert #32");
-    // would be better with more tests, but I think full stack only.
-    // I don't want to add too much manual-fake code, to test deliverable-code, or I have circular problem about testing
-    // the cookie stuff is quite low cyclometric complexity
-  });
+  
 
-  it("go 3: artcleName", () => {
+  it("go 3: articleName", () => {
     const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
     assert.equal(articleName(), "<name>", "assert #3");
     assert.equal(articleName(loc), "home", "assert #4");

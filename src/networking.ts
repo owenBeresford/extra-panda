@@ -43,8 +43,10 @@ export const MOBILE_MIN_PPI = 180;
  */
 export function getFetch(): Fetchable {
   if (typeof window !== "undefined") {
+console.log("we hvae window");    
     return window.fetch;
   } else if (typeof fetch === "function") {
+console.log("we hvae a loose fetch like Node")
     return fetch;
   } else {
     log("error", "Please stop using old versions of node.");
@@ -150,3 +152,6 @@ export function _getCookie(): Cookieable {
   //  }
   return new COOKIE();
 }
+
+
+export const TEST_ONLY ={ _getCookie, runFetch, getFetch, log, debug };

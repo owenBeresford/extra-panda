@@ -4,7 +4,7 @@ import { Document, Location, Window, Event, HTMLElement } from "jsdom";
 import { MiscEventHandler2, MiscEventHandler3 } from "./all-types";
 import { isFullstack, isMobile } from "./dom-base";
 import { isLocal } from './string-base';
-import { log } from './code-collection';
+import { log } from './networking';
 
 /**
  * openShare

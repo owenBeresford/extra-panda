@@ -20,7 +20,7 @@ import {
   ALL_REFERENCE,
   ALL_REFERENCE_LINKS,
   runFetch,
-} from "./code-collection";
+} from "./networking";
 
 // variables across this module
 // * @protected
@@ -44,7 +44,7 @@ function markAllLinksUnknown(
   const WASSUP: Array<HTMLAnchorElement> =
     dom.querySelectorAll(ALL_REFERENCE_LINKS);
   for (let i = 0; i < WASSUP.length; i++) {
-    const txt: string = `Reference popup for link [${1 + i}]\nERROR: No valid biblio file found.\nsite admin, today\nHTTP_ERROR, no valid file called ${naam}-references.json found.\n`;
+    const txt:string = `Reference popup for link [${1 + i}]\nERROR: No valid biblio file found.\nsite admin, today\nHTTP_ERROR, no valid file called ${naam}-references.json found.\n`;
     WASSUP[i].setAttribute("aria-label", "" + txt);
   }
 }

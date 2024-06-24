@@ -1,6 +1,6 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { dateMunge, articleName } from "./string-base";
-import { log, debug, runFetch } from "./code-collection";
+import { log, debug, runFetch } from "./networking";
 import { Document, Location } from "jsdom";
 import {
   SimpleResponse,

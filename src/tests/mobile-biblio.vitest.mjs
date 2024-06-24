@@ -3,8 +3,8 @@ import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed";
 import { appendIsland, setIsland, isFullstack } from "../dom-base";
-import { register, access } from "../code-collection";
-import { ALL_REFERENCE_LINKS, ReferenceType } from "../all-types";
+import { ReferenceType } from "../all-types";
+import { ALL_REFERENCE_LINKS } from '../networking';
 import { TEST_ONLY } from "../mobile-biblio";
 
 const { injectOpts, empty, normaliseData, render, createBiblio } = TEST_ONLY;
@@ -339,8 +339,7 @@ df sfsdfsdfs`,
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">21</a> </sup> 
 `;
     appendIsland("#point2", str, dom); // 15 links
-    register("runFetch", mockFetch1);
-    await createBiblio({ gainingElement: "#biblio" }, dom, loc);
+    await createBiblio({ gainingElement: "#biblio", debug:true, runFetch:mockFetch1 }, dom, loc);
 
     assert.equal(dom.querySelectorAll("#biblio ol a").length, 15, "assert #6");
     dom.querySelectorAll(ALL_REFERENCE_LINKS).forEach((a, b) => {

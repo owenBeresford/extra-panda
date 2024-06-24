@@ -1,6 +1,6 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Document, HTMLAnchorElement, HTMLElement } from "jsdom";
-// import { log, debug } from "./code-collection";
+// import { log, debug } from "./networking";
 import { appendIsland } from "./dom-base";
 import { pullout } from "./string-base";
 

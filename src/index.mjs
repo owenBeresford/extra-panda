@@ -1,7 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
 import * as Types from "./all-types";
-import * as Vanilla from "./code-collection";
+import * as Vanilla from "./networking";
 import * as StringBase from "./string-base";
 import * as DOMBase from "./dom-base";
 import * as Effect from "./effect";

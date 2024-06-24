@@ -1,7 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
 import { ScreenSizeArray } from "./all-types";
-import { log, MOBILE_MIN_PPI } from "./code-collection";
+import { log, MOBILE_MIN_PPI } from "./networking";
 
 /**
  * appendIsland

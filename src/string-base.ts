@@ -4,7 +4,7 @@ import {
    BOUNDARY,
   MiscEventHandler,
 } from "./all-types";
-import { log } from "./code-collection";
+import { log } from "./networking";
 import { isFullstack } from "./dom-base";
 
 /**

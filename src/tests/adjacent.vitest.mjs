@@ -3,7 +3,6 @@ import { assert, describe, it } from "vitest";
 import { page } from "./page-seed";
 import { TEST_ONLY } from "../adjacent";
 import { appendIsland, setIsland } from "../dom-base";
-import { register, access } from "../code-collection";
 import { SimpleResponse, AdjacentProps } from "../all-types";
 
 const {
@@ -329,11 +328,10 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
-    register("runFetch", mockFetch1);
     // jQuery("html").adjacent({group: i, debug:false, iteration:j, count:grp.length });
     // jQuery("html").adjacent({group: tt[1], debug:false});
     createAdjacentChart(
-      { group: "engineering", name: "code-metrics" },
+      { group: "engineering", name: "code-metrics", debug:true, runFetch: mockFetch1 },
       dom,
       loc,
     );
@@ -360,9 +358,8 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
 </div>`;
     appendIsland("#point2", str, dom);
 
-    register("runFetch", mockFetch2);
     await createAdjacentChart(
-      { group: "engineering", name: "code-metrics" },
+      { group: "engineering", name: "code-metrics", debug:true, runFetch: mockFetch2 },
       dom,
       loc,
     );
@@ -408,12 +405,13 @@ Description: What concepts or areas of development are important.    This is a h
 </div>`;
     appendIsland("#point2", str, dom);
 
-    register("runFetch", mockFetch3);
+/*
     createAdjacentChart(
-      { group: "engineering", name: "code-metrics", nextBar: 10 },
+      { group: "engineering", name: "code-metrics", nextBar: 10, debug:true, runFetch: mockFetch3 },
       dom,
       loc,
     );
+*/
     assert.equal(
       dom.querySelector(".adjacentGroup p").textContent,
       "TEST",

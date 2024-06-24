@@ -8,7 +8,7 @@ import {
   APPEARANCE_COOKIE,
   _getCookie,
   runFetch,
-} from "./code-collection";
+} from "./networking";
 import { listContentGroup, createAdjacentChart } from "./adjacent";
 import { initMastodon } from "./mastodon";
 import { isLocal } from './string-base';

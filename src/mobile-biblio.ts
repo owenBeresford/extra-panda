@@ -1,6 +1,6 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { dateMunge, addLineBreaks, makeRefUrl } from "./string-base";
-import { log, debug, URL_PLACEHOLDER, runFetch } from "./code-collection";
+import { log, debug, URL_PLACEHOLDER, runFetch } from "./networking";
 import { Document, Location } from "jsdom";
 import {
   ReferenceType,
