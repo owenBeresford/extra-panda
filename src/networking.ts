@@ -43,11 +43,9 @@ export const MOBILE_MIN_PPI = 180;
  */
 export function getFetch(): Fetchable {
   if (typeof window !== "undefined") {
-console.log("we hvae window");    
-    return window.fetch;
+     return window.fetch;
   } else if (typeof fetch === "function") {
-console.log("we hvae a loose fetch like Node")
-    return fetch;
+     return fetch;
   } else {
     log("error", "Please stop using old versions of node.");
     throw new Error("Please stop using old versions of Node");
@@ -72,9 +70,13 @@ export async function runFetch(
   trap: boolean,
 ): Promise<SimpleResponse> {
   const f = getFetch();
+  const debug=debug();
   try {
     const trans: Response = await f(url, { credentials: "same-origin" });
     if (!trans.ok) {
+      if(debug) {
+         log("warn", "Failed to communicate with "+url);
+      }
       if (trap) {
         return { body: "nothing", headers: {} as Headers, ok: false };
       } else {
@@ -90,11 +92,21 @@ export async function runFetch(
         .toLowerCase()
         .startsWith("application/json")
     ) {
+      if(debug) {
+         log("info", "successful JSON transaction "+url);
+      }
       return { body: JSON.parse(payload), headers: trans.headers, ok: true };
+
     } else {
+      if(debug) {
+         log("info", "ssuccessful other transaction "+url);
+      }      
       return { body: payload, headers: trans.headers, ok: true };
     }
   } catch (e) {
+      if(debug) {
+         log("error", "KLAXON, KLAXON failed: "+url+" "+e.toString());
+      }      
     if (trap) {
       return { body: "nothing", headers: {} as Headers, ok: false };
     } else {

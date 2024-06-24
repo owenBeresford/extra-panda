@@ -1,4 +1,4 @@
-I'm dragging this group of features kicking and screaming into the century of the fruitbat. If I didn't think needed a website, I have made other things I could have done with my dev-time.
+I'm dragging this group of features kicking and screaming into the century of the fruitbat.   If I didn't think needed a website, I have made other things with my dev-time.
 
 ## "business english" changelog
 
@@ -8,7 +8,7 @@ I'm dragging this group of features kicking and screaming into the century of th
 
 ### Motivation
 
-- Github keeps whining about old versions of jQuery that I am not using.
+- Github keeps whining about old versions of jQuery ~ that I am not using, but may have been 5Y ago.
 - Google keeps whining where I am pointlessly downloading 300KB of jQuery, and barely using it.
 - Aside from this rewrite, JS changes are quite slow, as I don't write 2010 edition JS very often.
 
@@ -17,9 +17,9 @@ I'm dragging this group of features kicking and screaming into the century of th
 - This is an outsize, painful, death march of a rewrite for hygiene and flow improvements. Every PM would say 'this is Bad planning', and I agree.
 - Note, PMs would also be happy that I kept 2010 era code this long, as good return on investment.
 
-### Engineering changelog
+### Engineering
 
-Unlike many situations at work, there is no value and should be no attention to intermediate steps on this project. I have a running platform, I will upgrade when the painful rewrite is complete.
+Unlike many situations at work, there is no value and no attention to intermediate steps should be applied on this project.   I have a running platform, I will upgrade when the painful rewrite is complete.
 
 My work sequence has been:
 
@@ -29,7 +29,8 @@ My work sequence has been:
 - port to typescript and better CSS/HTML
 - add many tests
 - split into better modules and improve english again
-  Pls note English is my first language #leSigh.
+
+Pls note English is my first language #leSigh.
 
 ### Engineering changelog
 
@@ -43,11 +44,24 @@ My work sequence has been:
 - As proper TDD units as I have better tools now (JS modules + a fake DOM), make code better ~ separately to, and above every other bullet point. WARN: Some tests cannot be run outside of a real webrowser.
 - Vastly improve English/ readability of the code. Gain is separate to all other points.
 - As all this code is made after a minimiser script is adopted, faction code more finely into logical modules. So its more readable.
-- As a design principle, I have tried to avoid using global objects in my code, to make testing easier. I can pass in, say, document as an optional param.
+- As a design principle, I have tried to avoid using global objects in my code to make testing easier.   I can pass in, say, ''document'' as an optional param.
 - As a very non-funny joke: the first two versions of the SM sharebar are legacy HTML, but very easy to unit-test. Now I have much better test tech and libraries and less good tests on this feature.
+- This has quite high levels of testing.   I have used JSDOM as part of JEST and similar tools.  This project is the first time I am using it directly.  It is a quite civilised was to test.
 
-### Known params that this code processes
+#### Known params that this code processes
 
-- first string - only used in the group-indexes articles
-- debug boolean - adjusts how many log messages are written
-- mobile boolean - force interpretation of current machine as a mobile device. In unit tests this MUST BE SET, as JSdom isn't a phone
+- ''first'' string - only used in the group-indexes articles
+- ''debug'' boolean - adjusts how many log messages are written
+- ''mobile'' boolean - force interpretation of current machine as a mobile device. In unit tests this MUST BE SET (1 or 0), as JSdom isn't a phone
+
+#### Known CSS containers that this code processes
+
+- .popOverWidget
+- .tabsComponent
+- .addReading
+- .shareMenu
+- .addArrow
+- .addBashSamples
+- .addReferences
+
+

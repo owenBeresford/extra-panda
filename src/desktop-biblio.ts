@@ -252,7 +252,6 @@ export async function createBiblio(
   OPTS = Object.assign(
     {
       indexUpdated: 0,
-      type: "biblio",
       referencesCache: "/resource/XXX-references",
       renumber: 1, // set to 0 to disable
       debug:debug(),

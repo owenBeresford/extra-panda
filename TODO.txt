@@ -1,13 +1,10 @@
 add licence headers
 non-standard syntax hilighting in sitemap-plan
-i think, in adjacent, mapping text() to html()
 performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311
        https://www.npmjs.com/package/linkedom
 look at:: https://github.com/Xooone47/vite-plugin-deadcodes
 add type washing to JSON ingestion 
 Add minifier to build step, try terser
-
-URGENT: fix tests again
 
 css changes
 swap CSS for dialog with modal JS function + [open] attrib

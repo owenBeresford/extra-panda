@@ -75,7 +75,7 @@ export function enableGetEventListeners(dom = document) {
     if (type === undefined) {
       return Object.values(this.eventListenerList);
     }
-    return this.eventListenerList[type];
+    return Object.values(this.eventListenerList[type]);
   };
 
   Object.setPrototypeOf(step2, step3);
@@ -83,7 +83,7 @@ export function enableGetEventListeners(dom = document) {
 
 /**
  * createEvent
- * Code to isolate the creation of artifical mouse events ousaide of Vue
+ * Code to isolate the creation of artificial mouse events outside of Vue
  
  * @param {HTMLElement} tar - where the fake event is about
  * @public

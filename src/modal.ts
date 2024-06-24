@@ -1,14 +1,19 @@
-function HTMLDetailsTrap(e) {
+/*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
+import { Fetchable, SimpleResponse, Cookieable, MiscEvent } from './all-types';
+
+function HTMLDetailsTrap(e:MiscEvent, dom:Document=document):boolean {
   if (e.code === "Escape" || e.key === "Escape") {
-    const tt = $("details[open]");
+    const tt = dom.querySelectorAll("details[open]");
     if (tt.length) {
       tt[0].open = false;
     }
   }
   e.preventDefault();
+  return false;
 }
-function HTMLDetailsClick(e) {
-  const find = function (ele, target) {
+
+function HTMLDetailsClick(e:MiscEvent, dom:Document=document):boolean {
+  const find = function (ele:HTMLElement, target:string):udefined|HTMLElement {
     if (ele.tagName === target) {
       return ele;
     }
@@ -42,11 +47,21 @@ function HTMLDetailsClick(e) {
   }
 
   e.preventDefault();
+  return false;
 }
 
-function exec() {
-  document.addEventListener("keydown", HTMLDetailsTrap);
-  document.addEventListener("click", HTMLDetailsClick);
+export function modalInit(dom:Document=document):void {
+  let tmp:Array<HTMLDetailsElement>=Array.from(dom.querySelectorAll('.popOverWidget details'));
+  if(tmp.length) {
+	tmp.forEach( function(a:HTMLDetailsElement ) {  
+    	a.addEventListener("keydown", HTMLDetailsTrap);
+    	a.addEventListener("click", HTMLDetailsClick);
+	});
+  }
+  // see if something can be done for mobile interactions
 }
+ 
+//////////////////////////////////////////// testing ////////////////////////////////////
 
-$(document).ready(exec);
+export const TEST_ONLY= { modalInit,  HTMLDetailsClick, HTMLDetailsTrap  }; 
+

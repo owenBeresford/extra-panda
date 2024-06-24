@@ -17,6 +17,7 @@ import { createBiblio as mobileCreateBiblio } from "./mobile-biblio";
 import { createBiblio as desktopCreateBiblio } from "./desktop-biblio";
 import { addOctoCats, addBooks, addFancyButtonArrow, addBashSamples } from './effect';
 import { readingDuration } from './reading';
+import { modalInit } from './modal';
 
 // variables across this module
 // * @protected
@@ -259,6 +260,7 @@ export function siteCore(
   addFancyButtonArrow(dom);
   addBashSamples(dom);
   applyAppearance(dom);
+  modalInit(dom);
 
   if (
     !isMobile(dom, loc) &&
