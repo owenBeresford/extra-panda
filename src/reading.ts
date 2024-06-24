@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
-import { log, debug } from "./code-collection";
+import { debug } from "./code-collection";
 import { appendIsland } from "./dom-base";
 import { pullout } from "./string-base";
 import { ReadingProps } from "./all-types";
@@ -25,6 +25,7 @@ function readingDuration(opts: ReadingProps, dom = document): void {
       wordPerMin: 275,
       codeSelector: "code",
       refresh: false,
+      debug:debug(),
     },
     opts,
   ) as ReadingProps;
@@ -48,7 +49,7 @@ function readingDuration(opts: ReadingProps, dom = document): void {
     let tt = 0;
     dom.querySelectorAll(options.codeSelector).forEach(function (
       a: HTMLElement,
-     ) {
+    ) {
       tt += pullout(a).match(RE).length;
     });
     if (tt) {

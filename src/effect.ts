@@ -1,9 +1,8 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Document, HTMLAnchorElement, HTMLElement } from "jsdom";
-import { log, debug } from "./code-collection";
+// import { log, debug } from "./code-collection";
 import { appendIsland } from "./dom-base";
 import { pullout } from "./string-base";
-
 
 /**
  * addOctoCats
@@ -35,9 +34,7 @@ function addOctoCats(dom: Document = document): void {
  * @return {void}
  */
 function addBooks(dom: Document = document): void {
-  dom.querySelectorAll("article a").forEach(function (
-    a: HTMLAnchorElement,
-  ) {
+  dom.querySelectorAll("article a").forEach(function (a: HTMLAnchorElement) {
     const tmp = pullout(a);
     if (tmp.trim().toLowerCase() === "docs") {
       a.textContent = "";

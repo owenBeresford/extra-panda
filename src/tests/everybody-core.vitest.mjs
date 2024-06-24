@@ -1,37 +1,42 @@
 import { assert, describe, it } from "vitest";
-import { JSDOM } from 'jsdom';
+import { JSDOM } from "jsdom";
 
-import { page } from './page-seed';
-import { TEST_ONLY } from '../core';
-import { appendIsland, setIsland, isFullstack, isMobile } from '../dom-base';
-import { enableGetEventListeners, createEvent } from './vitest-addons';
+import { page } from "./page-seed";
+import { TEST_ONLY } from "../core";
+import { appendIsland, setIsland, isFullstack, isMobile } from "../dom-base";
+import { enableGetEventListeners, createEvent } from "./vitest-addons";
 // So, everybody...     needed auto-magic happens
-import * as Types from '../all-types';
-import * as Vanilla from '../code-collection';
-import * as StringBase from '../string-base';
-import * as DOMBase from '../dom-base';
-import * as Effect from '../effect';
-import * as Masto from '../mastodon';
-import * as Core from '../core';
-import * as Adjacent from '../adjacent';
-import * as Biblio1 from '../desktop-biblio';
-import * as Biblio2 from '../mobile-biblio';
-import * as Reading from '../reading';
+import * as Types from "../all-types";
+import * as Vanilla from "../code-collection";
+import * as StringBase from "../string-base";
+import * as DOMBase from "../dom-base";
+import * as Effect from "../effect";
+import * as Masto from "../mastodon";
+import * as Core from "../core";
+import * as Adjacent from "../adjacent";
+import * as Biblio1 from "../desktop-biblio";
+import * as Biblio2 from "../mobile-biblio";
+import * as Reading from "../reading";
 
-const {
- siteCore
-} = TEST_ONLY;
+const { siteCore } = TEST_ONLY;
 
 describe("TEST core HARDCORE MODE ~ e'ribody jazz handz now!", () => {
-	let ram1=0;
-	if(process) { ram1=process.memoryUsage(); }
+  let ram1 = 0;
+  if (process) {
+    ram1 = process.memoryUsage();
+  }
 
   it("go 6: siteCore", (context) => {
-	let ram1=0;
-	if(process) { ram1=process.memoryUsage(); }
+    let ram1 = 0;
+    if (process) {
+      ram1 = process.memoryUsage();
+    }
 
-	const [dom, loc, win] =page('http://192.168.0.35/resource/react18-notes?mobile=0', 3);
-	let str=`<div id="navBar"> 
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/react18-notes?mobile=0",
+      3,
+    );
+    let str = `<div id="navBar"> 
 				<span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
 						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
@@ -65,26 +70,37 @@ describe("TEST core HARDCORE MODE ~ e'ribody jazz handz now!", () => {
 	</dialog> 
 
 </div>`;
-	appendIsland('#point2', str, dom );
+    appendIsland("#point2", str, dom);
 
-//	siteCore({}, dom, loc, win);
-	assert.equal(1, 2, "NOTE Test not usable until I build a way to override runFetch() assert #17");
+    //	siteCore({}, dom, loc, win);
+    assert.equal(
+      1,
+      2,
+      "NOTE Test not usable until I build a way to override runFetch() assert #17",
+    );
 
-	let ram2=0;
-	if(process) { ram2=	process.memoryUsage(); }
-	if(ram1!==0) {		
-		console.log("RAM used to make JSDOM: "+ (ram2.heapUsed- ram1.heapUsed) );
-	}
+    let ram2 = 0;
+    if (process) {
+      ram2 = process.memoryUsage();
+    }
+    if (ram1 !== 0) {
+      console.log("RAM used to make JSDOM: " + (ram2.heapUsed - ram1.heapUsed));
+    }
 
-	context.skip();
-	});
+    context.skip();
+  });
 
   it("go 6.1: siteCore", (context) => {
-	let ram1=0;
-	if(process) { ram1=process.memoryUsage(); }
+    let ram1 = 0;
+    if (process) {
+      ram1 = process.memoryUsage();
+    }
 
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home?mobile=0', 3);
-	let str=`<div id="navBar"> 
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/home?mobile=0",
+      3,
+    );
+    let str = `<div id="navBar"> 
 				<span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
 						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
@@ -113,27 +129,34 @@ describe("TEST core HARDCORE MODE ~ e'ribody jazz handz now!", () => {
 <li class=""><a href="#contentGroup">Similar articles</a></li>
 </menu>
 </div>`;
-	appendIsland('#point2', str, dom );
+    appendIsland("#point2", str, dom);
 
-// function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=window):void 
-//	siteCore({} );
-// auto appear param to see what happens
-	assert.equal(1, 2, "NOTE Test not usable until I build a way to override runFetch() assert #17");
-	let ram2=0;
-	if(process) { ram2=	process.memoryUsage(); }
- 
-	if(ram1!==0) {		
-		console.log("RAM used to make JSDOM: "+ (ram2.heapUsed- ram1.heapUsed) );
-	}
-	context.skip();
-	});
-// IOIO FIXME: more tests needed, but clear assert#1 first
+    // function siteCore(opts:CoreProps, dom=document, loc=location, win:Window=window):void
+    //	siteCore({} );
+    // auto appear param to see what happens
+    assert.equal(
+      1,
+      2,
+      "NOTE Test not usable until I build a way to override runFetch() assert #17",
+    );
+    let ram2 = 0;
+    if (process) {
+      ram2 = process.memoryUsage();
+    }
 
-	let ram2=0;
-	if(process) { ram2=	process.memoryUsage(); }
- 
-	if(ram1!==0) {		
-		console.log("RAM used to make JSDOM: "+ (ram2.heapUsed- ram1.heapUsed) );
-	}
+    if (ram1 !== 0) {
+      console.log("RAM used to make JSDOM: " + (ram2.heapUsed - ram1.heapUsed));
+    }
+    context.skip();
+  });
+  // IOIO FIXME: more tests needed, but clear assert#1 first
+
+  let ram2 = 0;
+  if (process) {
+    ram2 = process.memoryUsage();
+  }
+
+  if (ram1 !== 0) {
+    console.log("RAM used to make JSDOM: " + (ram2.heapUsed - ram1.heapUsed));
+  }
 });
-

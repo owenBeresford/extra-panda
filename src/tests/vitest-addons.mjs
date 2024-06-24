@@ -1,5 +1,5 @@
-import { isFullstack } from '../dom-base';
-'use strict';
+import { isFullstack } from "../dom-base";
+("use strict");
 
 /**
  * enableGetEventListeners
@@ -15,56 +15,70 @@ import { isFullstack } from '../dom-base';
  * @public
  * @return {void}
  */
-export function enableGetEventListeners(dom=document) {
-	const step1=dom.getElementsByTagName('body')[0];
-	const step2=Object.getPrototypeOf(Object.getPrototypeOf( Object.getPrototypeOf(step1))); 
-	// this should be an Element type.
-	if(step2.constructor.name !== "Element") {
-		throw new Error("KLAXON! KLAXON! the sky is falling");
-	}
-	const step3 = Object.getPrototypeOf(step2);
+export function enableGetEventListeners(dom = document) {
+  const step1 = dom.getElementsByTagName("body")[0];
+  const step2 = Object.getPrototypeOf(
+    Object.getPrototypeOf(Object.getPrototypeOf(step1)),
+  );
+  // this should be an Element type.
+  if (step2.constructor.name !== "Element") {
+    throw new Error("KLAXON! KLAXON! the sky is falling");
+  }
+  const step3 = Object.getPrototypeOf(step2);
 
-    // save the original methods before overwriting them
-    step3._addEventListener = step2.addEventListener;
-    step3._removeEventListener = step2.removeEventListener;
+  // save the original methods before overwriting them
+  step3._addEventListener = step2.addEventListener;
+  step3._removeEventListener = step2.removeEventListener;
 
-    step3.addEventListener = function(type,listener,useCapture=false) {
-        this._addEventListener(type,listener,useCapture);
+  step3.addEventListener = function (type, listener, useCapture = false) {
+    this._addEventListener(type, listener, useCapture);
 
-        if(!this.eventListenerList) { this.eventListenerList = {}; }
-        if(!this.eventListenerList[type]) { this.eventListenerList[type] = []; }
+    if (!this.eventListenerList) {
+      this.eventListenerList = {};
+    }
+    if (!this.eventListenerList[type]) {
+      this.eventListenerList[type] = [];
+    }
 
-        this.eventListenerList[type].push( {type, listener, useCapture} );
-    };
+    this.eventListenerList[type].push({ type, listener, useCapture });
+  };
 
-    step3.removeEventListener = function(type,listener,useCapture=false) {
-        this._removeEventListener(type,listener,useCapture);
+  step3.removeEventListener = function (type, listener, useCapture = false) {
+    this._removeEventListener(type, listener, useCapture);
 
-        if(!this.eventListenerList) { this.eventListenerList = {}; }
-        if(!this.eventListenerList[type]) { this.eventListenerList[type] = []; }
+    if (!this.eventListenerList) {
+      this.eventListenerList = {};
+    }
+    if (!this.eventListenerList[type]) {
+      this.eventListenerList[type] = [];
+    }
 
-        for(let i=0; i<this.eventListenerList[type].length; i++) {
-            if( this.eventListenerList[type][i].listener===listener && 
-				this.eventListenerList[type][i].useCapture===useCapture) {
-                this.eventListenerList[type].splice(i, 1);
-                break;
-            }
-        }
-        if(this.eventListenerList[type].length==0) {
-			delete this.eventListenerList[type];
-		}
-    };
+    for (let i = 0; i < this.eventListenerList[type].length; i++) {
+      if (
+        this.eventListenerList[type][i].listener === listener &&
+        this.eventListenerList[type][i].useCapture === useCapture
+      ) {
+        this.eventListenerList[type].splice(i, 1);
+        break;
+      }
+    }
+    if (this.eventListenerList[type].length == 0) {
+      delete this.eventListenerList[type];
+    }
+  };
 
-    step3.getEventListeners = function(type) {
-        if(!this.eventListenerList) { this.eventListenerList = {}; }
+  step3.getEventListeners = function (type) {
+    if (!this.eventListenerList) {
+      this.eventListenerList = {};
+    }
 
-        if(type===undefined) { 
-			return Object.values(this.eventListenerList); 
-		}
-        return this.eventListenerList[type];
-    };
-	
-	Object.setPrototypeOf(step2, step3);
+    if (type === undefined) {
+      return Object.values(this.eventListenerList);
+    }
+    return this.eventListenerList[type];
+  };
+
+  Object.setPrototypeOf(step2, step3);
 }
 
 /**
@@ -76,16 +90,19 @@ export function enableGetEventListeners(dom=document) {
  * @return {MiscEvent}
  */
 export function createEvent(tar) {
-	let vnt=null;
-	if(isFullstack()) { 
-		// I hope the target is still present after type washing
-		vnt=new CustomEvent('click', {detail:"a special click", bubbles:false, cancelable:true });
-		Object.defineProperty(vnt, 'target', {writable: false, value: tar});
-	} else {
-		vnt=new TouchEvent('click', { bubbles:false, cancelable:true });
-		Object.defineProperty(vnt, 'target', {writable: false, value: tar});
-//		vnt.initTouchEvent('touchstart');  // from old docs, not supported  
-	}
-	return vnt;
+  let vnt = null;
+  if (isFullstack()) {
+    // I hope the target is still present after type washing
+    vnt = new CustomEvent("click", {
+      detail: "a special click",
+      bubbles: false,
+      cancelable: true,
+    });
+    Object.defineProperty(vnt, "target", { writable: false, value: tar });
+  } else {
+    vnt = new TouchEvent("click", { bubbles: false, cancelable: true });
+    Object.defineProperty(vnt, "target", { writable: false, value: tar });
+    //		vnt.initTouchEvent('touchstart');  // from old docs, not supported
+  }
+  return vnt;
 }
-

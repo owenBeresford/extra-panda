@@ -2,13 +2,11 @@
 import { Document, Location, HTMLAnchorElement, HTMLElement } from "jsdom";
 
 import {
-  BiblioProps,
   DesktopBiblioProps,
   SimpleResponse,
   ReferenceType,
-
 } from "./all-types";
-import { isMobile, appendIsland } from "./dom-base";
+import {  appendIsland } from "./dom-base";
 import {
   dateMunge,
   mapAttribute,
@@ -16,7 +14,13 @@ import {
   addLineBreaks,
   makeRefUrl,
 } from "./string-base";
-import { log, debug, ALL_REFERENCE, ALL_REFERENCE_LINKS, runFetch } from "./code-collection";
+import {
+  log,
+  debug,
+  ALL_REFERENCE,
+  ALL_REFERENCE_LINKS,
+  runFetch,
+} from "./code-collection";
 
 // variables across this module
 // * @protected
@@ -234,7 +238,7 @@ function addMetaAge(xhr: SimpleResponse, dom: Document = document) {
  * Access point for biblio feature v2
  *    IMPURE
 
- * @param {BiblioProps} opts
+ * @param {DesktopBiblioProps} opts
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @public
@@ -256,6 +260,7 @@ export async function createBiblio(
       textAsName: 3,
       wholeTitle: 50,
       limitDesc: 150,
+      debug:debug(),
     },
     opts,
   );

@@ -1,18 +1,19 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Location, Document, HTMLElement } from "jsdom";
 
+import { CoreProps, MiscEvent, Cookieable } from "./all-types";
 import {
-  CoreProps,
-  MiscEvent,
-  Cookieable,
-} from "./all-types";
-import { log, debug, APPEARANCE_COOKIE, _getCookie, runFetch } from "./code-collection";
+  log,
+  debug,
+  APPEARANCE_COOKIE,
+  _getCookie,
+  runFetch,
+} from "./code-collection";
 import { listContentGroup } from "./adjacent";
 import { initMastodon } from "./mastodon";
 import { isMobile, appendIsland } from "./dom-base";
 import { createBiblio as mobileCreateBiblio } from "./mobile-biblio";
 import { createBiblio as desktopCreateBiblio } from "./desktop-biblio";
- 
 
 // variables across this module
 // * @protected
@@ -29,11 +30,11 @@ let OPTS: CoreProps = {} as CoreProps;
  *
  * @TODO define type for handler
  * @param {HTMLElement} where
- * @param {Function} action
+ * @param {( id: string , dom: Document ) =>void | (id: string | MiscEvent, dom: Document ) =>void} action
  * @public
  * @return {void}
  */
-function _map(where: HTMLElement, action: Function): void {
+function _map(where: HTMLElement, action: ( id: string , dom: Document ) =>void | (id: string | MiscEvent, dom: Document ) =>void): void {
   where.addEventListener("click", action);
   where.addEventListener("touch", action);
   where.addEventListener("keypress", action);
@@ -257,7 +258,7 @@ export function siteCore(
   for (let i = 0; i < tt.length; i++) {
     tt[i].classList.remove("noJS");
   }
- 
+
   _map(dom.querySelector("#pageMenu"), burgerMenu);
   initPopupMobile(dom, loc);
   initMastodon(dom, loc, win);
@@ -272,7 +273,7 @@ export function siteCore(
     loc.pathname !== "/resource/home" &&
     dom.querySelectorAll(".reading").length < 2
   ) {
-     readingDuration(
+    readingDuration(
       {
         dataLocation: "#main",
         target: ".addReading",
@@ -284,37 +285,35 @@ export function siteCore(
     );
   }
 
-  if(isMobile(dom, loc) ) {
-     mobileCreateBiblio(
-    {
-      tocEdit: 1,
-      width: OPTS.mobileWidth,
-      debug: debug(),
-      extendViaDownload: 4,
-      tooltip: 1,
-      renumber: 1,
-      runFetch:runFetch,
-    },
-    dom,
-    loc,
-  );
+  if (isMobile(dom, loc)) {
+    mobileCreateBiblio(
+      {
+        tocEdit: 1,
+        width: OPTS.mobileWidth,
+        debug: debug(),
+        extendViaDownload: 4,
+        tooltip: 1,
+        renumber: 1,
+        runFetch: runFetch,
+      },
+      dom,
+      loc,
+    );
   } else {
-     desktopCreateBiblio(
-    {
-      tocEdit: 1,
-      width: OPTS.mobileWidth,
-      debug: debug(),
-      extendViaDownload: 4,
-      tooltip: 1,
-      renumber: 1,
-      runFetch:runFetch,
-    },
-    dom,
-    loc,
-  );
-
+    desktopCreateBiblio(
+      {
+        tocEdit: 1,
+        width: OPTS.mobileWidth,
+        debug: debug(),
+        extendViaDownload: 4,
+        tooltip: 1,
+        renumber: 1,
+        runFetch: runFetch,
+      },
+      dom,
+      loc,
+    );
   }
-
 
   {
     const tabs = dom.querySelectorAll(".tabsComponent");
@@ -329,13 +328,19 @@ export function siteCore(
   if (loc.pathname.match("group-")) {
     const tt = loc.pathname.split("/group-");
     if (Array.isArray(tt) && tt.length > 1 && tt[1].length) {
-      adjacent({ group: tt[1], debug: debug(), runFetch:runFetch }, dom, loc);
+      adjacent({ group: tt[1], debug: debug(), runFetch: runFetch }, dom, loc);
     }
   } else {
     const grp: Array<string> = listContentGroup("div#contentGroup");
     for (let j = 0; j < grp.length; j++) {
       adjacent(
-        { group: grp[j], debug: debug(), iteration: j, count: grp.length, runFetch:runFetch },
+        {
+          group: grp[j],
+          debug: debug(),
+          iteration: j,
+          count: grp.length,
+          runFetch: runFetch,
+        },
         dom,
         loc,
       );

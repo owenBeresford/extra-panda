@@ -6,6 +6,7 @@ performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative
 look at:: https://github.com/Xooone47/vite-plugin-deadcodes
 add type washing to JSON ingestion 
 improve TEST_MACHINE to isLocal
+Add minifier to build step, try terser
 
 URGENT: fix tests again
 

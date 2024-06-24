@@ -1,16 +1,11 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
 import {
-  Cookieable,
-  Fetchable,
-  SimpleResponse,
-  BOUNDARY,
+   BOUNDARY,
   MiscEventHandler,
 } from "./all-types";
-import { log, debug } from "./code-collection";
+import { log } from "./code-collection";
 import { isFullstack } from "./dom-base";
-
- 
 
 /**
  * pullout
@@ -150,7 +145,6 @@ export function pad(num: number): string {
   return r;
 }
 
-
 /**
  * mapAttribute
  * Extract the named limit of the element
@@ -170,7 +164,7 @@ export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
     const STYL = ele.getBoundingClientRect();
     return STYL[attrib];
   } catch (e) {
-     log("error", "Missing data:" + e);
+    log("error", "Missing data:" + e);
     return -1;
   }
 }
@@ -208,7 +202,7 @@ export function importDate(
   let day1a: Array<string>;
   let time1a: Array<string>;
   let buf: Array<string>;
-  
+
   if (time === "" && day) {
     let tt = day.split("T");
     if (tt.length === 2) {

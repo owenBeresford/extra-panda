@@ -1,5 +1,5 @@
 import { HtmlValidate } from "html-validate";
-import { JSDOM } from 'jsdom';
+import { JSDOM } from "jsdom";
 
 /**
  * exportpage
@@ -10,8 +10,9 @@ import { JSDOM } from 'jsdom';
  * @access public
  * @return {Array<things>} - see args arg above.
  */
-export function page(url='', args=1) {
-	const dom = new JSDOM(`<html>
+export function page(url = "", args = 1) {
+  const dom = new JSDOM(
+    `<html>
 <head><title>test1</title></head>
 <body>
 	<div class="addReading" id="shareGroup">
@@ -22,11 +23,18 @@ export function page(url='', args=1) {
 		<div id="point2" class="blocker addReferences"></div>
 	</article>
 </body>
-</html>`, {url:url, referrer:url });
-	if(args===1) 	{ return dom.window.document; }
-	else if(args===2) { return [dom.window.document, dom.window.location]; } 
-	else if(args===3) { return [dom.window.document, dom.window.location, dom.window]; } 
-	else	 		{ throw new Error("Bad data"); } 
+</html>`,
+    { url: url, referrer: url },
+  );
+  if (args === 1) {
+    return dom.window.document;
+  } else if (args === 2) {
+    return [dom.window.document, dom.window.location];
+  } else if (args === 3) {
+    return [dom.window.document, dom.window.location, dom.window];
+  } else {
+    throw new Error("Bad data");
+  }
 }
 
 /**
@@ -40,15 +48,13 @@ export function page(url='', args=1) {
  * @return {boolean}
  */
 export async function validateHTML(html, emit) {
-	const htmlvalidate = new HtmlValidate({
- 	 extends: ["html-validate:recommended"],
-	});
-	const report = await htmlvalidate.validateString(html);
+  const htmlvalidate = new HtmlValidate({
+    extends: ["html-validate:recommended"],
+  });
+  const report = await htmlvalidate.validateString(html);
 
-	if (!report.valid && emit) {
-	  console.log(report.results);
-	}
-	return report.valid;
+  if (!report.valid && emit) {
+    console.log(report.results);
+  }
+  return report.valid;
 }
-
-

@@ -1,8 +1,8 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
 import { ScreenSizeArray } from "./all-types";
-import {log, debug, MOBILE_MIN_PPI} from './code-collection';
- 
+import { log, MOBILE_MIN_PPI } from "./code-collection";
+
 /**
  * appendIsland
  * An important util function, which removes need to jQuery, ShadowDOM AND other innerHTML hacks.
@@ -23,7 +23,7 @@ export function appendIsland(
 ): void {
   try {
     if (dom === null) {
-      throw new Error("Oh no! No DOM object");
+      throw new Error("Oh no! No DOM object!!");
     }
 
     const base: HTMLTemplateElement = dom.createElement("template");
@@ -31,7 +31,7 @@ export function appendIsland(
     if (typeof selector === "string") {
       const tt: HTMLElement = dom.querySelector(selector) as HTMLElement;
       if (tt === null) {
-        throw new Error("Oh no ! " + selector);
+        throw new Error("Oh no! DOM element not found: " + selector);
       }
       tt.append(base.content);
     } else {
@@ -188,7 +188,7 @@ function calcScreenDPI(dom: Document = document, win: Window = window): number {
     el.remove();
     return dpi;
   } catch (e) {
-    console.error("ERROR " + e);
+    log("error", "ERROR " + e.toString());
     return -1;
   }
 }

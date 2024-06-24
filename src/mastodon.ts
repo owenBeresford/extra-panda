@@ -1,20 +1,9 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import {
-  Document,
-  Location,
-  Window,
-  Event,
-  HTMLElement,
-} from "jsdom";
+import { Document, Location, Window, Event, HTMLElement } from "jsdom";
 
-import { log, debug, TEST_MACHINE } from "./code-collection";
-import {
-  MiscEventHandler2,
-  MiscEventHandler3,
-} from "./all-types";
+import { TEST_MACHINE } from "./code-collection";
+import { MiscEventHandler2, MiscEventHandler3 } from "./all-types";
 import { isFullstack, isMobile } from "./dom-base";
-
- 
 
 /**
  * openShare

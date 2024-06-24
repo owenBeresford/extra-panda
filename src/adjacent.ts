@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { dateMunge,  articleName } from "./string-base";
+import { dateMunge, articleName } from "./string-base";
 import { log, debug, runFetch } from "./code-collection";
 import { Document, Location } from "jsdom";
 import {
@@ -379,7 +379,7 @@ async function createAdjacentChart(
       iteration: 0,
       group: "system",
       count: 1,
-      debug: 0,
+      debug: debug(),
     },
     opts,
   ) as AdjacentProps;
@@ -393,7 +393,6 @@ async function createAdjacentChart(
   if (isMobile(dom, loc) && !isGroupArticle) {
     dom.querySelector(".adjacentGroup p").style["display"] = "none";
   } else {
-    const ROOT = access();
     const data: SimpleResponse = await runFetch(OPTS.meta, false);
     if (!data.ok || !Array.isArray(data.body)) {
       log("warn", "There doesn't seem to be a group meta data file.");

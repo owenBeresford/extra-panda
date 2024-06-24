@@ -1,62 +1,103 @@
 import { assert, describe, it } from "vitest";
-import { JSDOM } from 'jsdom';
+import { JSDOM } from "jsdom";
 
-import { page } from './page-seed';
-import { appendIsland, setIsland, isFullstack } from '../dom-base'; 
-import { register, access } from '../code-collection';
-import { ALL_REFERENCE_LINKS, ReferenceType } from '../all-types';
-import { TEST_ONLY } from '../desktop-biblio';
-const { injectOpts, markAllLinksUnknown, generateEmpty, normaliseData, applyDOMpostions, mapPositions, addMetaAge, createBiblio } = TEST_ONLY;
+import { page } from "./page-seed";
+import { appendIsland, setIsland, isFullstack } from "../dom-base";
+import { register, access } from "../code-collection";
+import { ALL_REFERENCE_LINKS, ReferenceType } from "../all-types";
+import { TEST_ONLY } from "../desktop-biblio";
+const {
+  injectOpts,
+  markAllLinksUnknown,
+  generateEmpty,
+  normaliseData,
+  applyDOMpostions,
+  mapPositions,
+  addMetaAge,
+  createBiblio,
+} = TEST_ONLY;
 
 describe("TEST desktop-biblio", () => {
-  it("go 1: generateEmptys", () => { // this item is abit pointless 
+  it("go 1: generateEmptys", () => {
+    // this item is abit pointless
     assert.equal(typeof generateEmpty, "function", "assert #1");
     assert.equal(typeof generateEmpty(1), "string", "assert #2");
     assert.equal(typeof generateEmpty(999999999), "string", "assert #3");
   });
 
-  it("go 2: markAllLinksUnknown", () => { 
-	const [dom, loc]=page('http://192.168.0.35/resource/reading-list', 2);
-	let str=`
+  it("go 2: markAllLinksUnknown", () => {
+    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
+    let str = `
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">2</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">3</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
 `;
-	appendIsland("#point2", str, dom);
-	markAllLinksUnknown(dom, loc);
-    assert.equal(dom.querySelectorAll(ALL_REFERENCE_LINKS).length, 5, "assert #4 ");
-    assert.equal(dom.querySelectorAll(ALL_REFERENCE_LINKS+"[aria-label]").length, 5, "assert #4");
-    assert.equal(dom.querySelectorAll(ALL_REFERENCE_LINKS+"[aria-label*=HTTP_ERROR]").length, 5, "assert #5");
-    assert.equal(dom.querySelectorAll(ALL_REFERENCE_LINKS+'[aria-label=""]').length, 0, "assert #6");
-    assert.equal(dom.querySelectorAll(ALL_REFERENCE_LINKS+':not( [aria-label] )').length, 0, "assert #7");
-  });	  	
+    appendIsland("#point2", str, dom);
+    markAllLinksUnknown(dom, loc);
+    assert.equal(
+      dom.querySelectorAll(ALL_REFERENCE_LINKS).length,
+      5,
+      "assert #4 ",
+    );
+    assert.equal(
+      dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]").length,
+      5,
+      "assert #4",
+    );
+    assert.equal(
+      dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label*=HTTP_ERROR]")
+        .length,
+      5,
+      "assert #5",
+    );
+    assert.equal(
+      dom.querySelectorAll(ALL_REFERENCE_LINKS + '[aria-label=""]').length,
+      0,
+      "assert #6",
+    );
+    assert.equal(
+      dom.querySelectorAll(ALL_REFERENCE_LINKS + ":not( [aria-label] )").length,
+      0,
+      "assert #7",
+    );
+  });
 
-  it("go 3: mapPositions", () => { 
-	const [dom, loc]=page('http://192.168.0.35/resource/reading-list', 2);
-	let str=`
+  it("go 3: mapPositions", () => {
+    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
+    let str = `
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
 `;
-	appendIsland("#point2", str, dom);
-	let dat=[
-		"sdfsfsd sfsdfsdf sdf sd fsdf sdfsdf ",	
-		"sdfsfsd sfsdfsdf sdf sd fsdf sdfsdf ",	
-		"sdfsfsd sfsdfsdf sdf sd fsdf sdfsdf ",	
-		"sdfsfsd sfsdfsdf sdf sd fsdf sdfsdf ",	
-		"sdfsfsd sfsdfsdf sdf sd fsdf sdfsdf ",	
-	];
-	injectOpts({renumber:1});
-	mapPositions(dat, dom);
-	
-    assert.equal(dom.querySelectorAll(ALL_REFERENCE_LINKS+"[aria-label]").length, 5, "assert #8");
-	dom.querySelectorAll(ALL_REFERENCE_LINKS+"[aria-label]").forEach((a, b)=> {
-		let tt=parseInt(a.textContent, 10);
-    	assert.isTrue(tt>=0 && tt<6 , "assert #9");
-	});
-    assert.equal(dom.querySelectorAll(ALL_REFERENCE_LINKS+'[aria-label=""]').length, 0, "assert #10");
+    appendIsland("#point2", str, dom);
+    let dat = [
+      "sdfsfsd sfsdfsdf sdf sd fsdf sdfsdf ",
+      "sdfsfsd sfsdfsdf sdf sd fsdf sdfsdf ",
+      "sdfsfsd sfsdfsdf sdf sd fsdf sdfsdf ",
+      "sdfsfsd sfsdfsdf sdf sd fsdf sdfsdf ",
+      "sdfsfsd sfsdfsdf sdf sd fsdf sdfsdf ",
+    ];
+    injectOpts({ renumber: 1 });
+    mapPositions(dat, dom);
 
-	str=`
+    assert.equal(
+      dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]").length,
+      5,
+      "assert #8",
+    );
+    dom
+      .querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]")
+      .forEach((a, b) => {
+        let tt = parseInt(a.textContent, 10);
+        assert.isTrue(tt >= 0 && tt < 6, "assert #9");
+      });
+    assert.equal(
+      dom.querySelectorAll(ALL_REFERENCE_LINKS + '[aria-label=""]').length,
+      0,
+      "assert #10",
+    );
+
+    str = `
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
@@ -67,89 +108,112 @@ describe("TEST desktop-biblio", () => {
 <p>sdf sdfs <sup><a href="gibgibgib">16</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">21</a> </sup> 
 `;
-	setIsland("#point2", str, dom);
-	// apply 5 items, as above, and renumber will still be set
-	mapPositions(dat, dom);
-    assert.equal(dom.querySelectorAll(ALL_REFERENCE_LINKS+"[aria-label]").length, 15, "assert #11");
-    assert.equal(dom.querySelectorAll(ALL_REFERENCE_LINKS+":not( [aria-label] )").length, 0, "assert #12");
-	dom.querySelectorAll(ALL_REFERENCE_LINKS+"[aria-label]").forEach((a, b)=> {
-		let tt=parseInt(a.textContent, 10);
-    	assert.isTrue(tt>=0 && tt<17 , "assert #13");
-		if(b>5) { // the early links have data, the later ones do not
-			assert.isTrue(a.getAttribute('aria-label') && a.getAttribute('aria-label').includes("HTTP_ERROR"), "assert #14");
-		}
-	});
-
+    setIsland("#point2", str, dom);
+    // apply 5 items, as above, and renumber will still be set
+    mapPositions(dat, dom);
+    assert.equal(
+      dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]").length,
+      15,
+      "assert #11",
+    );
+    assert.equal(
+      dom.querySelectorAll(ALL_REFERENCE_LINKS + ":not( [aria-label] )").length,
+      0,
+      "assert #12",
+    );
+    dom
+      .querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]")
+      .forEach((a, b) => {
+        let tt = parseInt(a.textContent, 10);
+        assert.isTrue(tt >= 0 && tt < 17, "assert #13");
+        if (b > 5) {
+          // the early links have data, the later ones do not
+          assert.isTrue(
+            a.getAttribute("aria-label") &&
+              a.getAttribute("aria-label").includes("HTTP_ERROR"),
+            "assert #14",
+          );
+        }
+      });
   });
 
-  it("go 4: addMetaAge", () => { 
-	const [dom, loc]=page('http://192.168.0.35/resource/reading-list', 2);
-	let str=`
+  it("go 4: addMetaAge", () => {
+    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
+    let str = `
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
 `;
-	appendIsland("#point2", str, dom);
-	injectOpts({ renumber:1 }); // refresh flag was removed
+    appendIsland("#point2", str, dom);
+    injectOpts({ renumber: 1 }); // refresh flag was removed
 
-	let h=new Headers();
-	h.append("Content-Type", "application/json; cbarset=utf8");
-	h.append("last-modified", "2023-06-01 09:00:00.2342Z");
-	let tt={headers:h, body:{}, ok:true};
-	addMetaAge(tt, dom);
-    assert.equal(dom.querySelectorAll('.addReading .ultraSkinny time').length, 1, "assert #15");
-	let bb=dom.querySelector('.addReading .ultraSkinny time').getAttribute('datetime');
-    assert.isTrue( parseInt(bb, 10) > 1000000000000, "assert #16");
-    assert.isTrue( +new Date(parseInt(bb, 10)) ===+new Date("2023-06-01 09:00:00.2342Z"), "assert #17");
- 	
+    let h = new Headers();
+    h.append("Content-Type", "application/json; cbarset=utf8");
+    h.append("last-modified", "2023-06-01 09:00:00.2342Z");
+    let tt = { headers: h, body: {}, ok: true };
+    addMetaAge(tt, dom);
+    assert.equal(
+      dom.querySelectorAll(".addReading .ultraSkinny time").length,
+      1,
+      "assert #15",
+    );
+    let bb = dom
+      .querySelector(".addReading .ultraSkinny time")
+      .getAttribute("datetime");
+    assert.isTrue(parseInt(bb, 10) > 1000000000000, "assert #16");
+    assert.isTrue(
+      +new Date(parseInt(bb, 10)) === +new Date("2023-06-01 09:00:00.2342Z"),
+      "assert #17",
+    );
   });
 
-  it("go 5: normaliseData", () => { 
-	const [dom, loc]=page('http://192.168.0.35/resource/reading-list', 2);
-	let dat=[
-{
-	date:+new Date('2024-03-01 09:00:00.0Z'),
-	title:"fsdfs sfs fsdfsdf1",
-	desc:"sf sfsf sdfsfsdf sdfs, dgdfgdf gdfgdfgdf",
-	auth:"racheal",
-	url:"http://192.168.0.35/resource/adfsdf",
-},
-{
-	date:+new Date('2024-04-01 09:00:00.0Z'),
-	title:"",
-	desc:"",
-	auth:"racheal2",
-	url:"http://192.168.0.35/resource/spamspam",
-},
-{
-	date:+new Date('2024-05-01 09:00:00.0Z'),
-	title:"fsdfs sfs fsdfsdf3i fgas dgadga dgd fgdg dag adfgad dfg dfg adgdg dfg ddzfh dth dh zd hzdfh zdhzdhzd h zdh zghsfj dfsf dhf sfh shsd hsthsthath dhsdthsths thsthsthsthsdthsthdths hs haeh ah h adh dhd had hah adh adh adh adhdh adth",
-	desc:"sf sfsf sdfsfsdf sdfs, dgdfgdf gdfgdfgdfdhd hst hsth sdtha ethath aeth aehaeya yae aerae ae ae aey s YANE \ GWYAE AA SE5NAEHSRT SE ZDHDRU ST HSRr srth ru s haeu er haes ese  sys thaeyu6rmae aernegarhrehd ne n5y eu4 zu,d tirsur7ia e47mr ae yr6 aere5 umr aeyarh ae5y ssrt es sruae s seu a5u aeu seuae5ua ea4n4je5y ae srey aw ey e enae sru 4wn r5 ea w7n srk6ue5uruw sumsr 4mrj sr6msr 54 ae",
-	auth:"racheal",
-	url:"http://192.168.0.35/resource/eggs-and-spam",
-},
-{
-	date:+new Date('2024-06-01 09:00:00.0Z'),
-	title:"               fsdfs sfs fsdfsdf4                  ",
-	desc:"sf %45 sfsf %20 sdfsfsdf&nbsp; sdfs, &lt;dgdfgdf&gt; gdfgdfgdf&nbsp;",
-	auth:"racheal",
-	url:"http://192.168.0.35/resource/moar-spam",
-},
-	];
-	let dat2= [
-   `Reference popup for link [1]
+  it("go 5: normaliseData", () => {
+    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
+    let dat = [
+      {
+        date: +new Date("2024-03-01 09:00:00.0Z"),
+        title: "fsdfs sfs fsdfsdf1",
+        desc: "sf sfsf sdfsfsdf sdfs, dgdfgdf gdfgdfgdf",
+        auth: "racheal",
+        url: "http://192.168.0.35/resource/adfsdf",
+      },
+      {
+        date: +new Date("2024-04-01 09:00:00.0Z"),
+        title: "",
+        desc: "",
+        auth: "racheal2",
+        url: "http://192.168.0.35/resource/spamspam",
+      },
+      {
+        date: +new Date("2024-05-01 09:00:00.0Z"),
+        title:
+          "fsdfs sfs fsdfsdf3i fgas dgadga dgd fgdg dag adfgad dfg dfg adgdg dfg ddzfh dth dh zd hzdfh zdhzdhzd h zdh zghsfj dfsf dhf sfh shsd hsthsthath dhsdthsths thsthsthsthsdthsthdths hs haeh ah h adh dhd had hah adh adh adh adhdh adth",
+        desc: "sf sfsf sdfsfsdf sdfs, dgdfgdf gdfgdfgdfdhd hst hsth sdtha ethath aeth aehaeya yae aerae ae ae aey s YANE  GWYAE AA SE5NAEHSRT SE ZDHDRU ST HSRr srth ru s haeu er haes ese  sys thaeyu6rmae aernegarhrehd ne n5y eu4 zu,d tirsur7ia e47mr ae yr6 aere5 umr aeyarh ae5y ssrt es sruae s seu a5u aeu seuae5ua ea4n4je5y ae srey aw ey e enae sru 4wn r5 ea w7n srk6ue5uruw sumsr 4mrj sr6msr 54 ae",
+        auth: "racheal",
+        url: "http://192.168.0.35/resource/eggs-and-spam",
+      },
+      {
+        date: +new Date("2024-06-01 09:00:00.0Z"),
+        title: "               fsdfs sfs fsdfsdf4                  ",
+        desc: "sf %45 sfsf %20 sdfsfsdf&nbsp; sdfs, &lt;dgdfgdf&gt; gdfgdfgdf&nbsp;",
+        auth: "racheal",
+        url: "http://192.168.0.35/resource/moar-spam",
+      },
+    ];
+    let dat2 = [
+      `Reference popup for link [1]
 
 fsdfs sfs fsdfsdf1
 racheal  01-March-2024 
 
 sf sfsf sdfsfsdf sdfs, dgdfgdf gdfgdfgdf`,
-`Reference popup for link [2]
+      `Reference popup for link [2]
 
 
 racheal2  01-April-2024 
 
 `,
-`Reference popup for link [3]
+      `Reference popup for link [3]
 
 fsdfs sfs fsdfsdf3i fgas dgadga dgd fgdg dag adfgad dfg dfg adgdg dfg ddzfh dth ↩
 dh zd hzdfh zdhzdhzd h zdh zghsfj dfsf dhf sfh shsd hsthsthath dhsdthsths thsths↩
@@ -161,75 +225,91 @@ ae aerae ae ae aey s YANE  GWYAE AA SE5NAEHSRT SE ZDHDRU ST HSRr srth ru s haeu 
 er haes ese  sys thaeyu6rmae aernegarhrehd ne n5y eu4 zu,d tirsur7ia e47mr ae yr↩
 6 aere5 umr aeyarh ae5y ssrt es sruae s seu a5u aeu seuae5ua ea4n4je5y ae srey a↩
 w ey e enae sru 4wn r5 ea w7n srk6ue5uruw sumsr 4mrj sr6msr 54 ae`,
-`Reference popup for link [4]
+      `Reference popup for link [4]
 
                fsdfs sfs fsdfsdf4                  
 racheal  01-June-2024 
 
 sf %45 sfsf %20 sdfsfsdf&nbsp; sdfs, &lt;dgdfgdf&gt; gdfgdfgdf&nbsp;`,
-];
-	assert.deepEqual( normaliseData(dat), dat2, "assert #18");
+    ];
+    assert.deepEqual(normaliseData(dat), dat2, "assert #18");
 
-	dat=[
-{
-	date:+new Date('2024-03-01 09:00:00.0Z'),
-	title:"fsdfs sfs fsdfsdf1",
-	desc:"sf sfsf sdfsfsdf sdfs, dgdfgdf gdfgdfgdf",
-	auth:"racheal",
-	url:"http://192.168.0.35/resource/adfsdf",
-},
-null, null 
-];
-	dat2= [
-   `Reference popup for link [1]
+    dat = [
+      {
+        date: +new Date("2024-03-01 09:00:00.0Z"),
+        title: "fsdfs sfs fsdfsdf1",
+        desc: "sf sfsf sdfsfsdf sdfs, dgdfgdf gdfgdfgdf",
+        auth: "racheal",
+        url: "http://192.168.0.35/resource/adfsdf",
+      },
+      null,
+      null,
+    ];
+    dat2 = [
+      `Reference popup for link [1]
 
 fsdfs sfs fsdfsdf1
 racheal  01-March-2024 
 
 sf sfsf sdfsfsdf sdfs, dgdfgdf gdfgdfgdf`,
-`Reference popup for link [2]
+      `Reference popup for link [2]
 
 HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.
   07-June-2024 
 
 HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
-`Reference popup for link [3]
+      `Reference popup for link [3]
 
 HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.
   07-June-2024 
 
 HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
-
-	];
-	assert.deepEqual( normaliseData(dat), dat2, "assert #18");
+    ];
+    assert.deepEqual(normaliseData(dat), dat2, "assert #18");
   });
 
-  it("go 6: applyDOMpostions", (context ) => { 
-	const [dom, loc]=page('http://192.168.0.35/resource/reading-list', 2);
- 	let str=`<span id="uniq1">GDG</span>
+  it("go 6: applyDOMpostions", (context) => {
+    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
+    let str = `<span id="uniq1">GDG</span>
 <span id="uniq2">WER</span>
 <span id="uniq3">IOP</span>
 <span id="uniq4">ASD</span>
 `;
-	appendIsland('#point2', str, dom);
-	if(! isFullstack() ) {
-		context.skip();
-		return;
-	}
+    appendIsland("#point2", str, dom);
+    if (!isFullstack()) {
+      context.skip();
+      return;
+    }
 
-	applyDOMpostions(dom.querySelector('#uniq1'), 200);
-	applyDOMpostions(dom.querySelector('#uniq2'), 400);
-	applyDOMpostions(dom.querySelector('#uniq3'), 600);
-	applyDOMpostions(dom.querySelector('#uniq4'), 800);
-    assert.equal(dom.querySelector('#uniq1').getAttribute('class'), "", "assert #19");
-    assert.equal(dom.querySelector('#uniq2').getAttribute('class'), "", "assert #20");
-    assert.equal(dom.querySelector('#uniq3').getAttribute('class'), "", "assert #21");
-    assert.equal(dom.querySelector('#uniq4').getAttribute('class'), "", "assert #22");
+    applyDOMpostions(dom.querySelector("#uniq1"), 200);
+    applyDOMpostions(dom.querySelector("#uniq2"), 400);
+    applyDOMpostions(dom.querySelector("#uniq3"), 600);
+    applyDOMpostions(dom.querySelector("#uniq4"), 800);
+    assert.equal(
+      dom.querySelector("#uniq1").getAttribute("class"),
+      "",
+      "assert #19",
+    );
+    assert.equal(
+      dom.querySelector("#uniq2").getAttribute("class"),
+      "",
+      "assert #20",
+    );
+    assert.equal(
+      dom.querySelector("#uniq3").getAttribute("class"),
+      "",
+      "assert #21",
+    );
+    assert.equal(
+      dom.querySelector("#uniq4").getAttribute("class"),
+      "",
+      "assert #22",
+    );
   });
 
-  it("go 7: createBiblio", async ( ) => { 
-	const [dom, loc]=page('http://192.168.0.35/resource/reading-list', 2);
-	let str=`
+  it("go 7: createBiblio", async () => {
+    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
+    let str = `
 <div id="biblio" style="display:none;"></div>
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
@@ -241,22 +321,35 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
 <p>sdf sdfs <sup><a href="gibgibgib">16</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">21</a> </sup> 
 `;
-		appendIsland('#point2', str, dom); // 15 links
-		register('runFetch', mockFetch1);
-		await createBiblio({}, dom, loc);
-		assert.equal(dom.querySelectorAll(ALL_REFERENCE_LINKS+"[aria-label]").length, 15, "assert #11");
-  		assert.equal(dom.querySelectorAll(ALL_REFERENCE_LINKS+":not( [aria-label] )").length, 0, "assert #12");
-		dom.querySelectorAll(ALL_REFERENCE_LINKS+"[aria-label]").forEach((a, b)=> {
-			let tt=parseInt(a.textContent, 10);
-    		assert.isTrue(tt>=0 && tt<17 , "assert #13");
-			assert.isTrue(a.getAttribute('aria-label') && !a.getAttribute('aria-label').includes("HTTP_ERROR"), "assert #14");
-		});
+    appendIsland("#point2", str, dom); // 15 links
+    register("runFetch", mockFetch1);
+    await createBiblio({}, dom, loc);
+    assert.equal(
+      dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]").length,
+      15,
+      "assert #11",
+    );
+    assert.equal(
+      dom.querySelectorAll(ALL_REFERENCE_LINKS + ":not( [aria-label] )").length,
+      0,
+      "assert #12",
+    );
+    dom
+      .querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]")
+      .forEach((a, b) => {
+        let tt = parseInt(a.textContent, 10);
+        assert.isTrue(tt >= 0 && tt < 17, "assert #13");
+        assert.isTrue(
+          a.getAttribute("aria-label") &&
+            !a.getAttribute("aria-label").includes("HTTP_ERROR"),
+          "assert #14",
+        );
+      });
+  });
 
-	});
-
-	function mockFetch1(url, hasExcept ) {
-		return new Promise((good, bad) => {
-			let str=`
+  function mockFetch1(url, hasExcept) {
+    return new Promise((good, bad) => {
+      let str = `
 [
   {
     "url": "https://caniuse.com/?search=%40media",
@@ -364,12 +457,11 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
     "date": 0
   }
 ]
-`; 
-			let h=new Headers();
-			h.append("Content-Type", "application/json; cbarset=utf8");
-			let ret = {body:JSON.parse(str.trim()), headers:h, ok:true};
-    		good(ret);
-		});
-	}
-
+`;
+      let h = new Headers();
+      h.append("Content-Type", "application/json; cbarset=utf8");
+      let ret = { body: JSON.parse(str.trim()), headers: h, ok: true };
+      good(ret);
+    });
+  }
 });

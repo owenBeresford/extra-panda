@@ -1,7 +1,8 @@
 /// <reference types="vitest" />
 //  // / <reference types="vite/client" />
 
-import { configDefaults, defineConfig, UserConfig } from "vitest/config";
+// import { configDefaults, defineConfig, UserConfig } from "vitest/config";
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {

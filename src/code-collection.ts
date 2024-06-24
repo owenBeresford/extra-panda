@@ -1,17 +1,17 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
-  
-export function debug(loc:Location=location):boolean {
-  const u:URLSearchParams=new URLSearchParams(loc.search);
+
+export function debug(loc: Location = location): boolean {
+  const u: URLSearchParams = new URLSearchParams(loc.search);
   return u.has("debug");
 }
 
 // this function exists, to make swapping to a fancy centralised logging feature easier.
-export function log(typ: string, ...inputs: string[]):void {
-    if (typ in console) {
-      console[typ](`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
-    } else {
-      console.log(`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
-    }
+export function log(typ: string, ...inputs: string[]): void {
+  if (typ in console) {
+    console[typ](`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
+  } else {
+    console.log(`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
+  }
 }
 
 // useful strings
@@ -45,7 +45,7 @@ export function getFetch(): Fetchable {
   } else if (typeof fetch === "function") {
     return fetch;
   } else {
-    log('error', "Please stop using old versions of node.");
+    log("error", "Please stop using old versions of node.");
     throw new Error("Please stop using old versions of Node");
     return null;
   }

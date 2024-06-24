@@ -1,26 +1,17 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import {
-  dateMunge,
-  addLineBreaks,
-  makeRefUrl,
-} from "./string-base";
+import { dateMunge, addLineBreaks, makeRefUrl } from "./string-base";
 import { log, debug, URL_PLACEHOLDER, runFetch } from "./code-collection";
 import { Document, Location } from "jsdom";
 import {
-
   ReferenceType,
   NormalisedReference,
-  BiblioProps,
   MobileBiblioProps,
 } from "./all-types";
-import { isMobile, appendIsland } from "./dom-base";
+import { appendIsland } from "./dom-base";
 
 // variables across this module
 // * @protected
 let OPTS: MobileBiblioProps = {} as MobileBiblioProps;
-if (isMobile(document, location)) {
-  register("biblio", createBiblio);
-}
 
 /**
  * empty
@@ -165,6 +156,7 @@ export async function createBiblio(
     renumber: 1, // set to 0 to disable
     tooltip: 0,
     forceToEnd: 1,
+    debug:debug(),
   };
   OPTS = Object.assign(OPTS2, opts);
 
@@ -183,7 +175,7 @@ export async function createBiblio(
     dom,
   );
 
-   const dat = await runFetch(makeRefUrl(OPTS.referencesCache, loc), false);
+  const dat = await runFetch(makeRefUrl(OPTS.referencesCache, loc), false);
   if (!dat.ok || !Array.isArray(dat.body)) {
     const html =
       '<p class="error">Unable to get bibliographic data for this article.</p>';

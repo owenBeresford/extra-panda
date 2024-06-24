@@ -1,167 +1,235 @@
 import { assert, describe, it } from "vitest";
 
-import { page } from './page-seed';
-import { TEST_ONLY } from '../adjacent';
-import { appendIsland, setIsland } from '../dom-base'; 
-import { register, access } from '../code-collection';
-import { SimpleResponse, AdjacentProps } from '../all-types';
+import { page } from "./page-seed";
+import { TEST_ONLY } from "../adjacent";
+import { appendIsland, setIsland } from "../dom-base";
+import { register, access } from "../code-collection";
+import { SimpleResponse, AdjacentProps } from "../all-types";
 
-const { 
-injectOpts,
-createStyle,
-cleanTitle,
-generateGroup,
-normaliseToList,
-nextStep,
-updateLabels,
-listContentGroup,
-convert2HTML,
-convert2IndexHTML,
-createAdjacentChart,
- } = TEST_ONLY;
-
+const {
+  injectOpts,
+  createStyle,
+  cleanTitle,
+  generateGroup,
+  normaliseToList,
+  nextStep,
+  updateLabels,
+  listContentGroup,
+  convert2HTML,
+  convert2IndexHTML,
+  createAdjacentChart,
+} = TEST_ONLY;
 
 // This is checking all the formatting visible in the result as text has been applied as
 //  expected (this is a rewrite).   This helps visualise very hetrogenious data sources,
-//  and the slightly-HTML2 outcomes make the results more useful on a variety of modern 
-// browsers (mobile, laptop, projection screen).  
-// This test is enough to make the module pass this mile-stone, which is why I wrote it 
+//  and the slightly-HTML2 outcomes make the results more useful on a variety of modern
+// browsers (mobile, laptop, projection screen).
+// This test is enough to make the module pass this mile-stone, which is why I wrote it
 // #TODO: add a HTML lint tool
 // #TODO: add a visual test via storybook or something, that will run the CSS in addition
 // also #TODO, add my new generation CSS for this module
 describe("TEST adjacent", () => {
-
   it("go 1: cleanTitle", () => {
-	assert.equal(cleanTitle("simpleID", "group"), "groupsimpleID", "step #1");
-	assert.equal(cleanTitle("test345357444", "group"), "grouptest345357444", "step #2");
-	assert.equal(cleanTitle("$t%t&t\"t=t't~t`t¬t\\t", "group"), "group_t_t_t_t_t_t_t_t_t_t", "step #3");
-	assert.equal(cleanTitle("sim\t", "group"), "groupsim_", "step #4");
+    assert.equal(cleanTitle("simpleID", "group"), "groupsimpleID", "step #1");
+    assert.equal(
+      cleanTitle("test345357444", "group"),
+      "grouptest345357444",
+      "step #2",
+    );
+    assert.equal(
+      cleanTitle("$t%t&t\"t=t't~t`t¬t\\t", "group"),
+      "group_t_t_t_t_t_t_t_t_t_t",
+      "step #3",
+    );
+    assert.equal(cleanTitle("sim\t", "group"), "groupsim_", "step #4");
   });
 
- it("go 2: createStyle", ()=>{
-	assert.equal(createStyle(true, true), "button lower", "step1" );	
-	assert.equal(createStyle(false, true), "button", "step2" );	
-	assert.equal(createStyle(false, false), "button", "step3" );	
- });
+  it("go 2: createStyle", () => {
+    assert.equal(createStyle(true, true), "button lower", "step1");
+    assert.equal(createStyle(false, true), "button", "step2");
+    assert.equal(createStyle(false, false), "button", "step3");
+  });
 
   it("go 3: generateGroup", () => {
-// data from OPTS.group OR location.search
-	injectOpts({group:"engineering" });
-	assert.equal(generateGroup({search:"first=XXX"}), "engineering", "step1");
-  	injectOpts({group:"XXX" });
-	assert.equal(generateGroup({search:"first=uitools"}), "uitools", "step2");
-	try {
-  		injectOpts({group:"XXX" });
-		generateGroup({search:"first=XXX"});
-		assert.equal(1, 0, "step3");
-
-	} catch(e) {
-		assert.equal(1, 1, "step3");
-	}
+    // data from OPTS.group OR location.search
+    injectOpts({ group: "engineering" });
+    assert.equal(
+      generateGroup({ search: "first=XXX" }),
+      "engineering",
+      "step1",
+    );
+    injectOpts({ group: "XXX" });
+    assert.equal(
+      generateGroup({ search: "first=uitools" }),
+      "uitools",
+      "step2",
+    );
+    try {
+      injectOpts({ group: "XXX" });
+      generateGroup({ search: "first=XXX" });
+      assert.equal(1, 0, "step3");
+    } catch (e) {
+      assert.equal(1, 1, "step3");
+    }
   });
 
-	it("go 4: nextStep, logic tests", ()=>{ 
-  		injectOpts({group:"engineering", name:"justify-oop", nextBar:10 });
-		assert.deepEqual( nextStep("paradigm-shft", "justify-oop", 10, 3, -1), [-1, 10, 3], "step4");
-		assert.deepEqual( nextStep("paradigm-shft", "howto-API", 10, 10, -1), [-1, 10, 10], "step5");
-		assert.deepEqual( nextStep("paradigm-shft", "paradigm-shft", 10, 3, -1), [3, 10, 3], "step6");
-		assert.deepEqual( nextStep("paradigm-shft", "paradigm-shft", 10, 10, -1), [10, 10, 0], "step7");
-		assert.deepEqual( nextStep("paradigm-shft", "paradigm-shft", 10, 10, 10), [10, 10, 0], "step8");
-	});
+  it("go 4: nextStep, logic tests", () => {
+    injectOpts({ group: "engineering", name: "justify-oop", nextBar: 10 });
+    assert.deepEqual(
+      nextStep("paradigm-shft", "justify-oop", 10, 3, -1),
+      [-1, 10, 3],
+      "step4",
+    );
+    assert.deepEqual(
+      nextStep("paradigm-shft", "howto-API", 10, 10, -1),
+      [-1, 10, 10],
+      "step5",
+    );
+    assert.deepEqual(
+      nextStep("paradigm-shft", "paradigm-shft", 10, 3, -1),
+      [3, 10, 3],
+      "step6",
+    );
+    assert.deepEqual(
+      nextStep("paradigm-shft", "paradigm-shft", 10, 10, -1),
+      [10, 10, 0],
+      "step7",
+    );
+    assert.deepEqual(
+      nextStep("paradigm-shft", "paradigm-shft", 10, 10, 10),
+      [10, 10, 0],
+      "step8",
+    );
+  });
 
-	it("go 5: normaliseToList", ()=>{
-		let d1=[
-		{ 
-		date: new Date("2024-03-02 09:00:00").getTime()/1000, 
-		title:"DDDSFDSDF ddd 1234", 
-		desc:"sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
-		auth:"racheal", 
-		url:"http://www.firstdata.com/" 
-		},
-		{ 
-		date:new Date("2024-03-03 09:00:00").getTime()/1000, 
-		title:"DDDSFDSDF ddd 45646", 
-		desc:"sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
-		auth:"", 
-		url:"http://www.seconddata.com/" 
-		},
-		{ 
-		date:new Date("2024-03-04 09:00:00").getTime()/1000, 
-		title:"DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfgd gd gdgdg dgdg dgdg dagd dag dgadf gdagdafgdagdagdafg dgdagdagd dg dg dgd ggadfgdg dgdgadfg dadg adgd dfg dgdfg g ddg adg adgd gadgdg dg adg dgdag dd gd dg dg dg dg dgadg dag dfg dgdg dg dfgdafgd dfgdfg dgdfg dfgadfg df", 
-		desc:"sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfgdfgdg dg dg dg dgdgdfgdfgdg dg dg dag agadgdg dgdgdgd gd gdgdfgdfg dgd gdg dfg dg dfg dgdfgdg dg dfgdfgdg dg dfg dfgadgdfgdgdgdfgdg dg dgdg dg dgdgdgdg dg dfg dfg dfg dgdfg dgdfg dfg dgd dfg dgdg dgdgdfg  sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf", 
-		auth:"gdgdg", 
-		url:"http://www.thirddata.com/" 
-		},
-				];
-		let d2=[
-			{
-     "auth": "racheal",
-     "date": " 02-March-2024 ",
-     "desc": "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
-     "offset": 0,
-     "title": "DDDSFDSDF ddd 1234",
-     "url": "http://www.firstdata.com/",
-			},
-			{ 
-		auth:"", 
-		date:" 03-March-2024 ", 
-		desc:"sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf", 
-     	"offset": 1,
-		title:"DDDSFDSDF ddd 45646",
-		url:"http://www.seconddata.com/" 
-			},
-			{ 
-		auth:"gdgdg", 
-		date:" 04-March-2024 ", 
-		desc:"sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg...",
-     	"offset": 2,
-		"title": "DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...",
-		url:"http://www.thirddata.com/"
-			 },
-				];
-		 injectOpts({ name:"group-engineering", nextBar:10, titleLimit:100, group:"engineering" });
-		 assert.deepEqual( normaliseToList(d1), d2, "step11" );
-	});
+  it("go 5: normaliseToList", () => {
+    let d1 = [
+      {
+        date: new Date("2024-03-02 09:00:00").getTime() / 1000,
+        title: "DDDSFDSDF ddd 1234",
+        desc: "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
+        auth: "racheal",
+        url: "http://www.firstdata.com/",
+      },
+      {
+        date: new Date("2024-03-03 09:00:00").getTime() / 1000,
+        title: "DDDSFDSDF ddd 45646",
+        desc: "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
+        auth: "",
+        url: "http://www.seconddata.com/",
+      },
+      {
+        date: new Date("2024-03-04 09:00:00").getTime() / 1000,
+        title:
+          "DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfgd gd gdgdg dgdg dgdg dagd dag dgadf gdagdafgdagdagdafg dgdagdagd dg dg dgd ggadfgdg dgdgadfg dadg adgd dfg dgdfg g ddg adg adgd gadgdg dg adg dgdag dd gd dg dg dg dg dgadg dag dfg dgdg dg dfgdafgd dfgdfg dgdfg dfgadfg df",
+        desc: "sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfgdfgdg dg dg dg dgdgdfgdfgdg dg dg dag agadgdg dgdgdgd gd gdgdfgdfg dgd gdg dfg dg dfg dgdfgdg dg dfgdfgdg dg dfg dfgadgdfgdgdgdfgdg dg dgdg dg dgdgdgdg dg dfg dfg dfg dgdfg dgdfg dfg dgd dfg dgdg dgdgdfg  sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
+        auth: "gdgdg",
+        url: "http://www.thirddata.com/",
+      },
+    ];
+    let d2 = [
+      {
+        auth: "racheal",
+        date: " 02-March-2024 ",
+        desc: "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
+        offset: 0,
+        title: "DDDSFDSDF ddd 1234",
+        url: "http://www.firstdata.com/",
+      },
+      {
+        auth: "",
+        date: " 03-March-2024 ",
+        desc: "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
+        offset: 1,
+        title: "DDDSFDSDF ddd 45646",
+        url: "http://www.seconddata.com/",
+      },
+      {
+        auth: "gdgdg",
+        date: " 04-March-2024 ",
+        desc: "sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg...",
+        offset: 2,
+        title:
+          "DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...",
+        url: "http://www.thirddata.com/",
+      },
+    ];
+    injectOpts({
+      name: "group-engineering",
+      nextBar: 10,
+      titleLimit: 100,
+      group: "engineering",
+    });
+    assert.deepEqual(normaliseToList(d1), d2, "step11");
+  });
 
-	it("go 6: listContentGroup", ()=>{
-		const [dom, loc, jsdom]=page('http://192.168.0.35/resource/code-metrics', 3 );
- 		setIsland("#point2", '<div id="testbar" data-group="engineering, uitools"></div>', dom );
-		assert.deepEqual(listContentGroup("#testbar", dom), ["engineering", "uitools"], "step8" );
- 		setIsland("#point2", '<div id="testbar" data-group="\tengineering,              uitools       "></div>', dom );
-		assert.deepEqual(listContentGroup("#testbar", dom), ["engineering", "uitools"], "step9" );
- 		setIsland("#point2", '<div id="testbar" data-group="engineering, uit   ools"></div>', dom );
-		assert.deepEqual(listContentGroup("#testbar", dom), ["engineering", "uit   ools"], "step10" );		
-	});
+  it("go 6: listContentGroup", () => {
+    const [dom, loc, jsdom] = page(
+      "http://192.168.0.35/resource/code-metrics",
+      3,
+    );
+    setIsland(
+      "#point2",
+      '<div id="testbar" data-group="engineering, uitools"></div>',
+      dom,
+    );
+    assert.deepEqual(
+      listContentGroup("#testbar", dom),
+      ["engineering", "uitools"],
+      "step8",
+    );
+    setIsland(
+      "#point2",
+      '<div id="testbar" data-group="\tengineering,              uitools       "></div>',
+      dom,
+    );
+    assert.deepEqual(
+      listContentGroup("#testbar", dom),
+      ["engineering", "uitools"],
+      "step9",
+    );
+    setIsland(
+      "#point2",
+      '<div id="testbar" data-group="engineering, uit   ools"></div>',
+      dom,
+    );
+    assert.deepEqual(
+      listContentGroup("#testbar", dom),
+      ["engineering", "uit   ools"],
+      "step10",
+    );
+  });
 
-	it("go 7: convert2HTML", ()=>{
-		let d1=[
-			{
-     "auth": "racheal",
-     "date": " 02-March-2024 ",
-     "desc": "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
-     "offset": 0,
-     "title": "DDDSFDSDF ddd 1234",
-     "url": "http://www.firstdata.com/",
-			},
-			{ 
-		auth:"", 
-     	"date": " 03-March-2024 ",
-		desc:"sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf", 
-     	"offset": 1,
-		title:"DDDSFDSDF ddd 45646",
-		url:"http://www.seconddata.com/" 
-			},
-			{ 
-		auth:"gdgdg", 
-     	"date": " 04-March-2024 ",
-		desc:"sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg...",
-     	"offset": 2,
-		"title": "DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...",
-		url:"http://www.thirddata.com/"
-			 },
-				];
+  it("go 7: convert2HTML", () => {
+    let d1 = [
+      {
+        auth: "racheal",
+        date: " 02-March-2024 ",
+        desc: "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
+        offset: 0,
+        title: "DDDSFDSDF ddd 1234",
+        url: "http://www.firstdata.com/",
+      },
+      {
+        auth: "",
+        date: " 03-March-2024 ",
+        desc: "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
+        offset: 1,
+        title: "DDDSFDSDF ddd 45646",
+        url: "http://www.seconddata.com/",
+      },
+      {
+        auth: "gdgdg",
+        date: " 04-March-2024 ",
+        desc: "sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg...",
+        offset: 2,
+        title:
+          "DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...",
+        url: "http://www.thirddata.com/",
+      },
+    ];
 
-		let d2=`<ul class="adjacentList">
+    let d2 = `<ul class="adjacentList">
 <li> <a id="linkengineering0" class="button" href="http://www.firstdata.com/" aria-label="Title: DDDSFDSDF ddd 1234
 Author: racheal &nbsp; &nbsp; Last edit:  02-March-2024 
 Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf" >DDDSFDSDF ddd 1234</a> </li>
@@ -172,90 +240,146 @@ Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf 
 Author: gdgdg &nbsp; &nbsp; Last edit:  04-March-2024 
 Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg..." >DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...</a> </li>
 </ul>`;
-		assert.deepEqual(convert2HTML(d1, "engineering"), d2, "step12" );
-	});
+    assert.deepEqual(convert2HTML(d1, "engineering"), d2, "step12");
+  });
 
-	it("go 8: convert2IndexHTML", ()=>{
-		let d1=[
-			{
-     "auth": "racheal",
-     "date": new Date("2024-03-02 09:00:00").getTime()/1000,
-     "desc": "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
-     "title": "DDDSFDSDF ddd 1234",
-     "url": "http://www.firstdata.com/",
-			},
-			{ 
-		auth:"", 
-     "date": new Date("2024-03-03 09:00:00").getTime()/1000,
-		desc:"sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf", 
-		title:"DDDSFDSDF ddd 45646",
-		url:"http://www.seconddata.com/" 
-			},
-			{ 
-		auth:"gdgdg", 
-     "date": new Date("2024-03-04 09:00:00").getTime()/1000,
-		desc:"sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfgdg dgdg dfg dgdgdgdgdgd gdgd gd gdgdfgdgdgdgdfgdfg dfgdf",
-		"title": "DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg",
-		url:"http://www.thirddata.com/"
-			 },
-				];
+  it("go 8: convert2IndexHTML", () => {
+    let d1 = [
+      {
+        auth: "racheal",
+        date: new Date("2024-03-02 09:00:00").getTime() / 1000,
+        desc: "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
+        title: "DDDSFDSDF ddd 1234",
+        url: "http://www.firstdata.com/",
+      },
+      {
+        auth: "",
+        date: new Date("2024-03-03 09:00:00").getTime() / 1000,
+        desc: "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
+        title: "DDDSFDSDF ddd 45646",
+        url: "http://www.seconddata.com/",
+      },
+      {
+        auth: "gdgdg",
+        date: new Date("2024-03-04 09:00:00").getTime() / 1000,
+        desc: "sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfgdg dgdg dfg dgdgdgdgdgd gdgd gd gdgdfgdgdgdgdfgdfg dfgdf",
+        title:
+          "DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg",
+        url: "http://www.thirddata.com/",
+      },
+    ];
 
-		let d2=`<a class="adjacentItem" href="http://www.firstdata.com/" title="sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf">DDDSFDSDF ddd 1234 <span class="button">DDDSFDSDF ddd 1234</span><p id="adjacentengineering0" >Author: racheal &nbsp; &nbsp; &nbsp;  Last edit:  02-March-2024  <br />Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf </a>
+    let d2 = `<a class="adjacentItem" href="http://www.firstdata.com/" title="sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf">DDDSFDSDF ddd 1234 <span class="button">DDDSFDSDF ddd 1234</span><p id="adjacentengineering0" >Author: racheal &nbsp; &nbsp; &nbsp;  Last edit:  02-March-2024  <br />Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf </a>
 <a class="adjacentItem" href="http://www.seconddata.com/" title="sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf">DDDSFDSDF ddd 45646 <span class="button">DDDSFDSDF ddd 45646</span><p id="adjacentengineering1" >Author:  &nbsp; &nbsp; &nbsp;  Last edit:  03-March-2024  <br />Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf </a>
 <a class="adjacentItem" href="http://www.thirddata.com/" title="sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg...">DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg <span class="button">DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg</span><p id="adjacentengineering2" >Author: gdgdg &nbsp; &nbsp; &nbsp;  Last edit:  04-March-2024  <br />Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg... </a>
 `;
-		const [dom, loc, jsdom]=page('http://192.168.0.35/resource/code-metrics', 3 );
-		assert.deepEqual(convert2IndexHTML(d1, "engineering", dom, loc), d2, "step13" );
-	});
+    const [dom, loc, jsdom] = page(
+      "http://192.168.0.35/resource/code-metrics",
+      3,
+    );
+    assert.deepEqual(
+      convert2IndexHTML(d1, "engineering", dom, loc),
+      d2,
+      "step13",
+    );
+  });
 
-	it("go 9: updateLabels", ()=>{
-		const [dom, loc, jsdom]=page('http://192.168.0.35/resource/code-metrics', 3 );
-		let str=`<div class=" top-bar fullWidth"><header><h1>I'm set</h1> </header> </div>  
-				<div class="adjacentGroup"><p>Im set too</p> </div> `; 
-		appendIsland("#point2", str, dom);
-		updateLabels("Engineering", dom);
-		assert.deepEqual(dom.querySelector('.top-bar.fullWidth header h1').textContent, "I'm set", "step14" );
-		assert.deepEqual(dom.querySelector('.adjacentGroup p').textContent, "Im set too", "step15" );
-		str=`<div class=" top-bar fullWidth"><header><h1>XXX</h1> </header> </div>
-				<div class="adjacentGroup"><p>XXX</p> </div> `; 
-		setIsland("#point2", str, dom);
-		updateLabels("Engineering", dom);
-		assert.deepEqual(dom.querySelector('.top-bar.fullWidth header h1').textContent, "Group Engineering", "step16" );
-		assert.deepEqual(dom.querySelector('.adjacentGroup p').textContent, "Some similar articles in Engineering", "step17" );
-	});
+  it("go 9: updateLabels", () => {
+    const [dom, loc, jsdom] = page(
+      "http://192.168.0.35/resource/code-metrics",
+      3,
+    );
+    let str = `<div class=" top-bar fullWidth"><header><h1>I'm set</h1> </header> </div>  
+				<div class="adjacentGroup"><p>Im set too</p> </div> `;
+    appendIsland("#point2", str, dom);
+    updateLabels("Engineering", dom);
+    assert.deepEqual(
+      dom.querySelector(".top-bar.fullWidth header h1").textContent,
+      "I'm set",
+      "step14",
+    );
+    assert.deepEqual(
+      dom.querySelector(".adjacentGroup p").textContent,
+      "Im set too",
+      "step15",
+    );
+    str = `<div class=" top-bar fullWidth"><header><h1>XXX</h1> </header> </div>
+				<div class="adjacentGroup"><p>XXX</p> </div> `;
+    setIsland("#point2", str, dom);
+    updateLabels("Engineering", dom);
+    assert.deepEqual(
+      dom.querySelector(".top-bar.fullWidth header h1").textContent,
+      "Group Engineering",
+      "step16",
+    );
+    assert.deepEqual(
+      dom.querySelector(".adjacentGroup p").textContent,
+      "Some similar articles in Engineering",
+      "step17",
+    );
+  });
 
-	it("go 10: createAdjacentChart", ()=>{
-		const [dom, loc, jsdom]=page( 'http://192.168.0.35/resource/code-metrics', 3 );
-		let str=`
+  it("go 10: createAdjacentChart", () => {
+    const [dom, loc, jsdom] = page(
+      "http://192.168.0.35/resource/code-metrics",
+      3,
+    );
+    let str = `
 <div class="adjacentGroup " id="groupengineering">
 <p>TEST</p>
 </div>`;
-		appendIsland('#point2', str, dom);
-		register('runFetch', mockFetch1);
-// jQuery("html").adjacent({group: i, debug:false, iteration:j, count:grp.length });  
-// jQuery("html").adjacent({group: tt[1], debug:false});  
-		createAdjacentChart({group:"engineering", name:"code-metrics" }, dom, loc);
-		assert.equal(dom.querySelector('.adjacentGroup p').textContent, "TEST", "step18 [negative]" );
-		assert.equal(dom.querySelectorAll('#groupengineering ul').length, 0, "step19 [negative]" );
-	});
+    appendIsland("#point2", str, dom);
+    register("runFetch", mockFetch1);
+    // jQuery("html").adjacent({group: i, debug:false, iteration:j, count:grp.length });
+    // jQuery("html").adjacent({group: tt[1], debug:false});
+    createAdjacentChart(
+      { group: "engineering", name: "code-metrics" },
+      dom,
+      loc,
+    );
+    assert.equal(
+      dom.querySelector(".adjacentGroup p").textContent,
+      "TEST",
+      "step18 [negative]",
+    );
+    assert.equal(
+      dom.querySelectorAll("#groupengineering ul").length,
+      0,
+      "step19 [negative]",
+    );
+  });
 
-
-	it("go 10.1: createAdjacentChart", async ()=>{	
-		const [dom, loc, jsdom]=page( 'http://192.168.0.35/resource/code-metrics', 3 );
-		let str=`
+  it("go 10.1: createAdjacentChart", async () => {
+    const [dom, loc, jsdom] = page(
+      "http://192.168.0.35/resource/code-metrics",
+      3,
+    );
+    let str = `
 <div class="adjacentGroup" id="groupengineering">
 <p>TEST</p>
 </div>`;
-		appendIsland('#point2', str, dom);
+    appendIsland("#point2", str, dom);
 
-		register('runFetch', mockFetch2);
-		await createAdjacentChart({group:"engineering", name:"code-metrics" }, dom, loc);
+    register("runFetch", mockFetch2);
+    await createAdjacentChart(
+      { group: "engineering", name: "code-metrics" },
+      dom,
+      loc,
+    );
 
-		assert.equal(dom.querySelector('.adjacentGroup p').textContent, "TEST", "step20 [positive]" );
-		assert.equal(dom.querySelectorAll('#groupengineering .adjacentList').length, 1, "step21 [positive]" );
+    assert.equal(
+      dom.querySelector(".adjacentGroup p").textContent,
+      "TEST",
+      "step20 [positive]",
+    );
+    assert.equal(
+      dom.querySelectorAll("#groupengineering .adjacentList").length,
+      1,
+      "step21 [positive]",
+    );
 
-// fixed input data, so fixed output data
-		let sample1=`
+    // fixed input data, so fixed output data
+    let sample1 = `
 <li> <a id="linkengineering0" class="button" href="https://owenberesford.me.uk/resource/code-metrics" aria-label="Title: Code metrics
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
 Description: A colleague didnt understand remarks about refactoring his code">Code metrics</a> </li>
@@ -269,32 +393,51 @@ Description: 16 Considerations for REST API, construction and why REST API are u
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
 Description: What concepts or areas of development are important.    This is a higher level chart..">“Zones of developmen...</a> </li>
 `;
-		assert.equal(dom.querySelector('#groupengineering .adjacentList').innerHTML, sample1, "step22 [positive]" );
-	});
+    assert.equal(
+      dom.querySelector("#groupengineering .adjacentList").innerHTML,
+      sample1,
+      "step22 [positive]",
+    );
+  });
 
-	it("go 10.2: createAdjacentChart", async ()=>{	
-		const [dom, loc]=page( 'http://192.168.0.35/resource/code-metrics', 3);
-		let str=`
+  it("go 10.2: createAdjacentChart", async () => {
+    const [dom, loc] = page("http://192.168.0.35/resource/code-metrics", 3);
+    let str = `
 <div class="adjacentGroup " id="groupengineering">
 <p>TEST</p>
 </div>`;
-		appendIsland('#point2', str, dom);
+    appendIsland("#point2", str, dom);
 
-		register('runFetch', mockFetch3);
-		createAdjacentChart({group:"engineering", name:"code-metrics", nextBar:10 }, dom, loc);
-		assert.equal(dom.querySelector('.adjacentGroup p').textContent, "TEST", "step22 [positive]" );
-		assert.equal(dom.querySelectorAll('#groupengineering ul').length, 1, "step23 [positive]" );
-// fixed input data, so fixed output data
-		let sample2=`
+    register("runFetch", mockFetch3);
+    createAdjacentChart(
+      { group: "engineering", name: "code-metrics", nextBar: 10 },
+      dom,
+      loc,
+    );
+    assert.equal(
+      dom.querySelector(".adjacentGroup p").textContent,
+      "TEST",
+      "step22 [positive]",
+    );
+    assert.equal(
+      dom.querySelectorAll("#groupengineering ul").length,
+      1,
+      "step23 [positive]",
+    );
+    // fixed input data, so fixed output data
+    let sample2 = `
 XXXX
 `;
-		assert.equal(dom.querySelectorAll('#groupengineering ul').textContent, sample2, "step24 [positive]" );
+    assert.equal(
+      dom.querySelectorAll("#groupengineering ul").textContent,
+      sample2,
+      "step24 [positive]",
+    );
+  });
 
-	});	
-
-	function mockFetch1(url, hasExcept ) {
-		return new Promise((good, bad) => {
-			let str=`
+  function mockFetch1(url, hasExcept) {
+    return new Promise((good, bad) => {
+      let str = `
 [
   {
     "url": "https://www.w3.org/WAI/WCAG2AAA-Conformance",
@@ -325,17 +468,17 @@ XXXX
     "date": 0
   }
 ]
-`; 
-			let h=new Headers();
-			h.append("Content-Type", "application/json; cbarset=utf8");
-			let ret = {body:JSON.parse(str.trim()), headers:h, ok:true};
-    		good(ret);
-		});
-	}
+`;
+      let h = new Headers();
+      h.append("Content-Type", "application/json; cbarset=utf8");
+      let ret = { body: JSON.parse(str.trim()), headers: h, ok: true };
+      good(ret);
+    });
+  }
 
-	function mockFetch2(url, hasExcept ) {
-		return new Promise((good, bad) => {
-			let str=`
+  function mockFetch2(url, hasExcept) {
+    return new Promise((good, bad) => {
+      let str = `
 [
   {
     "url": "https://owenberesford.me.uk/resource/code-metrics",
@@ -366,17 +509,17 @@ XXXX
     "date": 1711455586
   }
 ]
-`; 
-			let h=new Headers();
-			h.append("Content-Type", "application/json; cbarset=utf8");
-			let ret = {body:JSON.parse(str.trim()), headers:h, ok:true};
-    		good(ret);
-		});
-	}
+`;
+      let h = new Headers();
+      h.append("Content-Type", "application/json; cbarset=utf8");
+      let ret = { body: JSON.parse(str.trim()), headers: h, ok: true };
+      good(ret);
+    });
+  }
 
-	function mockFetch3(url, hasExcept ) {
-		return new Promise((good, bad) => {
-			let str=`
+  function mockFetch3(url, hasExcept) {
+    return new Promise((good, bad) => {
+      let str = `
 [
   {
     "url": "https://owenberesford.me.uk/resource/architecture",
@@ -737,12 +880,11 @@ XXXX
   }
 
 ]
-`; 
-			let h=new Headers();
-			h.append("Content-Type", "application/json; cbarset=utf8");
-			let ret = {body:JSON.parse(str.trim()), headers:h, ok:true};
-    		good(ret);
-		});
-	}
-
+`;
+      let h = new Headers();
+      h.append("Content-Type", "application/json; cbarset=utf8");
+      let ret = { body: JSON.parse(str.trim()), headers: h, ok: true };
+      good(ret);
+    });
+  }
 });

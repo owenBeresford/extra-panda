@@ -19,7 +19,6 @@ export interface NormalisedReference {
   url: string;
 }
 
-export type MisshapeComposite = Record<string, Function>;
 export type ScreenSizeArray = [number, number];
 export type MiscEventHandler = (a: Event) => void;
 export type MiscEventHandler3 = (
@@ -103,4 +102,3 @@ export type BiblioProps = DesktopBiblioProps & MobileBiblioProps;
 // add other possible events here
 // src: shopping project, maybe also cats
 export type MiscEvent = MouseEvent | WheelEvent | TouchEvent | KeyboardEvent;
-

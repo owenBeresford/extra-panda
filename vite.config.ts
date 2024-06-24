@@ -6,10 +6,10 @@ import { terser } from "rollup-plugin-terser";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-let mode = "development";
-if (process.env && process.env.NODE_ENV) {
-  mode = process.env.NODE_ENV;
-}
+// let mode = "development";
+// if (process.env && process.env.NODE_ENV) {
+//   mode = process.env.NODE_ENV;
+// }
 
 // https://vitejs.dev/config/
 /** @type {import('vite').UserConfig} */

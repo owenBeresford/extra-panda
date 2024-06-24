@@ -1,23 +1,23 @@
 import { assert, describe, it } from "vitest";
-import { JSDOM } from 'jsdom';
+import { JSDOM } from "jsdom";
 
-import { page } from './page-seed';
-import { TEST_ONLY } from '../core';
-import { appendIsland, setIsland, isFullstack, isMobile } from '../dom-base';
-import { enableGetEventListeners, createEvent } from './vitest-addons';
+import { page } from "./page-seed";
+import { TEST_ONLY } from "../core";
+import { appendIsland, setIsland, isFullstack, isMobile } from "../dom-base";
+import { enableGetEventListeners, createEvent } from "./vitest-addons";
 
 const {
- burgerMenu,
- initPopupMobile,
- storeAppearance,
- applyAppearance,
- tabChange,
+  burgerMenu,
+  initPopupMobile,
+  storeAppearance,
+  applyAppearance,
+  tabChange,
 } = TEST_ONLY;
 
 describe("TEST core", () => {
   it("go 1: burgerMeu", () => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home', 3);
-	let str=`<fieldset class="h4_menu column bigScreenOnly">
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    let str = `<fieldset class="h4_menu column bigScreenOnly">
 <legend><span id="pageMenu"><i class="fa fa-ob1burger" aria-hidden="true"></i> </span></legend>
 <menu class="h4_lean">
 </menu>
@@ -33,19 +33,37 @@ describe("TEST core", () => {
 <li class=""><a href="#contentGroup">Similar articles</a></li>
 </menu>
 `;
-	appendIsland('#point2', str, dom);
-	assert.isTrue(dom.querySelector('#pageMenu i').getAttribute('class').includes('fa-ob1burger'), "assert #1");
-	assert.equal(dom.querySelector('.burgerMenu').getAttribute('data-state'), null, "assert #2" );
-	burgerMenu('.burgerMenu', dom);
-	assert.isFalse(dom.querySelector('#pageMenu i').getAttribute('class').includes('fa-ob1burger'), "assert #3");
-	assert.equal(dom.querySelector('.burgerMenu').getAttribute('data-state'), '1', "assert #4" );
-
-  });	
-
+    appendIsland("#point2", str, dom);
+    assert.isTrue(
+      dom
+        .querySelector("#pageMenu i")
+        .getAttribute("class")
+        .includes("fa-ob1burger"),
+      "assert #1",
+    );
+    assert.equal(
+      dom.querySelector(".burgerMenu").getAttribute("data-state"),
+      null,
+      "assert #2",
+    );
+    burgerMenu(".burgerMenu", dom);
+    assert.isFalse(
+      dom
+        .querySelector("#pageMenu i")
+        .getAttribute("class")
+        .includes("fa-ob1burger"),
+      "assert #3",
+    );
+    assert.equal(
+      dom.querySelector(".burgerMenu").getAttribute("data-state"),
+      "1",
+      "assert #4",
+    );
+  });
 
   it("go 4: tabChange ", (context) => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home', 3);
-	let str=`<div class="chunkArticles column">
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    let str = `<div class="chunkArticles column">
 <ul class="tabList tabs" data-tab="" role="tablist">
 <li id="clickArticles" class="tab-title is-active" role="presentation"> <a id="annoying1" href="#blockArticles" role="tab" aria-selected="true" aria-controls="blockArticles"> Articles</a></li>
 <li id="clickProjects" class="tab-title" role="presentation"> <a id="annoying2" href="#blockProjects" role="tab" aria-selected="true" aria-controls="blockProjects"> Projects</a> </li>
@@ -78,32 +96,82 @@ describe("TEST core", () => {
 </fieldset>
 </div>
 `;
-	appendIsland('#point2', str, dom );
-// at point of print, this function is unused
-// I need to rewrite the home page to use it
-	tabChange('#blockProjects', dom);
-// it is necessary to use the legacy API in this unit-test, as JSDOM wont give me a populated classList  
-	assert.isTrue(dom.querySelector('#blockProjects').getAttribute('class').includes('is-active'), "assert #5");
-	assert.isFalse(dom.querySelector('#blockArticles').getAttribute('class').includes('is-active'), "assert #6");
-	tabChange('#blockArticles', dom);
-	assert.isFalse(dom.querySelector('#blockProjects').getAttribute('class').includes('is-active'), "assert #7");
-	assert.isTrue(dom.querySelector('#blockArticles').getAttribute('class').includes('is-active'), "assert #8");
+    appendIsland("#point2", str, dom);
+    // at point of print, this function is unused
+    // I need to rewrite the home page to use it
+    tabChange("#blockProjects", dom);
+    // it is necessary to use the legacy API in this unit-test, as JSDOM wont give me a populated classList
+    assert.isTrue(
+      dom
+        .querySelector("#blockProjects")
+        .getAttribute("class")
+        .includes("is-active"),
+      "assert #5",
+    );
+    assert.isFalse(
+      dom
+        .querySelector("#blockArticles")
+        .getAttribute("class")
+        .includes("is-active"),
+      "assert #6",
+    );
+    tabChange("#blockArticles", dom);
+    assert.isFalse(
+      dom
+        .querySelector("#blockProjects")
+        .getAttribute("class")
+        .includes("is-active"),
+      "assert #7",
+    );
+    assert.isTrue(
+      dom
+        .querySelector("#blockArticles")
+        .getAttribute("class")
+        .includes("is-active"),
+      "assert #8",
+    );
 
- 	let vnt=createEvent( dom.querySelector('#clickProjects a') ); 
-	tabChange(vnt , dom);
-	assert.isTrue(dom.querySelector('#blockProjects').getAttribute('class').includes('is-active'), "assert #9");
-	assert.isFalse(dom.querySelector('#blockArticles').getAttribute('class').includes('is-active'), "assert #10");
+    let vnt = createEvent(dom.querySelector("#clickProjects a"));
+    tabChange(vnt, dom);
+    assert.isTrue(
+      dom
+        .querySelector("#blockProjects")
+        .getAttribute("class")
+        .includes("is-active"),
+      "assert #9",
+    );
+    assert.isFalse(
+      dom
+        .querySelector("#blockArticles")
+        .getAttribute("class")
+        .includes("is-active"),
+      "assert #10",
+    );
 
- 	vnt=createEvent( dom.querySelector('#clickArticles a') ); 
-	tabChange(vnt , dom);
-	assert.isFalse(dom.querySelector('#blockProjects').getAttribute('class').includes('is-active'), "assert #11");
-	assert.isTrue(dom.querySelector('#blockArticles').getAttribute('class').includes('is-active'), "assert #12");
-
-	});
+    vnt = createEvent(dom.querySelector("#clickArticles a"));
+    tabChange(vnt, dom);
+    assert.isFalse(
+      dom
+        .querySelector("#blockProjects")
+        .getAttribute("class")
+        .includes("is-active"),
+      "assert #11",
+    );
+    assert.isTrue(
+      dom
+        .querySelector("#blockArticles")
+        .getAttribute("class")
+        .includes("is-active"),
+      "assert #12",
+    );
+  });
 
   it("go 5: initPopupMobile", (context) => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home?mobile=1', 3);
-	let str=`<div id="navBar"> 
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/home?mobile=1",
+      3,
+    );
+    let str = `<div id="navBar"> 
 <span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
 						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
@@ -122,17 +190,19 @@ describe("TEST core", () => {
 	</dialog>
 
 </div>`;
-	appendIsland('#point2', str, dom );
-// mobile yes, local yes
-	initPopupMobile(dom, loc);
-	assert.isTrue(dom.querySelector('#mobileMenu')!==undefined, "Assert #13");
-	assert.equal(dom.querySelectorAll('#mobileMenu a').length, 7, "Assert #14");
-
+    appendIsland("#point2", str, dom);
+    // mobile yes, local yes
+    initPopupMobile(dom, loc);
+    assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #13");
+    assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #14");
   });
 
   it("go 5.1: initPopupMobile", (context) => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home?mobile=0', 3);
-	let str=`<div id="navBar">
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/home?mobile=0",
+      3,
+    );
+    let str = `<div id="navBar">
 <span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
 						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
@@ -151,17 +221,16 @@ describe("TEST core", () => {
 	</dialog> 
 
  </div>`;
-	appendIsland('#point2', str, dom );
-// mobile no, local yes
-	initPopupMobile(dom, loc);
-	assert.isTrue(dom.querySelector('#mobileMenu')!==undefined, "Assert #15");
-	assert.equal(dom.querySelectorAll('#mobileMenu a').length, 7, "Assert #16");
-
+    appendIsland("#point2", str, dom);
+    // mobile no, local yes
+    initPopupMobile(dom, loc);
+    assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #15");
+    assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #16");
   });
 
   it("go 5.2: initPopupMobile", (context) => {
-	const [dom, loc, win] =page('http://6.6.6.6/resource/home?mobile=1', 3);
-	let str=`<div id="navBar">
+    const [dom, loc, win] = page("http://6.6.6.6/resource/home?mobile=1", 3);
+    let str = `<div id="navBar">
 				<span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
 						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
@@ -180,30 +249,26 @@ describe("TEST core", () => {
 	</dialog> 
 
  </div>`;
-	appendIsland('#point2', str, dom );
-// mobile no, local no
-	initPopupMobile(dom, loc);
-	assert.isTrue(dom.querySelector('#mobileMenu')!==undefined, "Assert #15");
-	assert.equal(dom.querySelectorAll('#mobileMenu a').length, 7, "Assert #16");
+    appendIsland("#point2", str, dom);
+    // mobile no, local no
+    initPopupMobile(dom, loc);
+    assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #15");
+    assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #16");
   });
 
-
   it("go 2: storeAppearance ", (context) => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home', 3);
-	if(!isFullstack()) {
-		context.skip();
-	}
-// if browser look at cookies before and after	
-	});
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    if (!isFullstack()) {
+      context.skip();
+    }
+    // if browser look at cookies before and after
+  });
 
   it("go 3: applyAppearance ", (context) => {
-	const [dom, loc, win] =page('http://192.168.0.35/resource/home', 3);
-	if(!isFullstack()) {
-		context.skip();
-	}
-// if browser look at cookies before and after	
-	
-	});
-
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    if (!isFullstack()) {
+      context.skip();
+    }
+    // if browser look at cookies before and after
+  });
 });
-

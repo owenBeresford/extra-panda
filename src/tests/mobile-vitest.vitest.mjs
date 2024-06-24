@@ -1,60 +1,64 @@
 import { assert, describe, it } from "vitest";
-import { JSDOM } from 'jsdom';
+import { JSDOM } from "jsdom";
 
-import { page } from './page-seed';
-import { appendIsland, setIsland, isFullstack } from '../dom-base'; 
-import { register, access } from '../code-collection';
-import { ALL_REFERENCE_LINKS, ReferenceType } from '../all-types';
-import { TEST_ONLY } from '../mobile-biblio';
+import { page } from "./page-seed";
+import { appendIsland, setIsland, isFullstack } from "../dom-base";
+import { register, access } from "../code-collection";
+import { ALL_REFERENCE_LINKS, ReferenceType } from "../all-types";
+import { TEST_ONLY } from "../mobile-biblio";
 
 const { injectOpts, empty, normaliseData, render, createBiblio } = TEST_ONLY;
 
 describe("TEST mobile-biblio", () => {
-
   it("go 1: empty", () => {
     assert.equal(typeof createBiblio, "function", "assert #1");
-	assert.deepEqual(empty(1), {
-		auth:"[No author]",
-		date:"[No date]",
-		desc:"HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
-		offset:1,
-		title:"HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
-		url: "https://owenberesford.me.uk/",
-			} , "assert #2");
+    assert.deepEqual(
+      empty(1),
+      {
+        auth: "[No author]",
+        date: "[No date]",
+        desc: "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
+        offset: 1,
+        title:
+          "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
+        url: "https://owenberesford.me.uk/",
+      },
+      "assert #2",
+    );
   });
 
   it("go 2: render", () => {
-	let dat=[
-		{
-			url:"http://192.168.0.35/resource/article1", 
-			title:"fg gdsg fgdfgdf gdfg dfg dg ",
-			desc:"sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf",
-			auth:"racheal", 
-			date:"1st-june-2001",
-		},
-		{
-			url:"http://192.168.0.35/resource/article2", 
-			title:"fg gdsg fgdfgg dfgdfg dg ad",
-			desc:"sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf",
-			auth:"racheal", 
-			date:"1st-june-2002",
-		},
-		{
-			url:"http://192.168.0.35/resource/article3", 
-			title:"dfg dg dfg dfgdfg dg ad",
-			desc:"sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf",
-			auth:"racheal", 
-			date:"1st-june-2003",
-		},
-		{
-			url:"http://192.168.0.35/resource/article4", 
-			title:"fg gdsg fgdfgdf dfgdfg dg ad",
-			desc:"sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf",
-			auth:"racheal", 
-			date:"1st-june-2004",
-		},
-		];
-	let dat2=`<ol class="mobileBiblo"><li>
+    let dat = [
+      {
+        url: "http://192.168.0.35/resource/article1",
+        title: "fg gdsg fgdfgdf gdfg dfg dg ",
+        desc: "sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf",
+        auth: "racheal",
+        date: "1st-june-2001",
+      },
+      {
+        url: "http://192.168.0.35/resource/article2",
+        title: "fg gdsg fgdfgg dfgdfg dg ad",
+        desc: "sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf",
+        auth: "racheal",
+        date: "1st-june-2002",
+      },
+      {
+        url: "http://192.168.0.35/resource/article3",
+        title: "dfg dg dfg dfgdfg dg ad",
+        desc: "sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf",
+        auth: "racheal",
+        date: "1st-june-2003",
+      },
+      {
+        url: "http://192.168.0.35/resource/article4",
+        title: "fg gdsg fgdfgdf dfgdfg dg ad",
+        desc: "sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf",
+        auth: "racheal",
+        date: "1st-june-2004",
+      },
+    ];
+    let dat2 = `<ol class="mobileBiblo"><li>
 <a href="http://192.168.0.35/resource/article1"> 
 <h5>fg gdsg fgdfgdf gdfg dfg dg </h5>
 <span>sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf</span>
@@ -84,63 +88,61 @@ describe("TEST mobile-biblio", () => {
 </li>
 </ol>`;
 
-	assert.equal(render(dat), dat2, "assert #3");
-// add HTML test	
-
+    assert.equal(render(dat), dat2, "assert #3");
+    // add HTML test
   });
 
-  it("go 2: normaliseData ", () => { 
-	let dat=[
-	{
-		date:+new Date('2000-03-01 09:00:00 Z'),
-		title:"sdfsdfs sdfsdfsfs",
-		desc:"sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
-		auth:"racheal",
-		url:"http://192.168.0.35/resource/article1",
-	},
-	{
-		date:+new Date('2000-04-01 09:00:00 Z'),
-		title:"sdfsdfs 23423432",
-		desc:"sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
-		auth:"racheal",
-		url:"http://192.168.0.35/resource/article2",
-	},
-	{
-		date:0,
-		title:"sdfsdfs 23423432",
-		desc:"sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
-		auth:"",
-		url:"http://192.168.0.35/resource/article3",
-	},
-	{
-		date:+new Date('2000-05-01 09:00:00 Z'),
-		title:"sdfsdfs 23423432",
-		desc:"sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
-		auth:false,
-		url:"http://192.168.0.35/resource/article4",
-	},
-	{
-		date:+new Date('2000-04-01 09:00:00 Z'),
-		title:"sdfsdfs w32dd2",
-		desc:null,
-		auth:"racheal",
-		url:"http://192.168.0.35/resource/article5",
-	},
-
-			];
-	let dat2=[
-	{
-	auth:"racheal",
-	date:" 01-March-2000 ", 
-	desc:`sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs f↩
+  it("go 2: normaliseData ", () => {
+    let dat = [
+      {
+        date: +new Date("2000-03-01 09:00:00 Z"),
+        title: "sdfsdfs sdfsdfsfs",
+        desc: "sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
+        auth: "racheal",
+        url: "http://192.168.0.35/resource/article1",
+      },
+      {
+        date: +new Date("2000-04-01 09:00:00 Z"),
+        title: "sdfsdfs 23423432",
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
+        auth: "racheal",
+        url: "http://192.168.0.35/resource/article2",
+      },
+      {
+        date: 0,
+        title: "sdfsdfs 23423432",
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
+        auth: "",
+        url: "http://192.168.0.35/resource/article3",
+      },
+      {
+        date: +new Date("2000-05-01 09:00:00 Z"),
+        title: "sdfsdfs 23423432",
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
+        auth: false,
+        url: "http://192.168.0.35/resource/article4",
+      },
+      {
+        date: +new Date("2000-04-01 09:00:00 Z"),
+        title: "sdfsdfs w32dd2",
+        desc: null,
+        auth: "racheal",
+        url: "http://192.168.0.35/resource/article5",
+      },
+    ];
+    let dat2 = [
+      {
+        auth: "racheal",
+        date: " 01-March-2000 ",
+        desc: `sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs f↩
 sdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs`,
-	offset:0,
-	title:"sdfsdfs sdfsdfsfs",
-	url:"http://192.168.0.35/resource/article1",
-	},
-	{
-	auth:"racheal",
-	desc:`sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
+        offset: 0,
+        title: "sdfsdfs sdfsdfsfs",
+        url: "http://192.168.0.35/resource/article1",
+      },
+      {
+        auth: "racheal",
+        desc: `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
 aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDG↩
 JDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdt↩
 yjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7id↩
@@ -148,13 +150,13 @@ t jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrt
 j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs↩
 dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
 df sfsdfsdfs`,
-	date:" 01-April-2000 ", 
-	offset:1,
-	title:"sdfsdfs 23423432",
-	url:"http://192.168.0.35/resource/article2",
-	},
-	{
-		desc:`sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
+        date: " 01-April-2000 ",
+        offset: 1,
+        title: "sdfsdfs 23423432",
+        url: "http://192.168.0.35/resource/article2",
+      },
+      {
+        desc: `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
 aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDG↩
 JDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdt↩
 yjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7id↩
@@ -162,16 +164,16 @@ t jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrt
 j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs↩
 dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
 df sfsdfsdfs`,
-		title:"sdfsdfs 23423432",
-      "auth": "[No author]",
-      "date": "[No date]",
-      "offset": 2,
-		url:"http://192.168.0.35/resource/article3",
-	},
-  {
-    "auth": "[No author]",
-	date:" 01-May-2000 ", 
-    "desc": `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
+        title: "sdfsdfs 23423432",
+        auth: "[No author]",
+        date: "[No date]",
+        offset: 2,
+        url: "http://192.168.0.35/resource/article3",
+      },
+      {
+        auth: "[No author]",
+        date: " 01-May-2000 ",
+        desc: `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
 aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDG↩
 JDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdt↩
 yjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7id↩
@@ -179,72 +181,73 @@ t jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrt
 j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs↩
 dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
 df sfsdfsdfs`,
-    "offset": 3,
-    "title": "sdfsdfs 23423432",
-    "url": "http://192.168.0.35/resource/article4",
-  },
-   {
-    "auth": "racheal",
-    "date": " 01-April-2000 ",
-    "desc": "null",
-    "offset": 4,
-    "title": "sdfsdfs w32dd2",
-    "url": "http://192.168.0.35/resource/article5",
-    },
-		];	
+        offset: 3,
+        title: "sdfsdfs 23423432",
+        url: "http://192.168.0.35/resource/article4",
+      },
+      {
+        auth: "racheal",
+        date: " 01-April-2000 ",
+        desc: "null",
+        offset: 4,
+        title: "sdfsdfs w32dd2",
+        url: "http://192.168.0.35/resource/article5",
+      },
+    ];
 
     assert.deepEqual(normaliseData(dat), dat2, "Assert #4");
-	dat=[
-	{
-		date:+new Date('2000-03-01 09:00:00 Z'),
-		title:"sdfsdfs sdfsdfsfs",
-		desc:"sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
-		auth:"racheal",
-		url:"http://192.168.0.35/resource/article1",
-	},
-	{
-		date:+new Date('2000-04-01 09:00:00 Z'),
-		title:"sdfsdfs 23423432",
-		desc:"sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
-		auth:"racheal",
-		url:"http://192.168.0.35/resource/article2",
-	},
-	{
-		date:0,
-		title:"sdfsdfs 23423432",
-		desc:"sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
-		auth:"",
-		url:"http://192.168.0.35/resource/article3",
-	},
-	{
-		date:+new Date('2000-05-01 09:00:00 Z'),
-		title:"sdfsdfs 23423432",
-		desc:"sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
-		auth:false,
-		url:"http://192.168.0.35/resource/article4",
-	},
-	{
-		date:+new Date('2000-04-01 09:00:00 Z'),
-		title:"sdfsdfs w32dd2",
-		desc:null,
-		auth:"racheal",
-		url:"http://192.168.0.35/resource/article5",
-	},
-	null, null
-			];
-	dat2=[
-	{
-	offset:0,
-   "desc": `sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs f↩
+    dat = [
+      {
+        date: +new Date("2000-03-01 09:00:00 Z"),
+        title: "sdfsdfs sdfsdfsfs",
+        desc: "sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
+        auth: "racheal",
+        url: "http://192.168.0.35/resource/article1",
+      },
+      {
+        date: +new Date("2000-04-01 09:00:00 Z"),
+        title: "sdfsdfs 23423432",
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
+        auth: "racheal",
+        url: "http://192.168.0.35/resource/article2",
+      },
+      {
+        date: 0,
+        title: "sdfsdfs 23423432",
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
+        auth: "",
+        url: "http://192.168.0.35/resource/article3",
+      },
+      {
+        date: +new Date("2000-05-01 09:00:00 Z"),
+        title: "sdfsdfs 23423432",
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
+        auth: false,
+        url: "http://192.168.0.35/resource/article4",
+      },
+      {
+        date: +new Date("2000-04-01 09:00:00 Z"),
+        title: "sdfsdfs w32dd2",
+        desc: null,
+        auth: "racheal",
+        url: "http://192.168.0.35/resource/article5",
+      },
+      null,
+      null,
+    ];
+    dat2 = [
+      {
+        offset: 0,
+        desc: `sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs f↩
 sdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs`,
-	title:"sdfsdfs sdfsdfsfs",
-	date:" 01-March-2000 ",
-	auth:"racheal",
-	url:"http://192.168.0.35/resource/article1",
-	},
-	{
-	offset:1,
-    "desc": `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
+        title: "sdfsdfs sdfsdfsfs",
+        date: " 01-March-2000 ",
+        auth: "racheal",
+        url: "http://192.168.0.35/resource/article1",
+      },
+      {
+        offset: 1,
+        desc: `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
 aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDG↩
 JDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdt↩
 yjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7id↩
@@ -252,14 +255,14 @@ t jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrt
 j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs↩
 dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
 df sfsdfsdfs`,
-	title:"sdfsdfs 23423432",
-	date:" 01-April-2000 ",
-	auth:"racheal",
-	url:"http://192.168.0.35/resource/article2",
-	},
-	{
-		offset:2,
-    "desc": `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
+        title: "sdfsdfs 23423432",
+        date: " 01-April-2000 ",
+        auth: "racheal",
+        url: "http://192.168.0.35/resource/article2",
+      },
+      {
+        offset: 2,
+        desc: `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
 aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDG↩
 JDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdt↩
 yjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7id↩
@@ -267,15 +270,15 @@ t jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrt
 j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs↩
 dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
 df sfsdfsdfs`,
-		title:"sdfsdfs 23423432",
-		 "date": "[No date]",
-   		"auth": "[No author]",
-		url:"http://192.168.0.35/resource/article3",
-	},
-    {
-     "auth": "[No author]",
-     "date": " 01-May-2000 ",
-     "desc": `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
+        title: "sdfsdfs 23423432",
+        date: "[No date]",
+        auth: "[No author]",
+        url: "http://192.168.0.35/resource/article3",
+      },
+      {
+        auth: "[No author]",
+        date: " 01-May-2000 ",
+        desc: `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
 aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDG↩
 JDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdt↩
 yjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7id↩
@@ -283,41 +286,43 @@ t jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrt
 j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs↩
 dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
 df sfsdfsdfs`,
-    "offset": 3,
-    "title": "sdfsdfs 23423432",
-    "url": "http://192.168.0.35/resource/article4",
-  },
-    {
-    "auth": "racheal",
-    "date": " 01-April-2000 ",
-    "desc": "null",
-    "offset": 4,
-    "title": "sdfsdfs w32dd2",
-    "url": "http://192.168.0.35/resource/article5",
-  },
-   {
-     "auth": "[No author]",
-     "date": "[No date]",
-    "desc": "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
-    "offset": 5,
-    "title": "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
-    "url": "https://owenberesford.me.uk/",
-  },
-   {
-     "auth": "[No author]",
-     "date": "[No date]",
-    "desc": "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
-    "offset": 6,
-    "title": "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
-    "url": "https://owenberesford.me.uk/",
-    },
-		];
+        offset: 3,
+        title: "sdfsdfs 23423432",
+        url: "http://192.168.0.35/resource/article4",
+      },
+      {
+        auth: "racheal",
+        date: " 01-April-2000 ",
+        desc: "null",
+        offset: 4,
+        title: "sdfsdfs w32dd2",
+        url: "http://192.168.0.35/resource/article5",
+      },
+      {
+        auth: "[No author]",
+        date: "[No date]",
+        desc: "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
+        offset: 5,
+        title:
+          "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
+        url: "https://owenberesford.me.uk/",
+      },
+      {
+        auth: "[No author]",
+        date: "[No date]",
+        desc: "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
+        offset: 6,
+        title:
+          "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.",
+        url: "https://owenberesford.me.uk/",
+      },
+    ];
     assert.deepEqual(normaliseData(dat), dat2, "Assert #5");
-  });	
+  });
 
-  it("go 3: createBiblio", async ( ) => { 
-	const [dom, loc]=page('http://192.168.0.35/resource/reading-list', 2);
-	let str=`
+  it("go 3: createBiblio", async () => {
+    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
+    let str = `
 <div id="biblio" style="display:none;">
 <p> here is old stuff
 <p> budget cows!!!
@@ -333,21 +338,20 @@ df sfsdfsdfs`,
 <p>sdf sdfs <sup><a href="gibgibgib">16</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">21</a> </sup> 
 `;
-		appendIsland('#point2', str, dom); // 15 links
-		register('runFetch', mockFetch1);
-		await createBiblio({gainingElement:"#biblio" }, dom, loc);
+    appendIsland("#point2", str, dom); // 15 links
+    register("runFetch", mockFetch1);
+    await createBiblio({ gainingElement: "#biblio" }, dom, loc);
 
-		assert.equal(dom.querySelectorAll("#biblio ol a" ).length, 15, "assert #6");
-		dom.querySelectorAll(ALL_REFERENCE_LINKS).forEach((a, b)=> {
-			let tt=parseInt(a.textContent, 10);
-    		assert.isTrue(tt>=0 && tt<17 , "assert #8");
-		});
+    assert.equal(dom.querySelectorAll("#biblio ol a").length, 15, "assert #6");
+    dom.querySelectorAll(ALL_REFERENCE_LINKS).forEach((a, b) => {
+      let tt = parseInt(a.textContent, 10);
+      assert.isTrue(tt >= 0 && tt < 17, "assert #8");
+    });
+  });
 
-	});
-
-	function mockFetch1(url, hasExcept ) {
-		return new Promise((good, bad) => {
-			let str=`
+  function mockFetch1(url, hasExcept) {
+    return new Promise((good, bad) => {
+      let str = `
 [
   {
     "url": "https://caniuse.com/?search=%40media",
@@ -455,12 +459,11 @@ df sfsdfsdfs`,
     "date": 0
   }
 ]
-`; 
-		let h=new Headers();
-		h.append("Content-Type", "application/json; cbarset=utf8");
-		let ret = {body:JSON.parse(str.trim()), headers:h, ok:true};
-		good(ret);
-	});
-}
-
+`;
+      let h = new Headers();
+      h.append("Content-Type", "application/json; cbarset=utf8");
+      let ret = { body: JSON.parse(str.trim()), headers: h, ok: true };
+      good(ret);
+    });
+  }
 });
