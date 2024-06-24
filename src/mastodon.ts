@@ -1,9 +1,9 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Document, Location, Window, Event, HTMLElement } from "jsdom";
 
-import { TEST_MACHINE } from "./code-collection";
 import { MiscEventHandler2, MiscEventHandler3 } from "./all-types";
 import { isFullstack, isMobile } from "./dom-base";
+import { isLocal } from './string-base';
 
 /**
  * openShare
@@ -20,7 +20,7 @@ function openShare(
   dom: Document = document,
   loc: Location = location,
 ): boolean {
-  if (loc.host !== TEST_MACHINE && !isMobile(dom, loc)) return false;
+  if ( !isLocal(loc.host) && !isMobile(dom, loc)) return false;
 
   const t = dom.querySelector("#shareMenu");
   if (t && !t.classList.replace("shareMenuOpen", "shareMenu")) {

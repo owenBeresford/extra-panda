@@ -93,6 +93,27 @@ export function makeRefUrl(template: string, loc: Location = location): string {
 }
 
 /**
+ * isLocal
+ * Guess if actual code or test node
+ 
+ * @param {string} str
+ * @public
+ * @return {boolean}
+ */
+export function isLocal(str: string): boolean {
+  if (
+    str.startsWith("192.168.") ||
+    str === "127.0.0.1" ||
+    str === "::1" ||
+    str === "0:0:0:0:0:0:0:1" ||
+    str === "localhost"
+  ) {
+    return true;
+  }
+  return false;
+}
+
+/**
  * addLineBreaks
  * Add manual wrap to a string, so the tooltips are a fixed width
  *   PURE
@@ -339,6 +360,7 @@ export function dateMunge(
 }
 
 export const TEST_ONLY = {
+  isLocal,
   articleName,
   addLineBreaks,
   pad,

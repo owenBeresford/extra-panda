@@ -5,7 +5,6 @@ performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative
        https://www.npmjs.com/package/linkedom
 look at:: https://github.com/Xooone47/vite-plugin-deadcodes
 add type washing to JSON ingestion 
-improve TEST_MACHINE to isLocal
 Add minifier to build step, try terser
 
 URGENT: fix tests again
@@ -32,8 +31,10 @@ DONE replace all log() calls
 DONE Convert to TS
 DONE move mobile shareBar to a Nav element
 DONE move appendIsland + setIsland to code-collection 
-DONE unify page() macro in testss
+DONE unify page() macro in tests
 DONE setup eslint after git
 DONE Move to an import log 
+DONE improve TEST_MACHINE to isLocal
+
 
 

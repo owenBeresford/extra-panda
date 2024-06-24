@@ -11,6 +11,7 @@ import {
 } from "./code-collection";
 import { listContentGroup } from "./adjacent";
 import { initMastodon } from "./mastodon";
+import { isLocal } from './string-base';
 import { isMobile, appendIsland } from "./dom-base";
 import { createBiblio as mobileCreateBiblio } from "./mobile-biblio";
 import { createBiblio as desktopCreateBiblio } from "./desktop-biblio";
@@ -38,19 +39,6 @@ function _map(where: HTMLElement, action: ( id: string , dom: Document ) =>void 
   where.addEventListener("click", action);
   where.addEventListener("touch", action);
   where.addEventListener("keypress", action);
-}
-
-function isLocal(str: string): boolean {
-  if (
-    str.startsWith("192.168.") ||
-    str === "127.0.0.1" ||
-    str === "::1" ||
-    str === "0:0:0:0:0:0:0:1" ||
-    str === "localhost"
-  ) {
-    return true;
-  }
-  return false;
 }
 
 /**
