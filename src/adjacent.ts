@@ -363,7 +363,7 @@ function updateLabels(gname: string, dom: Document = document): void {
  * @public
  * @return {Promise<void>}
  */
-async function createAdjacentChart(
+export async function createAdjacentChart(
   opts: AdjacentProps,
   dom: Document = document,
   loc: Location = location,
@@ -380,6 +380,7 @@ async function createAdjacentChart(
       group: "system",
       count: 1,
       debug: debug(),
+      runFetch:runFetch,
     },
     opts,
   ) as AdjacentProps;
@@ -393,7 +394,7 @@ async function createAdjacentChart(
   if (isMobile(dom, loc) && !isGroupArticle) {
     dom.querySelector(".adjacentGroup p").style["display"] = "none";
   } else {
-    const data: SimpleResponse = await runFetch(OPTS.meta, false);
+    const data: SimpleResponse = await OPTS.runFetch(OPTS.meta, false);
     if (!data.ok || !Array.isArray(data.body)) {
       log("warn", "There doesn't seem to be a group meta data file.");
       return;

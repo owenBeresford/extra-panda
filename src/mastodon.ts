@@ -4,6 +4,7 @@ import { Document, Location, Window, Event, HTMLElement } from "jsdom";
 import { MiscEventHandler2, MiscEventHandler3 } from "./all-types";
 import { isFullstack, isMobile } from "./dom-base";
 import { isLocal } from './string-base';
+import { log } from './code-collection';
 
 /**
  * openShare
@@ -190,11 +191,11 @@ function copyURL(loc: Location = location, win: Window = window): void {
         // add class for CSS effect
         return;
       },
-      (err: Error) => {
+      (err: unknown) => {
         log("error", "FAILED: copy URL " + err);
       },
     );
-  } catch (e0: Error) {
+  } catch (e0: unknown) {
     log(
       "error",
       "FAILED: copy URL feature borked " +
@@ -220,13 +221,13 @@ function _map1(
   dom: Document | Location = document,
 ): void {
   where.addEventListener("click", (a: Event): boolean => {
-    return action(a, dom);
+    action(a, dom); return false;
   });
   where.addEventListener("touch", (a: Event): boolean => {
-    return action(a, dom);
+    action(a, dom); return false;
   });
   where.addEventListener("keypress", (a: Event): boolean => {
-    return action(a, dom);
+    action(a, dom); return false;
   });
 }
 
@@ -248,13 +249,13 @@ function _map2(
   loc: Location = location,
 ): void {
   where.addEventListener("click", (a: Event): boolean => {
-    return action(a, dom, loc);
+    action(a, dom, loc); return false;
   });
   where.addEventListener("touch", (a: Event): boolean => {
-    return action(a, dom, loc);
+    action(a, dom, loc); return false;
   });
   where.addEventListener("keypress", (a: Event): boolean => {
-    return action(a, dom, loc);
+    action(a, dom, loc); return false;
   });
 }
 
@@ -265,7 +266,7 @@ function _map2(
  * @param {HTMLElement} where
  * @param {MiscEventHandler } action
  * @param {Document =document} dom
- * @param {Location =location} loc
+ * @param {Location|null =location} loc
  * @param {Window =window} win
  * @public
  * @return {void}
@@ -278,13 +279,13 @@ function _map3(
   win: Window = window,
 ): void {
   where.addEventListener("click", (a: Event): boolean => {
-    return action(a, dom, win);
+    action(a, dom, win); return false;
   });
   where.addEventListener("touch", (a: Event): boolean => {
-    return action(a, dom, win);
+    action(a, dom, win); return false;
   });
   where.addEventListener("keypress", (a: Event): boolean => {
-    return action(a, dom, win);
+    action(a, dom, win); return false;
   });
 }
 

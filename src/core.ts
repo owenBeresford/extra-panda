@@ -9,12 +9,14 @@ import {
   _getCookie,
   runFetch,
 } from "./code-collection";
-import { listContentGroup } from "./adjacent";
+import { listContentGroup, createAdjacentChart } from "./adjacent";
 import { initMastodon } from "./mastodon";
 import { isLocal } from './string-base';
 import { isMobile, appendIsland } from "./dom-base";
 import { createBiblio as mobileCreateBiblio } from "./mobile-biblio";
 import { createBiblio as desktopCreateBiblio } from "./desktop-biblio";
+import { addOctoCats, addBooks, addFancyButtonArrow, addBashSamples } from './effect';
+import { readingDuration } from './reading';
 
 // variables across this module
 // * @protected
@@ -25,17 +27,19 @@ let OPTS: CoreProps = {} as CoreProps;
 // CorrectionModule.prototype.biblioExtract = function ()  << runs HEAD
 // CorrectionModule.prototype.extractGET = function (val)  << UNUSED, became language API
 
+type MultiFuncArg =(id: string | MiscEvent, dom: Document ) =>void;
+
 /**
  * _map
  * Add several event listeners, just a utility
  *
  * @TODO define type for handler
  * @param {HTMLElement} where
- * @param {( id: string , dom: Document ) =>void | (id: string | MiscEvent, dom: Document ) =>void} action
+ * @param { (id: string | MiscEvent, dom: Document ) =>void} action
  * @public
  * @return {void}
  */
-function _map(where: HTMLElement, action: ( id: string , dom: Document ) =>void | (id: string | MiscEvent, dom: Document ) =>void): void {
+function _map(where: HTMLElement, action:MultiFuncArg ): void {
   where.addEventListener("click", action);
   where.addEventListener("touch", action);
   where.addEventListener("keypress", action);
@@ -76,7 +80,7 @@ function initPopupMobile(
       continue;
     }
 
-    const local: HTMLAnchorElement = BUFFER[i].cloneNode(true);
+    const local: HTMLAnchorElement = BUFFER[i].cloneNode(true) as HTMLAnchorElement;
     local.classList.remove("bigScreenOnly");
     html.push("<li>");
     html.push(local.outerHTML); // I don't like this line
@@ -266,9 +270,8 @@ export function siteCore(
         dataLocation: "#main",
         target: ".addReading",
         debug: debug(),
-        refresh: 1,
-        linkTo: "/resource/jQuery-reading-duration",
-      },
+        refresh: true,
+       },
       dom,
     );
   }
@@ -276,11 +279,7 @@ export function siteCore(
   if (isMobile(dom, loc)) {
     mobileCreateBiblio(
       {
-        tocEdit: 1,
-        width: OPTS.mobileWidth,
         debug: debug(),
-        extendViaDownload: 4,
-        tooltip: 1,
         renumber: 1,
         runFetch: runFetch,
       },
@@ -290,13 +289,9 @@ export function siteCore(
   } else {
     desktopCreateBiblio(
       {
-        tocEdit: 1,
-        width: OPTS.mobileWidth,
         debug: debug(),
-        extendViaDownload: 4,
-        tooltip: 1,
-        renumber: 1,
         runFetch: runFetch,
+        renumber:1
       },
       dom,
       loc,
@@ -316,12 +311,12 @@ export function siteCore(
   if (loc.pathname.match("group-")) {
     const tt = loc.pathname.split("/group-");
     if (Array.isArray(tt) && tt.length > 1 && tt[1].length) {
-      adjacent({ group: tt[1], debug: debug(), runFetch: runFetch }, dom, loc);
+      createAdjacentChart({ group: tt[1], debug: debug(), runFetch: runFetch }, dom, loc);
     }
   } else {
     const grp: Array<string> = listContentGroup("div#contentGroup");
     for (let j = 0; j < grp.length; j++) {
-      adjacent(
+      createAdjacentChart(
         {
           group: grp[j],
           debug: debug(),

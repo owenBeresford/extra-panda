@@ -1,4 +1,6 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
+import { Fetchable, SimpleResponse, Cookieable } from './all-types';
+
 
 export function debug(loc: Location = location): boolean {
   const u: URLSearchParams = new URLSearchParams(loc.search);

@@ -35,6 +35,7 @@ export function pullout(a: HTMLElement): string {
  * @public
  * @return {void}
  */
+/*
 function _map(
   where: HTMLElement,
   action: MiscEventHandler,
@@ -56,6 +57,7 @@ function _map(
     where.addEventListener("keypress", action);
   }
 }
+*/
 
 /**
  * articleName
@@ -368,5 +370,5 @@ export const TEST_ONLY = {
   mapAttribute,
   importDate,
   dateMunge,
-  _map,
+//  _map,
 };

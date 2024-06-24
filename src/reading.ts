@@ -14,7 +14,7 @@ import { ReadingProps } from "./all-types";
  * @public
  * @return {void}
  */
-function readingDuration(opts: ReadingProps, dom = document): void {
+export function readingDuration(opts: ReadingProps, dom = document): void {
   const RE = /\b[^ (),;.\t\n]{3,}\b/g;
   const options = Object.assign(
     {},

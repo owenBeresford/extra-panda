@@ -32,10 +32,11 @@ export type BOUNDARY = "top" | "bottom" | "left" | "right" | "height" | "width";
 export interface ReadingProps {
   dataLocation: string;
   target: string;
-  wordPerMin: number;
-  codeSelector: string;
-  timeFormat: string;
+  wordPerMin?: number;
+  codeSelector?: string;
+  timeFormat?: string;
   refresh: boolean;
+  debug:boolean;
 }
 
 export interface CoreProps {
@@ -46,6 +47,8 @@ export interface CoreProps {
 export type Fetch = (u: string, o: RequestInit) => Promise<Response>;
 
 export type Fetchable = Fetch | null;
+
+export type FetchedExec = (url: string, trap: boolean) => Promise<SimpleResponse>;
 
 export interface SimpleResponse {
   body: object | string;
@@ -59,42 +62,37 @@ export interface Cookieable {
 }
 
 export interface DesktopBiblioProps {
-  indexUpdated: number;
-  type: string;
-  width: number;
-  referencesCache: string;
-  gainingElement: string;
-  pageInitRun: number;
-  renumber: number;
-  tooltip: number;
-  textAsName: number;
-  wholeTitle: number;
-  limitDesc: number;
-  runFetch: Fetchable;
+  indexUpdated?: number;
+  referencesCache?: string;
+  gainingElement?: string;
+  pageInitRun?: number;
+  renumber?: number;
+  runFetch: FetchedExec ;
+  debug:boolean;
 }
 
 export interface MobileBiblioProps {
-  referencesCache: string;
-  gainingElement: string;
-  losingElement: string;
-  pageInitRun: number;
-  renumber: number;
-  tooltip: number;
-  forceToEnd: number;
-  runFetch: Fetchable;
+  referencesCache?: string;
+  gainingElement?: string;
+  losingElement?: string;
+  pageInitRun?: number;
+  renumber?: number;
+  forceToEnd?: number;
+  runFetch: FetchedExec ;
+  debug:boolean;
 }
 
 export interface AdjacentProps {
-  name: string;
-  debug: boolean;
-  meta: string;
-  nextBar: number;
-  titleLimit: number;
-  rendered: boolean;
-  iteration: number;
+  name?: string;
+  meta?: string;
+  nextBar?: number;
+  titleLimit?: number;
+  rendered?: boolean;
+  iteration?: number;
   group: string;
-  count: number;
-  runFetch: Fetchable;
+  count?: number;
+  debug: boolean;
+  runFetch: FetchedExec;
 }
 
 export type BiblioProps = DesktopBiblioProps & MobileBiblioProps;

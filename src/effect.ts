@@ -12,7 +12,7 @@ import { pullout } from "./string-base";
  * @public
  * @return {void}
  */
-function addOctoCats(dom: Document = document): void {
+export function addOctoCats(dom: Document = document): void {
   dom.querySelectorAll("article a").forEach(function (
     a: HTMLAnchorElement,
   ): void {
@@ -33,7 +33,7 @@ function addOctoCats(dom: Document = document): void {
  * @public
  * @return {void}
  */
-function addBooks(dom: Document = document): void {
+export function addBooks(dom: Document = document): void {
   dom.querySelectorAll("article a").forEach(function (a: HTMLAnchorElement) {
     const tmp = pullout(a);
     if (tmp.trim().toLowerCase() === "docs") {
@@ -59,7 +59,7 @@ function addBooks(dom: Document = document): void {
  * @public
  * @return {void}
  */
-function addBashSamples(dom: Document = document): void {
+export function addBashSamples(dom: Document = document): void {
   const r1 = new RegExp("`([^`]+)`", "g");
   const r2 = new RegExp("/ /", "g");
   const bash: Array<HTMLElement> = dom.querySelectorAll(".addBashSamples");
@@ -85,7 +85,7 @@ function addBashSamples(dom: Document = document): void {
  * @public
  * @return {void}
  */
-function addFancyButtonArrow(dom: Document = document): void {
+export function addFancyButtonArrow(dom: Document = document): void {
   const aa: Array<HTMLElement> = dom.querySelectorAll(".addArrow");
   for (let i = 0; i < aa.length; i++) {
     appendIsland(

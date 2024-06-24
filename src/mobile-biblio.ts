@@ -154,9 +154,9 @@ export async function createBiblio(
     losingElement: ".addReferences",
     pageInitRun: 0,
     renumber: 1, // set to 0 to disable
-    tooltip: 0,
     forceToEnd: 1,
     debug:debug(),
+	  runFetch:runFetch,
   };
   OPTS = Object.assign(OPTS2, opts);
 
@@ -175,12 +175,12 @@ export async function createBiblio(
     dom,
   );
 
-  const dat = await runFetch(makeRefUrl(OPTS.referencesCache, loc), false);
+  const dat = await OPTS.runFetch(makeRefUrl(OPTS.referencesCache, loc), false);
   if (!dat.ok || !Array.isArray(dat.body)) {
     const html =
       '<p class="error">Unable to get bibliographic data for this article.</p>';
     appendIsland(OPTS.gainingElement, html, dom);
-    log("warn", "Unable to get meta data ", dat.headers);
+    log("warn", "Unable to get meta data ", JSON.stringify(dat.headers.entries()));
   } else {
     const dat2 = normaliseData(dat.body as Array<ReferenceType>);
     const html = render(dat2);
