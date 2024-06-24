@@ -1,9 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
-import {
-  ScreenSizeArray,
-  MOBILE_MIN_PPI,
-} from "./all-types";
+import { ScreenSizeArray } from "./all-types";
+import {log, debug, MOBILE_MIN_PPI} from './code-collection';
  
 /**
  * appendIsland
@@ -40,7 +38,7 @@ export function appendIsland(
       return selector.append(base.content);
     }
   } catch (e) {
-    console.log("ERROR ", e);
+    log("error", e.toString());
   }
 }
 

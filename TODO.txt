@@ -1,16 +1,13 @@
-?? make URL HTTPS test work better ??
 add licence headers
 non-standard syntax hilighting in sitemap-plan
-I do not know how to test code-collection
 i think, in adjacent, mapping text() to html()
-setup eslint after git
 performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311
        https://www.npmjs.com/package/linkedom
 look at:: https://github.com/Xooone47/vite-plugin-deadcodes
 add type washing to JSON ingestion 
-Move to import log 
-drop single unified common class as not a valuable idea
-unify page() macros
+improve TEST_MACHINE to isLocal
+
+URGENT: fix tests again
 
 css changes
 swap CSS for dialog with modal JS function + [open] attrib
@@ -34,6 +31,8 @@ DONE replace all log() calls
 DONE Convert to TS
 DONE move mobile shareBar to a Nav element
 DONE move appendIsland + setIsland to code-collection 
-
+DONE unify page() macro in testss
+DONE setup eslint after git
+DONE Move to an import log 
 
 

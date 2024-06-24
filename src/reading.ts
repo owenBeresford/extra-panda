@@ -1,10 +1,8 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
-import { register } from "./code-collection";
+import { log, debug } from "./code-collection";
 import { appendIsland } from "./dom-base";
 import { pullout } from "./string-base";
 import { ReadingProps } from "./all-types";
-
-register("readingDuration", readingDuration);
 
 /**
  * readingDuration
@@ -73,6 +71,8 @@ function readingDuration(opts: ReadingProps, dom = document): void {
     "</a>";
   appendIsland(options.target, h1, dom);
 }
+
+/////////////////////////////////////////////// testing ////////////////////////////////////////////
 
 /* access to functions for unit tests */
 export const TEST_ONLY = { readingDuration };

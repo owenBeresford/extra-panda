@@ -1,6 +1,6 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { dateMunge, runFetch,  articleName } from "./string-base";
-import { register, access } from "./code-collection";
+import { dateMunge,  articleName } from "./string-base";
+import { log, debug, runFetch } from "./code-collection";
 import { Document, Location } from "jsdom";
 import {
   SimpleResponse,
@@ -9,8 +9,6 @@ import {
   AdjacentProps,
 } from "./all-types";
 import { isMobile, appendIsland } from "./dom-base";
-
-register("createAdjacentChart", createAdjacentChart);
 
 // variables across this module
 let OPTS: AdjacentProps = {} as AdjacentProps;
@@ -396,15 +394,15 @@ async function createAdjacentChart(
     dom.querySelector(".adjacentGroup p").style["display"] = "none";
   } else {
     const ROOT = access();
-    const data: SimpleResponse = await ROOT.runFetch(OPTS.meta, false);
+    const data: SimpleResponse = await runFetch(OPTS.meta, false);
     if (!data.ok || !Array.isArray(data.body)) {
-      ROOT.log("warn", "There doesn't seem to be a group meta data file.");
+      log("warn", "There doesn't seem to be a group meta data file.");
       return;
     }
 
     if (isGroupArticle) {
       if (OPTS.rendered) {
-        ROOT.log("warn", "Already rendered this asset");
+        log("warn", "Already rendered this asset");
         return;
       }
       OPTS.rendered = true;
@@ -437,7 +435,7 @@ async function createAdjacentChart(
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {
-    console.error("ERROR: to use injectOpts, you must set development");
+    console.error("ERROR: to use injectOpts, you must set NODE_ENV");
     return;
   }
   OPTS = Object.assign(OPTS, a);

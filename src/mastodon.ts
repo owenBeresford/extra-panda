@@ -7,17 +7,14 @@ import {
   HTMLElement,
 } from "jsdom";
 
-import { register, access } from "./code-collection";
+import { log, debug, TEST_MACHINE } from "./code-collection";
 import {
   MiscEventHandler2,
   MiscEventHandler3,
-  TEST_MACHINE,
 } from "./all-types";
 import { isFullstack, isMobile } from "./dom-base";
 
-register("shareMastodon", shareMastodon);
-register("copyURL", copyURL);
-const ROOT = access();
+ 
 
 /**
  * openShare
@@ -68,7 +65,7 @@ function shareMastodon(
   }
 
   server = "https://" + server + "/share?text=I+think+this+is+important+" + url;
-  ROOT.log("info", "Trying to open mastodon server, " + server);
+  log("info", "Trying to open mastodon server, " + server);
   if (isFullstack()) {
     // in JSDOM can't use extra functions, as the fake isn't deep enough
     (dom.querySelector("#popup") as HTMLDialogElement).close();
@@ -205,11 +202,11 @@ function copyURL(loc: Location = location, win: Window = window): void {
         return;
       },
       (err: Error) => {
-        ROOT.log("error", "FAILED: copy URL " + err);
+        log("error", "FAILED: copy URL " + err);
       },
     );
   } catch (e0: Error) {
-    ROOT.log(
+    log(
       "error",
       "FAILED: copy URL feature borked " +
         e0 +

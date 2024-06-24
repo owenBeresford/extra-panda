@@ -1,14 +1,13 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import {
   dateMunge,
-  runFetch,
   addLineBreaks,
   makeRefUrl,
 } from "./string-base";
-import { register, access } from "./code-collection";
+import { log, debug, URL_PLACEHOLDER, runFetch } from "./code-collection";
 import { Document, Location } from "jsdom";
 import {
-  URL_PLACEHOLDER,
+
   ReferenceType,
   NormalisedReference,
   BiblioProps,
@@ -153,7 +152,7 @@ function adjustDom(dat: Array<ReferenceType>, dom: Document = document): void {
  * @public
  * @return {void}
  */
-async function createBiblio(
+export async function createBiblio(
   opts: MobileBiblioProps,
   dom: Document = document,
   loc: Location = location,
@@ -170,7 +169,7 @@ async function createBiblio(
   OPTS = Object.assign(OPTS2, opts);
 
   if (OPTS.pageInitRun) {
-    this.log("warn", "Mobile biblio run twice ??!");
+    log("warn", "Mobile biblio run twice ??!");
     return;
   }
   OPTS.pageInitRun = 1;
@@ -184,13 +183,12 @@ async function createBiblio(
     dom,
   );
 
-  const ROOT = access();
-  const dat = await ROOT.runFetch(makeRefUrl(OPTS.referencesCache, loc), false);
+   const dat = await runFetch(makeRefUrl(OPTS.referencesCache, loc), false);
   if (!dat.ok || !Array.isArray(dat.body)) {
     const html =
       '<p class="error">Unable to get bibliographic data for this article.</p>';
     appendIsland(OPTS.gainingElement, html, dom);
-    this.log("warn", "Unable to get meta data ", dat.headers);
+    log("warn", "Unable to get meta data ", dat.headers);
   } else {
     const dat2 = normaliseData(dat.body as Array<ReferenceType>);
     const html = render(dat2);
@@ -211,7 +209,7 @@ async function createBiblio(
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {
-    console.error("ERROR: to use injectOpts, you must set development");
+    console.error("ERROR: to use injectOpts, you must set NODE_ENV");
     return;
   }
   OPTS = Object.assign(OPTS, a);

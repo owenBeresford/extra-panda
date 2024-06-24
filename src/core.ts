@@ -2,23 +2,17 @@
 import { Location, Document, HTMLElement } from "jsdom";
 
 import {
-  APPEARANCE_COOKIE,
   CoreProps,
   MiscEvent,
   Cookieable,
 } from "./all-types";
-import {
-  runFetch,
-  _getCookie,
-} from "./string-base";
-import { register, access } from "./code-collection";
+import { log, debug, APPEARANCE_COOKIE, _getCookie, runFetch } from "./code-collection";
 import { listContentGroup } from "./adjacent";
 import { initMastodon } from "./mastodon";
 import { isMobile, appendIsland } from "./dom-base";
-
-register("main", siteCore);
-register("siteCore", siteCore);
-register("tabChange", tabChange);
+import { createBiblio as mobileCreateBiblio } from "./mobile-biblio";
+import { createBiblio as desktopCreateBiblio } from "./desktop-biblio";
+ 
 
 // variables across this module
 // * @protected
@@ -27,7 +21,7 @@ let OPTS: CoreProps = {} as CoreProps;
 // removed:
 // CorrectionModule.prototype.columnise = function ()    << now CSS
 // CorrectionModule.prototype.biblioExtract = function ()  << runs HEAD
-// CorrectionModule.prototype.extractGET = function (val)  << UNUSED
+// CorrectionModule.prototype.extractGET = function (val)  << UNUSED, became language API
 
 /**
  * _map
@@ -218,7 +212,7 @@ function tabChange(id: string | MiscEvent, dom: Document = document): void {
     target = "" + thing.getAttribute("href");
   }
   if (!thing) {
-    this.log("ERROR", "Malconfigured tabs!! " + id + " matches nothing");
+    log("ERROR", "Malconfigured tabs!! " + id + " matches nothing");
     return;
   }
 
@@ -263,15 +257,14 @@ export function siteCore(
   for (let i = 0; i < tt.length; i++) {
     tt[i].classList.remove("noJS");
   }
-  const ROOT = access();
-
+ 
   _map(dom.querySelector("#pageMenu"), burgerMenu);
   initPopupMobile(dom, loc);
   initMastodon(dom, loc, win);
-  ROOT.addOctoCats(dom);
-  ROOT.addBooks(dom);
-  ROOT.addFancyButtonArrow(dom);
-  ROOT.addBashSamples(dom);
+  addOctoCats(dom);
+  addBooks(dom);
+  addFancyButtonArrow(dom);
+  addBashSamples(dom);
   applyAppearance(dom);
 
   if (
@@ -279,11 +272,11 @@ export function siteCore(
     loc.pathname !== "/resource/home" &&
     dom.querySelectorAll(".reading").length < 2
   ) {
-    ROOT.readingDuration(
+     readingDuration(
       {
         dataLocation: "#main",
         target: ".addReading",
-        debug: ROOT.debug(),
+        debug: debug(),
         refresh: 1,
         linkTo: "/resource/jQuery-reading-duration",
       },
@@ -291,26 +284,44 @@ export function siteCore(
     );
   }
 
-  // pull this out
-  ROOT.biblio(
+  if(isMobile(dom, loc) ) {
+     mobileCreateBiblio(
     {
       tocEdit: 1,
       width: OPTS.mobileWidth,
-      debug: ROOT.debug(),
+      debug: debug(),
       extendViaDownload: 4,
       tooltip: 1,
       renumber: 1,
+      runFetch:runFetch,
     },
     dom,
     loc,
   );
+  } else {
+     desktopCreateBiblio(
+    {
+      tocEdit: 1,
+      width: OPTS.mobileWidth,
+      debug: debug(),
+      extendViaDownload: 4,
+      tooltip: 1,
+      renumber: 1,
+      runFetch:runFetch,
+    },
+    dom,
+    loc,
+  );
+
+  }
+
 
   {
     const tabs = dom.querySelectorAll(".tabsComponent");
     for (let i = 0; i < tabs.length; i++) {
       const btns = tabs[i].querySelectorAll(".label.button");
       for (let j = 0; j < btns.length; j++) {
-        _map(btns[j], ROOT.tabChange);
+        _map(btns[j], tabChange);
       }
     }
   }
@@ -318,13 +329,13 @@ export function siteCore(
   if (loc.pathname.match("group-")) {
     const tt = loc.pathname.split("/group-");
     if (Array.isArray(tt) && tt.length > 1 && tt[1].length) {
-      ROOT.adjacent({ group: tt[1], debug: ROOT.debug() }, dom, loc);
+      adjacent({ group: tt[1], debug: debug(), runFetch:runFetch }, dom, loc);
     }
   } else {
     const grp: Array<string> = listContentGroup("div#contentGroup");
     for (let j = 0; j < grp.length; j++) {
-      ROOT.adjacent(
-        { group: grp[j], debug: ROOT.debug(), iteration: j, count: grp.length },
+      adjacent(
+        { group: grp[j], debug: debug(), iteration: j, count: grp.length, runFetch:runFetch },
         dom,
         loc,
       );

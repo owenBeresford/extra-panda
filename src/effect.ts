@@ -1,13 +1,9 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Document, HTMLAnchorElement, HTMLElement } from "jsdom";
-import { register } from "./code-collection";
+import { log, debug } from "./code-collection";
 import { appendIsland } from "./dom-base";
 import { pullout } from "./string-base";
 
-register("addOctoCats", addOctoCats);
-register("addBooks", addBooks);
-register("addBashSamples", addBashSamples);
-register("addFancyButtonArrow", addFancyButtonArrow);
 
 /**
  * addOctoCats
@@ -102,6 +98,8 @@ function addFancyButtonArrow(dom: Document = document): void {
     );
   }
 }
+
+/////////////////////////////////////////////////////// testing /////////////////////////////////////////////////
 
 /**
  * Only use for testing, it allows access to the entire API

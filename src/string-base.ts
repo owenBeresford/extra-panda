@@ -7,77 +7,10 @@ import {
   BOUNDARY,
   MiscEventHandler,
 } from "./all-types";
-import { register } from "./code-collection";
+import { log, debug } from "./code-collection";
 import { isFullstack } from "./dom-base";
 
-register("runFetch", runFetch);
-
-/**
- * getFetch
- * Access to fetch that is will work across JS interpreters
- *   IMPURE due to logging
-
- * @public
- * @return {Fetch| null}
- */
-export function getFetch(): Fetchable {
-  if (typeof window !== "undefined") {
-    return window.fetch;
-  } else if (typeof fetch === "function") {
-    return fetch;
-  } else {
-    console.error("Please stop using old versions of node.");
-    return null;
-  }
-}
-
-/**
- * runFetch
- * A simple wrapper current fetch()   IOIO LOGGING!!
- *   IMPURE when I add logging
- *	This behaves as a VERY SIMPLE middle-ware.
- *
- * @param {string} url
- * @param {boolean} trap ~ return null rather than an exception
- * @public
- * @throws {Error} = predictably, in case of network issue
- * @return {Promise<SimpleResponse>}
- */
-export async function runFetch(
-  url: string,
-  trap: boolean,
-): Promise<SimpleResponse> {
-  const f = getFetch();
-  try {
-    const trans: Response = await f(url, { credentials: "same-origin" });
-    if (!trans.ok) {
-      if (trap) {
-        return { body: "nothing", headers: {} as Headers, ok: false };
-      } else {
-        throw new Error("ERROR getting asset " + url);
-      }
-    }
-    let payload = "";
-    const tmp = await trans.body.getReader().read();
-    payload += await tmp.value;
-    if (
-      trans.headers
-        .get("content-type")
-        .toLowerCase()
-        .startsWith("application/json")
-    ) {
-      return { body: JSON.parse(payload), headers: trans.headers, ok: true };
-    } else {
-      return { body: payload, headers: trans.headers, ok: true };
-    }
-  } catch (e) {
-    if (trap) {
-      return { body: "nothing", headers: {} as Headers, ok: false };
-    } else {
-      throw new Error("ERROR getting asset " + url);
-    }
-  }
-}
+ 
 
 /**
  * pullout
@@ -217,55 +150,6 @@ export function pad(num: number): string {
   return r;
 }
 
-// source code copied from: then amended
-// https://www.tabnine.com/academy/javascript/how-to-set-cookies-javascript/
-// as common libraries outside of npm seem really flakey
-
-/**
-  A class to allow access to cookies
-  This version is mostly used by FF
- */
-class COOKIE implements Cookieable {
-  set(cName: string, cValue: string, expDays: number): void {
-    let expires = "";
-    if (expDays) {
-      const d1 = new Date();
-      d1.setTime(d1.getTime() + expDays * 24 * 60 * 60 * 1000);
-      expires = "expires=" + d1.toUTCString();
-    }
-    document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
-  }
-
-  get(cName: string): string {
-    const name = cName + "=";
-    const cDecoded = decodeURIComponent(document.cookie);
-    const cArr = cDecoded.split("; ");
-    let res;
-
-    cArr.forEach((val) => {
-      if (val.indexOf(name) === 0) {
-        res = val.substring(name.length);
-      }
-    });
-    return res;
-  }
-}
-
-/**
- * getCookie
- * Generate a cookie access object PURE
- *
- * @public
- * @return {Cookieable }
- */
-export function _getCookie(): Cookieable {
-  // first option is for chrome based browsers,
-  // technically served via a JS plugin that is always present
-  //	if(typeof getCookie==="function") {
-  //		return { get:getCookie, set:setCookie } as Cookieable ;
-  //	}
-  return new COOKIE();
-}
 
 /**
  * mapAttribute
@@ -286,7 +170,7 @@ export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
     const STYL = ele.getBoundingClientRect();
     return STYL[attrib];
   } catch (e) {
-    console.log("error", "Missing data:" + e);
+     log("error", "Missing data:" + e);
     return -1;
   }
 }
@@ -461,13 +345,10 @@ export function dateMunge(
 }
 
 export const TEST_ONLY = {
-  getFetch,
   articleName,
-  runFetch,
   addLineBreaks,
   pad,
   makeRefUrl,
-  _getCookie,
   mapAttribute,
   importDate,
   dateMunge,

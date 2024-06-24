@@ -6,27 +6,21 @@ import {
   DesktopBiblioProps,
   SimpleResponse,
   ReferenceType,
-  ALL_REFERENCE,
-  ALL_REFERENCE_LINKS,
+
 } from "./all-types";
 import { isMobile, appendIsland } from "./dom-base";
 import {
   dateMunge,
-  runFetch,
   mapAttribute,
   articleName,
   addLineBreaks,
   makeRefUrl,
 } from "./string-base";
-import { register, access } from "./code-collection";
+import { log, debug, ALL_REFERENCE, ALL_REFERENCE_LINKS, runFetch } from "./code-collection";
 
 // variables across this module
 // * @protected
 let OPTS: DesktopBiblioProps = {} as DesktopBiblioProps;
-
-if (!isMobile(document, location)) {
-  register("biblio", createBiblio);
-}
 
 /**
  * markAllLinksUnknown
@@ -246,7 +240,7 @@ function addMetaAge(xhr: SimpleResponse, dom: Document = document) {
  * @public
  * @return {void}
  */
-async function createBiblio(
+export async function createBiblio(
   opts: DesktopBiblioProps,
   dom: Document = document,
   loc: Location = location,
@@ -266,8 +260,7 @@ async function createBiblio(
     opts,
   );
 
-  const ROOT = access();
-  const data: SimpleResponse = await ROOT.runFetch(
+  const data: SimpleResponse = await runFetch(
     makeRefUrl(OPTS.referencesCache, loc),
     false,
   );
@@ -276,7 +269,7 @@ async function createBiblio(
     const html =
       '<p class="error">Unable to get bibliographic data for this article.</p>';
     appendIsland(OPTS.gainingElement, html);
-    this.log("warn", "Unable to get meta data ", data.headers);
+    log("warn", "Unable to get meta data ", data.headers);
     //		throw new Error("ERROR getting references "+makeRefUrl(OPTS.referencesCache, loc));
   }
 
@@ -300,7 +293,7 @@ async function createBiblio(
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {
-    console.error("ERROR: to use injectOpts, you must set development");
+    console.error("ERROR: to use injectOpts, you must set NODE_ENV");
     return;
   }
   OPTS = Object.assign(OPTS, a);
