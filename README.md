@@ -20,6 +20,7 @@ I'm dragging this group of features kicking and screaming into the century of th
 
 <details>
 <summary> User journeys in this project </summary>
+
 ### User journeys in this project
 
 I am making a copy of the user interactions here (in the new project), as I would like to deprecate the older projects entirely.  There are some sample pages in my website, with stress on 'some', but I would like to avoid adding further samples here.  I can make links on this README...
@@ -62,6 +63,7 @@ I am making a copy of the user interactions here (in the new project), as I woul
 </details>
 <details>
 <summary> Engineering details </summary>
+
 ## Engineering
 
 Unlike many situations at work, there is no value and no attention to intermediate steps should be applied on this project.   I have a running platform, I will upgrade when the painful rewrite is complete.
@@ -96,6 +98,7 @@ Pls note English is my first language #leSigh.
 </details>
 <details>
 <summary> Lists of technical names </summary>
+
 #### Known params that this code processes
 
 - ''first'' string - only used in the group-indexes articles
