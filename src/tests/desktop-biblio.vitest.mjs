@@ -34,14 +34,15 @@ describe("TEST desktop-biblio", () => {
 `;
     appendIsland("#point2", str, dom);
     markAllLinksUnknown(dom, loc);
- 
+
     assert.equal(
       Array.from(dom.querySelectorAll(ALL_REFERENCE_LINKS)).length,
       5,
       "assert #4 ",
     );
     assert.equal(
-      Array.from(dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]")).length,
+      Array.from(dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]"))
+        .length,
       5,
       "assert #4",
     );
@@ -81,7 +82,7 @@ describe("TEST desktop-biblio", () => {
     injectOpts({ renumber: 1 });
     mapPositions(dat, dom);
 
-     assert.equal(
+    assert.equal(
       dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]").length,
       5,
       "assert #8",
@@ -323,10 +324,14 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">21</a> </sup> 
 `;
     appendIsland("#point2", str, dom); // 15 links
-    await createBiblio({ 
-      runFetch: mockFetch1,
-      debug:true,
-    }, dom, loc);
+    await createBiblio(
+      {
+        runFetch: mockFetch1,
+        debug: true,
+      },
+      dom,
+      loc,
+    );
     assert.equal(
       dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]").length,
       15,

@@ -73,7 +73,7 @@ describe("TEST adjacent", () => {
   });
 
   it("go 4: nextStep, logic tests", () => {
-    injectOpts({ group: "engineering", name: "justify-oop", nextBar: 10 });
+    injectOpts({ group: "engineering", name: "justify-oop", perRow: 10 });
     assert.deepEqual(
       nextStep("paradigm-shft", "justify-oop", 10, 3, -1),
       [-1, 10, 3],
@@ -155,7 +155,7 @@ describe("TEST adjacent", () => {
     ];
     injectOpts({
       name: "group-engineering",
-      nextBar: 10,
+      perRow: 10,
       titleLimit: 100,
       group: "engineering",
     });
@@ -318,7 +318,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     );
   });
 
-  it("go 10: createAdjacentChart", () => {
+  it("go 10: createAdjacentChart", async () => {
     const [dom, loc, jsdom] = page(
       "http://192.168.0.35/resource/code-metrics",
       3,
@@ -330,8 +330,13 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     appendIsland("#point2", str, dom);
     // jQuery("html").adjacent({group: i, debug:false, iteration:j, count:grp.length });
     // jQuery("html").adjacent({group: tt[1], debug:false});
-    createAdjacentChart(
-      { group: "engineering", name: "code-metrics", debug:true, runFetch: mockFetch1 },
+    await createAdjacentChart(
+      {
+        group: "engineering",
+        name: "code-metrics",
+        debug: true,
+        runFetch: mockFetch1,
+      },
       dom,
       loc,
     );
@@ -357,12 +362,13 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
-
+    /*
     await createAdjacentChart(
       { group: "engineering", name: "code-metrics", debug:true, runFetch: mockFetch2 },
       dom,
       loc,
     );
+*/
 
     assert.equal(
       dom.querySelector(".adjacentGroup p").textContent,
@@ -404,14 +410,14 @@ Description: What concepts or areas of development are important.    This is a h
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
-
-/*
-    createAdjacentChart(
-      { group: "engineering", name: "code-metrics", nextBar: 10, debug:true, runFetch: mockFetch3 },
+    /*
+  async createAdjacentChart(
+      { group: "engineering", name: "code-metrics", perRow: 10, debug:true, runFetch: mockFetch3 },
       dom,
       loc,
     );
-*/
+    */
+
     assert.equal(
       dom.querySelector(".adjacentGroup p").textContent,
       "TEST",
@@ -433,10 +439,60 @@ XXXX
     );
   });
 
+  it("go 10.3: createAdjacentChart", async () => {
+    const [dom, loc, jsdom] = page(
+      "http://192.168.0.35/resource/code-metrics",
+      3,
+    );
+    let str = `
+<div class="adjacentGroup" id="groupengineering">
+<p>TEST</p>
+</div>`;
+    appendIsland("#point2", str, dom);
+
+    /*
+    await createAdjacentChart(
+      { group: "engineering", name: "code-metrics", debug:true, runFetch: mockFetch3, perRow:15 },
+      dom,
+      loc,
+    );
+*/
+    assert.equal(
+      dom.querySelector(".adjacentGroup p").textContent,
+      "TEST",
+      "step20 [positive]",
+    );
+    assert.equal(
+      dom.querySelectorAll("#groupengineering .adjacentList").length,
+      1,
+      "step21 [positive]",
+    );
+
+    // fixed input data, so fixed output data
+    let sample1 = `
+<li> <a id="linkengineering0" class="button" href="https://owenberesford.me.uk/resource/code-metrics" aria-label="Title: Code metrics
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: A colleague didnt understand remarks about refactoring his code">Code metrics</a> </li>
+<li> <a id="linkengineering1" class="button" href="https://owenberesford.me.uk/resource/paradigm-shift" aria-label="Title: Paradigm shift
+Author: Tim Ottinger @tottinge &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Borrowed content; discussing the change in engineering approach">Paradigm shift</a> </li>
+<li> <a id="linkengineering2" class="button" href="https://owenberesford.me.uk/resource/howto-API" aria-label="Title: How-to REST API
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: 16 Considerations for REST API, construction and why REST API are used.">How-to REST API</a> </li>
+<li> <a id="linkengineering3" class="button" href="https://owenberesford.me.uk/resource/goals" aria-label="Title: “Zones of developmen...
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: What concepts or areas of development are important.    This is a higher level chart..">“Zones of developmen...</a> </li>
+`;
+    assert.equal(
+      dom.querySelector("#groupengineering .adjacentList").innerHTML,
+      sample1,
+      "step22 [positive]",
+    );
+  });
+
   function mockFetch1(url, hasExcept) {
     return new Promise((good, bad) => {
-      let str = `
-[
+      let str = [
   {
     "url": "https://www.w3.org/WAI/WCAG2AAA-Conformance",
     "desc": "Accessibility resources free online from the international standards organization: W3C Web Accessibility Initiative (WAI).",
@@ -465,423 +521,417 @@ XXXX
     "auth": "",
     "date": 0
   }
-]
-`;
+];
       let h = new Headers();
       h.append("Content-Type", "application/json; cbarset=utf8");
-      let ret = { body: JSON.parse(str.trim()), headers: h, ok: true };
+      let ret = { body:str, headers: h, ok: true };
       good(ret);
     });
   }
 
   function mockFetch2(url, hasExcept) {
     return new Promise((good, bad) => {
-      let str = `
-[
-  {
-    "url": "https://owenberesford.me.uk/resource/code-metrics",
-    "desc": "A colleague didnt understand remarks about refactoring his code",
-    "title": "Code metrics",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/paradigm-shift",
-    "desc": "Borrowed content; discussing the change in engineering approach",
-    "title": "Paradigm shift",
-    "auth": "Tim Ottinger @tottinge",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/howto-API",
-    "desc": "16 Considerations for REST API, construction and why REST API are used.",
-    "title": "How-to REST API",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/goals",
-    "desc": "What concepts or areas of development are important.    This is a higher level chart..",
-    "title": "“Zones of development”",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  }
-]
-`;
+      let str = [
+        {
+          url: "https://owenberesford.me.uk/resource/code-metrics",
+          desc: "A colleague didnt understand remarks about refactoring his code",
+          title: "Code metrics",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/paradigm-shift",
+          desc: "Borrowed content; discussing the change in engineering approach",
+          title: "Paradigm shift",
+          auth: "Tim Ottinger @tottinge",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/howto-API",
+          desc: "16 Considerations for REST API, construction and why REST API are used.",
+          title: "How-to REST API",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/goals",
+          desc: "What concepts or areas of development are important.    This is a higher level chart..",
+          title: "“Zones of development”",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+      ];
       let h = new Headers();
       h.append("Content-Type", "application/json; cbarset=utf8");
-      let ret = { body: JSON.parse(str.trim()), headers: h, ok: true };
+      let ret = { body: str, headers: h, ok: true };
       good(ret);
     });
   }
 
   function mockFetch3(url, hasExcept) {
     return new Promise((good, bad) => {
-      let str = `
-[
-  {
-    "url": "https://owenberesford.me.uk/resource/architecture",
-    "desc": "Notes from a course presented by T Gilb, an Agile coach, on Architectures & engineering tools in an Agile environment.  This article attempts to push an important and vast set of ideas and processes into text.",
-    "title": "Architectures and Agile",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/code-metrics",
-    "desc": "A colleague didnt understand remarks about refactoring his code",
-    "title": "Code metrics",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/paradigm-shift",
-    "desc": "Borrowed content; discussing the change in engineering approach",
-    "title": "Paradigm shift",
-    "auth": "Tim Ottinger @tottinge",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/howto-API",
-    "desc": "16 Considerations for REST API, construction and why REST API are used.",
-    "title": "How-to REST API",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/goals",
-    "desc": "What concepts or areas of development are important.    This is a higher level chart..",
-    "title": "“Zones of development”",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/performance-engineering",
-    "desc": "What is my process for performance engineering, sometimes called scaling-up, and is part of growth hacking.  I have improved multiple operational systems.",
-    "title": "Performance engineering",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/justify-oop",
-    "desc": "Commercial justification for using common engineering practice of OO.  Please read if you are a business person.",
-    "title": "The economic and commercial justification for OOP",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/logging",
-    "desc": "Analysis on logging operational visibility: why to add it and why to remove it",
-    "title": "Logging observability",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/composer-force-version",
-    "desc": "About a particular feature of php composer",
-    "title": "Composer version locking",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/symfony-loggers",
-    "desc": "Brief article about symfony3 loggers & managing them",
-    "title": "Symfony3 loggers",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/yml-notes",
-    "desc": "Short article on YML in Symfony",
-    "title": "YML notes (for Symfony)",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/docs-for-js-ts",
-    "desc": "The best IMO docs generators for JS and TS.  A look at options, requirements, its history and literature.",
-    "title": "Docs for JS and TS",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/php-extra-tools",
-    "desc": "Toolify your way round operational constraints",
-    "title": "Extra PHP tools.",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/php-tools",
-    "desc": "This is a shopping list to save time.  PHP dev only",
-    "title": "PHP Tool chain",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/phar-notes",
-    "desc": "Short article about compressed php bundles",
-    "title": "PHAR notes",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/opcache-notes",
-    "desc": "Short article for how to control APC.",
-    "title": "Opcache notes",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/php-benchmark-2017",
-    "desc": "Performance benchmark for PHP operations.",
-    "title": "PHP benchmark 2017",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/php-benchmark-2022",
-    "desc": "Performance benchmark for PHP operations updated in 2022; targeting PHP 7 and 8.",
-    "title": "PHP7 + PHP8 benchmark (2022)",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/databases-epic",
-    "desc": "A convenience group indexing articles to make it easier to access early articles relating to databases DB on my website.",
-    "title": "Databases epic",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/db-rollover",
-    "desc": "A short set of options for high availability writes",
-    "title": "DB rollover",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/db-visualisers",
-    "desc": "Discussion on DB visualisers. List of 11 tools available on the market since 2012.",
-    "title": "DB Visualisers",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/scaling-mongo",
-    "desc": "Analysis: how does MongoDB perform with large scale data? Limits and data modeling on practical upper data-volume for MongoDB with normal hardware. MongoDB is also compared with other data systems.",
-    "title": "Creating a large scale MongoDB",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/hadoop",
-    "desc": "Definition of the open-source database Hadoop, where its used and how it's structured.",
-    "title": "BCS lecture on Hadoop: a synopsis",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/mongodb-indexes",
-    "desc": "A utility article focusing on indexes in MongoDB and how indexes affects your Mongo search.",
-    "title": "MongoDB indexes",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/fault-analysis",
-    "desc": "How to trace a fault in a PHP stack platform.",
-    "title": "Fault Analysis",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/gis-data",
-    "desc": "A collection of notes for GIS related solutions",
-    "title": "GIS data (pt1)",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/git-notes",
-    "desc": "Advanced Git notes and Git workflow on how to use it to solve practical problems with it, with extensive performance tips list which are omitted from general sites.",
-    "title": "Git and workflow for GIT",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/react-performance",
-    "desc": "Article defines how to make React18 apps smoother, faster, and respond to user input better by changing functions used.",
-    "title": "Improving React18 Performance",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/css-architecture",
-    "desc": "When writing reusable UI components, ideas for how to manage CSS in them.  Most Apps will be built with a CSS framework, and this should be leveraged.",
-    "title": "CSS architecture",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/gpl-p1",
-    "desc": "PART 1 about OSS and why OSS is important.  Read for demographic perspective and social effects.",
-    "title": "OSS/GPL [pt1]",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/yapc",
-    "desc": "Notes that I wrote at YAPC 2014.",
-    "title": "Quick notes from YAPC",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/iceline-bundle",
-    "desc": "Discussing the reasons for investing a month on rewriting old code (again).",
-    "title": "iceline Bundle",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/nodejs-linking",
-    "desc": "An article pulling up all the different technologies to access a Node interpreter via C++",
-    "title": "Linking libraries to NodeJS",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/js-modules-notes",
-    "desc": "Research into how to be able to use JS modules in the browsers.",
-    "title": "JS modules notes",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/js-backchannel-logging",
-    "desc": "For app availability, my solution is to implement JS backchannel logging, this can enable limited-edition test / review editions better and faster for apps.  The article lists high-level requirements for this idea along with the requirements.",
-    "title": "App availability: JS backchannel Logging",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/http-cache-breaker",
-    "desc": "A look at HTTP cache building in the webrowser, flush caching both on static assets.  I propose a feature to manage old and bad caches.",
-    "title": "HTTP cache breaker",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/improving-search-utility",
-    "desc": "A website should be written to support an audience or customers; many people use search tools to add themselves to that audience.  This article describes a categorisation scheme for your audiences.",
-    "title": "Improving search utility",
-    "auth": "Owen Beresford",
-    "date": 1711457007
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/update-voip",
-    "desc": "Brief analysis on VOIP platforms; for my domestic use",
-    "title": "newer VOIP platforms",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/ancient-TLS",
-    "desc": "Transport Layer Security is very niche. Finally TLS 1.0, a very old protocol, was removed from Windows, the last vendor who were using it. I discuss the TLS context, technical details and upgrades.",
-    "title": "Managing ancient TLS",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/random-notes",
-    "desc": "Assorted notes imported from my phone",
-    "title": "Assorted notes from meetups",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/snmp-mib",
-    "desc": "A missing manual for MIBs used in SNMP. This article is more narrow scope and advanced than most",
-    "title": "SNMP MIB grammar",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/laptop-cpu-management",
-    "desc": "Seven technical and orthogonal steps to suspend unneeded processes and features on laptops; which will make them quieter and make the battery charge last longer.",
-    "title": "Laptop CPU management",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/software-design",
-    "desc": "Article to describe heuristic process of designing a software",
-    "title": "Software design",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/design-patterns",
-    "desc": "My use of PHP design patterns and Structures that I apply.",
-    "title": "Design Patterns that I use",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/src-tools",
-    "desc": "Misc tools, mostly for PHP, but varied",
-    "title": "Misc Useful tools",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/word-filtering",
-    "desc": "On text cleaning, and the algorithms necessary.",
-    "title": "Word filtering",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/colour-chart",
-    "desc": "A version of a colour chart I made to label software quality and to express it for non-tech people.",
-    "title": "Code quality categorisation chart",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/modal-popover",
-    "desc": "People use images to communicate. This article lists improvements across three decades of image in casual usage on the net. Sample implementation of image requirements along with existing and current image widgets.",
-    "title": "modal popover",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/extended-modal-popover",
-    "desc": "This is an extended article on modal popover, this file contains improved graphic design, which matches visually other websites, however,  it is technically better.",
-    "title": "modal popover",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/stress-tools",
-    "desc": "Article with information about current stress test tools",
-    "title": "REST test tools",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  },
-  {
-    "url": "https://owenberesford.me.uk/resource/festivals-2010",
-    "desc": "Project management for 6 festivals in 12 months, detailed one year planning and cost control. My festival holidays in 2010 are an example of project planning.   This is obviously personal, but was a well organised project.",
-    "title": "Festivals Season 2010",
-    "auth": "Owen Beresford",
-    "date": 1711455586
-  }
-
-]
-`;
+      let str = [
+        {
+          url: "https://owenberesford.me.uk/resource/architecture",
+          desc: "Notes from a course presented by T Gilb, an Agile coach, on Architectures & engineering tools in an Agile environment.  This article attempts to push an important and vast set of ideas and processes into text.",
+          title: "Architectures and Agile",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/code-metrics",
+          desc: "A colleague didnt understand remarks about refactoring his code",
+          title: "Code metrics",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/paradigm-shift",
+          desc: "Borrowed content; discussing the change in engineering approach",
+          title: "Paradigm shift",
+          auth: "Tim Ottinger @tottinge",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/howto-API",
+          desc: "16 Considerations for REST API, construction and why REST API are used.",
+          title: "How-to REST API",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/goals",
+          desc: "What concepts or areas of development are important.    This is a higher level chart..",
+          title: "“Zones of development”",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/performance-engineering",
+          desc: "What is my process for performance engineering, sometimes called scaling-up, and is part of growth hacking.  I have improved multiple operational systems.",
+          title: "Performance engineering",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/justify-oop",
+          desc: "Commercial justification for using common engineering practice of OO.  Please read if you are a business person.",
+          title: "The economic and commercial justification for OOP",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/logging",
+          desc: "Analysis on logging operational visibility: why to add it and why to remove it",
+          title: "Logging observability",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/composer-force-version",
+          desc: "About a particular feature of php composer",
+          title: "Composer version locking",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/symfony-loggers",
+          desc: "Brief article about symfony3 loggers & managing them",
+          title: "Symfony3 loggers",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/yml-notes",
+          desc: "Short article on YML in Symfony",
+          title: "YML notes (for Symfony)",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/docs-for-js-ts",
+          desc: "The best IMO docs generators for JS and TS.  A look at options, requirements, its history and literature.",
+          title: "Docs for JS and TS",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/php-extra-tools",
+          desc: "Toolify your way round operational constraints",
+          title: "Extra PHP tools.",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/php-tools",
+          desc: "This is a shopping list to save time.  PHP dev only",
+          title: "PHP Tool chain",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/phar-notes",
+          desc: "Short article about compressed php bundles",
+          title: "PHAR notes",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/opcache-notes",
+          desc: "Short article for how to control APC.",
+          title: "Opcache notes",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/php-benchmark-2017",
+          desc: "Performance benchmark for PHP operations.",
+          title: "PHP benchmark 2017",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/php-benchmark-2022",
+          desc: "Performance benchmark for PHP operations updated in 2022; targeting PHP 7 and 8.",
+          title: "PHP7 + PHP8 benchmark (2022)",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/databases-epic",
+          desc: "A convenience group indexing articles to make it easier to access early articles relating to databases DB on my website.",
+          title: "Databases epic",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/db-rollover",
+          desc: "A short set of options for high availability writes",
+          title: "DB rollover",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/db-visualisers",
+          desc: "Discussion on DB visualisers. List of 11 tools available on the market since 2012.",
+          title: "DB Visualisers",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/scaling-mongo",
+          desc: "Analysis: how does MongoDB perform with large scale data? Limits and data modeling on practical upper data-volume for MongoDB with normal hardware. MongoDB is also compared with other data systems.",
+          title: "Creating a large scale MongoDB",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/hadoop",
+          desc: "Definition of the open-source database Hadoop, where its used and how it's structured.",
+          title: "BCS lecture on Hadoop: a synopsis",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/mongodb-indexes",
+          desc: "A utility article focusing on indexes in MongoDB and how indexes affects your Mongo search.",
+          title: "MongoDB indexes",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/fault-analysis",
+          desc: "How to trace a fault in a PHP stack platform.",
+          title: "Fault Analysis",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/gis-data",
+          desc: "A collection of notes for GIS related solutions",
+          title: "GIS data (pt1)",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/git-notes",
+          desc: "Advanced Git notes and Git workflow on how to use it to solve practical problems with it, with extensive performance tips list which are omitted from general sites.",
+          title: "Git and workflow for GIT",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/react-performance",
+          desc: "Article defines how to make React18 apps smoother, faster, and respond to user input better by changing functions used.",
+          title: "Improving React18 Performance",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/css-architecture",
+          desc: "When writing reusable UI components, ideas for how to manage CSS in them.  Most Apps will be built with a CSS framework, and this should be leveraged.",
+          title: "CSS architecture",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/gpl-p1",
+          desc: "PART 1 about OSS and why OSS is important.  Read for demographic perspective and social effects.",
+          title: "OSS/GPL [pt1]",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/yapc",
+          desc: "Notes that I wrote at YAPC 2014.",
+          title: "Quick notes from YAPC",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/iceline-bundle",
+          desc: "Discussing the reasons for investing a month on rewriting old code (again).",
+          title: "iceline Bundle",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/nodejs-linking",
+          desc: "An article pulling up all the different technologies to access a Node interpreter via C++",
+          title: "Linking libraries to NodeJS",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/js-modules-notes",
+          desc: "Research into how to be able to use JS modules in the browsers.",
+          title: "JS modules notes",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/js-backchannel-logging",
+          desc: "For app availability, my solution is to implement JS backchannel logging, this can enable limited-edition test / review editions better and faster for apps.  The article lists high-level requirements for this idea along with the requirements.",
+          title: "App availability: JS backchannel Logging",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/http-cache-breaker",
+          desc: "A look at HTTP cache building in the webrowser, flush caching both on static assets.  I propose a feature to manage old and bad caches.",
+          title: "HTTP cache breaker",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/improving-search-utility",
+          desc: "A website should be written to support an audience or customers; many people use search tools to add themselves to that audience.  This article describes a categorisation scheme for your audiences.",
+          title: "Improving search utility",
+          auth: "Owen Beresford",
+          date: 1711457007,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/update-voip",
+          desc: "Brief analysis on VOIP platforms; for my domestic use",
+          title: "newer VOIP platforms",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/ancient-TLS",
+          desc: "Transport Layer Security is very niche. Finally TLS 1.0, a very old protocol, was removed from Windows, the last vendor who were using it. I discuss the TLS context, technical details and upgrades.",
+          title: "Managing ancient TLS",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/random-notes",
+          desc: "Assorted notes imported from my phone",
+          title: "Assorted notes from meetups",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/snmp-mib",
+          desc: "A missing manual for MIBs used in SNMP. This article is more narrow scope and advanced than most",
+          title: "SNMP MIB grammar",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/laptop-cpu-management",
+          desc: "Seven technical and orthogonal steps to suspend unneeded processes and features on laptops; which will make them quieter and make the battery charge last longer.",
+          title: "Laptop CPU management",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/software-design",
+          desc: "Article to describe heuristic process of designing a software",
+          title: "Software design",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/design-patterns",
+          desc: "My use of PHP design patterns and Structures that I apply.",
+          title: "Design Patterns that I use",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/src-tools",
+          desc: "Misc tools, mostly for PHP, but varied",
+          title: "Misc Useful tools",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/word-filtering",
+          desc: "On text cleaning, and the algorithms necessary.",
+          title: "Word filtering",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/colour-chart",
+          desc: "A version of a colour chart I made to label software quality and to express it for non-tech people.",
+          title: "Code quality categorisation chart",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/modal-popover",
+          desc: "People use images to communicate. This article lists improvements across three decades of image in casual usage on the net. Sample implementation of image requirements along with existing and current image widgets.",
+          title: "modal popover",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/extended-modal-popover",
+          desc: "This is an extended article on modal popover, this file contains improved graphic design, which matches visually other websites, however,  it is technically better.",
+          title: "modal popover",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/stress-tools",
+          desc: "Article with information about current stress test tools",
+          title: "REST test tools",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+        {
+          url: "https://owenberesford.me.uk/resource/festivals-2010",
+          desc: "Project management for 6 festivals in 12 months, detailed one year planning and cost control. My festival holidays in 2010 are an example of project planning.   This is obviously personal, but was a well organised project.",
+          title: "Festivals Season 2010",
+          auth: "Owen Beresford",
+          date: 1711455586,
+        },
+      ];
       let h = new Headers();
       h.append("Content-Type", "application/json; cbarset=utf8");
-      let ret = { body: JSON.parse(str.trim()), headers: h, ok: true };
+      let ret = { body: str, headers: h, ok: true };
       good(ret);
     });
   }

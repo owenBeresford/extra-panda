@@ -2,18 +2,18 @@ import { assert, describe, it } from "vitest";
 
 import { page } from "./page-seed";
 import { TEST_ONLY } from "../modal";
-import { enableGetEventListeners } from './vitest-addons';
+import { enableGetEventListeners } from "./vitest-addons";
 import { appendIsland, setIsland } from "../dom-base";
 import { SimpleResponse, Fetchable, AdjacentProps } from "../all-types";
 
 const { modalInit, HTMLDetailsClick, HTMLDetailsTrap } = TEST_ONLY;
 
 describe("TEST modal ", () => {
-// I need to do more usability on this feature
+  // I need to do more usability on this feature
   it("go 1: HTMLDetailsClick", () => {
-	const [dom, loc ]= page('http://192.168.0.35/resource/home', 2);
-	enableGetEventListeners( dom );
-	let str=`
+    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
+    enableGetEventListeners(dom);
+    let str = `
 <div class="blocker popOverWidget">
 <details class="singlePopup">
 <summary> <picture> <img title="CCCCccEMO" src="/asdfsdfsdf" width="500" height="375" /> </picture> </summary>
@@ -23,13 +23,10 @@ describe("TEST modal ", () => {
 </details>
 </div>
 `;
-	appendIsland('#point2', str, dom);
-	modalInit(dom);
+    appendIsland("#point2", str, dom);
+    modalInit(dom);
 
-	let buf=dom.querySelector('details');
-	assert.equal(buf.getEventListeners().length, 2, "Assert #20");
-
-  }); 
-
+    let buf = dom.querySelector("details");
+    assert.equal(buf.getEventListeners().length, 2, "Assert #20");
+  });
 });
-

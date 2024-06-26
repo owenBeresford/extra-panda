@@ -20,7 +20,6 @@ const {
 } = TEST_ONLY;
 
 describe("TEST string-base", () => {
-
   it("go 4: pad", () => {
     assert.equal(pad(1), "01", "assert #4");
     assert.equal(pad(10), "10", "assert #5");
@@ -166,8 +165,6 @@ ggaz gdfgadfg agadfg agadg adfgadgad gadfgadfgadga fgaga ggaPING
 dg ag aga gdgadfg`;
     assert.equal(addLineBreaks(str1, 60, "PING"), str2, "assert #29");
   });
-
-  
 
   it("go 3: articleName", () => {
     const [dom, loc] = page("http://192.168.0.35/resource/home", 2);

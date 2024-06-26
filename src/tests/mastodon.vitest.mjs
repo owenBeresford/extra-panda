@@ -23,7 +23,7 @@ describe("TEST mastodon", () => {
       "http://192.168.0.35/resource/home?mobile=1",
       3,
     );
-    let str = `<div id="shareMenu" class="shareMenu"></div> `;
+    let str = `<div id="shareMenu" class="shareMenu"></div>`;
     appendIsland("#point2", str, dom);
 
     let vnt = createEvent(dom.querySelector("#shareMenu"));
