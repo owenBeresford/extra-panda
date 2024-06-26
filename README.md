@@ -14,21 +14,66 @@ I'm dragging this group of features kicking and screaming into the century of th
 
 ### Accounting
 
-- This is an outsize, painful, death march of a rewrite for hygiene and flow improvements. Every PM would say 'this is Bad planning', and I agree.
+- This is an outsize, painful, death march of a rewrite for hygiene and flow improvements.  Every PM would say 'this is Bad planning', and I agree.
 - Note, PMs would also be happy that I kept 2010 era code this long, as good return on investment.
+- This has a fairly high test coverage, as the early dev time was after I had done a long run, and was then sat on a train ~ sometimes with the sun in my eyes.   I am testing-in to get improved confidence and adding types as a further safety.  
 
-### Engineering
+<details>
+<summary> User journeys in this project </summary>
+### User journeys in this project
+
+I am making a copy of the user interactions here (in the new project), as I would like to deprecate the older projects entirely.  There are some sample pages in my website, with stress on 'some', but I would like to avoid adding further samples here.  I can make links on this README...
+
+- Adjacent articles 
+	- User AJ deep links into my site from a search engine.
+	- The target information is precise, but my boring site has enough meta information that this article is seems relevant.  
+	- AJ scans the longish page, the page content is organised this this is comfortable;  
+	- however, this was the wrong article. 
+	- but having read to the end, AJ sees a row of other articles.
+	- The third one seems better to his needs, not what he typed into the search, and AJ starts to open it
+	- when the mouse gets to the button, a tooltip appears showing the new page description; 
+	- This is definitely what AJ needs, and clicks on the button.
+	- New page loads and replaces previous.
+	- UX iteration: should I make feature this an infinite scroll of articles?  Currently the range of articles is clipped to what will fit on the screen,
+	- UX iteration: the tooltips do no block mouse events, but people can't see this.  Translucence is bad for readability, but may indicate this.
+    - UX note: categorisation was done my me.  Its possible other people may categorise differently.
+- Fancy meta data on links
+	- On a deep-link article, AJ is reading in detail, but needs authoritative sources to hand to management.
+	- This site uses Harvard notation? But whilst hovering a link to see the URL, a rich link description appears.
+	- AJ like the convenience of this, it allows him to easily make an evaluation about the usefulness of the link to his needs. 
+    - The links correlate with the text, which is good.
+	- AJ feels more confident about the site that is clearly making it easy to depart if he wishes.
+	- AJ wishes there was a copy link option, but he also thinks that he ought to read the links rather than send them to a director. 
+	- Later he views the site from his phone, and discover the now too small links in the page are moved to a list at the end of the page.  Bonus.  This makes this page accessible.
+	- UX: there are no hover actions on a phone, so the extra information is permanently displayed.
+	- UX: There is a warning ~ mostly for the dev ~ when links are dead to the meta building script.  Cloudflare is blocking action.
+- SM/ share feature 
+	- Whilst on the phone, AJ sees there has been some redesign for the smaller screen.
+	- The row of SM links is now folded away,
+	- AJ can see a "share" button, and uses this
+	- and sees the previous list of SM.  Standard.  
+	- But the first option is 'copy link', the current article.  Useful.  But not relevant to needs now.
+- 'Reading time' guide
+	- On first impression AJ notes a fairly standard "reading time" guide.  This is useful but not that noteworthy.
+	- It does mean that he sorts the order of his reading list for best use of time. 
+- Effects
+	- On a more code focussed page, AJ sees the links have been decorated with some sort of emotie.   The little logos for docs and github.  Cute but again not significant.
+
+</details>
+<details>
+<summary> Engineering details </summary>
+## Engineering
 
 Unlike many situations at work, there is no value and no attention to intermediate steps should be applied on this project.   I have a running platform, I will upgrade when the painful rewrite is complete.
 
 My work sequence has been:
 
 - port JS 1.6 to es2020
-- ditch unused features, and improve readability/ english
+- ditch unused features, and improve readability/ English
 - split into better modules
 - port to typescript and better CSS/HTML
 - add many tests
-- split into better modules and improve english again
+- split into better modules and improve English again
 
 Pls note English is my first language #leSigh.
 
@@ -48,6 +93,9 @@ Pls note English is my first language #leSigh.
 - As a very non-funny joke: the first two versions of the SM sharebar are legacy HTML, but very easy to unit-test. Now I have much better test tech and libraries and less good tests on this feature.
 - This has quite high levels of testing.   I have used JSDOM as part of JEST and similar tools.  This project is the first time I am using it directly.  It is a quite civilised was to test.
 
+</details>
+<details>
+<summary> Lists of technical names </summary>
 #### Known params that this code processes
 
 - ''first'' string - only used in the group-indexes articles
@@ -64,4 +112,5 @@ Pls note English is my first language #leSigh.
 - .addBashSamples
 - .addReferences
 
+</details>
 
