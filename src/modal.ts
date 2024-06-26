@@ -1,7 +1,7 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
-import { Fetchable, SimpleResponse, Cookieable, MiscEvent } from './all-types';
+import { MiscEvent } from "./all-types";
 
-function HTMLDetailsTrap(e:MiscEvent, dom:Document=document):boolean {
+function HTMLDetailsTrap(e: MiscEvent, dom: Document = document): boolean {
   if (e.code === "Escape" || e.key === "Escape") {
     const tt = dom.querySelectorAll("details[open]");
     if (tt.length) {
@@ -12,8 +12,11 @@ function HTMLDetailsTrap(e:MiscEvent, dom:Document=document):boolean {
   return false;
 }
 
-function HTMLDetailsClick(e:MiscEvent, dom:Document=document):boolean {
-  const find = function (ele:HTMLElement, target:string):udefined|HTMLElement {
+function HTMLDetailsClick(e: MiscEvent, dom: Document = document): boolean {
+  const find = function (
+    ele: HTMLElement,
+    target: string,
+  ): undefined | HTMLElement {
     if (ele.tagName === target) {
       return ele;
     }
@@ -35,12 +38,16 @@ function HTMLDetailsClick(e:MiscEvent, dom:Document=document):boolean {
   const act = find(e.target, "DETAILS");
   if (act && act.tagName === "A") {
     return true;
-  } else if (act && act.open) {
-    act.open = false;
-  } else if (act && !act.open) {
-    act.open = true;
-  } else if (!act) {
-    const tt = document.querySelector("details[open]");
+  }
+  if (act) {
+    const act2: HTMLDetailsElement = act as HTMLDetailsElement;
+    if (act2 && act2.open) {
+      act2.open = false;
+    } else {
+      act2.open = true;
+    }
+  } else {
+    const tt = dom.querySelector("details[open]");
     if (tt) {
       tt.open = false;
     }
@@ -50,18 +57,19 @@ function HTMLDetailsClick(e:MiscEvent, dom:Document=document):boolean {
   return false;
 }
 
-export function modalInit(dom:Document=document):void {
-  let tmp:Array<HTMLDetailsElement>=Array.from(dom.querySelectorAll('.popOverWidget details'));
-  if(tmp.length) {
-	tmp.forEach( function(a:HTMLDetailsElement ) {  
-    	a.addEventListener("keydown", HTMLDetailsTrap);
-    	a.addEventListener("click", HTMLDetailsClick);
-	});
+export function modalInit(dom: Document = document): void {
+  const tmp: Array<HTMLDetailsElement> = Array.from(
+    dom.querySelectorAll(".popOverWidget details"),
+  );
+  if (tmp.length) {
+    tmp.forEach(function (a: HTMLDetailsElement) {
+      a.addEventListener("keydown", HTMLDetailsTrap);
+      a.addEventListener("click", HTMLDetailsClick);
+    });
   }
   // see if something can be done for mobile interactions
 }
- 
+
 //////////////////////////////////////////// testing ////////////////////////////////////
 
-export const TEST_ONLY= { modalInit,  HTMLDetailsClick, HTMLDetailsTrap  }; 
-
+export const TEST_ONLY = { modalInit, HTMLDetailsClick, HTMLDetailsTrap };
