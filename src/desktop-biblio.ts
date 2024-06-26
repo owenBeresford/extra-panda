@@ -1,12 +1,8 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Document, Location, HTMLAnchorElement, HTMLElement } from "jsdom";
 
-import {
-  DesktopBiblioProps,
-  SimpleResponse,
-  ReferenceType,
-} from "./all-types";
-import {  appendIsland } from "./dom-base";
+import { DesktopBiblioProps, SimpleResponse, ReferenceType } from "./all-types";
+import { appendIsland } from "./dom-base";
 import {
   dateMunge,
   mapAttribute,
@@ -44,7 +40,7 @@ function markAllLinksUnknown(
   const WASSUP: Array<HTMLAnchorElement> =
     dom.querySelectorAll(ALL_REFERENCE_LINKS);
   for (let i = 0; i < WASSUP.length; i++) {
-    const txt:string = `Reference popup for link [${1 + i}]\nERROR: No valid biblio file found.\nsite admin, today\nHTTP_ERROR, no valid file called ${naam}-references.json found.\n`;
+    const txt: string = `Reference popup for link [${1 + i}]\nERROR: No valid biblio file found.\nsite admin, today\nHTTP_ERROR, no valid file called ${naam}-references.json found.\n`;
     WASSUP[i].setAttribute("aria-label", "" + txt);
   }
 }
@@ -182,6 +178,11 @@ function mapPositions(data: Array<string>, dom: Document = document): void {
     (mapAttribute(dom.querySelector(ALL_REFERENCE), "width") as number) -
     32 * 16;
   const REFS = dom.querySelectorAll(ALL_REFERENCE_LINKS);
+  if (REFS.length < data.length) {
+    // situation only likely to occur in test data
+    throw new Error("Recompile the meta data for here");
+    return;
+  }
 
   let j = 1;
   for (const i in data) {
@@ -254,8 +255,8 @@ export async function createBiblio(
       indexUpdated: 0,
       referencesCache: "/resource/XXX-references",
       renumber: 1, // set to 0 to disable
-      debug:debug(),
-	    runFetch:runFetch,
+      debug: debug(),
+      runFetch: runFetch,
     },
     opts,
   );
@@ -269,7 +270,11 @@ export async function createBiblio(
     const html =
       '<p class="error">Unable to get bibliographic data for this article.</p>';
     appendIsland(OPTS.gainingElement, html);
-    log("warn", "Unable to get meta data ", JSON.stringify(data.headers.entries()));
+    log(
+      "warn",
+      "Unable to get meta data ",
+      JSON.stringify(data.headers.entries()),
+    );
     //		throw new Error("ERROR getting references "+makeRefUrl(OPTS.referencesCache, loc));
   }
 

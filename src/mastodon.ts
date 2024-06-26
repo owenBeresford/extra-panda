@@ -3,8 +3,8 @@ import { Document, Location, Window, Event, HTMLElement } from "jsdom";
 
 import { MiscEventHandler2, MiscEventHandler3 } from "./all-types";
 import { isFullstack, isMobile } from "./dom-base";
-import { isLocal } from './string-base';
-import { log } from './networking';
+import { isLocal } from "./string-base";
+import { log } from "./networking";
 
 /**
  * openShare
@@ -21,7 +21,7 @@ function openShare(
   dom: Document = document,
   loc: Location = location,
 ): boolean {
-  if ( !isLocal(loc.host) && !isMobile(dom, loc)) return false;
+  if (!isLocal(loc.host) && !isMobile(dom, loc)) return false;
 
   const t = dom.querySelector("#shareMenu");
   if (t && !t.classList.replace("shareMenuOpen", "shareMenu")) {
@@ -221,13 +221,16 @@ function _map1(
   dom: Document | Location = document,
 ): void {
   where.addEventListener("click", (a: Event): boolean => {
-    action(a, dom); return false;
+    action(a, dom);
+    return false;
   });
   where.addEventListener("touch", (a: Event): boolean => {
-    action(a, dom); return false;
+    action(a, dom);
+    return false;
   });
   where.addEventListener("keypress", (a: Event): boolean => {
-    action(a, dom); return false;
+    action(a, dom);
+    return false;
   });
 }
 
@@ -249,13 +252,16 @@ function _map2(
   loc: Location = location,
 ): void {
   where.addEventListener("click", (a: Event): boolean => {
-    action(a, dom, loc); return false;
+    action(a, dom, loc);
+    return false;
   });
   where.addEventListener("touch", (a: Event): boolean => {
-    action(a, dom, loc); return false;
+    action(a, dom, loc);
+    return false;
   });
   where.addEventListener("keypress", (a: Event): boolean => {
-    action(a, dom, loc); return false;
+    action(a, dom, loc);
+    return false;
   });
 }
 
@@ -279,13 +285,16 @@ function _map3(
   win: Window = window,
 ): void {
   where.addEventListener("click", (a: Event): boolean => {
-    action(a, dom, win); return false;
+    action(a, dom, win);
+    return false;
   });
   where.addEventListener("touch", (a: Event): boolean => {
-    action(a, dom, win); return false;
+    action(a, dom, win);
+    return false;
   });
   where.addEventListener("keypress", (a: Event): boolean => {
-    action(a, dom, win); return false;
+    action(a, dom, win);
+    return false;
   });
 }
 

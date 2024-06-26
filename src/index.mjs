@@ -12,6 +12,6 @@ import * as Adjacent from "./adjacent";
 import * as Biblio1 from "./desktop-biblio";
 import * as Biblio2 from "./mobile-biblio";
 import * as Reading from "./reading";
-import * as Modal from './modal';
+import * as Modal from "./modal";
 
 siteCore();

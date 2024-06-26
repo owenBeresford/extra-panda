@@ -1,9 +1,6 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
-import {
-   BOUNDARY,
-  MiscEventHandler,
-} from "./all-types";
+import { BOUNDARY } from "./all-types";
 import { log } from "./networking";
 import { isFullstack } from "./dom-base";
 
@@ -16,7 +13,9 @@ import { isFullstack } from "./dom-base";
  * @return {string}
  */
 export function pullout(a: HTMLElement): string {
-  if ("textContent" in a) {
+  if (!a) {
+    throw new Error("No element for text found");
+  } else if ("textContent" in a) {
     return a.textContent;
   } else if ("innerText" in a) {
     return a.innerText;
@@ -370,5 +369,5 @@ export const TEST_ONLY = {
   mapAttribute,
   importDate,
   dateMunge,
-//  _map,
+  //  _map,
 };

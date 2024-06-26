@@ -11,13 +11,18 @@ import {
 } from "./networking";
 import { listContentGroup, createAdjacentChart } from "./adjacent";
 import { initMastodon } from "./mastodon";
-import { isLocal } from './string-base';
+import { isLocal } from "./string-base";
 import { isMobile, appendIsland } from "./dom-base";
 import { createBiblio as mobileCreateBiblio } from "./mobile-biblio";
 import { createBiblio as desktopCreateBiblio } from "./desktop-biblio";
-import { addOctoCats, addBooks, addFancyButtonArrow, addBashSamples } from './effect';
-import { readingDuration } from './reading';
-import { modalInit } from './modal';
+import {
+  addOctoCats,
+  addBooks,
+  addFancyButtonArrow,
+  addBashSamples,
+} from "./effect";
+import { readingDuration } from "./reading";
+import { modalInit } from "./modal";
 
 // variables across this module
 // * @protected
@@ -28,7 +33,7 @@ let OPTS: CoreProps = {} as CoreProps;
 // CorrectionModule.prototype.biblioExtract = function ()  << runs HEAD
 // CorrectionModule.prototype.extractGET = function (val)  << UNUSED, became language API
 
-type MultiFuncArg =(id: string | MiscEvent, dom: Document ) =>void;
+type MultiFuncArg = (id: string | MiscEvent, dom: Document) => void;
 
 /**
  * _map
@@ -40,7 +45,7 @@ type MultiFuncArg =(id: string | MiscEvent, dom: Document ) =>void;
  * @public
  * @return {void}
  */
-function _map(where: HTMLElement, action:MultiFuncArg ): void {
+function _map(where: HTMLElement, action: MultiFuncArg): void {
   where.addEventListener("click", action);
   where.addEventListener("touch", action);
   where.addEventListener("keypress", action);
@@ -81,7 +86,9 @@ function initPopupMobile(
       continue;
     }
 
-    const local: HTMLAnchorElement = BUFFER[i].cloneNode(true) as HTMLAnchorElement;
+    const local: HTMLAnchorElement = BUFFER[i].cloneNode(
+      true,
+    ) as HTMLAnchorElement;
     local.classList.remove("bigScreenOnly");
     html.push("<li>");
     html.push(local.outerHTML); // I don't like this line
@@ -233,19 +240,20 @@ function tabChange(id: string | MiscEvent, dom: Document = document): void {
  * @public
  * @return {void}
  */
-export function siteCore(
+export async function siteCore(
   opts: CoreProps,
   dom: Document = document,
   loc: Location = location,
   win: Window = window,
 ): void {
   OPTS = Object.assign(
+    OPTS,
     {
       tabs: {},
-      mobileWidth: 700,
     },
     opts,
   );
+  const ldebug = debug();
 
   const tt: Array<HTMLElement> = dom.querySelectorAll(".noJS");
   for (let i = 0; i < tt.length; i++) {
@@ -271,29 +279,29 @@ export function siteCore(
       {
         dataLocation: "#main",
         target: ".addReading",
-        debug: debug(),
+        debug: ldebug,
         refresh: true,
-       },
+      },
       dom,
     );
   }
 
   if (isMobile(dom, loc)) {
-    mobileCreateBiblio(
+    await mobileCreateBiblio(
       {
-        debug: debug(),
+        debug: ldebug,
         renumber: 1,
-        runFetch: runFetch,
+        runFetch: "mobileRunFetch" in OPTS ? OPTS.mobileRunFetch : runFetch,
       },
       dom,
       loc,
     );
   } else {
-    desktopCreateBiblio(
+    await desktopCreateBiblio(
       {
-        debug: debug(),
-        runFetch: runFetch,
-        renumber:1
+        debug: ldebug,
+        runFetch: "desktopRunFetch" in OPTS ? OPTS.desktopRunFetch : runFetch,
+        renumber: 1,
       },
       dom,
       loc,
@@ -313,18 +321,28 @@ export function siteCore(
   if (loc.pathname.match("group-")) {
     const tt = loc.pathname.split("/group-");
     if (Array.isArray(tt) && tt.length > 1 && tt[1].length) {
-      createAdjacentChart({ group: tt[1], debug: debug(), runFetch: runFetch }, dom, loc);
+      await createAdjacentChart(
+        {
+          group: tt[1],
+          debug: ldebug,
+          runFetch:
+            "adjacentRunFetch" in OPTS ? OPTS.adjacentRunFetch : runFetch,
+        },
+        dom,
+        loc,
+      );
     }
   } else {
-    const grp: Array<string> = listContentGroup("div#contentGroup");
+    const grp: Array<string> = listContentGroup("div#contentGroup", dom);
     for (let j = 0; j < grp.length; j++) {
-      createAdjacentChart(
+      await createAdjacentChart(
         {
           group: grp[j],
-          debug: debug(),
+          debug: ldebug,
           iteration: j,
           count: grp.length,
-          runFetch: runFetch,
+          runFetch:
+            "adjacentRunFetch" in OPTS ? OPTS.adjacentRunFetch : runFetch,
         },
         dom,
         loc,
@@ -340,9 +358,26 @@ export function siteCore(
 ///////////////////////////////////////////////// testing /////////////////////////////////////////////////////////
 
 /**
+ * injectOpts
+ * PURELY FOR UNIT TESTS, adds ability to set initial state per internal function
+ * READS process.env
+ * @param {undefined object} opts - I could add a new interface where all the options were optional
+ * @public
+ * @return {void}
+ */
+function injectOpts(a: object): void {
+  if (process.env["NODE_ENV"] !== "development") {
+    console.error("ERROR: to use injectOpts, you must set NODE_ENV");
+    return;
+  }
+  OPTS = Object.assign(OPTS, a);
+}
+
+/**
  * Only use for testing, it allows access to the entire API
  */
 export const TEST_ONLY = {
+  injectOpts,
   _map,
   initPopupMobile,
   storeAppearance,

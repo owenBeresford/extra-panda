@@ -1,6 +1,5 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
-import { Fetchable, SimpleResponse, Cookieable } from './all-types';
-
+import { Fetchable, SimpleResponse, Cookieable } from "./all-types";
 
 export function debug(loc: Location = location): boolean {
   const u: URLSearchParams = new URLSearchParams(loc.search);
@@ -43,9 +42,9 @@ export const MOBILE_MIN_PPI = 180;
  */
 export function getFetch(): Fetchable {
   if (typeof window !== "undefined") {
-     return window.fetch;
+    return window.fetch;
   } else if (typeof fetch === "function") {
-     return fetch;
+    return fetch;
   } else {
     log("error", "Please stop using old versions of node.");
     throw new Error("Please stop using old versions of Node");
@@ -70,12 +69,12 @@ export async function runFetch(
   trap: boolean,
 ): Promise<SimpleResponse> {
   const f = getFetch();
-  const debug=debug();
+  const ldebug = debug();
   try {
     const trans: Response = await f(url, { credentials: "same-origin" });
     if (!trans.ok) {
-      if(debug) {
-         log("warn", "Failed to communicate with "+url);
+      if (ldebug) {
+        log("warn", "Failed to communicate with " + url);
       }
       if (trap) {
         return { body: "nothing", headers: {} as Headers, ok: false };
@@ -92,21 +91,20 @@ export async function runFetch(
         .toLowerCase()
         .startsWith("application/json")
     ) {
-      if(debug) {
-         log("info", "successful JSON transaction "+url);
+      if (ldebug) {
+        log("info", "successful JSON transaction " + url);
       }
       return { body: JSON.parse(payload), headers: trans.headers, ok: true };
-
     } else {
-      if(debug) {
-         log("info", "ssuccessful other transaction "+url);
-      }      
+      if (ldebug) {
+        log("info", "ssuccessful other transaction " + url);
+      }
       return { body: payload, headers: trans.headers, ok: true };
     }
   } catch (e) {
-      if(debug) {
-         log("error", "KLAXON, KLAXON failed: "+url+" "+e.toString());
-      }      
+    if (ldebug) {
+      log("error", "KLAXON, KLAXON failed: " + url + " " + e.toString());
+    }
     if (trap) {
       return { body: "nothing", headers: {} as Headers, ok: false };
     } else {
@@ -165,5 +163,4 @@ export function _getCookie(): Cookieable {
   return new COOKIE();
 }
 
-
-export const TEST_ONLY ={ _getCookie, runFetch, getFetch, log, debug };
+export const TEST_ONLY = { _getCookie, runFetch, getFetch, log, debug };

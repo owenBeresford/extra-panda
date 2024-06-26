@@ -19,15 +19,17 @@ export interface NormalisedReference {
   url: string;
 }
 
-export type ScreenSizeArray = [number, number];
 export type MiscEventHandler = (a: Event) => void;
+export type MiscEventHandler2 = (a: Event, dom: Document) => void;
 export type MiscEventHandler3 = (
   a: Event,
   dom: Document,
   loc: Location | Window,
 ) => void;
-export type MiscEventHandler2 = (a: Event, dom: Document) => void;
+
 export type BOUNDARY = "top" | "bottom" | "left" | "right" | "height" | "width";
+export type ScreenSizeArray = [number, number];
+export type GenericEventHandler = (e: Event) => void;
 
 export interface ReadingProps {
   dataLocation: string;
@@ -36,19 +38,26 @@ export interface ReadingProps {
   codeSelector?: string;
   timeFormat?: string;
   refresh: boolean;
-  debug:boolean;
+  debug: boolean;
 }
 
 export interface CoreProps {
   tabs: Array<string>;
-  mobileWidth: number;
+
+  mobileRunFetch?: FetchedExec;
+  desktopRunFetch?: FetchedExec;
+  adjacentRunFetch?: FetchedExec;
+  debug: () => boolean;
 }
 
 export type Fetch = (u: string, o: RequestInit) => Promise<Response>;
 
 export type Fetchable = Fetch | null;
 
-export type FetchedExec = (url: string, trap: boolean) => Promise<SimpleResponse>;
+export type FetchedExec = (
+  url: string,
+  trap: boolean,
+) => Promise<SimpleResponse>;
 
 export interface SimpleResponse {
   body: object | string;
@@ -67,8 +76,8 @@ export interface DesktopBiblioProps {
   gainingElement?: string;
   pageInitRun?: number;
   renumber?: number;
-  runFetch: FetchedExec ;
-  debug:boolean;
+  runFetch: FetchedExec;
+  debug: boolean;
 }
 
 export interface MobileBiblioProps {
@@ -78,8 +87,8 @@ export interface MobileBiblioProps {
   pageInitRun?: number;
   renumber?: number;
   forceToEnd?: number;
-  runFetch: FetchedExec ;
-  debug:boolean;
+  runFetch: FetchedExec;
+  debug: boolean;
 }
 
 export interface AdjacentProps {

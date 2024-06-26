@@ -25,7 +25,7 @@ export function readingDuration(opts: ReadingProps, dom = document): void {
       wordPerMin: 275,
       codeSelector: "code",
       refresh: false,
-      debug:debug(),
+      debug: debug(),
     },
     opts,
   ) as ReadingProps;

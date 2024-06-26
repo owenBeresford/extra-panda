@@ -1,6 +1,6 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
-import { ScreenSizeArray } from "./all-types";
+import { ScreenSizeArray, GenericEventHandler } from "./all-types";
 import { log, MOBILE_MIN_PPI } from "./networking";
 
 /**
@@ -40,6 +40,30 @@ export function appendIsland(
   } catch (e) {
     log("error", e.toString());
   }
+}
+
+/**
+ * ready
+ * Page start event triggering
+ * TODO: work out which option is for MSIE and delete that 
+ 
+ * @param {GenericEventHandler} callback
+ * @link {https://stackoverflow.com/questions/799981/document-ready-equivalent-without-jquery}
+ * @public
+ * @return {void}
+ */
+export function ready(callback: GenericEventHandler): void {
+  if (document.readyState !== "loading") {
+    const e = createEvent();
+    callback(e);
+  } else if (document.addEventListener) {
+    document.addEventListener("DOMContentLoaded", callback);
+  } else
+    document.attachEvent("onreadystatechange", function (e: Event) {
+      if (document.readyState === "complete") {
+        callback(e);
+      }
+    });
 }
 
 /**

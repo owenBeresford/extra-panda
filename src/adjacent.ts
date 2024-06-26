@@ -125,7 +125,7 @@ function normaliseToList(
   data: Array<ReferenceType>,
 ): Array<NormalisedReference> {
   let me: number = -1,
-    remainder: number = OPTS.nextBar,
+    remainder: number = OPTS.perRow,
     list: Array<NormalisedReference> = [];
 
   let i = 0;
@@ -190,7 +190,7 @@ function nextStep(
   i: number,
   me: number,
 ): Array<number> {
-  let remainder = OPTS.nextBar;
+  let remainder = OPTS.perRow;
   if (OPTS.name === "group-" + OPTS.group) {
     me = 0;
     remainder = wrap;
@@ -373,33 +373,38 @@ export async function createAdjacentChart(
     {
       name: articleName(loc),
       meta: mapURL(OPTS.group, ".json", loc),
-      nextBar: 100,
+      perRow: 100,
       titleLimit: 20,
       rendered: false,
       iteration: 0,
       group: "system",
       count: 1,
       debug: debug(),
-      runFetch:runFetch,
+      runFetch: runFetch,
     },
     opts,
   ) as AdjacentProps;
   if (OPTS.group === "system") {
     throw new Error("Must set the article group, and not to 'system'.");
   }
+
   const isGroupArticle: boolean =
     OPTS.name === "group-XXX" || OPTS.name === "group-" + OPTS.group;
   const GROUP: string = "group" + OPTS.group;
 
   if (isMobile(dom, loc) && !isGroupArticle) {
     dom.querySelector(".adjacentGroup p").style["display"] = "none";
+    appendIsland(
+      "#" + GROUP,
+      "<p>As mobile View, use the full page link to the left</p>",
+      dom,
+    );
   } else {
     const data: SimpleResponse = await OPTS.runFetch(OPTS.meta, false);
     if (!data.ok || !Array.isArray(data.body)) {
       log("warn", "There doesn't seem to be a group meta data file.");
       return;
     }
-
     if (isGroupArticle) {
       if (OPTS.rendered) {
         log("warn", "Already rendered this asset");
