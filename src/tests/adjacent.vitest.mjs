@@ -28,6 +28,7 @@ const {
 // #TODO: add a visual test via storybook or something, that will run the CSS in addition
 // also #TODO, add my new generation CSS for this module
 describe("TEST adjacent", () => {
+
   it("go 1: cleanTitle", () => {
     assert.equal(cleanTitle("simpleID", "group"), "groupsimpleID", "step #1");
     assert.equal(
@@ -108,14 +109,14 @@ describe("TEST adjacent", () => {
         title: "DDDSFDSDF ddd 1234",
         desc: "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
         auth: "racheal",
-        url: "http://www.firstdata.com/",
+        url: "http://www.firstdata.com/dgdfg/itsy",
       },
       {
         date: new Date("2024-03-03 09:00:00").getTime() / 1000,
         title: "DDDSFDSDF ddd 45646",
         desc: "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
         auth: "",
-        url: "http://www.seconddata.com/",
+        url: "http://www.seconddata.com/sdfgsdfg/bitsey",
       },
       {
         date: new Date("2024-03-04 09:00:00").getTime() / 1000,
@@ -123,7 +124,7 @@ describe("TEST adjacent", () => {
           "DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfgd gd gdgdg dgdg dgdg dagd dag dgadf gdagdafgdagdagdafg dgdagdagd dg dg dgd ggadfgdg dgdgadfg dadg adgd dfg dgdfg g ddg adg adgd gadgdg dg adg dgdag dd gd dg dg dg dg dgadg dag dfg dgdg dg dfgdafgd dfgdfg dgdfg dfgadfg df",
         desc: "sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfgdfgdg dg dg dg dgdgdfgdfgdg dg dg dag agadgdg dgdgdgd gd gdgdfgdfg dgd gdg dfg dg dfg dgdfgdg dg dfgdfgdg dg dfg dfgadgdfgdgdgdfgdg dg dgdg dg dgdgdgdg dg dfg dfg dfg dgdfg dgdfg dfg dgd dfg dgdg dgdgdfg  sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
         auth: "gdgdg",
-        url: "http://www.thirddata.com/",
+        url: "http://www.thirddata.com/gddfgdf/winey",
       },
     ];
     let d2 = [
@@ -133,7 +134,7 @@ describe("TEST adjacent", () => {
         desc: "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
         offset: 0,
         title: "DDDSFDSDF ddd 1234",
-        url: "http://www.firstdata.com/",
+        url: "http://www.firstdata.com/dgdfg/itsy",
       },
       {
         auth: "",
@@ -141,7 +142,7 @@ describe("TEST adjacent", () => {
         desc: "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
         offset: 1,
         title: "DDDSFDSDF ddd 45646",
-        url: "http://www.seconddata.com/",
+        url: "http://www.seconddata.com/sdfgsdfg/bitsey",
       },
       {
         auth: "gdgdg",
@@ -150,16 +151,52 @@ describe("TEST adjacent", () => {
         offset: 2,
         title:
           "DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...",
-        url: "http://www.thirddata.com/",
+        url: "http://www.thirddata.com/gddfgdf/winey",
       },
     ];
+    injectOpts({
+      name: "itsy",
+      perRow: 10,
+      titleLimit: 100,
+      group: "engineering",
+    });
+    assert.deepEqual(normaliseToList(d1), d2, "step11");
+  });
+
+  it("go 5.1: normaliseToList (nonsense)", () => {
+    let d1 = [
+      {
+        date: new Date("2024-03-02 09:00:00").getTime() / 1000,
+        title: "DDDSFDSDF ddd 1234",
+        desc: "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
+        auth: "racheal",
+        url: "http://www.firstdata.com/dgdfg/itsy",
+      },
+      {
+        date: new Date("2024-03-03 09:00:00").getTime() / 1000,
+        title: "DDDSFDSDF ddd 45646",
+        desc: "sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
+        auth: "",
+        url: "http://www.seconddata.com/sdfgsdfg/bitsey",
+      },
+      {
+        date: new Date("2024-03-04 09:00:00").getTime() / 1000,
+        title:
+          "DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfgd gd gdgdg dgdg dgdg dagd dag dgadf gdagdafgdagdagdafg dgdagdagd dg dg dgd ggadfgdg dgdgadfg dadg adgd dfg dgdfg g ddg adg adgd gadgdg dg adg dgdag dd gd dg dg dg dg dgadg dag dfg dgdg dg dfgdafgd dfgdfg dgdfg dfgadfg df",
+        desc: "sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfgdfgdg dg dg dg dgdgdfgdfgdg dg dg dag agadgdg dgdgdgd gd gdgdfgdfg dgd gdg dfg dg dfg dgdfgdg dg dfgdfgdg dg dfg dfgadgdfgdgdgdfgdg dg dgdg dg dgdgdgdg dg dfg dfg dfg dgdfg dgdfg dfg dgd dfg dgdg dgdgdfg  sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf",
+        auth: "gdgdg",
+        url: "http://www.thirddata.com/gddfgdf/winey",
+      },
+    ];
+    let d2 = [
+       ];
     injectOpts({
       name: "group-engineering",
       perRow: 10,
       titleLimit: 100,
       group: "engineering",
     });
-    assert.deepEqual(normaliseToList(d1), d2, "step11");
+    assert.deepEqual(normaliseToList(d1), d2, "step12");
   });
 
   it("go 6: listContentGroup", () => {
@@ -268,9 +305,9 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       },
     ];
 
-    let d2 = `<a class="adjacentItem" href="http://www.firstdata.com/" title="sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf">DDDSFDSDF ddd 1234 <span class="button">DDDSFDSDF ddd 1234</span><p id="adjacentengineering0" >Author: racheal &nbsp; &nbsp; &nbsp;  Last edit:  02-March-2024  <br />Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf </a>
-<a class="adjacentItem" href="http://www.seconddata.com/" title="sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf">DDDSFDSDF ddd 45646 <span class="button">DDDSFDSDF ddd 45646</span><p id="adjacentengineering1" >Author:  &nbsp; &nbsp; &nbsp;  Last edit:  03-March-2024  <br />Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf </a>
-<a class="adjacentItem" href="http://www.thirddata.com/" title="sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg...">DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg <span class="button">DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg</span><p id="adjacentengineering2" >Author: gdgdg &nbsp; &nbsp; &nbsp;  Last edit:  04-March-2024  <br />Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg... </a>
+    let d2 = `<a class="adjacentItem" href="http://www.firstdata.com/" title="sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf">DDDSFDSDF ddd 1234 <span class="button">DDDSFDSDF ddd 1234</span><p id="adjacentengineering0" >Author: racheal &nbsp; &nbsp; &nbsp;  Last edit:  02-March-2024  <br />Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf </p></a>
+<a class="adjacentItem" href="http://www.seconddata.com/" title="sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf">DDDSFDSDF ddd 45646 <span class="button">DDDSFDSDF ddd 45646</span><p id="adjacentengineering1" >Author:  &nbsp; &nbsp; &nbsp;  Last edit:  03-March-2024  <br />Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf </p></a>
+<a class="adjacentItem" href="http://www.thirddata.com/" title="sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg...">DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg <span class="button">DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg</span><p id="adjacentengineering2" >Author: gdgdg &nbsp; &nbsp; &nbsp;  Last edit:  04-March-2024  <br />Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg... </p></a>
 `;
     const [dom, loc, jsdom] = page(
       "http://192.168.0.35/resource/code-metrics",
@@ -324,7 +361,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       3,
     );
     let str = `
-<div class="adjacentGroup " id="groupengineering">
+<div class="adjacentGroup" id="groupengineering">
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
@@ -346,7 +383,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       "step18 [negative]",
     );
     assert.equal(
-      dom.querySelectorAll("#groupengineering ul").length,
+      dom.querySelectorAll("#groupengineering ul li").length,
       0,
       "step19 [negative]",
     );
@@ -362,13 +399,12 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
-    /*
+    
     await createAdjacentChart(
       { group: "engineering", name: "code-metrics", debug:true, runFetch: mockFetch2 },
       dom,
       loc,
     );
-*/
 
     assert.equal(
       dom.querySelector(".adjacentGroup p").textContent,
@@ -392,9 +428,9 @@ Description: Borrowed content; discussing the change in engineering approach">Pa
 <li> <a id="linkengineering2" class="button" href="https://owenberesford.me.uk/resource/howto-API" aria-label="Title: How-to REST API
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
 Description: 16 Considerations for REST API, construction and why REST API are used.">How-to REST API</a> </li>
-<li> <a id="linkengineering3" class="button" href="https://owenberesford.me.uk/resource/goals" aria-label="Title: “Zones of developmen...
+<li> <a id="linkengineering3" class="button" href="https://owenberesford.me.uk/resource/goals" aria-label="Title: “Zones of development”
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
-Description: What concepts or areas of development are important.    This is a higher level chart..">“Zones of developmen...</a> </li>
+Description: What concepts or areas of development are important.    This is a higher level chart..">“Zones of development”</a> </li>
 `;
     assert.equal(
       dom.querySelector("#groupengineering .adjacentList").innerHTML,
@@ -410,33 +446,48 @@ Description: What concepts or areas of development are important.    This is a h
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
-    /*
-  async createAdjacentChart(
+    
+    await createAdjacentChart(
       { group: "engineering", name: "code-metrics", perRow: 10, debug:true, runFetch: mockFetch3 },
       dom,
       loc,
     );
-    */
-
+ 
     assert.equal(
       dom.querySelector(".adjacentGroup p").textContent,
       "TEST",
-      "step22 [positive]",
+      "step23 ",
     );
+    assert.equal(
+      dom.querySelectorAll("#groupengineering ul li").length,
+      10,
+      "step24",
+    );
+
     assert.equal(
       dom.querySelectorAll("#groupengineering ul").length,
       1,
-      "step23 [positive]",
+      "step25",
     );
-    // fixed input data, so fixed output data
-    let sample2 = `
-XXXX
-`;
+
     assert.equal(
-      dom.querySelectorAll("#groupengineering ul").textContent,
-      sample2,
-      "step24 [positive]",
+      dom.querySelectorAll("#groupengineering ul").length,
+      1,
+      "step26",
     );
+
+    assert.equal(
+      dom.querySelectorAll("#groupengineering ul a").length,
+      10,
+      "step27",
+    );
+
+    assert.equal(
+      dom.querySelectorAll("#groupengineering ul a[aria-label]").length,
+      10,
+      "step28",
+    );
+
   });
 
   it("go 10.3: createAdjacentChart", async () => {
@@ -450,81 +501,121 @@ XXXX
 </div>`;
     appendIsland("#point2", str, dom);
 
-    /*
     await createAdjacentChart(
       { group: "engineering", name: "code-metrics", debug:true, runFetch: mockFetch3, perRow:15 },
       dom,
       loc,
     );
-*/
+
     assert.equal(
       dom.querySelector(".adjacentGroup p").textContent,
       "TEST",
-      "step20 [positive]",
+      "step29",
     );
     assert.equal(
       dom.querySelectorAll("#groupengineering .adjacentList").length,
       1,
-      "step21 [positive]",
+      "step30",
     );
+    assert.equal(
+      dom.querySelectorAll("#groupengineering .adjacentList li").length,
+      15,
+      "step31",
+    );
+    
 
-    // fixed input data, so fixed output data
     let sample1 = `
-<li> <a id="linkengineering0" class="button" href="https://owenberesford.me.uk/resource/code-metrics" aria-label="Title: Code metrics
-Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
-Description: A colleague didnt understand remarks about refactoring his code">Code metrics</a> </li>
-<li> <a id="linkengineering1" class="button" href="https://owenberesford.me.uk/resource/paradigm-shift" aria-label="Title: Paradigm shift
+<li> <a id="linkengineering0" class="button" href="https://owenberesford.me.uk/resource/paradigm-shift" aria-label="Title: Paradigm shift
 Author: Tim Ottinger @tottinge &nbsp; &nbsp; Last edit:  26-March-2024 
 Description: Borrowed content; discussing the change in engineering approach">Paradigm shift</a> </li>
-<li> <a id="linkengineering2" class="button" href="https://owenberesford.me.uk/resource/howto-API" aria-label="Title: How-to REST API
+<li> <a id="linkengineering1" class="button" href="https://owenberesford.me.uk/resource/howto-API" aria-label="Title: How-to REST API
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
 Description: 16 Considerations for REST API, construction and why REST API are used.">How-to REST API</a> </li>
-<li> <a id="linkengineering3" class="button" href="https://owenberesford.me.uk/resource/goals" aria-label="Title: “Zones of developmen...
+<li> <a id="linkengineering2" class="button" href="https://owenberesford.me.uk/resource/goals" aria-label="Title: “Zones of development”
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
-Description: What concepts or areas of development are important.    This is a higher level chart..">“Zones of developmen...</a> </li>
+Description: What concepts or areas of development are important.    This is a higher level chart..">“Zones of development”</a> </li>
+<li> <a id="linkengineering3" class="button lower" href="https://owenberesford.me.uk/resource/performance-engineering" aria-label="Title: Performance engineering
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: What is my process for performance engineering, sometimes called scaling-up, and is part of growth hacking.  I have improved multiple operational systems.">Performance engineering</a> </li>
+<li> <a id="linkengineering4" class="button lower" href="https://owenberesford.me.uk/resource/justify-oop" aria-label="Title: The economic and commercial justificatio...
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Commercial justification for using common engineering practice of OO.  Please read if you are a business person.">The economic and commercial justificatio...</a> </li>
+<li> <a id="linkengineering5" class="button" href="https://owenberesford.me.uk/resource/logging" aria-label="Title: Logging observability
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Analysis on logging operational visibility: why to add it and why to remove it">Logging observability</a> </li>
+<li> <a id="linkengineering6" class="button" href="https://owenberesford.me.uk/resource/composer-force-version" aria-label="Title: Composer version locking
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: About a particular feature of php composer">Composer version locking</a> </li>
+<li> <a id="linkengineering7" class="button" href="https://owenberesford.me.uk/resource/symfony-loggers" aria-label="Title: Symfony3 loggers
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Brief article about symfony3 loggers &amp; managing them">Symfony3 loggers</a> </li>
+<li> <a id="linkengineering8" class="button" href="https://owenberesford.me.uk/resource/yml-notes" aria-label="Title: YML notes (for Symfony)
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Short article on YML in Symfony">YML notes (for Symfony)</a> </li>
+<li> <a id="linkengineering9" class="button" href="https://owenberesford.me.uk/resource/docs-for-js-ts" aria-label="Title: Docs for JS and TS
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: The best IMO docs generators for JS and TS.  A look at options, requirements, its history and literature.">Docs for JS and TS</a> </li>
+<li> <a id="linkengineering10" class="button" href="https://owenberesford.me.uk/resource/php-extra-tools" aria-label="Title: Extra PHP tools.
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Toolify your way round operational constraints">Extra PHP tools.</a> </li>
+<li> <a id="linkengineering11" class="button" href="https://owenberesford.me.uk/resource/php-tools" aria-label="Title: PHP Tool chain
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: This is a shopping list to save time.  PHP dev only">PHP Tool chain</a> </li>
+<li> <a id="linkengineering12" class="button" href="https://owenberesford.me.uk/resource/phar-notes" aria-label="Title: PHAR notes
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Short article about compressed php bundles">PHAR notes</a> </li>
+<li> <a id="linkengineering13" class="button" href="https://owenberesford.me.uk/resource/opcache-notes" aria-label="Title: Opcache notes
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Short article for how to control APC.">Opcache notes</a> </li>
+<li> <a id="linkengineering14" class="button" href="https://owenberesford.me.uk/resource/php-benchmark-2017" aria-label="Title: PHP benchmark 2017
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> </li>
 `;
     assert.equal(
       dom.querySelector("#groupengineering .adjacentList").innerHTML,
       sample1,
-      "step22 [positive]",
+      "step32 ",
     );
+
   });
 
   function mockFetch1(url, hasExcept) {
     return new Promise((good, bad) => {
       let str = [
-  {
-    "url": "https://www.w3.org/WAI/WCAG2AAA-Conformance",
-    "desc": "Accessibility resources free online from the international standards organization: W3C Web Accessibility Initiative (WAI).",
-    "title": "Web Content Accessibility Guidelines (WCAG) 2 Level AAA Conformance | Web Accessibility Initiative (WAI) | W3C",
-    "auth": "W3C Web Accessibility Initiative (WAI)",
-    "date": 1717168263
-  },
-  {
-    "url": "https://www.allaccessible.org/wcag-level-a-aa-and-aaa-whats-the-difference/",
-    "desc": "Within WCAG there are three levels of compliance Levels A, AA, and AAA. Find out which is attainable for your organization.",
-    "title": "WCAG Level A, AA, and AAA Whats the Difference? | AllAccessible Automated Web Accessibility WCAG 2.1",
-    "auth": "AllAccessible",
-    "date": 0
-  },
-  {
-    "url": "https://www.w3.org/WAI/WCAG21/quickref/",
-    "desc": "How to Meet WCAG (Quickref Reference)",
-    "title": "How to Meet WCAG (Quickref Reference)",
-    "auth": "unknown",
-    "date": 0
-  },
-  {
-    "url": "https://accessibility.18f.gov/checklist/",
-    "desc": "Checklist | 18F Accessibility",
-    "title": "Checklist | 18F Accessibility",
-    "auth": "",
-    "date": 0
-  }
-];
+        {
+          url: "https://www.w3.org/WAI/WCAG2AAA-Conformance",
+          desc: "Accessibility resources free online from the international standards organization: W3C Web Accessibility Initiative (WAI).",
+          title:
+            "Web Content Accessibility Guidelines (WCAG) 2 Level AAA Conformance | Web Accessibility Initiative (WAI) | W3C",
+          auth: "W3C Web Accessibility Initiative (WAI)",
+          date: 1717168263,
+        },
+        {
+          url: "https://www.allaccessible.org/wcag-level-a-aa-and-aaa-whats-the-difference/",
+          desc: "Within WCAG there are three levels of compliance Levels A, AA, and AAA. Find out which is attainable for your organization.",
+          title:
+            "WCAG Level A, AA, and AAA Whats the Difference? | AllAccessible Automated Web Accessibility WCAG 2.1",
+          auth: "AllAccessible",
+          date: 0,
+        },
+        {
+          url: "https://www.w3.org/WAI/WCAG21/quickref/",
+          desc: "How to Meet WCAG (Quickref Reference)",
+          title: "How to Meet WCAG (Quickref Reference)",
+          auth: "unknown",
+          date: 0,
+        },
+        {
+          url: "https://accessibility.18f.gov/checklist/",
+          desc: "Checklist | 18F Accessibility",
+          title: "Checklist | 18F Accessibility",
+          auth: "",
+          date: 0,
+        },
+      ];
       let h = new Headers();
       h.append("Content-Type", "application/json; cbarset=utf8");
-      let ret = { body:str, headers: h, ok: true };
+      let ret = { body: str, headers: h, ok: true };
       good(ret);
     });
   }

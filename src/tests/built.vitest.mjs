@@ -2,160 +2,50 @@ import { assert, describe, it } from "vitest";
 import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed";
+import { TEST_ONLY } from "../core";
+import { _getCookie } from "../networking";
+import { appendIsland, setIsland, isFullstack, isMobile } from "../dom-base";
+import { enableGetEventListeners, createEvent } from "./vitest-addons";
 
-describe("TEST built artifact ", () => {
+const { siteCore, injectOpts } = TEST_ONLY;
+
+describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now!", () => {
   let ram1 = 0;
   if (process) {
     ram1 = process.memoryUsage();
   }
 
-  it("go 1: PANIC! ", async (context) => {
+  it("go 6: siteCore (as desktop)", async (context) => {
     let ram1 = 0;
-    let d1 = new Date();
     if (process) {
       ram1 = process.memoryUsage();
     }
 
-    const url = "http://192.168.0.35/resource/ancient-TLS?mobile=0";
-    const dom = new JSDOM(
-      `<!DOCTYPE html>
-<html lang="en-GB" class="noJS" itemscope itemtype="http://schema.org/Article">
-<head>
-<!-- This website is written by a guy who claims to have lots of specialised technical skills, but this website only partially demonstrates them.  This website is a vehicle for about 200,000 words, please read some of them. -->
-<title>Managing ancient TLS</title>
-<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="Content-Language" content="en-GB" />
-<meta name="Author" content="Owen Beresford" />
-<meta name="Description" content="Transport Layer Security is very niche. Finally TLS 1.0, a very old protocol, was removed from Windows, the last vendor who were using it. I discuss the TLS context, technical details and upgrades." />
-<meta name="google-site-verification" content="lSgIe7Nm0H0RYQ2ktQ4vr5Jz0iYGhQd7cTWoVDg3Xss" />
-<link href="/asset/favicon-32x32.png" rel="icon" type="image/png" />
-<meta itemprop="name" content="Managing ancient TLS">
-<meta itemprop="description" content="Transport Layer Security is very niche. Finally TLS 1.0, a very old protocol, was removed from Windows, the last vendor who were using it. I discuss the TLS context, technical details and upgrades.">
-<meta name="twitter:site" content="@channelOwen">
-<meta name="twitter:title" content="Managing ancient TLS">
-<meta name="twitter:description" content="Transport Layer Security is very niche. Finally TLS 1.0, a very old protocol, was removed from Windows, the last vendor who were using it. I discuss the TLS context, technical details and upgrades.">
-<meta name="twitter:creator" content="@channelOwen">
-<meta property="og:title" content="Managing ancient TLS" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://owenberesford.me.uk/resource/ancient-TLS" />
-<meta property="og:description" content="Transport Layer Security is very niche. Finally TLS 1.0, a very old protocol, was removed from Windows, the last vendor who were using it. I discuss the TLS context, technical details and upgrades." />
-<meta property="og:site_name" content="OwenBeresford's very wordy site" />
-<meta property="article:published_time" content="19th of May 2024, 12:07:03" />
-<meta property="article:modified_time" content="19th of May 2024" />
-<link rel="canonical" href="https://owenberesford.me.uk/resource/ancient-TLS" />
-<!-- the below track is just a generic cheese track, but the style fits. progressive + uplifting tone.  I do not own the rights or anything. 
-TODO: magic tune selection against some index/DB -->
-<meta property="og:audio" content="https://www.youtube.com/watch?v=Brl7WmHDG-E" />
-
-<link rel="stylesheet" href="/asset/ob1.min.css" />
-<script type="application/ld+json">
-  {
-    "@context": "https://ogp.me/ns/article#",
-    "@type": "Article",
-    "name": "Managing ancient TLS",
-	"article:published_time":"19th of May 2024, 12:07:03", 
-    "article:modified_time":"19th of May 2024",
-    "article:section":"technology",
-
-    "author": {
-      "@type": "Person",
-      "name": "Owen Beresford"
-    }
-  }
-</script>
-</head>
-<body id="body" class="annoyingBody">
- <div class="h4_page wholeArticle">
-  <div class="after_menu articleContent">
-   <main id="main">
-    <article>
-     <div class="blocker addReferences">
-<div class="halferWords">
-<p>Very short article.</p>
-
-
-<h5 id="toc0"> Context</h5>
-<p>All OS vendors will have soon removed support for TLS 1.0.  Microsoft was hanging around on this upgrade for a very long time, as they would like strong backwards compatibility <a href="https://news.thewindowsclub.com/microsoft-to-disable-tls-versions-1-0-and-1-1-by-default-in-windows-108353/" target="_blank">announcement for OS released September 2023</a> - this includes a list of services likely to break, some services deprecated <sup><a href="https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/tls-1-0-and-1-1-deprecation/ba-p/1620264" target="_blank">1</a></sup>, TLS deprecations in Azure <sup><a href="https://devblogs.microsoft.com/devops/deprecating-weak-cryptographic-standards-tls-1-0-and-tls-1-1-in-azure-devops/" target="_blank">2</a></sup>, deprecation in Edge in 2020 <sup><a href="https://blogs.windows.com/msedgedev/2020/03/31/tls-1-0-tls-1-1-schedule-update-edge-ie11/" target="_blank">3</a></sup>.</p>
-
-
-<h5 id="toc1"> Brief technical details</h5>
-<p>As an introduction to terms, look at <a href="https://en.wikipedia.org/wiki/Cipher_suite" target="_blank">cipher suite</a>.   TLS 1.0 was introduced in 1999 <sup><a href="https://en.wikipedia.org/wiki/Transport_Layer_Security" target="_blank">4</a></sup>, and many issues have been found with it since that date <sup><a href="https://www.freecodecamp.org/news/attacks-on-ssl-tls-and-how-to-protect-your-system/" target="_blank">5</a></sup> <sup><a href="https://www.acunetix.com/blog/articles/tls-vulnerabilities-attacks-final-part/" target="_blank">6</a></sup> <sup><a href="https://crashtest-security.com/ssl-beast-attack-tls/" target="_blank">7</a></sup>.  The support for the versions is listed at <sup><a href="https://caniuse.com/?search=tls" target="_blank">8</a></sup>.   The wiki page includes a list of algorithms that are acceptable by each version of TLS.   It was formally deprecated as an ITEF spec in 2021, but many engineers had been avoiding it for sometime.   <br />
-There are many different cyphers <sup><a href="https://wiki.mozilla.org/Security/Cipher_Suites" target="_blank">9</a></sup> <sup><a href="https://cheapsslsecurity.com/p/everything-you-need-to-know-about-an-ssl-cipher-cipher-lists/" target="_blank">10</a></sup>, process to list cyphers for a particular site <sup><a href="https://superuser.com/questions/109213/how-do-i-list-the-ssl-tls-cipher-suites-a-particular-website-offers" target="_blank">11</a></sup>.   My cursory reading led me to use Elliptic curves, since 2018, as the maths involved was harder to factor <sup><a href="https://en.wikipedia.org/wiki/Elliptic_curve" target="_blank">12</a></sup>.  This is not a decision that has meaning to anyone else.<br />
-</p>
-
-
-<h5 id="toc2"> Upgrade notes</h5>
-<p>Obviously when running a webapp, and in possession of technical skills and access, one can set headers to encourage browsers to upgrade to better security.  The Upgrade-Insecure-Requests header <sup><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Upgrade-Insecure-Requests" target="_blank">13</a></sup> should be set by all recentish browsers and requests better encryption.  The Upgrade header <sup><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Upgrade" target="_blank">14</a></sup> is only used by systems currently using HTTP1.1, and is targeted to get to HTTP2.<br />
-For the client side, Warwick university did a systematic process in 2017, to support PCI-DSS better.   Notes for client webrowsers <sup><a href="https://warwick.ac.uk/services/its/servicessupport/web/sign-on/help/tls1-eol/" target="_blank">15</a></sup>.   Warwick's process seems to include upgrading payments made at parking-metres, so was thorough.  <br />
-Some notes for github certs <sup><a href="https://docs.github.com/en/enterprise-cloud@latest/organizations/managing-git-access-to-your-organizations-repositories/about-ssh-certificate-authorities" target="_blank">16</a></sup> <sup><a href="https://docs.github.com/en/enterprise-cloud@latest/organizations/managing-git-access-to-your-organizations-repositories/managing-your-organizations-ssh-certificate-authorities" target="_blank">17</a></sup>.<br />
-Notes for setting certs in web-services will be published as part of the service documentation.  There are many choices of implementation for a web-service.  As web-services link to a common SSL library which supports many cert types, the cert type is easily fungible.  The upgrade process is normally add the new file, update the service config to point to new file, and restart service.</p>
-
-
-<h5 id="toc3"> To test a host</h5>
-<p>If you have a service already setup and need to document it for security notes or something, you are likely to need a technical breakdown on the SSL used on it.   Fortunately this is easy, there are many choices <sup><a href="https://www.ipvoid.com/tls-checker/" target="_blank">18</a></sup> ~ thesimplest ~ <sup><a href="https://www.ssllabs.com/ssltest" target="_blank">19</a></sup> <sup><a href="https://www.site24x7.com/tools/tls-checker.html" target="_blank">20</a></sup> ~ note other people will be able to see these results ~ <sup><a href="https://tls.support/" target="_blank">21</a></sup> ~ what your local browser is using.  If for some reason the data provided by a browser isn't detailed enough (likely for reporting).</p>
-
-
-</div>
-</div>
-    </article>
-   </main>
-	<div id="contentGroup" class="adjacentGroup" --data-group="engineering"> <p>Some similar articles in engineering </p>
-<div id="groupengineering" class="adjacentList"><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in engineering group.">All of <br />engineering </a> </div>
- </div>
-
-  </div>
-  <fieldset class="outer_menu articleHeader">
-	<legend></legend>
-	<nav>
-		<div id="navBar" class="row">
-			<div class="column">
-				<div class="top-bar fullWidth">
-					<header><h1>Managing ancient TLS</h1></header>
-			    	<p role="status" class="bigScreenOnly">    </p>
-				</div>
-				<div id="shareGroup" class="bibbles row addReading">
-					<span class="allButtons"> 
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/architecture?mobile=0",
+      3,
+    );
+    let str = `<div id="navBar"> 
+				<span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
-						<a id="rssLink" href="https://owenberesford.me.uk/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
+						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
 						<span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
 						<span class="bigScreenOnly">Share: </span>
-                        <a href="https://twitter.com/intent/tweet?text=I+think+this+is+important+https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fancient-TLS" title="Share this resource on your twitter account." target="_blank" class="bigScreenOnly"> <i class="fa fa-twitter" aria-label="Share this resource on your twitter account." aria-hidden="true"></i></a>
-						<a href="#" id="mastoTrigger" class="masto bigScreenOnly" title="Share this article with *your* mastodon instance" >	<i class="fa fa-mastodon" aria-label="Share this article on *your* mastodon instance." aria-hidden="true"></i> </a>
-						<a href="https://www.reddit.com/submit?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fancient-TLS" target="_blank" title="Share this article with your Reddit audience" class="bigScreenOnly" ><i aria-label="Share this article with your Reddit audience." class="fa fa-reddit-square" aria-hidden="true"></i></a>
-						<a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fancient-TLS" target="_blank" class="bigScreenOnly" title="Share current article with your linked-in audience." ><i class="fa fa-linkedin-square" aria-hidden="true" aria-label="Share this article with your linked-in audience."></i></a>
-						<a title="Share current article with Hacker news/ Y combinator audience" target="_blank" class="bigScreenOnly" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fancient-TLS&amp;t=Managing+ancient+TLS"> <i class="fa fa-hacker-news" aria-label="Share this article with your Y combinator audience." aria-hidden="true"> </i></a>
-						<a title="Share this article with your Xing audience." href="https://www.xing.com/spi/shares/new?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fancient-TLS" target="_blank" class="bigScreenOnly" ><i class="fa fa-xing-square" aria-hidden="true" aria-label="Share this article with your Xing audience."></i> </a>
+                        <a href="https://twitter.com/intent/tweet?text=I+think+this+is+important+https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" title="Share this resource on your twitter account." target="_blank" class="bigScreenOnly"> <i class="fa fa-twitter" aria-label="Share this resource on your twitter account." aria-hidden="true"></i></a>
+						<a href="#" id="mastoTrigger" class="masto bigScreenOnly" title="Share this article with *your* mastodon instance">	<i class="fa fa-mastodon" aria-label="Share this article on *your* mastodon instance." aria-hidden="true"></i> </a>
+						<a href="https://www.reddit.com/submit?url=https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" target="_blank" title="Share this article with your Reddit audience" class="bigScreenOnly"><i aria-label="Share this article with your Reddit audience." class="fa fa-reddit-square" aria-hidden="true"></i></a>
+						<a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" target="_blank" class="bigScreenOnly" title="Share current article with your linked-in audience."><i class="fa fa-linkedin-square" aria-hidden="true" aria-label="Share this article with your linked-in audience."></i></a>
+						<a title="Share current article with Hacker news/ Y combinator audience" target="_blank" class="bigScreenOnly" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette&amp;t=3D+effects+demo%2F+maquette"> <i class="fa fa-hacker-news" aria-label="Share this article with your Y combinator audience." aria-hidden="true"> </i></a>
+						<a title="Share this article with your Xing audience." href="https://www.xing.com/spi/shares/new?url=https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" target="_blank" class="bigScreenOnly"><i class="fa fa-xing-square" aria-hidden="true" aria-label="Share this article with your Xing audience."></i> </a>
 					</span>
 
-					<span class="ultraSkinny bigScreenOnly"> 
-						<span>Edited <time datetime="2024-05-19T12:07:00">19th of May 2024</time>
-						</span>
-						<span>Created <time datetime="2023-09-08T00:00:00" title="if the value says 03-03-2015; its wrong but that is when this project was moved to the current git project" >8th of Sep 2023</time> </span>
-					</span>
-
-				</div>
-			</div>
-			<dialog id="popup" class="popup1 bigScreenOnly">
-				<form method="dialog" encoding="multipart/form-data" action="." name="mastoSelection"  >
-					<label for="mastodonserver">your server: 
-						<input id="mastodonserver" max-length="50" --data-url="https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fancient-TLS" type="text" value="" placeholder="mastodon.social" />  
-					</label> 
-					<span id="sendMasto" class="button masto" href="#" title="Share article to *your* mastodon server">Share article now</span>
-					<span class="button trimmed" id="hideMasto" href="#" title="Close popup"> <i class="fa fa-cancel" aria-hidden="true"></i> Cancel </span>
-				</form>
-			</dialog>
-
-<fieldset class="h4_menu column bigScreenOnly ">
+<fieldset class="h4_menu column bigScreenOnly">
 <legend><span id="pageMenu"><i class="fa fa-ob1burger" aria-hidden="true"></i> </span></legend>
 <menu class="h4_lean">
 </menu>
-<br />
-
+<br>
 </fieldset>
-	</div>
-<menu class="burgerMenu" >
+<menu class="burgerMenu">
 <li class="h4_odd">Additional features</li>
 <li class=""><a href="/resource/home"><i class="fa fa-angle-left" aria-hidden="true"></i> Home</a> </li> 
 <li class="h4_odd"><a href="/resource/search">Search <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
@@ -163,59 +53,705 @@ Notes for setting certs in web-services will be published as part of the service
 <li class="h4_odd"><a href="/resource/contact-me">Contact me <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 <li class=""><a href="#contentGroup">Similar articles</a></li>
 </menu>
-	</nav>
-</fieldset>
-		</div>
- <br class="blocker" />
- <div id="biblio" style="display:none;">
-    <br class="blocker" />
- </div>
- 
- <footer>
-  <div class="h4_footer"> 
-	<div class="leftFooter"> 
-		<a href="https://www.plainenglish.co.uk/services/webcheck.html" target="_blank" title="They, er, don't have a service for >170,000 word sites, so no logo.">Campaign for Plain English</a><br />
-		My profile: <a href="https://www.linkedin.com/in/owen-beresford-bb6ab030/" target="_blank" aria-label="my linked-in" title="Load my linked-in profile" ><i class="fixLinkedSq fa fa-linkedin-square" aria-hidden="true" aria-label="Open my linked in profile" ></i></a>
-	</div> 
-	<p> Page rendered <time datetime="2024-05-19T12:07:03">19th of May 2024, 12:07:03</time>, Copyright &copy; 2022 Owen Beresford, <a href="https://owenberesford.me.uk/resource/contact-me">contact me</a>.  Last modified <time datetime="2024-05-19T12:07:00">19th of May 2024</time>.
-    <p>Read the generous <a rel="license" href="https://owenberesford.me.uk/resource/licence" title="Load the license term; but not that interesting">licence terms</a>, if you feel the need, there is a <a href="https://owenberesford.me.uk/resource/privacy#" title="Load the privacy terms" >privacy here</a>.    View the <a href="https://owenberesford.me.uk/resource/site-chart#" title="Load a page showing all the articles on this site">site map</a>.  <a href="#pageMenu">Jump to menu</a>
+	<dialog id="popup" >
+	<span id="sendMasto">TICK</span> <span id="hideMasto">CROSS</span>
+	<input id="mastodonserver" value="panda.testing" data-url="giggle.co.uk?" /> 
+	</dialog> 
+
 </div>
-</footer>
-
-</body>
-</html>`,
-      { url: url, referrer: url },
+<main id="main">
+<div class="blocker addReferences ">
+<h3 class="dontend" id="toc1"> <a href="#toc1" title="Jump to this section."> Current image widgets <sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h3>
+<ul class="ulbasic">
+    <li>React Image Magnifier <a href="https://adamrisberg.github.io/react-image-magnifiers/" target="_blank">demo</a> <a href="https://www.npmjs.com/package/@vanyapr/react-image-magnifiers" target="_blank">npm</a> <a href="https://github.com/vanyapr/react-image-magnifiers" target="_blank">git</a> <a href="https://github.com/vanyapr/react-image-magnifiers#readme" target="_blank">docs</a></li>
+    <li>React Spring lightbox <a href="https://www.npmjs.com/package/react-spring-lightbox" target="_blank">npm</a> <a href="https://github.com/tim-soft/react-spring-lightbox" target="_blank">git</a> <a href="https://timellenberger.com" target="_blank">docs</a></li>
+    <li>Featherlight <a href="https://www.npmjs.com/package/featherlight" target="_blank">npm</a> <a href="https://github.com/noelboss/featherlight" target="_blank">git</a> <a href="https://noelboss.github.io/featherlight/" target="_blank">docs</a> ~ lightweight jQuery lightbox plugin.  NB: this is 4YO. </li>
+    <li>@will2code/react-modal-image <sup><a href="https://www.npmjs.com/package/@will2code/react-modal-image" target="_blank">3</a></sup> <a href="https://github.com/aautio/react-modal-image" target="_blank">git</a> <a href="https://github.com/aautio/react-modal-image#readme" target="_blank">docs</a> ~ is a modal; supports transparent backgrounds; supports Zoom.</li>
+    <li>Simple lightbox <a href="https://www.npmjs.com/package/simplelightbox" target="_blank">npm</a> <a href="https://github.com/andreknieriem/simplelightbox" target="_blank">git</a> <a href="https://simplelightbox.com/" target="_blank">docs</a> ~  this is optional jQuery; it supports ALOT of localisation overrides; it supports full mobile interaction;  it uses 6MB on disk.</li>
+    <li>Flyout block <a href="https://www.npmjs.com/package/flyout-block" target="_blank">npm</a> <a href="https://github.com/fluidweb-co/flyout-block" target="_blank">git</a> <a href="https://github.com/fluidweb-co/flyout-block#readme" target="_blank">docs</a> ~ doesn't mention frameworks; it's built by processing HTML attributes on standard HTML tags; not widely used from NPM, released this year. </li>
+</ul>
+<p>I workout several methods to have a zoom and clip of an image.</p>
+<ul class="ulbasic">
+    <li>Simple CSS for image static scaling: object-fit <sup><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit" target="_blank">1</a></sup>, object-position <sup><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-position" target="_blank">2</a></sup>. This is really useful for browsers where it works <sup><a href="https://caniuse.com/?search=object-fit" target="_blank">3</a></sup>, and should be used for all RWD / PWA designs <sup><a href="https://www.digitalocean.com/community/tutorials/css-cropping-images-object-fit" target="_blank">4</a></sup>.  But this is not a popup/ is not reactive to user input.</li>
+    <li>CSS transform:scale <sup><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale" target="_blank">5</a></sup> <sup><a href="https://css-tricks.com/almanac/properties/s/scale/" target="_blank">6</a></sup> older browsers have this feature as zoom <sup><a href="https://www.positioniseverything.net/css-zoom" target="_blank">7</a></sup> <sup><a href="https://css-tricks.com/almanac/properties/z/zoom/" target="_blank">8</a></sup>, but that is deprecated, just like MSIE that started that CSS item.  This should probably be combined with overflow-x/ overflow-y <sup><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-x" target="_blank">9</a></sup> to avoid too many scrollbars.</li>
+    <li>If using a desktop/ laptop, &lt;cntl + mouse-scroll&gt; will normally zoom.  With many mobile apps pinch will zoom.   Both these are operating system features, but I use them a lot.</li>
+    <li>“blitting” or Sprite mapping is an old pre-internet technique for pulling a currently wanted texture from a big texture file; and applying it to what is currently on screen <sup><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path" target="_blank">10</a></sup>.   I have been shying away from doing this is JS/CSS, as I didn't see any libraries, and I didn't want to hand calculate all the maths, <sup><a href="https://css-tricks.com/using-css-clip-path-create-interactive-effects/" target="_blank">11</a></sup> <sup><a href="https://cssfordesigners.com/articles/clip-path-scaling" target="_blank">12</a></sup> has some ideas to avoid manual typing.  Support is less sharp for this feature <sup><a href="https://caniuse.com/?search=css-clip-path" target="_blank">13</a></sup> (looking at colour of support rather than volume).</li>
+    <li>A low tech/ inefficient use of bandwidth width, but very stable and very reliable trick is to shoot all you images in very high resolution; and just set the “normal size” image to have fixed pixel sizes; the browser will scale the image <sup><a href="https://www.w3docs.com/snippets/css/how-to-auto-resize-an-image-to-fit-an-html-container.html" target="_blank">14</a></sup>.  Then the popup can use the same image at real size.</li>
+</ul>
+</div>
+</main>
+<div id="contentGroup" class="adjacentGroup" data-group="engineering">
+<div class="adjacentGroup " id="groupengineering">
+<p>TEST</p>
+</div>
+</div>
+<div id="biblio" style="display:none;"></div>
+`;
+    appendIsland("#point2", str, dom);
+    enableGetEventListeners(dom);
+    let hash = {
+      tabs: [],
+      desktopRunFetch: mockt1_1,
+      adjacentRunFetch: mockt1_2,
+      mobileRunFetch: mockt1_3,
+      debug: () => {
+        return true;
+      },
+    };
+    injectOpts(hash);
+    const CC = _getCookie();
+    CC.set(
+      "appearance",
+      '{"fs":"14pt","ft":"ubuntu","cr":"blue","dn":"ltr"}',
+      1,
     );
-    const [document, location, window] = [
-      dom.window.document,
-      dom.window.location,
-      dom.window,
-    ];
 
-    console.log("XXXXX 1");
-    const moduleA = await import("../../dist/ob1");
-    console.log("XXXXX 2");
+    await siteCore({}, dom, loc, win);
+    assert.equal(
+      dom.querySelectorAll("#groupengineering .adjacentList").length,
+      1,
+      "assert #1",
+    );
+    assert.equal(
+      dom.querySelectorAll("#groupengineering .adjacentList li").length,
+      8,
+      "assert #2",
+    );
+    let buf = dom.querySelector("#sendMasto");
+    assert.equal(buf.getEventListeners().length, 3, "Assert #3");
+    buf = dom.querySelector("#hideMasto");
+    assert.equal(buf.getEventListeners().length, 3, "Assert #4");
+    buf = dom.querySelector("#shareGroup a.reading");
+    assert(buf.textContent, "To read: 1m", "assert #5");
+
+    assert.equal(dom.querySelectorAll("i.fa-book-open").length, 6, "assert #6");
+    assert.equal(dom.querySelectorAll("i.fa-github").length, 6, "assert #7");
+    assert.equal(dom.querySelectorAll("style").length, 1, "assert #8"); // added by setAppearance
+
+    // add tabs test
+    // test modal
 
     let ram2 = 0;
-    let d2 = new Date();
-
     if (process) {
       ram2 = process.memoryUsage();
     }
     if (ram1 !== 0) {
-      console.log(
-        "RAM used to make JSDOM: " +
-          (ram2.heapUsed - ram1.heapUsed) +
-          " " +
-          (d2 - d1),
-      );
+      console.log("RAM used to make JSDOM: " + (ram2.heapUsed - ram1.heapUsed));
     }
   });
+
+  function mockt1_1() {
+    // desktop biblio
+    let hh = new Headers();
+    hh.append("content-encoding", "application/json");
+
+    return new Promise((good, bad) => {
+      let tt = {
+        body: [
+          {
+            url: "https://caniuse.com/?search=%40media",
+            desc: "Can I use' provides up-to-date browser support tables for support of front-end web technologies on desktop and mobile web browsers.",
+            title: "@media' | Can I use... Support tables for HTML5, CSS3, etc",
+            auth: "Alexis Deveria @Fyrd",
+            date: 0,
+          },
+          {
+            url: "https://automaticcss.com/accessibility-features/",
+            desc: "Automatic.css (ACSS) is committed to helping developers build more accessible websites. While accessibility is a deep and fairly technical topic…",
+            title:
+              "How Automatic.css is Making Websites More Accessible - Automatic.css",
+            auth: "",
+            date: 0,
+          },
+          {
+            url: "https://stackoverflow.com/questions/41370741/how-do-i-edit-a-css-variable-using-js",
+            desc: "javascript - How do I edit a CSS variable using JS? - Stack Overflow",
+            title:
+              "javascript - How do I edit a CSS variable using JS? - Stack Overflow",
+            auth: "No author for Q&A sites",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-transparency",
+            desc: "The prefers-reduced-transparency CSS media feature is used to detect if a user has enabled a setting on their device to reduce the transparent or translucent layer effects used on the device. Switching on such a setting can help improve contrast and readability for some users.",
+            title:
+              "prefers-reduced-transparency - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/video-dynamic-range",
+            desc: "The video-dynamic-range CSS media feature can be used to test the combination of brightness, contrast ratio, and color depth that are supported by the video plane of the user agent and the output device.",
+            title: "video-dynamic-range - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+          {
+            url: "https://stackoverflow.com/questions/46791052/detect-scale-settings-dpi-with-javascript-or-css",
+            desc: "Detect scale settings (dpi) with JavaScript or CSS - Stack Overflow",
+            title:
+              "Detect scale settings (dpi) with JavaScript or CSS - Stack Overflow",
+            auth: "No author for Q&A sites",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/aspect-ratio",
+            desc: "The aspect-ratio CSS media feature can be used to test the aspect ratio of the viewport.",
+            title: "aspect-ratio - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-contrast",
+            desc: "The prefers-contrast CSS media feature is used to detect whether the user has requested the web content to be presented with a lower or higher contrast.",
+            title: "prefers-contrast - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+        ],
+        headers: hh,
+        ok: true,
+      };
+      good(tt);
+    });
+  }
+
+  function mockt1_2() {
+    // adjacent
+    let hh = new Headers();
+    hh.append("content-encoding", "application/json");
+
+    return new Promise((good, bad) => {
+      let tt = {
+        body: [
+          {
+            url: "https://owenberesford.me.uk/resource/architecture",
+            desc: "Notes from a course presented by T Gilb, an Agile coach, on Architectures & engineering tools in an Agile environment.  This article attempts to push an important and vast set of ideas and processes into text.",
+            title: "Architectures and Agile",
+            auth: "Owen Beresford",
+            date: 1711455586,
+          },
+          {
+            url: "https://owenberesford.me.uk/resource/code-metrics",
+            desc: "A colleague didnt understand remarks about refactoring his code",
+            title: "Code metrics",
+            auth: "Owen Beresford",
+            date: 1711467412,
+          },
+          {
+            url: "https://owenberesford.me.uk/resource/paradigm-shift",
+            desc: "Borrowed content; discussing the change in engineering approach",
+            title: "Paradigm shift",
+            auth: "Tim Ottinger @tottinge",
+            date: 1711455586,
+          },
+          {
+            url: "https://owenberesford.me.uk/resource/howto-API",
+            desc: "16 Considerations for REST API, construction and why REST API are used.",
+            title: "How-to REST API",
+            auth: "Owen Beresford",
+            date: 1711455586,
+          },
+          {
+            url: "https://owenberesford.me.uk/resource/goals",
+            desc: "What concepts or areas of development are important.    This is a higher level chart..",
+            title: "“Zones of development”",
+            auth: "Owen Beresford",
+            date: 1711455586,
+          },
+          {
+            url: "https://owenberesford.me.uk/resource/performance-engineering",
+            desc: "What is my process for performance engineering, sometimes called scaling-up, and is part of growth hacking.  I have improved multiple operational systems.",
+            title: "Performance engineering",
+            auth: "Owen Beresford",
+            date: 1711455586,
+          },
+          {
+            url: "https://owenberesford.me.uk/resource/justify-oop",
+            desc: "Commercial justification for using common engineering practice of OO.  Please read if you are a business person.",
+            title: "The economic and commercial justification for OOP",
+            auth: "Owen Beresford",
+            date: 1711455586,
+          },
+          {
+            url: "https://owenberesford.me.uk/resource/logging",
+            desc: "Analysis on logging operational visibility: why to add it and why to remove it",
+            title: "Logging observability",
+            auth: "Owen Beresford",
+            date: 1711455586,
+          },
+        ],
+        headers: hh,
+        ok: true,
+      };
+      good(tt);
+    });
+  }
+
+  function mockt1_3() {
+    // mobile biblio
+    let hh = new Headers();
+    hh.append("content-encoding", "application/json");
+
+    return new Promise((good, bad) => {
+      let tt = {
+        body: [
+          {
+            url: "https://caniuse.com/?search=%40media",
+            desc: "Can I use' provides up-to-date browser support tables for support of front-end web technologies on desktop and mobile web browsers.",
+            title: "@media' | Can I use... Support tables for HTML5, CSS3, etc",
+            auth: "Alexis Deveria @Fyrd",
+            date: 0,
+          },
+          {
+            url: "https://automaticcss.com/accessibility-features/",
+            desc: "Automatic.css (ACSS) is committed to helping developers build more accessible websites. While accessibility is a deep and fairly technical topic…",
+            title:
+              "How Automatic.css is Making Websites More Accessible - Automatic.css",
+            auth: "",
+            date: 0,
+          },
+          {
+            url: "https://stackoverflow.com/questions/41370741/how-do-i-edit-a-css-variable-using-js",
+            desc: "javascript - How do I edit a CSS variable using JS? - Stack Overflow",
+            title:
+              "javascript - How do I edit a CSS variable using JS? - Stack Overflow",
+            auth: "No author for Q&A sites",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-transparency",
+            desc: "The prefers-reduced-transparency CSS media feature is used to detect if a user has enabled a setting on their device to reduce the transparent or translucent layer effects used on the device. Switching on such a setting can help improve contrast and readability for some users.",
+            title:
+              "prefers-reduced-transparency - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/video-dynamic-range",
+            desc: "The video-dynamic-range CSS media feature can be used to test the combination of brightness, contrast ratio, and color depth that are supported by the video plane of the user agent and the output device.",
+            title: "video-dynamic-range - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+          {
+            url: "https://stackoverflow.com/questions/46791052/detect-scale-settings-dpi-with-javascript-or-css",
+            desc: "Detect scale settings (dpi) with JavaScript or CSS - Stack Overflow",
+            title:
+              "Detect scale settings (dpi) with JavaScript or CSS - Stack Overflow",
+            auth: "No author for Q&A sites",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/aspect-ratio",
+            desc: "The aspect-ratio CSS media feature can be used to test the aspect ratio of the viewport.",
+            title: "aspect-ratio - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-contrast",
+            desc: "The prefers-contrast CSS media feature is used to detect whether the user has requested the web content to be presented with a lower or higher contrast.",
+            title: "prefers-contrast - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+        ],
+        headers: hh,
+        ok: true,
+      };
+      good(tt);
+    });
+  }
+
+  it("go 6.1: siteCore (as phone)", async (context) => {
+    let ram1 = 0;
+    if (process) {
+      ram1 = process.memoryUsage();
+    }
+
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/home?mobile=1",
+      3,
+    );
+    let str = `<div id="navBar"> 
+        <span class="allButtons"> 
+            <a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
+            <a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
+            <span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
+            <span class="bigScreenOnly">Share: </span>
+                        <a href="https://twitter.com/intent/tweet?text=I+think+this+is+important+https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" title="Share this resource on your twitter account." target="_blank" class="bigScreenOnly"> <i class="fa fa-twitter" aria-label="Share this resource on your twitter account." aria-hidden="true"></i></a>
+            <a href="#" id="mastoTrigger" class="masto bigScreenOnly" title="Share this article with *your* mastodon instance"> <i class="fa fa-mastodon" aria-label="Share this article on *your* mastodon instance." aria-hidden="true"></i> </a>
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" target="_blank" title="Share this article with your Reddit audience" class="bigScreenOnly"><i aria-label="Share this article with your Reddit audience." class="fa fa-reddit-square" aria-hidden="true"></i></a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" target="_blank" class="bigScreenOnly" title="Share current article with your linked-in audience."><i class="fa fa-linkedin-square" aria-hidden="true" aria-label="Share this article with your linked-in audience."></i></a>
+            <a title="Share current article with Hacker news/ Y combinator audience" target="_blank" class="bigScreenOnly" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette&amp;t=3D+effects+demo%2F+maquette"> <i class="fa fa-hacker-news" aria-label="Share this article with your Y combinator audience." aria-hidden="true"> </i></a>
+            <a title="Share this article with your Xing audience." href="https://www.xing.com/spi/shares/new?url=https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" target="_blank" class="bigScreenOnly"><i class="fa fa-xing-square" aria-hidden="true" aria-label="Share this article with your Xing audience."></i> </a>
+          </span>
+
+<fieldset class="h4_menu column bigScreenOnly">
+<legend><span id="pageMenu"><i class="fa fa-ob1burger" aria-hidden="true"></i> </span></legend>
+<menu class="h4_lean">
+</menu>
+<br>
+</fieldset>
+<menu class="burgerMenu">
+<li class="h4_odd">Additional features</li>
+<li class=""><a href="/resource/home"><i class="fa fa-angle-left" aria-hidden="true"></i> Home</a> </li> 
+<li class="h4_odd"><a href="/resource/search">Search <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+<li class=""><a href="/resource/appearance">Appearance <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+<li class="h4_odd"><a href="/resource/contact-me">Contact me <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+<li class=""><a href="#contentGroup">Similar articles</a></li>
+</menu>
+  <dialog id="popup" >
+  <span id="sendMasto">TICK</span> <span id="hideMasto">CROSS</span>
+  <input id="mastodonserver" value="panda.testing" data-url="giggle.co.uk?" /> 
+  </dialog> 
+
+</div>
+<main id="main">
+<div class="blocker addReferences ">
+<h3 class="dontend" id="toc1"> <a href="#toc1" title="Jump to this section."> Current image widgets <sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h3>
+<ul class="ulbasic">
+    <li>React Image Magnifier <a href="https://adamrisberg.github.io/react-image-magnifiers/" target="_blank">demo</a> <a href="https://www.npmjs.com/package/@vanyapr/react-image-magnifiers" target="_blank">npm</a> <a href="https://github.com/vanyapr/react-image-magnifiers" target="_blank">git</a> <a href="https://github.com/vanyapr/react-image-magnifiers#readme" target="_blank">docs</a></li>
+    <li>React Spring lightbox <a href="https://www.npmjs.com/package/react-spring-lightbox" target="_blank">npm</a> <a href="https://github.com/tim-soft/react-spring-lightbox" target="_blank">git</a> <a href="https://timellenberger.com" target="_blank">docs</a></li>
+    <li>Featherlight <a href="https://www.npmjs.com/package/featherlight" target="_blank">npm</a> <a href="https://github.com/noelboss/featherlight" target="_blank">git</a> <a href="https://noelboss.github.io/featherlight/" target="_blank">docs</a> ~ lightweight jQuery lightbox plugin.  NB: this is 4YO. </li>
+    <li>@will2code/react-modal-image <sup><a href="https://www.npmjs.com/package/@will2code/react-modal-image" target="_blank">3</a></sup> <a href="https://github.com/aautio/react-modal-image" target="_blank">git</a> <a href="https://github.com/aautio/react-modal-image#readme" target="_blank">docs</a> ~ is a modal; supports transparent backgrounds; supports Zoom.</li>
+    <li>Simple lightbox <a href="https://www.npmjs.com/package/simplelightbox" target="_blank">npm</a> <a href="https://github.com/andreknieriem/simplelightbox" target="_blank">git</a> <a href="https://simplelightbox.com/" target="_blank">docs</a> ~  this is optional jQuery; it supports ALOT of localisation overrides; it supports full mobile interaction;  it uses 6MB on disk.</li>
+    <li>Flyout block <a href="https://www.npmjs.com/package/flyout-block" target="_blank">npm</a> <a href="https://github.com/fluidweb-co/flyout-block" target="_blank">git</a> <a href="https://github.com/fluidweb-co/flyout-block#readme" target="_blank">docs</a> ~ doesn't mention frameworks; it's built by processing HTML attributes on standard HTML tags; not widely used from NPM, released this year. </li>
+</ul>
+<p>I workout several methods to have a zoom and clip of an image.</p>
+<ul class="ulbasic">
+    <li>Simple CSS for image static scaling: object-fit <sup><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit" target="_blank">1</a></sup>, object-position <sup><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-position" target="_blank">2</a></sup>. This is really useful for browsers where it works <sup><a href="https://caniuse.com/?search=object-fit" target="_blank">3</a></sup>, and should be used for all RWD / PWA designs <sup><a href="https://www.digitalocean.com/community/tutorials/css-cropping-images-object-fit" target="_blank">4</a></sup>.  But this is not a popup/ is not reactive to user input.</li>
+    <li>CSS transform:scale <sup><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale" target="_blank">5</a></sup> <sup><a href="https://css-tricks.com/almanac/properties/s/scale/" target="_blank">6</a></sup> older browsers have this feature as zoom <sup><a href="https://www.positioniseverything.net/css-zoom" target="_blank">7</a></sup> <sup><a href="https://css-tricks.com/almanac/properties/z/zoom/" target="_blank">8</a></sup>, but that is deprecated, just like MSIE that started that CSS item.  This should probably be combined with overflow-x/ overflow-y <sup><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-x" target="_blank">9</a></sup> to avoid too many scrollbars.</li>
+    <li>If using a desktop/ laptop, &lt;cntl + mouse-scroll&gt; will normally zoom.  With many mobile apps pinch will zoom.   Both these are operating system features, but I use them a lot.</li>
+    <li>“blitting” or Sprite mapping is an old pre-internet technique for pulling a currently wanted texture from a big texture file; and applying it to what is currently on screen <sup><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path" target="_blank">10</a></sup>.   I have been shying away from doing this is JS/CSS, as I didn't see any libraries, and I didn't want to hand calculate all the maths, <sup><a href="https://css-tricks.com/using-css-clip-path-create-interactive-effects/" target="_blank">11</a></sup> <sup><a href="https://cssfordesigners.com/articles/clip-path-scaling" target="_blank">12</a></sup> has some ideas to avoid manual typing.  Support is less sharp for this feature <sup><a href="https://caniuse.com/?search=css-clip-path" target="_blank">13</a></sup> (looking at colour of support rather than volume).</li>
+    <li>A low tech/ inefficient use of bandwidth width, but very stable and very reliable trick is to shoot all you images in very high resolution; and just set the “normal size” image to have fixed pixel sizes; the browser will scale the image <sup><a href="https://www.w3docs.com/snippets/css/how-to-auto-resize-an-image-to-fit-an-html-container.html" target="_blank">14</a></sup>.  Then the popup can use the same image at real size.</li>
+</ul>
+</div>
+</main>
+<div id="contentGroup" class="adjacentGroup" data-group="engineering">
+<div class="adjacentGroup " id="groupengineering">
+<p>TEST</p>
+</div>
+</div>
+<div id="biblio" style="display:none;"> <br class="blocker"> </div>
+`;
+    appendIsland("#point2", str, dom);
+
+    enableGetEventListeners(dom);
+    let hash = {
+      tabs: [],
+      desktopRunFetch: mockt2_1,
+      adjacentRunFetch: mockt2_2,
+      mobileRunFetch: mockt2_3,
+      debug: () => {
+        return true;
+      },
+    };
+    injectOpts(hash);
+    const CC = _getCookie();
+    CC.set(
+      "appearance",
+      '{"fs":"14pt","ft":"ubuntu","cr":"blue","dn":"ltr"}',
+      1,
+    );
+
+    await siteCore({}, dom, loc, win);
+    assert.equal(
+      dom.querySelectorAll("#groupengineering .adjacentList").length,
+      0,
+      "assert #9",
+    );
+    assert.equal(
+      dom.querySelectorAll("#groupengineering p").length,
+      2,
+      "assert #10",
+    );
+    assert.equal(
+      dom.querySelector("#groupengineering p:nth-child(2)").textContent,
+      "As mobile View, use the full page link to the left",
+      "assert #11",
+    );
+
+    let buf = dom.querySelector("#sendMasto");
+    assert.equal(buf.getEventListeners().length, 3, "Assert #12");
+    buf = dom.querySelector("#hideMasto");
+    assert.equal(buf.getEventListeners().length, 3, "Assert #13");
+    // this is absent for mobile
+    //   buf = dom.querySelector("#shareGroup a.reading");
+    //   assert(buf.textContent, "To read: 1m", "assert #14");
+
+    assert.equal(
+      dom.querySelectorAll("i.fa-book-open").length,
+      6,
+      "assert #15",
+    );
+    assert.equal(dom.querySelectorAll("i.fa-github").length, 6, "assert #16");
+    assert.equal(dom.querySelectorAll("style").length, 1, "assert #17"); // added by setAppearance
+
+    assert.equal(
+      dom.querySelectorAll("ol.mobileBiblo").length,
+      1,
+      "assert #18",
+    );
+    assert.equal(
+      dom.querySelectorAll("ol.mobileBiblo li").length,
+      8,
+      "assert #19",
+    );
+    assert.equal(
+      dom.querySelectorAll("ol.mobileBiblo li a").length,
+      8,
+      "assert #20",
+    );
+    assert.equal(
+      dom.querySelectorAll("ol.mobileBiblo li a h5").length,
+      8,
+      "assert #21",
+    );
+
+    // add tabs test
+    // test modal
+
+    let ram2 = 0;
+    if (process) {
+      ram2 = process.memoryUsage();
+    }
+
+    if (ram1 !== 0) {
+      console.log("RAM used to make JSDOM: " + (ram2.heapUsed - ram1.heapUsed));
+    }
+  });
+
+  function mockt2_1() {
+    // desktop biblio
+    let hh = new Headers();
+    hh.append("content-encoding", "application/json");
+
+    return new Promise((good, bad) => {
+      let tt = {
+        body: [
+          {
+            url: "https://caniuse.com/?search=%40media",
+            desc: "Can I use' provides up-to-date browser support tables for support of front-end web technologies on desktop and mobile web browsers.",
+            title: "@media' | Can I use... Support tables for HTML5, CSS3, etc",
+            auth: "Alexis Deveria @Fyrd",
+            date: 0,
+          },
+          {
+            url: "https://automaticcss.com/accessibility-features/",
+            desc: "Automatic.css (ACSS) is committed to helping developers build more accessible websites. While accessibility is a deep and fairly technical topic…",
+            title:
+              "How Automatic.css is Making Websites More Accessible - Automatic.css",
+            auth: "",
+            date: 0,
+          },
+          {
+            url: "https://stackoverflow.com/questions/41370741/how-do-i-edit-a-css-variable-using-js",
+            desc: "javascript - How do I edit a CSS variable using JS? - Stack Overflow",
+            title:
+              "javascript - How do I edit a CSS variable using JS? - Stack Overflow",
+            auth: "No author for Q&A sites",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-transparency",
+            desc: "The prefers-reduced-transparency CSS media feature is used to detect if a user has enabled a setting on their device to reduce the transparent or translucent layer effects used on the device. Switching on such a setting can help improve contrast and readability for some users.",
+            title:
+              "prefers-reduced-transparency - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/video-dynamic-range",
+            desc: "The video-dynamic-range CSS media feature can be used to test the combination of brightness, contrast ratio, and color depth that are supported by the video plane of the user agent and the output device.",
+            title: "video-dynamic-range - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+          {
+            url: "https://stackoverflow.com/questions/46791052/detect-scale-settings-dpi-with-javascript-or-css",
+            desc: "Detect scale settings (dpi) with JavaScript or CSS - Stack Overflow",
+            title:
+              "Detect scale settings (dpi) with JavaScript or CSS - Stack Overflow",
+            auth: "No author for Q&A sites",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/aspect-ratio",
+            desc: "The aspect-ratio CSS media feature can be used to test the aspect ratio of the viewport.",
+            title: "aspect-ratio - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-contrast",
+            desc: "The prefers-contrast CSS media feature is used to detect whether the user has requested the web content to be presented with a lower or higher contrast.",
+            title: "prefers-contrast - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+        ],
+        headers: hh,
+        ok: true,
+      };
+      good(tt);
+    });
+  }
+
+  function mockt2_2() {
+    // adjacent
+    let hh = new Headers();
+    hh.append("content-encoding", "application/json");
+
+    return new Promise((good, bad) => {
+      let tt = {
+        body: [
+          {
+            url: "https://owenberesford.me.uk/resource/architecture",
+            desc: "Notes from a course presented by T Gilb, an Agile coach, on Architectures & engineering tools in an Agile environment.  This article attempts to push an important and vast set of ideas and processes into text.",
+            title: "Architectures and Agile",
+            auth: "Owen Beresford",
+            date: 1711455586,
+          },
+          {
+            url: "https://owenberesford.me.uk/resource/code-metrics",
+            desc: "A colleague didnt understand remarks about refactoring his code",
+            title: "Code metrics",
+            auth: "Owen Beresford",
+            date: 1711467412,
+          },
+          {
+            url: "https://owenberesford.me.uk/resource/paradigm-shift",
+            desc: "Borrowed content; discussing the change in engineering approach",
+            title: "Paradigm shift",
+            auth: "Tim Ottinger @tottinge",
+            date: 1711455586,
+          },
+          {
+            url: "https://owenberesford.me.uk/resource/howto-API",
+            desc: "16 Considerations for REST API, construction and why REST API are used.",
+            title: "How-to REST API",
+            auth: "Owen Beresford",
+            date: 1711455586,
+          },
+          {
+            url: "https://owenberesford.me.uk/resource/goals",
+            desc: "What concepts or areas of development are important.    This is a higher level chart..",
+            title: "“Zones of development”",
+            auth: "Owen Beresford",
+            date: 1711455586,
+          },
+          {
+            url: "https://owenberesford.me.uk/resource/performance-engineering",
+            desc: "What is my process for performance engineering, sometimes called scaling-up, and is part of growth hacking.  I have improved multiple operational systems.",
+            title: "Performance engineering",
+            auth: "Owen Beresford",
+            date: 1711455586,
+          },
+          {
+            url: "https://owenberesford.me.uk/resource/justify-oop",
+            desc: "Commercial justification for using common engineering practice of OO.  Please read if you are a business person.",
+            title: "The economic and commercial justification for OOP",
+            auth: "Owen Beresford",
+            date: 1711455586,
+          },
+          {
+            url: "https://owenberesford.me.uk/resource/logging",
+            desc: "Analysis on logging operational visibility: why to add it and why to remove it",
+            title: "Logging observability",
+            auth: "Owen Beresford",
+            date: 1711455586,
+          },
+        ],
+        headers: hh,
+        ok: true,
+      };
+      good(tt);
+    });
+  }
+
+  function mockt2_3() {
+    // mobile biblio
+    let hh = new Headers();
+    hh.append("content-encoding", "application/json");
+
+    return new Promise((good, bad) => {
+      let tt = {
+        body: [
+          {
+            url: "https://caniuse.com/?search=%40media",
+            desc: "Can I use' provides up-to-date browser support tables for support of front-end web technologies on desktop and mobile web browsers.",
+            title: "@media' | Can I use... Support tables for HTML5, CSS3, etc",
+            auth: "Alexis Deveria @Fyrd",
+            date: 0,
+          },
+          {
+            url: "https://automaticcss.com/accessibility-features/",
+            desc: "Automatic.css (ACSS) is committed to helping developers build more accessible websites. While accessibility is a deep and fairly technical topic…",
+            title:
+              "How Automatic.css is Making Websites More Accessible - Automatic.css",
+            auth: "",
+            date: 0,
+          },
+          {
+            url: "https://stackoverflow.com/questions/41370741/how-do-i-edit-a-css-variable-using-js",
+            desc: "javascript - How do I edit a CSS variable using JS? - Stack Overflow",
+            title:
+              "javascript - How do I edit a CSS variable using JS? - Stack Overflow",
+            auth: "No author for Q&A sites",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-transparency",
+            desc: "The prefers-reduced-transparency CSS media feature is used to detect if a user has enabled a setting on their device to reduce the transparent or translucent layer effects used on the device. Switching on such a setting can help improve contrast and readability for some users.",
+            title:
+              "prefers-reduced-transparency - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/video-dynamic-range",
+            desc: "The video-dynamic-range CSS media feature can be used to test the combination of brightness, contrast ratio, and color depth that are supported by the video plane of the user agent and the output device.",
+            title: "video-dynamic-range - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+          {
+            url: "https://stackoverflow.com/questions/46791052/detect-scale-settings-dpi-with-javascript-or-css",
+            desc: "Detect scale settings (dpi) with JavaScript or CSS - Stack Overflow",
+            title:
+              "Detect scale settings (dpi) with JavaScript or CSS - Stack Overflow",
+            auth: "No author for Q&A sites",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/aspect-ratio",
+            desc: "The aspect-ratio CSS media feature can be used to test the aspect ratio of the viewport.",
+            title: "aspect-ratio - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+          {
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-contrast",
+            desc: "The prefers-contrast CSS media feature is used to detect whether the user has requested the web content to be presented with a lower or higher contrast.",
+            title: "prefers-contrast - CSS: Cascading Style Sheets | MDN",
+            auth: "MozDevNet",
+            date: 0,
+          },
+        ],
+        headers: hh,
+        ok: true,
+      };
+      good(tt);
+    });
+  }
 
   let ram2 = 0;
   if (process) {
     ram2 = process.memoryUsage();
   }
+
   if (ram1 !== 0) {
     console.log("RAM used to make JSDOM: " + (ram2.heapUsed - ram1.heapUsed));
   }

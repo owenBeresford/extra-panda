@@ -9,6 +9,7 @@ import { enableGetEventListeners, createEvent } from "./vitest-addons";
 
 const { siteCore, injectOpts } = TEST_ONLY;
 
+// you ALL have to have take your hands off the keyb.  E'ribody.
 describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now!", () => {
   let ram1 = 0;
   if (process) {
