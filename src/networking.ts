@@ -171,9 +171,9 @@ class COOKIE implements Cookieable {
 export function _getCookie(): Cookieable {
   // first option is for chrome based browsers,
   // technically served via a JS plugin that is always present
-//  if (typeof getCookie === "function") {
-//    return { get: getCookie, set: setCookie } as Cookieable;
-//  }
+  //  if (typeof getCookie === "function") {
+  //    return { get: getCookie, set: setCookie } as Cookieable;
+  //  }
   return new COOKIE();
 }
 

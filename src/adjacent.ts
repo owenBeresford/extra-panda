@@ -126,9 +126,9 @@ function normaliseToList(
   let me: number = -1,
     remainder: number = OPTS.perRow,
     list: Array<NormalisedReference> = [],
-	i = 0, 
-	j = 0,
-	retries=0;	
+    i = 0,
+    j = 0,
+    retries = 0;
   [me, remainder, i] = nextStep(
     extractOABName(data[0].url),
     OPTS.name,
@@ -167,15 +167,19 @@ function normaliseToList(
       me,
     );
 
-// if i can get more time, I will integrate this break clause into nextStep
-// im too tired now
-	if(list.length===data.length) { break; }
-  if(list.length>=OPTS.perRow) { break; }
-  
-  retries++;
-	if(retries>OPTS.perRow*2) { 
-		throw new Error("Pls check data on this pagei, can't match anything");
-	}
+    // if i can get more time, I will integrate this break clause into nextStep
+    // im too tired now
+    if (list.length === data.length) {
+      break;
+    }
+    if (list.length >= OPTS.perRow) {
+      break;
+    }
+
+    retries++;
+    if (retries > OPTS.perRow * 2) {
+      throw new Error("Pls check data on this pagei, can't match anything");
+    }
   }
   return list;
 }
@@ -200,7 +204,7 @@ function nextStep(
   me: number,
 ): Array<number> {
   if (OPTS.name === "group-" + OPTS.group) {
-  	return [me, wrap, i];
+    return [me, wrap, i];
   }
   if (local === cur) {
     me = i;
@@ -360,26 +364,33 @@ function updateLabels(gname: string, dom: Document = document): void {
   }
 }
 
-export function extractGroup(ele:HTMLElement|null, loc:Location=location, dom:Document=document):string {
-	let tmp1=loc.pathname.split("/group-");
-	if(Array.isArray(tmp1) && tmp1.length>0) {
-		return tmp1[1];
-	}
-    const tmp2 = new URLSearchParams(loc.search);
-	if(tmp2.has('first')) {
-		return tmp2.get('first');
-	}
+export function extractGroup(
+  ele: HTMLElement | null,
+  loc: Location = location,
+  dom: Document = document,
+): string {
+  const tmp1 = loc.pathname.split("/group-");
+  if (Array.isArray(tmp1) && tmp1.length > 0) {
+    return tmp1[1];
+  }
+  const tmp2 = new URLSearchParams(loc.search);
+  if (tmp2.has("first")) {
+    return tmp2.get("first");
+  }
 
-// this third option is just a back stop;
-	if(ele && ele.getAtrtibute('data-group')) {
-		let tmp=ele.getAtrtibute('data-group');
-		tmp=tmp.trim();
-		tmp.split(',').map((a, b)=>{ return a.trim(); });
-		return tmp[0];
-	}
-	throw new Error("KLAXON, KLAXON, I do not know how to build an adjacent list for  +Loc.href");
-} 
-
+  // this third option is just a back stop;
+  if (ele && ele.getAtrtibute("data-group")) {
+    let tmp = ele.getAtrtibute("data-group");
+    tmp = tmp.trim();
+    tmp.split(",").map((a, b) => {
+      return a.trim();
+    });
+    return tmp[0];
+  }
+  throw new Error(
+    "KLAXON, KLAXON, I do not know how to build an adjacent list for  +Loc.href",
+  );
+}
 
 /**
  * createAdjacentChart
@@ -415,7 +426,7 @@ export async function createAdjacentChart(
   if (OPTS.group === "system") {
     throw new Error("Must set the article group, and not to 'system'.");
   }
-  OPTS.meta= mapURL(OPTS.group, ".json", loc);
+  OPTS.meta = mapURL(OPTS.group, ".json", loc);
 
   const isGroupArticle: boolean =
     OPTS.name === "group-XXX" || OPTS.name === "group-" + OPTS.group;
@@ -487,7 +498,7 @@ function injectOpts(a: object): void {
  */
 export const TEST_ONLY = {
   injectOpts,
-  mapURL, 
+  mapURL,
   extractGroup,
   createStyle,
   cleanTitle,

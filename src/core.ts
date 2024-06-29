@@ -260,7 +260,9 @@ export async function siteCore(
     tt[i].classList.remove("noJS");
   }
 
-  _map(dom.querySelector("#pageMenu"), (e:Event) => { burgerMenu(".burgerMenu", dom); });
+  _map(dom.querySelector("#pageMenu"), (e: Event) => {
+    burgerMenu(".burgerMenu", dom);
+  });
   initPopupMobile(dom, loc);
   initMastodon(dom, loc, win);
   addOctoCats(dom);
@@ -333,23 +335,22 @@ export async function siteCore(
       );
     }
 
-		const grp: Array<string> = listContentGroup("div#contentGroup", dom);
-		for (let j = 0; j < grp.length; j++) {
-		  await createAdjacentChart(
-			{
-			  group: grp[j],
-			  debug: ldebug,
-			  iteration: j,
-			  count: grp.length,
-			  runFetch:
-				"adjacentRunFetch" in OPTS ? OPTS.adjacentRunFetch : runFetch,
-			},
-			dom,
-			loc,
-		  );
-		}
+    const grp: Array<string> = listContentGroup("div#contentGroup", dom);
+    for (let j = 0; j < grp.length; j++) {
+      await createAdjacentChart(
+        {
+          group: grp[j],
+          debug: ldebug,
+          iteration: j,
+          count: grp.length,
+          runFetch:
+            "adjacentRunFetch" in OPTS ? OPTS.adjacentRunFetch : runFetch,
+        },
+        dom,
+        loc,
+      );
+    }
   }
-
 
   if (typeof pageStartup === "function") {
     pageStartup();
@@ -368,7 +369,7 @@ export async function siteCore(
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {
-    log('error', "ERROR: to use injectOpts, you must set NODE_ENV");
+    log("error", "ERROR: to use injectOpts, you must set NODE_ENV");
     return;
   }
   OPTS = Object.assign(OPTS, a);

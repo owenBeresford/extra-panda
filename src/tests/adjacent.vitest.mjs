@@ -28,7 +28,6 @@ const {
 // #TODO: add a visual test via storybook or something, that will run the CSS in addition
 // also #TODO, add my new generation CSS for this module
 describe("TEST adjacent", () => {
-
   it("go 1: cleanTitle", () => {
     assert.equal(cleanTitle("simpleID", "group"), "groupsimpleID", "step #1");
     assert.equal(
@@ -188,8 +187,7 @@ describe("TEST adjacent", () => {
         url: "http://www.thirddata.com/gddfgdf/winey",
       },
     ];
-    let d2 = [
-       ];
+    let d2 = [];
     injectOpts({
       name: "group-engineering",
       perRow: 10,
@@ -399,9 +397,14 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
-    
+
     await createAdjacentChart(
-      { group: "engineering", name: "code-metrics", debug:true, runFetch: mockFetch2 },
+      {
+        group: "engineering",
+        name: "code-metrics",
+        debug: true,
+        runFetch: mockFetch2,
+      },
       dom,
       loc,
     );
@@ -446,13 +449,19 @@ Description: What concepts or areas of development are important.    This is a h
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
-    
+
     await createAdjacentChart(
-      { group: "engineering", name: "code-metrics", perRow: 10, debug:true, runFetch: mockFetch3 },
+      {
+        group: "engineering",
+        name: "code-metrics",
+        perRow: 10,
+        debug: true,
+        runFetch: mockFetch3,
+      },
       dom,
       loc,
     );
- 
+
     assert.equal(
       dom.querySelector(".adjacentGroup p").textContent,
       "TEST",
@@ -487,7 +496,6 @@ Description: What concepts or areas of development are important.    This is a h
       10,
       "step28",
     );
-
   });
 
   it("go 10.3: createAdjacentChart", async () => {
@@ -502,7 +510,13 @@ Description: What concepts or areas of development are important.    This is a h
     appendIsland("#point2", str, dom);
 
     await createAdjacentChart(
-      { group: "engineering", name: "code-metrics", debug:true, runFetch: mockFetch3, perRow:15 },
+      {
+        group: "engineering",
+        name: "code-metrics",
+        debug: true,
+        runFetch: mockFetch3,
+        perRow: 15,
+      },
       dom,
       loc,
     );
@@ -522,7 +536,6 @@ Description: What concepts or areas of development are important.    This is a h
       15,
       "step31",
     );
-    
 
     let sample1 = `
 <li> <a id="linkengineering0" class="button" href="https://owenberesford.me.uk/resource/paradigm-shift" aria-label="Title: Paradigm shift
@@ -576,7 +589,6 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
       sample1,
       "step32 ",
     );
-
   });
 
   function mockFetch1(url, hasExcept) {
