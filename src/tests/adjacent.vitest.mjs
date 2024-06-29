@@ -591,6 +591,99 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
     );
   });
 
+  it("go 10.3: createAdjacentChart", async () => {
+    const [dom, loc, jsdom] = page(
+      "http://192.168.0.35/resource/code-metrics",
+      3,
+    );
+    let str = `
+<div class="adjacentGroup" id="groupengineering">
+<p>TEST</p>
+</div>`;
+    appendIsland("#point2", str, dom);
+
+    await createAdjacentChart(
+      {
+        group: "engineering",
+        name: "code-metrics",
+        debug: true,
+        runFetch: mockFetch3,
+        perRow: 15,
+      },
+      dom,
+      loc,
+    );
+
+    assert.equal(
+      dom.querySelector(".adjacentGroup p").textContent,
+      "TEST",
+      "step29",
+    );
+    assert.equal(
+      dom.querySelectorAll("#groupengineering .adjacentList").length,
+      1,
+      "step30",
+    );
+    assert.equal(
+      dom.querySelectorAll("#groupengineering .adjacentList li").length,
+      15,
+      "step31",
+    );
+
+    let sample1 = `
+<li> <a id="linkengineering0" class="button" href="https://owenberesford.me.uk/resource/paradigm-shift" aria-label="Title: Paradigm shift
+Author: Tim Ottinger @tottinge &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Borrowed content; discussing the change in engineering approach">Paradigm shift</a> </li>
+<li> <a id="linkengineering1" class="button" href="https://owenberesford.me.uk/resource/howto-API" aria-label="Title: How-to REST API
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: 16 Considerations for REST API, construction and why REST API are used.">How-to REST API</a> </li>
+<li> <a id="linkengineering2" class="button" href="https://owenberesford.me.uk/resource/goals" aria-label="Title: “Zones of development”
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: What concepts or areas of development are important.    This is a higher level chart..">“Zones of development”</a> </li>
+<li> <a id="linkengineering3" class="button lower" href="https://owenberesford.me.uk/resource/performance-engineering" aria-label="Title: Performance engineering
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: What is my process for performance engineering, sometimes called scaling-up, and is part of growth hacking.  I have improved multiple operational systems.">Performance engineering</a> </li>
+<li> <a id="linkengineering4" class="button lower" href="https://owenberesford.me.uk/resource/justify-oop" aria-label="Title: The economic and commercial justificatio...
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Commercial justification for using common engineering practice of OO.  Please read if you are a business person.">The economic and commercial justificatio...</a> </li>
+<li> <a id="linkengineering5" class="button" href="https://owenberesford.me.uk/resource/logging" aria-label="Title: Logging observability
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Analysis on logging operational visibility: why to add it and why to remove it">Logging observability</a> </li>
+<li> <a id="linkengineering6" class="button" href="https://owenberesford.me.uk/resource/composer-force-version" aria-label="Title: Composer version locking
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: About a particular feature of php composer">Composer version locking</a> </li>
+<li> <a id="linkengineering7" class="button" href="https://owenberesford.me.uk/resource/symfony-loggers" aria-label="Title: Symfony3 loggers
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Brief article about symfony3 loggers &amp; managing them">Symfony3 loggers</a> </li>
+<li> <a id="linkengineering8" class="button" href="https://owenberesford.me.uk/resource/yml-notes" aria-label="Title: YML notes (for Symfony)
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Short article on YML in Symfony">YML notes (for Symfony)</a> </li>
+<li> <a id="linkengineering9" class="button" href="https://owenberesford.me.uk/resource/docs-for-js-ts" aria-label="Title: Docs for JS and TS
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: The best IMO docs generators for JS and TS.  A look at options, requirements, its history and literature.">Docs for JS and TS</a> </li>
+<li> <a id="linkengineering10" class="button" href="https://owenberesford.me.uk/resource/php-extra-tools" aria-label="Title: Extra PHP tools.
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Toolify your way round operational constraints">Extra PHP tools.</a> </li>
+<li> <a id="linkengineering11" class="button" href="https://owenberesford.me.uk/resource/php-tools" aria-label="Title: PHP Tool chain
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: This is a shopping list to save time.  PHP dev only">PHP Tool chain</a> </li>
+<li> <a id="linkengineering12" class="button" href="https://owenberesford.me.uk/resource/phar-notes" aria-label="Title: PHAR notes
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Short article about compressed php bundles">PHAR notes</a> </li>
+<li> <a id="linkengineering13" class="button" href="https://owenberesford.me.uk/resource/opcache-notes" aria-label="Title: Opcache notes
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Short article for how to control APC.">Opcache notes</a> </li>
+<li> <a id="linkengineering14" class="button" href="https://owenberesford.me.uk/resource/php-benchmark-2017" aria-label="Title: PHP benchmark 2017
+Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
+Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> </li>
+`;
+    assert.equal(
+      dom.querySelector("#groupengineering .adjacentList").innerHTML,
+      sample1,
+      "step32 ",
+    );
+  });
+
   function mockFetch1(url, hasExcept) {
     return new Promise((good, bad) => {
       let str = [

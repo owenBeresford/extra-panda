@@ -6,8 +6,10 @@ import { appendIsland, setIsland, isFullstack } from "../dom-base";
 import { ReferenceType } from "../all-types";
 import { ALL_REFERENCE_LINKS } from "../networking";
 import { TEST_ONLY } from "../mobile-biblio";
+import { TEST_ONLY as NETWORKING } from "../networking";
 
 const { injectOpts, empty, normaliseData, render, createBiblio } = TEST_ONLY;
+const { getLogCounter } = NETWORKING;
 
 describe("TEST mobile-biblio", () => {
   it("go 1: empty", () => {
@@ -350,6 +352,60 @@ df sfsdfsdfs`,
       let tt = parseInt(a.textContent, 10);
       assert.isTrue(tt >= 0 && tt < 17, "assert #8");
     });
+  });
+
+  it("go 3.1: createBiblio ", async () => {
+    const url = "http://192.168.0.35/resource/reading-list";
+    const brwr = new JSDOM(
+      `<html>
+<head><title>test1</title></head>
+<body>
+  <div class="addReading" id="shareGroup">
+    <div class="allButtons"> <span class="ultraSkinny"></span> </div>
+  </div>
+  <article>
+    <div id="point1"></div>
+    <div id="point2" class="blocker "></div>
+  </article>
+</body>
+</html>`,
+      { url: url, referrer: url },
+    );
+    const [dom, loc] = [brwr.window.document, brwr.window.location];
+
+    let str = `
+<div id="biblio" style="display:none;">
+<p> here is old stuff
+<p> budget cows!!!
+<p> glow in the dark cows
+</div>
+<p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
+<p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
+<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
+<p>sdf sdfs <sup><a href="gibgibgib">7</a> </sup> <sup><a href="gibgibgib">45</a> </sup> sdfsf sdfsdf ssf sd
+<p>sdf sdfs <sup><a href="gibgibgib">-3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
+<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
+<p>sdf sdfs <sup><a href="gibgibgib">9</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
+<p>sdf sdfs <sup><a href="gibgibgib">16</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
+<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">21</a> </sup> 
+`;
+    appendIsland("#point2", str, dom); // 15 links
+
+    let t1 = getLogCounter();
+    await createBiblio(
+      { gainingElement: "#biblio", debug: true, runFetch: mockFetch1 },
+      dom,
+      loc,
+    );
+    let t2 = getLogCounter();
+
+    assert.equal(t2 - t1, 1, "assert #7");
+
+    assert.equal(
+      dom.querySelectorAll(ALL_REFERENCE_LINKS).length,
+      0,
+      "asset #8",
+    );
   });
 
   function mockFetch1(url, hasExcept) {

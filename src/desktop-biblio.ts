@@ -177,14 +177,9 @@ function mapPositions(data: Array<string>, dom: Document = document): void {
   const WIDTH: number =
     (mapAttribute(dom.querySelector(ALL_REFERENCE), "width") as number) -
     32 * 16;
-  const REFS = dom.querySelectorAll(ALL_REFERENCE_LINKS);
-  if (REFS.length < data.length) {
-    // situation only likely to occur in test data
-    throw new Error("Recompile the meta data for here");
-    return;
-  }
 
   let j = 1;
+  const REFS = dom.querySelectorAll(ALL_REFERENCE_LINKS);
   for (const i in data) {
     REFS[i].setAttribute("aria-label", "" + data[i]);
     applyDOMpostions(REFS[i], WIDTH);
@@ -211,6 +206,7 @@ function mapPositions(data: Array<string>, dom: Document = document): void {
 /**
  * addMetaAge
  * When found, display the age of the meta file on screen
+ * Unneeded in small screens
  *    IMPURE
 
  * @param {SimpleResponse} xhr - the whole objects from runFetch
@@ -261,6 +257,15 @@ export async function createBiblio(
     },
     opts,
   );
+  if (dom.querySelectorAll(ALL_REFERENCE).length === 0) {
+    log(
+      "info",
+      "This URL '" +
+        loc.pathname +
+        "' isn't marked-up for references, so skipped",
+    );
+    return;
+  }
 
   const data: SimpleResponse = await OPTS.runFetch(
     makeRefUrl(OPTS.referencesCache, loc),
@@ -273,11 +278,21 @@ export async function createBiblio(
     appendIsland(OPTS.gainingElement, html, dom);
     log(
       "warn",
-      "Unable to get meta data ",
+      "Unable to get meta data " + makeRefUrl(OPTS.referencesCache, loc),
       JSON.stringify(Array.from(data.headers.entries())),
     );
   } else {
-    dom.querySelector("#biblio").setAttribute("style", "");
+    const REFS = dom.querySelectorAll(ALL_REFERENCE_LINKS);
+    if (REFS.length < data.length) {
+      // situation only likely to occur in test data
+      throw new Error("Recompile the meta data for  " + loc.pathname);
+      return;
+    }
+
+    const tmp = dom.querySelector("#biblio");
+    if (tmp) {
+      tmp.setAttribute("style", "");
+    }
     addMetaAge(data);
     const cooked: Array<string> = normaliseData(
       data.body as Array<ReferenceType>,
@@ -292,7 +307,7 @@ export async function createBiblio(
  * injectOpts
  * PURELY FOR UNIT TESTS, adds ability to set initial state per internal function
  * READS process.env
- * @param {undefined object} opts - I could add a new interface where all the options were optional
+ * @param {undefined Object} opts - I could add a new interface where all the options were optional
  * @public
  * @return {void}
  */

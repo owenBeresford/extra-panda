@@ -179,12 +179,12 @@ function burgerMenu(
 
   if (!t.getAttribute("data-state")) {
     t.classList.add("burgerMenuOpen");
-    t.setAttribute("data-state", 1);
+    t.setAttribute("data-state", "1");
     ico.classList.remove("fa-ob1burger");
     ico.classList.add("fa-cancel");
   } else {
     t.classList.remove("burgerMenuOpen");
-    t.setAttribute("data-state", null);
+    t.setAttribute("data-state", "");
     ico.classList.add("fa-ob1burger");
     ico.classList.remove("fa-cancel");
   }
@@ -217,17 +217,21 @@ function tabChange(id: string | MiscEvent, dom: Document = document): void {
     return;
   }
 
-  const iter = dom.querySelectorAll(".tabs-content .tabs-panel");
-  for (let i = 0; i < iter.length; i++) {
-    iter[i].classList.remove("is-active");
-  }
-  //	target=target.substring(1);
-  const alive = dom.querySelectorAll(".tabs-content " + target);
-  if (alive.length > 1) {
-    throw new Error("Labels on tabs must be unique, or tabs don't work.");
+  const iter1 = dom.querySelectorAll(".tab-title");
+  for (let i = 0; i < iter1.length; i++) {
+    iter1[i].classList.remove("is-active");
   }
 
-  alive[0].classList.add("is-active");
+  const iter2 = dom.querySelectorAll(".tabs-content .tabs-panel");
+  for (let i = 0; i < iter2.length; i++) {
+    iter2[i].classList.remove("is-active");
+    iter2[i].setAttribute("aria-hidden", "false");
+  }
+
+  const [alive] = dom.querySelectorAll(".tabs-content " + target);
+  alive.classList.add("is-active");
+  alive.setAttribute("aria-hidden", "true");
+  thing.parentNode.classList.add("is-active");
 }
 
 /**
@@ -250,19 +254,29 @@ export async function siteCore(
     OPTS,
     {
       tabs: {},
+      pageInitRun: 0,
     },
     opts,
   );
   const ldebug = debug();
+
+  if (OPTS.pageInitRun) {
+    log("warn", "Extra panda should not be run twice per page");
+    return;
+  }
+  OPTS.pageInitRun = 1;
 
   const tt: Array<HTMLElement> = dom.querySelectorAll(".noJS");
   for (let i = 0; i < tt.length; i++) {
     tt[i].classList.remove("noJS");
   }
 
-  _map(dom.querySelector("#pageMenu"), (e: Event) => {
-    burgerMenu(".burgerMenu", dom);
-  });
+  const tmp: HTMLElement = dom.querySelector("#pageMenu");
+  if (tmp) {
+    _map(tmp, (e: Event): void => {
+      return burgerMenu(".burgerMenu", dom);
+    });
+  }
   initPopupMobile(dom, loc);
   initMastodon(dom, loc, win);
   addOctoCats(dom);
@@ -289,9 +303,9 @@ export async function siteCore(
   }
 
   {
-    const tabs = dom.querySelectorAll(".tabsComponent");
+    const tabs = dom.querySelectorAll(".tabComponent");
     for (let i = 0; i < tabs.length; i++) {
-      const btns = tabs[i].querySelectorAll(".label.button");
+      const btns = tabs[i].querySelectorAll(".tab-title a");
       for (let j = 0; j < btns.length; j++) {
         _map(btns[j], tabChange);
       }

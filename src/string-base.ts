@@ -82,14 +82,9 @@ export function articleName(loc: Location = location): string {
  * @return {string}
  */
 export function makeRefUrl(template: string, loc: Location = location): string {
-  let tmp: string = "";
   let tmp2: string[] = [];
-  if (loc.href.indexOf("?") > 0) {
-    tmp = loc.href.substring(0, loc.href.indexOf("?"));
-  } else {
-    tmp = loc.href;
-  }
-  tmp2 = tmp.split("/");
+
+  tmp2 = loc.pathname.split("/");
   return template.replace(/XXX/, tmp2.pop());
 }
 

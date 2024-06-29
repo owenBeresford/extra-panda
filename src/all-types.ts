@@ -43,6 +43,7 @@ export interface ReadingProps {
 
 export interface CoreProps {
   tabs: Array<string>;
+  pageInitRun?: number;
 
   mobileRunFetch?: FetchedExec;
   desktopRunFetch?: FetchedExec;
@@ -84,7 +85,6 @@ export interface MobileBiblioProps {
   referencesCache?: string;
   gainingElement?: string;
   losingElement?: string;
-  pageInitRun?: number;
   renumber?: number;
   forceToEnd?: number;
   runFetch: FetchedExec;

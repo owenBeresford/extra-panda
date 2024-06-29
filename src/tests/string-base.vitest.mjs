@@ -205,13 +205,37 @@ dg ag aga gdgadfg`;
 
   it("go 15.1 makeRefUrl", () => {
     const [dom, loc] = page(
-      "http://192.168.0.35/resource/react18-notes?varable=value",
+      "http://192.168.0.35/resource/react18-notes?variable=value",
       2,
     );
     assert.equal(
       makeRefUrl("/resources/XXX-references", loc),
       "/resources/react18-notes-references",
       "assert #34",
+    );
+  });
+
+  it("go 15.2 makeRefUrl", () => {
+    const [dom, loc] = page(
+      "http://192.168.0.35/resource/react18-notes#results",
+      2,
+    );
+    assert.equal(
+      makeRefUrl("/resources/XXX-references", loc),
+      "/resources/react18-notes-references",
+      "assert #35",
+    );
+  });
+
+  it("go 15.3 makeRefUrl", () => {
+    const [dom, loc] = page(
+      "http://192.168.0.35/resource/react18-notes?variable=value#results",
+      2,
+    );
+    assert.equal(
+      makeRefUrl("/resources/XXX-references", loc),
+      "/resources/react18-notes-references",
+      "assert #36",
     );
   });
 

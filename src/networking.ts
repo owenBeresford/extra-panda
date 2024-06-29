@@ -1,6 +1,12 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
 import { Fetchable, SimpleResponse, Cookieable } from "./all-types";
 
+// Yes I know full well this is a dups of Mocks available in Jest
+// Vitest also can do those Mocks
+// but this is just a simple counter, not an object
+// adding a dep for 1 int is overkill.
+let LOG_USAGE: number = 0;
+
 export function debug(loc: Location = location): boolean {
   const u: URLSearchParams = new URLSearchParams(loc.search);
   return u.has("debug");
@@ -8,6 +14,7 @@ export function debug(loc: Location = location): boolean {
 
 // this function exists, to make swapping to a fancy centralised logging feature easier.
 export function log(typ: string, ...inputs: string[]): void {
+  LOG_USAGE++;
   if (typ in console) {
     console[typ](`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
   } else {
@@ -177,4 +184,13 @@ export function _getCookie(): Cookieable {
   return new COOKIE();
 }
 
-export const TEST_ONLY = { _getCookie, runFetch, getFetch, log, debug };
+export const TEST_ONLY = {
+  _getCookie,
+  runFetch,
+  getFetch,
+  log,
+  debug,
+  getLogCounter: (): number => {
+    return LOG_USAGE;
+  },
+};

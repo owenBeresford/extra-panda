@@ -1,6 +1,12 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { dateMunge, addLineBreaks, makeRefUrl } from "./string-base";
-import { log, debug, URL_PLACEHOLDER, runFetch } from "./networking";
+import {
+  log,
+  debug,
+  URL_PLACEHOLDER,
+  runFetch,
+  ALL_REFERENCE,
+} from "./networking";
 import { Document, Location } from "jsdom";
 import {
   ReferenceType,
@@ -54,6 +60,7 @@ function normaliseData(
 
   for (const i in data) {
     if (data[i] === null) {
+      // modern versions of the references builder shouldnt let this happen
       out.push(empty(parseInt(i, 10)));
       continue;
     }
@@ -63,7 +70,7 @@ function normaliseData(
     let descrip = data[i].desc;
 
     descrip = addLineBreaks(descrip, 80);
-    title = title.replace(".", ". ");
+    title = title.replace(".", ".  ");
     title = addLineBreaks(title, 80);
 
     let auth = data[i].auth || po[0];
@@ -152,21 +159,25 @@ export async function createBiblio(
     referencesCache: "/resource/XXX-references",
     gainingElement: "#biblio",
     losingElement: ".addReferences",
-    pageInitRun: 0,
+
     renumber: 1, // set to 0 to disable
     forceToEnd: 1,
     debug: debug(),
     runFetch: runFetch,
   };
   OPTS = Object.assign(OPTS2, opts);
-
-  if (OPTS.pageInitRun) {
-    log("warn", "Mobile biblio run twice ??!");
+  if (dom.querySelectorAll(ALL_REFERENCE).length === 0) {
+    log(
+      "info",
+      "URL '" + loc.pathname + "' isn't marked-up for references, so skipped",
+    );
     return;
   }
-  OPTS.pageInitRun = 1;
 
-  dom.querySelector("#biblio").setAttribute("style", "");
+  const tmp = dom.querySelector("#biblio");
+  if (tmp) {
+    tmp.setAttribute("style", "");
+  }
   dom.querySelector(OPTS.gainingElement + " *").replaceChildren([]);
   appendIsland(
     OPTS.gainingElement,
@@ -182,13 +193,13 @@ export async function createBiblio(
     appendIsland(OPTS.gainingElement, html, dom);
     log(
       "warn",
-      "Unable to get meta data ",
+      "Unable to get meta data " + makeRefUrl(OPTS.referencesCache, loc),
       JSON.stringify(Array.from(dat.headers.entries())),
     );
   } else {
     const dat2 = normaliseData(dat.body as Array<ReferenceType>);
     const html = render(dat2);
-    adjustDom(dat.body, dom);
+    adjustDom(dat.body as Array<ReferenceType>, dom);
     appendIsland(OPTS.gainingElement, html, dom);
   }
 }
@@ -199,7 +210,7 @@ export async function createBiblio(
  * injectOpts
  * PURELY FOR UNIT TESTS, adds ability to set initial state per internal function
  * READS process.env
- * @param {undefined object} opts - I could add a new interface where all the options were optional
+ * @param {undefined Object} opts - I could add a new interface where all the options were optional
  * @public
  * @return {void}
  */

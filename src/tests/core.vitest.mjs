@@ -59,6 +59,20 @@ describe("TEST core", () => {
       "1",
       "assert #4",
     );
+
+    burgerMenu(".burgerMenu", dom);
+    assert.isTrue(
+      dom
+        .querySelector("#pageMenu i")
+        .getAttribute("class")
+        .includes("fa-ob1burger"),
+      "assert #5",
+    );
+    assert.equal(
+      dom.querySelector(".burgerMenu").getAttribute("data-state"),
+      "",
+      "assert #6",
+    );
   });
 
   it("go 4: tabChange ", (context) => {
@@ -106,14 +120,14 @@ describe("TEST core", () => {
         .querySelector("#blockProjects")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #5",
+      "assert #7",
     );
     assert.isFalse(
       dom
         .querySelector("#blockArticles")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #6",
+      "assert #8",
     );
     tabChange("#blockArticles", dom);
     assert.isFalse(
@@ -121,14 +135,14 @@ describe("TEST core", () => {
         .querySelector("#blockProjects")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #7",
+      "assert #9",
     );
     assert.isTrue(
       dom
         .querySelector("#blockArticles")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #8",
+      "assert #10",
     );
 
     let vnt = createEvent(dom.querySelector("#clickProjects a"));
@@ -138,14 +152,14 @@ describe("TEST core", () => {
         .querySelector("#blockProjects")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #9",
+      "assert #11",
     );
     assert.isFalse(
       dom
         .querySelector("#blockArticles")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #10",
+      "assert #12",
     );
 
     vnt = createEvent(dom.querySelector("#clickArticles a"));
@@ -155,14 +169,14 @@ describe("TEST core", () => {
         .querySelector("#blockProjects")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #11",
+      "assert #13",
     );
     assert.isTrue(
       dom
         .querySelector("#blockArticles")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #12",
+      "assert #14",
     );
   });
 
@@ -255,6 +269,8 @@ describe("TEST core", () => {
     assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #15");
     assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #16");
   });
+
+  // IOIO XXX Add test for running twice
 
   it("go 2: storeAppearance ", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);

@@ -177,8 +177,12 @@ function normaliseToList(
     }
 
     retries++;
-    if (retries > OPTS.perRow * 2) {
-      throw new Error("Pls check data on this pagei, can't match anything");
+    let limit = OPTS.perRow;
+    if (data.length > OPTS.perRow) {
+      limit = data.length;
+    }
+    if (retries > limit * 2) {
+      throw new Error("Pls check data on this page, can't match anything");
     }
   }
   return list;
@@ -481,7 +485,7 @@ export async function createAdjacentChart(
  * injectOpts
  * PURELY FOR UNIT TESTS, adds ability to set initial state per internal function
  * READS process.env
- * @param {undefined object} opts - I could add a new interface where all the options were optional
+ * @param {undefined Object} opts - I could add a new interface where all the options were optional
  * @public
  * @return {void}
  */

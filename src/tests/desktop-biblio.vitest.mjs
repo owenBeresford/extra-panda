@@ -6,6 +6,10 @@ import { appendIsland, setIsland, isFullstack } from "../dom-base";
 import { ALL_REFERENCE_LINKS } from "../networking";
 import { ReferenceType } from "../all-types";
 import { TEST_ONLY } from "../desktop-biblio";
+import { TEST_ONLY as NETWORKING } from "../networking";
+
+const { getLogCounter } = NETWORKING;
+
 const {
   injectOpts,
   markAllLinksUnknown,
@@ -293,8 +297,9 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
       "assert #19",
     );
     assert.equal(
-      dom.querySelector("#uniq2").getAttribute("class"),
       "",
+
+      dom.querySelector("#uniq2").getAttribute("class"),
       "assert #20",
     );
     assert.equal(
@@ -335,12 +340,12 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
     assert.equal(
       dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]").length,
       15,
-      "assert #11",
+      "assert #23",
     );
     assert.equal(
       dom.querySelectorAll(ALL_REFERENCE_LINKS + ":not( [aria-label] )").length,
       0,
-      "assert #12",
+      "assert #24",
     );
     dom
       .querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]")
@@ -353,6 +358,60 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
           "assert #14",
         );
       });
+  });
+
+  it("go 7.1: createBiblio ", async () => {
+    const url = "http://192.168.0.35/resource/reading-list";
+    const brwr = new JSDOM(
+      `<html>
+<head><title>test1</title></head>
+<body>
+  <div class="addReading" id="shareGroup">
+    <div class="allButtons"> <span class="ultraSkinny"></span> </div>
+  </div>
+  <article>
+    <div id="point1"></div>
+    <div id="point2" class="blocker "></div>
+  </article>
+</body>
+</html>`,
+      { url: url, referrer: url },
+    );
+    const [dom, loc] = [brwr.window.document, brwr.window.location];
+
+    let str = `
+<div id="biblio" style="display:none;">
+<p> here is old stuff
+<p> budget cows!!!
+<p> glow in the dark cows
+</div>
+<p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
+<p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
+<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
+<p>sdf sdfs <sup><a href="gibgibgib">7</a> </sup> <sup><a href="gibgibgib">45</a> </sup> sdfsf sdfsdf ssf sd
+<p>sdf sdfs <sup><a href="gibgibgib">-3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
+<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
+<p>sdf sdfs <sup><a href="gibgibgib">9</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
+<p>sdf sdfs <sup><a href="gibgibgib">16</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
+<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">21</a> </sup> 
+`;
+    appendIsland("#point2", str, dom); // 15 links
+
+    let t1 = getLogCounter();
+    await createBiblio(
+      { gainingElement: "#biblio", debug: true, runFetch: mockFetch1 },
+      dom,
+      loc,
+    );
+    let t2 = getLogCounter();
+
+    assert.equal(t2 - t1, 1, "assert #25");
+
+    assert.equal(
+      dom.querySelectorAll(ALL_REFERENCE_LINKS).length,
+      0,
+      "asset #26",
+    );
   });
 
   function mockFetch1(url, hasExcept) {
