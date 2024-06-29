@@ -16,7 +16,7 @@ I'm dragging this group of features kicking and screaming into the century of th
 
 - This is an outsize, painful, death march of a rewrite for hygiene and flow improvements.  Every PM would say 'this is Bad planning', and I agree.
 - Note, PMs would also be happy that I kept 2010 era code this long, as good return on investment.
-- This has a fairly high test coverage, as the early dev time was after I had done a long run, and was then sat on a train ~ sometimes with the sun in my eyes.   I am testing-in to get improved confidence and adding types as a further safety.  
+- This has a fairly high test coverage, as the early dev time was after I had done a long run, and was then sat on a train ~ sometimes with the sun in my eyes.   Multiple train trips .  I am testing-in to get improved confidence and adding types as a further safety.  
 
 <details>
 <summary> User journeys in this project </summary>
@@ -85,15 +85,16 @@ Pls note English is my first language #leSigh.
 - Some of these unit tests are less meaningful than others, regrettably (running from Node).
 - Use new language features (ADD a few KB of source) without jQuery (DROP >300KB of source). Dropping jQuery, as "select downloaded features" feature has been removed from https://jquery.com
 - Drop unused features. This makes everything less confusing and more readable.
-- With JS modules, have less functions inside functions, so unit tests are easier. Improve unit-test coverage as its now feasible (rather than behaviour testing).
-- Use TEST_ONLY symbols that expose entire module to unit tests. I will add config to strip them in release build.
+- With JS modules, have less functions inside functions, so unit tests are easier.   Improve unit-test coverage as its now feasible (rather than behaviour testing).
+- Use TEST_ONLY symbols that expose entire module to unit tests.   I will add config to strip them in release build.
 - Drop legacy test tools.
 - As proper TDD units as I have better tools now (JS modules + a fake DOM), make code better ~ separately to, and above every other bullet point. WARN: Some tests cannot be run outside of a real webrowser.
 - Vastly improve English/ readability of the code. Gain is separate to all other points.
 - As all this code is made after a minimiser script is adopted, faction code more finely into logical modules. So its more readable.
 - As a design principle, I have tried to avoid using global objects in my code to make testing easier.   I can pass in, say, ''document'' as an optional param.
 - As a very non-funny joke: the first two versions of the SM sharebar are legacy HTML, but very easy to unit-test. Now I have much better test tech and libraries and less good tests on this feature.
-- This has quite high levels of testing.   I have used JSDOM as part of JEST and similar tools.  This project is the first time I am using it directly.  It is a quite civilised was to test.
+- This has quite high levels of testing.   I have used JSDOM as part of JEST and similar tools.  This project is the first time I am using it directly.   It is a quite civilised was to test.
+- Assuming this project is frozen on feature completion, I do not need an installer.   I will manually copy 1 compiled file to the static-host local-image.
 
 </details>
 <details>
@@ -109,8 +110,8 @@ Pls note English is my first language #leSigh.
 
 - .popOverWidget
 - .tabsComponent
-- .addReading
 - .shareMenu
+- .addReading
 - .addArrow
 - .addBashSamples
 - .addReferences

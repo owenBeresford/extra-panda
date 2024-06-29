@@ -1,8 +1,8 @@
 {
   "name": "Panda",
   "version": "1.0.0",
-  "description": "A rebuild on my site to newer versions of JS, code is shorter and easier to read",
-  "main": "index.js",
+  "description": "A rebuild on my site to newer versions of JS, code is shorter and easier to read.  The project name is just a random noun-pair.",
+  "main": "src/index.mjs",
   "private": true,
   "type": "module",
   "engines": {
@@ -10,16 +10,17 @@
   },
   "scripts": {
     "build": "node ./node_modules/.bin/vite build",
-    "test": "node ./node_modules/.bin/vitest run",
-    "lint": "node ./node_modules/.bin/eslint --exit-on-fatal-error --fix --no-cache; node ./node_modules/.bin/prettier --write ./src ; "
+    "test":  "node ./node_modules/.bin/vitest run",
+    "lint":  "node ./node_modules/.bin/eslint --exit-on-fatal-error --fix --no-cache; node ./node_modules/.bin/prettier --write ./src; "
   },
   "repository": {
-    "type": "git",
-    "url": "XXX.test"
+    "type":  "git",
+    "url":   "https://github.com/owenBeresford/extra-panda.git"
   },
-  "author": "Racheal",
+  "author":  "github user name: owen beresford",
   "license": "ISC",
   "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
     "@types/jsdom": "^21.1.6",
     "@types/node": "^20.12.12",
     "@types/node-fetch": "^2.6.11",
