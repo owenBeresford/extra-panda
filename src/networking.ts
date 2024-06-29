@@ -84,7 +84,17 @@ export async function runFetch(
     }
     let payload = "";
     const tmp = await trans.body.getReader().read();
-    payload += await tmp.value;
+    const tmp2 = await tmp.value;
+    if (tmp2.length > 65535) {
+      // at point of publish I am nowhere near this limit.
+      // BUT this gives a mewaningful error message
+      log(
+        "error",
+        "May not pack a very long string as a single fromCharCode call, get dev to implement blocks #leSigh",
+      );
+      tmp2 = tmp2.slice(0, 65530);
+    }
+    payload += String.fromCharCode(...tmp2);
     if (
       trans.headers
         .get("content-type")
@@ -94,7 +104,11 @@ export async function runFetch(
       if (ldebug) {
         log("info", "successful JSON transaction " + url);
       }
-      return { body: JSON.parse(payload), headers: trans.headers, ok: true };
+      return {
+        body: JSON.parse(payload.trim()),
+        headers: trans.headers,
+        ok: true,
+      };
     } else {
       if (ldebug) {
         log("info", "ssuccessful other transaction " + url);
@@ -157,9 +171,9 @@ class COOKIE implements Cookieable {
 export function _getCookie(): Cookieable {
   // first option is for chrome based browsers,
   // technically served via a JS plugin that is always present
-  //  if(typeof getCookie==="function") {
-  //    return { get:getCookie, set:setCookie } as Cookieable ;
-  //  }
+//  if (typeof getCookie === "function") {
+//    return { get: getCookie, set: setCookie } as Cookieable;
+//  }
   return new COOKIE();
 }
 

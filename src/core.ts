@@ -260,7 +260,7 @@ export async function siteCore(
     tt[i].classList.remove("noJS");
   }
 
-  _map(dom.querySelector("#pageMenu"), burgerMenu);
+  _map(dom.querySelector("#pageMenu"), (e:Event) => { burgerMenu(".burgerMenu", dom); });
   initPopupMobile(dom, loc);
   initMastodon(dom, loc, win);
   addOctoCats(dom);
@@ -286,28 +286,6 @@ export async function siteCore(
     );
   }
 
-  if (isMobile(dom, loc)) {
-    await mobileCreateBiblio(
-      {
-        debug: ldebug,
-        renumber: 1,
-        runFetch: "mobileRunFetch" in OPTS ? OPTS.mobileRunFetch : runFetch,
-      },
-      dom,
-      loc,
-    );
-  } else {
-    await desktopCreateBiblio(
-      {
-        debug: ldebug,
-        runFetch: "desktopRunFetch" in OPTS ? OPTS.desktopRunFetch : runFetch,
-        renumber: 1,
-      },
-      dom,
-      loc,
-    );
-  }
-
   {
     const tabs = dom.querySelectorAll(".tabsComponent");
     for (let i = 0; i < tabs.length; i++) {
@@ -319,11 +297,11 @@ export async function siteCore(
   }
 
   if (loc.pathname.match("group-")) {
-    const tt = loc.pathname.split("/group-");
-    if (Array.isArray(tt) && tt.length > 1 && tt[1].length) {
+    const tt = extractGroup(null, loc, dom);
+    if (tt) {
       await createAdjacentChart(
         {
-          group: tt[1],
+          group: tt,
           debug: ldebug,
           runFetch:
             "adjacentRunFetch" in OPTS ? OPTS.adjacentRunFetch : runFetch,
@@ -333,22 +311,45 @@ export async function siteCore(
       );
     }
   } else {
-    const grp: Array<string> = listContentGroup("div#contentGroup", dom);
-    for (let j = 0; j < grp.length; j++) {
-      await createAdjacentChart(
+    if (isMobile(dom, loc)) {
+      await mobileCreateBiblio(
         {
-          group: grp[j],
           debug: ldebug,
-          iteration: j,
-          count: grp.length,
-          runFetch:
-            "adjacentRunFetch" in OPTS ? OPTS.adjacentRunFetch : runFetch,
+          renumber: 1,
+          runFetch: "mobileRunFetch" in OPTS ? OPTS.mobileRunFetch : runFetch,
+        },
+        dom,
+        loc,
+      );
+    } else {
+      await desktopCreateBiblio(
+        {
+          debug: ldebug,
+          runFetch: "desktopRunFetch" in OPTS ? OPTS.desktopRunFetch : runFetch,
+          renumber: 1,
         },
         dom,
         loc,
       );
     }
+
+		const grp: Array<string> = listContentGroup("div#contentGroup", dom);
+		for (let j = 0; j < grp.length; j++) {
+		  await createAdjacentChart(
+			{
+			  group: grp[j],
+			  debug: ldebug,
+			  iteration: j,
+			  count: grp.length,
+			  runFetch:
+				"adjacentRunFetch" in OPTS ? OPTS.adjacentRunFetch : runFetch,
+			},
+			dom,
+			loc,
+		  );
+		}
   }
+
 
   if (typeof pageStartup === "function") {
     pageStartup();
@@ -367,7 +368,7 @@ export async function siteCore(
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {
-    console.error("ERROR: to use injectOpts, you must set NODE_ENV");
+    log('error', "ERROR: to use injectOpts, you must set NODE_ENV");
     return;
   }
   OPTS = Object.assign(OPTS, a);

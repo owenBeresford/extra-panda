@@ -253,6 +253,7 @@ export async function createBiblio(
   OPTS = Object.assign(
     {
       indexUpdated: 0,
+      gainingElement: "#biblio",
       referencesCache: "/resource/XXX-references",
       renumber: 1, // set to 0 to disable
       debug: debug(),
@@ -269,21 +270,20 @@ export async function createBiblio(
     markAllLinksUnknown(dom, loc);
     const html =
       '<p class="error">Unable to get bibliographic data for this article.</p>';
-    appendIsland(OPTS.gainingElement, html);
+    appendIsland(OPTS.gainingElement, html, dom);
     log(
       "warn",
       "Unable to get meta data ",
-      JSON.stringify(data.headers.entries()),
+      JSON.stringify(Array.from(data.headers.entries())),
     );
-    //		throw new Error("ERROR getting references "+makeRefUrl(OPTS.referencesCache, loc));
+  } else {
+    dom.querySelector("#biblio").setAttribute("style", "");
+    addMetaAge(data);
+    const cooked: Array<string> = normaliseData(
+      data.body as Array<ReferenceType>,
+    );
+    mapPositions(cooked, dom);
   }
-
-  dom.querySelector("#biblio").setAttribute("style", "");
-  addMetaAge(data);
-  const cooked: Array<string> = normaliseData(
-    data.body as Array<ReferenceType>,
-  );
-  mapPositions(cooked, dom);
 }
 
 /////////////////////////////////////////// testing ////////////////////////////////

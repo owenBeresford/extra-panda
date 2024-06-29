@@ -20,7 +20,6 @@ let OPTS: AdjacentProps = {} as AdjacentProps;
  * @param {string} article
  * @param {string} suffix
  * @public
- * DEPRECATED until I find where I am calling it
  * @return {string} - the desired full URL of this page
  */
 function mapURL(
@@ -126,10 +125,10 @@ function normaliseToList(
 ): Array<NormalisedReference> {
   let me: number = -1,
     remainder: number = OPTS.perRow,
-    list: Array<NormalisedReference> = [];
-
-  let i = 0;
-  let j = 0;
+    list: Array<NormalisedReference> = [],
+	i = 0, 
+	j = 0,
+	retries=0;	
   [me, remainder, i] = nextStep(
     extractOABName(data[0].url),
     OPTS.name,
@@ -158,15 +157,25 @@ function normaliseToList(
         list[j].desc = tt.substr(0, 235) + "...";
       }
       remainder--;
+      j++;
     }
     [me, remainder, i] = nextStep(
       extractOABName(data[i].url),
       OPTS.name,
-      data.length,
+      remainder,
       i,
       me,
     );
-    j++;
+
+// if i can get more time, I will integrate this break clause into nextStep
+// im too tired now
+	if(list.length===data.length) { break; }
+  if(list.length>=OPTS.perRow) { break; }
+  
+  retries++;
+	if(retries>OPTS.perRow*2) { 
+		throw new Error("Pls check data on this pagei, can't match anything");
+	}
   }
   return list;
 }
@@ -190,18 +199,16 @@ function nextStep(
   i: number,
   me: number,
 ): Array<number> {
-  let remainder = OPTS.perRow;
   if (OPTS.name === "group-" + OPTS.group) {
-    me = 0;
-    remainder = wrap;
+  	return [me, wrap, i];
   }
   if (local === cur) {
     me = i;
   }
-  if (i > 0 && me > 0 && remainder > 0 && i >= wrap - 1) {
+  if (i > 0 && me > 0 && wrap > 0 && i >= wrap - 1) {
     i = 0;
   }
-  return [me, remainder, i];
+  return [me, wrap, i];
 }
 
 /**
@@ -320,7 +327,7 @@ function convert2IndexHTML(
       dateMunge(list[i].date, "Unknown time", true) +
       " <br />Description: " +
       tt +
-      " </a>\n";
+      " </p></a>\n";
   }
   return html;
 }
@@ -353,6 +360,27 @@ function updateLabels(gname: string, dom: Document = document): void {
   }
 }
 
+export function extractGroup(ele:HTMLElement|null, loc:Location=location, dom:Document=document):string {
+	let tmp1=loc.pathname.split("/group-");
+	if(Array.isArray(tmp1) && tmp1.length>0) {
+		return tmp1[1];
+	}
+    const tmp2 = new URLSearchParams(loc.search);
+	if(tmp2.has('first')) {
+		return tmp2.get('first');
+	}
+
+// this third option is just a back stop;
+	if(ele && ele.getAtrtibute('data-group')) {
+		let tmp=ele.getAtrtibute('data-group');
+		tmp=tmp.trim();
+		tmp.split(',').map((a, b)=>{ return a.trim(); });
+		return tmp[0];
+	}
+	throw new Error("KLAXON, KLAXON, I do not know how to build an adjacent list for  +Loc.href");
+} 
+
+
 /**
  * createAdjacentChart
  * Create a adjacent chart on the bottom of the current page.
@@ -373,8 +401,8 @@ export async function createAdjacentChart(
     {
       name: articleName(loc),
       meta: mapURL(OPTS.group, ".json", loc),
-      perRow: 100,
-      titleLimit: 20,
+      perRow: 10,
+      titleLimit: 40,
       rendered: false,
       iteration: 0,
       group: "system",
@@ -387,6 +415,7 @@ export async function createAdjacentChart(
   if (OPTS.group === "system") {
     throw new Error("Must set the article group, and not to 'system'.");
   }
+  OPTS.meta= mapURL(OPTS.group, ".json", loc);
 
   const isGroupArticle: boolean =
     OPTS.name === "group-XXX" || OPTS.name === "group-" + OPTS.group;
@@ -403,8 +432,15 @@ export async function createAdjacentChart(
     const data: SimpleResponse = await OPTS.runFetch(OPTS.meta, false);
     if (!data.ok || !Array.isArray(data.body)) {
       log("warn", "There doesn't seem to be a group meta data file.");
+      appendIsland(
+        "#" + GROUP,
+        "<p>Internal error. Hopefully this will be fixed shortly. </p>",
+        dom,
+      );
+
       return;
     }
+
     if (isGroupArticle) {
       if (OPTS.rendered) {
         log("warn", "Already rendered this asset");
@@ -451,7 +487,8 @@ function injectOpts(a: object): void {
  */
 export const TEST_ONLY = {
   injectOpts,
-  mapURL,
+  mapURL, 
+  extractGroup,
   createStyle,
   cleanTitle,
   generateGroup,

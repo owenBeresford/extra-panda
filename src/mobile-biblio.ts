@@ -183,7 +183,7 @@ export async function createBiblio(
     log(
       "warn",
       "Unable to get meta data ",
-      JSON.stringify(dat.headers.entries()),
+      JSON.stringify(Array.from(dat.headers.entries())),
     );
   } else {
     const dat2 = normaliseData(dat.body as Array<ReferenceType>);
