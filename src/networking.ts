@@ -91,13 +91,13 @@ export async function runFetch(
     }
     let payload = "";
     const tmp = await trans.body.getReader().read();
-    const tmp2 = await tmp.value;
+    let tmp2 = await tmp.value;
     if (tmp2.length > 65535) {
       // at point of publish I am nowhere near this limit.
-      // BUT this gives a mewaningful error message
+      // BUT this gives a meaningful error message
       log(
         "error",
-        "May not pack a very long string as a single fromCharCode call, get dev to implement blocks #leSigh",
+        "May not pack a very long string as a single fromCharCode() call, get dev to implement blocks #leSigh",
       );
       tmp2 = tmp2.slice(0, 65530);
     }

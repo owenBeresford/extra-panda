@@ -16,7 +16,8 @@ I'm dragging this group of features kicking and screaming into the century of th
 
 - This is an outsize, painful, death march of a rewrite for hygiene and flow improvements.  Every PM would say 'this is Bad planning', and I agree.
 - Note, PMs would also be happy that I kept 2010 era code this long, as good return on investment.
-- This has a fairly high test coverage, as the early dev time was after I had done a long run, and was then sat on a train ~ sometimes with the sun in my eyes.   Multiple train trips .  I am testing-in to get improved confidence and adding types as a further safety.  
+- This has a fairly high test coverage, as the early dev time was after I had done a long run, and was then sat on a train ~ sometimes with the sun in my eyes.   Multiple train trips.  I am testing-in to get improved confidence and adding types as a further safety.  
+- Some previous feedback: "your history/commits are really messy".  True, its messier than I would like.  I can delete my Git history from any work I do for you if you would like ~ but Dyslexia is permanent.  This project is building towards good SE code from a lower JQ baseline.  As the only version that a third party would use is the **complete copy** I lean towards a complete audit.   
 
 <details>
 <summary> User journeys in this project </summary>
@@ -75,7 +76,7 @@ My work sequence has been:
 - split into better modules
 - port to typescript and better CSS/HTML
 - add many tests
-- split into better modules and improve English again
+- split into better modules, refactor, and improve English again
 
 Pls note English is my first language #leSigh.
 
@@ -95,6 +96,17 @@ Pls note English is my first language #leSigh.
 - As a very non-funny joke: the first two versions of the SM sharebar are legacy HTML, but very easy to unit-test. Now I have much better test tech and libraries and less good tests on this feature.
 - This has quite high levels of testing.   I have used JSDOM as part of JEST and similar tools.  This project is the first time I am using it directly.   It is a quite civilised was to test.
 - Assuming this project is frozen on feature completion, I do not need an installer.   I will manually copy 1 compiled file to the static-host local-image.
+- I have used a short term solution to minification, as I need to move forward.
+- OLD TECH:: 
+  - first bundle: 1MB flat
+  - second bundle (smaller stdlib): 670KB
+  - above but with with minify: 361KB
+  - above but with dead code removal: 250KB
+- NEW TECH (ignoring unit tests)::
+  - complete build: 75KB flat
+  - above with with minification: 23KB
+  - Note dead code removal didn't make any impact here, as tree shaking works properly now
+  - above with gzip: 9KB  
 
 </details>
 <details>

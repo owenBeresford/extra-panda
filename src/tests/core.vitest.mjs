@@ -111,7 +111,7 @@ describe("TEST core", () => {
 </div>
 `;
     appendIsland("#point2", str, dom);
-    
+
     tabChange("#blockProjects", dom);
     // NOTE: it is necessary to use the legacy CSS API in this unit-test, as JSDOM wont give me a populated classList
     assert.isTrue(
@@ -123,9 +123,7 @@ describe("TEST core", () => {
     );
 
     assert.equal(
-      dom
-        .querySelector("#blockProjects")
-        .getAttribute("aria-hidden"),
+      dom.querySelector("#blockProjects").getAttribute("aria-hidden"),
       "false",
       "assert #8",
     );
@@ -137,9 +135,7 @@ describe("TEST core", () => {
       "assert #9",
     );
     assert.equal(
-      dom
-        .querySelector("#blockArticles")
-        .getAttribute("aria-hidden"),
+      dom.querySelector("#blockArticles").getAttribute("aria-hidden"),
       "true",
       "assert #10",
     );
@@ -153,9 +149,7 @@ describe("TEST core", () => {
       "assert #11",
     );
     assert.equal(
-      dom
-        .querySelector("#blockProjects")
-        .getAttribute("aria-hidden"),
+      dom.querySelector("#blockProjects").getAttribute("aria-hidden"),
       "true",
       "assert #12",
     );
@@ -167,13 +161,10 @@ describe("TEST core", () => {
       "assert #13",
     );
     assert.equal(
-      dom
-        .querySelector("#blockArticles")
-        .getAttribute("aria-hidden"),
-        "false",
+      dom.querySelector("#blockArticles").getAttribute("aria-hidden"),
+      "false",
       "assert #14",
     );
-
 
     let vnt = createEvent(dom.querySelector("#clickProjects a"));
     tabChange(vnt, dom);
@@ -193,12 +184,16 @@ describe("TEST core", () => {
     );
 
     assert.equal(
-       dom.querySelectorAll('.tabList .tab-title.is-active').length, 1, "assert #17");
+      dom.querySelectorAll(".tabList .tab-title.is-active").length,
+      1,
+      "assert #17",
+    );
 
     assert.equal(
-       dom.querySelector('.tabList .tab-title.is-active').id,
-        "clickProjects",
-        "assert #18");
+      dom.querySelector(".tabList .tab-title.is-active").id,
+      "clickProjects",
+      "assert #18",
+    );
 
     vnt = createEvent(dom.querySelector("#clickArticles a"));
     tabChange(vnt, dom);
@@ -216,17 +211,19 @@ describe("TEST core", () => {
         .includes("is-active"),
       "assert #20",
     );
- 
-    assert.equal(
-       dom.querySelectorAll('.tabList .tab-title.is-active').length, 1, "assert #21");
 
     assert.equal(
-       dom.querySelector('.tabList .tab-title.is-active').id,
-        "clickArticles",
-        "assert #22");
+      dom.querySelectorAll(".tabList .tab-title.is-active").length,
+      1,
+      "assert #21",
+    );
 
+    assert.equal(
+      dom.querySelector(".tabList .tab-title.is-active").id,
+      "clickArticles",
+      "assert #22",
+    );
   });
-
 
   it("go 5: initPopupMobile", (context) => {
     const [dom, loc, win] = page(

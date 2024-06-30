@@ -1,12 +1,12 @@
-add licence headers
-non-standard syntax hilighting in sitemap-plan
-performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311
-       https://www.npmjs.com/package/linkedom
-look at:: https://github.com/Xooone47/vite-plugin-deadcodes
-add type washing to JSON ingestion 
-Add minifier to build step, try terser
+### TODO
+- Add type washing to JSON ingestion 
+- Add wrapper objects to JSON payload as OWASP says to (not explained why necessary)
+- non-standard syntax hilighting in sitemap-plan
+- Add syntax
+- Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom
+- Add config for minifier via terser to build step.  Out of time
 
-
+### Previous Updates
 Discuss: Perl-style encapsulation by culture rather than armed enforcers
 Discuss: every time I am setting CSS vis JS, this is code smell & I need more information
 DONE remove local scope use of global vars

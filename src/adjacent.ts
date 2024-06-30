@@ -242,8 +242,8 @@ export function listContentGroup(
   }
 
   grp = grp.split(",");
-  grp = grp.map((i: string, j: number): string => {
-    return i.trim();
+  grp = grp.map((a: string, b: number): string => {
+    return a.trim();
   });
   return [...grp];
 }

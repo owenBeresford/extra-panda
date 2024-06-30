@@ -9,15 +9,15 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "node ./node_modules/.bin/vite build",
-    "test":  "node ./node_modules/.bin/vitest run",
-    "lint":  "node ./node_modules/.bin/eslint --exit-on-fatal-error --fix --no-cache; node ./node_modules/.bin/prettier --write ./src; "
+    "build": "node ./node_modules/.bin/vite build && node ./node_modules/.bin/uglifyjs ./dist/ob1.mjs -o /tmp/ob1.min.mjs && echo 'generated /tmp/ob1.min.mjs'; ",
+    "test": "node ./node_modules/.bin/vitest run",
+    "lint": "node ./node_modules/.bin/eslint --exit-on-fatal-error --fix --no-cache; node ./node_modules/.bin/prettier --write ./src; "
   },
   "repository": {
-    "type":  "git",
-    "url":   "https://github.com/owenBeresford/extra-panda.git"
+    "type": "git",
+    "url": "https://github.com/owenBeresford/extra-panda.git"
   },
-  "author":  "github user name: owen beresford",
+  "author": "github user name: owen beresford",
   "license": "ISC",
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
@@ -31,6 +31,7 @@
     "prettier": "^3.2.5",
     "rollup-plugin-terser": "^7.0.2",
     "typescript-eslint": "^8.0.0-alpha.30",
+    "uglify-js": "^3.18.0",
     "vite": "^5.2.11",
     "vite-plugin-ts": "^1.3.2-1",
     "vitest": "^1.6.0"
