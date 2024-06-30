@@ -217,21 +217,27 @@ function tabChange(id: string | MiscEvent, dom: Document = document): void {
     return;
   }
 
-  const iter1 = dom.querySelectorAll(".tab-title");
+  let iter1 = dom.querySelectorAll(".tab-title");
   for (let i = 0; i < iter1.length; i++) {
     iter1[i].classList.remove("is-active");
+  }
+
+  iter1 = dom.querySelectorAll(".tab-title>a");
+  for (let i = 0; i < iter1.length; i++) {
+    iter1[i].setAttribute("aria-hidden", "true");
   }
 
   const iter2 = dom.querySelectorAll(".tabs-content .tabs-panel");
   for (let i = 0; i < iter2.length; i++) {
     iter2[i].classList.remove("is-active");
-    iter2[i].setAttribute("aria-hidden", "false");
+    iter2[i].setAttribute("aria-hidden", "true");
   }
 
   const [alive] = dom.querySelectorAll(".tabs-content " + target);
   alive.classList.add("is-active");
-  alive.setAttribute("aria-hidden", "true");
+  alive.setAttribute("aria-hidden", "false");
   thing.parentNode.classList.add("is-active");
+  thing.setAttribute("aria-hidden", "false");
 }
 
 /**

@@ -5,11 +5,7 @@ performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative
 look at:: https://github.com/Xooone47/vite-plugin-deadcodes
 add type washing to JSON ingestion 
 Add minifier to build step, try terser
-use tab feature on home index
-see "add test" lines
 
-css changes
-suppress DOM reflow when biblio tooltips show
 
 Discuss: Perl-style encapsulation by culture rather than armed enforcers
 Discuss: every time I am setting CSS vis JS, this is code smell & I need more information
@@ -36,6 +32,7 @@ DONE title clipping in adjacent is too short, add wrap, or make it longer
 DONE add CSS for copy label, propose text to green for 2s
 DONE patch adjacent CSS for newer HTML layout
 DONE deploy as mjs
-
+DONE use the newer code for tabs on home page
+DONE suppress chaotic interaction between CSS columns and CSS position:absolute
 
 

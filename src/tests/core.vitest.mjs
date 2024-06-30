@@ -111,10 +111,9 @@ describe("TEST core", () => {
 </div>
 `;
     appendIsland("#point2", str, dom);
-    // at point of print, this function is unused
-    // I need to rewrite the home page to use it
+    
     tabChange("#blockProjects", dom);
-    // it is necessary to use the legacy API in this unit-test, as JSDOM wont give me a populated classList
+    // NOTE: it is necessary to use the legacy CSS API in this unit-test, as JSDOM wont give me a populated classList
     assert.isTrue(
       dom
         .querySelector("#blockProjects")
@@ -122,28 +121,59 @@ describe("TEST core", () => {
         .includes("is-active"),
       "assert #7",
     );
+
+    assert.equal(
+      dom
+        .querySelector("#blockProjects")
+        .getAttribute("aria-hidden"),
+      "false",
+      "assert #8",
+    );
     assert.isFalse(
       dom
         .querySelector("#blockArticles")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #8",
+      "assert #9",
     );
+    assert.equal(
+      dom
+        .querySelector("#blockArticles")
+        .getAttribute("aria-hidden"),
+      "true",
+      "assert #10",
+    );
+
     tabChange("#blockArticles", dom);
     assert.isFalse(
       dom
         .querySelector("#blockProjects")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #9",
+      "assert #11",
+    );
+    assert.equal(
+      dom
+        .querySelector("#blockProjects")
+        .getAttribute("aria-hidden"),
+      "true",
+      "assert #12",
     );
     assert.isTrue(
       dom
         .querySelector("#blockArticles")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #10",
+      "assert #13",
     );
+    assert.equal(
+      dom
+        .querySelector("#blockArticles")
+        .getAttribute("aria-hidden"),
+        "false",
+      "assert #14",
+    );
+
 
     let vnt = createEvent(dom.querySelector("#clickProjects a"));
     tabChange(vnt, dom);
@@ -152,15 +182,23 @@ describe("TEST core", () => {
         .querySelector("#blockProjects")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #11",
+      "assert #15",
     );
     assert.isFalse(
       dom
         .querySelector("#blockArticles")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #12",
+      "assert #16",
     );
+
+    assert.equal(
+       dom.querySelectorAll('.tabList .tab-title.is-active').length, 1, "assert #17");
+
+    assert.equal(
+       dom.querySelector('.tabList .tab-title.is-active').id,
+        "clickProjects",
+        "assert #18");
 
     vnt = createEvent(dom.querySelector("#clickArticles a"));
     tabChange(vnt, dom);
@@ -169,16 +207,26 @@ describe("TEST core", () => {
         .querySelector("#blockProjects")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #13",
+      "assert #19",
     );
     assert.isTrue(
       dom
         .querySelector("#blockArticles")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #14",
+      "assert #20",
     );
+ 
+    assert.equal(
+       dom.querySelectorAll('.tabList .tab-title.is-active').length, 1, "assert #21");
+
+    assert.equal(
+       dom.querySelector('.tabList .tab-title.is-active').id,
+        "clickArticles",
+        "assert #22");
+
   });
+
 
   it("go 5: initPopupMobile", (context) => {
     const [dom, loc, win] = page(
@@ -207,8 +255,8 @@ describe("TEST core", () => {
     appendIsland("#point2", str, dom);
     // mobile yes, local yes
     initPopupMobile(dom, loc);
-    assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #13");
-    assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #14");
+    assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #23");
+    assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #24");
   });
 
   it("go 5.1: initPopupMobile", (context) => {
@@ -238,8 +286,8 @@ describe("TEST core", () => {
     appendIsland("#point2", str, dom);
     // mobile no, local yes
     initPopupMobile(dom, loc);
-    assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #15");
-    assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #16");
+    assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #25");
+    assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #26");
   });
 
   it("go 5.2: initPopupMobile", (context) => {
@@ -266,8 +314,8 @@ describe("TEST core", () => {
     appendIsland("#point2", str, dom);
     // mobile no, local no
     initPopupMobile(dom, loc);
-    assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #15");
-    assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #16");
+    assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #27");
+    assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #28");
   });
 
   // IOIO XXX Add test for running twice
@@ -277,7 +325,7 @@ describe("TEST core", () => {
     if (!isFullstack()) {
       context.skip();
     }
-    // if browser look at cookies before and after
+    // if browser look at cookies before and after     dom.cookies
   });
 
   it("go 3: applyAppearance ", (context) => {
