@@ -1,8 +1,8 @@
 ### TODO
 - Add type washing to JSON ingestion 
-- Add wrapper objects to JSON payload as OWASP says to (not explained why necessary)
+- Add wrapper objects to JSON payload as OWASP says to (not explained why necessary) see https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html
 - non-standard syntax hilighting in sitemap-plan
-- Add syntax
+- Add syntax highlighter, try Highlight.js  https://www.npmjs.com/package/highlight.js
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom
 - Add config for minifier via terser to build step.  Out of time
 
