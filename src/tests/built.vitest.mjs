@@ -136,7 +136,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       ram2 = process.memoryUsage();
     }
     if (ram1 !== 0) {
-      console.log("RAM used to make JSDOM: " + (ram2.heapUsed - ram1.heapUsed));
+      console.log("[INFO] RAM used to make JSDOM: " + (ram2.heapUsed - ram1.heapUsed));
     }
   });
 
@@ -519,7 +519,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     }
 
     if (ram1 !== 0) {
-      console.log("RAM used to make JSDOM: " + (ram2.heapUsed - ram1.heapUsed));
+      console.log("[INFO] RAM used to make JSDOM: " + (ram2.heapUsed - ram1.heapUsed));
     }
   });
 
@@ -753,6 +753,6 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
   }
 
   if (ram1 !== 0) {
-    console.log("RAM used to make JSDOM: " + (ram2.heapUsed - ram1.heapUsed));
+    console.log("[INFO] RAM used to make JSDOM: " + (ram2.heapUsed - ram1.heapUsed));
   }
 });

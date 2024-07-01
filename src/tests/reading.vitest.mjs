@@ -11,7 +11,7 @@ describe("TEST readingDuration", () => {
     assert.equal(typeof readingDuration, "function", "assert #1");
   });
   it("go 2: testing content manipulation", () => {
-    const dom = page("https://192.168.0.35/", 1);
+    const dom = page("https://192.168.0.35/?debug=1", 1);
     let txt = `
 wer werwer wer werwer wer werwer werwer wer werwer wer
 wer werwer wer werwer wer werwer werwer wer werwer wer
@@ -57,7 +57,7 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
       "assert #5",
     );
 
-    readingDuration({ refresh: true }, dom);
+    readingDuration({ refresh: true, debug:()=> {return true;} }, dom);
     let tt = dom.querySelector("#shareGroup a.reading").textContent;
     assert(tt, "To read: 1m", "assert #6");
   });
@@ -125,11 +125,11 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
 wer werwer wer werwer wer werwer werwer wer werwer wer 
 `;
     appendIsland(".blocker", txt, dom);
-    assert.notEqual(dom.getElementById("point2"), null, "assert #8");
+    assert.notEqual(dom.getElementById("point2"), null, "assert #9");
 
     readingDuration({ refresh: true }, dom);
     let tt = dom.querySelectorAll("#shareGroup a.reading");
-    assert.equal(tt.length, 1, "assert #9");
-    assert(Array.from(tt).pop().textContent, "To read: 4m", "assert #10");
+    assert.equal(tt.length, 1, "assert #10");
+    assert(Array.from(tt).pop().textContent, "To read: 4m", "assert #11");
   });
 });
