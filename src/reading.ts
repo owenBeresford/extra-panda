@@ -15,7 +15,7 @@ import { ReadingProps } from "./all-types";
  * @return {void}
  */
 export function readingDuration(opts: ReadingProps, dom = document): void {
-  const RE = /\b[^ (),;.\t\n]{3,}\b/g;
+  const RE = /[ \t\n\r.(),~]/g;
   const options = Object.assign(
     {},
     {
@@ -29,7 +29,6 @@ export function readingDuration(opts: ReadingProps, dom = document): void {
     },
     opts,
   ) as ReadingProps;
-  let h1 = "";
   // I would like to move this into the config
   const mm =
     options.dataLocation +
@@ -38,22 +37,27 @@ export function readingDuration(opts: ReadingProps, dom = document): void {
     " picture, " +
     options.dataLocation +
     " object";
-  let duration: number =
-    (pullout(dom.querySelector(options.dataLocation) as HTMLElement).match(RE)
-      .length /
-      options.wordPerMin) *
-    60;
-  duration += dom.querySelectorAll(mm).length * 12;
+	let count:number =pullout(
+						dom.querySelector(options.dataLocation) as HTMLElement
+								)
+						.split(RE)
+						.filter(n => n)
+						.length;
+
+  let duration: number =count / options.wordPerMin;
+  duration += dom.querySelectorAll(mm).length /5;
 
   if (options.codeSelector && dom.querySelectorAll(options.codeSelector)) {
     let tt = 0;
-    dom.querySelectorAll(options.codeSelector).forEach(function (
-      a: HTMLElement,
-    ) {
-      tt += pullout(a).match(RE).length;
+    dom.querySelectorAll(options.codeSelector).forEach(
+		function ( a: HTMLElement ) {
+			tt+=pullout(a)
+			.split(RE)
+			.filter(n=>n)
+			.length;
     });
     if (tt) {
-      duration += (tt * 3) / (options.wordPerMin * 60);
+      duration += (tt * 3) / options.wordPerMin ;
     }
   }
 
@@ -64,8 +68,8 @@ export function readingDuration(opts: ReadingProps, dom = document): void {
     }
   }
 
-  duration = Math.round(duration / 60);
-  h1 =
+  duration = Math.round(duration );
+  let h1 =
     '<a class="reading" title="See longer version of this reading guide." href="/resource/jQuery-reading-duration">To read: ' +
     duration +
     options.timeFormat +
