@@ -97,7 +97,7 @@ Pls note English is my first language #leSigh.
 - This has quite high levels of testing.   I have used JSDOM as part of JEST and similar tools.  This project is the first time I am using it directly.   It is a quite civilised was to test.
 - Assuming this project is frozen on feature completion, I do not need an installer.   I will manually copy 1 compiled file to the static-host local-image.
 - I have used a short term solution to minification, as I need to move forward.
-- As far as Vite is a _code bundler_, I need to make all these separate outcome files as separate configs.  I probably can reduce the amount of configs duplication at a later date.   To repeat for clarity, each generated file is a separate file to syntax high-lighting for other languages.    
+- As far as Vite is a _code bundler_, I need to make all these separate outcome files as separate configs.  I probably can reduce the amount of configs duplication at a later date.   To repeat for clarity, each generated file is a separate file to syntax high-lighting for other languages.  Note again, CSS syntax highlighting isn't perfect. 
 - There are some pages that I will need to retire or use CDN to host.
 - There isn't much logging, but logging is held to a wrapper, so I could jump to a centralised log (such as ELK) if I need to in future.
 - OLD TECH:: 
