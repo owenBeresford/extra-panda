@@ -14,7 +14,7 @@ I'm dragging this group of features kicking and screaming into the century of th
 
 ### Accounting
 
-- This is an outsize, painful, death march of a rewrite for hygiene and flow improvements.  Every PM would say 'this is Bad planning', and I agree.
+- This is an outsize, painful, death march of a rewrite for hygiene and flow improvements.  Every PM would say 'this is Bad planning', and I agree.  I cannot see any means to split this change into smaller releases.
 - Note, PMs would also be happy that I kept 2010 era code this long, as good return on investment.
 - This has a fairly high test coverage, as the early dev time was after I had done a long run, and was then sat on a train ~ sometimes with the sun in my eyes.   Multiple train trips.  I am testing-in to get improved confidence and adding types as a further safety.  
 - Some previous feedback: "your history/commits are messy".  True, its messier than I would like.  I can delete my Git history from any work I do for you if you would like ~ but Dyslexia is permanent.  This project is building towards good Software engineering code from a lower jQuery baseline.  As the only version that a third party would use is the **complete copy** I lean towards a complete audit.   
@@ -54,12 +54,12 @@ I am making a copy of the user interactions here (in the new project), as I woul
 	- The row of SM links is now folded away,
 	- AJ can see a "share" button, and uses this
 	- and sees the previous list of SM.  Standard.  
-	- But the first option is 'copy link', the current article.  Useful.  But not relevant to needs now.
+	- But the first option is 'copy link' for the current article.  Useful.  But not relevant to needs now.
 - 'Reading time' guide
 	- On first impression AJ notes a fairly standard "reading time" guide.  This is useful but not that noteworthy.
 	- It does mean that he sorts the order of his reading list for best use of time. 
 - Effects
-	- On a more code focussed page, AJ sees the links have been decorated with some sort of emotie.   The little logos for docs and github.  Cute but again not significant.
+	- On a more code focussed page, AJ sees the links have been decorated with some sort of emotie.   The little logos for docs and github.  Cute, improves readability, but again not significant.
 
 </details>
 <details>
@@ -83,7 +83,7 @@ Pls note English is my first language #leSigh.
 ### Engineering changelog
 
 - **_NOTE_** Commits at the start of this project are completely meaningless, as its just when I moved the code back to my dev machine. They are meaningless duration markers, rather than feature markers.
-- Some of these unit tests are less meaningful than others, regrettably (running from Node).
+- Some of these unit tests are less meaningful than others, regrettably (running from Node).   It would be nice to setup test from a browser.  To *look* at the UX (as in, I am being the success/ fail criterion), I did some manual testing
 - Use new language features (ADD a few KB of source) without jQuery (DROP >300KB of source). Dropping jQuery, as "select downloaded features" feature has been removed from https://jquery.com
 - Drop unused features. This makes everything less confusing and more readable.
 - With JS modules, have less functions inside functions, so unit tests are easier.   Improve unit-test coverage as its now feasible (rather than behaviour testing).
@@ -97,6 +97,8 @@ Pls note English is my first language #leSigh.
 - This has quite high levels of testing.   I have used JSDOM as part of JEST and similar tools.  This project is the first time I am using it directly.   It is a quite civilised was to test.
 - Assuming this project is frozen on feature completion, I do not need an installer.   I will manually copy 1 compiled file to the static-host local-image.
 - I have used a short term solution to minification, as I need to move forward.
+- As far as Vite is a _code bundler_, I need to make all these separate outcome files as separate configs.  I probably can reduce the amount of configs duplication at a later date.   To repeat for clarity, each generated file is a separate file to syntax high-lighting for other languages.    
+- There are some pages that I will need to retire or use CDN to host.
 - OLD TECH:: 
   - first bundle: 1MB flat
   - second bundle (smaller stdlib): 670KB
