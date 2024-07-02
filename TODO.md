@@ -4,7 +4,7 @@
 - Add HTML validation to data in test files.
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom
 - Add config for minifier via terser to build step.  Out of time.
-- Build some solution to syntax highlighting for CSS and JS inside other languages.
+- Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages.
 
 
 ### Previous Updates

@@ -99,6 +99,7 @@ Pls note English is my first language #leSigh.
 - I have used a short term solution to minification, as I need to move forward.
 - As far as Vite is a _code bundler_, I need to make all these separate outcome files as separate configs.  I probably can reduce the amount of configs duplication at a later date.   To repeat for clarity, each generated file is a separate file to syntax high-lighting for other languages.    
 - There are some pages that I will need to retire or use CDN to host.
+- There isn't much logging, but logging is held to a wrapper, so I could jump to a centralised log (such as ELK) if I need to in future.
 - OLD TECH:: 
   - first bundle: 1MB flat
   - second bundle (smaller stdlib): 670KB
@@ -109,6 +110,7 @@ Pls note English is my first language #leSigh.
   - above with with minification: 23KB
   - Note dead code removal didn't make any impact here, as tree shaking works properly now
   - above with gzip: 9KB  
+  - I think I have perfect feature match, and new solution is 4% of volume of previous solution.
 
 </details>
 <details>
