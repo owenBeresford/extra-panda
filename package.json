@@ -9,7 +9,7 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "node ./node_modules/.bin/vite build && node ./node_modules/.bin/uglifyjs ./dist/ob1.mjs -o /tmp/ob1.min.mjs && echo 'generated /tmp/ob1.min.mjs'; ",
+    "build": "node ./node_modules/.bin/vite --config ./vite.config.lib.ts build && node ./node_modules/.bin/uglifyjs ./dist/ob1.mjs -o /tmp/ob1.min.mjs && echo 'generated /tmp/ob1.min.mjs' ; node node_modules/.bin/vite --config vite.config.lang-go.ts build ; node node_modules/.bin/vite --config vite.config.lang-bash.ts build ; node node_modules/.bin/vite --config vite.config.lang-conf.ts build ; node node_modules/.bin/vite --config vite.config.lang-html.ts build ; node node_modules/.bin/vite --config vite.config.lang-js.ts build ; node node_modules/.bin/vite --config vite.config.lang-php.ts build ; node node_modules/.bin/vite --config vite.config.lang-xml.ts build ; node node_modules/.bin/vite --config vite.config.lang-sql.ts build ; node node_modules/.bin/vite --config vite.config.lang-perl.ts build ;",
     "test": "node ./node_modules/.bin/vitest run",
     "lint": "node ./node_modules/.bin/eslint --exit-on-fatal-error --fix --no-cache; node ./node_modules/.bin/prettier --write ./src; "
   },
@@ -35,5 +35,8 @@
     "vite": "^5.2.11",
     "vite-plugin-ts": "^1.3.2-1",
     "vitest": "^1.6.0"
+  },
+  "dependencies": {
+    "highlight.js": "^11.9.0"
   }
 }
