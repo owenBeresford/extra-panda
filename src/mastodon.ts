@@ -1,7 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Document, Location, Window, Event, HTMLElement } from "jsdom";
 
-import { MiscEventHandler2, MiscEventHandler3 } from "./all-types";
+import { MiscEventHandler2, MiscEventHandler3, MiscEventHandler4 } from "./all-types";
 import { isFullstack, isMobile } from "./dom-base";
 import { isLocal } from "./string-base";
 import { log } from "./networking";
@@ -19,7 +19,7 @@ import { log } from "./networking";
 function openShare(
   e: Event,
   dom: Document = document,
-  loc: Location = location,
+  loc: Location = location
 ): boolean {
   if (!isLocal(loc.host) && !isMobile(dom, loc)) return false;
 
@@ -67,7 +67,9 @@ function shareMastodon(
     // fake exceptions from a fake browser #leSigh
     throw Error("Test passed, for " + server);
   }
-  openShare(e, dom, loc);
+  if(isMobile(dom, loc)) {
+	openShare(e, dom, loc);
+  }
   return false;
 }
 
@@ -279,21 +281,21 @@ function _map2(
  */
 function _map3(
   where: HTMLElement,
-  action: MiscEventHandler3,
+  action: MiscEventHandler4,
   dom: Document,
   loc: Location | null = location,
   win: Window = window,
 ): void {
   where.addEventListener("click", (a: Event): boolean => {
-    action(a, dom, win);
+    action(a, dom, loc, win);
     return false;
   });
   where.addEventListener("touch", (a: Event): boolean => {
-    action(a, dom, win);
+    action(a, dom, loc, win);
     return false;
   });
   where.addEventListener("keypress", (a: Event): boolean => {
-    action(a, dom, win);
+    action(a, dom, loc, win);
     return false;
   });
 }
