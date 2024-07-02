@@ -26,6 +26,12 @@ export type MiscEventHandler3 = (
   dom: Document,
   loc: Location | Window,
 ) => void;
+export type MiscEventHandler4 = (
+  a: Event,
+  dom: Document,
+  loc: Location,
+  win: Window,
+) => void;
 
 export type BOUNDARY = "top" | "bottom" | "left" | "right" | "height" | "width";
 export type ScreenSizeArray = [number, number];

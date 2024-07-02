@@ -37,27 +37,26 @@ export function readingDuration(opts: ReadingProps, dom = document): void {
     " picture, " +
     options.dataLocation +
     " object";
-	let count:number =pullout(
-						dom.querySelector(options.dataLocation) as HTMLElement
-								)
-						.split(RE)
-						.filter(n => n)
-						.length;
+  const count: number = pullout(
+    dom.querySelector(options.dataLocation) as HTMLElement,
+  )
+    .split(RE)
+    .filter((n) => n).length;
 
-  let duration: number =count / options.wordPerMin;
-  duration += dom.querySelectorAll(mm).length /5;
+  let duration: number = count / options.wordPerMin;
+  duration += dom.querySelectorAll(mm).length / 5;
 
   if (options.codeSelector && dom.querySelectorAll(options.codeSelector)) {
     let tt = 0;
-    dom.querySelectorAll(options.codeSelector).forEach(
-		function ( a: HTMLElement ) {
-			tt+=pullout(a)
-			.split(RE)
-			.filter(n=>n)
-			.length;
+    dom.querySelectorAll(options.codeSelector).forEach(function (
+      a: HTMLElement,
+    ) {
+      tt += pullout(a)
+        .split(RE)
+        .filter((n) => n).length;
     });
     if (tt) {
-      duration += (tt * 3) / options.wordPerMin ;
+      duration += (tt * 3) / options.wordPerMin;
     }
   }
 
@@ -68,8 +67,8 @@ export function readingDuration(opts: ReadingProps, dom = document): void {
     }
   }
 
-  duration = Math.round(duration );
-  let h1 =
+  duration = Math.round(duration);
+  const h1 =
     '<a class="reading" title="See longer version of this reading guide." href="/resource/jQuery-reading-duration">To read: ' +
     duration +
     options.timeFormat +

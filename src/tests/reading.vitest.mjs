@@ -57,7 +57,15 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
       "assert #5",
     );
 
-    readingDuration({ refresh: true, debug:()=> {return true;} }, dom);
+    readingDuration(
+      {
+        refresh: true,
+        debug: () => {
+          return true;
+        },
+      },
+      dom,
+    );
     let tt = dom.querySelector("#shareGroup a.reading").textContent;
     assert(tt, "To read: 1m", "assert #6");
   });

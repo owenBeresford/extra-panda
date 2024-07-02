@@ -9,7 +9,11 @@ import {
   _getCookie,
   runFetch,
 } from "./networking";
-import { listContentGroup, createAdjacentChart } from "./adjacent";
+import {
+  listContentGroup,
+  extractGroup,
+  createAdjacentChart,
+} from "./adjacent";
 import { initMastodon } from "./mastodon";
 import { isLocal } from "./string-base";
 import { isMobile, appendIsland } from "./dom-base";

@@ -351,18 +351,19 @@ function convert2IndexHTML(
  * @return {void}
  */
 function updateLabels(gname: string, dom: Document = document): void {
-  const dat: Array<Node> = dom.querySelectorAll(
+  const dat: Array<HTMLElement> = dom.querySelectorAll(
     ".top-bar.fullWidth header h1",
-  ) as Array<Node>;
+  ) as Array<HTMLElement>;
+
   if (
     (dat.length && dat[0].textContent.includes("whatsmyname")) ||
     dat[0].textContent.includes("XXX")
   ) {
     dat[0].textContent = "Group " + gname;
   }
-  const dit: Array<Node> = dom.querySelectorAll(
+  const dit: Array<HTMLElement> = dom.querySelectorAll(
     ".adjacentGroup p",
-  ) as Array<Node>;
+  ) as Array<HTMLElement>;
   if (dit.length && dit[0].textContent.includes("XXX")) {
     dit[0].textContent = "Some similar articles in " + gname;
   }
@@ -470,7 +471,7 @@ export async function createAdjacentChart(
         loc,
       );
       appendIsland("#" + GROUP, html, dom);
-      updateLabels(GROUP, dom);
+      updateLabels(generateGroup(loc), dom);
     } else {
       const rendered = normaliseToList(data.body as Array<ReferenceType>);
       const html = convert2HTML(rendered, generateGroup(loc));
