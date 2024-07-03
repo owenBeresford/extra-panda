@@ -30,7 +30,9 @@ import { modalInit } from "./modal";
 
 // variables across this module
 // * @protected
-let OPTS: CoreProps = {} as CoreProps;
+let OPTS: CoreProps = {
+  pageInitRun: 0,
+} as CoreProps;
 
 // removed:
 // CorrectionModule.prototype.columnise = function ()    << now CSS
@@ -263,8 +265,7 @@ export async function siteCore(
   OPTS = Object.assign(
     OPTS,
     {
-      tabs: {},
-      pageInitRun: 0,
+      // none found
     },
     opts,
   );
@@ -386,10 +387,10 @@ export async function siteCore(
     }
   }
 
-// There may be a pageStartup() in 20-30% of the articles.
-// This is calling out to global scope on purpose, as its outside the module, 
-//   I don't rely on which module loads first and I can't import the function 
-//   when it isn't there.
+  // There may be a pageStartup() in 20-30% of the articles.
+  // This is calling out to global scope on purpose, as its outside the module,
+  //   I don't rely on which module loads first and I can't import the function
+  //   when it isn't there.
   if (typeof document.pageStartup === "function") {
     document.pageStartup();
   } else {
@@ -398,6 +399,10 @@ export async function siteCore(
 }
 
 ///////////////////////////////////////////////// testing /////////////////////////////////////////////////////////
+
+export function hasBeenRun(): number {
+  return OPTS["pageInitRun"];
+}
 
 /**
  * injectOpts
@@ -420,6 +425,7 @@ function injectOpts(a: object): void {
  */
 export const TEST_ONLY = {
   injectOpts,
+  hasBeenRun,
   _map,
   initPopupMobile,
   storeAppearance,

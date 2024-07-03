@@ -48,7 +48,6 @@ export interface ReadingProps {
 }
 
 export interface CoreProps {
-  tabs: Array<string>;
   pageInitRun?: number;
 
   mobileRunFetch?: FetchedExec;
