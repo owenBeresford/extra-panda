@@ -1,7 +1,11 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Document, Location, Window, Event, HTMLElement } from "jsdom";
 
-import { MiscEventHandler2, MiscEventHandler3, MiscEventHandler4 } from "./all-types";
+import {
+  MiscEventHandler2,
+  MiscEventHandler3,
+  MiscEventHandler4,
+} from "./all-types";
 import { isFullstack, isMobile } from "./dom-base";
 import { isLocal } from "./string-base";
 import { log } from "./networking";
@@ -19,7 +23,7 @@ import { log } from "./networking";
 function openShare(
   e: Event,
   dom: Document = document,
-  loc: Location = location
+  loc: Location = location,
 ): boolean {
   if (!isLocal(loc.host) && !isMobile(dom, loc)) return false;
 
@@ -67,8 +71,8 @@ function shareMastodon(
     // fake exceptions from a fake browser #leSigh
     throw Error("Test passed, for " + server);
   }
-  if(isMobile(dom, loc)) {
-	openShare(e, dom, loc);
+  if (isMobile(dom, loc)) {
+    openShare(e, dom, loc);
   }
   return false;
 }
@@ -115,8 +119,9 @@ export function initMastodon(
   win: Window = window,
 ): void {
   let BUFFER: HTMLElement = dom.querySelector("#shareMenu #mastoTrigger");
-  _map1(BUFFER, openMastodon, dom);
-
+  if (BUFFER) {
+    _map1(BUFFER, openMastodon, dom);
+  }
   BUFFER = dom.querySelector("#shareGroup .allButtons #mastoTrigger");
   const canSee: string = accessVisibility(BUFFER, "display", win);
   if (canSee && canSee !== "none") {
@@ -127,11 +132,14 @@ export function initMastodon(
       return openMastodon(e, dom);
     });
   }
-  _map1(dom.querySelector("#copyURL"), copyURL, loc);
+  BUFFER = dom.querySelector("#copyURL");
+  if (BUFFER) {
+    _map1(BUFFER, copyURL, loc);
+  }
   _map3(dom.querySelector("#popup #sendMasto"), shareMastodon, dom, loc, win);
   const BUFFER2 = Array.from(
     dom.querySelectorAll("#shareMenuTrigger, #shareClose"),
-  );
+  ); // the second ID will be nought in desktop view
   for (const i in BUFFER2) {
     _map2(BUFFER2[i], openShare, dom, loc);
   }

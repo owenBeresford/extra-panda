@@ -90,38 +90,25 @@ export async function runFetch(
       }
     }
     let payload = "";
-    const tmp = await trans.body.getReader().read();
-    let tmp2 = await tmp.value;
-    if (tmp2.length > 65535) {
-      // at point of publish I am nowhere near this limit.
-      // BUT this gives a meaningful error message
-      log(
-        "error",
-        "May not pack a very long string as a single fromCharCode() call, get dev to implement blocks #leSigh",
-      );
-      tmp2 = tmp2.slice(0, 65530);
-    }
-    payload += String.fromCharCode(...tmp2);
     if (
       trans.headers
         .get("content-type")
         .toLowerCase()
         .startsWith("application/json")
     ) {
-      if (ldebug) {
-        log("info", "successful JSON transaction " + url);
-      }
-      return {
-        body: JSON.parse(payload.trim()),
-        headers: trans.headers,
-        ok: true,
-      };
+      payload = await trans.json();
     } else {
-      if (ldebug) {
-        log("info", "ssuccessful other transaction " + url);
-      }
-      return { body: payload, headers: trans.headers, ok: true };
+      payload = await trans.text();
     }
+
+    if (ldebug) {
+      log("info", "Successful JSON transaction " + url);
+    }
+    return {
+      body: payload,
+      headers: trans.headers,
+      ok: true,
+    };
   } catch (e) {
     if (ldebug) {
       log("error", "KLAXON, KLAXON failed: " + url + " " + e.toString());

@@ -286,7 +286,10 @@ export async function siteCore(
     _map(tmp, (e: Event): void => {
       return burgerMenu(".burgerMenu", dom);
     });
+  } else {
+    log("info", "This URL '" + loc.pathname + "' has no burger menu");
   }
+
   initPopupMobile(dom, loc);
   initMastodon(dom, loc, win);
   addOctoCats(dom);
@@ -360,24 +363,37 @@ export async function siteCore(
     }
 
     const grp: Array<string> = listContentGroup("div#contentGroup", dom);
-    for (let j = 0; j < grp.length; j++) {
-      await createAdjacentChart(
-        {
-          group: grp[j],
-          debug: ldebug,
-          iteration: j,
-          count: grp.length,
-          runFetch:
-            "adjacentRunFetch" in OPTS ? OPTS.adjacentRunFetch : runFetch,
-        },
-        dom,
-        loc,
+    if (grp.length === 0) {
+      log(
+        "info",
+        "This URL '" + loc.pathname + "' has no Adjacent groups defined.",
       );
+    } else {
+      for (let j = 0; j < grp.length; j++) {
+        await createAdjacentChart(
+          {
+            group: grp[j],
+            debug: ldebug,
+            iteration: j,
+            count: grp.length,
+            runFetch:
+              "adjacentRunFetch" in OPTS ? OPTS.adjacentRunFetch : runFetch,
+          },
+          dom,
+          loc,
+        );
+      }
     }
   }
 
-  if (typeof pageStartup === "function") {
-    pageStartup();
+// There may be a pageStartup() in 20-30% of the articles.
+// This is calling out to global scope on purpose, as its outside the module, 
+//   I don't rely on which module loads first and I can't import the function 
+//   when it isn't there.
+  if (typeof document.pageStartup === "function") {
+    document.pageStartup();
+  } else {
+    log("info", "No article specific scripting found, so all done");
   }
 }
 

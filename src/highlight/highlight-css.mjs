@@ -5,9 +5,9 @@ hljs.registerLanguage("css", (hl) => {
 });
 
 export function execHighlight(dom = document) {
-  dom.querySelectorAll('code[lang="css"]').forEach( (el) => {
+  dom.querySelectorAll('code[lang="css"]').forEach((el) => {
     hljs.highlightElement(el);
-  } );
+  });
 }
 
 if (typeof window.process === "undefined") {
