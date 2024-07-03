@@ -245,6 +245,10 @@ export function listContentGroup(
   grp = grp.map((a: string, b: number): string => {
     return a.trim();
   });
+  if (grp[0] === "XXX") {
+    grp.shift();
+    // in this case, the function will return []
+  }
   return [...grp];
 }
 
@@ -393,7 +397,8 @@ export function extractGroup(
     return tmp[0];
   }
   throw new Error(
-    "KLAXON, KLAXON, I do not know how to build an adjacent list for  +Loc.href",
+    "KLAXON, KLAXON, I do not know how to build an adjacent list for " +
+      loc.href,
   );
 }
 
@@ -447,7 +452,7 @@ export async function createAdjacentChart(
   } else {
     const data: SimpleResponse = await OPTS.runFetch(OPTS.meta, false);
     if (!data.ok || !Array.isArray(data.body)) {
-      log("warn", "There doesn't seem to be a group meta data file.");
+      log("info", "There doesn't seem to be a group meta data file.");
       appendIsland(
         "#" + GROUP,
         "<p>Internal error. Hopefully this will be fixed shortly. </p>",
