@@ -1,7 +1,9 @@
 import { assert, describe, it } from "vitest";
 import { JSDOM } from "jsdom";
+// node_modules/html-validator/lib/whatwg-validator.js
+import * as validator from "html-validator";
 
-import { page } from "./page-seed";
+import { page, validateHTML } from "./page-seed";
 import { TEST_ONLY } from "../core";
 import { _getCookie } from "../networking";
 import { appendIsland, setIsland, isFullstack, isMobile } from "../dom-base";
@@ -56,11 +58,12 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
 </menu>
 	<dialog id="popup" >
 	<span id="sendMasto">TICK</span> <span id="hideMasto">CROSS</span>
-	<input id="mastodonserver" value="panda.testing" data-url="giggle.co.uk?" /> 
+	<input id="mastodonserver" value="panda.testing" data-url="giggle.co.uk?" type="text" /> 
 	</dialog> 
 
 </div>
 <main id="main">
+<article>
 <div class="blocker addReferences ">
 <h3 class="dontend" id="toc1"> <a href="#toc1" title="Jump to this section."> Current image widgets <sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h3>
 <ul class="ulbasic">
@@ -80,6 +83,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     <li>A low tech/ inefficient use of bandwidth width, but very stable and very reliable trick is to shoot all you images in very high resolution; and just set the “normal size” image to have fixed pixel sizes; the browser will scale the image <sup><a href="https://www.w3docs.com/snippets/css/how-to-auto-resize-an-image-to-fit-an-html-container.html" target="_blank">14</a></sup>.  Then the popup can use the same image at real size.</li>
 </ul>
 </div>
+</article>
 </main>
 <div id="contentGroup" class="adjacentGroup" data-group="engineering">
 <div class="adjacentGroup " id="groupengineering">
@@ -91,7 +95,6 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     appendIsland("#point2", str, dom);
     enableGetEventListeners(dom);
     let hash = {
-      tabs: [],
       desktopRunFetch: mockt1_1,
       adjacentRunFetch: mockt1_2,
       mobileRunFetch: mockt1_3,
@@ -129,10 +132,12 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     assert.equal(dom.querySelectorAll("i.fa-github").length, 6, "assert #7");
     assert.equal(dom.querySelectorAll("style").length, 1, "assert #8"); // added by setAppearance
 
-    // add tabs test
-    // add mobile moblio
-    // test modal
+    let HTML =
+      "<!DOCTYPE html>" + dom.getElementsByTagName("html")[0].outerHTML;
+    let err = await validateHTML(HTML);
+    assert.equal(err.length, 0, "assert #9");
 
+    // POSSIBLE add tabs test, modal test.  These are present in existing tests
     let ram2 = 0;
     if (process) {
       ram2 = process.memoryUsage();
@@ -408,11 +413,12 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
 </menu>
   <dialog id="popup" >
   <span id="sendMasto">TICK</span> <span id="hideMasto">CROSS</span>
-  <input id="mastodonserver" value="panda.testing" data-url="giggle.co.uk?" /> 
+  <input id="mastodonserver" value="panda.testing" data-url="giggle.co.uk?" type="text" /> 
   </dialog> 
 
 </div>
 <main id="main">
+<article>
 <div class="blocker addReferences ">
 <h3 class="dontend" id="toc1"> <a href="#toc1" title="Jump to this section."> Current image widgets <sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h3>
 <ul class="ulbasic">
@@ -432,10 +438,10 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     <li>A low tech/ inefficient use of bandwidth width, but very stable and very reliable trick is to shoot all you images in very high resolution; and just set the “normal size” image to have fixed pixel sizes; the browser will scale the image <sup><a href="https://www.w3docs.com/snippets/css/how-to-auto-resize-an-image-to-fit-an-html-container.html" target="_blank">14</a></sup>.  Then the popup can use the same image at real size.</li>
 </ul>
 </div>
+</article>
 </main>
 <div id="contentGroup" class="adjacentGroup" data-group="engineering">
-<div class="adjacentGroup " id="groupengineering">
-<p>TEST</p>
+<div class="adjacentGroup" id="groupengineering"><p>TEST</p>
 </div>
 </div>
 <div id="biblio" style="display:none;"> <br class="blocker"> </div>
@@ -444,13 +450,13 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
 
     enableGetEventListeners(dom);
     let hash = {
-      tabs: [],
       desktopRunFetch: mockt2_1,
       adjacentRunFetch: mockt2_2,
       mobileRunFetch: mockt2_3,
       debug: () => {
         return true;
       },
+      pageInitRun: 0,
     };
     injectOpts(hash);
     const CC = _getCookie();
@@ -464,23 +470,24 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     assert.equal(
       dom.querySelectorAll("#groupengineering .adjacentList").length,
       0,
-      "assert #9",
+      "assert #10",
     );
+
     assert.equal(
       dom.querySelectorAll("#groupengineering p").length,
       2,
-      "assert #10",
+      "assert #11",
     );
     assert.equal(
       dom.querySelector("#groupengineering p:nth-child(2)").textContent,
       "As mobile View, use the full page link to the left",
-      "assert #11",
+      "assert #12",
     );
 
     let buf = dom.querySelector("#sendMasto");
-    assert.equal(buf.getEventListeners().length, 3, "Assert #12");
-    buf = dom.querySelector("#hideMasto");
     assert.equal(buf.getEventListeners().length, 3, "Assert #13");
+    buf = dom.querySelector("#hideMasto");
+    assert.equal(buf.getEventListeners().length, 3, "Assert #14");
     // this is absent for mobile
     //   buf = dom.querySelector("#shareGroup a.reading");
     //   assert(buf.textContent, "To read: 1m", "assert #14");
@@ -513,6 +520,11 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       8,
       "assert #21",
     );
+
+    let HTML =
+      "<!DOCTYPE html>" + dom.getElementsByTagName("html")[0].outerHTML;
+    let err = await validateHTML(HTML);
+    assert.equal(err.length, 0, "assert #22");
 
     // add tabs test
     // test modal

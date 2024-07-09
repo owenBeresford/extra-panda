@@ -60,6 +60,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
 
 </div>
 <main id="main">
+<article>
 <div class="blocker addReferences ">
 <h3 class="dontend" id="toc1"> <a href="#toc1" title="Jump to this section."> Current image widgets <sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h3>
 <ul class="ulbasic">
@@ -79,9 +80,10 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     <li>A low tech/ inefficient use of bandwidth width, but very stable and very reliable trick is to shoot all you images in very high resolution; and just set the “normal size” image to have fixed pixel sizes; the browser will scale the image <sup><a href="https://www.w3docs.com/snippets/css/how-to-auto-resize-an-image-to-fit-an-html-container.html" target="_blank">14</a></sup>.  Then the popup can use the same image at real size.</li>
 </ul>
 </div>
+</article>
 </main>
 <div id="contentGroup" class="adjacentGroup" data-group="engineering">
-<div class="adjacentGroup " id="groupengineering">
+<div class="adjacentGroup" id="groupengineering">
 <p>TEST</p>
 </div>
 </div>
@@ -90,7 +92,6 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     appendIsland("#point2", str, dom);
     enableGetEventListeners(dom);
     let hash = {
-      tabs: [],
       desktopRunFetch: mockt1_1,
       adjacentRunFetch: mockt1_2,
       mobileRunFetch: mockt1_3,
@@ -411,6 +412,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
 
 </div>
 <main id="main">
+<article>
 <div class="blocker addReferences ">
 <h3 class="dontend" id="toc1"> <a href="#toc1" title="Jump to this section."> Current image widgets <sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h3>
 <ul class="ulbasic">
@@ -430,6 +432,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     <li>A low tech/ inefficient use of bandwidth width, but very stable and very reliable trick is to shoot all you images in very high resolution; and just set the “normal size” image to have fixed pixel sizes; the browser will scale the image <sup><a href="https://www.w3docs.com/snippets/css/how-to-auto-resize-an-image-to-fit-an-html-container.html" target="_blank">14</a></sup>.  Then the popup can use the same image at real size.</li>
 </ul>
 </div>
+</article>
 </main>
 <div id="contentGroup" class="adjacentGroup" data-group="engineering">
 <div class="adjacentGroup " id="groupengineering">
@@ -442,13 +445,13 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
 
     enableGetEventListeners(dom);
     let hash = {
-      tabs: [],
       desktopRunFetch: mockt2_1,
       adjacentRunFetch: mockt2_2,
       mobileRunFetch: mockt2_3,
       debug: () => {
         return true;
       },
+      pageInitRun: 0,
     };
     injectOpts(hash);
     const CC = _getCookie();
@@ -464,6 +467,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       0,
       "assert #9",
     );
+
     assert.equal(
       dom.querySelectorAll("#groupengineering p").length,
       2,

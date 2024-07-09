@@ -1,5 +1,5 @@
-import { HtmlValidate } from "html-validate";
 import { JSDOM } from "jsdom";
+import * as validator from "html-validator";
 
 /**
  * exportpage
@@ -12,16 +12,18 @@ import { JSDOM } from "jsdom";
  */
 export function page(url = "", args = 1) {
   const dom = new JSDOM(
-    `<html>
+    `<!DOCTYPE html>
+<html lang="en-GB">
 <head><title>test1</title></head>
 <body>
+   <div>
+	<h1>Page Title!! </h1>
 	<div class="addReading" id="shareGroup">
 		<div class="allButtons"> <span class="ultraSkinny"></span> </div>
 	</div>
-	<article>
-		<div id="point1"></div>
-		<div id="point2" class="blocker addReferences"></div>
-	</article>
+   </div>
+	<div id="point1"></div>
+	<div id="point2" class="blocker addReferences"></div>
 </body>
 </html>`,
     { url: url, referrer: url },
@@ -45,16 +47,24 @@ export function page(url = "", args = 1) {
  * @param {string} html
  * @param {boolean} emit
  * @public
- * @return {boolean}
+ * @return {Array<string>}
  */
-export async function validateHTML(html, emit) {
-  const htmlvalidate = new HtmlValidate({
-    extends: ["html-validate:recommended"],
+export async function validateHTML(html) {
+  // I do no know why WhatWG doesn't know Dialog tag
+  // I have persisent disagreement on heading levels
+  const lint = await validator.default({
+    validator: "WHATWG",
+    data: html,
+    format: "text",
+    ignore: [
+      "Unknown element <dialog>",
+      "<dialog> is not a valid element name",
+      "Heading level can only increase by one, expected <h2> but got <h3>",
+      "Heading level can only increase by one, expected <h3> but got <h5>",
+    ],
   });
-  const report = await htmlvalidate.validateString(html);
 
-  if (!report.valid && emit) {
-    console.log(report.results);
-  }
-  return report.valid;
+  // I do no know why WhatWG doesnt know Dialog tag
+  // I have persisent disagreement on heading levels
+  return [...lint.errors];
 }

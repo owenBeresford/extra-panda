@@ -38,18 +38,11 @@ describe("TEST dom-base", () => {
 
     let str = "<h2>WWWWW WWWWW</h2>";
     appendIsland("#point1", str, dom);
+    let tmp = dom.getElementsByTagName("body")[0].outerHTML;
+    tmp = tmp.replace(new RegExp(">[ \\t\\n]*<", "g"), "><");
     assert.equal(
-      dom.getElementsByTagName("body")[0].outerHTML,
-      `<body>
-	<div class="addReading" id="shareGroup">
-		<div class="allButtons"> <span class="ultraSkinny"></span> </div>
-	</div>
-	<article>
-		<div id="point1"><h2>WWWWW WWWWW</h2></div>
-		<div id="point2" class="blocker addReferences"></div>
-	</article>
-
-</body>`,
+      tmp,
+      `<body><div><h1>Page Title!! </h1><div class="addReading" id="shareGroup"><div class="allButtons"><span class="ultraSkinny"></span></div></div></div><div id="point1"><h2>WWWWW WWWWW</h2></div><div id="point2" class="blocker addReferences"></div></body>`,
       "assert #2",
     );
     assert.equal(dom.getElementsByTagName("h2").length, 1, "assert #30");
@@ -62,18 +55,11 @@ describe("TEST dom-base", () => {
 
     let str = "<h2>WWWWW WWWWW</h2>";
     appendIsland("#point1", str, dom);
+    let tmp = dom.getElementsByTagName("body")[0].outerHTML;
+    tmp = tmp.replace(new RegExp(">[ \\t\\n]*<", "g"), "><");
     assert.equal(
-      dom.getElementsByTagName("body")[0].outerHTML,
-      `<body>
-	<div class="addReading" id="shareGroup">
-		<div class="allButtons"> <span class="ultraSkinny"></span> </div>
-	</div>
-	<article>
-		<div id="point1"><h2>WWWWW WWWWW</h2></div>
-		<div id="point2" class="blocker addReferences"></div>
-	</article>
-
-</body>`,
+      tmp,
+      `<body><div><h1>Page Title!! </h1><div class="addReading" id="shareGroup"><div class="allButtons"><span class="ultraSkinny"></span></div></div></div><div id="point1"><h2>WWWWW WWWWW</h2></div><div id="point2" class="blocker addReferences"></div></body>`,
       "assert #2",
     );
     assert.equal(dom.getElementsByTagName("h2").length, 1, "assert #30");
