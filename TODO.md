@@ -1,11 +1,15 @@
 ### TODO
 - Add type washing to JSON ingestion used in multiple places 
 - Add wrapper objects to JSON payload as OWASP says to (not explained why necessary) see https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html
-- Add HTML validation to data in test files.
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom
 - Add config for minifier via terser to build step.  Out of time.
 - Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages.  Also possibly patch 3rd party library for CSS syntax highlighting.
 - I haven't added tests for highlight code.  This statement may change to isolate some problems in CSS highlighting
+- setup https://www.npmjs.com/package/eslint-plugin-cyclomatic-complexity
+- think about adding mobile view biblio better display/ wrap
+- multilingual support
+- port the everything tests to storybook
+- WCAG tests (lighthouse) for whole pages need to go some where 
 
 ### Previous Updates
 
@@ -37,5 +41,6 @@
 - DONE use the newer code for tabs on home page
 - DONE suppress chaotic interaction between CSS columns and CSS position:absolute
 - DONE setup 1 language syntax highlighting, each language separate as each article is normally only 1 language.
+- DONE add HTML validation to tests and when adding HTML, scramble ids for uniqueness
 
 

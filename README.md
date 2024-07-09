@@ -1,4 +1,4 @@
-I'm dragging this group of features kicking and screaming into the century of the fruitbat.   If I didn't think needed a website, I have made other things with my dev-time.
+I'm dragging this group of features kicking and screaming into the century of the fruitbat.   If I didn't think needed a website, I have made other things with my dev-time.   I normally use 3rd party libraries to reduce dev time, but here I didn't see things that are relevant.  
 
 ## "business english" changelog
 
@@ -99,8 +99,9 @@ Pls note English is my first language #leSigh.
 - Assuming this project is frozen on feature completion, I do not need an installer.   I will manually copy 1 compiled file to the static-host local-image.
 - I have used a short term solution to minification, as I need to move forward.
 - As far as Vite is a _code bundler_, I need to make all these separate outcome files as separate configs.  I probably can reduce the amount of configs duplication at a later date.   To repeat for clarity, each generated file is a separate file to syntax high-lighting for other languages.  Note again, CSS syntax highlighting isn't perfect. 
-- There are some pages that I will need to retire or use CDN to host.
+- There are some pages that I will need to retire or use CDN to host needed libraries.
 - There isn't much logging, but logging is held to a wrapper, so I could jump to a centralised log (such as ELK) if I need to in future.
+- My code has complex/ unexpected behaviour if you change the DOM/ document object without changing state.  This shouldn't be an issue outside of tests, as this code doesn't support SSR presently.
 - Minor gain for Google, I made the sliding window feature in Adjacent module this time, as I have more articles in each group.  This means unnecessary (not-rendered) nodes are not added to the HTML.  My rebuild of the Adjacent HTML is also smaller.  
 - OLD TECH:: 
   - first bundle: 1MB flat
