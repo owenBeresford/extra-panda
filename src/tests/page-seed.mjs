@@ -1,6 +1,5 @@
 import { JSDOM } from "jsdom";
-import * as validator from 'html-validator';
-
+import * as validator from "html-validator";
 
 /**
  * exportpage
@@ -50,23 +49,22 @@ export function page(url = "", args = 1) {
  * @public
  * @return {Array<string>}
  */
-export async function validateHTML(html ) {
+export async function validateHTML(html) {
+  // I do no know why WhatWG doesn't know Dialog tag
+  // I have persisent disagreement on heading levels
+  const lint = await validator.default({
+    validator: "WHATWG",
+    data: html,
+    format: "text",
+    ignore: [
+      "Unknown element <dialog>",
+      "<dialog> is not a valid element name",
+      "Heading level can only increase by one, expected <h2> but got <h3>",
+      "Heading level can only increase by one, expected <h3> but got <h5>",
+    ],
+  });
 
-// I do no know why WhatWG doesn't know Dialog tag
-// I have persisent disagreement on heading levels 
-	const lint = await validator.default({ 
-					validator: 'WHATWG', 
-					data:     html, 
-					format: 'text',
-					ignore: ['Unknown element <dialog>', 
-					'<dialog> is not a valid element name', 
-					'Heading level can only increase by one, expected <h2> but got <h3>',
-					'Heading level can only increase by one, expected <h3> but got <h5>',
-					] 
-										});
-
-// I do no know why WhatWG doesnt know Dialog tag
-// I have persisent disagreement on heading levels 
-	return [...lint.errors];
+  // I do no know why WhatWG doesnt know Dialog tag
+  // I have persisent disagreement on heading levels
+  return [...lint.errors];
 }
-

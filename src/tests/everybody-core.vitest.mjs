@@ -1,7 +1,7 @@
 import { assert, describe, it } from "vitest";
 import { JSDOM } from "jsdom";
 // node_modules/html-validator/lib/whatwg-validator.js
-import * as validator from 'html-validator';
+import * as validator from "html-validator";
 
 import { page, validateHTML } from "./page-seed";
 import { TEST_ONLY } from "../core";
@@ -132,10 +132,11 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     assert.equal(dom.querySelectorAll("i.fa-github").length, 6, "assert #7");
     assert.equal(dom.querySelectorAll("style").length, 1, "assert #8"); // added by setAppearance
 
-	let HTML='<!DOCTYPE html>'+dom.getElementsByTagName('html')[0].outerHTML; 
-	let err= await validateHTML(HTML );
-    assert.equal(err.length, 0, "assert #9"); 
-	
+    let HTML =
+      "<!DOCTYPE html>" + dom.getElementsByTagName("html")[0].outerHTML;
+    let err = await validateHTML(HTML);
+    assert.equal(err.length, 0, "assert #9");
+
     // POSSIBLE add tabs test, modal test.  These are present in existing tests
     let ram2 = 0;
     if (process) {
@@ -455,7 +456,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       debug: () => {
         return true;
       },
-	pageInitRun:0,
+      pageInitRun: 0,
     };
     injectOpts(hash);
     const CC = _getCookie();
@@ -520,10 +521,11 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       "assert #21",
     );
 
-	let HTML='<!DOCTYPE html>'+dom.getElementsByTagName('html')[0].outerHTML; 
-	let err= await validateHTML(HTML );
-    assert.equal(err.length, 0, "assert #22"); 
-	
+    let HTML =
+      "<!DOCTYPE html>" + dom.getElementsByTagName("html")[0].outerHTML;
+    let err = await validateHTML(HTML);
+    assert.equal(err.length, 0, "assert #22");
+
     // add tabs test
     // test modal
 

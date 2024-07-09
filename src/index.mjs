@@ -17,4 +17,3 @@ import * as Modal from "./modal";
 
 siteCore();
 export { runFetch, log, hasBeenRun };
-

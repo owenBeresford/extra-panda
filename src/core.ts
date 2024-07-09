@@ -99,10 +99,10 @@ function initPopupMobile(
     html.push("<li>");
     html.push(local.outerHTML); // I don't like this line
     html.push("</li>");
-	if(BUFFER[i].getAttribute('id')) {
-// assert people using mobile view do not use desktop buttons
-		BUFFER[i].setAttribute('id', "old"+BUFFER[i].getAttribute('id') );
-	}
+    if (BUFFER[i].getAttribute("id")) {
+      // assert people using mobile view do not use desktop buttons
+      BUFFER[i].setAttribute("id", "old" + BUFFER[i].getAttribute("id"));
+    }
   }
   html.unshift(
     '<nav><div class="shareMenu" id="shareMenu"><menu id="mobileMenu">',

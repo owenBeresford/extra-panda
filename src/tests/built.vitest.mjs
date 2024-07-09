@@ -451,7 +451,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       debug: () => {
         return true;
       },
-		pageInitRun:0,
+      pageInitRun: 0,
     };
     injectOpts(hash);
     const CC = _getCookie();
