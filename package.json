@@ -1,7 +1,7 @@
 {
   "name": "Panda",
   "version": "1.0.0",
-  "description": "A rebuild on my site to newer versions of JS, code is shorter and easier to read.  The project name is just a random noun-pair.",
+  "description": "A rebuild on my site to newer versions of JS, code is shorter and easier to read.  The project name is just a random word-pair.  There is no execute script here as this code is integated into another project.   I wrote all the tests in src/tests before I executed this code.  ",
   "main": "src/index.mjs",
   "private": true,
   "type": "module",
@@ -26,6 +26,7 @@
     "@types/node-fetch": "^2.6.11",
     "eslint": "^9.3.0",
     "html-validate": "^8.20.1",
+    "html-validator": "^6.0.1",
     "jsdom": "^24.0.0",
     "npm": "^10.8.0",
     "prettier": "^3.2.5",
