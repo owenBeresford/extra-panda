@@ -59,6 +59,10 @@ export function readingDuration(opts: ReadingProps, dom = document): void {
       duration += (tt * 3) / options.wordPerMin;
     }
   }
+  if(duration <1) {
+	log("info", "No reading time displayed for this article");
+	return;
+	}
 
   if (options.refresh) {
     const tt = dom.querySelector(options.target + " a.reading");
