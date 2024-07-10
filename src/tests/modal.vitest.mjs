@@ -3,8 +3,7 @@ import { assert, describe, it } from "vitest";
 import { page } from "./page-seed";
 import { TEST_ONLY } from "../modal";
 import { enableGetEventListeners } from "./vitest-addons";
-import { appendIsland, setIsland } from "../dom-base";
-import { SimpleResponse, Fetchable, AdjacentProps } from "../all-types";
+import { appendIsland } from "../dom-base";
 
 const { modalInit, HTMLDetailsClick, HTMLDetailsTrap } = TEST_ONLY;
 

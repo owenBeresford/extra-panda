@@ -4,7 +4,6 @@ import { JSDOM } from "jsdom";
 import { page } from "./page-seed";
 import { appendIsland, setIsland, isFullstack } from "../dom-base";
 import { ALL_REFERENCE_LINKS } from "../networking";
-import { ReferenceType } from "../all-types";
 import { TEST_ONLY } from "../desktop-biblio";
 import { TEST_ONLY as NETWORKING } from "../networking";
 

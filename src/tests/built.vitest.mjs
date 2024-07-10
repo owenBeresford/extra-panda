@@ -1,11 +1,10 @@
 import { assert, describe, it } from "vitest";
-import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed";
 import { TEST_ONLY } from "../core";
 import { _getCookie } from "../networking";
-import { appendIsland, setIsland, isFullstack, isMobile } from "../dom-base";
-import { enableGetEventListeners, createEvent } from "./vitest-addons";
+import { appendIsland } from "../dom-base";
+import { enableGetEventListeners } from "./vitest-addons";
 
 const { siteCore, injectOpts } = TEST_ONLY;
 

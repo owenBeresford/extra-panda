@@ -1,5 +1,4 @@
 import { assert, describe, it } from "vitest";
-import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed";
 import { TEST_ONLY } from "../mastodon";

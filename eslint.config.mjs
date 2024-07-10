@@ -3,8 +3,13 @@ import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 
 export default [
-  { languageOptions: { globals: globals.browser } },
+  { languageOptions: { globals: globals.browser }},
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  {ignores: [ "dist/*", "node_modules/*", "src/tests/" ]}
+  { ignores: [ "dist/*", "node_modules/*", "src/tests/" ] },
+  {	 
+	"rules": { 
+	"complexity": ["error", 10]	
+		},
+ }
 ];

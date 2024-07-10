@@ -260,6 +260,7 @@ function tabChange(id: string | MiscEvent, dom: Document = document): void {
  * @public
  * @return {void}
  */
+/*eslint complexity: ["error", 30]*/
 export async function siteCore(
   opts: CoreProps,
   dom: Document = document,
@@ -276,7 +277,7 @@ export async function siteCore(
   const ldebug = debug();
 
   if (OPTS.pageInitRun) {
-    log("warn", "Extra panda should not be run twice per page");
+    log("warn", "Extra panda should not be run more than once per page");
     return;
   }
   OPTS.pageInitRun = 1;

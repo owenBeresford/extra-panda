@@ -1,5 +1,4 @@
 import { assert, describe, it, assertType } from "vitest";
-import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed";
 import { Fetchable, Cookieable } from "../all-types";

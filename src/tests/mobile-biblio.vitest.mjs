@@ -2,13 +2,12 @@ import { assert, describe, it } from "vitest";
 import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed";
-import { appendIsland, setIsland, isFullstack } from "../dom-base";
-import { ReferenceType } from "../all-types";
+import { appendIsland } from "../dom-base";
 import { ALL_REFERENCE_LINKS } from "../networking";
 import { TEST_ONLY } from "../mobile-biblio";
 import { TEST_ONLY as NETWORKING } from "../networking";
 
-const { injectOpts, empty, normaliseData, render, createBiblio } = TEST_ONLY;
+const { empty, normaliseData, render, createBiblio } = TEST_ONLY;
 const { getLogCounter } = NETWORKING;
 
 describe("TEST mobile-biblio", () => {
