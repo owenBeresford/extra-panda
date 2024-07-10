@@ -127,7 +127,7 @@ function normaliseToList(
     remainder: number = OPTS.perRow,
     list: Array<NormalisedReference> = [],
     i = 0,
-    j = 0,
+    j = 0;
 //    retries = 0;
   [me, remainder, i] = nextStep(
     extractOABName(data[0].url),
