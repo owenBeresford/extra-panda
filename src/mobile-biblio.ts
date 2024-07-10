@@ -22,10 +22,9 @@ let OPTS: MobileBiblioProps = {} as MobileBiblioProps;
 /**
  * empty
  * A static fixture response for no-data issues
- *
  * @param {number} offset
  * @public
- * @return {NormalisedReference}
+ * @returns {NormalisedReference}
  */
 function empty(offset: number): NormalisedReference {
   return {
@@ -42,11 +41,10 @@ function empty(offset: number): NormalisedReference {
 /**
  * normaliseData
  * Make text data more suited for display, map to flat string array
- *   PURE
-
+ * PURE
  * @param {Array<ReferenceType>} data
  * @protected
- * @return {Array<NormalisedReference>}
+ * @returns {Array<NormalisedReference>}
  */
 function normaliseData(
   data: Array<ReferenceType | null>,
@@ -95,10 +93,9 @@ function normaliseData(
 /**
  * render
  * Function to convert the data to HTML
- *
  * @param {Array<NormalisedReference>} data - technically synthetic reference data.
  * @public
- * @return {string} - the HTML
+ * @returns {string} - the HTML
  */
 function render(data: Array<NormalisedReference>): string {
   let html = `<ol class="mobileBiblo">`;
@@ -119,11 +116,10 @@ function render(data: Array<NormalisedReference>): string {
 /**
  * adjustDom
  * Hack original text section
- *
  * @param {Array<ReferenceType>} dat
  * @param {Document =document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 function adjustDom(dat: Array<ReferenceType>, dom: Document = document): void {
   if (!OPTS.renumber) {
@@ -142,13 +138,12 @@ function adjustDom(dat: Array<ReferenceType>, dom: Document = document): void {
 /**
  * biblio
  * Access point for biblio feature v2, on mobile
- *    IMPURE
-
+ * IMPURE
  * @param {MobileBiblioProps} opts
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @public
- * @return {void}
+ * @returns {void}
  */
 export async function createBiblio(
   opts: MobileBiblioProps,
@@ -210,9 +205,9 @@ export async function createBiblio(
  * injectOpts
  * PURELY FOR UNIT TESTS, adds ability to set initial state per internal function
  * READS process.env
- * @param {undefined Object} opts - I could add a new interface where all the options were optional
+ * @param {undefined Object} a - I could add a new interface where all the options were optional
  * @public
- * @return {void}
+ * @returns {void}
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {

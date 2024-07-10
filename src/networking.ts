@@ -7,12 +7,26 @@ import { Fetchable, SimpleResponse, Cookieable } from "./all-types";
 // adding a dep for 1 int is overkill.
 let LOG_USAGE: number = 0;
 
+/**
+ * debug
+ * a debug tool
+ * @param {Location = location} loc
+ * @public
+ * @returns {boolean}
+ */
 export function debug(loc: Location = location): boolean {
   const u: URLSearchParams = new URLSearchParams(loc.search);
   return u.has("debug");
 }
 
-// this function exists, to make swapping to a fancy centralised logging feature easier.
+/**
+ * exportlog
+ * A simple console.log alias, to make later extension easier
+ * @param {string} typ - The Type on the message, should match functions on console/ a syslog
+ * @param {Array<string>} inputs - a variable list
+ * @public
+ * @returns {void}
+ */
 export function log(typ: string, ...inputs: string[]): void {
   LOG_USAGE++;
   if (typ in console) {
@@ -33,19 +47,18 @@ export const APPEARANCE_COOKIE = "appearance";
   According to the internet a current phone is likely to have a PPI of over 300
   (historical trend) a cheap lazer will have a PPI of 300, 600 or 900 PPI
   a desktop / laptop is likely to be 80-150 PPI
-
+ 
 https://www.displayninja.com/what-is-pixel-density/
 https://phonesdata.com/en/best/screenppi/
-*/
+ */
 export const MOBILE_MIN_PPI = 180;
 
 /**
  * getFetch
  * Access to fetch that is will work across JS interpreters
- *   IMPURE due to logging
-
+ * IMPURE due to logging
  * @public
- * @return {Fetch| null}
+ * @returns {Fetch| null}
  */
 export function getFetch(): Fetchable {
   if (typeof window !== "undefined") {
@@ -62,14 +75,13 @@ export function getFetch(): Fetchable {
 /**
  * runFetch
  * A simple wrapper current fetch()   IOIO LOGGING!!
- *   IMPURE when I add logging
- *  This behaves as a VERY SIMPLE middle-ware.
- *
+ * IMPURE when I add logging
+ * This behaves as a VERY SIMPLE middle-ware.
  * @param {string} url
  * @param {boolean} trap ~ return null rather than an exception
  * @public
  * @throws {Error} = predictably, in case of network issue
- * @return {Promise<SimpleResponse>}
+ * @returns {Promise<SimpleResponse>}
  */
 export async function runFetch(
   url: string,
@@ -158,9 +170,9 @@ class COOKIE implements Cookieable {
 /**
  * getCookie
  * Generate a cookie access object PURE
- *
+ * The commented code should faster in Chrome, however it was making errors in tests, so I commented it
  * @public
- * @return {Cookieable }
+ * @returns {Cookieable }
  */
 export function _getCookie(): Cookieable {
   // first option is for chrome based browsers,
@@ -170,6 +182,8 @@ export function _getCookie(): Cookieable {
   //  }
   return new COOKIE();
 }
+
+/////////////////////////////////////////////////// testing ///////////////////////////////////////////////
 
 export const TEST_ONLY = {
   _getCookie,

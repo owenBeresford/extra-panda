@@ -9,11 +9,11 @@ const { getFetch, runFetch, _getCookie, log } = TEST_ONLY;
 describe("TEST networking", () => {
   it("go 1: getFetch", () => {
     assert.equal(typeof getFetch, "function", "assert #1");
-    assertType<Fetchable> (getFetch(), "assert #2");
+    assertType < Fetchable > (getFetch(), "assert #2");
   });
 
   it("go 2: getCookie ", () => {
-    assertType<Cookieable>(_getCookie(), "assert #32");
+    assertType < Cookieable > (_getCookie(), "assert #32");
     // would be better with more tests, but I think full stack only.
     // I don't want to add too much manual-fake code, to test deliverable-code, or I have circular problem about testing
     // the cookie stuff is quite low cyclometric complexity

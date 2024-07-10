@@ -9,6 +9,7 @@ const {
   injectOpts,
   createStyle,
   cleanTitle,
+  extractGroup,
   generateGroup,
   normaliseToList,
   nextStep,
@@ -497,6 +498,8 @@ Description: What concepts or areas of development are important.    This is a h
       "step28",
     );
   });
+
+  // ADD_TEST extractGroup
 
   it("go 10.3: createAdjacentChart", async () => {
     const [dom, loc, jsdom] = page(

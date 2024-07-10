@@ -19,8 +19,9 @@ let OPTS: AdjacentProps = {} as AdjacentProps;
  *    PURE
  * @param {string} article
  * @param {string} suffix
+ * @param {Location =location} loc
  * @public
- * @return {string} - the desired full URL of this page
+ * @returns {string} - the desired full URL of this page
  */
 function mapURL(
   article: string,
@@ -51,10 +52,10 @@ function mapURL(
  * createStyle
  * Compute the relevant CSS classes for this item
  *    PURE
- * @param {bool} isLong
+ * @param {boolean} isLong
  * @param {number} isOffscreen - unused in current version, but may be readded in future
  * @public
- * @return {string}
+ * @returns {string}
  */
 function createStyle(isLong: boolean, isOffscreen: boolean): string {
   let clsNm = "button";
@@ -73,14 +74,21 @@ function createStyle(isLong: boolean, isOffscreen: boolean): string {
  * @param {string} id
  * @param {string} group
  * @public
- * @return {string}
+ * @returns {string}
  */
 function cleanTitle(id: string, group: string): string {
   return group + "" + id.replace(/[^a-zA-Z0-9_]/g, "_");
 }
 
-// DO NOT EXPORT
-// this is 1 line of code, functionalised for readability reasons
+/**
+ * extractOABName
+ * Readability macro
+ * DO NOT EXPORT this is 1 line of code, functionalised for readability reasons
+    PURE
+ * @param {string} url
+ * @public
+ * @returns {string}
+ */
 function extractOABName(url: string): string {
   return url.split("/").pop();
 }
@@ -94,7 +102,7 @@ function extractOABName(url: string): string {
  * @param {Location =location} loc
  * @public
  * @throws when insufficient data has been supplied
- * @return {string}
+ * @returns {string}
  */
 function generateGroup(loc: Location = location): string {
   let foreward = OPTS.group;
@@ -112,13 +120,12 @@ function generateGroup(loc: Location = location): string {
 
 /**
  * normaliseToList ~
- *    PURE
+ * PURE
  * [me, remainder] form a sliding window of the meta data,
- *   the window many exceed the end of the adjacent meta data, in which case
- *   it fills the buffer 'list' with values from the start of the meta data
- *
+ * the window many exceed the end of the adjacent meta data, in which case
+ * it fills the buffer 'list' with values from the start of the meta data
  * @param {Array<ReferenceType>} data - the meta data
- * @return {Array<NormalisedReference>}
+ * @returns {Array<NormalisedReference>}
  */
 function normaliseToList(
   data: Array<ReferenceType>,
@@ -128,7 +135,7 @@ function normaliseToList(
     list: Array<NormalisedReference> = [],
     i = 0,
     j = 0;
-//    retries = 0;
+  //    retries = 0;
   [me, remainder, i] = nextStep(
     extractOABName(data[0].url),
     OPTS.name,
@@ -175,7 +182,7 @@ function normaliseToList(
     if (list.length >= OPTS.perRow) {
       break;
     }
-    /*  //safety feature added during testing
+    /*  //Optional safety feature added during testing
     retries++;
     let limit = OPTS.perRow;
     if (data.length > OPTS.perRow) {
@@ -199,7 +206,7 @@ function normaliseToList(
  * @param {number} i
  * @param {number} me
  * @public
- * @return {Array<number>}
+ * @returns {Array<number>}
  */
 function nextStep(
   cur: string,
@@ -223,11 +230,10 @@ function nextStep(
 /**
  * listContentGroup
  * Map the data group attribute to an Array
- *
  * @param {string} id
  * @param {Document =document} dom
  * @public
- * @return {Array<string>}
+ * @returns {Array<string>}
  */
 export function listContentGroup(
   id: string,
@@ -260,7 +266,7 @@ export function listContentGroup(
  * @param {Array<NormalisedReference>} list
  * @param {string} gname - the group name
  * @public
- * @return {string of HTML}
+ * @returns {string} - the HTML
  */
 function convert2HTML(list: Array<NormalisedReference>, gname: string): string {
   let html = '<ul class="adjacentList">\n';
@@ -304,7 +310,7 @@ function convert2HTML(list: Array<NormalisedReference>, gname: string): string {
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @public
- * @return {string of HTML}
+ * @returns {string} - of HTML
  */
 function convert2IndexHTML(
   list: Array<ReferenceType>,
@@ -348,12 +354,11 @@ function convert2IndexHTML(
 /**
  * updateLabels
  * Apply the JS code to the new DOM elements
- *
- * @WARN has side effects
+ * WARN has side effects, IMPURE
  * @param {string} gname - article group name
  * @param {Document =document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 function updateLabels(gname: string, dom: Document = document): void {
   const dat: Array<HTMLElement> = dom.querySelectorAll(
@@ -374,6 +379,16 @@ function updateLabels(gname: string, dom: Document = document): void {
   }
 }
 
+/**
+ * extractGroup
+ * A method to extract the possible data sources for group data PURE
+ * @param {HTMLElement | null} ele
+ * @param {Location = location} loc
+ * @param {Document = document} dom
+ * @public
+ * @throws Error when there is no known data to extract
+ * @returns {string}
+ */
 export function extractGroup(
   ele: HTMLElement | null,
   loc: Location = location,
@@ -406,12 +421,12 @@ export function extractGroup(
 /**
  * createAdjacentChart
  * Create a adjacent chart on the bottom of the current page.
- *
+           IMPURE
  * @param {AdjacentParams} opts
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @public
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export async function createAdjacentChart(
   opts: AdjacentProps,
@@ -492,9 +507,10 @@ export async function createAdjacentChart(
  * injectOpts
  * PURELY FOR UNIT TESTS, adds ability to set initial state per internal function
  * READS process.env
- * @param {undefined Object} opts - I could add a new interface where all the options were optional
+ * @param {object} o - I could add a new interface where all the options were optional
+ * @param a
  * @public
- * @return {void}
+ * @returns {void}
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {

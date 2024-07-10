@@ -7,14 +7,13 @@ import { log, MOBILE_MIN_PPI } from "./networking";
  * appendIsland
  * An important util function, which removes need to jQuery, ShadowDOM AND other innerHTML hacks.
  * I have a historic avoidance of passing DOM object around the stack as it caused bad memory leaks.
- *    IMPURE
- *
+ * IMPURE
  * @param {string|HTMLElement} selector ~ where to appends the new content
  * @param {string} html ~ what to append
  * @param {Document =document} dom ~ reference to which DOM tree
  * @throws some sort of HTML error, if the supplied HTML is malformed.  Browser dependant
  * @protected
- * @return {undefined}
+ * @returns {undefined}
  */
 export function appendIsland(
   selector: string | HTMLElement,
@@ -45,12 +44,11 @@ export function appendIsland(
 /**
  * ready
  * Page start event triggering
- * TODO: work out which option is for MSIE and delete that 
- 
+ * TODO: work out which option is for MSIE and delete that
  * @param {GenericEventHandler} callback
  * @link {https://stackoverflow.com/questions/799981/document-ready-equivalent-without-jquery}
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function ready(callback: GenericEventHandler): void {
   if (document.readyState !== "loading") {
@@ -70,14 +68,13 @@ export function ready(callback: GenericEventHandler): void {
  * setIsland
  * Replace the whole of the subtree with the param
  * I have a historic avoidance of passing DOM object around the stack as it caused bad memory leaks.
- *    IMPURE
- *
+ * IMPURE
  * @param {string|HTMLElement} selector
  * @param {string} html
  * @param {Document =document} dom
  * @throws some sort of HTML error, if the supplied HTML is malformed.  Browser dependant
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function setIsland(
   selector: string | HTMLElement,
@@ -103,9 +100,8 @@ export function setIsland(
 /**
  * isFullstack
  * Look at function implementations to see if this is a browser
- 
  * @public
- * @return {boolean}
+ * @returns {boolean}
  */
 export function isFullstack(): boolean {
   let isNativeWindow;
@@ -128,10 +124,9 @@ export function isFullstack(): boolean {
  * booleanMap
  * Convert many possible "English" boolean values to boolean
  * NOTE: js, may not be a string
- 
  * @param {string | number} str
  * @public
- * @return {boolean}
+ * @returns {boolean}
  */
 function booleanMap(str: string | number): boolean {
   const TRUE = ["1", 1, "true", "TRUE", "on", "ON", "yes", "YES"];
@@ -149,12 +144,11 @@ function booleanMap(str: string | number): boolean {
 /**
  * isMobile
  * Statically workout if this is mobile
- *
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @param {Window =window} win
  * @public
- * @return {bool} ~ is this Mobile?
+ * @returns {boolean} ~ is this Mobile?
  */
 export function isMobile(
   dom: Document = document,
@@ -187,11 +181,10 @@ export function isMobile(
 /**
  * calcScreenDPI
  * as labeled
- 
  * @param {Document =document} dom
  * @param {Window =window} win
  * @public
- * @return {number}
+ * @returns {number}
  */
 function calcScreenDPI(dom: Document = document, win: Window = window): number {
   try {
@@ -213,10 +206,9 @@ function calcScreenDPI(dom: Document = document, win: Window = window): number {
  * currentSize
  * Utility function to report the tab size...
  * I use this in debugging RWD PURE
-
  * @param {Document =document} dom
  * @public
- * @return {ScreenSizeArray}
+ * @returns {ScreenSizeArray}
  */
 export function currentSize(dom: Document = document): ScreenSizeArray {
   const root = dom.documentElement,

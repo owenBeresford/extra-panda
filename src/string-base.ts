@@ -7,10 +7,9 @@ import { isFullstack } from "./dom-base";
 /**
  * pullout
  * An isolation function, as JSDOM isn't perfect.
- 
- * @param {HTMLElement} a 
+ * @param {HTMLElement} a
  * @public
- * @return {string}
+ * @returns {string}
  */
 export function pullout(a: HTMLElement): string {
   if (!a) {
@@ -28,11 +27,10 @@ export function pullout(a: HTMLElement): string {
  * _map
  * Add several event listeners, just a utility
  * UNUSED till I can use Golang grade types
- *
  * @param {HTMLElement} where
  * @param {MiscEventHandler } action
  * @public
- * @return {void}
+ * @returns {void}
  */
 /*
 function _map(
@@ -61,11 +59,10 @@ function _map(
 /**
  * articleName
  * Extract article name from location
- *    PURE
-
+ * PURE
  * @param {Location =location} loc
  * @public
- * @return {string}
+ * @returns {string}
  */
 export function articleName(loc: Location = location): string {
   return loc.pathname.split("/").pop() || "<name>";
@@ -74,12 +71,11 @@ export function articleName(loc: Location = location): string {
 /**
  * makeRefUrl
  * Compute the relative URL for the references cache
- *    PURE
-
+ * PURE
  * @param {string} template
  * @param {Location =location} loc
  * @protected
- * @return {string}
+ * @returns {string}
  */
 export function makeRefUrl(template: string, loc: Location = location): string {
   let tmp2: string[] = [];
@@ -91,10 +87,9 @@ export function makeRefUrl(template: string, loc: Location = location): string {
 /**
  * isLocal
  * Guess if actual code or test node
- 
  * @param {string} str
  * @public
- * @return {boolean}
+ * @returns {boolean}
  */
 export function isLocal(str: string): boolean {
   if (
@@ -112,13 +107,12 @@ export function isLocal(str: string): boolean {
 /**
  * addLineBreaks
  * Add manual wrap to a string, so the tooltips are a fixed width
- *   PURE
-
+ * PURE
  * @param {string} str
  * @param {number =80} len
- * @param {string ="↩"} token 
+ * @param {string ="↩"} token
  * @public
- * @return {string}
+ * @returns {string}
  */
 export function addLineBreaks(
   str: string,
@@ -144,12 +138,11 @@ export function addLineBreaks(
 /**
  * pad
  * For making dates, add a leading zero to the param string if needed
- *   PURE
+ * PURE
  * This code would be much simpler if I could make unsigned number or exclusive counting number types
- *
  * @param {number} num
  * @public
- * @return {string} - the result
+ * @returns {string} - the result
  */
 export function pad(num: number): string {
   let r = String(num);
@@ -166,11 +159,10 @@ export function pad(num: number): string {
  * mapAttribute
  * Extract the named limit of the element
  * PURE
- *
  * @param {HTMLElement} ele
  * @param {BOUNDARY} attrib - One of top|bottom|left|right|width|height
  * @public
- * @return {number } - the value of the requested
+ * @returns {number } - the value of the requested
  */
 export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
   try {
@@ -191,12 +183,11 @@ export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
  * Fix whatever I have been given, down to a predictable list #leSigh browsers.
  * This is too complex as I am supporting ALL browsers across a large amount of time/editions
  * A 'JS purity & primis' person would not support some of the corner cases I think
- * Used in importDate 
-
+ * Used in importDate
  * @param {string = ""} day - supports / and - common formats
  * @param {string = ""} time
  * @protected
- * @return {Array<strings>}
+ * @returns {Array<strings>}
  */
 /*eslint complexity: ["error", 30]*/
 function fixArgs(day: string = "", time: string = ""): Array<string> {
@@ -248,13 +239,12 @@ function fixArgs(day: string = "", time: string = ""): Array<string> {
  * For details on format, please see php strtotime()
  * NOTE output dates always in current and local TZ, even if input date isn't
  * like really small version of moment, converts ascii string to Date object
- *    PURE
- *
+ * PURE
  * @param {string} format
  * @param {string=""} day
  * @param {string=""} time
  * @public
- * @return {Date}
+ * @returns {Date}
  */
 export function importDate(
   format: string,
@@ -313,12 +303,11 @@ export function importDate(
 /**
  * dateMunge
  * Convert Epoch to human readable string PURE
- *
  * @param {number} din
  * @param {Date | string} ddefault - assert tranactional data sources, filler for nulls in first src
- * @param {bool =true} monthText - weather or not to translate month numbers to text, and whether to pad a 1 digit month
+ * @param {boolean =true} monthText - weather or not to translate month numbers to text, and whether to pad a 1 digit month
  * @public
- * @return {string}
+ * @returns {string}
  */
 export function dateMunge(
   din: number,
@@ -376,6 +365,8 @@ export function dateMunge(
   return date;
 }
 
+////////////////////////////////////////////////////////////// testing /////////////////////////////////////////////
+// no injectOpts needed
 export const TEST_ONLY = {
   isLocal,
   articleName,
