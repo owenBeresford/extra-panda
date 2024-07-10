@@ -1,12 +1,8 @@
 import { assert, describe, it, assertType } from "vitest";
-import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed";
-import { Fetchable, Cookieable } from "../all-types";
-
 import { TEST_ONLY } from "../dom-base";
-const { isMobile, appendIsland, setIsland, isFullstack, currentSize } =
-  TEST_ONLY;
+const { appendIsland, setIsland, currentSize } = TEST_ONLY;
 
 describe("TEST dom-base", () => {
   it("go 6: currentSize", (context) => {

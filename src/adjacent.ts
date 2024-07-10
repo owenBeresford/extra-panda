@@ -52,7 +52,7 @@ function mapURL(
  * Compute the relevant CSS classes for this item
  *    PURE
  * @param {bool} isLong
- * @param {number} isOffscreen - unused in current version
+ * @param {number} isOffscreen - unused in current version, but may be readded in future
  * @public
  * @return {string}
  */
@@ -128,7 +128,7 @@ function normaliseToList(
     list: Array<NormalisedReference> = [],
     i = 0,
     j = 0,
-    retries = 0;
+//    retries = 0;
   [me, remainder, i] = nextStep(
     extractOABName(data[0].url),
     OPTS.name,
@@ -175,7 +175,7 @@ function normaliseToList(
     if (list.length >= OPTS.perRow) {
       break;
     }
-
+    /*  //safety feature added during testing
     retries++;
     let limit = OPTS.perRow;
     if (data.length > OPTS.perRow) {
@@ -184,6 +184,7 @@ function normaliseToList(
     if (retries > limit * 2) {
       throw new Error("Pls check data on this page, can't match anything");
     }
+*/
   }
   return list;
 }
@@ -463,11 +464,11 @@ export async function createAdjacentChart(
     }
 
     if (isGroupArticle) {
-      if (OPTS.rendered) {
-        log("warn", "Already rendered this asset");
-        return;
-      }
-      OPTS.rendered = true;
+      //      if (OPTS.rendered) {
+      //        log("warn", "Already rendered this asset");
+      //        return;
+      //      }
+      //      OPTS.rendered = true;
 
       const html = convert2IndexHTML(
         data.body as Array<ReferenceType>,

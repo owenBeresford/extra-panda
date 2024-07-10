@@ -1,5 +1,4 @@
 import { assert, describe, it } from "vitest";
-import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed";
 import { TEST_ONLY } from "../effect";
@@ -127,7 +126,7 @@ sf sfsfs sdsdf sfsfsf sfs
 </div><i class="fa fa-play specialPointer " aria-hidden="true"></i>
 `;
     appendIsland("#point2", str1, dom);
-    addBashSamples(dom);
+    addFancyButtonArrow(dom);
     assert(dom.querySelector("#point2").textContent, str2, "Mapping addArrow");
   });
 });

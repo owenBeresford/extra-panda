@@ -1,9 +1,8 @@
 import { assert, describe, it, assertType } from "vitest";
-import { JSDOM } from "jsdom";
 
-import { page } from "./page-seed";
-import { Fetchable, Cookieable } from "../all-types";
-import { appendIsland, setIsland, isFullstack } from "../dom-base";
+//import { page } from "./page-seed";
+// import { appendIsland, setIsland, isFullstack } from "../dom-base";
+import { Cookieable } from "../all-types";
 import { TEST_ONLY } from "../networking";
 const { getFetch, runFetch, _getCookie, log } = TEST_ONLY;
 

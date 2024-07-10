@@ -124,34 +124,26 @@ export function isFullstack(): boolean {
   return false;
 }
 
-// NOTE: js, may not be a string
+/**
+ * booleanMap
+ * Convert many possible "English" boolean values to boolean
+ * NOTE: js, may not be a string
+ 
+ * @param {string | number} str
+ * @public
+ * @return {boolean}
+ */
 function booleanMap(str: string | number): boolean {
-  switch (str) {
-    case "1":
-    case 1:
-    case "true":
-    case "TRUE":
-    case "on":
-    case "ON":
-    case "yes":
-    case "YES":
-      return true;
-      break;
+  const TRUE = ["1", 1, "true", "TRUE", "on", "ON", "yes", "YES"];
+  const FALSE = ["0", 0, "false", "FALSE", "off", "OFF", "no", "NO"];
 
-    case "0":
-    case 0:
-    case "false":
-    case "FALSE":
-    case "off":
-    case "OFF":
-    case "no":
-    case "NO":
-      return false;
-      break;
-
-    default:
-      throw new Error("Unknown data " + str);
+  if (TRUE.includes(str)) {
+    return true;
   }
+  if (FALSE.includes(str)) {
+    return false;
+  }
+  throw new Error("Unknown data " + str);
 }
 
 /**

@@ -187,34 +187,22 @@ export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
 }
 
 /**
- * importDate
- * Convert a string of date with a format to a date
- * For details on format, please see php strtotime()
- * NOTE output dates always in current and local TZ, even if input date isn't
- * like really small version of moment, converts ascii string to Date object
- *    PURE
- *
- * @param {string} format
- * @param {string=""} day
- * @param {string=""} time
- * @public
- * @return {Date}
+ * fixArgs
+ * Fix whatever I have been given, down to a predictable list #leSigh browsers.
+ * This is too complex as I am supporting ALL browsers across a large amount of time/editions
+ * A 'JS purity & primis' person would not support some of the corner cases I think
+ * Used in importDate 
+
+ * @param {string = ""} day - supports / and - common formats
+ * @param {string = ""} time
+ * @protected
+ * @return {Array<strings>}
  */
-export function importDate(
-  format: string,
-  day: string = "",
-  time: string = "",
-): Date {
+/*eslint complexity: ["error", 30]*/
+function fixArgs(day: string = "", time: string = ""): Array<string> {
   let day1: string;
   let time1: string;
-  let fpos: number;
 
-  let year1: number;
-  let month1: number;
-  let _day1: number;
-  let hour1: number;
-  let min1: number;
-  let sec1: number;
   // write once vars
   let day1a: Array<string>;
   let time1a: Array<string>;
@@ -237,17 +225,50 @@ export function importDate(
     day1 = day;
     time1 = time;
   }
-
   if (!day1) {
     throw new Error("importDate: No values supplied");
   } else if (day1.indexOf("-") > 0) {
     // if - is in first char position, its still bad, so skip that option
     day1a = day1.split("-");
-  } else {
+  } else if (day1.indexOf("/") > 0) {
     day1a = day1.split("/");
   }
   time1a = time1.split(":");
+
+  if (!day1a) {
+    throw new Error("importDate: No values supplied");
+  }
   buf = [...day1a, ...time1a];
+  return buf;
+}
+
+/**
+ * importDate
+ * Convert a string of date with a format to a date
+ * For details on format, please see php strtotime()
+ * NOTE output dates always in current and local TZ, even if input date isn't
+ * like really small version of moment, converts ascii string to Date object
+ *    PURE
+ *
+ * @param {string} format
+ * @param {string=""} day
+ * @param {string=""} time
+ * @public
+ * @return {Date}
+ */
+export function importDate(
+  format: string,
+  day: string = "",
+  time: string = "",
+): Date {
+  let year1: number;
+  let month1: number;
+  let _day1: number;
+  let hour1: number;
+  let min1: number;
+  let sec1: number;
+  let fpos: number;
+  const buf = fixArgs(day, time);
 
   // note very clearly: this is array fragment offset, not char offset
   fpos = 0;
