@@ -6,10 +6,12 @@ export default [
   { languageOptions: { globals: globals.browser }},
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  { ignores: [ "dist/*", "node_modules/*", "src/tests/" ] },
+  { ignores: [ "dist", "node_modules", "src/tests/" ] },
   {	 
+    plugins: {
+    },
 	"rules": { 
-	"complexity": ["error", 10]	
+	"complexity": ["error", 10],	
 		},
  }
 ];

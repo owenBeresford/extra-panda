@@ -1,0 +1,18 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "./src/index.mjs",
+    "src/*"
+  ],
+  "out": "dist/docs",
+  "exclude": [
+    "src/tests/",
+    "/node_modules/"
+  ],
+  "excludeExternals": true,
+  "lang": "en-GB",
+  "locales": { "en-GB": { "theme_implements": "Implements" }},
+  "skipErrorChecking": true,
+  "searchInComments": true,
+  "plugin": ["typedoc-plugin-missing-exports"]
+}
