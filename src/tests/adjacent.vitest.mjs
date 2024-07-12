@@ -319,12 +319,39 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     );
   });
 
-  it("go 9: updateLabels", () => {
+  it("go 11: extractGroup", () => {
+//	 extractGroup(  ele: HTMLElement | null, loc: Location = location, dom: Document = document): string 
+    const [dom, loc, win, jsdom] = page(
+      "http://192.168.0.35/resource/code-metrics",
+      4,
+    );
+    let str = `<div class="top-bar fullwidth"><header><h1>i'm set</h1> </header> </div>  
+				<div id="thing1" class="adjacentGroup" data-group="engineering"><p>im set too</p> </div>
+				<div id="thing2" class="adjacentGroup" data-group="engineering   "><p>im set too</p> </div>
+				<div id="thing3" class="adjacentGroup" data-group="engineering,   "><p>im set too</p> </div>
+				<div id="thing4" class="adjacentGroup" data-group="engineering,uitools"><p>im set too</p> </div>
+ `;
+    appendIsland("#point2", str, dom);
+	
+	assert.equal( extractGroup(dom.querySelector('#thing1'), loc, dom ), "engineering", "step 14" );
+	assert.equal( extractGroup(dom.querySelector('#thing2'), loc, dom ), "engineering", "step 15" );
+	assert.equal( extractGroup(dom.querySelector('#thing3'), loc, dom ), "engineering", "step 16" );
+	assert.equal( extractGroup(dom.querySelector('#thing4'), loc, dom ), "engineering", "step 17" );
+
+	jsdom.reconfigure({   url: "http://192.168.0.35/resource/group-XXX?first=martech",  });
+	assert.equal( extractGroup(dom.querySelector('#thing1'), loc, dom ), "martech", "step 18" );
+
+	jsdom.reconfigure({   url: "http://192.168.0.35/resource/group-research",  });
+	assert.equal( extractGroup(dom.querySelector('#thing1'), loc, dom ), "research", "step 19" );
+
+	});
+
+  it("go 9: updatelabels", () => {
     const [dom, loc, jsdom] = page(
       "http://192.168.0.35/resource/code-metrics",
       3,
     );
-    let str = `<div class=" top-bar fullWidth"><header><h1>I'm set</h1> </header> </div>  
+    let str = `<div class="top-bar fullWidth"><header><h1>I'm set</h1> </header> </div>  
 				<div class="adjacentGroup"><p>Im set too</p> </div> `;
     appendIsland("#point2", str, dom);
     updateLabels("Engineering", dom);
@@ -446,7 +473,7 @@ Description: What concepts or areas of development are important.    This is a h
   it("go 10.2: createAdjacentChart", async () => {
     const [dom, loc] = page("http://192.168.0.35/resource/code-metrics", 3);
     let str = `
-<div class="adjacentGroup " id="groupengineering">
+<div class="adjacentGroup" id="groupengineering">
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
@@ -498,8 +525,6 @@ Description: What concepts or areas of development are important.    This is a h
       "step28",
     );
   });
-
-  // ADD_TEST extractGroup
 
   it("go 10.3: createAdjacentChart", async () => {
     const [dom, loc, jsdom] = page(

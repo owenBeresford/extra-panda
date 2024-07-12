@@ -366,9 +366,10 @@ function updateLabels(gname: string, dom: Document = document): void {
   ) as Array<HTMLElement>;
 
   if (
-    (dat.length && dat[0].textContent.includes("whatsmyname")) ||
-    dat[0].textContent.includes("XXX")
-  ) {
+    dat.length && (
+		dat[0].textContent.includes("whatsmyname") ||
+    	dat[0].textContent.includes("XXX")
+				) ) {
     dat[0].textContent = "Group " + gname;
   }
   const dit: Array<HTMLElement> = dom.querySelectorAll(
@@ -395,7 +396,7 @@ export function extractGroup(
   dom: Document = document,
 ): string {
   const tmp1 = loc.pathname.split("/group-");
-  if (Array.isArray(tmp1) && tmp1.length > 0) {
+  if (Array.isArray(tmp1) && tmp1.length > 1 && tmp1[1]!== "XXX") {
     return tmp1[1];
   }
   const tmp2 = new URLSearchParams(loc.search);
@@ -404,13 +405,13 @@ export function extractGroup(
   }
 
   // this third option is just a back stop;
-  if (ele && ele.getAtrtibute("data-group")) {
-    let tmp = ele.getAtrtibute("data-group");
+  if (ele && ele.getAttribute("data-group")) {
+    let tmp = ele.getAttribute("data-group");
     tmp = tmp.trim();
-    tmp.split(",").map((a, b) => {
+    let tmp2 = tmp.split(",").map((a, b) => {
       return a.trim();
     });
-    return tmp[0];
+    return tmp2[0];
   }
   throw new Error(
     "KLAXON, KLAXON, I do not know how to build an adjacent list for " +
@@ -479,6 +480,8 @@ export async function createAdjacentChart(
     }
 
     if (isGroupArticle) {
+// feature removed, as the dup render trap is in core
+// this is an inherited trap
       //      if (OPTS.rendered) {
       //        log("warn", "Already rendered this asset");
       //        return;
@@ -507,8 +510,7 @@ export async function createAdjacentChart(
  * injectOpts
  * PURELY FOR UNIT TESTS, adds ability to set initial state per internal function
  * READS process.env
- * @param {object} o - I could add a new interface where all the options were optional
- * @param a
+ * @param {object} a - I could add a new interface where all the options were optional
  * @public
  * @returns {void}
  */
