@@ -44,7 +44,7 @@ type MultiFuncArg = (id: string | MiscEvent, dom: Document) => void;
 /**
  * _map
  * Add several event listeners, just a utility
- * @TODO define type for handler
+ *
  * @param {HTMLElement} where
  * @param { (id: string | MiscEvent, dom: Document ) =>void} action
  * @public
@@ -59,6 +59,7 @@ function _map(where: HTMLElement, action: MultiFuncArg): void {
 /**
  * initPopupMobile
  * Create the popup bar for mobile
+ *
  * @param {Document =document} dom
  * @param {location =location} loc
  * @public
@@ -114,6 +115,7 @@ function initPopupMobile(
 /**
  * storeAppearance
  * Write supplied data to a cOOKIE
+ *
  * @param {string} ft - font
  * @param {string} fs - font-size
  * @param {string} dir - direction, mostly unused
@@ -421,7 +423,7 @@ export function hasBeenRun(): number {
  * @public
  * @returns {void}
  */
-function injectOpts(a: Object): void {
+function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {
     console.error("To use injectOpts, you must set NODE_ENV");
     return;

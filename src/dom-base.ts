@@ -46,7 +46,7 @@ export function appendIsland(
  * Page start event triggering
  * TODO: work out which option is for MSIE and delete that
  * @param {GenericEventHandler} callback
- * @link {https://stackoverflow.com/questions/799981/document-ready-equivalent-without-jquery}
+ * @see [stack overflow answer https://stackoverflow.com/questions/799981/document-ready-equivalent-without-jquery]
  * @public
  * @returns {void}
  */
