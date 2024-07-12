@@ -45,11 +45,10 @@ type MultiFuncArg = (id: string | MiscEvent, dom: Document) => void;
  * _map
  * Add several event listeners, just a utility
  *
- * @TODO define type for handler
  * @param {HTMLElement} where
  * @param { (id: string | MiscEvent, dom: Document ) =>void} action
  * @public
- * @return {void}
+ * @returns {void}
  */
 function _map(where: HTMLElement, action: MultiFuncArg): void {
   where.addEventListener("click", action);
@@ -62,8 +61,9 @@ function _map(where: HTMLElement, action: MultiFuncArg): void {
  * Create the popup bar for mobile
  *
  * @param {Document =document} dom
+ * @param {location =location} loc
  * @public
- * @return {void}
+ * @returns {void}
  */
 function initPopupMobile(
   dom: Document = document,
@@ -121,7 +121,7 @@ function initPopupMobile(
  * @param {string} dir - direction, mostly unused
  * @param {string} clr - color scheme
  * @public
- * @return {void}
+ * @returns {void}
  */
 function storeAppearance(
   ft: string,
@@ -137,10 +137,9 @@ function storeAppearance(
 /**
  * applyAppearance
  * Apply branding settings found in a COOKIE
- *
  * @param {Document =document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 function applyAppearance(dom: Document = document): void {
   const COOKIE: Cookieable = _getCookie();
@@ -174,11 +173,10 @@ function applyAppearance(dom: Document = document): void {
 /**
  * burgerMenu
  * Util to manage state in the burgermenu
-
  * @param {string =".burgerMenu"} id - HTML id for the menu
  * @param {Document =document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 function burgerMenu(
   id: string = ".burgerMenu",
@@ -204,11 +202,10 @@ function burgerMenu(
  * tabChange
  * Change which tab is visible
  * IOIO REWRITE when tabs are replaced
- *
  * @param {string} id - HTML id for the menu
  * @param {Document =document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 function tabChange(id: string | MiscEvent, dom: Document = document): void {
   let thing: HTMLElement | null = null;
@@ -253,12 +250,11 @@ function tabChange(id: string | MiscEvent, dom: Document = document): void {
 /**
  * siteCore
  * Applies all the functions in this file to the DOM
- *
  * @param {CoreProps} opts - see docs, at top of file
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @public
- * @return {void}
+ * @returns {void}
  */
 /*eslint complexity: ["error", 30]*/
 export async function siteCore(
@@ -399,12 +395,22 @@ export async function siteCore(
   if (typeof document.pageStartup === "function") {
     document.pageStartup();
   } else {
-    log("info", "No article specific scripting found, so all done");
+    log(
+      "info",
+      "No article specific scripting found, (it may load manually ATF)",
+    );
   }
 }
 
 ///////////////////////////////////////////////// testing /////////////////////////////////////////////////////////
 
+/**
+ * hasBeenRun
+ * Access to an int
+ 
+ * @public
+ * @return {number}
+ */
 export function hasBeenRun(): number {
   return OPTS["pageInitRun"];
 }
@@ -413,13 +419,13 @@ export function hasBeenRun(): number {
  * injectOpts
  * PURELY FOR UNIT TESTS, adds ability to set initial state per internal function
  * READS process.env
- * @param {undefined object} opts - I could add a new interface where all the options were optional
+ * @param {object} a - I could add a new interface where all the options were optional
  * @public
- * @return {void}
+ * @returns {void}
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {
-    log("error", "ERROR: to use injectOpts, you must set NODE_ENV");
+    console.error("To use injectOpts, you must set NODE_ENV");
     return;
   }
   OPTS = Object.assign(OPTS, a);

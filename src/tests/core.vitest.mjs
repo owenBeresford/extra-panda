@@ -15,7 +15,7 @@ const {
 
 describe("TEST core", () => {
   it("go 1: burgerMeu", () => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
     let str = `<fieldset class="h4_menu column bigScreenOnly">
 <legend><span id="pageMenu"><i class="fa fa-ob1burger" aria-hidden="true"></i> </span></legend>
 <menu class="h4_lean">
@@ -75,7 +75,7 @@ describe("TEST core", () => {
   });
 
   it("go 4: tabChange ", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
     let str = `<div class="chunkArticles column">
 <ul class="tabList tabs" data-tab="" role="tablist">
 <li id="clickArticles" class="tab-title is-active" role="presentation"> <a id="annoying1" href="#blockArticles" role="tab" aria-selected="true" aria-controls="blockArticles"> Articles</a></li>
@@ -225,9 +225,9 @@ describe("TEST core", () => {
   });
 
   it("go 5: initPopupMobile", (context) => {
-    const [dom, loc, win] = page(
+    const [dom, loc] = page(
       "http://192.168.0.35/resource/home?mobile=1",
-      3,
+      2,
     );
     let str = `<div id="navBar"> 
 <span class="allButtons"> 
@@ -256,9 +256,9 @@ describe("TEST core", () => {
   });
 
   it("go 5.1: initPopupMobile", (context) => {
-    const [dom, loc, win] = page(
+    const [dom, loc] = page(
       "http://192.168.0.35/resource/home?mobile=0",
-      3,
+      2,
     );
     let str = `<div id="navBar">
 <span class="allButtons"> 
@@ -287,7 +287,7 @@ describe("TEST core", () => {
   });
 
   it("go 5.2: initPopupMobile", (context) => {
-    const [dom, loc, win] = page("http://6.6.6.6/resource/home?mobile=1", 3);
+    const [dom, loc] = page("http://6.6.6.6/resource/home?mobile=1", 2);
     let str = `<div id="navBar">
 				<span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>

@@ -109,7 +109,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 3: openMastodon", () => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc ] = page("http://192.168.0.35/resource/home", 2);
     let str = `<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup">
 	<input id="id1" type="submit" value="Post now" />
@@ -128,7 +128,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 4: closeMastodon", () => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
     let str = `<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup" open>
 	<input id="id1" type="submit" value="Post now" />
@@ -192,7 +192,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 7: _map1", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
     let str = `<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup" >
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 

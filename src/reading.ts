@@ -12,7 +12,7 @@ import { ReadingProps } from "./all-types";
  * @param {ReadingProps} opts
  * @param {Document =document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function readingDuration(opts: ReadingProps, dom = document): void {
   const RE = /[ \t\n\r.(),~]/g;
@@ -81,6 +81,6 @@ export function readingDuration(opts: ReadingProps, dom = document): void {
 }
 
 /////////////////////////////////////////////// testing ////////////////////////////////////////////
-
+// injectOpts not needed, only 1 function
 /* access to functions for unit tests */
 export const TEST_ONLY = { readingDuration };

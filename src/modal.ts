@@ -1,6 +1,14 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
 import { MiscEvent } from "./all-types";
 
+/**
+ * HTMLDetailsTrap
+ * If see ESC key close any open details
+ * @param {MiscEvent} e
+ * @param {Document = document} dom
+ * @protected
+ * @returns {boolean} - keypress event, so return false
+ */
 function HTMLDetailsTrap(e: MiscEvent, dom: Document = document): boolean {
   if (e.code === "Escape" || e.key === "Escape") {
     const tt = dom.querySelectorAll("details[open]");
@@ -12,6 +20,14 @@ function HTMLDetailsTrap(e: MiscEvent, dom: Document = document): boolean {
   return false;
 }
 
+/**
+ * HTMLDetailsClick
+ * If there is a click, walk up the DOM until the details is found
+ * @param {MiscEvent} e
+ * @param {Document = document} dom
+ * @protected
+ * @returns {boolean} - mouse event, so return false
+ */
 function HTMLDetailsClick(e: MiscEvent, dom: Document = document): boolean {
   const find = function (
     ele: HTMLElement,
@@ -57,6 +73,13 @@ function HTMLDetailsClick(e: MiscEvent, dom: Document = document): boolean {
   return false;
 }
 
+/**
+ * modalInit
+ * Add other event handlers
+ * @param {Document = document} dom
+ * @public
+ * @returns {void}
+ */
 export function modalInit(dom: Document = document): void {
   const tmp: Array<HTMLDetailsElement> = Array.from(
     dom.querySelectorAll(".popOverWidget details"),
@@ -68,8 +91,10 @@ export function modalInit(dom: Document = document): void {
     });
   }
   // see if something can be done for mobile interactions
+  // add a listener to the custom back button would be good
 }
 
 //////////////////////////////////////////// testing ////////////////////////////////////
+// no OPTS  or injectOpts needed for this module, its just static event listeners
 
 export const TEST_ONLY = { modalInit, HTMLDetailsClick, HTMLDetailsTrap };

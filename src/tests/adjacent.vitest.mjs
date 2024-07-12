@@ -9,6 +9,7 @@ const {
   injectOpts,
   createStyle,
   cleanTitle,
+  extractGroup,
   generateGroup,
   normaliseToList,
   nextStep,
@@ -198,9 +199,9 @@ describe("TEST adjacent", () => {
   });
 
   it("go 6: listContentGroup", () => {
-    const [dom, loc, jsdom] = page(
+    const [dom, loc] = page(
       "http://192.168.0.35/resource/code-metrics",
-      3,
+      2,
     );
     setIsland(
       "#point2",
@@ -307,9 +308,9 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
 <a class="adjacentItem" href="http://www.seconddata.com/" title="sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf">DDDSFDSDF ddd 45646 <span class="button">DDDSFDSDF ddd 45646</span><p id="adjacentengineering1" >Author:  &nbsp; &nbsp; &nbsp;  Last edit:  03-March-2024  <br />Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf </p></a>
 <a class="adjacentItem" href="http://www.thirddata.com/" title="sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg...">DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg <span class="button">DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg</span><p id="adjacentengineering2" >Author: gdgdg &nbsp; &nbsp; &nbsp;  Last edit:  04-March-2024  <br />Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg... </p></a>
 `;
-    const [dom, loc, jsdom] = page(
+    const [dom, loc] = page(
       "http://192.168.0.35/resource/code-metrics",
-      3,
+      2,
     );
     assert.deepEqual(
       convert2IndexHTML(d1, "engineering", dom, loc),
@@ -318,12 +319,39 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     );
   });
 
-  it("go 9: updateLabels", () => {
-    const [dom, loc, jsdom] = page(
+  it("go 11: extractGroup", () => {
+//	 extractGroup(  ele: HTMLElement | null, loc: Location = location, dom: Document = document): string 
+    const [dom, loc, win, jsdom] = page(
       "http://192.168.0.35/resource/code-metrics",
-      3,
+      4,
     );
-    let str = `<div class=" top-bar fullWidth"><header><h1>I'm set</h1> </header> </div>  
+    let str = `<div class="top-bar fullwidth"><header><h1>i'm set</h1> </header> </div>  
+				<div id="thing1" class="adjacentGroup" data-group="engineering"><p>im set too</p> </div>
+				<div id="thing2" class="adjacentGroup" data-group="engineering   "><p>im set too</p> </div>
+				<div id="thing3" class="adjacentGroup" data-group="engineering,   "><p>im set too</p> </div>
+				<div id="thing4" class="adjacentGroup" data-group="engineering,uitools"><p>im set too</p> </div>
+ `;
+    appendIsland("#point2", str, dom);
+	
+	assert.equal( extractGroup(dom.querySelector('#thing1'), loc, dom ), "engineering", "step 14" );
+	assert.equal( extractGroup(dom.querySelector('#thing2'), loc, dom ), "engineering", "step 15" );
+	assert.equal( extractGroup(dom.querySelector('#thing3'), loc, dom ), "engineering", "step 16" );
+	assert.equal( extractGroup(dom.querySelector('#thing4'), loc, dom ), "engineering", "step 17" );
+
+	jsdom.reconfigure({   url: "http://192.168.0.35/resource/group-XXX?first=martech",  });
+	assert.equal( extractGroup(dom.querySelector('#thing1'), loc, dom ), "martech", "step 18" );
+
+	jsdom.reconfigure({   url: "http://192.168.0.35/resource/group-research",  });
+	assert.equal( extractGroup(dom.querySelector('#thing1'), loc, dom ), "research", "step 19" );
+
+	});
+
+  it("go 9: updatelabels", () => {
+    const [dom, loc] = page(
+      "http://192.168.0.35/resource/code-metrics",
+      2,
+    );
+    let str = `<div class="top-bar fullWidth"><header><h1>I'm set</h1> </header> </div>  
 				<div class="adjacentGroup"><p>Im set too</p> </div> `;
     appendIsland("#point2", str, dom);
     updateLabels("Engineering", dom);
@@ -354,9 +382,9 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
   });
 
   it("go 10: createAdjacentChart", async () => {
-    const [dom, loc, jsdom] = page(
+    const [dom, loc] = page(
       "http://192.168.0.35/resource/code-metrics",
-      3,
+      2,
     );
     let str = `
 <div class="adjacentGroup" id="groupengineering">
@@ -388,7 +416,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
   });
 
   it("go 10.1: createAdjacentChart", async () => {
-    const [dom, loc, jsdom] = page(
+    const [dom, loc] = page(
       "http://192.168.0.35/resource/code-metrics",
       3,
     );
@@ -443,9 +471,9 @@ Description: What concepts or areas of development are important.    This is a h
   });
 
   it("go 10.2: createAdjacentChart", async () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/code-metrics", 3);
+    const [dom, loc] = page("http://192.168.0.35/resource/code-metrics", 2);
     let str = `
-<div class="adjacentGroup " id="groupengineering">
+<div class="adjacentGroup" id="groupengineering">
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
@@ -499,9 +527,9 @@ Description: What concepts or areas of development are important.    This is a h
   });
 
   it("go 10.3: createAdjacentChart", async () => {
-    const [dom, loc, jsdom] = page(
+    const [dom, loc] = page(
       "http://192.168.0.35/resource/code-metrics",
-      3,
+      2,
     );
     let str = `
 <div class="adjacentGroup" id="groupengineering">
@@ -592,9 +620,9 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
   });
 
   it("go 10.3: createAdjacentChart", async () => {
-    const [dom, loc, jsdom] = page(
+    const [dom, loc] = page(
       "http://192.168.0.35/resource/code-metrics",
-      3,
+      2,
     );
     let str = `
 <div class="adjacentGroup" id="groupengineering">

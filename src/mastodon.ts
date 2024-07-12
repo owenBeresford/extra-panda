@@ -13,12 +13,11 @@ import { log } from "./networking";
 /**
  * openShare
  * Display/ hide the mobile share bar (both directions)
- *
  * @param {Event} e - unused at present
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @public
- * @return {false}
+ * @returns {false}
  */
 function openShare(
   e: Event,
@@ -37,13 +36,12 @@ function openShare(
 /**
  * shareMastodon
  * Effect the share to your chosen Masto server
- *
  * @param {Event} e - unused at present
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @param {Window =window} win
  * @public
- * @return {boolean}
+ * @returns {boolean}
  */
 function shareMastodon(
   e: Event,
@@ -80,12 +78,11 @@ function shareMastodon(
 /**
  * accessVisibility
  * Util function to isolate access to styles
- *
  * @param {HTMLElement} buf
  * @param {string ='display'} what
  * @param {Window =window} win
  * @public
- * @return {void}
+ * @returns {void}
  */
 function accessVisibility(
   buf: HTMLElement,
@@ -106,12 +103,11 @@ function accessVisibility(
 /**
  * initMastodon
  * Register the event handlers for a mastodon sharing
- *
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @param {Window =window} win
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function initMastodon(
   dom: Document = document,
@@ -150,11 +146,10 @@ export function initMastodon(
  * openMastodon
  * Show extra UI for selecting a Mastodon server
  * Covert a click event to a DOM change
- *
  * @param {Event} e - unused at present
  * @param {Document =document} dom
  * @public
- * @return {false}
+ * @returns {false}
  */
 function openMastodon(e: Event, dom: Document = document): boolean {
   if (isFullstack()) {
@@ -168,11 +163,10 @@ function openMastodon(e: Event, dom: Document = document): boolean {
 /**
  * closeMastodon
  * Hide extra UI for selecting a Mastodon server
- *
  * @param {Event } e - unused at present
  * @param {Document =document} dom
  * @public
- * @return {false}
+ * @returns {false}
  */
 function closeMastodon(e: Event, dom: Document = document): boolean {
   if (isFullstack()) {
@@ -185,11 +179,10 @@ function closeMastodon(e: Event, dom: Document = document): boolean {
 /**
  * copyURL
  * Copy the current URL into the paste buffer, for use in mobile view
- *
  * @param {Location =location} loc
  * @param {Window =window} win
  * @public
- * @return {void}
+ * @returns {void}
  */
 function copyURL(loc: Location = location, win: Window = window): void {
   try {
@@ -218,12 +211,11 @@ function copyURL(loc: Location = location, win: Window = window): void {
 /**
  * _map1
  * Add several event listeners, just a utility
- *
  * @param {HTMLElement} where
  * @param {MiscEventHandler } action
  * @param {Document =document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 function _map1(
   where: HTMLElement,
@@ -247,13 +239,12 @@ function _map1(
 /**
  * _map2
  * Add several event listeners, just a utility
- *
  * @param {HTMLElement} where
  * @param {MiscEventHandler } action
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @public
- * @return {void}
+ * @returns {void}
  */
 function _map2(
   where: HTMLElement,
@@ -278,14 +269,13 @@ function _map2(
 /**
  * _map3
  * Add several event listeners, just a utility
- *
  * @param {HTMLElement} where
  * @param {MiscEventHandler } action
  * @param {Document =document} dom
  * @param {Location|null =location} loc
  * @param {Window =window} win
  * @public
- * @return {void}
+ * @returns {void}
  */
 function _map3(
   where: HTMLElement,

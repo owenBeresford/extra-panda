@@ -26,11 +26,10 @@ let OPTS: DesktopBiblioProps = {} as DesktopBiblioProps;
  * markAllLinksUnknown
  * Utility function to statically annotate page in absence of meta data.
  * IMPURE
-
- * @param {Document =document} dom 
+ * @param {Document =document} dom
  * @param {Location =location} loc
  * @protected
- * @return {void}
+ * @returns {void}
  */
 function markAllLinksUnknown(
   dom: Document = document,
@@ -48,11 +47,10 @@ function markAllLinksUnknown(
 /**
  * generateEmpty
  * Create a tooltip for a link that seems to lack meta data.
- *  PURE
-
+ * PURE
  * @param {number} i - the offset for the link, used in the output
  * @protected
- * @return {string}
+ * @returns {string}
  */
 function generateEmpty(i: number): string {
   const DEFAULT = {
@@ -79,11 +77,10 @@ function generateEmpty(i: number): string {
 /**
  * normaliseData
  * Make text data more suited for display, map to flat string array
- *   PURE
-
+ * PURE
  * @param {Array<ReferenceType>} data
  * @protected
- * @return {Array<string>}
+ * @returns {Array<string>}
  */
 function normaliseData(data: Array<ReferenceType | null>): Array<string> {
   const po = [
@@ -135,12 +132,11 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
  * applyDOMpostions
  * Actually do the CSS class insertion
  * IOIO KLAXON KLAXON: check memory usage, in earlier browsers this was VERY bad
- *    IMPURE
-
+ * IMPURE
  * @param {HTMLElement or child class} ele
  * @param {number} WIDTH
  * @protected
- * @return {void}
+ * @returns {void}
  */
 function applyDOMpostions(ele: HTMLElement, WIDTH: number): void {
   const left = mapAttribute(ele, "left");
@@ -166,12 +162,11 @@ function applyDOMpostions(ele: HTMLElement, WIDTH: number): void {
 /**
  * mapPositions
  * Apply list of values previously made to DOM, and add CSS adjustments
- *    IMPURE
-
+ * IMPURE
  * @param {Array<string>} data ~ the results of normaliseData()
  * @param {Document =document} dom
  * @protected
- * @return {void}
+ * @returns {void}
  */
 function mapPositions(data: Array<string>, dom: Document = document): void {
   const WIDTH: number =
@@ -207,12 +202,11 @@ function mapPositions(data: Array<string>, dom: Document = document): void {
  * addMetaAge
  * When found, display the age of the meta file on screen
  * Unneeded in small screens
- *    IMPURE
-
+ * IMPURE
  * @param {SimpleResponse} xhr - the whole objects from runFetch
- * @param {Document =document}
+ * @param {Document =document} dom
  * @protected
- * @return {void}
+ * @returns {void}
  */
 function addMetaAge(xhr: SimpleResponse, dom: Document = document) {
   const updated: number = new Date(xhr.headers.get("last-modified")).getTime();
@@ -233,13 +227,12 @@ function addMetaAge(xhr: SimpleResponse, dom: Document = document) {
 /**
  * biblio
  * Access point for biblio feature v2
- *    IMPURE
-
+ * IMPURE
  * @param {DesktopBiblioProps} opts
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @public
- * @return {void}
+ * @returns {void}
  */
 export async function createBiblio(
   opts: DesktopBiblioProps,
@@ -307,9 +300,9 @@ export async function createBiblio(
  * injectOpts
  * PURELY FOR UNIT TESTS, adds ability to set initial state per internal function
  * READS process.env
- * @param {undefined Object} opts - I could add a new interface where all the options were optional
+ * @param {object} a - I could add a new interface where all the options were optional
  * @public
- * @return {void}
+ * @returns {void}
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {

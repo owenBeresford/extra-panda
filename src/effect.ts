@@ -7,10 +7,9 @@ import { pullout } from "./string-base";
 /**
  * addOctoCats
  * Convert links labelled 'git' to the github logo
- *
  * @param {Document =document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function addOctoCats(dom: Document = document): void {
   dom.querySelectorAll("article a").forEach(function (
@@ -28,10 +27,9 @@ export function addOctoCats(dom: Document = document): void {
 /**
  * addBooks
  * Convert links labelled 'docs' to an open book logo
- *
  * @param {Document =document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function addBooks(dom: Document = document): void {
   dom.querySelectorAll("article a").forEach(function (a: HTMLAnchorElement) {
@@ -54,10 +52,9 @@ export function addBooks(dom: Document = document): void {
 /**
  * addBashSamples
  * Convert backticks to code blocks, markup distorted C 1line comments to actual C 1line comments
- *
  * @param {Document =document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function addBashSamples(dom: Document = document): void {
   const r1 = new RegExp("`([^`]+)`", "g");
@@ -80,10 +77,9 @@ export function addBashSamples(dom: Document = document): void {
  * addFancyButtonArrow
  * Markup buttons as a big arrow.
  * Maybe at some point refactor into addLeftArrow, addRightArrow
- *
  * @param {Document =document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function addFancyButtonArrow(dom: Document = document): void {
   const aa: Array<HTMLElement> = dom.querySelectorAll(".addArrow");
@@ -100,6 +96,7 @@ export function addFancyButtonArrow(dom: Document = document): void {
 
 /**
  * Only use for testing, it allows access to the entire API
+      no injectOpts needed here
  */
 export const TEST_ONLY = {
   addOctoCats,
