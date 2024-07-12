@@ -404,6 +404,7 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
     );
     let t2 = getLogCounter();
 
+// this test counts log messages, as the mockFetch isn't a real network thing
     assert.equal(t2 - t1, 1, "assert #25");
 
     assert.equal(
