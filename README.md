@@ -69,6 +69,7 @@ I am making a copy of the user interactions here (in the new project), as I woul
 ## Engineering
 
 Unlike many situations at work, there is no value and no attention to intermediate steps should be applied on this project.   I have a running platform, I will upgrade when the painful rewrite is complete.
+In many places this project drags legacy "this code is good, it fixes this awkward oversight in that browser" to "this code is organised and tidy AND adds these UX features".  So this JS is now closer to how I write other languages.
 
 My work sequence has been:
 
@@ -103,6 +104,8 @@ Pls note English is my first language #leSigh.
 - There isn't much logging, but logging is held to a wrapper, so I could jump to a centralised log (such as ELK) if I need to in future.
 - My code has complex/ unexpected behaviour if you change the DOM/ document object without changing state.  This shouldn't be an issue outside of tests, as this code doesn't support SSR presently.
 - Minor gain for Google, I made the sliding window feature in Adjacent module this time, as I have more articles in each group.  This means unnecessary (not-rendered) nodes are not added to the HTML.  My rebuild of the Adjacent HTML is also smaller.  
+- As this lump of JS is a single project rather than 6, there are less control flag needed. This make the code a bit simpler.
+- This has a function equivalent to void main (core).  This is allowed to have a high volume and complexity as it wraps *all the other* methods.  As an architecture detail, I think this isn't avoidable.
 - OLD TECH:: 
   - first bundle: 1MB flat
   - second bundle (smaller stdlib): 670KB
