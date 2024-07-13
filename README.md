@@ -107,6 +107,7 @@ Pls note English is my first language #leSigh.
 - As this lump of JS is a single project rather than 6, there are less control flag needed. This make the code a bit simpler.
 - This has a function equivalent to void main (core).  This is allowed to have a high volume and complexity as it wraps *all the other* methods.  As an architecture detail, I think this isn't avoidable.
 - The highlight source is now in TS, as I found the type definitions.
+- The process of expanding the number of tools in this project is adding features, but also acting as a lint as it shows small oversights.
 - OLD TECH:: 
   - first bundle: 1MB flat
   - second bundle (smaller stdlib): 670KB

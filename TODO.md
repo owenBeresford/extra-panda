@@ -9,6 +9,8 @@
 - multilingual support
 - port the everything* tests to storybook
 - WCAG tests (lighthouse) for whole pages need to go some where 
+- log fault on validate class for HTML with no doctype header
+- add better tooltips on effect html
 
 ### Previous Updates
 

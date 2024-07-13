@@ -101,7 +101,7 @@ export interface MobileBiblioProps {
 export interface AdjacentProps {
   name?: string;
   meta?: string;
-  nextBar?: number;
+  perRow?: number;
   titleLimit?: number;
   rendered?: boolean;
   iteration?: number;
