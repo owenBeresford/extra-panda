@@ -106,6 +106,7 @@ Pls note English is my first language #leSigh.
 - Minor gain for Google, I made the sliding window feature in Adjacent module this time, as I have more articles in each group.  This means unnecessary (not-rendered) nodes are not added to the HTML.  My rebuild of the Adjacent HTML is also smaller.  
 - As this lump of JS is a single project rather than 6, there are less control flag needed. This make the code a bit simpler.
 - This has a function equivalent to void main (core).  This is allowed to have a high volume and complexity as it wraps *all the other* methods.  As an architecture detail, I think this isn't avoidable.
+- The highlight source is now in TS, as I found the type definitions.
 - OLD TECH:: 
   - first bundle: 1MB flat
   - second bundle (smaller stdlib): 670KB

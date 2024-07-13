@@ -1,7 +1,9 @@
 import hljs from "highlight.js/lib/core";
-import * as javascript from "highlight.js/lib/languages/go";
+import { Language, HLJSApi } from 'highlight.js';
+import * as javascript from "highlight.js/lib/languages/xml";
+
 // custom written loader as code is packed in a legacy fashion
-hljs.registerLanguage("go", (hl) => {
+hljs.registerLanguage("xml", (hl:HLJSApi ):Language => {
   return javascript.default(hl);
 });
 
@@ -13,8 +15,8 @@ hljs.registerLanguage("go", (hl) => {
  * @public
  * @return {void}
  */
-export function execHighlight(dom = document) {
-  dom.querySelectorAll('code[lang="go"]').forEach((el) => {
+export function execHighlight(dom:Document = document):void {
+  dom.querySelectorAll('code[lang="xml"]').forEach((el:HTMLElement):void  => {
     hljs.highlightElement(el);
   });
 }

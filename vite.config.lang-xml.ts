@@ -21,7 +21,7 @@ export default defineConfig({
     minify: "terser",
     target: "es2020",
     lib: {
-      entry: [path.resolve(__dirname, "src/highlight/highlight-xml.mjs")],
+      entry: [path.resolve(__dirname, "src/highlight/highlight-xml.ts")],
     },
     rollupOptions: {
       plugins: [ terser({}) ],

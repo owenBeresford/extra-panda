@@ -44,4 +44,5 @@
 - DONE add complexity monitor to eslint
 - DONE another "add doc header" pass
 - DONE add API docs
+- DONE port JS highlight files to TS, add at least 1 test
 

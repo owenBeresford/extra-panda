@@ -1,7 +1,9 @@
 import hljs from "highlight.js/lib/core";
-import * as javascript from "highlight.js/lib/languages/php";
+import { Language, HLJSApi } from 'highlight.js';
+import * as javascript from "highlight.js/lib/languages/perl";
+
 // custom written loader as code is packed in a legacy fashion
-hljs.registerLanguage("php", (hl) => {
+hljs.registerLanguage("perl", (hl:HLJSApi ):Language => {
   return javascript.default(hl);
 });
 
@@ -13,8 +15,8 @@ hljs.registerLanguage("php", (hl) => {
  * @public
  * @return {void}
  */
-export function execHighlight(dom = document) {
-  dom.querySelectorAll('code[lang="php"]').forEach((el) => {
+export function execHighlight(dom:Document = document):void {
+  dom.querySelectorAll('code[lang="perl"]').forEach((el:HTMLElement):void => {
     hljs.highlightElement(el);
   });
 }
