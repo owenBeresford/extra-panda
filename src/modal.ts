@@ -85,7 +85,7 @@ export function modalInit(dom: Document = document): void {
     dom.querySelectorAll(".popOverWidget details"),
   );
   if (tmp.length) {
-    tmp.forEach(function (a: HTMLDetailsElement) {
+    tmp.forEach(function (a: HTMLDetailsElement):void {
       a.addEventListener("keydown", HTMLDetailsTrap);
       a.addEventListener("click", HTMLDetailsClick);
     });
