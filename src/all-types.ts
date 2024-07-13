@@ -37,6 +37,8 @@ export type BOUNDARY = "top" | "bottom" | "left" | "right" | "height" | "width";
 export type ScreenSizeArray = [number, number];
 export type GenericEventHandler = (e: Event) => void;
 
+export type MultiFuncArg = (id: string | MiscEvent, dom: Document) => void;
+
 export interface ReadingProps {
   dataLocation: string;
   target: string;
