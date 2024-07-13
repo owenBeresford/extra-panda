@@ -16,8 +16,12 @@ hljs.registerLanguage("css", (hl:HLJSApi ):Language => {
  * @return {void}
  */
 export function execHighlight(dom:Document = document):void {
-  dom.querySelectorAll('code[lang="css"]').forEach((el:HTMLElement):void => {
+  dom.querySelectorAll('code[lang="css"]').forEach((el:HTMLElement, i:number):void => {
     hljs.highlightElement(el);
+	if (el.classList.contains('language-undefined') ) {	
+		el.innerHTML =  hljs.highlight(el.innerText, { language: 'css' }).value;
+
+	}
   });
 }
 
