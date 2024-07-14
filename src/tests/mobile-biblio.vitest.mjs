@@ -59,7 +59,7 @@ describe("TEST mobile-biblio", () => {
         date: "1st-june-2004",
       },
     ];
-    let dat2 = `<ol class="mobileBiblo"><li>
+    let dat2 = `<ol class="mobileBiblio"><li>
 <a href="http://192.168.0.35/resource/article1"> 
 <h5>fg gdsg fgdfgdf gdfg dfg dg </h5>
 <span>sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf</span>
@@ -135,36 +135,21 @@ describe("TEST mobile-biblio", () => {
       {
         auth: "racheal",
         date: " 01-March-2000 ",
-        desc: `sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs f↩
-sdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs`,
+        desc: "sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         offset: 0,
         title: "sdfsdfs sdfsdfsfs",
         url: "http://192.168.0.35/resource/article1",
       },
       {
         auth: "racheal",
-        desc: `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
-aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDG↩
-JDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdt↩
-yjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7id↩
-t jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrt↩
-j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs↩
-dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
-df sfsdfsdfs`,
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         date: " 01-April-2000 ",
         offset: 1,
         title: "sdfsdfs 23423432",
         url: "http://192.168.0.35/resource/article2",
       },
       {
-        desc: `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
-aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDG↩
-JDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdt↩
-yjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7id↩
-t jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrt↩
-j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs↩
-dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
-df sfsdfsdfs`,
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         title: "sdfsdfs 23423432",
         auth: "[No author]",
         date: "[No date]",
@@ -174,14 +159,7 @@ df sfsdfsdfs`,
       {
         auth: "[No author]",
         date: " 01-May-2000 ",
-        desc: `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
-aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDG↩
-JDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdt↩
-yjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7id↩
-t jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrt↩
-j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs↩
-dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
-df sfsdfsdfs`,
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         offset: 3,
         title: "sdfsdfs 23423432",
         url: "http://192.168.0.35/resource/article4",
@@ -239,8 +217,7 @@ df sfsdfsdfs`,
     dat2 = [
       {
         offset: 0,
-        desc: `sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs f↩
-sdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs`,
+        desc: "sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         title: "sdfsdfs sdfsdfsfs",
         date: " 01-March-2000 ",
         auth: "racheal",
@@ -248,14 +225,7 @@ sdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs`,
       },
       {
         offset: 1,
-        desc: `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
-aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDG↩
-JDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdt↩
-yjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7id↩
-t jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrt↩
-j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs↩
-dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
-df sfsdfsdfs`,
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         title: "sdfsdfs 23423432",
         date: " 01-April-2000 ",
         auth: "racheal",
@@ -263,14 +233,7 @@ df sfsdfsdfs`,
       },
       {
         offset: 2,
-        desc: `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
-aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDG↩
-JDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdt↩
-yjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7id↩
-t jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrt↩
-j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs↩
-dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
-df sfsdfsdfs`,
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         title: "sdfsdfs 23423432",
         date: "[No date]",
         auth: "[No author]",
@@ -279,14 +242,7 @@ df sfsdfsdfs`,
       {
         auth: "[No author]",
         date: " 01-May-2000 ",
-        desc: `sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag ↩
-aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDG↩
-JDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdt↩
-yjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7id↩
-t jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrt↩
-j srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fs↩
-dfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfs↩
-df sfsdfsdfs`,
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         offset: 3,
         title: "sdfsdfs 23423432",
         url: "http://192.168.0.35/resource/article4",

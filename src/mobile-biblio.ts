@@ -58,25 +58,27 @@ function normaliseData(
 
   for (const i in data) {
     if (data[i] === null) {
-      // modern versions of the references builder shouldnt let this happen
+      // With modern versions of the references builder shouldn't let this happen
       out.push(empty(parseInt(i, 10)));
       continue;
     }
 
     const date = dateMunge(data[i].date, po[2], true);
-    let title = data[i].title + ""; // this stops errors later...
-    let descrip = data[i].desc;
 
-    descrip = addLineBreaks(descrip, 80);
+    let title = data[i].title + ""; // this stops errors later...
     title = title.replace(".", ".  ");
-    title = addLineBreaks(title, 80);
+    
+	let descrip = data[i].desc+"";
+	if(descrip.length > OPTS.maxDescripLen ) {
+		descrip=descrip.substring(0, OPTS.maxDescripLen );
+	}
 
     let auth = data[i].auth || po[0];
     if (data[i].auth === "unknown") {
       auth = po[0];
     }
-    if (auth.length > 65) {
-      auth = auth.substring(0, 65);
+    if (auth.length > OPTS.maxAuthLen) {
+      auth = auth.substring(0, OPTS.maxAuthLen);
     }
     out.push({
       auth: auth,
@@ -98,7 +100,7 @@ function normaliseData(
  * @returns {string} - the HTML
  */
 function render(data: Array<NormalisedReference>): string {
-  let html = `<ol class="mobileBiblo">`;
+  let html = `<ol class="mobileBiblio">`;
   for (const i in data) {
     html += `<li>
 <a href="${data[i].url}"> 
@@ -128,7 +130,7 @@ function adjustDom(dat: Array<ReferenceType>, dom: Document = document): void {
 
   const LIST = dom.querySelectorAll(OPTS.losingElement + " sup a");
   for (let i = 0; i < LIST.length; i++) {
-    LIST[i].textContent = "" + i;
+    LIST[i].textContent = "" + (i+1);
     if (OPTS.forceToEnd) {
       LIST[i].href = "#biblio";
     }
@@ -157,6 +159,8 @@ export async function createBiblio(
 
     renumber: 1, // set to 0 to disable
     forceToEnd: 1,
+	maxDescripLen: 230,
+	maxAuthLen:65,
     debug: debug(),
     runFetch: runFetch,
   };
@@ -199,7 +203,7 @@ export async function createBiblio(
   }
 }
 
-/////////////////////////////////////////// testing ////////////////////////////////
+/////////////////////////////////////////// testing ///////////////////////////////////////
 
 /**
  * injectOpts
