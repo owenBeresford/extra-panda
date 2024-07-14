@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { dateMunge, addLineBreaks, makeRefUrl } from "./string-base";
+import { dateMunge, makeRefUrl } from "./string-base";
 import {
   log,
   debug,
@@ -67,11 +67,11 @@ function normaliseData(
 
     let title = data[i].title + ""; // this stops errors later...
     title = title.replace(".", ".  ");
-    
-	let descrip = data[i].desc+"";
-	if(descrip.length > OPTS.maxDescripLen ) {
-		descrip=descrip.substring(0, OPTS.maxDescripLen );
-	}
+
+    let descrip = data[i].desc + "";
+    if (descrip.length > OPTS.maxDescripLen) {
+      descrip = descrip.substring(0, OPTS.maxDescripLen);
+    }
 
     let auth = data[i].auth || po[0];
     if (data[i].auth === "unknown") {
@@ -130,7 +130,7 @@ function adjustDom(dat: Array<ReferenceType>, dom: Document = document): void {
 
   const LIST = dom.querySelectorAll(OPTS.losingElement + " sup a");
   for (let i = 0; i < LIST.length; i++) {
-    LIST[i].textContent = "" + (i+1);
+    LIST[i].textContent = "" + (i + 1);
     if (OPTS.forceToEnd) {
       LIST[i].href = "#biblio";
     }
@@ -159,8 +159,8 @@ export async function createBiblio(
 
     renumber: 1, // set to 0 to disable
     forceToEnd: 1,
-	maxDescripLen: 230,
-	maxAuthLen:65,
+    maxDescripLen: 230,
+    maxAuthLen: 65,
     debug: debug(),
     runFetch: runFetch,
   };

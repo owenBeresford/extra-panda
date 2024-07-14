@@ -225,10 +225,7 @@ describe("TEST core", () => {
   });
 
   it("go 5: initPopupMobile", (context) => {
-    const [dom, loc] = page(
-      "http://192.168.0.35/resource/home?mobile=1",
-      2,
-    );
+    const [dom, loc] = page("http://192.168.0.35/resource/home?mobile=1", 2);
     let str = `<div id="navBar"> 
 <span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
@@ -256,10 +253,7 @@ describe("TEST core", () => {
   });
 
   it("go 5.1: initPopupMobile", (context) => {
-    const [dom, loc] = page(
-      "http://192.168.0.35/resource/home?mobile=0",
-      2,
-    );
+    const [dom, loc] = page("http://192.168.0.35/resource/home?mobile=0", 2);
     let str = `<div id="navBar">
 <span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>

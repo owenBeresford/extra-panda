@@ -1,7 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Location, Document, HTMLElement } from "jsdom";
 
-import { CoreProps, MiscEvent, Cookieable, MultiFuncArg  } from "./all-types";
+import { CoreProps, MiscEvent, Cookieable, MultiFuncArg } from "./all-types";
 import {
   log,
   debug,
@@ -292,7 +292,7 @@ export async function siteCore(
 
   initPopupMobile(dom, loc);
   initMastodon(dom, loc, win);
-  const isRefs:boolean=dom.querySelector('.addReferences') !== null;
+  const isRefs: boolean = dom.querySelector(".addReferences") !== null;
   addOctoCats(isRefs, dom);
   addBooks(isRefs, dom);
   addFancyButtonArrow(dom);

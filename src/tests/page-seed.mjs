@@ -35,7 +35,7 @@ export function page(url = "", args = 1) {
   } else if (args === 3) {
     return [dom.window.document, dom.window.location, dom.window];
   } else if (args === 4) {
-    return [dom.window.document, dom.window.location, dom.window, dom ];
+    return [dom.window.document, dom.window.location, dom.window, dom];
   } else {
     throw new Error("Bad data");
   }

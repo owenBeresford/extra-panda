@@ -83,7 +83,7 @@ export interface DesktopBiblioProps {
   referencesCache?: string;
   gainingElement?: string;
 
-  maxAuthLen?:number;
+  maxAuthLen?: number;
   renumber?: number;
 
   runFetch: FetchedExec;
@@ -97,8 +97,8 @@ export interface MobileBiblioProps {
 
   renumber?: number;
   forceToEnd?: number;
-  maxAuthLen?:number;
-  maxDescripLen?:number;
+  maxAuthLen?: number;
+  maxDescripLen?: number;
 
   runFetch: FetchedExec;
   debug: boolean;

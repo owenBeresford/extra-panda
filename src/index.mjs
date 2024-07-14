@@ -17,5 +17,4 @@ import * as Reading from "./reading";
 import * as Modal from "./modal";
 
 siteCore();
-export { runFetch, log, hasBeenRun, appendIsland  };
-
+export { runFetch, log, hasBeenRun, appendIsland };

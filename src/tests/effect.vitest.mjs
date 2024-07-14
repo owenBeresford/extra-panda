@@ -3,7 +3,7 @@ import { assert, describe, it } from "vitest";
 import { page } from "./page-seed";
 import { TEST_ONLY } from "../effect";
 import { appendIsland } from "../dom-base";
-const { addOctoCats, addBooks, addBashSamples, addFancyButtonArrow, link2Txt,} =
+const { addOctoCats, addBooks, addBashSamples, addFancyButtonArrow, link2Txt } =
   TEST_ONLY;
 
 // all the intelligence on this module is in the selection of graphics, not the simple code
@@ -81,7 +81,7 @@ describe("TEST effects", () => {
 \nA Github project ~ text auto generated without scrapping."><i class="fa fa-github" aria-hidden="true"></i></a>
 `;
 
-// "Reference popup for link [*]\n\n"+ titre + "\n" + nom +" " + datte + "\n\n" + desc
+      // "Reference popup for link [*]\n\n"+ titre + "\n" + nom +" " + datte + "\n\n" + desc
       appendIsland("#point2", str1, dom);
       addOctoCats(true, dom);
       assert(
@@ -94,10 +94,9 @@ describe("TEST effects", () => {
     // assert no-one defines an A tagged with git outside an A
   });
 
-
   it("go 2: addBooks", () => {
-	{
-    let str1 = `
+    {
+      let str1 = `
 <p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</a>
 	 sfsdfs sfsfs sfsfs sfsdf sfsdfsf <a href="sdfsdf" title="sdfsdfsdf">TEST2</a> 
 <p>sfs sdfsfs sdfsdf fsdfsdf sfsdfs sfsfs sfsfs sfsdf sfsdfsf  <a href="sdfsdf" title="sdfsdfsdf">docs</a>
@@ -105,7 +104,7 @@ describe("TEST effects", () => {
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">docs</a>
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">git</a>
 `;
-    let str2 = `
+      let str2 = `
 <p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</a>
 	 sfsdfs sfsfs sfsfs sfsdf sfsdfsf <a href="sdfsdf" title="sdfsdfsdf">TEST2</a> 
 <p>sfs sdfsfs sdfsdf fsdfsdf sfsdfs sfsfs sfsfs sfsdf sfsdfsf  <a href="sdfsdf" title="sdfsdfsdf"><i class="fa fa-book-open" aria-hidden="true"></i></a>
@@ -114,14 +113,18 @@ describe("TEST effects", () => {
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">git</a>
 `;
 
-    const dom = page("http://192.68.0.35/", 1);
-    appendIsland("#point2", str1, dom);
-    addBooks(false, dom);
-    assert(dom.querySelector("#point2").textContent, str2, "added books logo");
-	}
+      const dom = page("http://192.68.0.35/", 1);
+      appendIsland("#point2", str1, dom);
+      addBooks(false, dom);
+      assert(
+        dom.querySelector("#point2").textContent,
+        str2,
+        "added books logo",
+      );
+    }
 
-	{
-    let str1 = `
+    {
+      let str1 = `
 <p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</a>
 	 sfsdfs sfsfs sfsfs sfsdf sfsdfsf <a href="sdfsdf" title="sdfsdfsdf">TEST2</a> 
 <p>sfs sdfsfs sdfsdf fsdfsdf sfsdfs sfsfs sfsfs sfsdf sfsdfsf  <a href="sdfsdf" title="sdfsdfsdf">docs</a>
@@ -129,7 +132,7 @@ describe("TEST effects", () => {
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">docs</a>
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">git</a>
 `;
-    let str2 = `
+      let str2 = `
 <p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</a>
 	 sfsdfs sfsfs sfsfs sfsdf sfsdfsf <a href="sdfsdf" title="sdfsdfsdf">TEST2</a> 
 <p>sfs sdfsfs sdfsdf fsdfsdf sfsdfs sfsfs sfsfs sfsdf sfsdfsf  <a href="sdfsdf" aria-label="Link to the project docs; it may be a git page, or a separate webpage."><i class="fa fa-book-open" aria-hidden="true"></i></a>
@@ -137,20 +140,32 @@ describe("TEST effects", () => {
       <a id="thing1" href="sdfs df" aria-label="Link to the project docs; it may be a git page, or a separate webpage."><i class="fa fa-book-open" aria-hidden="true"></i></a>
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">git</a>
 `;
-    const dom = page("http://192.168.0.35/", 1);
-    appendIsland("#point2", str1, dom);
-    addBooks(true, dom);
-    assert(dom.querySelector("#point2").textContent, str2, "added books logo with decorations");
-	}	
-
+      const dom = page("http://192.168.0.35/", 1);
+      appendIsland("#point2", str1, dom);
+      addBooks(true, dom);
+      assert(
+        dom.querySelector("#point2").textContent,
+        str2,
+        "added books logo with decorations",
+      );
+    }
   });
 
   it("go 5: link2Txt", () => {
-	let str="Reference popup for link [*]\n\nproject1\nuser1 [recent time]\n\nA Github project ~ text auto generated without scrapping.";
-	assert.equal( link2Txt("https://github.com/user1/project1"), str, "step #1" );	
-	assert.equal( link2Txt("https://github.com/user1/project1/blob/main/README.md"), str, "step #2" );	
-	assert.equal( link2Txt("https://github.com/user1/project1/tree/ensureDocs"), str, "step #3" );	
-	});
+    let str =
+      "Reference popup for link [*]\n\nproject1\nuser1 [recent time]\n\nA Github project ~ text auto generated without scrapping.";
+    assert.equal(link2Txt("https://github.com/user1/project1"), str, "step #1");
+    assert.equal(
+      link2Txt("https://github.com/user1/project1/blob/main/README.md"),
+      str,
+      "step #2",
+    );
+    assert.equal(
+      link2Txt("https://github.com/user1/project1/tree/ensureDocs"),
+      str,
+      "step #3",
+    );
+  });
 
   it("go 3: addBashSamples", () => {
     let str1 = `

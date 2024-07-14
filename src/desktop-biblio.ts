@@ -109,7 +109,7 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
       auth = po[0];
     }
     if (auth.length > OPTS.maxAuthLen) {
-      auth = auth.substring(0, OPTS.maxAuthLen );
+      auth = auth.substring(0, OPTS.maxAuthLen);
     }
 
     out.push(
@@ -247,7 +247,7 @@ export async function createBiblio(
       gainingElement: "#biblio",
       referencesCache: "/resource/XXX-references",
       renumber: 1, // set to 0 to disable
-      maxAuthLen:65,
+      maxAuthLen: 65,
       debug: debug(),
       runFetch: runFetch,
     },
