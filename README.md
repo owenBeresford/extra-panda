@@ -1,4 +1,5 @@
 I'm dragging this group of features kicking and screaming into the century of the fruitbat.   If I didn't think needed a website, I have made other things with my dev-time.   I normally use 3rd party libraries to reduce dev time, but here I didn't see things that are relevant.  
+Functions tagged "PURE" do not effect the DOM, and tend to test quickly.
 
 ## "business english" changelog
 
