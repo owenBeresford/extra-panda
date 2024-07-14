@@ -82,8 +82,10 @@ export interface DesktopBiblioProps {
   indexUpdated?: number;
   referencesCache?: string;
   gainingElement?: string;
-  pageInitRun?: number;
+
+  maxAuthLen?:number;
   renumber?: number;
+
   runFetch: FetchedExec;
   debug: boolean;
 }
@@ -92,10 +94,12 @@ export interface MobileBiblioProps {
   referencesCache?: string;
   gainingElement?: string;
   losingElement?: string;
+
   renumber?: number;
   forceToEnd?: number;
   maxAuthLen?:number;
   maxDescripLen?:number;
+
   runFetch: FetchedExec;
   debug: boolean;
 }
