@@ -94,6 +94,8 @@ export interface MobileBiblioProps {
   losingElement?: string;
   renumber?: number;
   forceToEnd?: number;
+  maxAuthLen?:number;
+  maxDescripLen?:number;
   runFetch: FetchedExec;
   debug: boolean;
 }
