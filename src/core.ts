@@ -292,8 +292,9 @@ export async function siteCore(
 
   initPopupMobile(dom, loc);
   initMastodon(dom, loc, win);
-  addOctoCats(dom);
-  addBooks(dom);
+  const isRefs:boolean=dom.querySelector('.addReferences') !== null;
+  addOctoCats(isRefs, dom);
+  addBooks(isRefs, dom);
   addFancyButtonArrow(dom);
   addBashSamples(dom);
   applyAppearance(dom);

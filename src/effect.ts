@@ -4,14 +4,41 @@ import { Document, HTMLAnchorElement, HTMLElement } from "jsdom";
 import { appendIsland } from "./dom-base";
 import { pullout } from "./string-base";
 
+
+/**
+ * link2Txt
+ * Generate link decorator sample from available data.
+ *   PURE
+ * 
+ * @param {string} url
+ * @public
+ * @return {string}
+ */
+function link2Txt(url:string):string {
+	const adresse=new URL(url);
+	let nom='[anon dev]', datte='[recent time]', titre="";
+	let desc="A Github project ~ text auto generated without scrapping.";
+	if(adresse.username) {
+		nom=adresse.username;
+	}
+	if(adresse.pathname) {
+		let pièces=adresse.pathname.split('/');
+		nom=pièces[1];
+		titre=pièces[2];
+	}	
+	return "Reference popup for link [*]\n\n"+ titre + "\n" + nom +" " + datte + "\n\n" + desc;
+} 
+
+
 /**
  * addOctoCats
  * Convert links labelled 'git' to the github logo
+ * @param {boolean} refs
  * @param {Document =document} dom
  * @public
  * @returns {void}
  */
-export function addOctoCats(dom: Document = document): void {
+export function addOctoCats(refs:boolean, dom: Document = document): void {
   dom.querySelectorAll("article a").forEach(function (
     a: HTMLAnchorElement,
   ): void {
@@ -19,7 +46,11 @@ export function addOctoCats(dom: Document = document): void {
     if (tmp.trim().toLowerCase() === "git") {
       a.textContent = "";
       appendIsland(a, '<i class="fa fa-github" aria-hidden="true"></i>', dom);
+		if(refs) {
+      a.setAttribute("aria-label", link2Txt( a.getAttribute('href') ) );
+		} else {
       a.setAttribute("title", "Link to a github project.");
+		}
     }
   });
 }
@@ -31,7 +62,7 @@ export function addOctoCats(dom: Document = document): void {
  * @public
  * @returns {void}
  */
-export function addBooks(dom: Document = document): void {
+export function addBooks(refs:boolean, dom: Document = document): void {
   dom.querySelectorAll("article a").forEach(function (a: HTMLAnchorElement) {
     const tmp = pullout(a);
     if (tmp.trim().toLowerCase() === "docs") {
@@ -42,7 +73,7 @@ export function addBooks(dom: Document = document): void {
         dom,
       );
       a.setAttribute(
-        "title",
+        refs?"aria-label":"title",
         "Link to the project docs; it may be a git page, or a separate webpage. ",
       );
     }
@@ -86,7 +117,7 @@ export function addFancyButtonArrow(dom: Document = document): void {
   for (let i = 0; i < aa.length; i++) {
     appendIsland(
       aa[i].parentElement,
-      '<i class="fa fa-play specialPointer " aria-hidden="true"></i>',
+      '<i class="fa fa-play specialPointer" aria-hidden="true"></i>',
       dom,
     );
   }
@@ -99,6 +130,7 @@ export function addFancyButtonArrow(dom: Document = document): void {
       no injectOpts needed here
  */
 export const TEST_ONLY = {
+ link2Txt,
   addOctoCats,
   addBooks,
   addBashSamples,
