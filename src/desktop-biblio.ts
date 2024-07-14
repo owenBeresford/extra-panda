@@ -76,8 +76,8 @@ function generateEmpty(i: number): string {
 
 /**
  * normaliseData
- * Make text data more suited for display, map to flat string array
- * PURE
+ * Make text data more suited for display, map to flat string array.
+ * PURE.
  * @param {Array<ReferenceType>} data
  * @protected
  * @returns {Array<string>}
@@ -108,8 +108,8 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
     if (data[i].auth === "unknown") {
       auth = po[0];
     }
-    if (auth.length > 65) {
-      auth = auth.substring(0, 65);
+    if (auth.length > OPTS.maxAuthLen) {
+      auth = auth.substring(0, OPTS.maxAuthLen );
     }
 
     out.push(
@@ -130,9 +130,9 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
 
 /**
  * applyDOMpostions
- * Actually do the CSS class insertion
- * IOIO KLAXON KLAXON: check memory usage, in earlier browsers this was VERY bad
- * IMPURE
+ * Actually do the CSS class insertion.
+ * IOIO KLAXON KLAXON: check memory usage, in earlier browsers this was VERY bad.
+ * IMPURE.
  * @param {HTMLElement or child class} ele
  * @param {number} WIDTH
  * @protected
@@ -161,8 +161,8 @@ function applyDOMpostions(ele: HTMLElement, WIDTH: number): void {
 
 /**
  * mapPositions
- * Apply list of values previously made to DOM, and add CSS adjustments
- * IMPURE
+ * Apply list of values previously made to DOM, and add CSS adjustments.
+ * IMPURE.
  * @param {Array<string>} data ~ the results of normaliseData()
  * @param {Document =document} dom
  * @protected
@@ -200,9 +200,10 @@ function mapPositions(data: Array<string>, dom: Document = document): void {
 
 /**
  * addMetaAge
- * When found, display the age of the meta file on screen
- * Unneeded in small screens
- * IMPURE
+ * When found, display the age of the meta file on screen.
+ * Unneeded in small screens.
+ * IMPURE.
+
  * @param {SimpleResponse} xhr - the whole objects from runFetch
  * @param {Document =document} dom
  * @protected
@@ -225,8 +226,9 @@ function addMetaAge(xhr: SimpleResponse, dom: Document = document) {
 }
 
 /**
- * biblio
- * Access point for biblio feature v2
+ * createBiblio
+ * Access point for biblio feature v2.
+
  * IMPURE
  * @param {DesktopBiblioProps} opts
  * @param {Document =document} dom
@@ -245,6 +247,7 @@ export async function createBiblio(
       gainingElement: "#biblio",
       referencesCache: "/resource/XXX-references",
       renumber: 1, // set to 0 to disable
+      maxAuthLen:65,
       debug: debug(),
       runFetch: runFetch,
     },
@@ -298,7 +301,7 @@ export async function createBiblio(
 
 /**
  * injectOpts
- * PURELY FOR UNIT TESTS, adds ability to set initial state per internal function
+ * PURELY FOR UNIT TESTS, adds ability to set initial state per internal function.
  * READS process.env
  * @param {object} a - I could add a new interface where all the options were optional
  * @public
@@ -313,7 +316,7 @@ function injectOpts(a: object): void {
 }
 
 /**
- * Only use for testing, it allows access to the entire API
+ * Only use for testing, it allows access to the entire API.
  */
 export const TEST_ONLY = {
   injectOpts,
