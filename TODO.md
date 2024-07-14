@@ -1,14 +1,13 @@
 ### TODO
 - Add type washing to JSON ingestion used in multiple places 
 - Add wrapper objects to JSON payload as OWASP says to (not explained why necessary) see https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html
+- add multilingual support
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom
-- Add config for minifier via terser to build step.  Out of time.
-- Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages.  Also possibly patch 3rd party library for CSS syntax highlighting.
-- I haven't added tests for highlight code.  This statement may change to isolate some problems in CSS highlighting
-- think about adding mobile view biblio better display/ wrap
-- multilingual support
+- Add config for minifier via terser to build step.  Out of time.  IMPORTANT
+- Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages. 
 - port the everything* tests to storybook
-- WCAG tests (lighthouse) for whole pages need to go some where 
+- WCAG tests (lighthouse) for whole pages need to go some where (suggest this project) 
+- log fault on validate class for HTML with no doctype header
 
 ### Previous Updates
 
@@ -44,4 +43,8 @@
 - DONE add complexity monitor to eslint
 - DONE another "add doc header" pass
 - DONE add API docs
+- DONE port JS highlight files to TS, add at least 1 test
+- DONE improve mobile view biblio for better display/ wrap
+- DONE effect fancy links are now decorated in the same style as biblio links, controlled by addReferences CSS class
+- DONE adjacent links no longer erase first group label when there is multiple adjacent groups
 

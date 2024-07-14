@@ -1,7 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Location, Document, HTMLElement } from "jsdom";
 
-import { CoreProps, MiscEvent, Cookieable } from "./all-types";
+import { CoreProps, MiscEvent, Cookieable, MultiFuncArg } from "./all-types";
 import {
   log,
   debug,
@@ -38,8 +38,6 @@ let OPTS: CoreProps = {
 // CorrectionModule.prototype.columnise = function ()    << now CSS
 // CorrectionModule.prototype.biblioExtract = function ()  << runs HEAD
 // CorrectionModule.prototype.extractGET = function (val)  << UNUSED, became language API
-
-type MultiFuncArg = (id: string | MiscEvent, dom: Document) => void;
 
 /**
  * _map
@@ -294,8 +292,9 @@ export async function siteCore(
 
   initPopupMobile(dom, loc);
   initMastodon(dom, loc, win);
-  addOctoCats(dom);
-  addBooks(dom);
+  const isRefs: boolean = dom.querySelector(".addReferences") !== null;
+  addOctoCats(isRefs, dom);
+  addBooks(isRefs, dom);
   addFancyButtonArrow(dom);
   addBashSamples(dom);
   applyAppearance(dom);

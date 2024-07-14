@@ -21,7 +21,7 @@ export default defineConfig({
     minify: "terser",
     target: "es2020",
     lib: {
-      entry: [path.resolve(__dirname, "src/highlight/highlight-sql.mjs")],
+      entry: [path.resolve(__dirname, "src/highlight/highlight-sql.ts")],
     },
     rollupOptions: {
       plugins: [terser({})],

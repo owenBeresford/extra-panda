@@ -495,22 +495,22 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     assert.equal(dom.querySelectorAll("style").length, 1, "assert #17"); // added by setAppearance
 
     assert.equal(
-      dom.querySelectorAll("ol.mobileBiblo").length,
+      dom.querySelectorAll("ol.mobileBiblio").length,
       1,
       "assert #18",
     );
     assert.equal(
-      dom.querySelectorAll("ol.mobileBiblo li").length,
+      dom.querySelectorAll("ol.mobileBiblio li").length,
       8,
       "assert #19",
     );
     assert.equal(
-      dom.querySelectorAll("ol.mobileBiblo li a").length,
+      dom.querySelectorAll("ol.mobileBiblio li a").length,
       8,
       "assert #20",
     );
     assert.equal(
-      dom.querySelectorAll("ol.mobileBiblo li a h5").length,
+      dom.querySelectorAll("ol.mobileBiblio li a h5").length,
       8,
       "assert #21",
     );

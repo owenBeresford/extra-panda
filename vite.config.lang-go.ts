@@ -21,7 +21,7 @@ export default defineConfig({
     minify: "terser",
     target: "es2020",
     lib: {
-      entry: [path.resolve(__dirname, "src/highlight/highlight-golang.mjs")],
+      entry: [path.resolve(__dirname, "src/highlight/highlight-golang.ts")],
     },
     rollupOptions: {
       plugins: [terser({})],

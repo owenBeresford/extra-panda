@@ -35,7 +35,7 @@ export function page(url = "", args = 1) {
   } else if (args === 3) {
     return [dom.window.document, dom.window.location, dom.window];
   } else if (args === 4) {
-    return [dom.window.document, dom.window.location, dom.window, dom ];
+    return [dom.window.document, dom.window.location, dom.window, dom];
   } else {
     throw new Error("Bad data");
   }
@@ -45,7 +45,7 @@ export function page(url = "", args = 1) {
  * exportvalidateHTML
  * Build 1 code to check HTML
 
- * @link https://html-validate.org/dev/using-api.html 
+ * @see ["Using validate.org API" https://html-validate.org/dev/using-api.html]
  * @param {string} html
  * @param {boolean} emit
  * @public
@@ -53,7 +53,7 @@ export function page(url = "", args = 1) {
  */
 export async function validateHTML(html) {
   // I do no know why WhatWG doesn't know Dialog tag
-  // I have persisent disagreement on heading levels
+  // I have persistent disagreement on heading levels
   const lint = await validator.default({
     validator: "WHATWG",
     data: html,
@@ -66,7 +66,7 @@ export async function validateHTML(html) {
     ],
   });
 
-  // I do no know why WhatWG doesnt know Dialog tag
-  // I have persisent disagreement on heading levels
+  // I do no know why WhatWG doesn't know Dialog tag
+  // I have persistent disagreement on heading levels
   return [...lint.errors];
 }

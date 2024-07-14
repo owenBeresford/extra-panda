@@ -37,6 +37,8 @@ export type BOUNDARY = "top" | "bottom" | "left" | "right" | "height" | "width";
 export type ScreenSizeArray = [number, number];
 export type GenericEventHandler = (e: Event) => void;
 
+export type MultiFuncArg = (id: string | MiscEvent, dom: Document) => void;
+
 export interface ReadingProps {
   dataLocation: string;
   target: string;
@@ -80,8 +82,10 @@ export interface DesktopBiblioProps {
   indexUpdated?: number;
   referencesCache?: string;
   gainingElement?: string;
-  pageInitRun?: number;
+
+  maxAuthLen?: number;
   renumber?: number;
+
   runFetch: FetchedExec;
   debug: boolean;
 }
@@ -90,8 +94,12 @@ export interface MobileBiblioProps {
   referencesCache?: string;
   gainingElement?: string;
   losingElement?: string;
+
   renumber?: number;
   forceToEnd?: number;
+  maxAuthLen?: number;
+  maxDescripLen?: number;
+
   runFetch: FetchedExec;
   debug: boolean;
 }
@@ -99,7 +107,7 @@ export interface MobileBiblioProps {
 export interface AdjacentProps {
   name?: string;
   meta?: string;
-  nextBar?: number;
+  perRow?: number;
   titleLimit?: number;
   rendered?: boolean;
   iteration?: number;

@@ -109,7 +109,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 3: openMastodon", () => {
-    const [dom, loc ] = page("http://192.168.0.35/resource/home", 2);
+    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
     let str = `<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup">
 	<input id="id1" type="submit" value="Post now" />

@@ -366,10 +366,10 @@ function updateLabels(gname: string, dom: Document = document): void {
   ) as Array<HTMLElement>;
 
   if (
-    dat.length && (
-		dat[0].textContent.includes("whatsmyname") ||
-    	dat[0].textContent.includes("XXX")
-				) ) {
+    dat.length &&
+    (dat[0].textContent.includes("whatsmyname") ||
+      dat[0].textContent.includes("XXX"))
+  ) {
     dat[0].textContent = "Group " + gname;
   }
   const dit: Array<HTMLElement> = dom.querySelectorAll(
@@ -396,7 +396,7 @@ export function extractGroup(
   dom: Document = document,
 ): string {
   const tmp1 = loc.pathname.split("/group-");
-  if (Array.isArray(tmp1) && tmp1.length > 1 && tmp1[1]!== "XXX") {
+  if (Array.isArray(tmp1) && tmp1.length > 1 && tmp1[1] !== "XXX") {
     return tmp1[1];
   }
   const tmp2 = new URLSearchParams(loc.search);
@@ -408,7 +408,7 @@ export function extractGroup(
   if (ele && ele.getAttribute("data-group")) {
     let tmp = ele.getAttribute("data-group");
     tmp = tmp.trim();
-    let tmp2 = tmp.split(",").map((a, b) => {
+    const tmp2 = tmp.split(",").map((a, b) => {
       return a.trim();
     });
     return tmp2[0];
@@ -460,7 +460,9 @@ export async function createAdjacentChart(
   const GROUP: string = "group" + OPTS.group;
 
   if (isMobile(dom, loc) && !isGroupArticle) {
-    dom.querySelector(".adjacentGroup p").style["display"] = "none";
+    if (dom.querySelectorAll(".adjacentGroup .adjacentItem").length === 1) {
+      dom.querySelector(".adjacentGroup p").style["display"] = "none";
+    }
     appendIsland(
       "#" + GROUP,
       "<p>As mobile View, use the full page link to the left</p>",
@@ -480,8 +482,8 @@ export async function createAdjacentChart(
     }
 
     if (isGroupArticle) {
-// feature removed, as the dup render trap is in core
-// this is an inherited trap
+      // feature removed, as the dup render trap is in core
+      // this is an inherited trap
       //      if (OPTS.rendered) {
       //        log("warn", "Already rendered this asset");
       //        return;
