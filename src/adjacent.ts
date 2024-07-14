@@ -460,7 +460,9 @@ export async function createAdjacentChart(
   const GROUP: string = "group" + OPTS.group;
 
   if (isMobile(dom, loc) && !isGroupArticle) {
-    dom.querySelector(".adjacentGroup p").style["display"] = "none";
+	if( dom.querySelectorAll('.adjacentGroup .adjacentItem').length===1) {
+    	dom.querySelector(".adjacentGroup p").style["display"] = "none";
+	}
     appendIsland(
       "#" + GROUP,
       "<p>As mobile View, use the full page link to the left</p>",
