@@ -3,6 +3,8 @@ import { Document, HTMLAnchorElement, HTMLElement } from "jsdom";
 // import { log, debug } from "./networking";
 import { appendIsland } from "./dom-base";
 import { pullout } from "./string-base";
+import { applyDOMpostions } from "./desktop-biblio";
+import { getArticleWidth } from "./dom-base";
 
 /**
  * link2Txt
@@ -26,6 +28,10 @@ function link2Txt(url: string): string {
     const pièces = adresse.pathname.split("/");
     nom = pièces[1];
     titre = pièces[2];
+  } else if (adresse.hostname.indexOf("github.io")) {
+    const pièces = adresse.hostname.split(".");
+    nom = pièces[0];
+    titre = "The " + pièces[0] + " project";
   }
   return (
     "Reference popup for link [*]\n\n" +
@@ -48,6 +54,8 @@ function link2Txt(url: string): string {
  * @returns {void}
  */
 export function addOctoCats(refs: boolean, dom: Document = document): void {
+  const WIDTH: number = getArticleWidth(true, dom);
+
   dom.querySelectorAll("article a").forEach(function (
     a: HTMLAnchorElement,
   ): void {
@@ -57,6 +65,7 @@ export function addOctoCats(refs: boolean, dom: Document = document): void {
       appendIsland(a, '<i class="fa fa-github" aria-hidden="true"></i>', dom);
       if (refs) {
         a.setAttribute("aria-label", link2Txt(a.getAttribute("href")));
+        applyDOMpostions(a, WIDTH);
       } else {
         a.setAttribute("title", "Link to a github project.");
       }
@@ -72,6 +81,8 @@ export function addOctoCats(refs: boolean, dom: Document = document): void {
  * @returns {void}
  */
 export function addBooks(refs: boolean, dom: Document = document): void {
+  const WIDTH: number = getArticleWidth(true, dom);
+
   dom.querySelectorAll("article a").forEach(function (a: HTMLAnchorElement) {
     const tmp = pullout(a);
     if (tmp.trim().toLowerCase() === "docs") {
@@ -85,6 +96,7 @@ export function addBooks(refs: boolean, dom: Document = document): void {
         refs ? "aria-label" : "title",
         "Link to the project docs; it may be a git page, or a separate webpage. ",
       );
+	  if(refs) { applyDOMpostions(a, WIDTH); }
     }
   });
 }

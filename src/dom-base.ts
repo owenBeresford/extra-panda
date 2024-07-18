@@ -1,7 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
-import { ScreenSizeArray, GenericEventHandler } from "./all-types";
-import { log, MOBILE_MIN_PPI } from "./networking";
+import { ScreenSizeArray, GenericEventHandler, BOUNDARY } from "./all-types";
+import { log, MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./networking";
 
 /**
  * appendIsland
@@ -121,6 +121,61 @@ export function isFullstack(): boolean {
 }
 
 /**
+ * mapAttribute
+ * Extract the named limit of the element
+ * PURE
+ * @param {HTMLElement} ele
+ * @param {BOUNDARY} attrib - One of top|bottom|left|right|width|height
+ * @public
+ * @returns {number } - the value of the requested
+ */
+export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
+  try {
+    if (!isFullstack()) {
+      return -1;
+    }
+
+    const STYL = ele.getBoundingClientRect();
+    return STYL[attrib];
+  } catch (e) {
+    log("error", "Missing data:" + e);
+    return -1;
+  }
+}
+
+/**
+ * getArticleWidth
+ * a util to get current article width
+ 
+ * @param {boolean} isLeft
+ * @param {Document=document} dom
+ * @public
+ * @return {number}
+ */
+export function getArticleWidth(isLeft:boolean, dom: Document = document): number {
+  let wid:number=Math.round( mapAttribute(dom.querySelector(ALL_REFERENCE), "width"));
+	if( isLeft)	{ return wid-  32 * EM_SZ; }
+	else { return wid; }
+    }
+
+/**
+ * applyVolume
+ * Log pixel offsets so the CSS can work correctly
+ 
+ * @param {Document = document} dom
+ * @public
+ * @return {void}
+ */
+export function applyVolume(dom: Document = document) :void {
+	dom.querySelector('body').setAttribute("style",  '--offset-height: 0;' );
+	const tt: Array<HTMLElement> = dom.querySelectorAll('.lotsOfWords, .halferWords, .fewWords');
+	for(let i=0; i<tt.length; i++) {
+		let tmp=tt[i].getBoundingClientRect( );
+		tt[i].setAttribute("style", '--offset-height: ' +Math.round(tmp.top)+"px;" );
+	}
+}
+
+/**
  * booleanMap
  * Convert many possible "English" boolean values to boolean
  * NOTE: js, may not be a string
@@ -235,6 +290,9 @@ export function currentSize(dom: Document = document): ScreenSizeArray {
 
 export const TEST_ONLY = {
   appendIsland,
+  getArticleWidth,
+  applyVolume,
+  mapAttribute,
   setIsland,
   isFullstack,
   isMobile,

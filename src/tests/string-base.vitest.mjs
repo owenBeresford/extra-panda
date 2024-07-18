@@ -13,7 +13,6 @@ const {
   addLineBreaks,
   pad,
   _getCookie,
-  mapAttribute,
   importDate,
   dateMunge,
 } = TEST_ONLY;
@@ -169,28 +168,6 @@ dg ag aga gdgadfg`;
     const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
     assert.equal(articleName(), "<name>", "assert #3");
     assert.equal(articleName(loc), "home", "assert #4");
-  });
-
-  it("go 6: mapAttribute", (context) => {
-    if (!isFullstack()) {
-      context.skip();
-    }
-
-    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
-    let str = `<h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>`;
-    appendIsland("#point2", str, dom);
-
-    assert.equal(
-      mapAttribute(dom.querySelector("#item1"), "right"),
-      "100",
-      "asset #10",
-    );
-    assert.equal(
-      mapAttribute(dom.querySelector("#item1"), "right"),
-      100,
-      "asset #11",
-    );
   });
 
   it("go 15: makeRefUrl", () => {

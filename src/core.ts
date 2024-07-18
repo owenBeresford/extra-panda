@@ -16,7 +16,7 @@ import {
 } from "./adjacent";
 import { initMastodon } from "./mastodon";
 import { isLocal } from "./string-base";
-import { isMobile, appendIsland } from "./dom-base";
+import { isMobile, appendIsland, applyVolume } from "./dom-base";
 import { createBiblio as mobileCreateBiblio } from "./mobile-biblio";
 import { createBiblio as desktopCreateBiblio } from "./desktop-biblio";
 import {
@@ -290,6 +290,7 @@ export async function siteCore(
     log("info", "This URL '" + loc.pathname + "' has no burger menu");
   }
 
+  applyVolume(dom);
   initPopupMobile(dom, loc);
   initMastodon(dom, loc, win);
   const isRefs: boolean = dom.querySelector(".addReferences") !== null;

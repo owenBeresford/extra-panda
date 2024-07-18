@@ -1,9 +1,5 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
-import { BOUNDARY } from "./all-types";
-import { log } from "./networking";
-import { isFullstack } from "./dom-base";
-
 /**
  * pullout
  * An isolation function, as JSDOM isn't perfect.
@@ -153,29 +149,6 @@ export function pad(num: number): string {
     r = "0" + r;
   }
   return r;
-}
-
-/**
- * mapAttribute
- * Extract the named limit of the element
- * PURE
- * @param {HTMLElement} ele
- * @param {BOUNDARY} attrib - One of top|bottom|left|right|width|height
- * @public
- * @returns {number } - the value of the requested
- */
-export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
-  try {
-    if (!isFullstack()) {
-      return -1;
-    }
-
-    const STYL = ele.getBoundingClientRect();
-    return STYL[attrib];
-  } catch (e) {
-    log("error", "Missing data:" + e);
-    return -1;
-  }
 }
 
 /**
@@ -373,7 +346,6 @@ export const TEST_ONLY = {
   addLineBreaks,
   pad,
   makeRefUrl,
-  mapAttribute,
   importDate,
   dateMunge,
   //  _map,

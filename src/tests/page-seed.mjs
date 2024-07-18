@@ -29,7 +29,7 @@ export function page(url = "", args = 1) {
     { url: url, referrer: url },
   );
   if (args === 1) {
-    return dom.window.document;
+    return [dom.window.document];
   } else if (args === 2) {
     return [dom.window.document, dom.window.location];
   } else if (args === 3) {

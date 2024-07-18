@@ -2,10 +2,9 @@
 import { Document, Location, HTMLAnchorElement, HTMLElement } from "jsdom";
 
 import { DesktopBiblioProps, SimpleResponse, ReferenceType } from "./all-types";
-import { appendIsland } from "./dom-base";
+import { appendIsland, mapAttribute, getArticleWidth } from "./dom-base";
 import {
   dateMunge,
-  mapAttribute,
   articleName,
   addLineBreaks,
   makeRefUrl,
@@ -16,6 +15,7 @@ import {
   ALL_REFERENCE,
   ALL_REFERENCE_LINKS,
   runFetch,
+  EM_SZ,
 } from "./networking";
 
 // variables across this module
@@ -133,12 +133,12 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
  * Actually do the CSS class insertion.
  * IOIO KLAXON KLAXON: check memory usage, in earlier browsers this was VERY bad.
  * IMPURE.
- * @param {HTMLElement or child class} ele
+ * @param {HTMLElement} ele
  * @param {number} WIDTH
  * @protected
  * @returns {void}
  */
-function applyDOMpostions(ele: HTMLElement, WIDTH: number): void {
+export function applyDOMpostions(ele: HTMLElement, WIDTH: number): void {
   const left = mapAttribute(ele, "left");
   const bot = mapAttribute(ele, "bottom");
   if (left === -1 && bot === -1) {
@@ -149,11 +149,13 @@ function applyDOMpostions(ele: HTMLElement, WIDTH: number): void {
     ele.classList.add("leanIn");
   }
   let tt = ele.parentNode;
-  if (tt.tagName === "sup") {
+  const subItem: Array<string> = ["li", "sup", "ul", "ol", "span", "p"];
+  // list doesnt include HTML, BODY or DIV
+  while (subItem.includes(tt.tagName)) {
     tt = tt.parentNode;
   }
 
-  const HEIGHT = (mapAttribute(tt, "height") as number) - 3 * 16;
+  const HEIGHT = (mapAttribute(tt, "height") as number) - 3 * EM_SZ;
   if (bot > HEIGHT) {
     ele.classList.add("leanUp");
   }
@@ -169,12 +171,11 @@ function applyDOMpostions(ele: HTMLElement, WIDTH: number): void {
  * @returns {void}
  */
 function mapPositions(data: Array<string>, dom: Document = document): void {
-  const WIDTH: number =
-    (mapAttribute(dom.querySelector(ALL_REFERENCE), "width") as number) -
-    32 * 16;
+  const WIDTH: number = getArticleWidth(true, dom);
 
   let j = 1;
   const REFS = dom.querySelectorAll(ALL_REFERENCE_LINKS);
+
   for (const i in data) {
     REFS[i].setAttribute("aria-label", "" + data[i]);
     applyDOMpostions(REFS[i], WIDTH);
@@ -294,6 +295,9 @@ export async function createBiblio(
       data.body as Array<ReferenceType>,
     );
     mapPositions(cooked, dom);
+
+    // enable reporting of bad values
+    dom.querySelector(ALL_REFERENCE).classList.add("showBiblioErrors");
   }
 }
 

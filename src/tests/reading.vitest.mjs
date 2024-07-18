@@ -9,8 +9,9 @@ describe("TEST readingDuration", () => {
   it("go 1: readingDuration function is available correctly", () => {
     assert.equal(typeof readingDuration, "function", "assert #1");
   });
+
   it("go 2: testing content manipulation", () => {
-    const dom = page("https://192.168.0.35/?debug=1", 1);
+    const [dom] = page("https://192.168.0.35/?debug=1", 1);
     let txt = `
 wer werwer wer werwer wer werwer werwer wer werwer wer
 wer werwer wer werwer wer werwer werwer wer werwer wer
@@ -70,7 +71,7 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
   });
 
   it("go 3: extra text and images", () => {
-    const dom = page("https://192.168.0.35/", 1);
+    const [dom] = page("https://192.168.0.35/", 1);
     let txt = `<img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" />
 wer werwer wer werwer wer werwer werwer wer werwer wer
 wer werwer wer werwer wer werwer werwer wer werwer wer
@@ -109,7 +110,7 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
   });
 
   it("go 4: growth test (refresh flag + output value should be larger)", () => {
-    const dom = page("https://192.168.0.35/", 1);
+    const [dom] = page("https://192.168.0.35/", 1);
     let txt = `<img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" /> <img src="dfgdfg" width="30%" />
 wer werwer wer werwer wer werwer werwer wer werwer wer
 wer werwer wer werwer wer werwer werwer wer werwer wer
