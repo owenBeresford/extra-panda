@@ -171,10 +171,11 @@ export function applyDOMpostions(ele: HTMLElement, WIDTH: number): void {
  * @returns {void}
  */
 function mapPositions(data: Array<string>, dom: Document = document): void {
-  const WIDTH: number = getArticleWidth(dom);
+  const WIDTH: number = getArticleWidth(true, dom);
 
   let j = 1;
   const REFS = dom.querySelectorAll(ALL_REFERENCE_LINKS);
+
   for (const i in data) {
     REFS[i].setAttribute("aria-label", "" + data[i]);
     applyDOMpostions(REFS[i], WIDTH);

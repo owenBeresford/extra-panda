@@ -11,7 +11,7 @@ describe("TEST effects", () => {
   it("go 1: addOctoCats", () => {
     assert.equal(typeof addOctoCats, "function", "assert #1");
     {
-      const dom = page("http://192.68.0.35/", 1);
+      const [dom] = page("http://192.68.0.35/", 1);
       let str1 = `
 <p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</a>
 	 sfsdfs sfsfs sfsfs sfsdf sfsdfsf <a href="sdfsdf" title="sdfsdfsdf">TEST2</a> 
@@ -37,7 +37,7 @@ describe("TEST effects", () => {
     }
 
     {
-      const dom = page("http://192.68.0.35/", 1);
+      const [dom] = page("http://192.68.0.35/", 1);
       let str1 = `
 <p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</a>
 	 sfsdfs sfsfs sfsfs sfsdf sfsdfsf <a href="sdfsdf" title="sdfsdfsdf">TEST2</a> 
@@ -55,7 +55,7 @@ describe("TEST effects", () => {
     }
 
     {
-      const dom = page("http://192.68.0.35/", 1);
+      const [dom] = page("http://192.68.0.35/", 1);
       let str1 = `
 <p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</a>
 	 sfsdfs sfsfs sfsfs sfsdf sfsdfsf <a href="sdfsdf" title="sdfsdfsdf">TEST2</a> 
@@ -113,7 +113,7 @@ describe("TEST effects", () => {
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">git</a>
 `;
 
-      const dom = page("http://192.68.0.35/", 1);
+      const [dom] = page("http://192.68.0.35/", 1);
       appendIsland("#point2", str1, dom);
       addBooks(false, dom);
       assert(
@@ -140,7 +140,7 @@ describe("TEST effects", () => {
       <a id="thing1" href="sdfs df" aria-label="Link to the project docs; it may be a git page, or a separate webpage."><i class="fa fa-book-open" aria-hidden="true"></i></a>
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">git</a>
 `;
-      const dom = page("http://192.168.0.35/", 1);
+      const [dom] = page("http://192.168.0.35/", 1);
       appendIsland("#point2", str1, dom);
       addBooks(true, dom);
       assert(
@@ -187,7 +187,7 @@ describe("TEST effects", () => {
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">git</a>
 	 <p> sdfsfds <code class="bashSample" title="Quote from a bash; will add copy button">gdfgdgd1dfgdfgdfgd</code>  sdfs fsf s sfsdfsdfsdfs</p><p>fsdfsdfsd <code class="bashSample" title="Quote from a bash; will add copy button">sdfsdfsdf</code> `;
 
-    const dom = page("http://192.68.0.35/", 1);
+    const [ dom] = page("http://192.68.0.35/", 1);
     appendIsland("#point2", str1, dom);
     appendIsland("#point2", str2, dom);
     addBashSamples(dom);
@@ -199,7 +199,7 @@ describe("TEST effects", () => {
   });
 
   it("go 4: addArrows", () => {
-    const dom = page("http://192.68.0.35/", 1);
+    const [dom] = page("http://192.68.0.35/", 1);
     let str1 = `
 <p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</>
 <div class="addArrow">

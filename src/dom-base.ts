@@ -147,16 +147,16 @@ export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
  * getArticleWidth
  * a util to get current article width
  
+ * @param {boolean} isLeft
  * @param {Document=document} dom
  * @public
  * @return {number}
  */
-export function getArticleWidth(dom: Document = document): number {
-  return Math.round(
-    (mapAttribute(dom.querySelector(ALL_REFERENCE), "width") as number) -
-      32 * EM_SZ
-  );
-}
+export function getArticleWidth(isLeft:boolean, dom: Document = document): number {
+  let wid:number=Math.round( mapAttribute(dom.querySelector(ALL_REFERENCE), "width"));
+	if( isLeft)	{ return wid-  32 * EM_SZ; }
+	else { return wid; }
+    }
 
 /**
  * applyVolume
@@ -167,11 +167,11 @@ export function getArticleWidth(dom: Document = document): number {
  * @return {void}
  */
 export function applyVolume(dom: Document = document) :void {
-	dom.querySelector('body').setAttribute("style",  '--offset-height: 0' );
+	dom.querySelector('body').setAttribute("style",  '--offset-height: 0;' );
 	const tt: Array<HTMLElement> = dom.querySelectorAll('.lotsOfWords, .halferWords, .fewWords');
 	for(let i=0; i<tt.length; i++) {
 		let tmp=tt[i].getBoundingClientRect( );
-		tt[i].setAttribute("style", '--offset-height: ' +Math.round(tmp.top) );
+		tt[i].setAttribute("style", '--offset-height: ' +Math.round(tmp.top)+"px;" );
 	}
 }
 

@@ -54,7 +54,7 @@ function link2Txt(url: string): string {
  * @returns {void}
  */
 export function addOctoCats(refs: boolean, dom: Document = document): void {
-  const WIDTH: number = getArticleWidth(dom);
+  const WIDTH: number = getArticleWidth(true, dom);
 
   dom.querySelectorAll("article a").forEach(function (
     a: HTMLAnchorElement,
@@ -81,7 +81,7 @@ export function addOctoCats(refs: boolean, dom: Document = document): void {
  * @returns {void}
  */
 export function addBooks(refs: boolean, dom: Document = document): void {
-  const WIDTH: number = getArticleWidth(dom);
+  const WIDTH: number = getArticleWidth(true, dom);
 
   dom.querySelectorAll("article a").forEach(function (a: HTMLAnchorElement) {
     const tmp = pullout(a);
