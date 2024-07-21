@@ -1,4 +1,5 @@
 import { assert, describe, it, assertType } from "vitest";
+import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed";
 import { TEST_ONLY } from "../dom-base";
@@ -343,7 +344,6 @@ describe("TEST dom-base", () => {
 
       let tmp=Array.from(dom.querySelectorAll("[style]"));
 		for(let i=0; i<tmp.length; i++) {
-console.log("WERWRWER ", tmp[i].tagName);
 		    assert.isTrue(
 				["div", "body" ].includes( tmp[i].tagName.toLowerCase() ),
       			"asset #19"
@@ -446,4 +446,71 @@ console.log("WERWRWER ", tmp[i].tagName);
 	 assert.equal( ret, 200, "asset #20",);
 // test is defective in JSDOM
   });
+
+  it("go 7.2: getArticleWidth", (context ) => {
+	  const URL="http://192.168.0.35/resource/home";
+// NOTE no addReferences block
+	  const JSDOM1 = new JSDOM(
+    `<!DOCTYPE html>
+<html lang="en-GB">
+<head><title>test1</title></head>
+<body>
+   <div>
+	<h1>Page Title!! </h1>
+	<div class="addReading" id="shareGroup">
+		<div class="allButtons"> <span class="ultraSkinny"></span> </div>
+	</div>
+   </div>
+	<div id="point1"></div>
+	<div id="point2" class="blocker"></div>
+</body>
+</html>`,
+    { url: URL, referrer: URL },
+  );
+  const dom=JSDOM1.window.document;
+
+    let str = `<div class="lotsOfWords">
+<h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+</div> `;
+    appendIsland("#point2", str, dom);
+	 let ret=getArticleWidth(true, dom);
+	 assert.equal( ret, -1, "asset #20",);
+// test is defective in JSDOM
+  });
+
+
 });
