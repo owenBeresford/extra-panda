@@ -149,7 +149,7 @@ export function applyDOMpostions(ele: HTMLElement, WIDTH: number): void {
     ele.classList.add("leanIn");
   }
   let tt = ele.parentNode;
-  const subItem: Array<string> = ["li", "sup", "ul", "ol", "span", "p"];
+  const subItem: Array<string> = ["LI", "SUP", "UL", "OL", "SPAN", "P"];
   // list doesnt include HTML, BODY or DIV
   while (subItem.includes(tt.tagName)) {
     tt = tt.parentNode;
