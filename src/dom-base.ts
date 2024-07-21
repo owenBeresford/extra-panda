@@ -1,6 +1,6 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
-import { ScreenSizeArray, GenericEventHandler, BOUNDARY } from "./all-types";
+import { ScreenSizeArray, GenericEventHandler, Scrollable, ScreenOffsetArray, BOUNDARY } from "./all-types";
 import { log, MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./networking";
 
 /**
@@ -153,25 +153,45 @@ export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
  * @return {number}
  */
 export function getArticleWidth(isLeft:boolean, dom: Document = document): number {
-  let wid:number=Math.round( mapAttribute(dom.querySelector(ALL_REFERENCE), "width"));
+	const tmp=dom.querySelector(ALL_REFERENCE);
+	if(!tmp ) { return -1; }	
+
+  let wid:number=Math.round( mapAttribute(tmp, "width"));
 	if( isLeft)	{ return wid-  32 * EM_SZ; }
 	else { return wid; }
-    }
+}
+
+/**
+ * docOffset
+ * Better computation of number, returns doc co-ords for element location
+      PURE
+ * @param {HTMLElement} ele
+ * @param {number} offset
+ * @public
+ * @return {ScreenOffsetArray }
+ */
+function docOffsets(ele:HTMLElement, offsets:Scrollable):ScreenOffsetArray  {
+	const tmp=ele.getBoundingClientRect( );
+	return [
+			Math.round( offsets.scrollY + tmp.top), 
+			Math.round( offsets.scrollY + tmp.top)
+			];
+}
 
 /**
  * applyVolume
  * Log pixel offsets so the CSS can work correctly
  
  * @param {Document = document} dom
+ * @param {Window = window} win
  * @public
  * @return {void}
  */
-export function applyVolume(dom: Document = document) :void {
+export function applyVolume(dom: Document = document, win:Window=window) :void {
 	dom.querySelector('body').setAttribute("style",  '--offset-height: 0;' );
 	const tt: Array<HTMLElement> = dom.querySelectorAll('.lotsOfWords, .halferWords, .fewWords');
 	for(let i=0; i<tt.length; i++) {
-		let tmp=tt[i].getBoundingClientRect( );
-		tt[i].setAttribute("style", '--offset-height: ' +Math.round(tmp.top)+"px;" );
+		tt[i].setAttribute("style", '--offset-height: ' + docOffsets(tt[i], win as Scrollable)[0] +'px;' );
 	}
 }
 
