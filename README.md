@@ -37,7 +37,7 @@ I am making a copy of the user interactions here (in the new project), as I woul
 	- The third one seems better to his needs, not what he typed into the search, and AJ starts to open it
 	- when the mouse gets to the button, a tooltip appears showing the new page description; 
 	- This is definitely what AJ needs, and clicks on the button.
-	- New page loads and replaces previous.
+	- New page loads and replaces the previous.
 	- UX iteration: should I make feature this an infinite scroll of articles?  Currently the range of articles is clipped to what will fit on the screen,
 	- UX iteration: the tooltips do no block mouse events, but people can't see this.  Translucence is bad for readability, but may indicate this.
     - UX note: categorisation was done my me.  Its possible other people may categorise differently.
@@ -48,9 +48,9 @@ I am making a copy of the user interactions here (in the new project), as I woul
     - The links correlate with the text, which is good.
 	- AJ feels more confident about the site that is clearly making it easy to depart if he wishes.
 	- AJ wishes there was a copy link option, but he also thinks that he ought to read the links rather than send them to a director. 
-	- Later he views the site from his phone, and discover the now too small links in the page are moved to a list at the end of the page.  Bonus.  This makes this page accessible.
+	- Later he views the site from his phone, and discover the now-too-small links in the page are moved to a list at the end of the page.  Bonus.  This makes this page accessible.
 	- UX: there are no hover actions on a phone, so the extra information is permanently displayed.
-	- UX: There is a warning ~ mostly for the dev ~ when links are dead to the meta building script.  Cloudflare is blocking action.
+	- UX: There is a warning ~ mostly for the dev ~ when links are dead to the meta building script.  Cloudflare is the blocking action.
 - SM/ share feature 
 	- Whilst on the phone, AJ sees there has been some redesign for the smaller screen.
 	- The row of SM links is now folded away,
@@ -61,7 +61,7 @@ I am making a copy of the user interactions here (in the new project), as I woul
 	- On first impression AJ notes a fairly standard "reading time" guide.  This is useful but not that noteworthy.
 	- It does mean that he sorts the order of his reading list for best use of time. 
 - Effects
-	- On a more code focussed page, AJ sees the links have been decorated with some sort of emotie.   The little logos for docs and github.  Cute, improves readability, but again not significant.
+	- On a more code focussed page, AJ sees the links have been decorated with some sort of emoji.   The little logos for docs and Github.  Cute, improves readability, but again not significant.
 
 </details>
 <details>
@@ -97,16 +97,17 @@ Pls note English is my first language #leSigh.
 - As all this code is made after a minimiser script is adopted, faction code more finely into logical modules. So its more readable.
 - As a design principle, I have tried to avoid using global objects in my code to make testing easier.   I can pass in, say, ''document'' as an optional param.
 - As a very non-funny joke: the first two versions of the SM sharebar are legacy HTML, but very easy to unit-test. Now I have much better test tech and libraries and less good tests on this feature.
-- This has quite high levels of testing.   I have used JSDOM as part of JEST and similar tools.  This project is the first time I am using it directly.   It is a quite civilised was to test.
-- Assuming this project is frozen on feature completion, I do not need an installer.   I will manually copy 1 compiled file to the static-host local-image.
-- I have used a short term solution to minification, as I need to move forward.
+- This has quite high levels of testing.   I have used JSDOM as part of JEST and similar tools.  This project is the first time I am using it directly.   It is a quite civilised way to test.
+- Assuming this project is frozen on feature completion, I do not need an installer.   I will manually copy 1 compiled file to the static-host local-image.   This project may not have any rollbacks/ reverts, tests are mandated.   
+- I have used a short term solution to minification, as I need to move forward.  XXX #FIXME
 - As far as Vite is a _code bundler_, I need to make all these separate outcome files as separate configs.  I probably can reduce the amount of configs duplication at a later date.   To repeat for clarity, each generated file is a separate file to syntax high-lighting for other languages.  Note again, CSS syntax highlighting isn't perfect. 
 - There are some pages that I will need to retire or use CDN to host needed libraries.
 - There isn't much logging, but logging is held to a wrapper, so I could jump to a centralised log (such as ELK) if I need to in future.
 - My code has complex/ unexpected behaviour if you change the DOM/ document object without changing state.  This shouldn't be an issue outside of tests, as this code doesn't support SSR presently.
+- I want to reduce the amount of manually made snap shot tests, as again its a code smell (test and measure outcomes not the recipe to achieve them, or the recipe is forced to be immutable).
 - Minor gain for Google, I made the sliding window feature in Adjacent module this time, as I have more articles in each group.  This means unnecessary (not-rendered) nodes are not added to the HTML.  My rebuild of the Adjacent HTML is also smaller.  
-- As this lump of JS is a single project rather than 6, there are less control flag needed. This make the code a bit simpler.
-- This has a function equivalent to void main (core).  This is allowed to have a high volume and complexity as it wraps *all the other* methods.  As an architecture detail, I think this isn't avoidable.
+- As this lump of JS is a single project rather than 6, there are less control flags needed.  This makes the code a bit simpler.
+- This has a function equivalent to `int main(int argc, char * argv[])`, called _core_.  This is allowed to have a high volume and complexity as it wraps *all the other* methods.  As an architecture detail, I think this isn't avoidable.
 - The highlight source is now in TS, as I found the type definitions.
 - The process of expanding the number of tools in this project is adding features, but also acting as a lint as it shows small oversights.
 - OLD TECH:: 
@@ -139,7 +140,13 @@ Pls note English is my first language #leSigh.
 - .addReading
 - .addArrow
 - .addBashSamples
+- .adjacentGroup 
 - .addReferences
+- .showBiblioErrors - this turns the broken link alert ON, which is OFF before all the content is downloaded
+- Basic Containers
+- .lotsOfWords
+- .halferWords
+- .fewWords
 
 </details>
 
