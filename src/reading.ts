@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
-import { debug } from "./networking";
+import { debug, log } from "./networking";
 import { appendIsland } from "./dom-base";
 import { pullout } from "./string-base";
 import { ReadingProps } from "./all-types";

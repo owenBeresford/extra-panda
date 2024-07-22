@@ -96,7 +96,9 @@ export function addBooks(refs: boolean, dom: Document = document): void {
         refs ? "aria-label" : "title",
         "Link to the project docs; it may be a git page, or a separate webpage. ",
       );
-	  if(refs) { applyDOMpostions(a, WIDTH); }
+      if (refs) {
+        applyDOMpostions(a, WIDTH);
+      }
     }
   });
 }

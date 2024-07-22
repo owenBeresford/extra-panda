@@ -1,8 +1,14 @@
 import { assert, describe, it, assertType } from "vitest";
+import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed";
 import { TEST_ONLY } from "../dom-base";
-const { appendIsland, setIsland, currentSize, mapAttribute, 
+const {
+  appendIsland,
+  setIsland,
+  docOffsets,
+  currentSize,
+  mapAttribute,
   getArticleWidth,
   applyVolume,
   isFullstack,
@@ -89,8 +95,8 @@ describe("TEST dom-base", () => {
     assert.equal(dom.getElementsByTagName("h2").length, 1, "assert #9");
   });
 
-  it("go 7: applyVolume", (context ) => {
-   const [dom ] = page("http://192.168.0.35/resource/home", 1);
+  it("go 7:  docOffsets ", () => {
+    const [dom] = page("http://192.168.0.35/resource/home", 1);
     let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -129,26 +135,80 @@ describe("TEST dom-base", () => {
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
 </div> `;
     appendIsland("#point2", str, dom);
-	 applyVolume( dom);
-    assert.equal(
-      dom.querySelector("body").getAttribute('style'),
-	 "--offset-height: 0;",
-      "asset #10"
+    const ELE = dom.querySelector(".lotsOfWords");
+
+    assert.deepEqual(
+      [100, 0],
+      docOffsets(ELE, { scrollY: 100, scrollX: 0 }),
+      "assert #10",
     );
-	if(!isFullstack()) {
-		context.skip();
-		return;
-	}
+    assert.deepEqual(
+      [900, 0],
+      docOffsets(ELE, { scrollY: 900, scrollX: 0 }),
+      "assert #11",
+    );
+  });
+
+  it("go 8: applyVolume", (context) => {
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    let str = `<div class="lotsOfWords">
+<h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+</div> `;
+    appendIsland("#point2", str, dom);
+    applyVolume(dom, win);
+    assert.equal(
+      dom.querySelector("body").getAttribute("style"),
+      "--offset-height: 0;",
+      "asset #12",
+    );
+    if (!isFullstack()) {
+      context.skip();
+      return;
+    }
 
     assert.equal(
-      dom.querySelector(".lotsOfWords").getAttribute('style'),
+      dom.querySelector(".lotsOfWords").getAttribute("style"),
       "--offset-height: XXpx;",
-      "asset #11",
+      "asset #13",
     );
-	});
+  });
 
-  it("go 7.1: applyVolume", (context ) => {
-   const [dom ] = page("http://192.168.0.35/resource/home", 1);
+  it("go 8.1: applyVolume", (context) => {
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div class="halferWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -187,26 +247,26 @@ describe("TEST dom-base", () => {
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
 </div> `;
     appendIsland("#point2", str, dom);
-	 applyVolume( dom);
+    applyVolume(dom, win);
     assert.equal(
-      dom.querySelector("body").getAttribute('style'),
-	 "--offset-height: 0;",
-      "asset #12"
+      dom.querySelector("body").getAttribute("style"),
+      "--offset-height: 0;",
+      "asset #14",
     );
-	if(!isFullstack()) {
-		context.skip();
-		return;
-	}
+    if (!isFullstack()) {
+      context.skip();
+      return;
+    }
 
     assert.equal(
-      dom.querySelector(".lotsOfWords").getAttribute('style'),
+      dom.querySelector(".lotsOfWords").getAttribute("style"),
       "--offset-height: XXpx;",
-      "asset #13",
+      "asset #15",
     );
-	});
+  });
 
-  it("go 7.2: applyVolume", (context ) => {
-   const [dom ] = page("http://192.168.0.35/resource/home", 1);
+  it("go 8.2: applyVolume", (context) => {
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div class="halferWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -266,31 +326,31 @@ describe("TEST dom-base", () => {
 </div>
 `;
     appendIsland("#point2", str, dom);
-	 applyVolume( dom);
+    applyVolume(dom, win);
     assert.equal(
-      dom.querySelector("body").getAttribute('style'),
-	 "--offset-height: 0;",
-      "asset #14"
+      dom.querySelector("body").getAttribute("style"),
+      "--offset-height: 0;",
+      "asset #16",
     );
 
-	if(!isFullstack()) {
-		context.skip();
-		return;
-	}
+    if (!isFullstack()) {
+      context.skip();
+      return;
+    }
     assert.equal(
-      dom.querySelector(".halferWords").getAttribute('style'),
+      dom.querySelector(".halferWords").getAttribute("style"),
       "--offset-height: XXpx;",
       "asset #15",
     );
     assert.equal(
-      dom.querySelector(".fewWords").getAttribute('style'),
+      dom.querySelector(".fewWords").getAttribute("style"),
       "--offset-height: XXpx;",
-      "asset #16",
+      "asset #17",
     );
-	});
+  });
 
-  it("go 7.3: applyVolume", (context ) => {
-   const [dom ] = page("http://192.168.0.35/resource/home", 1);
+  it("go 8.3: applyVolume", (context) => {
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div class="some words">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -329,76 +389,25 @@ describe("TEST dom-base", () => {
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
 </div> `;
     appendIsland("#point2", str, dom);
-	 applyVolume( dom);
+    applyVolume(dom, win);
     assert.equal(
-      dom.querySelector("body").getAttribute('style'),
-	 "--offset-height: 0;",
-      "asset #17"
-    );
-    assert.equal(
-      dom.querySelectorAll("[style]").length,
-      1,
+      dom.querySelector("body").getAttribute("style"),
+      "--offset-height: 0;",
       "asset #18",
     );
+    assert.equal(dom.querySelectorAll("[style]").length, 1, "asset #18");
 
-      let tmp=Array.from(dom.querySelectorAll("[style]"));
-		for(let i=0; i<tmp.length; i++) {
-console.log("WERWRWER ", tmp[i].tagName);
-		    assert.isTrue(
-				["div", "body" ].includes( tmp[i].tagName.toLowerCase() ),
-      			"asset #19"
-   				 );	
-		}
-	});
-
-  it("go 7: getArticleWidth", ( ) => {
-   const [dom ] = page("http://192.168.0.35/resource/home", 1);
-    let str = `<div class="lotsOfWords">
-<h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
-</div> `;
-    appendIsland("#point2", str, dom);
-	 let ret=getArticleWidth(true, dom);
-	  
-	 assert.equal( ret, -513, "asset #20",);
-// test is defective in JSDOM
+    let tmp = Array.from(dom.querySelectorAll("[style]"));
+    for (let i = 0; i < tmp.length; i++) {
+      assert.isTrue(
+        ["div", "body"].includes(tmp[i].tagName.toLowerCase()),
+        "asset #19",
+      );
+    }
   });
 
-  it("go 7.1: getArticleWidth", (context ) => {
-   const [dom ] = page("http://192.168.0.35/resource/home", 1);
+  it("go 9: getArticleWidth", () => {
+    const [dom] = page("http://192.168.0.35/resource/home", 1);
     let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -437,13 +446,123 @@ console.log("WERWRWER ", tmp[i].tagName);
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
 </div> `;
     appendIsland("#point2", str, dom);
-	 let ret=getArticleWidth(true, dom);
-	if(!isFullstack()) {
-		context.skip();
-		return;
-	}	  
+    let ret = getArticleWidth(true, dom);
 
-	 assert.equal( ret, 200, "asset #20",);
-// test is defective in JSDOM
+    assert.equal(ret, -513, "asset #20");
+    // test is defective in JSDOM
+  });
+
+  it("go 9.1: getArticleWidth", (context) => {
+    const [dom] = page("http://192.168.0.35/resource/home", 1);
+    let str = `<div class="lotsOfWords">
+<h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+</div> `;
+    appendIsland("#point2", str, dom);
+    let ret = getArticleWidth(true, dom);
+    if (!isFullstack()) {
+      context.skip();
+      return;
+    }
+
+    assert.equal(ret, 200, "asset #21");
+    // test is defective in JSDOM
+  });
+
+  it("go 9.2: getArticleWidth", (context) => {
+    const URL = "http://192.168.0.35/resource/home";
+    // NOTE no addReferences block
+    const JSDOM1 = new JSDOM(
+      `<!DOCTYPE html>
+<html lang="en-GB">
+<head><title>test1</title></head>
+<body>
+   <div>
+	<h1>Page Title!! </h1>
+	<div class="addReading" id="shareGroup">
+		<div class="allButtons"> <span class="ultraSkinny"></span> </div>
+	</div>
+   </div>
+	<div id="point1"></div>
+	<div id="point2" class="blocker"></div>
+</body>
+</html>`,
+      { url: URL, referrer: URL },
+    );
+    const dom = JSDOM1.window.document;
+
+    let str = `<div class="lotsOfWords">
+<h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+<h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
+</div> `;
+    appendIsland("#point2", str, dom);
+    let ret = getArticleWidth(true, dom);
+    assert.equal(ret, -1, "asset #22");
   });
 });
