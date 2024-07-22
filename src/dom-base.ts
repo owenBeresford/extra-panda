@@ -1,6 +1,12 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
-import { ScreenSizeArray, GenericEventHandler, Scrollable, ScreenOffsetArray, BOUNDARY } from "./all-types";
+import {
+  ScreenSizeArray,
+  GenericEventHandler,
+  Scrollable,
+  ScreenOffsetArray,
+  BOUNDARY,
+} from "./all-types";
 import { log, MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./networking";
 
 /**
@@ -147,18 +153,26 @@ export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
  * getArticleWidth
  * a util to get current article width
  
- * @param {boolean} isLeft
+ * @param {boolean} isLeft - left edge or right edge?
  * @param {Document=document} dom
  * @public
- * @return {number}
+ * @return {number} - will return -1 on malcompliant webpages
  */
-export function getArticleWidth(isLeft:boolean, dom: Document = document): number {
-	const tmp=dom.querySelector(ALL_REFERENCE);
-	if(!tmp ) { return -1; }	
+export function getArticleWidth(
+  isLeft: boolean,
+  dom: Document = document,
+): number {
+  const tmp = dom.querySelector(ALL_REFERENCE);
+  if (!tmp) {
+    return -1;
+  }
 
-  let wid:number=Math.round( mapAttribute(tmp, "width"));
-	if( isLeft)	{ return wid-  32 * EM_SZ; }
-	else { return wid; }
+  const wid: number = Math.round(mapAttribute(tmp, "width"));
+  if (isLeft) {
+    return wid - 32 * EM_SZ;
+  } else {
+    return wid;
+  }
 }
 
 /**
@@ -166,16 +180,16 @@ export function getArticleWidth(isLeft:boolean, dom: Document = document): numbe
  * Better computation of number, returns doc co-ords for element location
       PURE
  * @param {HTMLElement} ele
- * @param {number} offset
+ * @param {Scrollable} offsets - a Trait of Window, holding the scroll offset values
  * @public
- * @return {ScreenOffsetArray }
+ * @return {ScreenOffsetArray}
  */
-function docOffsets(ele:HTMLElement, offsets:Scrollable):ScreenOffsetArray  {
-	const tmp=ele.getBoundingClientRect( );
-	return [
-			Math.round( offsets.scrollY + tmp.top), 
-			Math.round( offsets.scrollY + tmp.top)
-			];
+function docOffsets(ele: HTMLElement, offsets: Scrollable): ScreenOffsetArray {
+  const tmp = ele.getBoundingClientRect();
+  return [
+    Math.round(offsets.scrollY + tmp.top),
+    Math.round(offsets.scrollX + tmp.left),
+  ];
 }
 
 /**
@@ -187,12 +201,20 @@ function docOffsets(ele:HTMLElement, offsets:Scrollable):ScreenOffsetArray  {
  * @public
  * @return {void}
  */
-export function applyVolume(dom: Document = document, win:Window=window) :void {
-	dom.querySelector('body').setAttribute("style",  '--offset-height: 0;' );
-	const tt: Array<HTMLElement> = dom.querySelectorAll('.lotsOfWords, .halferWords, .fewWords');
-	for(let i=0; i<tt.length; i++) {
-		tt[i].setAttribute("style", '--offset-height: ' + docOffsets(tt[i], win as Scrollable)[0] +'px;' );
-	}
+export function applyVolume(
+  dom: Document = document,
+  win: Window = window,
+): void {
+  dom.querySelector("body").setAttribute("style", "--offset-height: 0;");
+  const tt: Array<HTMLElement> = dom.querySelectorAll(
+    ".lotsOfWords, .halferWords, .fewWords",
+  );
+  for (let i = 0; i < tt.length; i++) {
+    tt[i].setAttribute(
+      "style",
+      "--offset-height: " + docOffsets(tt[i], win as Scrollable)[0] + "px;",
+    );
+  }
 }
 
 /**
@@ -311,6 +333,7 @@ export function currentSize(dom: Document = document): ScreenSizeArray {
 export const TEST_ONLY = {
   appendIsland,
   getArticleWidth,
+  docOffsets,
   applyVolume,
   mapAttribute,
   setIsland,
