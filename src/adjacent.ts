@@ -385,7 +385,7 @@ function updateLabels(gname: string, dom: Document = document): void {
  * A method to extract the possible data sources for group data PURE
  * @param {HTMLElement | null} ele
  * @param {Location = location} loc
- * @param {Document = document} dom
+ * @param {Document = document} dom - unused param supplied so if I need to add an extra reading point I can
  * @public
  * @throws Error when there is no known data to extract
  * @returns {string}

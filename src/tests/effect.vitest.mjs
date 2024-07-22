@@ -187,7 +187,7 @@ describe("TEST effects", () => {
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">git</a>
 	 <p> sdfsfds <code class="bashSample" title="Quote from a bash; will add copy button">gdfgdgd1dfgdfgdfgd</code>  sdfs fsf s sfsdfsdfsdfs</p><p>fsdfsdfsd <code class="bashSample" title="Quote from a bash; will add copy button">sdfsdfsdf</code> `;
 
-    const [ dom] = page("http://192.68.0.35/", 1);
+    const [dom] = page("http://192.68.0.35/", 1);
     appendIsland("#point2", str1, dom);
     appendIsland("#point2", str2, dom);
     addBashSamples(dom);

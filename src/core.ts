@@ -290,7 +290,7 @@ export async function siteCore(
     log("info", "This URL '" + loc.pathname + "' has no burger menu");
   }
 
-  applyVolume(dom);
+  applyVolume(dom, win);
   initPopupMobile(dom, loc);
   initMastodon(dom, loc, win);
   const isRefs: boolean = dom.querySelector(".addReferences") !== null;

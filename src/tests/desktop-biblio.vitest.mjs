@@ -94,7 +94,7 @@ describe("TEST desktop-biblio", () => {
       .querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]")
       .forEach((a, b) => {
         let tt = parseInt(a.textContent, 10);
-        assert.isTrue((tt >= 0 && tt < 6), "assert #9");
+        assert.isTrue(tt >= 0 && tt < 6, "assert #9");
       });
     assert.equal(
       dom.querySelectorAll(ALL_REFERENCE_LINKS + '[aria-label=""]').length,

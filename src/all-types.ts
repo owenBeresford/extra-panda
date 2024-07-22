@@ -38,8 +38,8 @@ export type ScreenSizeArray = [number, number];
 export type ScreenOffsetArray = [number, number];
 
 export interface Scrollable {
-	scrollY:number;
-	scrollX:number;
+  scrollY: number;
+  scrollX: number;
 }
 
 export type GenericEventHandler = (e: Event) => void;
