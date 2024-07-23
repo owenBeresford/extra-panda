@@ -261,8 +261,10 @@ export function listContentGroup(
 
 /**
  * convert2HTML
- * Convert an array of Reference type into DOM nodes
+ * Convert an array of Reference type into a HTML string
  *   PURE
+ * NOTE: the initial link is hardcoded in the static HTML template, so people with problems can still use the user journey  
+ *
  * @param {Array<NormalisedReference>} list
  * @param {string} gname - the group name
  * @public
@@ -284,6 +286,7 @@ function convert2HTML(list: Array<NormalisedReference>, gname: string): string {
       list[i].date +
       "\nDescription: " +
       list[i].desc;
+
     html +=
       '<li> <a id="link' +
       nui +
@@ -297,7 +300,7 @@ function convert2HTML(list: Array<NormalisedReference>, gname: string): string {
       list[i].title +
       "</a> </li>\n";
   }
-  html += "</ul>";
+  html += '<li><a class="adjacentItem button" href="/resource/group-XXX?first='+gname+'" aria-label="This article lists all items in worklog group."> See full list </a></li></ul>';
   return html;
 }
 
@@ -496,7 +499,7 @@ export async function createAdjacentChart(
         dom,
         loc,
       );
-      appendIsland("#" + GROUP, html, dom);
+      appendIsland("#groupXXX" , html, dom);
       updateLabels(generateGroup(loc), dom);
     } else {
       const rendered = normaliseToList(data.body as Array<ReferenceType>);

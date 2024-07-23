@@ -18,7 +18,7 @@ Functions tagged "PURE" do not effect the DOM, and tend to test quickly.
 - This is an outsize, painful, death march of a rewrite for hygiene and flow improvements.  Every PM would say 'this is Bad planning', and I agree.  I cannot see any means to split this change into smaller releases.
 - Note, PMs would also be happy that I kept 2010 era code this long, as good return on investment.
 - I wrote the first edition of these features as I was unable to find anything that existed previously (aside from syntax highlighting).  
-- This has a fairly high test coverage, as the early dev time was after I had done a long run, and was then sat on a train ~ sometimes with the sun in my eyes.   Multiple train trips.  I am testing-in to get improved confidence and adding types as a further safety.  
+- This has a fairly high test coverage, as the early dev time was after I had done a long run, and was then sat on a train ~ sometimes with the sun in my eyes.   Multiple train trips.  I am testing-in to get improved confidence and adding types as a further safety.   Factoid: today, 73% of the code volume is tests. 
 - Some previous feedback: "your history/commits are messy".  True, its messier than I would like.  I can delete my Git history from any work I do for you if you would like ~ but Dyslexia is permanent.  This project is building towards good Software engineering code from a lower jQuery baseline.  As the only version that a third party would use is the **complete copy** I lean towards a complete audit.   
 
 <details>
@@ -90,14 +90,15 @@ Pls note English is my first language #leSigh.
 - Use new language features (ADD a few KB of source) without jQuery (DROP >300KB of source). Dropping jQuery, as "select downloaded features" feature has been removed from https://jquery.com
 - Drop unused features. This makes everything less confusing and more readable.
 - With JS modules, have less functions inside functions, so unit tests are easier.   Improve unit-test coverage as its now feasible (rather than behaviour testing).
-- Use TEST_ONLY symbols that expose entire module to unit tests.   I will add config to strip them in release build.
+- Use TEST_ONLY symbols that expose entire module to unit tests.   I will add config to strip them in release build.   I didn't invent this structure, but I have used it ever since I started with JS modules, rather than plain JS.
 - Drop legacy test tools.
 - As proper TDD units as I have better tools now (JS modules + a fake DOM), make code better ~ separately to, and above every other bullet point. WARN: Some tests cannot be run outside of a real webrowser.
 - Vastly improve English/ readability of the code. Gain is separate to all other points.
 - As all this code is made after a minimiser script is adopted, faction code more finely into logical modules. So its more readable.
 - As a design principle, I have tried to avoid using global objects in my code to make testing easier.   I can pass in, say, ''document'' as an optional param.
+- This code is readable, but it isn't very functional or OO.   If I swapped any loops to higher functions, and edited to reduce number of "if branch" statements; it would be more functional.   It could be pushed towards OO by reducing the importance of the "config dicts" which have been preserved from legacy jQuery, and having a more institutionalised function naming scheme.   It is strictly modular and does have SRP and some layering.   
 - As a very non-funny joke: the first two versions of the SM sharebar are legacy HTML, but very easy to unit-test. Now I have much better test tech and libraries and less good tests on this feature.
-- This has quite high levels of testing.   I have used JSDOM as part of JEST and similar tools.  This project is the first time I am using it directly.   It is a quite civilised way to test.
+- This has quite high levels of testing.   I have used JSDOM as part of JEST and similar tools.  This project is the first time I am using it directly.  
 - Assuming this project is frozen on feature completion, I do not need an installer.   I will manually copy 1 compiled file to the static-host local-image.   This project may not have any rollbacks/ reverts, tests are mandated.   
 - I have used a short term solution to minification, as I need to move forward.  XXX #FIXME
 - As far as Vite is a _code bundler_, I need to make all these separate outcome files as separate configs.  I probably can reduce the amount of configs duplication at a later date.   To repeat for clarity, each generated file is a separate file to syntax high-lighting for other languages.  Note again, CSS syntax highlighting isn't perfect. 
@@ -110,13 +111,14 @@ Pls note English is my first language #leSigh.
 - This has a function equivalent to `int main(int argc, char * argv[])`, called _core_.  This is allowed to have a high volume and complexity as it wraps *all the other* methods.  As an architecture detail, I think this isn't avoidable.
 - The highlight source is now in TS, as I found the type definitions.
 - The process of expanding the number of tools in this project is adding features, but also acting as a lint as it shows small oversights.
+- I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together, its a nul-point difference.   
 - OLD TECH:: 
   - first bundle: 1MB flat
   - second bundle (smaller stdlib): 670KB
   - above but with with minify: 361KB
   - above but with dead code removal: 250KB
 - NEW TECH (ignoring unit tests)::
-  - complete build: 75KB flat
+  - complete build: 75KB flat files
   - above with with minification: 23KB
   - Note dead code removal didn't make any impact here, as tree shaking works properly now
   - above with gzip: 9KB  

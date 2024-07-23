@@ -47,4 +47,5 @@
 - DONE improve mobile view biblio for better display/ wrap
 - DONE effect fancy links are now decorated in the same style as biblio links, controlled by addReferences CSS class
 - DONE adjacent links no longer erase first group label when there is multiple adjacent groups
+- DONE made it more clear that the 10 items in the adjacent list are not the full list, but a browser width option.
 
