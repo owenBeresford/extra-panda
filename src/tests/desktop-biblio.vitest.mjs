@@ -151,8 +151,8 @@ describe("TEST desktop-biblio", () => {
 `;
     appendIsland("#point2", str, dom);
     injectOpts({ renumber: 1 }); // refresh flag was removed
-
-    let h = new Headers();
+	
+    let h = new Headers();   // IOIO add TZ to dates #leSigh JS
     h.append("Content-Type", "application/json; cbarset=utf8");
     h.append("last-modified", "2023-06-01 09:00:00.2342Z");
     let tt = { headers: h, body: {}, ok: true };
@@ -169,6 +169,66 @@ describe("TEST desktop-biblio", () => {
     assert.isTrue(
       +new Date(parseInt(bb, 10)) === +new Date("2023-06-01 09:00:00.2342Z"),
       "assert #17",
+    );
+	});
+
+  it("go 4.1: addMetaAge", () => {
+    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
+    let str = `
+<p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
+<p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
+<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
+`;
+    appendIsland("#point2", str, dom);
+    injectOpts({ renumber: 1 }); // refresh flag was removed
+
+	let h = new Headers();   // IOIO add TZ to dates #leSigh JS
+    h.append("Content-Type", "application/json; cbarset=utf8");
+    h.append("last-modified", "2023-06-01 09:00:00 BST");
+    let tt = { headers: h, body: {}, ok: true };
+    addMetaAge(tt, dom);
+    assert.equal(
+      dom.querySelectorAll(".addReading .ultraSkinny time").length,
+      1,
+      "assert #18",
+    );
+    let bb = dom
+      .querySelector(".addReading .ultraSkinny time")
+      .getAttribute("datetime");
+    assert.isTrue(parseInt(bb, 10) > 1000000000000, "assert #19");
+    assert.isTrue(
+      +new Date(parseInt(bb, 10)) === +new Date("2023-06-01 09:00:00"),
+      "assert #20",
+    );
+	});
+
+  it("go 4.2: addMetaAge", () => {
+    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
+    let str = `
+<p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
+<p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
+<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
+`;
+    appendIsland("#point2", str, dom);
+    injectOpts({ renumber: 1 }); // refresh flag was removed
+
+	let h = new Headers();   // IOIO add TZ to dates #leSigh JS
+    h.append("Content-Type", "application/json; cbarset=utf8");
+    h.append("last-modified", "Tue, 02 Jul 2024 16:45:09 BST");
+    let tt = { headers: h, body: {}, ok: true };
+    addMetaAge(tt, dom);
+    assert.equal(
+      dom.querySelectorAll(".addReading .ultraSkinny time").length,
+      1,
+      "assert #21",
+    );
+    let bb = dom
+      .querySelector(".addReading .ultraSkinny time")
+      .getAttribute("datetime");
+    assert.isTrue(parseInt(bb, 10) > 1000000000000, "assert #22");
+    assert.isTrue(
+      +new Date(parseInt(bb, 10)) === +new Date("2024-07-02 16:45:09"),
+      "assert #22",
     );
   });
 

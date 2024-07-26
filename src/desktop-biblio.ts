@@ -211,7 +211,14 @@ function mapPositions(data: Array<string>, dom: Document = document): void {
  * @returns {void}
  */
 function addMetaAge(xhr: SimpleResponse, dom: Document = document) {
-  const updated: number = new Date(xhr.headers.get("last-modified")).getTime();
+  let tstr=xhr.headers.get("last-modified");
+  if(!tstr) { return; }
+// for unknown reasons, JS doesn't like TZ "BST", but it does accept "EST" etc
+// I'll take a 1H error, as I am reporting to the *day*, and the accuracy not that critical
+  if(tstr.indexOf("BST")>0) { 
+	tstr=tstr.substring(0, tstr.length-4);
+  }
+  const updated: number = new Date(tstr).getTime();
   if (updated > 0) {
     const str: string =
       '<span>Links updated <time datetime="' +

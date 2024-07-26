@@ -1,5 +1,5 @@
 ### TODO
-- Add type washing to JSON ingestion used in multiple places 
+- Add type washing to JSON ingestion used in multiple places https://github.com/samchon/typia 
 - Add wrapper objects to JSON payload as OWASP says to (not explained why necessary) see https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html
 - add multilingual support
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom
