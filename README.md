@@ -85,18 +85,30 @@ Pls note English is my first language #leSigh.
 
 ### Engineering changelog
 
+Software architecture
+* this code is properly modular, with isolation and encapsulation
+* none of this features are "long lived", they just tweak the document
+* This does show SRP, and layering
+* this does show clear reporting on errors
+* doesn't have any use of global variables 
+* With JS modules, there is less functions inside functions, so unit tests are easier.   Improved unit-test coverage as its now feasible (rather than behaviour testing).
+* early versions did have actual object composition, but I removed that as it made the types too complex
+* this is not currently OO code, but would be when:
+  - add single DocumentChange interface, and everything implement this
+  - reduce important of setting dicts, in favour of a more OO style
+* this code is not actual FP, but could be when:
+  - drop any loops in favour of map() or forEach()
+  - add higher order functions
+
 - **_NOTE_** Commits at the start of this project are completely meaningless, as its just when I moved the code back to my dev machine. They are meaningless duration markers, rather than feature markers.
 - Some of these unit tests are less meaningful than others, regrettably (running from Node).   It would be nice to setup test from a browser.  To *look* at the UX (as in, I am being the success/ fail criterion), I did some manual testing
 - Use new language features (ADD a few KB of source) without jQuery (DROP >300KB of source). Dropping jQuery, as "select downloaded features" feature has been removed from https://jquery.com
 - Drop unused features. This makes everything less confusing and more readable.
-- With JS modules, have less functions inside functions, so unit tests are easier.   Improve unit-test coverage as its now feasible (rather than behaviour testing).
 - Use TEST_ONLY symbols that expose entire module to unit tests.   I will add config to strip them in release build.   I didn't invent this structure, but I have used it ever since I started with JS modules, rather than plain JS.
 - Drop legacy test tools.
 - As proper TDD units as I have better tools now (JS modules + a fake DOM), make code better ~ separately to, and above every other bullet point. WARN: Some tests cannot be run outside of a real webrowser.
 - Vastly improve English/ readability of the code. Gain is separate to all other points.
 - As all this code is made after a minimiser script is adopted, faction code more finely into logical modules. So its more readable.
-- As a design principle, I have tried to avoid using global objects in my code to make testing easier.   I can pass in, say, ''document'' as an optional param.
-- This code is readable, but it isn't very functional or OO.   If I swapped any loops to higher functions, and edited to reduce number of "if branch" statements; it would be more functional.   It could be pushed towards OO by reducing the importance of the "config dicts" which have been preserved from legacy jQuery, and having a more institutionalised function naming scheme.   It is strictly modular and does have SRP and some layering.   
 - As a very non-funny joke: the first two versions of the SM sharebar are legacy HTML, but very easy to unit-test. Now I have much better test tech and libraries and less good tests on this feature.
 - This has quite high levels of testing.   I have used JSDOM as part of JEST and similar tools.  This project is the first time I am using it directly.  
 - Assuming this project is frozen on feature completion, I do not need an installer.   I will manually copy 1 compiled file to the static-host local-image.   This project may not have any rollbacks/ reverts, tests are mandated.   
@@ -112,6 +124,8 @@ Pls note English is my first language #leSigh.
 - The highlight source is now in TS, as I found the type definitions.
 - The process of expanding the number of tools in this project is adding features, but also acting as a lint as it shows small oversights.
 - I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together, its a nul-point difference.   
+
+#### Metrics that are important to goals
 - OLD TECH:: 
   - first bundle: 1MB flat
   - second bundle (smaller stdlib): 670KB

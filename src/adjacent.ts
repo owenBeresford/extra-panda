@@ -177,6 +177,7 @@ function normaliseToList(
     // if i can get more time, I will integrate this break clause into nextStep
     // im too tired now
     if (list.length === data.length) {
+
       break;
     }
     if (list.length >= OPTS.perRow) {
@@ -263,7 +264,7 @@ export function listContentGroup(
  * convert2HTML
  * Convert an array of Reference type into a HTML string
  *   PURE
- * NOTE: the initial link is hardcoded in the static HTML template, so people with problems can still use the user journey  
+ * NOTE: the initial link is hardcoded in the static HTML template, so people with problems can still use the user journey
  *
  * @param {Array<NormalisedReference>} list
  * @param {string} gname - the group name
@@ -300,7 +301,16 @@ function convert2HTML(list: Array<NormalisedReference>, gname: string): string {
       list[i].title +
       "</a> </li>\n";
   }
-  html += '<li><a class="adjacentItem button" href="/resource/group-XXX?first='+gname+'" aria-label="This article lists all items in worklog group."> See full list </a></li></ul>';
+
+  if(list.length===0) {
+	html+= "<li> Article doesn't seem setup correctly.</li></ul>";
+ 
+  } else {
+ 	 html +=
+    	'<li><a class="adjacentItem button" href="/resource/group-XXX?first=' +
+    	gname +
+    	'" aria-label="This article lists all items in worklog group."> See full list </a></li></ul>';
+  }
   return html;
 }
 
@@ -499,7 +509,7 @@ export async function createAdjacentChart(
         dom,
         loc,
       );
-      appendIsland("#groupXXX" , html, dom);
+      appendIsland("#groupXXX", html, dom);
       updateLabels(generateGroup(loc), dom);
     } else {
       const rendered = normaliseToList(data.body as Array<ReferenceType>);

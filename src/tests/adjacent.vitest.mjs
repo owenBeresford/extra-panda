@@ -25,9 +25,8 @@ const {
 //  and the slightly-HTML2 outcomes make the results more useful on a variety of modern
 // browsers (mobile, laptop, projection screen).
 // This test is enough to make the module pass this mile-stone, which is why I wrote it
-// #TODO: add a HTML lint tool
 // #TODO: add a visual test via storybook or something, that will run the CSS in addition
-// also #TODO, add my new generation CSS for this module
+// also #TODO, add my new generation CSS for this module 
 describe("TEST adjacent", () => {
   it("go 1: cleanTitle", () => {
     assert.equal(cleanTitle("simpleID", "group"), "groupsimpleID", "step #1");
@@ -45,9 +44,9 @@ describe("TEST adjacent", () => {
   });
 
   it("go 2: createStyle", () => {
-    assert.equal(createStyle(true, true), "button lower", "step1");
-    assert.equal(createStyle(false, true), "button", "step2");
-    assert.equal(createStyle(false, false), "button", "step3");
+    assert.equal(createStyle(true, true), "button lower", "step #5");
+    assert.equal(createStyle(false, true), "button", "step #6");
+    assert.equal(createStyle(false, false), "button", "step #7");
   });
 
   it("go 3: generateGroup", () => {
@@ -56,20 +55,20 @@ describe("TEST adjacent", () => {
     assert.equal(
       generateGroup({ search: "first=XXX" }),
       "engineering",
-      "step1",
+      "step #8",
     );
     injectOpts({ group: "XXX" });
     assert.equal(
       generateGroup({ search: "first=uitools" }),
       "uitools",
-      "step2",
+      "step #9",
     );
     try {
       injectOpts({ group: "XXX" });
       generateGroup({ search: "first=XXX" });
-      assert.equal(1, 0, "step3");
+      assert.equal(1, 0, "step #10");
     } catch (e) {
-      assert.equal(1, 1, "step3");
+      assert.equal(1, 1, "step #11");
     }
   });
 
@@ -78,27 +77,27 @@ describe("TEST adjacent", () => {
     assert.deepEqual(
       nextStep("paradigm-shft", "justify-oop", 10, 3, -1),
       [-1, 10, 3],
-      "step4",
+      "step #12",
     );
     assert.deepEqual(
       nextStep("paradigm-shft", "howto-API", 10, 10, -1),
       [-1, 10, 10],
-      "step5",
+      "step #13",
     );
     assert.deepEqual(
       nextStep("paradigm-shft", "paradigm-shft", 10, 3, -1),
       [3, 10, 3],
-      "step6",
+      "step #14",
     );
     assert.deepEqual(
       nextStep("paradigm-shft", "paradigm-shft", 10, 10, -1),
       [10, 10, 0],
-      "step7",
+      "step #15",
     );
     assert.deepEqual(
       nextStep("paradigm-shft", "paradigm-shft", 10, 10, 10),
       [10, 10, 0],
-      "step8",
+      "step #16",
     );
   });
 
@@ -160,7 +159,7 @@ describe("TEST adjacent", () => {
       titleLimit: 100,
       group: "engineering",
     });
-    assert.deepEqual(normaliseToList(d1), d2, "step11");
+    assert.deepEqual(normaliseToList(d1), d2, "step #17");
   });
 
   it("go 5.1: normaliseToList (nonsense)", () => {
@@ -195,7 +194,7 @@ describe("TEST adjacent", () => {
       titleLimit: 100,
       group: "engineering",
     });
-    assert.deepEqual(normaliseToList(d1), d2, "step12");
+    assert.deepEqual(normaliseToList(d1), d2, "step #18");
   });
 
   it("go 6: listContentGroup", () => {
@@ -208,7 +207,7 @@ describe("TEST adjacent", () => {
     assert.deepEqual(
       listContentGroup("#testbar", dom),
       ["engineering", "uitools"],
-      "step8",
+      "step #19",
     );
     setIsland(
       "#point2",
@@ -218,7 +217,7 @@ describe("TEST adjacent", () => {
     assert.deepEqual(
       listContentGroup("#testbar", dom),
       ["engineering", "uitools"],
-      "step9",
+      "step #20",
     );
     setIsland(
       "#point2",
@@ -228,7 +227,7 @@ describe("TEST adjacent", () => {
     assert.deepEqual(
       listContentGroup("#testbar", dom),
       ["engineering", "uit   ools"],
-      "step10",
+      "step #21",
     );
   });
 
@@ -272,8 +271,16 @@ Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf 
 Author: gdgdg &nbsp; &nbsp; Last edit:  04-March-2024 
 Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg..." >DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...</a> </li>
 <li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in worklog group."> See full list </a></li></ul>`;
-    assert.deepEqual(convert2HTML(d1, "engineering"), d2, "step12");
+    assert.deepEqual(convert2HTML(d1, "engineering"), d2, "step #22");
   });
+
+  it("go 7.1: convert2HTML", () => {
+    let d1 = [];
+    let d2 = `<ul class="adjacentList">
+<li> Article doesn't seem setup correctly.</li></ul>`;	
+    assert.deepEqual(convert2HTML(d1, "engineering"), d2, "step #23");
+
+	});
 
   it("go 8: convert2IndexHTML", () => {
     let d1 = [
@@ -309,7 +316,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     assert.deepEqual(
       convert2IndexHTML(d1, "engineering", dom, loc),
       d2,
-      "step13",
+      "step #24",
     );
   });
 
@@ -330,22 +337,22 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     assert.equal(
       extractGroup(dom.querySelector("#thing1"), loc, dom),
       "engineering",
-      "step 14",
+      "step #25",
     );
     assert.equal(
       extractGroup(dom.querySelector("#thing2"), loc, dom),
       "engineering",
-      "step 15",
+      "step #26",
     );
     assert.equal(
       extractGroup(dom.querySelector("#thing3"), loc, dom),
       "engineering",
-      "step 16",
+      "step #27",
     );
     assert.equal(
       extractGroup(dom.querySelector("#thing4"), loc, dom),
       "engineering",
-      "step 17",
+      "step #28",
     );
 
     jsdom.reconfigure({
@@ -354,14 +361,14 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     assert.equal(
       extractGroup(dom.querySelector("#thing1"), loc, dom),
       "martech",
-      "step 18",
+      "step #29",
     );
 
     jsdom.reconfigure({ url: "http://192.168.0.35/resource/group-research" });
     assert.equal(
       extractGroup(dom.querySelector("#thing1"), loc, dom),
       "research",
-      "step 19",
+      "step #30",
     );
   });
 
@@ -374,12 +381,12 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     assert.deepEqual(
       dom.querySelector(".top-bar.fullWidth header h1").textContent,
       "I'm set",
-      "step14",
+      "step #31",
     );
     assert.deepEqual(
       dom.querySelector(".adjacentGroup p").textContent,
       "Im set too",
-      "step15",
+      "step #32",
     );
     str = `<div class=" top-bar fullWidth"><header><h1>XXX</h1> </header> </div>
 				<div class="adjacentGroup"><p>XXX</p> </div> `;
@@ -388,12 +395,12 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     assert.deepEqual(
       dom.querySelector(".top-bar.fullWidth header h1").textContent,
       "Group Engineering",
-      "step16",
+      "step #33",
     );
     assert.deepEqual(
       dom.querySelector(".adjacentGroup p").textContent,
       "Some similar articles in Engineering",
-      "step17",
+      "step #34",
     );
   });
 
@@ -419,12 +426,12 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     assert.equal(
       dom.querySelector(".adjacentGroup p").textContent,
       "TEST",
-      "step18 [negative]",
+      "step #35 [negative]",
     );
     assert.equal(
       dom.querySelectorAll("#groupengineering ul li").length,
       1,
-      "step19 [negative]",
+      "step #36 [negative]",
     );
   });
 
@@ -450,12 +457,12 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     assert.equal(
       dom.querySelector(".adjacentGroup p").textContent,
       "TEST",
-      "step20 [positive]",
+      "step #37 [positive]",
     );
     assert.equal(
       dom.querySelectorAll("#groupengineering .adjacentList").length,
       1,
-      "step21 [positive]",
+      "step #38 [positive]",
     );
 
     // fixed input data, so fixed output data
@@ -476,7 +483,7 @@ Description: What concepts or areas of development are important.    This is a h
     assert.equal(
       dom.querySelector("#groupengineering .adjacentList").innerHTML,
       sample1,
-      "step22 [positive]",
+      "step #39 [positive]",
     );
   });
 
@@ -503,36 +510,36 @@ Description: What concepts or areas of development are important.    This is a h
     assert.equal(
       dom.querySelector(".adjacentGroup p").textContent,
       "TEST",
-      "step23 ",
+      "step #40 ",
     );
     assert.equal(
       dom.querySelectorAll("#groupengineering ul li").length,
       11,
-      "step24",
+      "step #41", 
     );
 
     assert.equal(
       dom.querySelectorAll("#groupengineering ul").length,
       1,
-      "step25",
+      "step #42",
     );
 
     assert.equal(
       dom.querySelectorAll("#groupengineering ul").length,
       1,
-      "step26",
+      "step #43",
     );
 
     assert.equal(
       dom.querySelectorAll("#groupengineering ul a").length,
       11,
-      "step27",
+      "step #44",
     );
 
     assert.equal(
       dom.querySelectorAll("#groupengineering ul a[aria-label]").length,
       11,
-      "step28",
+      "step #45",
     );
   });
 
@@ -559,17 +566,17 @@ Description: What concepts or areas of development are important.    This is a h
     assert.equal(
       dom.querySelector(".adjacentGroup p").textContent,
       "TEST",
-      "step29",
+      "step #46",
     );
     assert.equal(
       dom.querySelectorAll("#groupengineering .adjacentList").length,
       1,
-      "step30",
+      "step #47",
     );
     assert.equal(
       dom.querySelectorAll("#groupengineering .adjacentList li").length,
       16,
-      "step31",
+      "step #48",
     );
 
     let sample1 = `
@@ -622,11 +629,11 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
     assert.equal(
       dom.querySelector("#groupengineering .adjacentList").innerHTML,
       sample1,
-      "step32 ",
+      "step #49",
     );
   });
 
-  it("go 10.3: createAdjacentChart", async () => {
+  it("go 10.4: createAdjacentChart", async () => {
     const [dom, loc] = page("http://192.168.0.35/resource/code-metrics", 2);
     let str = `
 <div class="adjacentGroup" id="groupengineering">
@@ -649,17 +656,17 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
     assert.equal(
       dom.querySelector(".adjacentGroup p").textContent,
       "TEST",
-      "step29",
+      "step #50",
     );
     assert.equal(
       dom.querySelectorAll("#groupengineering .adjacentList").length,
       1,
-      "step30",
+      "step #51",
     );
     assert.equal(
       dom.querySelectorAll("#groupengineering .adjacentList li").length,
       16,
-      "step31",
+      "step #52",
     );
 
     let sample1 = `
@@ -712,7 +719,7 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
     assert.equal(
       dom.querySelector("#groupengineering .adjacentList").innerHTML,
       sample1,
-      "step32 ",
+      "step #53",
     );
   });
 
