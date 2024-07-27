@@ -118,7 +118,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     );
     assert.equal(
       dom.querySelectorAll("#groupengineering .adjacentList li").length,
-      8,
+      9,
       "assert #2",
     );
     let buf = dom.querySelector("#sendMasto");
