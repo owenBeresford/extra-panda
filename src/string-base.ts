@@ -70,7 +70,7 @@ export function articleName(loc: Location = location): string {
  * PURE
  * @param {string} template
  * @param {Location =location} loc
- * @protected
+ * @public
  * @returns {string}
  */
 export function makeRefUrl(template: string, loc: Location = location): string {
@@ -211,7 +211,7 @@ function fixArgs(day: string = "", time: string = ""): Array<string> {
  * Convert a string of date with a format to a date
  * For details on format, please see php strtotime()
  * NOTE output dates always in current and local TZ, even if input date isn't
- * like really small version of moment, converts ascii string to Date object
+ * This is like really small version of moment, converts ascii string to Date object
  * PURE
  * @param {string} format
  * @param {string=""} day
@@ -277,7 +277,7 @@ export function importDate(
  * dateMunge
  * Convert Epoch to human readable string PURE
  * @param {number} din
- * @param {Date | string} ddefault - assert tranactional data sources, filler for nulls in first src
+ * @param {Date | string} ddefault - assert transactional data sources, filler for nulls in first src
  * @param {boolean =true} monthText - weather or not to translate month numbers to text, and whether to pad a 1 digit month
  * @public
  * @returns {string}

@@ -105,7 +105,9 @@ export function addBooks(refs: boolean, dom: Document = document): void {
 
 /**
  * addBashSamples
- * Convert backticks to code blocks, markup distorted C 1line comments to actual C 1line comments
+ * Convert backticks to code blocks, markup distorted C 1line comments to actual C 1line comments.
+ * Security note: this is editing innerHTML, but only with static values set at authoring time.
+ *
  * @param {Document =document} dom
  * @public
  * @returns {void}

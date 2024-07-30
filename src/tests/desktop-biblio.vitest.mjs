@@ -151,8 +151,8 @@ describe("TEST desktop-biblio", () => {
 `;
     appendIsland("#point2", str, dom);
     injectOpts({ renumber: 1 }); // refresh flag was removed
-	
-    let h = new Headers();   // IOIO add TZ to dates #leSigh JS
+
+    let h = new Headers();
     h.append("Content-Type", "application/json; cbarset=utf8");
     h.append("last-modified", "2023-06-01 09:00:00.2342Z");
     let tt = { headers: h, body: {}, ok: true };
@@ -170,7 +170,7 @@ describe("TEST desktop-biblio", () => {
       +new Date(parseInt(bb, 10)) === +new Date("2023-06-01 09:00:00.2342Z"),
       "assert #17",
     );
-	});
+  });
 
   it("go 4.1: addMetaAge", () => {
     const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
@@ -182,7 +182,7 @@ describe("TEST desktop-biblio", () => {
     appendIsland("#point2", str, dom);
     injectOpts({ renumber: 1 }); // refresh flag was removed
 
-	let h = new Headers();   // IOIO add TZ to dates #leSigh JS
+    let h = new Headers();
     h.append("Content-Type", "application/json; cbarset=utf8");
     h.append("last-modified", "2023-06-01 09:00:00 BST");
     let tt = { headers: h, body: {}, ok: true };
@@ -200,7 +200,7 @@ describe("TEST desktop-biblio", () => {
       +new Date(parseInt(bb, 10)) === +new Date("2023-06-01 09:00:00"),
       "assert #20",
     );
-	});
+  });
 
   it("go 4.2: addMetaAge", () => {
     const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
@@ -212,7 +212,7 @@ describe("TEST desktop-biblio", () => {
     appendIsland("#point2", str, dom);
     injectOpts({ renumber: 1 }); // refresh flag was removed
 
-	let h = new Headers();   // IOIO add TZ to dates #leSigh JS
+    let h = new Headers();
     h.append("Content-Type", "application/json; cbarset=utf8");
     h.append("last-modified", "Tue, 02 Jul 2024 16:45:09 BST");
     let tt = { headers: h, body: {}, ok: true };

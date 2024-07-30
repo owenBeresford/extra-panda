@@ -28,8 +28,9 @@ function mapURL(
   suffix: string,
   loc: Location = location,
 ): string {
-  let t = loc.protocol + "//" + loc.host,
-    t2 = loc.pathname.split("/");
+  //  let t = loc.protocol + "//" + loc.host,
+  let t2 = loc.pathname.split("/"),
+    t = "";
   t2 = t2.pop();
   const tmp = new URLSearchParams(loc.search);
   if (t2 === "group-XXX" && tmp.has("first")) {
@@ -177,22 +178,11 @@ function normaliseToList(
     // if i can get more time, I will integrate this break clause into nextStep
     // im too tired now
     if (list.length === data.length) {
-
       break;
     }
     if (list.length >= OPTS.perRow) {
       break;
     }
-    /*  //Optional safety feature added during testing
-    retries++;
-    let limit = OPTS.perRow;
-    if (data.length > OPTS.perRow) {
-      limit = data.length;
-    }
-    if (retries > limit * 2) {
-      throw new Error("Pls check data on this page, can't match anything");
-    }
-*/
   }
   return list;
 }
@@ -302,14 +292,13 @@ function convert2HTML(list: Array<NormalisedReference>, gname: string): string {
       "</a> </li>\n";
   }
 
-  if(list.length===0) {
-	html+= "<li> Article doesn't seem setup correctly.</li></ul>";
- 
+  if (list.length === 0) {
+    html += "<li> Article doesn't seem setup correctly.</li></ul>";
   } else {
- 	 html +=
-    	'<li><a class="adjacentItem button" href="/resource/group-XXX?first=' +
-    	gname +
-    	'" aria-label="This article lists all items in worklog group."> See full list </a></li></ul>';
+    html +=
+      '<li><a class="adjacentItem button" href="/resource/group-XXX?first=' +
+      gname +
+      '" aria-label="This article lists all items in worklog group."> See full list </a></li></ul>';
   }
   return html;
 }
@@ -495,14 +484,6 @@ export async function createAdjacentChart(
     }
 
     if (isGroupArticle) {
-      // feature removed, as the dup render trap is in core
-      // this is an inherited trap
-      //      if (OPTS.rendered) {
-      //        log("warn", "Already rendered this asset");
-      //        return;
-      //      }
-      //      OPTS.rendered = true;
-
       const html = convert2IndexHTML(
         data.body as Array<ReferenceType>,
         GROUP,

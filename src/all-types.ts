@@ -127,5 +127,4 @@ export interface AdjacentProps {
 export type BiblioProps = DesktopBiblioProps & MobileBiblioProps;
 
 // add other possible events here
-// src: shopping project, maybe also cats
 export type MiscEvent = MouseEvent | WheelEvent | TouchEvent | KeyboardEvent;

@@ -26,7 +26,7 @@ const {
 // browsers (mobile, laptop, projection screen).
 // This test is enough to make the module pass this mile-stone, which is why I wrote it
 // #TODO: add a visual test via storybook or something, that will run the CSS in addition
-// also #TODO, add my new generation CSS for this module 
+// also #TODO, add my new generation CSS for this module
 describe("TEST adjacent", () => {
   it("go 1: cleanTitle", () => {
     assert.equal(cleanTitle("simpleID", "group"), "groupsimpleID", "step #1");
@@ -277,10 +277,9 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
   it("go 7.1: convert2HTML", () => {
     let d1 = [];
     let d2 = `<ul class="adjacentList">
-<li> Article doesn't seem setup correctly.</li></ul>`;	
+<li> Article doesn't seem setup correctly.</li></ul>`;
     assert.deepEqual(convert2HTML(d1, "engineering"), d2, "step #23");
-
-	});
+  });
 
   it("go 8: convert2IndexHTML", () => {
     let d1 = [
@@ -515,7 +514,7 @@ Description: What concepts or areas of development are important.    This is a h
     assert.equal(
       dom.querySelectorAll("#groupengineering ul li").length,
       11,
-      "step #41", 
+      "step #41",
     );
 
     assert.equal(

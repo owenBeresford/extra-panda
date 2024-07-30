@@ -13,12 +13,13 @@ import { log, MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./networking";
  * appendIsland
  * An important util function, which removes need to jQuery, ShadowDOM AND other innerHTML hacks.
  * I have a historic avoidance of passing DOM object around the stack as it caused bad memory leaks.
+ * Security note: Executes changes to innerHTML on an Element not attached to the DOM.  It is the callers responsibility to not inject a JS blob that mines bitcoin by accident.
  * IMPURE
  * @param {string|HTMLElement} selector ~ where to appends the new content
  * @param {string} html ~ what to append
  * @param {Document =document} dom ~ reference to which DOM tree
  * @throws some sort of HTML error, if the supplied HTML is malformed.  Browser dependant
- * @protected
+ * @public
  * @returns {undefined}
  */
 export function appendIsland(
@@ -38,7 +39,7 @@ export function appendIsland(
       if (tt === null) {
         throw new Error("Oh no! DOM element not found: " + selector);
       }
-      tt.append(base.content);
+      return tt.append(base.content);
     } else {
       return selector.append(base.content);
     }
@@ -74,6 +75,7 @@ export function ready(callback: GenericEventHandler): void {
  * setIsland
  * Replace the whole of the subtree with the param
  * I have a historic avoidance of passing DOM object around the stack as it caused bad memory leaks.
+ * Security note: Executes changes to innerHTML on an Element not attached to the DOM.  It is the callers responsibility to not inject a JS blob that mines bitcoin.
  * IMPURE
  * @param {string|HTMLElement} selector
  * @param {string} html
@@ -89,6 +91,7 @@ export function setIsland(
 ): void {
   const base = dom.createElement("template");
   base.innerHTML = html;
+
   if (typeof selector === "string") {
     const tt = dom.querySelector(selector);
     while (tt && tt.lastChild) {
@@ -156,7 +159,7 @@ export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
  * @param {boolean} isLeft - left edge or right edge?
  * @param {Document=document} dom
  * @public
- * @return {number} - will return -1 on malcompliant webpages
+ * @return {number} - will return -1 on mal-compliant webpages
  */
 export function getArticleWidth(
   isLeft: boolean,
