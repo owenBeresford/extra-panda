@@ -45,7 +45,7 @@ let OPTS: CoreProps = {
  *
  * @param {HTMLElement} where
  * @param { (id: string | MiscEvent, dom: Document ) =>void} action
- * @public
+ * @protected
  * @returns {void}
  */
 function _map(where: HTMLElement, action: MultiFuncArg): void {
@@ -60,7 +60,7 @@ function _map(where: HTMLElement, action: MultiFuncArg): void {
  *
  * @param {Document =document} dom
  * @param {location =location} loc
- * @public
+ * @protected
  * @returns {void}
  */
 function initPopupMobile(
@@ -118,7 +118,7 @@ function initPopupMobile(
  * @param {string} fs - font-size
  * @param {string} dir - direction, mostly unused
  * @param {string} clr - color scheme
- * @public
+ * @protected
  * @returns {void}
  */
 function storeAppearance(
@@ -136,7 +136,7 @@ function storeAppearance(
  * applyAppearance
  * Apply branding settings found in a COOKIE
  * @param {Document =document} dom
- * @public
+ * @protected
  * @returns {void}
  */
 function applyAppearance(dom: Document = document): void {
@@ -173,7 +173,7 @@ function applyAppearance(dom: Document = document): void {
  * Util to manage state in the burgermenu
  * @param {string =".burgerMenu"} id - HTML id for the menu
  * @param {Document =document} dom
- * @public
+ * @protected
  * @returns {void}
  */
 function burgerMenu(
@@ -200,9 +200,9 @@ function burgerMenu(
  * tabChange
  * Change which tab is visible
  * IOIO REWRITE when tabs are replaced
- * @param {string} id - HTML id for the menu
+ * @param {string|MiscEvent} id - HTML id for the menu
  * @param {Document =document} dom
- * @public
+ * @protected
  * @returns {void}
  */
 function tabChange(id: string | MiscEvent, dom: Document = document): void {
@@ -245,22 +245,23 @@ function tabChange(id: string | MiscEvent, dom: Document = document): void {
   thing.setAttribute("aria-hidden", "false");
 }
 
+/*eslint complexity: ["error", 30]*/
 /**
  * siteCore
  * Applies all the functions in this file to the DOM
  * @param {CoreProps} opts - see docs, at top of file
  * @param {Document =document} dom
  * @param {Location =location} loc
+ * @param {Window =window} win
  * @public
  * @returns {void}
  */
-/*eslint complexity: ["error", 30]*/
 export async function siteCore(
   opts: CoreProps,
   dom: Document = document,
   loc: Location = location,
   win: Window = window,
-): void {
+): Promise<void> {
   OPTS = Object.assign(
     OPTS,
     {
@@ -409,7 +410,7 @@ export async function siteCore(
  * Access to an int
  
  * @public
- * @return {number}
+ * @returns {number}
  */
 export function hasBeenRun(): number {
   return OPTS["pageInitRun"];

@@ -13,7 +13,7 @@ hljs.registerLanguage("javascript", (hl: HLJSApi): Language => {
  
  * @param {Document = document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function execHighlight(dom: Document = document): void {
   dom

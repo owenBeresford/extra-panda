@@ -13,7 +13,7 @@ import { getArticleWidth } from "./dom-base";
  *
  * @param {string} url
  * @public
- * @return {string}
+ * @returns {string}
  */
 function link2Txt(url: string): string {
   const adresse = new URL(url);
@@ -76,6 +76,7 @@ export function addOctoCats(refs: boolean, dom: Document = document): void {
 /**
  * addBooks
  * Convert links labelled 'docs' to an open book logo
+ * @param {boolean} refs
  * @param {Document =document} dom
  * @public
  * @returns {void}
