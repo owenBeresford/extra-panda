@@ -304,7 +304,7 @@ function calcScreenDPI(dom: Document = document, win: Window = window): number {
 }
 
 //////////////////////////////////////////////// testing /////////////////////////////////////////////////////////////
-// no injectOpts as it wouldnt make sense
+// no injectOpts as it wouldn't make sense
 
 /**
  * exportcurrentSize
