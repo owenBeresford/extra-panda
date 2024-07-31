@@ -13,12 +13,13 @@ import { log, MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./networking";
  * appendIsland
  * An important util function, which removes need to jQuery, ShadowDOM AND other innerHTML hacks.
  * I have a historic avoidance of passing DOM object around the stack as it caused bad memory leaks.
+ * Security note: Executes changes to innerHTML on an Element not attached to the DOM.  It is the callers responsibility to not inject a JS blob that mines bitcoin by accident.
  * IMPURE
  * @param {string|HTMLElement} selector ~ where to appends the new content
  * @param {string} html ~ what to append
  * @param {Document =document} dom ~ reference to which DOM tree
  * @throws some sort of HTML error, if the supplied HTML is malformed.  Browser dependant
- * @protected
+ * @public
  * @returns {undefined}
  */
 export function appendIsland(
@@ -38,7 +39,7 @@ export function appendIsland(
       if (tt === null) {
         throw new Error("Oh no! DOM element not found: " + selector);
       }
-      tt.append(base.content);
+      return tt.append(base.content);
     } else {
       return selector.append(base.content);
     }
@@ -74,6 +75,7 @@ export function ready(callback: GenericEventHandler): void {
  * setIsland
  * Replace the whole of the subtree with the param
  * I have a historic avoidance of passing DOM object around the stack as it caused bad memory leaks.
+ * Security note: Executes changes to innerHTML on an Element not attached to the DOM.  It is the callers responsibility to not inject a JS blob that mines bitcoin.
  * IMPURE
  * @param {string|HTMLElement} selector
  * @param {string} html
@@ -89,6 +91,7 @@ export function setIsland(
 ): void {
   const base = dom.createElement("template");
   base.innerHTML = html;
+
   if (typeof selector === "string") {
     const tt = dom.querySelector(selector);
     while (tt && tt.lastChild) {
@@ -106,6 +109,7 @@ export function setIsland(
 /**
  * isFullstack
  * Look at function implementations to see if this is a browser
+ *
  * @public
  * @returns {boolean}
  */
@@ -133,7 +137,7 @@ export function isFullstack(): boolean {
  * @param {HTMLElement} ele
  * @param {BOUNDARY} attrib - One of top|bottom|left|right|width|height
  * @public
- * @returns {number } - the value of the requested
+ * @returns {number} - the value of the requested
  */
 export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
   try {
@@ -156,7 +160,7 @@ export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
  * @param {boolean} isLeft - left edge or right edge?
  * @param {Document=document} dom
  * @public
- * @return {number} - will return -1 on malcompliant webpages
+ * @returns {number} - will return -1 on mal-compliant webpages
  */
 export function getArticleWidth(
   isLeft: boolean,
@@ -181,8 +185,8 @@ export function getArticleWidth(
       PURE
  * @param {HTMLElement} ele
  * @param {Scrollable} offsets - a Trait of Window, holding the scroll offset values
- * @public
- * @return {ScreenOffsetArray}
+ * @protected
+ * @returns {ScreenOffsetArray}
  */
 function docOffsets(ele: HTMLElement, offsets: Scrollable): ScreenOffsetArray {
   const tmp = ele.getBoundingClientRect();
@@ -199,7 +203,7 @@ function docOffsets(ele: HTMLElement, offsets: Scrollable): ScreenOffsetArray {
  * @param {Document = document} dom
  * @param {Window = window} win
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function applyVolume(
   dom: Document = document,
@@ -222,7 +226,7 @@ export function applyVolume(
  * Convert many possible "English" boolean values to boolean
  * NOTE: js, may not be a string
  * @param {string | number} str
- * @public
+ * @protected
  * @returns {boolean}
  */
 function booleanMap(str: string | number): boolean {
@@ -280,7 +284,7 @@ export function isMobile(
  * as labeled
  * @param {Document =document} dom
  * @param {Window =window} win
- * @public
+ * @protected
  * @returns {number}
  */
 function calcScreenDPI(dom: Document = document, win: Window = window): number {
@@ -299,11 +303,14 @@ function calcScreenDPI(dom: Document = document, win: Window = window): number {
   }
 }
 
+//////////////////////////////////////////////// testing /////////////////////////////////////////////////////////////
+// no injectOpts as it wouldn't make sense
+
 /**
- * currentSize
- * Utility function to report the tab size...
- * I use this in debugging RWD PURE
- * @param {Document =document} dom
+ * exportcurrentSize
+ * Supplied for testing, convert a window to a size
+ 
+ * @param {Document = document} dom 
  * @public
  * @returns {ScreenSizeArray}
  */
@@ -327,9 +334,6 @@ export function currentSize(dom: Document = document): ScreenSizeArray {
   return [wid2, hi2];
 }
 
-//////////////////////////////////////////////// testing /////////////////////////////////////////////////////////////
-// no injectOpts as it wouldnt make sense
-
 export const TEST_ONLY = {
   appendIsland,
   getArticleWidth,
@@ -342,3 +346,4 @@ export const TEST_ONLY = {
   calcScreenDPI,
   currentSize,
 };
+

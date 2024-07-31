@@ -90,7 +90,7 @@ export function modalInit(dom: Document = document): void {
       a.addEventListener("click", HTMLDetailsClick);
     });
   }
-  // see if something can be done for mobile interactions
+  // IOIO see if something can be done for mobile interactions
   // add a listener to the custom back button would be good
 }
 

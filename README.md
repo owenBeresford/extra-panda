@@ -94,12 +94,35 @@ Software architecture
 * With JS modules, there is less functions inside functions, so unit tests are easier.   Improved unit-test coverage as its now feasible (rather than behaviour testing).
 * early versions did have actual object composition, but I removed that as it made the types too complex
 * this is not currently OO code, but would be when:
-  - add single DocumentChange interface, and everything implement this
+  - add single DocumentChange interface, and everything implements this
   - reduce important of setting dicts, in favour of a more OO style
 * this code is not actual FP, but could be when:
   - drop any loops in favour of map() or forEach()
   - add higher order functions
 
+Security review
+* My client side JS only loads assets that are from the same server [by settings in Fetch].
+* All my assets are hosted on the same server
+* As far as I can, the SM links are direct links/ URLs, not 3rd party JS
+* The inbound comms are all hosted on third party services, and assumed to be secure (as that would affect their revenue) 
+* So to get my webpages to show wrong content, you need to breach the server
+* If somehow I have uploaded bad content, the article will show a relevant error.  I am fairly sure its not possible for data in a JSON file to be auto executed when parsing the JSON
+* My server is administrated by professionals, and they seem to know what they are doing.
+* All access as a webpage consumer is inside HTTPS, exclusively.
+* At point of setup, my new IP is clean for any reputation usage (e.g. not also used by a spammer/ scammer / con-artist).
+* I have held this domain a long time, it was new to me, AFAIK 
+* If you disable some assets on the client side, you get the same HTML/ content, and usable user journeys.
+*  .
+* I have read OWASP that says I should house data arrays ~ from JSON ~ inside an object, so the array can't be extended, but I need more data to make a sensible mitigation.  TODO 
+* TODO: adding more integrity HTTP headers
+* Most common failure: bad English by me.  Not a security concern
+* If allow third party articles, they get a 24hour review period ~ to review ~ before their content is generally visible or indexable.
+* I have done an audit, all the URLs loaded are relative URLs (not absolute URLs).
+* Nothing new learned in these links: 
+  * https://aptori.dev/blog/javascript-security-a-secure-coding-checklist-for-developers
+  * https://raygun.com/blog/js-security-vulnerabilities-best-practices/
+
+Notes:
 - **_NOTE_** Commits at the start of this project are completely meaningless, as its just when I moved the code back to my dev machine. They are meaningless duration markers, rather than feature markers.
 - Some of these unit tests are less meaningful than others, regrettably (running from Node).   It would be nice to setup test from a browser.  To *look* at the UX (as in, I am being the success/ fail criterion), I did some manual testing
 - Use new language features (ADD a few KB of source) without jQuery (DROP >300KB of source). Dropping jQuery, as "select downloaded features" feature has been removed from https://jquery.com

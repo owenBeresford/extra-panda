@@ -1,8 +1,7 @@
 ### TODO
 - Add type washing to JSON ingestion used in multiple places https://github.com/samchon/typia 
-- Add wrapper objects to JSON payload as OWASP says to (not explained why necessary) see https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html
 - add multilingual support
-- Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom
+- Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom   to TESTS
 - Add config for minifier via terser to build step.  Out of time.  IMPORTANT
 - Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages. 
 - port the everything* tests to storybook
@@ -11,8 +10,9 @@
 
 ### Previous Updates
 
-- Discuss: Perl-style encapsulation by culture rather than armed enforcers
-- Discuss: every time I am setting CSS vis JS, this is code smell & I need more information
+- Discuss: Perl-style encapsulation by culture rather than armed enforcers.
+- Discuss: every time I am setting CSS vis JS, this is code smell & I need more information.
+- Discuss: Whilst checking old security failures, note that JS modules segregates the '90s and '00s from my website JS.  It implies "use strict" flag as a further layer of less-stupid.
 - DONE remove local scope use of global vars
 - DONE reduce use a lambda functions
 - DONE check accessibility of currentSize
@@ -48,4 +48,7 @@
 - DONE effect fancy links are now decorated in the same style as biblio links, controlled by addReferences CSS class
 - DONE adjacent links no longer erase first group label when there is multiple adjacent groups
 - DONE made it more clear that the 10 items in the adjacent list are not the full list, but a browser width option.
+- WONTFIX A legacy version of JS that **can't read JS modules** may be breached if someone overloads window.Array, and parses JSON. [https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html] [https://security.stackexchange.com/questions/159609/how-is-it-possible-to-poison-javascript-array-constructor-and-how-does-ecmascrip]
+- DONE: locate and terminate-with-extreme-prejudice the source of page jitter whilst displaying tooltips. 
+
 
