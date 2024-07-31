@@ -20,7 +20,7 @@ let OPTS: AdjacentProps = {} as AdjacentProps;
  * @param {string} article
  * @param {string} suffix
  * @param {Location =location} loc
- * @public
+ * @protected
  * @returns {string} - the desired full URL of this page
  */
 function mapURL(
@@ -55,7 +55,7 @@ function mapURL(
  *    PURE
  * @param {boolean} isLong
  * @param {number} isOffscreen - unused in current version, but may be readded in future
- * @public
+ * @protected
  * @returns {string}
  */
 function createStyle(isLong: boolean, isOffscreen: boolean): string {
@@ -74,7 +74,7 @@ function createStyle(isLong: boolean, isOffscreen: boolean): string {
  *    PURE
  * @param {string} id
  * @param {string} group
- * @public
+ * @protected
  * @returns {string}
  */
 function cleanTitle(id: string, group: string): string {
@@ -87,7 +87,7 @@ function cleanTitle(id: string, group: string): string {
  * DO NOT EXPORT this is 1 line of code, functionalised for readability reasons
     PURE
  * @param {string} url
- * @public
+ * @protected
  * @returns {string}
  */
 function extractOABName(url: string): string {
@@ -101,7 +101,7 @@ function extractOABName(url: string): string {
  * Will be on the URL for the group indexes
  *       PURE
  * @param {Location =location} loc
- * @public
+ * @protected
  * @throws when insufficient data has been supplied
  * @returns {string}
  */
@@ -126,6 +126,7 @@ function generateGroup(loc: Location = location): string {
  * the window many exceed the end of the adjacent meta data, in which case
  * it fills the buffer 'list' with values from the start of the meta data
  * @param {Array<ReferenceType>} data - the meta data
+ * @protected
  * @returns {Array<NormalisedReference>}
  */
 function normaliseToList(
@@ -196,7 +197,7 @@ function normaliseToList(
  * @param {number} wrap
  * @param {number} i
  * @param {number} me
- * @public
+ * @protected
  * @returns {Array<number>}
  */
 function nextStep(
@@ -258,7 +259,7 @@ export function listContentGroup(
  *
  * @param {Array<NormalisedReference>} list
  * @param {string} gname - the group name
- * @public
+ * @protected
  * @returns {string} - the HTML
  */
 function convert2HTML(list: Array<NormalisedReference>, gname: string): string {
@@ -311,7 +312,7 @@ function convert2HTML(list: Array<NormalisedReference>, gname: string): string {
  * @param {string} gname
  * @param {Document =document} dom
  * @param {Location =location} loc
- * @public
+ * @protected
  * @returns {string} - of HTML
  */
 function convert2IndexHTML(
@@ -359,7 +360,7 @@ function convert2IndexHTML(
  * WARN has side effects, IMPURE
  * @param {string} gname - article group name
  * @param {Document =document} dom
- * @public
+ * @protected
  * @returns {void}
  */
 function updateLabels(gname: string, dom: Document = document): void {

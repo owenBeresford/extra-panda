@@ -12,7 +12,7 @@ import { getArticleWidth } from "./dom-base";
  *   PURE
  *
  * @param {string} url
- * @public
+ * @protected
  * @returns {string}
  */
 function link2Txt(url: string): string {
