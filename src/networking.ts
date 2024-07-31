@@ -75,17 +75,17 @@ export function getFetch(): Fetchable {
 
 /**
  * runFetch
- * A simple wrapper current fetch()   IOIO LOGGING!!
+ * A simple wrapper current fetch()
  * IMPURE when I add logging
  * This behaves as a VERY SIMPLE middle-ware.
- * @param {string} url
+ * @param {string|URL} url
  * @param {boolean} trap ~ return null rather than an exception
  * @public
  * @throws {Error} = predictably, in case of network issue
  * @returns {Promise<SimpleResponse>}
  */
 export async function runFetch(
-  url: string,
+  url: string | URL,
   trap: boolean,
 ): Promise<SimpleResponse> {
   const f = getFetch();

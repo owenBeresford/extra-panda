@@ -13,7 +13,7 @@ hljs.registerLanguage("html", (hl: HLJSApi): Language => {
  
  * @param {Document = document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function execHighlight(dom: Document = document): void {
   dom.querySelectorAll('code[lang="html"]').forEach((el: HTMLElement): void => {

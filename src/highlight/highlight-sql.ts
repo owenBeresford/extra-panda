@@ -13,7 +13,7 @@ hljs.registerLanguage("sql", (hl: HLJSApi): Language => {
  
  * @param {Document = document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function execHighlight(dom: Document = document): void {
   dom.querySelectorAll('code[lang="sql"]').forEach((el: HTMLElement): void => {

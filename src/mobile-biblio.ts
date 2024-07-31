@@ -23,7 +23,7 @@ let OPTS: MobileBiblioProps = {} as MobileBiblioProps;
  * empty
  * A static fixture response for no-data issues
  * @param {number} offset
- * @public
+ * @protected
  * @returns {NormalisedReference}
  */
 function empty(offset: number): NormalisedReference {
@@ -96,7 +96,7 @@ function normaliseData(
  * render
  * Function to convert the data to HTML
  * @param {Array<NormalisedReference>} data - technically synthetic reference data.
- * @public
+ * @protected
  * @returns {string} - the HTML
  */
 function render(data: Array<NormalisedReference>): string {
@@ -120,7 +120,7 @@ function render(data: Array<NormalisedReference>): string {
  * Hack original text section
  * @param {Array<ReferenceType>} dat
  * @param {Document =document} dom
- * @public
+ * @protected
  * @returns {void}
  */
 function adjustDom(dat: Array<ReferenceType>, dom: Document = document): void {

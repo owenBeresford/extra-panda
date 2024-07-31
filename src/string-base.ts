@@ -20,39 +20,6 @@ export function pullout(a: HTMLElement): string {
 }
 
 /**
- * _map
- * Add several event listeners, just a utility
- * UNUSED till I can use Golang grade types
- * @param {HTMLElement} where
- * @param {MiscEventHandler } action
- * @public
- * @returns {void}
- */
-/*
-function _map(
-  where: HTMLElement,
-  action: MiscEventHandler,
-  args: Array<any> | undefined = undefined,
-): void {
-  if (args) {
-    where.addEventListener("click", (a: Event) => {
-      return action(a, ...args);
-    });
-    where.addEventListener("touch", (a: Event) => {
-      return action(a, ...args);
-    });
-    where.addEventListener("keypress", (a: Event) => {
-      return action(a, ...args);
-    });
-  } else {
-    where.addEventListener("click", action);
-    where.addEventListener("touch", action);
-    where.addEventListener("keypress", action);
-  }
-}
-*/
-
-/**
  * articleName
  * Extract article name from location
  * PURE
@@ -70,7 +37,7 @@ export function articleName(loc: Location = location): string {
  * PURE
  * @param {string} template
  * @param {Location =location} loc
- * @protected
+ * @public
  * @returns {string}
  */
 export function makeRefUrl(template: string, loc: Location = location): string {
@@ -151,6 +118,7 @@ export function pad(num: number): string {
   return r;
 }
 
+/*eslint complexity: ["error", 30]*/
 /**
  * fixArgs
  * Fix whatever I have been given, down to a predictable list #leSigh browsers.
@@ -162,7 +130,6 @@ export function pad(num: number): string {
  * @protected
  * @returns {Array<strings>}
  */
-/*eslint complexity: ["error", 30]*/
 function fixArgs(day: string = "", time: string = ""): Array<string> {
   let day1: string;
   let time1: string;
@@ -211,7 +178,7 @@ function fixArgs(day: string = "", time: string = ""): Array<string> {
  * Convert a string of date with a format to a date
  * For details on format, please see php strtotime()
  * NOTE output dates always in current and local TZ, even if input date isn't
- * like really small version of moment, converts ascii string to Date object
+ * This is like really small version of moment, converts ascii string to Date object
  * PURE
  * @param {string} format
  * @param {string=""} day
@@ -277,7 +244,7 @@ export function importDate(
  * dateMunge
  * Convert Epoch to human readable string PURE
  * @param {number} din
- * @param {Date | string} ddefault - assert tranactional data sources, filler for nulls in first src
+ * @param {Date | string} ddefault - assert transactional data sources, filler for nulls in first src
  * @param {boolean =true} monthText - weather or not to translate month numbers to text, and whether to pad a 1 digit month
  * @public
  * @returns {string}
