@@ -11,9 +11,9 @@ import { log, MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./networking";
 
 /**
  * appendIsland
- * An important util function, which removes need to jQuery, ShadowDOM AND other innerHTML hacks.
+ * An important util function, which removes the need for jQuery, ShadowDOM AND other innerHTML hacks.
  * I have a historic avoidance of passing DOM object around the stack as it caused bad memory leaks.
- * Security note: Executes changes to innerHTML on an Element not attached to the DOM.  It is the callers responsibility to not inject a JS blob that mines bitcoin by accident.
+ * Security note: Executes changes to innerHTML on an Element not attached to the DOM.  It is the callers' responsibility to not inject a JS blob that mines bitcoin by accident.
  * IMPURE
  * @param {string|HTMLElement} selector ~ where to appends the new content
  * @param {string} html ~ what to append
@@ -50,25 +50,23 @@ export function appendIsland(
 
 /**
  * ready
- * Page start event triggering
- * TODO: work out which option is for MSIE and delete that
+ * Triggers Page start-event
+ * 
  * @param {GenericEventHandler} callback
+ * @param {Document =document} dom
  * @see [stack overflow answer https://stackoverflow.com/questions/799981/document-ready-equivalent-without-jquery]
+ * @throws In case of an unknown JS interpreter that supports an unknown pageReady event
  * @public
  * @returns {void}
  */
-export function ready(callback: GenericEventHandler): void {
-  if (document.readyState !== "loading") {
-    const e = createEvent();
+export function ready(callback: GenericEventHandler, dom:Document=document): void {
+  if (dom.readyState !== "loading") {
+    const e = dom.createEvent();
     callback(e);
-  } else if (document.addEventListener) {
-    document.addEventListener("DOMContentLoaded", callback);
-  } else
-    document.attachEvent("onreadystatechange", function (e: Event) {
-      if (document.readyState === "complete") {
-        callback(e);
-      }
-    });
+  } else if (dom.addEventListener) {
+    dom.addEventListener("DOMContentLoaded", callback);
+  }
+  throw new Error("Unknown JS interpreter, can't register code");
 }
 
 /**
@@ -108,7 +106,8 @@ export function setIsland(
 
 /**
  * isFullstack
- * Look at function implementations to see if this is a browser
+ * Workout if this JS runtime is inside a full range of technology, like a browser.
+ * This is mostly used for tests.
  *
  * @public
  * @returns {boolean}
@@ -155,7 +154,7 @@ export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
 
 /**
  * getArticleWidth
- * a util to get current article width
+ * A utility to get current article width
  
  * @param {boolean} isLeft - left edge or right edge?
  * @param {Document=document} dom
@@ -244,7 +243,7 @@ function booleanMap(str: string | number): boolean {
 
 /**
  * isMobile
- * Statically workout if this is mobile
+ * Statically workout if this JS interpreter is a mobile
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @param {Window =window} win

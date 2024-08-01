@@ -3,7 +3,7 @@ import { MiscEvent } from "./all-types";
 
 /**
  * HTMLDetailsTrap
- * If see ESC key close any open details
+ * If ESC key happens, close any open DETAILS elements
  * @param {MiscEvent} e
  * @param {Document = document} dom
  * @protected

@@ -121,10 +121,10 @@ export function pad(num: number): string {
 /*eslint complexity: ["error", 30]*/
 /**
  * fixArgs
- * Fix whatever I have been given, down to a predictable list #leSigh browsers.
- * This is too complex as I am supporting ALL browsers across a large amount of time/editions
- * A 'JS purity & primis' person would not support some of the corner cases I think
- * Used in importDate
+ * Fix whatever data that I have been given, down to a predictable list #leSigh browsers.
+ * This is too complex as I am supporting ALL browsers across a large amount of time/editions.
+ * I presume a 'JS purity & primis' person would not support some of the corner cases.
+ * Used in importDate()
  * @param {string = ""} day - supports / and - common formats
  * @param {string = ""} time
  * @protected
@@ -175,10 +175,9 @@ function fixArgs(day: string = "", time: string = ""): Array<string> {
 
 /**
  * importDate
- * Convert a string of date with a format to a date
+ * Convert a string or Date with a format to a date
  * For details on format, please see php strtotime()
  * NOTE output dates always in current and local TZ, even if input date isn't
- * This is like really small version of moment, converts ascii string to Date object
  * PURE
  * @param {string} format
  * @param {string=""} day

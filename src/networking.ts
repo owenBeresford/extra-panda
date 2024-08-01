@@ -20,8 +20,8 @@ export function debug(loc: Location = location): boolean {
 }
 
 /**
- * exportlog
- * A simple console.log alias, to make later extension easier
+ * log
+ * A simple console.log alias, to make a later extension easier
  * @param {string} typ - The Type on the message, should match functions on console/ a syslog
  * @param {Array<string>} inputs - a variable list
  * @public
@@ -47,7 +47,7 @@ export const EM_SZ = 16;
 /**
   According to the internet a current phone is likely to have a PPI of over 300
   (historical trend) a cheap lazer will have a PPI of 300, 600 or 900 PPI
-  a desktop / laptop is likely to be 80-150 PPI
+  a desktop / laptop is likely to hve a 80-150 PPI
  
 https://www.displayninja.com/what-is-pixel-density/
 https://phonesdata.com/en/best/screenppi/
@@ -56,7 +56,7 @@ export const MOBILE_MIN_PPI = 180;
 
 /**
  * getFetch
- * Access to fetch that is will work across JS interpreters
+ * Access to fetch that will work across JS interpreters
  * IMPURE due to logging
  * @public
  * @returns {Fetch| null}
@@ -171,7 +171,8 @@ class COOKIE implements Cookieable {
 /**
  * getCookie
  * Generate a cookie access object PURE
- * The commented code should faster in Chrome, however it was making errors in tests, so I commented it
+ * The awkward name is not to collide with Chrome extensions.
+ * The commented code should run faster in Chrome, however it was making errors in tests, so I commented it
  * @public
  * @returns {Cookieable }
  */
