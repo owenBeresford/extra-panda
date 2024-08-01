@@ -46,7 +46,7 @@ function markAllLinksUnknown(
 
 /**
  * generateEmpty
- * Create a tooltip for a link that seems to lack meta data.
+ * Create a tooltip text for a link that lacks meta data.
  * PURE
  * @param {number} i - the offset for the link, used in the output
  * @protected
@@ -130,8 +130,8 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
 
 /**
  * applyDOMpostions
- * Actually do the CSS class insertion.
- * IOIO KLAXON KLAXON: check memory usage, in earlier browsers this was VERY bad.
+ * Actually does the CSS class insertion here.
+ * see mapPositions() for the iterators
  * IMPURE.
  * @param {HTMLElement} ele
  * @param {number} WIDTH

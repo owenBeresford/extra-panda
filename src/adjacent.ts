@@ -123,7 +123,7 @@ function generateGroup(loc: Location = location): string {
  * normaliseToList ~
  * PURE
  * [me, remainder] form a sliding window of the meta data,
- * the window many exceed the end of the adjacent meta data, in which case
+ * the window may exceed the end of the adjacent meta data, in which case
  * it fills the buffer 'list' with values from the start of the meta data
  * @param {Array<ReferenceType>} data - the meta data
  * @protected
@@ -190,7 +190,7 @@ function normaliseToList(
 
 /**
  * nextStep
- * A function map next values, to make other code simpler
+ * maps the next values, to make other code simpler
  *     PURE
  * @param {string} cur
  * @param {string} local
@@ -255,7 +255,7 @@ export function listContentGroup(
  * convert2HTML
  * Convert an array of Reference type into a HTML string
  *   PURE
- * NOTE: the initial link is hardcoded in the static HTML template, so people with problems can still use the user journey
+ * NOTE: the initial link is hardcoded in the static HTML template, so people with problems can still follow the user journey
  *
  * @param {Array<NormalisedReference>} list
  * @param {string} gname - the group name
@@ -385,7 +385,8 @@ function updateLabels(gname: string, dom: Document = document): void {
 
 /**
  * extractGroup
- * A method to extract the possible data sources for group data PURE
+ * A method to extract the possible data sources for group data 
+ *     PURE
  * @param {HTMLElement | null} ele
  * @param {Location = location} loc
  * @param {Document = document} dom - unused param supplied so if I need to add an extra reading point I can
@@ -423,9 +424,9 @@ export function extractGroup(
 }
 
 /**
- * createAdjacentChart
- * Create a adjacent chart on the bottom of the current page.
-           IMPURE
+ * createAdjacentChart::
+ * Create an adjacent chart at the bottom of the current article.
+ *     IMPURE
  * @param {AdjacentParams} opts
  * @param {Document =document} dom
  * @param {Location =location} loc
