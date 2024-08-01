@@ -112,7 +112,7 @@ function initPopupMobile(
 
 /**
  * storeAppearance
- * Write supplied data to a cOOKIE
+ * Write supplied data to a COOKIE
  *
  * @param {string} ft - font
  * @param {string} fs - font-size
@@ -170,7 +170,7 @@ function applyAppearance(dom: Document = document): void {
 
 /**
  * burgerMenu
- * Util to manage state in the burgermenu
+ * A utility to manage the State in the burgermenu
  * @param {string =".burgerMenu"} id - HTML id for the menu
  * @param {Document =document} dom
  * @protected

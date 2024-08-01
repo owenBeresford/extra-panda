@@ -77,7 +77,7 @@ function shareMastodon(
 
 /**
  * accessVisibility
- * Util function to isolate access to styles
+ * A Utility to isolate access to styles
  * @param {HTMLElement} buf
  * @param {string ='display'} what
  * @param {Window =window} win

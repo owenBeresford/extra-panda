@@ -83,4 +83,5 @@ export function readingDuration(opts: ReadingProps, dom = document): void {
 /////////////////////////////////////////////// testing ////////////////////////////////////////////
 // injectOpts not needed, only 1 function
 /* access to functions for unit tests */
+
 export const TEST_ONLY = { readingDuration };
