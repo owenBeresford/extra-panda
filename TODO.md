@@ -48,7 +48,7 @@
 - DONE effect fancy links are now decorated in the same style as biblio links, controlled by addReferences CSS class
 - DONE adjacent links no longer erase first group label when there is multiple adjacent groups
 - DONE made it more clear that the 10 items in the adjacent list are not the full list, but a browser width option.
-- WONTFIX A legacy version of JS that **can't read JS modules** may be breached if someone overloads window.Array, and parses JSON. [https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html] [https://security.stackexchange.com/questions/159609/how-is-it-possible-to-poison-javascript-array-constructor-and-how-does-ecmascrip]
+- WONTFIX A legacy version of JS that **can't read JS modules** may be breached if someone overloads window.Array, and parses JSON. ["AJAX security tips", https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html] ["Historic JSON parsing problems", https://security.stackexchange.com/questions/159609/how-is-it-possible-to-poison-javascript-array-constructor-and-how-does-ecmascrip]
 - DONE: locate and terminate-with-extreme-prejudice the source of page jitter whilst displaying tooltips. 
 
 
