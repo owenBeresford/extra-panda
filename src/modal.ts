@@ -1,6 +1,6 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
 import { MiscEvent } from "./all-types";
-import { log} from './networking';
+import { log } from "./networking";
 
 /**
  * HTMLDetailsTrap
@@ -90,7 +90,7 @@ export function modalInit(dom: Document = document): void {
     tmp.forEach(function (a: HTMLDetailsElement): void {
       a.addEventListener("click", HTMLDetailsClick);
     });
-	dom.body.addEventListener("keydown", HTMLDetailsTrap);
+    dom.body.addEventListener("keydown", HTMLDetailsTrap);
   }
   // IOIO see if something can be done for mobile interactions
   // add a listener to the custom back button would be good

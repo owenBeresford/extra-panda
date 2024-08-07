@@ -13,8 +13,6 @@ export default [
     jsdoc: {
       mode: "typescript",
     },
-    plugins: { "jsdoc"
-    },
 	},
     plugins: { jsdoc },
 	"rules": { 

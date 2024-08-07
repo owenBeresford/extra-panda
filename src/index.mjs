@@ -1,5 +1,6 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
+// this file is importing everything to ensure that the linker/ minifier can see the files
 import * as Types from "./all-types";
 import * as Vanilla from "./networking";
 import * as StringBase from "./string-base";

@@ -28,6 +28,5 @@ describe("TEST modal ", () => {
     let buf = dom.querySelector("details");
     assert.equal(buf.getEventListeners().length, 1, "Assert #20");
     assert.equal(dom.body.getEventListeners().length, 1, "Assert #20");
-
   });
 });
