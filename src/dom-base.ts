@@ -51,7 +51,7 @@ export function appendIsland(
 /**
  * ready
  * Triggers Page start-event
- * 
+ *
  * @param {GenericEventHandler} callback
  * @param {Document =document} dom
  * @see [stack overflow answer https://stackoverflow.com/questions/799981/document-ready-equivalent-without-jquery]
@@ -59,7 +59,10 @@ export function appendIsland(
  * @public
  * @returns {void}
  */
-export function ready(callback: GenericEventHandler, dom:Document=document): void {
+export function ready(
+  callback: GenericEventHandler,
+  dom: Document = document,
+): void {
   if (dom.readyState !== "loading") {
     const e = dom.createEvent();
     callback(e);
@@ -345,4 +348,3 @@ export const TEST_ONLY = {
   calcScreenDPI,
   currentSize,
 };
-

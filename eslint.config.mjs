@@ -23,14 +23,13 @@ export default [
     "jsdoc/require-jsdoc": 1,
     "jsdoc/newline-after-description": 0,
     "jsdoc/require-description": 1,
-//    "jsdoc/require-param": [1, { checkDestructured: false }],
     "jsdoc/require-param": 1,
     "jsdoc/require-param-description": 0,
     "jsdoc/require-param-name": 1,
     "jsdoc/require-param-type": 1,
     "jsdoc/require-returns": 1,
     "jsdoc/require-returns-description": 0,
-    "jsdoc/require-yields": 1,
-		},
+    "jsdoc/require-yields": 1
+		}
   }
 ];
