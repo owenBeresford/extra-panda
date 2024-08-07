@@ -385,7 +385,7 @@ function updateLabels(gname: string, dom: Document = document): void {
 
 /**
  * extractGroup
- * A method to extract the possible data sources for group data 
+ * A method to extract the possible data sources for group data
  *     PURE
  * @param {HTMLElement | null} ele
  * @param {Location = location} loc
