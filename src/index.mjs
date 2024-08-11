@@ -2,7 +2,7 @@
 
 // this file is importing everything to ensure that the linker/ minifier can see the files
 import * as Types from "./all-types";
-import * as Vanilla from "./networking";
+import * as NetTools from "./networking";
 import * as StringBase from "./string-base";
 import * as DOMBase from "./dom-base";
 import * as Effect from "./effect";
