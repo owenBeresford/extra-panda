@@ -188,6 +188,7 @@ Notes:
 - .lotsOfWords
 - .halferWords
 - .fewWords
-
+-
+- please ensure .sr-only is defined (from bootstrap)
 </details>
 

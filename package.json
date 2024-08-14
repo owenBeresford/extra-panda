@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "node ./node_modules/.bin/vite --config ./vite.config.lib.ts build && node ./node_modules/.bin/uglifyjs ./dist/ob1.mjs -o /tmp/ob1.min.mjs && echo 'generated /tmp/ob1.min.mjs' ; node node_modules/.bin/vite --config vite.config.lang-go.ts build ; node node_modules/.bin/vite --config vite.config.lang-bash.ts build ; node node_modules/.bin/vite --config vite.config.lang-conf.ts build ; node node_modules/.bin/vite --config vite.config.lang-html.ts build ; node node_modules/.bin/vite --config vite.config.lang-js.ts build ; node node_modules/.bin/vite --config vite.config.lang-php.ts build ; node node_modules/.bin/vite --config vite.config.lang-xml.ts build ; node node_modules/.bin/vite --config vite.config.lang-sql.ts build ; node node_modules/.bin/vite --config vite.config.lang-perl.ts build ; node node_modules/.bin/vite --config vite.config.lang-css.ts build",
-    "test": "node ./node_modules/.bin/vitest run",
+    "test": "export NODE_ENV=development; node ./node_modules/.bin/vitest run",
+    "lint notes":"1 function is over complexity by 1 point. . .  && Its an arbitary limit",
     "lint": "node ./node_modules/.bin/eslint --exit-on-fatal-error --fix --no-cache; node ./node_modules/.bin/prettier --write ./src; ",
     "build:docs": "if [ ! -d './dist/docs' ]; then mkdir -p ./dist/docs; fi; node ./node_modules/.bin/typedoc --options ./typedoc.json --emit both --logLevel 3",
     "#ignore-this-line": "Edit values in this simple script if you have local security policy",
