@@ -16,7 +16,7 @@ import {
 } from "./adjacent";
 import { initMastodon } from "./mastodon";
 import { isLocal } from "./string-base";
-import { isMobile, appendIsland, applyVolume } from "./dom-base";
+import { isMobile, appendIsland, applyVolume, expandDetails } from "./dom-base";
 import { createBiblio as mobileCreateBiblio } from "./mobile-biblio";
 import { createBiblio as desktopCreateBiblio } from "./desktop-biblio";
 import {
@@ -301,6 +301,7 @@ export async function siteCore(
   addBashSamples(dom);
   applyAppearance(dom);
   modalInit(dom);
+  expandDetails(1040, dom, loc, win);
 
   if (
     !isMobile(dom, loc) &&

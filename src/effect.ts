@@ -50,6 +50,7 @@ function link2Txt(url: string): string {
  * Convert links labelled 'git' to the github logo
  * @param {boolean} refs
  * @param {Document =document} dom
+ * @see [https://fontawesome.com/v4/accessibility/]
  * @public
  * @returns {void}
  */
@@ -62,7 +63,12 @@ export function addOctoCats(refs: boolean, dom: Document = document): void {
     const tmp = pullout(a);
     if (tmp.trim().toLowerCase() === "git") {
       a.textContent = "";
-      appendIsland(a, '<i class="fa fa-github" aria-hidden="true"></i>', dom);
+      appendIsland(
+        a,
+        `<i class="fa fa-github" aria-hidden="true"></i> 
+		 <span class="sr-only">git</span>`,
+        dom,
+      );
       if (refs) {
         a.setAttribute("aria-label", link2Txt(a.getAttribute("href")));
         applyDOMpostions(a, WIDTH);
@@ -90,9 +96,11 @@ export function addBooks(refs: boolean, dom: Document = document): void {
       a.textContent = "";
       appendIsland(
         a,
-        '<i class="fa fa-book-open" aria-hidden="true"></i>',
+        `<i class="fa fa-book-open" aria-hidden="true"></i>
+		 <span class="sr-only">docs</span>`,
         dom,
       );
+      // I am injecting this here, as the HTML renderer doesn't add titles to links
       a.setAttribute(
         refs ? "aria-label" : "title",
         "Link to the project docs; it may be a git page, or a separate webpage. ",
@@ -133,7 +141,7 @@ export function addBashSamples(dom: Document = document): void {
 /**
  * addFancyButtonArrow
  * Markup buttons as a big arrow.
- * Maybe at some point refactor into addLeftArrow, addRightArrow
+ * TODO Maybe at some point refactor into addLeftArrow, addRightArrow
  * @param {Document =document} dom
  * @public
  * @returns {void}
