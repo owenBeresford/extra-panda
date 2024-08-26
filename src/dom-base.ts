@@ -227,11 +227,12 @@ export function applyVolume(
  * expandDetails
  * Function to open DETAILS elements, when on a large screen.
  * Only apply to maquette articles at present.
- *  NOTE: this doesn't care about mobile, just viewport size, to save a click for the user
+ * NOTE: this doesn't care about mobile, just viewport size, to save a click for the user
  *
  * @param {number =1040} bigScreen - Minimum size for a large screen. The "bigscreenness" is regulated by CSS design
  * @param {Document =document} dom
  * @param {Location = location} loc
+ * @param {Window = window} win
  * @public
  * @returns {void}
  */
@@ -239,17 +240,21 @@ export function expandDetails(
   bigScreen: number = 1040,
   dom: Document = document,
   loc: Location = location,
+  win: Window = window,
 ): void {
   if (!dom.querySelector(".maquetteContainer")) {
     return;
   }
 
-  if (screenWidth(dom, loc) > bigScreen) {
+  if (screenWidth(loc, win) > bigScreen) {
     const THING = Array.from(
       dom.querySelectorAll(".maquetteContainer details"),
     );
     for (let i = 0; i < THING.length; i++) {
-      THING[i].open = true;
+      // this IF trap is to avoid the test results widget being locked open, and blocking the screen
+      if (!THING[i].classList.contains("singlePopup")) {
+        THING[i].open = true;
+      }
     }
   }
 }
@@ -258,20 +263,17 @@ export function expandDetails(
  * screenWidth
  * compute the viewport width.
  *
- * @param {Document=document} dom
  * @param {Location = location} loc
+ * @param {Window = window} win
  * @public
  * @returns {number}
  */
-function screenWidth(
-  dom: Document = document,
-  loc: Location = location,
-): number {
+function screenWidth(loc: Location = location, win: Window = window): number {
   const u: URLSearchParams = new URLSearchParams(loc.search);
   if (u.has("width")) {
     return parseInt(u.get("width"), 10);
   }
-  return dom.innerWidth;
+  return win.innerWidth;
 }
 
 /**

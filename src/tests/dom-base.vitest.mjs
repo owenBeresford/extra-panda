@@ -230,6 +230,43 @@ d
     assert.equal(dom.querySelector("details").open, false, "asset #16");
   });
 
+  it("go 10.2: expandDetails", (context) => {
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/home?width=1100",
+      3,
+    );
+    let str = `<div class="maquetteContainer">
+<details class="singlePopup">
+<summary>A title</summary>
+dg dfg
+d 
+fgdf gds
+fg ad
+fg dafg
+adfg
+df g
+dfgdfg
+df gdaf
+gadf
+gad
+ fgad
+fg d
+fg
+dafg
+da
+fg
+dafg
+da
+ga
+d
+</details>
+</div>`;
+    appendIsland("#point1", str, dom);
+    assert.equal(dom.querySelector("details").open, false, "asset #14");
+    expandDetails(1040, dom, loc);
+    assert.equal(dom.querySelector("details").open, false, "asset #15");
+  });
+
   it("go 8: applyVolume", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div class="lotsOfWords">

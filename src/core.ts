@@ -301,7 +301,7 @@ export async function siteCore(
   addBashSamples(dom);
   applyAppearance(dom);
   modalInit(dom);
-  expandDetails(1040, dom, win);
+  expandDetails(1040, dom, loc, win);
 
   if (
     !isMobile(dom, loc) &&
