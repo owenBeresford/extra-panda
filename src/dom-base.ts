@@ -224,6 +224,48 @@ export function applyVolume(
 }
 
 /**
+ * expandDetails
+ * Function to open DETAILS elements, when on a large screen.  
+ * Only apply to maquette articles at present.
+ *  NOTE: this doesn't care about mobile, just viewport size, to save a click for the user
+ *
+ * @param {number =1040} bigScreen - Minimum size for a large screen. The "bigscreenness" is regulated by CSS design
+ * @param {Document =document} dom
+ * @param {Location = location} loc
+ * @public
+ * @return {void}
+ */
+export function expandDetails(bigScreen:number=1040, dom:Document=document, loc:Location=location):void {
+	if(!dom.querySelector('.maquetteContainer')) {
+		return; 
+	}
+
+	if( screenWidth(dom, loc) >bigScreen ) {
+		const THING= Array.from(dom.querySelectorAll('.maquetteContainer details'));
+		for(let i=0; i<THING.length; i++) {
+    		THING[i].open = true;
+		}
+	}
+}
+
+/**
+ * screenWidth
+ * compute the viewport width.
+ *
+ * @param {Document=document} dom
+ * @param {Location = location} loc
+ * @public
+ * @return {number}
+ */
+function screenWidth(dom:Document=document, loc: Location = location):number {
+	const u: URLSearchParams = new URLSearchParams(loc.search);
+	if(u.has('width')) {
+		return parseInt(u.get('width'), 10);
+	}
+	return dom.innerWidth;
+}
+
+/**
  * booleanMap
  * Convert many possible "English" boolean values to boolean
  * NOTE: js, may not be a string
@@ -309,18 +351,19 @@ function calcScreenDPI(dom: Document = document, win: Window = window): number {
 // no injectOpts as it wouldn't make sense
 
 /**
- * exportcurrentSize
+ * currentSize
  * Supplied for testing, convert a window to a size
  
  * @param {Document = document} dom 
+ * @param {Window = window} win 
  * @public
  * @returns {ScreenSizeArray}
  */
-export function currentSize(dom: Document = document): ScreenSizeArray {
+export function currentSize(dom: Document = document, win:Window=window): ScreenSizeArray {
   const root = dom.documentElement,
     body = dom.body;
-  const wid = window.innerWidth || root.clientWidth || body.clientWidth;
-  const hi = window.innerHeight || root.clientHeight || body.clientHeight;
+  const wid = win.innerWidth || root.clientWidth || body.clientWidth;
+  const hi = win.innerHeight || root.clientHeight || body.clientHeight;
   let wid2: number = 0;
   let hi2: number = 0;
   if (typeof hi === "string") {
@@ -339,6 +382,7 @@ export function currentSize(dom: Document = document): ScreenSizeArray {
 export const TEST_ONLY = {
   appendIsland,
   getArticleWidth,
+  expandDetails,
   docOffsets,
   applyVolume,
   mapAttribute,

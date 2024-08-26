@@ -7,7 +7,8 @@ const {
   appendIsland,
   setIsland,
   docOffsets,
-  currentSize,
+  expandDetails,
+ currentSize,
   mapAttribute,
   getArticleWidth,
   applyVolume,
@@ -76,6 +77,9 @@ describe("TEST dom-base", () => {
     assert.equal(dom.getElementsByTagName("h2").length, 1, "assert #5");
     appendIsland("#point1", str, dom);
     assert.equal(dom.getElementsByTagName("h2").length, 2, "assert #6");
+    appendIsland("#point1", str, dom);
+    assert.equal(dom.getElementsByTagName("h2").length, 3, "assert #7");
+
   });
 
   it("go 6: setIsland ", () => {
@@ -90,9 +94,14 @@ describe("TEST dom-base", () => {
       `<body><div><h1>Page Title!! </h1><div class="addReading" id="shareGroup"><div class="allButtons"><span class="ultraSkinny"></span></div></div></div><div id="point1"><h2>WWWWW WWWWW</h2></div><div id="point2" class="blocker addReferences"></div></body>`,
       "assert #2",
     );
-    assert.equal(dom.getElementsByTagName("h2").length, 1, "assert #7");
+    assert.equal(dom.getElementsByTagName("h2").length, 1, "assert #8");
     setIsland("#point1", str, dom);
     assert.equal(dom.getElementsByTagName("h2").length, 1, "assert #9");
+    setIsland("#point1", str+str, dom);
+    assert.equal(dom.getElementsByTagName("h2").length, 2, "assert #10");
+    setIsland("#point1", "", dom);
+    assert.equal(dom.getElementsByTagName("h2").length, 0, "assert #11");
+
   });
 
   it("go 7:  docOffsets ", () => {
@@ -140,14 +149,98 @@ describe("TEST dom-base", () => {
     assert.deepEqual(
       [100, 0],
       docOffsets(ELE, { scrollY: 100, scrollX: 0 }),
-      "assert #10",
+      "assert #12",
     );
     assert.deepEqual(
       [900, 0],
       docOffsets(ELE, { scrollY: 900, scrollX: 0 }),
-      "assert #11",
+      "assert #13",
     );
   });
+
+	it("go 10: expandDetails", (context) => {
+	    const [dom, loc, win] = page("http://192.168.0.35/resource/home?width=1100", 3);
+	    let str = `<div class="maquetteContainer">
+<details >
+<summary>A title</summary>
+dg dfg
+d 
+fgdf gds
+fg ad
+fg dafg
+adfg
+df g
+dfgdfg
+df gdaf
+gadf
+gad
+ fgad
+fg d
+fg
+dafg
+da
+fg
+dafg
+da
+ga
+d
+</details>
+</div>`;
+    appendIsland("#point1", str, dom);
+  assert.equal(
+      dom.querySelector("details").open,
+		false,
+      "asset #14",
+    );
+	expandDetails(1040, dom, loc );
+  assert.equal(
+      dom.querySelector("details").open,
+		true,
+      "asset #15",
+    );
+	});
+
+	it("go 10.1: expandDetails", (context) => {
+	    const [dom, loc, win] = page("http://192.168.0.35/resource/home?width=600", 3);
+	    let str = `<div class="maquetteContainer">
+<details >
+<summary>A title</summary>
+dg dfg
+d 
+fgdf gds
+fg ad
+fg dafg
+adfg
+df g
+dfgdfg
+df gdaf
+gadf
+gad
+ fgad
+fg d
+fg
+dafg
+da
+fg
+dafg
+da
+ga
+d
+</details>
+</div>`;
+    appendIsland("#point1", str, dom);
+  assert.equal(
+      dom.querySelector("details").open,
+		false,
+      "asset #16",
+    );
+	expandDetails(1040, dom, loc );
+  assert.equal(
+      dom.querySelector("details").open,
+		false,
+      "asset #16",
+    );
+	});
 
   it("go 8: applyVolume", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
@@ -193,7 +286,7 @@ describe("TEST dom-base", () => {
     assert.equal(
       dom.querySelector("body").getAttribute("style"),
       "--offset-height: 0;",
-      "asset #12",
+      "asset #17",
     );
     if (!isFullstack()) {
       context.skip();
@@ -203,11 +296,11 @@ describe("TEST dom-base", () => {
     assert.equal(
       dom.querySelector(".lotsOfWords").getAttribute("style"),
       "--offset-height: XXpx;",
-      "asset #13",
+      "asset #18",
     );
   });
 
-  it("go 8.1: applyVolume", (context) => {
+	  it("go 8.1: applyVolume", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div class="halferWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
@@ -251,7 +344,7 @@ describe("TEST dom-base", () => {
     assert.equal(
       dom.querySelector("body").getAttribute("style"),
       "--offset-height: 0;",
-      "asset #14",
+      "asset #19",
     );
     if (!isFullstack()) {
       context.skip();
@@ -261,7 +354,7 @@ describe("TEST dom-base", () => {
     assert.equal(
       dom.querySelector(".lotsOfWords").getAttribute("style"),
       "--offset-height: XXpx;",
-      "asset #15",
+      "asset #20",
     );
   });
 
@@ -330,7 +423,7 @@ describe("TEST dom-base", () => {
     assert.equal(
       dom.querySelector("body").getAttribute("style"),
       "--offset-height: 0;",
-      "asset #16",
+      "asset #21",
     );
 
     if (!isFullstack()) {
@@ -340,12 +433,12 @@ describe("TEST dom-base", () => {
     assert.equal(
       dom.querySelector(".halferWords").getAttribute("style"),
       "--offset-height: XXpx;",
-      "asset #15",
+      "asset #22",
     );
     assert.equal(
       dom.querySelector(".fewWords").getAttribute("style"),
       "--offset-height: XXpx;",
-      "asset #17",
+      "asset #23",
     );
   });
 
@@ -393,7 +486,7 @@ describe("TEST dom-base", () => {
     assert.equal(
       dom.querySelector("body").getAttribute("style"),
       "--offset-height: 0;",
-      "asset #18",
+      "asset #24",
     );
     assert.equal(dom.querySelectorAll("[style]").length, 1, "asset #18");
 
@@ -401,7 +494,7 @@ describe("TEST dom-base", () => {
     for (let i = 0; i < tmp.length; i++) {
       assert.isTrue(
         ["div", "body"].includes(tmp[i].tagName.toLowerCase()),
-        "asset #19",
+        "asset #25",
       );
     }
   });
@@ -448,7 +541,7 @@ describe("TEST dom-base", () => {
     appendIsland("#point2", str, dom);
     let ret = getArticleWidth(true, dom);
 
-    assert.equal(ret, -513, "asset #20");
+    assert.equal(ret, -513, "asset #26");
     // test is defective in JSDOM
   });
 
@@ -498,7 +591,7 @@ describe("TEST dom-base", () => {
       return;
     }
 
-    assert.equal(ret, 200, "asset #21");
+    assert.equal(ret, 200, "asset #27");
     // test is defective in JSDOM
   });
 
@@ -563,6 +656,6 @@ describe("TEST dom-base", () => {
 </div> `;
     appendIsland("#point2", str, dom);
     let ret = getArticleWidth(true, dom);
-    assert.equal(ret, -1, "asset #22");
+    assert.equal(ret, -1, "asset #28");
   });
 });
