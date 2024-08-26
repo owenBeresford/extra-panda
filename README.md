@@ -86,13 +86,13 @@ Pls note English is my first language #leSigh.
 ### Engineering changelog
 
 Software architecture
-* this code is properly modular, with isolation and encapsulation
-* none of this features are "long lived", they just tweak the document
+* This code is properly modular, with isolation and encapsulation
+* None of this features are "long lived", they just tweak the document on page load
 * This does show SRP, and layering
-* this does show clear reporting on errors
-* doesn't have any use of global variables 
-* With JS modules, there is less functions inside functions, so unit tests are easier.   Improved unit-test coverage as it's now feasible (rather than behaviour testing).
-* early versions did have actual object composition, but I removed that as it made the types too complex
+* This does show clear reporting on errors
+* This doesn't have any global variables 
+* With JS modules, there are less functions inside functions, so unit tests are easier and faster to build.   Improved unit-test coverage as it's now feasible (rather than behaviour testing).
+* Early versions did have actual object composition, but I removed that as it made the types too complex
 * this is not currently OO code, but would be when:
   - add single DocumentChange interface, and everything implements this
   - reduce the importance of setting dicts, in favour of a more OO style
@@ -100,44 +100,20 @@ Software architecture
   - drop any loops in favour of map() or forEach()
   - add other higher order functions, ideally function returning functions for module configuration.
   - there are no streams in this project, so nothing to lazily evaluate.
-* Sensible question: why doesn't this use Alpine or something (modern JS, and modules)?  I am trying to migrate the DOM  fiddling sections over to CSS, and without those this code is small and not in a 3rd party framework 
-
-Security review
-* My client-side JS only loads assets that are from the same server [by settings in Fetch].
-* All my assets are hosted on the same server
-* As far as I can, the SM links are direct links / URLs, not 3rd party JS
-* The inbound comms are all hosted on third party services, and assumed to be secure (as that would affect their revenue) 
-* So to get my webpages to show wrong content, you need to breach the server
-* If somehow I have uploaded bad content, the article will show a relevant error.  I am fairly sure it's not possible for data in a JSON file to be auto executed when parsing the JSON
-* My server is administrated by professionals, and they seem to know what they are doing.
-* All access as a webpage is inside HTTPS, exclusively.
-* At point of setup, my new IP is clean for any reputation usage (e.g. not also used by a spammer / scammer / con-artist).
-* I have held this domain a long time, it was new to me, AFAIK 
-* If you disable some assets on the client side, you get the same HTML / content, and usable user journeys.
-*  .
-* TODO: adding more integrity HTTP headers
-* Most common failure: bad English by me, due to volume of text added.  Not a security concern
-* If third party articles are allowed, they get a 24hour review period ~ to review ~ before their content is generally visible or indexable.
-* I have done an audit, all the URLs loaded are relative URLs (not absolute URLs).
-* Nothing new learned in these links: 
-  * https://aptori.dev/blog/javascript-security-a-secure-coding-checklist-for-developers
-  * https://raygun.com/blog/js-security-vulnerabilities-best-practices/
+* Sensible question: why doesn't this use Alpine or something (modern JS, and modules)?  I am trying to migrate the DOM fiddling sections over to CSS, and without those this code is small and not in a 3rd party framework 
 
 Notes:
 - **_NOTE_** Commits at the start of this project are completely meaningless, as it's just when I moved the code back to my dev machine. They are meaningless duration markers, rather than feature markers.
 - Some of these unit tests are less meaningful than others, regrettably (running from Node).   It would be nice to setup test from a browser.  To *look* at the UX (as in, I am being the success / fail criterion), I did some manual testing
 - Use new language features (ADD a few KB of source) without jQuery (DROP >300KB of source). Dropping jQuery, as "select downloaded features" feature has been removed from https://jquery.com
-- Drop unused features. This makes everything less confusing and more readable.
 - Use TEST_ONLY symbols that expose entire module to unit tests.   I will add config to strip them in release build.   I didn't invent this structure, but I have used it ever since I started with JS modules, rather than plain JS.
-- Drop legacy test tools.
 - Proper TDD units, as I have better tools now (JS modules + a fake DOM), make code better ~ separately to, and above every other bullet point. WARN: Some tests cannot be run outside a real webrowser.
 - Vastly improve English / readability of the code. Gain is separate to all other points.
 - As all this code is made after a minimiser script is adopted, faction code more finely into logical modules. So it's more readable.
 - As a very non-funny joke: the first two versions of the SM sharebar are legacy HTML, but very easy to unit-test. Now I have much better test tech and libraries and less good tests on this feature.
-- This has quite high levels of testing.   I have used JSDOM as part of JEST and similar tools.  This project is the first time I am using it directly.  
 - Assuming this project is frozen on feature completion, I do not need an installer.   I will manually copy 1 compiled file to the static-host local-image.   This project may not have any rollbacks/ reverts, tests are mandated.   
 - I have used a short term solution to minification, as I need to move forward.  XXX #FIXME
-- As far as Vite is a _code bundler_, I need to make all these separate outcome files as separate configs.  I probably can reduce the amount of configs duplication at a later date.   To repeat for clarity, each generated file is a separate file to syntax high-lighting for other languages.  Note again, CSS syntax highlighting isn't perfect. 
+- As far as Vite is a _code bundler_, I need to make all these separate outcome files as separate configs.  I probably can reduce the amount of configs duplication at a later date.   To repeat for clarity, each generated file is a separate file to syntax high-lighting for other languages.  Note again via this library, CSS syntax highlighting isn't perfect. 
 - There are some pages that I will need to retire or use CDN to host needed libraries.
 - There isn't much logging, but logging is held to a wrapper, so I could jump to a centralised log (such as ELK) if I need to in future.
 - My code has complex / unexpected behaviour if you change the DOM / document object without changing state.  This shouldn't be an issue outside tests, as this code doesn't support SSR presently.
@@ -147,6 +123,8 @@ Notes:
 - This has a function equivalent to `int main(int argc, char * argv[])`, called _core_.  This is allowed to have a high volume and complexity as it wraps *all the other* methods.  As an architecture detail, this isn't avoidable.
 - The highlight source is now in TS, as I found the type definitions.
 - The process of expanding the number of tools in this project is adding features, but also acting as a lint as it shows small oversights.
+- Note I added a UI feature that added extra HTML, but this didn't invalidate any of the unit-tests.
+- I am adding search params for testing, rather than a Mock, as I may want to use them during QA
 - I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together, it's a nul-point difference.   
 
 #### Metrics that are important to goals
@@ -171,6 +149,7 @@ Notes:
 
 - ''first'' string - only used in the group-indexes articles
 - ''debug'' boolean - adjusts how many log messages are written
+- ''width'' number - adds a fake width to the browser
 - ''mobile'' boolean - force interpretation of current machine as a mobile device. In unit tests this MUST BE SET (1 or 0), as JSdom isn't a phone
 
 #### Known CSS containers that this code processes

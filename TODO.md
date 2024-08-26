@@ -5,7 +5,7 @@
 - Add config for minifier via terser to build step.  Out of time.  IMPORTANT
 - Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages. 
 - port the everything* tests to storybook
-- WCAG tests (lighthouse) for whole pages need to go some where (suggest this project) 
+- WCAG tests (lighthouse) for whole pages need to go some where (suggest this project) https://www.npmjs.com/package/wcag 
 - log fault on validate class for HTML with no doctype header
 
 ### Previous Updates
@@ -50,5 +50,5 @@
 - DONE made it more clear that the 10 items in the adjacent list are not the full list, but a browser width option.
 - WONTFIX A legacy version of JS that **can't read JS modules** may be breached if someone overloads window.Array, and parses JSON. ["AJAX security tips" https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html] ["Historic JSON parsing problems" https://security.stackexchange.com/questions/159609/how-is-it-possible-to-poison-javascript-array-constructor-and-how-does-ecmascrip]
 - DONE: locate and terminate-with-extreme-prejudice the source of page jitter whilst displaying tooltips. 
-
+- DONE: add support for screen readers in the link decorations
 
