@@ -8,7 +8,7 @@ const {
   setIsland,
   docOffsets,
   expandDetails,
- currentSize,
+  currentSize,
   mapAttribute,
   getArticleWidth,
   applyVolume,
@@ -79,7 +79,6 @@ describe("TEST dom-base", () => {
     assert.equal(dom.getElementsByTagName("h2").length, 2, "assert #6");
     appendIsland("#point1", str, dom);
     assert.equal(dom.getElementsByTagName("h2").length, 3, "assert #7");
-
   });
 
   it("go 6: setIsland ", () => {
@@ -97,11 +96,10 @@ describe("TEST dom-base", () => {
     assert.equal(dom.getElementsByTagName("h2").length, 1, "assert #8");
     setIsland("#point1", str, dom);
     assert.equal(dom.getElementsByTagName("h2").length, 1, "assert #9");
-    setIsland("#point1", str+str, dom);
+    setIsland("#point1", str + str, dom);
     assert.equal(dom.getElementsByTagName("h2").length, 2, "assert #10");
     setIsland("#point1", "", dom);
     assert.equal(dom.getElementsByTagName("h2").length, 0, "assert #11");
-
   });
 
   it("go 7:  docOffsets ", () => {
@@ -158,9 +156,12 @@ describe("TEST dom-base", () => {
     );
   });
 
-	it("go 10: expandDetails", (context) => {
-	    const [dom, loc, win] = page("http://192.168.0.35/resource/home?width=1100", 3);
-	    let str = `<div class="maquetteContainer">
+  it("go 10: expandDetails", (context) => {
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/home?width=1100",
+      3,
+    );
+    let str = `<div class="maquetteContainer">
 <details >
 <summary>A title</summary>
 dg dfg
@@ -187,22 +188,17 @@ d
 </details>
 </div>`;
     appendIsland("#point1", str, dom);
-  assert.equal(
-      dom.querySelector("details").open,
-		false,
-      "asset #14",
-    );
-	expandDetails(1040, dom, loc );
-  assert.equal(
-      dom.querySelector("details").open,
-		true,
-      "asset #15",
-    );
-	});
+    assert.equal(dom.querySelector("details").open, false, "asset #14");
+    expandDetails(1040, dom, loc);
+    assert.equal(dom.querySelector("details").open, true, "asset #15");
+  });
 
-	it("go 10.1: expandDetails", (context) => {
-	    const [dom, loc, win] = page("http://192.168.0.35/resource/home?width=600", 3);
-	    let str = `<div class="maquetteContainer">
+  it("go 10.1: expandDetails", (context) => {
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/home?width=600",
+      3,
+    );
+    let str = `<div class="maquetteContainer">
 <details >
 <summary>A title</summary>
 dg dfg
@@ -229,18 +225,10 @@ d
 </details>
 </div>`;
     appendIsland("#point1", str, dom);
-  assert.equal(
-      dom.querySelector("details").open,
-		false,
-      "asset #16",
-    );
-	expandDetails(1040, dom, loc );
-  assert.equal(
-      dom.querySelector("details").open,
-		false,
-      "asset #16",
-    );
-	});
+    assert.equal(dom.querySelector("details").open, false, "asset #16");
+    expandDetails(1040, dom, loc);
+    assert.equal(dom.querySelector("details").open, false, "asset #16");
+  });
 
   it("go 8: applyVolume", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
@@ -300,7 +288,7 @@ d
     );
   });
 
-	  it("go 8.1: applyVolume", (context) => {
+  it("go 8.1: applyVolume", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div class="halferWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>

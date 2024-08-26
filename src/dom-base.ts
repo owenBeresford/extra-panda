@@ -225,7 +225,7 @@ export function applyVolume(
 
 /**
  * expandDetails
- * Function to open DETAILS elements, when on a large screen.  
+ * Function to open DETAILS elements, when on a large screen.
  * Only apply to maquette articles at present.
  *  NOTE: this doesn't care about mobile, just viewport size, to save a click for the user
  *
@@ -233,19 +233,25 @@ export function applyVolume(
  * @param {Document =document} dom
  * @param {Location = location} loc
  * @public
- * @return {void}
+ * @returns {void}
  */
-export function expandDetails(bigScreen:number=1040, dom:Document=document, loc:Location=location):void {
-	if(!dom.querySelector('.maquetteContainer')) {
-		return; 
-	}
+export function expandDetails(
+  bigScreen: number = 1040,
+  dom: Document = document,
+  loc: Location = location,
+): void {
+  if (!dom.querySelector(".maquetteContainer")) {
+    return;
+  }
 
-	if( screenWidth(dom, loc) >bigScreen ) {
-		const THING= Array.from(dom.querySelectorAll('.maquetteContainer details'));
-		for(let i=0; i<THING.length; i++) {
-    		THING[i].open = true;
-		}
-	}
+  if (screenWidth(dom, loc) > bigScreen) {
+    const THING = Array.from(
+      dom.querySelectorAll(".maquetteContainer details"),
+    );
+    for (let i = 0; i < THING.length; i++) {
+      THING[i].open = true;
+    }
+  }
 }
 
 /**
@@ -255,14 +261,17 @@ export function expandDetails(bigScreen:number=1040, dom:Document=document, loc:
  * @param {Document=document} dom
  * @param {Location = location} loc
  * @public
- * @return {number}
+ * @returns {number}
  */
-function screenWidth(dom:Document=document, loc: Location = location):number {
-	const u: URLSearchParams = new URLSearchParams(loc.search);
-	if(u.has('width')) {
-		return parseInt(u.get('width'), 10);
-	}
-	return dom.innerWidth;
+function screenWidth(
+  dom: Document = document,
+  loc: Location = location,
+): number {
+  const u: URLSearchParams = new URLSearchParams(loc.search);
+  if (u.has("width")) {
+    return parseInt(u.get("width"), 10);
+  }
+  return dom.innerWidth;
 }
 
 /**
@@ -359,7 +368,10 @@ function calcScreenDPI(dom: Document = document, win: Window = window): number {
  * @public
  * @returns {ScreenSizeArray}
  */
-export function currentSize(dom: Document = document, win:Window=window): ScreenSizeArray {
+export function currentSize(
+  dom: Document = document,
+  win: Window = window,
+): ScreenSizeArray {
   const root = dom.documentElement,
     body = dom.body;
   const wid = win.innerWidth || root.clientWidth || body.clientWidth;
