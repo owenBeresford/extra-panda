@@ -8,7 +8,7 @@ import { appendIsland } from "../dom-base";
 const { modalInit, HTMLDetailsClick, HTMLDetailsTrap } = TEST_ONLY;
 
 describe("TEST modal ", () => {
-  // I need to do more usability on this feature
+  // IOIO I need to do more usability on this feature
   it("go 1: HTMLDetailsClick", () => {
     const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
     enableGetEventListeners(dom);
@@ -27,6 +27,18 @@ describe("TEST modal ", () => {
 
     let buf = dom.querySelector("details");
     assert.equal(buf.getEventListeners().length, 1, "Assert #20");
-    assert.equal(dom.body.getEventListeners().length, 1, "Assert #20");
+    assert.equal(dom.body.getEventListeners().length, 2, "Assert #20");
   });
+
+// add STORYBOOK here
+// I click on a SUMMARY with no CODE, the DETAILS opens
+// I click on a SUMMARY with no CODE and is OPEN, the DETAILS closes
+// I click outside the DETAILS, and its open, it closes
+// I fire a ESC key sequence with an DETAILS in open state, it closes
+
+// I click on a SUMMARY with CODE, the DETAILS opens
+// I click on a SUMMARY with CODE and is OPEN, it doesnt close so people can interact with the CODE sample
+// I click outside the DETAILS, and its open, it closes
+// I fire a ESC key sequence with an DETAILS in open state, it closes
+
 });

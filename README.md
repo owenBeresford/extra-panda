@@ -94,13 +94,14 @@ Software architecture
 * With JS modules, there are less functions inside functions, so unit tests are easier and faster to build.   Improved unit-test coverage as it's now feasible (rather than behaviour testing).
 * Early versions did have actual object composition, but I removed that as it made the types too complex
 * this is not currently OO code, but would be when:
-  - add single DocumentChange interface, and everything implements this
-  - reduce the importance of setting dicts, in favour of a more OO style
+  - add single DocumentChange and  DataAdaptor interfaces and everything implements these
+  - reduce the importance of setting dicts, in favour of a more OO style setters
 * this code is not actual FP, but could be when:
   - drop any loops in favour of map() or forEach()
-  - add other higher order functions, ideally function returning functions for module configuration.
-  - there are no streams in this project, so nothing to lazily evaluate.
-* Sensible question: why doesn't this use Alpine or something (modern JS, and modules)?  I am trying to migrate the DOM fiddling sections over to CSS, and without those this code is small and not in a 3rd party framework 
+  - add other higher order functions, reducing fiddly branching
+  - move module config to a function returning functions
+  - there are no streams in this project, so nothing to lazily evaluate.  It doesn't make sense to stream the data files, as to make a complete page you need all the data.
+* Sensible question: why doesn't this use Alpine, Stimulus or something (modern JS, and modules)?  I am trying to migrate the DOM fiddling sections over to CSS, and without those this code is small and not in a 3rd party framework.  This rewrite was to make everything SMALL. 
 
 Notes:
 - **_NOTE_** Commits at the start of this project are completely meaningless, as it's just when I moved the code back to my dev machine. They are meaningless duration markers, rather than feature markers.
@@ -138,7 +139,8 @@ Notes:
   - complete build: 75KB flat files
   - above with with minification: 23KB
   - Note dead code removal didn't make any impact here, as tree shaking works properly now
-  - above with gzip: 9KB  
+  - above with gzip: 9KB   
+    - UPDATE: due to further features, I have crept over the 10k boundary &lt;Meme: "so it begins"&gt;
   - I think I have perfect feature match, and new solution is 4% of volume of previous solution.
 
 </details>
