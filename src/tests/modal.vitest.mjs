@@ -30,15 +30,14 @@ describe("TEST modal ", () => {
     assert.equal(dom.body.getEventListeners().length, 2, "Assert #20");
   });
 
-// add STORYBOOK here
-// I click on a SUMMARY with no CODE, the DETAILS opens
-// I click on a SUMMARY with no CODE and is OPEN, the DETAILS closes
-// I click outside the DETAILS, and its open, it closes
-// I fire a ESC key sequence with an DETAILS in open state, it closes
+  // add STORYBOOK here
+  // I click on a SUMMARY with no CODE, the DETAILS opens
+  // I click on a SUMMARY with no CODE and is OPEN, the DETAILS closes
+  // I click outside the DETAILS, and its open, it closes
+  // I fire a ESC key sequence with an DETAILS in open state, it closes
 
-// I click on a SUMMARY with CODE, the DETAILS opens
-// I click on a SUMMARY with CODE and is OPEN, it doesnt close so people can interact with the CODE sample
-// I click outside the DETAILS, and its open, it closes
-// I fire a ESC key sequence with an DETAILS in open state, it closes
-
+  // I click on a SUMMARY with CODE, the DETAILS opens
+  // I click on a SUMMARY with CODE and is OPEN, it doesnt close so people can interact with the CODE sample
+  // I click outside the DETAILS, and its open, it closes
+  // I fire a ESC key sequence with an DETAILS in open state, it closes
 });
