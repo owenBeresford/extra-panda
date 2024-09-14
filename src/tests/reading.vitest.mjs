@@ -7,6 +7,7 @@ const { readingDuration } = TEST_ONLY;
 
 describe("TEST readingDuration", () => {
   it("go 1: readingDuration function is available correctly", () => {
+    // this test was written first, and to show that the test framework was linking correctly.
     assert.equal(typeof readingDuration, "function", "assert #1");
   });
 

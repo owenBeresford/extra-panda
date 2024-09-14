@@ -95,12 +95,13 @@ function normaliseData(
 /**
  * render
  * Function to convert the data to HTML
+ * @link ["interesting notes to create accessible footnotes", https://www.davidmacd.com/blog/html51-footnotes.html]
  * @param {Array<NormalisedReference>} data - technically synthetic reference data.
  * @protected
  * @returns {string} - the HTML
  */
 function render(data: Array<NormalisedReference>): string {
-  let html = `<ol class="mobileBiblio">`;
+  let html = `<aside role="footnote"><ol class="mobileBiblio">`;
   for (const i in data) {
     html += `<li>
 <a href="${data[i].url}"> 
@@ -111,7 +112,7 @@ function render(data: Array<NormalisedReference>): string {
 </li>
 `;
   }
-  html += "</ol>";
+  html += "</ol></aside>";
   return html;
 }
 
@@ -209,7 +210,7 @@ export async function createBiblio(
  * injectOpts
  * PURELY FOR UNIT TESTS, adds ability to set initial state per internal function
  * READS process.env
- * @param {undefined Object} a - I could add a new interface where all the options were optional
+ * @param {undefined-Object} a - I could add a new interface where all the options were optional
  * @public
  * @returns {void}
  */

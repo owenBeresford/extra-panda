@@ -225,7 +225,7 @@ export function applyVolume(
 
 /**
  * expandDetails
- * Function to open DETAILS elements, when on a large screen.
+ * Function to open DETAILS elements, when on a large screen.   IMPURE
  * Only apply to maquette articles at present.
  * NOTE: this doesn't care about mobile, just viewport size, to save a click for the user
  *
@@ -262,6 +262,7 @@ export function expandDetails(
 /**
  * screenWidth
  * compute the viewport width.
+ *  PURE
  *
  * @param {Location = location} loc
  * @param {Window = window} win

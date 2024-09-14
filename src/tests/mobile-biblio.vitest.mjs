@@ -59,7 +59,7 @@ describe("TEST mobile-biblio", () => {
         date: "1st-june-2004",
       },
     ];
-    let dat2 = `<ol class="mobileBiblio"><li>
+    let dat2 = `<aside role="footnote"><ol class="mobileBiblio"><li>
 <a href="http://192.168.0.35/resource/article1"> 
 <h5>fg gdsg fgdfgdf gdfg dfg dg </h5>
 <span>sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf</span>
@@ -87,7 +87,7 @@ describe("TEST mobile-biblio", () => {
 <span>by racheal on 1st-june-2004</span>
 </a>
 </li>
-</ol>`;
+</ol></aside>`;
 
     assert.equal(render(dat), dat2, "assert #3");
     // add HTML test
