@@ -95,7 +95,7 @@ function normaliseData(
 /**
  * render
  * Function to convert the data to HTML
- * @link ["interesting notes to create accessible footnotes", https://www.davidmacd.com/blog/html51-footnotes.html]
+ * @see ["interesting notes to create accessible footnotes", https://www.davidmacd.com/blog/html51-footnotes.html]
  * @param {Array<NormalisedReference>} data - technically synthetic reference data.
  * @protected
  * @returns {string} - the HTML
