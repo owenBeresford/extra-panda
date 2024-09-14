@@ -51,4 +51,5 @@
 - WONTFIX A legacy version of JS that **can't read JS modules** may be breached if someone overloads window.Array, and parses JSON. ["AJAX security tips" https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html] ["Historic JSON parsing problems" https://security.stackexchange.com/questions/159609/how-is-it-possible-to-poison-javascript-array-constructor-and-how-does-ecmascrip]
 - DONE: locate and terminate-with-extreme-prejudice the source of page jitter whilst displaying tooltips. 
 - DONE: add support for screen readers in the link decorations
+- DONE: add ability to have details opened automatically
 
