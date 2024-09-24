@@ -16,9 +16,10 @@ function HTMLDetailsTrap(e: MiscEvent, dom: Document = document): boolean {
     if (tt.length) {
       tt[0].open = false;
     }
+    e.preventDefault();
+    return false;
   }
-  e.preventDefault();
-  return false;
+  return true;
 }
 
 /**
@@ -46,6 +47,10 @@ function find(ele: HTMLElement, target: string): undefined | HTMLElement {
     if (ele.tagName === "BODY") {
       return undefined;
     }
+    // #leSigh these two features shouldn't collide but they are.
+    if (ele.classList.contains("maquette")) {
+      return undefined;
+    }
 
     ele = ele.parentElement;
   }
@@ -68,11 +73,11 @@ function HTMLDetailsClick(e: MiscEvent, dom: Document = document): boolean {
     return true;
   }
 
-  e.preventDefault();
-  e.stopPropagation();
   if (act) {
     const act2: HTMLDetailsElement = act as HTMLDetailsElement;
 
+    e.preventDefault();
+    e.stopPropagation();
     if (act2 && act2.open) {
       if (
         e.target.tagName !== "SUMMARY" &&
@@ -90,7 +95,12 @@ function HTMLDetailsClick(e: MiscEvent, dom: Document = document): boolean {
   } else {
     const tt = dom.querySelector("details[open]");
     if (tt) {
+      e.preventDefault();
+      e.stopPropagation();
       tt.open = false;
+    } else {
+      // this click has nothing todo with DETAILS
+      return true;
     }
   }
 

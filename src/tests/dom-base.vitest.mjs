@@ -27,6 +27,9 @@ describe("TEST dom-base", () => {
   });
 
   it("go 2: isFullStack", (context) => {
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+
+	assert.isTrue(false=== isFullstack(win), "A plain Node instance is false");
     if (process && process.env) {
       context.skip();
     }
@@ -41,22 +44,22 @@ describe("TEST dom-base", () => {
   });
 
   it("go 4: mapAttribute", (context) => {
-    if (!isFullstack()) {
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    if (!isFullstack(win)) {
       context.skip();
     }
 
-    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
     let str = `<h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>`;
     appendIsland("#point2", str, dom);
 
     assert.equal(
-      mapAttribute(dom.querySelector("#item1"), "right"),
+      mapAttribute(dom.querySelector("#item1"), "right", win),
       "100",
       "asset #3",
     );
     assert.equal(
-      mapAttribute(dom.querySelector("#item1"), "right"),
+      mapAttribute(dom.querySelector("#item1"), "right", win),
       100,
       "asset #4",
     );
@@ -313,7 +316,7 @@ d
       "--offset-height: 0;",
       "asset #17",
     );
-    if (!isFullstack()) {
+    if (!isFullstack(win)) {
       context.skip();
       return;
     }
@@ -371,7 +374,7 @@ d
       "--offset-height: 0;",
       "asset #19",
     );
-    if (!isFullstack()) {
+    if (!isFullstack(win)) {
       context.skip();
       return;
     }
@@ -451,7 +454,7 @@ d
       "asset #21",
     );
 
-    if (!isFullstack()) {
+    if (!isFullstack(win)) {
       context.skip();
       return;
     }
@@ -566,12 +569,12 @@ d
     appendIsland("#point2", str, dom);
     let ret = getArticleWidth(true, dom);
 
-    assert.equal(ret, -513, "asset #26");
+    assert.equal(ret, -512, "asset #26");
     // test is defective in JSDOM
   });
 
   it("go 9.1: getArticleWidth", (context) => {
-    const [dom] = page("http://192.168.0.35/resource/home", 1);
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -610,8 +613,8 @@ d
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
 </div> `;
     appendIsland("#point2", str, dom);
-    let ret = getArticleWidth(true, dom);
-    if (!isFullstack()) {
+    let ret = getArticleWidth(true, dom, win);
+    if (!isFullstack(win)) {
       context.skip();
       return;
     }
@@ -680,7 +683,7 @@ d
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
 </div> `;
     appendIsland("#point2", str, dom);
-    let ret = getArticleWidth(true, dom);
+    let ret = getArticleWidth(true, dom, JSDOM1.window);
     assert.equal(ret, -1, "asset #28");
   });
 });

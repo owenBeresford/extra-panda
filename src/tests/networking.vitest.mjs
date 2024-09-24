@@ -27,7 +27,7 @@ describe("TEST networking", () => {
     assert.equal(
       1,
       1,
-      "Fake test, as I think that console.log executes.   This code is prsent, so I could swap to a centralised log platform",
+      "Fake test, as I think that console.log executes.   This code is present, so I could swap to a centralised log platform",
     );
   });
 });

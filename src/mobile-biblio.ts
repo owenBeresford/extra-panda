@@ -216,7 +216,7 @@ export async function createBiblio(
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {
-    console.error("ERROR: to use injectOpts, you must set NODE_ENV");
+    log("error", "to use injectOpts, you must set NODE_ENV");
     return;
   }
   OPTS = Object.assign(OPTS, a);

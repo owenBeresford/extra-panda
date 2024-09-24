@@ -86,12 +86,13 @@ export function enableGetEventListeners(dom = document) {
  * Code to isolate the creation of artificial mouse events outside of Vue
  
  * @param {HTMLElement} tar - where the fake event is about
+ * @param {Window} win - 
  * @public
  * @return {MiscEvent}
  */
-export function createEvent(tar) {
+export function createEvent(tar, win) {
   let vnt = null;
-  if (isFullstack()) {
+  if (isFullstack(win)) {
     // I hope the target is still present after type washing
     vnt = new CustomEvent("click", {
       detail: "a special click",

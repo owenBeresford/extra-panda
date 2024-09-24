@@ -25,7 +25,7 @@ describe("TEST mastodon", () => {
     let str = `<div id="shareMenu" class="shareMenu"></div>`;
     appendIsland("#point2", str, dom);
 
-    let vnt = createEvent(dom.querySelector("#shareMenu"));
+    let vnt = createEvent(dom.querySelector("#shareMenu"), win);
     assert.equal(
       dom.querySelector("#shareMenu").getAttribute("class"),
       "shareMenu",
@@ -53,7 +53,7 @@ describe("TEST mastodon", () => {
     let str = `<div id="shareMenu" class="shareMenu">
 </div> `;
     appendIsland("#point2", str, dom);
-    let vnt = createEvent(dom.querySelector("#shareMenu"));
+    let vnt = createEvent(dom.querySelector("#shareMenu"), win);
 
     assert.equal(
       dom.querySelector("#shareMenu").getAttribute("class"),
@@ -76,7 +76,7 @@ describe("TEST mastodon", () => {
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
 	</dialog>`;
     appendIsland("#point2", str, dom);
-    let vnt = createEvent(dom.querySelector("#id1"));
+    let vnt = createEvent(dom.querySelector("#id1"), win);
     assert.throws(
       () => {
         shareMastodon(vnt, dom, loc, win);
@@ -98,7 +98,7 @@ describe("TEST mastodon", () => {
 	</dialog>`;
     appendIsland("#point2", str, dom);
 
-    let vnt = createEvent(dom.querySelector("#id1"));
+    let vnt = createEvent(dom.querySelector("#id1"), win);
     assert.throws(
       () => {
         shareMastodon(vnt, dom, loc, win);
@@ -109,7 +109,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 3: openMastodon", () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup">
 	<input id="id1" type="submit" value="Post now" />
@@ -118,8 +118,8 @@ describe("TEST mastodon", () => {
     appendIsland("#point2", str, dom);
 
     let vnt = createEvent(dom.querySelector("#id1"));
-    assert.equal(openMastodon(vnt, dom), false, "assert #10");
-    if (isFullstack()) {
+    assert.equal(openMastodon(vnt, dom, win), false, "assert #10");
+    if (isFullstack(win)) {
       assert.istrue(
         typeof dom.querySelector("#popup").getAttribute("open") !== "undefined",
         "assert #11",
@@ -128,7 +128,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 4: closeMastodon", () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup" open>
 	<input id="id1" type="submit" value="Post now" />
@@ -136,9 +136,9 @@ describe("TEST mastodon", () => {
 	</dialog>`;
     appendIsland("#point2", str, dom);
 
-    let vnt = createEvent(dom.querySelector("#id1"));
-    assert.equal(closeMastodon(vnt, dom), false, "assert #12");
-    if (isFullstack()) {
+    let vnt = createEvent(dom.querySelector("#id1"), win);
+    assert.equal(closeMastodon(vnt, dom, win), false, "assert #12");
+    if (isFullstack(win)) {
       assert.istrue(
         typeof dom.querySelector("#popup").getAttribute("open") === "undefined",
         "assert #13",
@@ -163,10 +163,10 @@ describe("TEST mastodon", () => {
   });
 
   it("go 6:  accessVisibility", (context) => {
-    if (!isFullstack()) {
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    if (!isFullstack(win)) {
       context.skip();
     }
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup" open>
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
@@ -177,10 +177,10 @@ describe("TEST mastodon", () => {
   });
 
   it("go 6.1: accessVisibility", (context) => {
-    if (!isFullstack()) {
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    if (!isFullstack(win)) {
       context.skip();
     }
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
 
     let str = `<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup" >

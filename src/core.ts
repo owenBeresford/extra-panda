@@ -295,8 +295,8 @@ export async function siteCore(
   initPopupMobile(dom, loc);
   initMastodon(dom, loc, win);
   const isRefs: boolean = dom.querySelector(".addReferences") !== null;
-  addOctoCats(isRefs, dom);
-  addBooks(isRefs, dom);
+  addOctoCats(isRefs, dom, win);
+  addBooks(isRefs, dom, win);
   addFancyButtonArrow(dom);
   addBashSamples(dom);
   applyAppearance(dom);
@@ -427,7 +427,7 @@ export function hasBeenRun(): number {
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {
-    console.error("To use injectOpts, you must set NODE_ENV");
+    log("error", "To use injectOpts, you must set NODE_ENV");
     return;
   }
   OPTS = Object.assign(OPTS, a);

@@ -129,18 +129,23 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
 }
 
 /**
- * applyDOMpostions
+ * applyDOMpositions
  * Actually does the CSS class insertion here.
  * see mapPositions() for the iterators
  * IMPURE.
  * @param {HTMLElement} ele
  * @param {number} WIDTH
+ * @param {Window =window} win
  * @protected
  * @returns {void}
  */
-export function applyDOMpostions(ele: HTMLElement, WIDTH: number): void {
-  const left = mapAttribute(ele, "left");
-  const bot = mapAttribute(ele, "bottom");
+export function applyDOMpositions(
+  ele: HTMLElement,
+  WIDTH: number,
+  win: Window = window,
+): void {
+  const left = mapAttribute(ele, "left", win);
+  const bot = mapAttribute(ele, "bottom", win);
   if (left === -1 && bot === -1) {
     return;
   }
@@ -155,7 +160,7 @@ export function applyDOMpostions(ele: HTMLElement, WIDTH: number): void {
     tt = tt.parentNode;
   }
 
-  const HEIGHT = (mapAttribute(tt, "height") as number) - 3 * EM_SZ;
+  const HEIGHT = (mapAttribute(tt, "height", win) as number) - 3 * EM_SZ;
   if (bot > HEIGHT) {
     ele.classList.add("leanUp");
   }
@@ -165,20 +170,31 @@ export function applyDOMpostions(ele: HTMLElement, WIDTH: number): void {
  * mapPositions
  * Apply list of values previously made to DOM, and add CSS adjustments.
  * IMPURE.
+ *
  * @param {Array<string>} data ~ the results of normaliseData()
  * @param {Document =document} dom
+ * @param {Window =window} win
  * @protected
  * @returns {void}
  */
-function mapPositions(data: Array<string>, dom: Document = document): void {
+function mapPositions(
+  data: Array<string>,
+  dom: Document = document,
+  win: Window = window,
+): void {
   const WIDTH: number = getArticleWidth(true, dom);
 
   let j = 1;
-  const REFS = dom.querySelectorAll(ALL_REFERENCE_LINKS);
+  const REFS = Array.from(dom.querySelectorAll(ALL_REFERENCE_LINKS));
+  if (data.length > REFS.length) {
+    throw new Error(
+      "Too many references in meta-data for this article, pls recompile.",
+    );
+  }
 
-  for (const i in data) {
+  for (let i = 0; i < data.length; i++) {
     REFS[i].setAttribute("aria-label", "" + data[i]);
-    applyDOMpostions(REFS[i], WIDTH);
+    applyDOMpositions(REFS[i], WIDTH, win);
     if (OPTS.renumber) {
       REFS[i].textContent = "" + j;
     }
@@ -190,7 +206,7 @@ function mapPositions(data: Array<string>, dom: Document = document): void {
       const dit = generateEmpty(i);
       REFS[i].setAttribute("aria-label", "" + dit);
 
-      applyDOMpostions(REFS[i], WIDTH);
+      applyDOMpositions(REFS[i], WIDTH, win);
       if (OPTS.renumber) {
         REFS[i].textContent = "" + (i + 1);
       }
@@ -322,7 +338,7 @@ export async function createBiblio(
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {
-    console.error("ERROR: to use injectOpts, you must set NODE_ENV");
+    log("error", "to use injectOpts, you must set NODE_ENV");
     return;
   }
   OPTS = Object.assign(OPTS, a);
@@ -336,7 +352,7 @@ export const TEST_ONLY = {
   markAllLinksUnknown,
   generateEmpty,
   normaliseData,
-  applyDOMpostions,
+  applyDOMpositions,
   mapPositions,
   addMetaAge,
   createBiblio,

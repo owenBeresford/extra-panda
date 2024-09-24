@@ -8,7 +8,6 @@ import { appendIsland, isFullstack } from "../dom-base";
 const { modalInit, HTMLDetailsClick, HTMLDetailsTrap } = TEST_ONLY;
 
 describe("TEST modal ", () => {
-  // IOIO I need to do more usability on this feature
   it("go 1: HTMLDetailsClick", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     enableGetEventListeners(dom);
@@ -30,7 +29,7 @@ describe("TEST modal ", () => {
     assert.equal(buf.getEventListeners().length, 1, "Assert #1");
     assert.equal(dom.body.getEventListeners().length, 2, "Assert #2");
 
-    if (!isFullstack()) {
+    if (!isFullstack(win)) {
       context.skip();
     }
 
@@ -77,7 +76,7 @@ window.alert("SDFSDFSDF SDFSDFSDF");
     assert.equal(buf.getEventListeners().length, 1, "Assert #8");
     assert.equal(dom.body.getEventListeners().length, 2, "Assert #9");
 
-    if (!isFullstack()) {
+    if (!isFullstack(win)) {
       context.skip();
     }
 

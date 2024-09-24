@@ -112,21 +112,15 @@ export function setIsland(
  * Workout if this JS runtime is inside a full range of technology, like a browser.
  * This is mostly used for tests.
  *
+ * @param {Window =window} win
  * @public
  * @returns {boolean}
  */
-export function isFullstack(): boolean {
-  let isNativeWindow;
-  if (typeof _window == "object") {
-    isNativeWindow = Object.getOwnPropertyDescriptor(_window, "window")
-      ?.get?.toString()
-      .includes("[native code]");
-  } else {
-    isNativeWindow = Object.getOwnPropertyDescriptor(window, "window")
-      ?.get?.toString()
-      .includes("[native code]");
-  }
-  if (typeof isNativeWindow === "boolean" && isNativeWindow) {
+export function isFullstack(win: Window = window): boolean {
+  const isNativeWindow = win.getComputedStyle
+    .toString().includes("[native code]");
+
+  if ((typeof isNativeWindow === "boolean") && isNativeWindow) {
     return true;
   }
   return false;
@@ -138,12 +132,17 @@ export function isFullstack(): boolean {
  * PURE
  * @param {HTMLElement} ele
  * @param {BOUNDARY} attrib - One of top|bottom|left|right|width|height
+ * @param {Window =window} win
  * @public
  * @returns {number} - the value of the requested
  */
-export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
+export function mapAttribute(
+  ele: HTMLElement,
+  attrib: BOUNDARY,
+  win: Window = window,
+): number {
   try {
-    if (!isFullstack()) {
+    if (!isFullstack(win)) {
       return -1;
     }
 
@@ -160,20 +159,22 @@ export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
  * A utility to get current article width
  
  * @param {boolean} isLeft - left edge or right edge?
- * @param {Document=document} dom
+ * @param {Document =document} dom
+ * @param {Window =window} win
  * @public
  * @returns {number} - will return -1 on mal-compliant webpages
  */
 export function getArticleWidth(
   isLeft: boolean,
   dom: Document = document,
+  win: Window = window,
 ): number {
   const tmp = dom.querySelector(ALL_REFERENCE);
   if (!tmp) {
     return -1;
   }
 
-  const wid: number = Math.round(mapAttribute(tmp, "width"));
+  const wid: number = Math.round(mapAttribute(tmp, "width", win));
   if (isLeft) {
     return wid - 32 * EM_SZ;
   } else {
@@ -252,7 +253,10 @@ export function expandDetails(
     );
     for (let i = 0; i < THING.length; i++) {
       // this IF trap is to avoid the test results widget being locked open, and blocking the screen
-      if (!THING[i].classList.contains("singlePopup")) {
+      if (
+        !THING[i].classList.contains("singlePopup") &&
+        !THING[i].classList.contains("screenDocs")
+      ) {
         THING[i].open = true;
       }
     }

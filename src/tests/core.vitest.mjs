@@ -75,7 +75,7 @@ describe("TEST core", () => {
   });
 
   it("go 4: tabChange ", (context) => {
-    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div class="chunkArticles column">
 <ul class="tabList tabs" data-tab="" role="tablist">
 <li id="clickArticles" class="tab-title is-active" role="presentation"> <a id="annoying1" href="#blockArticles" role="tab" aria-selected="true" aria-controls="blockArticles"> Articles</a></li>
@@ -165,7 +165,7 @@ describe("TEST core", () => {
       "assert #14",
     );
 
-    let vnt = createEvent(dom.querySelector("#clickProjects a"));
+    let vnt = createEvent(dom.querySelector("#clickProjects a"), win);
     tabChange(vnt, dom);
     assert.isTrue(
       dom
@@ -194,7 +194,7 @@ describe("TEST core", () => {
       "assert #18",
     );
 
-    vnt = createEvent(dom.querySelector("#clickArticles a"));
+    vnt = createEvent(dom.querySelector("#clickArticles a"), win);
     tabChange(vnt, dom);
     assert.isFalse(
       dom
@@ -312,7 +312,7 @@ describe("TEST core", () => {
 
   it("go 2: storeAppearance ", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    if (!isFullstack()) {
+    if (!isFullstack(win)) {
       context.skip();
     }
     // if browser look at cookies before and after     dom.cookies
@@ -320,7 +320,7 @@ describe("TEST core", () => {
 
   it("go 3: applyAppearance ", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    if (!isFullstack()) {
+    if (!isFullstack(win)) {
       context.skip();
     }
     // if browser look at cookies before and after

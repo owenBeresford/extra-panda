@@ -14,7 +14,7 @@ const {
   markAllLinksUnknown,
   generateEmpty,
   normaliseData,
-  applyDOMpostions,
+  applyDOMpositions,
   mapPositions,
   addMetaAge,
   createBiblio,
@@ -333,23 +333,26 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
     assert.deepEqual(normaliseData(dat), dat2, "assert #18");
   });
 
-  it("go 6: applyDOMpostions", (context) => {
-    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
+  it("go 6: applyDOMpositions", (context) => {
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/reading-list",
+      3,
+    );
     let str = `<span id="uniq1">GDG</span>
 <span id="uniq2">WER</span>
 <span id="uniq3">IOP</span>
 <span id="uniq4">ASD</span>
 `;
     appendIsland("#point2", str, dom);
-    if (!isFullstack()) {
+    if (!isFullstack(win)) {
       context.skip();
       return;
     }
 
-    applyDOMpostions(dom.querySelector("#uniq1"), 200);
-    applyDOMpostions(dom.querySelector("#uniq2"), 400);
-    applyDOMpostions(dom.querySelector("#uniq3"), 600);
-    applyDOMpostions(dom.querySelector("#uniq4"), 800);
+    applyDOMpositions(dom.querySelector("#uniq1"), 200);
+    applyDOMpositions(dom.querySelector("#uniq2"), 400);
+    applyDOMpositions(dom.querySelector("#uniq3"), 600);
+    applyDOMpositions(dom.querySelector("#uniq4"), 800);
     assert.equal(
       dom.querySelector("#uniq1").getAttribute("class"),
       "",

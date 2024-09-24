@@ -3,7 +3,7 @@ import { assert, describe, it } from "vitest";
 import { page } from "./page-seed";
 import { TEST_ONLY } from "../adjacent";
 import { appendIsland, setIsland } from "../dom-base";
-import { SimpleResponse, AdjacentProps } from "../all-types";
+// import { SimpleResponse, AdjacentProps } from "../all-types";
 
 const {
   injectOpts,

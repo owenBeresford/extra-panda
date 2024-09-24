@@ -13,6 +13,7 @@ import { log } from "./networking";
 /**
  * openShare
  * Display/ hide the mobile share bar (both directions)
+ *
  * @param {Event} e - unused at present
  * @param {Document =document} dom
  * @param {Location =location} loc
@@ -58,7 +59,7 @@ function shareMastodon(
 
   server = "https://" + server + "/share?text=I+think+this+is+important+" + url;
   log("info", "Trying to open mastodon server, " + server);
-  if (isFullstack()) {
+  if (isFullstack(win)) {
     // in JSDOM can't use extra functions, as the fake isn't deep enough
     (dom.querySelector("#popup") as HTMLDialogElement).close();
     win.open(server, "_blank");
@@ -116,16 +117,16 @@ export function initMastodon(
 ): void {
   let BUFFER: HTMLElement = dom.querySelector("#shareMenu #mastoTrigger");
   if (BUFFER) {
-    _map1(BUFFER, openMastodon, dom);
+    _map2(BUFFER, openMastodon, dom, win);
   }
   BUFFER = dom.querySelector("#shareGroup .allButtons #mastoTrigger");
   const canSee: string = accessVisibility(BUFFER, "display", win);
   if (canSee && canSee !== "none") {
     BUFFER.addEventListener("click", (e: Event): boolean => {
-      return openMastodon(e, dom);
+      return openMastodon(e, dom, win);
     });
     BUFFER.addEventListener("keypress", (e: Event): boolean => {
-      return openMastodon(e, dom);
+      return openMastodon(e, dom, win);
     });
   }
   BUFFER = dom.querySelector("#copyURL");
@@ -139,7 +140,7 @@ export function initMastodon(
   for (const i in BUFFER2) {
     _map2(BUFFER2[i], openShare, dom, loc);
   }
-  _map1(dom.querySelector("#hideMasto"), closeMastodon, dom);
+  _map2(dom.querySelector("#hideMasto"), closeMastodon, dom, win);
 }
 
 /**
@@ -148,11 +149,16 @@ export function initMastodon(
  * Covert a click event to a DOM change
  * @param {Event} e - unused at present
  * @param {Document =document} dom
+ * @param {Window =window } win
  * @public
  * @returns {false}
  */
-function openMastodon(e: Event, dom: Document = document): boolean {
-  if (isFullstack()) {
+function openMastodon(
+  e: Event,
+  dom: Document = document,
+  win: Window = window,
+): boolean {
+  if (isFullstack(win)) {
     // in JSDOM can't use extra functions, as the fake isn't deep enough
     (dom.querySelector("#popup") as HTMLDialogElement).showModal();
   }
@@ -165,11 +171,16 @@ function openMastodon(e: Event, dom: Document = document): boolean {
  * Hide extra UI for selecting a Mastodon server
  * @param {Event } e - unused at present
  * @param {Document =document} dom
+ * @param {Window =window } win
  * @public
  * @returns {false}
  */
-function closeMastodon(e: Event, dom: Document = document): boolean {
-  if (isFullstack()) {
+function closeMastodon(
+  e: Event,
+  dom: Document = document,
+  win: Window = window,
+): boolean {
+  if (isFullstack(win)) {
     // in JSDOM can't use extra functions, as the fake isn't deep enough
     dom.querySelector("#popup").close();
   }
@@ -242,7 +253,7 @@ function _map1(
  * @param {HTMLElement} where
  * @param {MiscEventHandler } action
  * @param {Document =document} dom
- * @param {Location =location} loc
+ * @param {Location|Window =location} loc
  * @public
  * @returns {void}
  */
@@ -250,7 +261,7 @@ function _map2(
   where: HTMLElement,
   action: MiscEventHandler3,
   dom: Document,
-  loc: Location = location,
+  loc: Location | Window = location,
 ): void {
   where.addEventListener("click", (a: Event): boolean => {
     action(a, dom, loc);

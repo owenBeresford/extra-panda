@@ -3,7 +3,7 @@ import { Document, HTMLAnchorElement, HTMLElement } from "jsdom";
 // import { log, debug } from "./networking";
 import { appendIsland } from "./dom-base";
 import { pullout } from "./string-base";
-import { applyDOMpostions } from "./desktop-biblio";
+import { applyDOMpositions } from "./desktop-biblio";
 import { getArticleWidth } from "./dom-base";
 
 /**
@@ -50,11 +50,16 @@ function link2Txt(url: string): string {
  * Convert links labelled 'git' to the github logo
  * @param {boolean} refs
  * @param {Document =document} dom
+ * @param {Window =window} win
  * @see [https://fontawesome.com/v4/accessibility/]
  * @public
  * @returns {void}
  */
-export function addOctoCats(refs: boolean, dom: Document = document): void {
+export function addOctoCats(
+  refs: boolean,
+  dom: Document = document,
+  win: Window = window,
+): void {
   const WIDTH: number = getArticleWidth(true, dom);
 
   dom.querySelectorAll("article a").forEach(function (
@@ -71,7 +76,7 @@ export function addOctoCats(refs: boolean, dom: Document = document): void {
       );
       if (refs) {
         a.setAttribute("aria-label", link2Txt(a.getAttribute("href")));
-        applyDOMpostions(a, WIDTH);
+        applyDOMpositions(a, WIDTH, win);
       } else {
         a.setAttribute("title", "Link to a github project.");
       }
@@ -84,10 +89,15 @@ export function addOctoCats(refs: boolean, dom: Document = document): void {
  * Convert links labelled 'docs' to an open book logo
  * @param {boolean} refs
  * @param {Document =document} dom
+ * @param {Window =window} win
  * @public
  * @returns {void}
  */
-export function addBooks(refs: boolean, dom: Document = document): void {
+export function addBooks(
+  refs: boolean,
+  dom: Document = document,
+  win: Window = window,
+): void {
   const WIDTH: number = getArticleWidth(true, dom);
 
   dom.querySelectorAll("article a").forEach(function (a: HTMLAnchorElement) {
@@ -106,7 +116,7 @@ export function addBooks(refs: boolean, dom: Document = document): void {
         "Link to the project docs; it may be a git page, or a separate webpage. ",
       );
       if (refs) {
-        applyDOMpostions(a, WIDTH);
+        applyDOMpositions(a, WIDTH, win);
       }
     }
   });

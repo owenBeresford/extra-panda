@@ -1,7 +1,7 @@
 import { assert, describe, it, assertType } from "vitest";
 
 import { page } from "./page-seed";
-import { Fetchable, Cookieable } from "../all-types";
+/// import { Fetchable, Cookieable } from "../all-types";
 import { appendIsland, setIsland, isFullstack } from "../dom-base";
 import { TEST_ONLY } from "../string-base";
 const {
