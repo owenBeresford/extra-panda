@@ -1,12 +1,16 @@
 ### TODO
 - Add type washing to JSON ingestion used in multiple places https://github.com/samchon/typia 
-- add multilingual support
+- Add multilingual support
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom   to TESTS
 - Add config for minifier via terser to build step.  Out of time.  IMPORTANT
 - Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages. 
-- port the everything* tests to storybook
+- Port the everything* tests to storybook
 - WCAG tests (lighthouse) for whole pages need to go some where (suggest this project) https://www.npmjs.com/package/wcag 
-- log fault on validate class for HTML with no doctype header
+- Look at https://github.com/githubnext/testpilot - test generator
+- Log fault on validate class for HTML with no doctype header
+- Run tests more often in browser mode, so fill in the isFullstack() tests
+- See if can remove HTML fixtures from tests that are not HTML rendering functions
+- Setup some process to deal with content being removed from articles, but references not yet rebuilt.  Ideally an alarm ~ but will need to be on page load, boo :-( 
 
 ### Previous Updates
 
@@ -18,9 +22,8 @@
 - DONE check accessibility of currentSize
 - DONE move inpage JS to pageStartup
 - DONE Add further modules
-- DONE move post handler in search to JS, as this can't work on mew site 
+- DONE move post handler in search to JS, as this can't work on new site 
 - DONE copy back the top functions for vanilla 
-- DONE check base.mjs is OK
 - DONE lookup fetch stuff 
 - DONE add vite to build
 - DONE add vitest
@@ -52,4 +55,5 @@
 - DONE: locate and terminate-with-extreme-prejudice the source of page jitter whilst displaying tooltips. 
 - DONE: add support for screen readers in the link decorations
 - DONE: add ability to have details opened automatically
+- DONE:     and remove this ability in some cases.
 

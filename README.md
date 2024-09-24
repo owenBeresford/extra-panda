@@ -107,7 +107,7 @@ Notes:
 - **_NOTE_** Commits at the start of this project are completely meaningless, as it's just when I moved the code back to my dev machine. They are meaningless duration markers, rather than feature markers.
 - Some of these unit tests are less meaningful than others, regrettably (running from Node).   It would be nice to setup test from a browser.  To *look* at the UX (as in, I am being the success / fail criterion), I did some manual testing
 - Use new language features (ADD a few KB of source) without jQuery (DROP >300KB of source). Dropping jQuery, as "select downloaded features" feature has been removed from https://jquery.com
-- Use TEST_ONLY symbols that expose entire module to unit tests.   I will add config to strip them in release build.   I didn't invent this structure, but I have used it ever since I started with JS modules, rather than plain JS.
+- Use TEST_ONLY symbols that expose entire module to unit tests.   Tree-shaking means these do not show in release builds and is a free feature of most build tools.   I didn't invent this structure, but I have used it ever since I started with JS modules, rather than plain JS.
 - Proper TDD units, as I have better tools now (JS modules + a fake DOM), make code better ~ separately to, and above every other bullet point. WARN: Some tests cannot be run outside a real webrowser.
 - Vastly improve English / readability of the code. Gain is separate to all other points.
 - As all this code is made after a minimiser script is adopted, faction code more finely into logical modules. So it's more readable.
@@ -165,6 +165,8 @@ Notes:
 - .adjacentGroup 
 - .addReferences
 - .showBiblioErrors - this turns the broken link alert ON, which is OFF before all the content is downloaded
+- .screenDocs - suppress DETAILS expansion on page load, as these are full width docs 
+- .maquette - do not apply any effects ~ like DETAILS ~ to code demos
 - Basic Containers
 - .lotsOfWords
 - .halferWords
