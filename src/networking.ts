@@ -43,6 +43,7 @@ export const URL_PLACEHOLDER = "https://owenberesford.me.uk/";
 export const TEST_MACHINE = "192.168.0.35";
 export const APPEARANCE_COOKIE = "appearance";
 export const EM_SZ = 16;
+export const SHOW_ERROR = "showBiblioErrors";
 
 /**
   According to the internet a current phone is likely to have a PPI of over 300
