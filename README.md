@@ -146,6 +146,10 @@ Notes:
 </details>
 <details>
 <summary> Lists of technical names </summary>
+#### values for 'NODE_ENV'
+- development ~ used at runtime, in tests
+- web-test ~ used at compile time, to make tests (affects linked libraries), '''RARE'''
+- production ~ includes less libraries, used at build time and runtime
 
 #### Known params that this code processes
 
