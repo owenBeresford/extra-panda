@@ -3,9 +3,10 @@ import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 import jsdoc from 'eslint-plugin-jsdoc';
 // eslint-plugin-jsx-a11y, eslint-plugin-vuejs-accessibility, eslint-plugin-react-native-a11y, eslint-plugin-styled-components-a11y 
+// eslint-plugin-jest, eslint-plugin-vitest: WTB a rule for count-of-skips vs count-of-real-tests
+
 
 export default [
-  { languageOptions: { globals: globals.browser }},
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   { ignores: [ "dist", "node_modules", "src/tests/" ] },
@@ -29,6 +30,15 @@ export default [
     "jsdoc/require-returns": 1,
     "jsdoc/require-returns-description": 0,
     "jsdoc/require-yields": 1
-		}
+		},
+	languageOptions: {
+            ecmaVersion: 2022,
+            sourceType: "module",
+            globals: {
+                ...globals.browser,
+                ...globals.node,
+            }
+        }
+
   }
 ];
