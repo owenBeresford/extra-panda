@@ -118,9 +118,10 @@ export function setIsland(
  */
 export function isFullstack(win: Window = window): boolean {
   const isNativeWindow = win.getComputedStyle
-    .toString().includes("[native code]");
+    .toString()
+    .includes("[native code]");
 
-  if ((typeof isNativeWindow === "boolean") && isNativeWindow) {
+  if (typeof isNativeWindow === "boolean" && isNativeWindow) {
     return true;
   }
   return false;

@@ -188,7 +188,7 @@ function mapPositions(
   let j = 1;
   const REFS = Array.from(dom.querySelectorAll(ALL_REFERENCE_LINKS));
   if (data.length > REFS.length) {
-    dom.querySelector(ALL_REFERENCE ).classList.add(SHOW_ERROR);
+    dom.querySelector(ALL_REFERENCE).classList.add(SHOW_ERROR);
     dom.querySelector("p[role=status]").textContent += "Recompile meta data";
     throw new Error(
       "Too many references in meta-data for this article, pls recompile.",

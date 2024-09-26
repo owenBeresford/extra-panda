@@ -170,7 +170,7 @@ class COOKIE implements Cookieable {
 }
 
 /**
- * getCookie
+ * _getCookie
  * Generate a cookie access object PURE
  * The awkward name is not to collide with Chrome extensions.
  * The commented code should run faster in Chrome, however it was making errors in tests, so I commented it
