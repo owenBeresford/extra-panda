@@ -1,6 +1,6 @@
 import { assert, describe, it } from "vitest";
 
-import { page } from "./page-seed";
+import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../effect";
 import { appendIsland } from "../dom-base";
 const { addOctoCats, addBooks, addBashSamples, addFancyButtonArrow, link2Txt } =

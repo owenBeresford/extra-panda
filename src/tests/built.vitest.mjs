@@ -1,6 +1,6 @@
 import { assert, describe, it } from "vitest";
 
-import { page } from "./page-seed";
+import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../core";
 import { _getCookie } from "../networking";
 import { appendIsland } from "../dom-base";

@@ -3,7 +3,7 @@ import { JSDOM } from "jsdom";
 // node_modules/html-validator/lib/whatwg-validator.js
 import * as validator from "html-validator";
 
-import { page, validateHTML } from "./page-seed";
+import { page, validateHTML } from "./page-seed-vite";
 import { TEST_ONLY } from "../core";
 import { _getCookie } from "../networking";
 import { appendIsland, setIsland, isFullstack, isMobile } from "../dom-base";

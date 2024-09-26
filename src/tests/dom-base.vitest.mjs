@@ -1,7 +1,7 @@
 import { assert, describe, it, assertType } from "vitest";
 import { JSDOM } from "jsdom";
 
-import { page } from "./page-seed";
+import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../dom-base";
 const {
   appendIsland,
@@ -29,7 +29,7 @@ describe("TEST dom-base", () => {
   it("go 2: isFullStack", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
 
-	assert.isTrue(false=== isFullstack(win), "A plain Node instance is false");
+    assert.isTrue(false === isFullstack(win), "A plain Node instance is false");
     if (process && process.env) {
       context.skip();
     }

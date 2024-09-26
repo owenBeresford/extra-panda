@@ -1,7 +1,7 @@
 import { assert, describe, it } from "vitest";
 import { JSDOM } from "jsdom";
 
-import { page } from "./page-seed";
+import { page } from "./page-seed-vite";
 import { appendIsland, setIsland, isFullstack } from "../dom-base";
 import { ALL_REFERENCE_LINKS } from "../networking";
 import { TEST_ONLY } from "../desktop-biblio";
