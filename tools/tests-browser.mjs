@@ -1,8 +1,10 @@
-/*
- This file exists as I am not making E2E tests, I am running normal unit test in the webrowser
- I need to do this as the JS interp has different features in a browser, and my code-under-test uses them
- The unit tests inject fixture HTML to operate.
-  Secondly the browser will execute the CSS properly.
+/**
+Some extra tests that do not run in Node
+* that is a lot of extra effort, why?
+   # unified output, to make automation easier
+   # test with CSS executed
+   # test with view-port sizes that work
+   # able to test Js features that only run on HTTPS
 
 * have pre-compiled unit tests into a JS bundle
 * add runtime file so single chrome instance is started
@@ -11,7 +13,6 @@
 * start playwright process inside node
 * tell browser to open local static file, which loads JS unit test
 * grab test output
-* 
 
 // https://gist.github.com/cmalven/1885287
 // https://medium.com/@rihem.larbi/how-to-create-an-ssl-certificate-to-securely-access-a-nestjs-backend-app-using-https-c441cc39c6b5
@@ -20,67 +21,74 @@
 // chromium $new_profile_command --remote-debugging-port 9222 
 // https://github.com/sonyarianto/playwright-using-external-chrome
 */
-import { exec } from 'node:child_process';
+import { spawn } from "node:child_process";
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import fs from "fs";
 
-import { chromium } from 'playwright';
+import { chromium } from "playwright";
 import express from "express";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const TESTS			=[
-	// IOIO 
-					];
-const PORT_DEBUG	=9222;
-const PORT_SERVER	=8081;
-const URL_DEBUG		="http://localhost:";
-const URL_SERVER 	="127.0.0.1";
-const BROWSER		='chromium --user-data-dir=/tmp/js-test --remote-debugging-port '+PORT_DEBUG;
+const TESTS = [
+  "modal.webtest.mjs", // extend...
+];
+const PORT_DEBUG = 9222;
+const PORT_SERVER = 8081;
+const URL_SERVER = "127.0.0.1";
+const BROWSER = [
+  "/snap/bin/chromium",
+  "--user-data-dir=/tmp/js-test",
+  "--remote-debugging-port=" + PORT_DEBUG,
+  "--ignore-this",
+];
 
-const DIR_TESTS		= path.join(__dirname, "..", "dist", "tests");
-const DIR_FIXTURES  = path.join(__dirname, "..", "src", "fixtures");
-const CERT_NAME     = DIR_FIXTURES +path.sep+"ecdsa.crt"; 
-const CERT_KEY      = DIR_FIXTURES+path.sep+"ecdsa.pem"; 
+const DIR_TESTS = path.join(__dirname, "..", "dist", "tests");
+const DIR_FIXTURES = path.join(__dirname, "..", "src", "fixtures");
+const CERT_NAME = DIR_FIXTURES + path.sep + "csr.pem";
+const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
+// cert.pem  csr.pem  index.html  ob1.min.css  private.key
 
 /**
  * spinup_server
  * A function to start a Node/Express process to host test files
  
  * @protected
- * @returns [null, ()=>void ]
+ * @returns {Array} - [null, ()=>void ]
  */
 function spinup_server() {
-// probably throws...
-	const credentials = {
-			key: fs.readFileSync( CERT_KEY ), 
-			cert: fs.readFileSync( CERT_NAME )
-						};
+  // probably throws...
+  const credentials = {
+    key: Buffer.from(fs.readFileSync(CERT_KEY)).toString(),
+    cert: Buffer.from(fs.readFileSync(CERT_NAME)).toString(),
+  };
 
-  const app = express( credentials );
-	app.get('/', function(req,res) {
-		res.writeHead(200, {'Content-Type': 'text/html; encoding= utf8'});
-		res.sendFile( path.join( DIR_FIXTURES, "index.html") );
-	});
-	app.get('/asset/ob1.min.css', function(req,res) {
-		res.writeHead(200, {'Content-Type': 'text/css;charset=UTF-8'});
-		res.sendFile( path.join( DIR_FIXTURES, "ob1.min.css") );
-	});
-// IOIO possible clash, as asset is used for 2 URLs
-	app.get('/asset/*', express.static( DIR_TESTS ));
+  const app = express(credentials);
+  app.get("/", function (req, res) {
+    res.writeHead(200, { "Content-Type": "text/html; encoding= utf8" });
+    res.sendFile(path.join(DIR_FIXTURES, "index.html"));
+  });
+  app.get("/asset/ob1.min.css", function (req, res) {
+    res.writeHead(200, { "Content-Type": "text/css;charset=UTF-8" });
+    res.sendFile(path.join(DIR_FIXTURES, "ob1.min.css"));
+  });
+  // IOIO possible clash, as asset is used for 2 URLs
+  app.get("/asset/*", express.static(DIR_TESTS));
 
-  const sock= app.listen(PORT_SERVER, URL_SERVER);
+  const sock = app.listen(PORT_SERVER, URL_SERVER);
   console.log(
-    "Fixture server  https://" +
+    "[INFO] Fixture server  https://" +
       URL_SERVER +
       ":" +
       PORT_SERVER +
       "/ with a local PID of " +
-      process.pid
+      process.pid,
   );
-	const closeServer= () =>{ sock.close(); }
-	return [null, closeServer ];
+  const closeServer = () => {
+    sock.close();
+  };
+  return [null, closeServer];
 }
 
 /**
@@ -88,46 +96,94 @@ function spinup_server() {
  * A function to generate "Node access" to the browser 
  
  * @protected
- * @returns [playwright.Context, ()=>void ]
+ * @param {string} debug_url
+ * @returns {Array} - [playwright.Context, ()=>void ]
  */
-async function spinup_playwright() {
-// debug channel, not test node web service
-        const DBG = await chromium.connectOverCDP(URL_DEBUG +PORT_DEBUG);
-		if(! DBG.isConnected()) 		{ throw new Error("Can't connect to captive browser"); }
-		if(! DBG.contexts().length <1)  { throw new Error("Can't connect to captive browser (contexts)"); }
+async function spinup_playwright(debug_url) {
+  // debug channel, not test node web service
+  const DBG = await chromium.connectOverCDP(debug_url);
+  if (!DBG.isConnected()) {
+    throw new Error("Can't connect to captive browser");
+  }
+  const CTX = DBG.contexts();
+  if (CTX.length < 1) {
+    throw new Error("Can't connect to captive browser (contexts)");
+  }
+  console.log("[INFO] Playwright admin via " + debug_url);
 
-        const ctx = DBG.contexts()[0];
-		const closure= async () => {
-    	    await ctx.close();
-       		await DBG.close();
-		}
-		return [ctx, closure ];
+  const ctx = CTX[0];
+  const closure = async () => {
+    await ctx.close();
+    await DBG.close();
+  };
+  return [ctx, closure];
 }
 
 /**
- * delay ~ borrowed from another project, a blocking sleep in JS
+ * spinup_host
+ * A //fairly// generic shell exec replacement, with a watch on stdout
+// sample:
+// DevTools listening on ws://127.0.0.1:9222/devtools/browser/59522268-ee60-43ba-b277-eab59f915f65
+ 
+ * @param {Array<string>} cmd
+ * @param {(str)=>void } onSocket
+ * @protected
+ * @returns {Array} - [PID of child, ()=>void]
+ */
+async function spinup_host(cmd, onSocket) {
+  let buf = "",
+    found = false;
+  const READ = (data) => {
+    // being cautious on line buffering:
+    buf += data;
+    let tmp = buf.split("\n");
+    for (let i = 0; i < tmp.length; i++) {
+      if (!found && tmp[i].match(/^DevTools listening on /)) {
+        onSocket(tmp[i].match(/^DevTools listening on ([^ ]+)$/)[1]);
+        found = true;
+      }
+    }
+  };
+  const READ_ERR = (data) => {
+    console.log("Child said: " + data);
+  };
+
+  const CHILD = await spawn(BROWSER[0], BROWSER.slice(1, 3), {
+    detached: true,
+    shell: false,
+  });
+  CHILD.stdout.setEncoding("utf8");
+  CHILD.stderr.setEncoding("utf8");
+  CHILD.stdout.on("data", READ_ERR);
+  CHILD.stderr.on("data", READ);
+  CHILD.on("error", (err) => {
+    console.log("CHILD errored with " + err.message);
+    throw err;
+  });
+  CHILD.on("close", (code) => {
+    if (code !== 0) {
+      console.log(`CHILD exited with code ${code}`);
+      // maybe make an exception
+    }
+    CHILD.stdin.end();
+  });
+  console.log("[INFO] Created a browser instance");
+
+  const closure = () => {
+    if (!CHILD.killed) {
+      CHILD.kill();
+    }
+  };
+  return [CHILD.pid, closure];
+}
+
+/**
+ * delay ~ borrowed from another project, a blocking sleep() in JS
  * @param {number} ms
  * @returns {Promise<void>}
  */
 function delay(ms) {
   return new Promise((good) => setTimeout(good, ms));
-}
-
-/**
- * end0 - the closing browser function
- *
- * @param {Error} err
- * @param {Buffer|string} stdout
- * @param {Buffer|string} stderr
- * @protected
- * @throws The same error, so it gets caught in the single error catcher
- * @returns {void}
- */
-function end0(err, stdout, stderr) {
-	if(err) { console.log(err.message, err.stack, stderr); }	
-	if(stderr) { console.log("ERROR:", stderr);  }
-	if(stdout) { console.log("OUT:", stdout);  }
-	throw err;
 }
 
 /**
@@ -137,36 +193,52 @@ function end0(err, stdout, stderr) {
  * @protected
  * @returns {void}
  */
-function runTests( tests) {
-	try {
-		const cntlr = new AbortController();
-		const { signal } = cntlr;
+export async function runTests(tests) {
+  try {
+    let dburl = "";
+    const grab = (data) => {
+      dburl = data;
+    };
+    const [CHILD, end0] = await spinup_host(BROWSER, grab);
+    const [ignored, end1] = spinup_server();
+    await delay(2000);
+    // loading chrome on this fairly fast machine takes more than 1s,
+    // there is a chrome that I am using already loaded, could be account creation being slow
+    if (dburl === "") {
+      throw new Error("IO tangled, pls fix " + CHILD);
+    }
+    const [ctx, end2] = await spinup_playwright(dburl);
+    for (let i in tests) {
+      // IOIO maybe don't need a new tab each time
+      const page = await ctx.newPage();
+      // using **https** localhost,
+      // test server is to server a HTML file in 'GET /'
+      const URL =
+        "https://" + URL_SERVER + ":" + PORT_SERVER + "/?test=" + tests[i];
+      await page.goto(URL);
+      await delay(2000); // adjust this after completion
+      // https://stackoverflow.com/questions/61453673/how-to-get-a-collection-of-elements-with-playwright
+      // https://hatchjs.com/playwright-get-text-of-element/
+      // https://playwright.dev/docs/locators
+      // https://playwright.dev/docs/api/class-framelocator#frame-locator-get-by-text
+    }
 
-		exec( BROWSER, {signal}, end0 );
-		const [ignored, end2 ] = spinup_server();
-		const [ctx, end1 ]=spinup_playwright();
-		for(let script in tests) {
-// IOIO maybe don't need a new tab each time
-			const page = await ctx.newPage();
-// using **https** localhost, 
-// test server is to server a HTML file in 'GET /' 
-			const URL= URL_SERVER+PORT_SERVER+'/?test='+script; 
-			await page.goto(URL );
-			await delay(2000); // adjust this after completion		
-// IOIO get results of running script
-		}
-		cntlr.abort();
-		end1();
-		end2();
-	} catch(e) {
-		console.log(e.message, e.stack );
-	}
+    end1();
+    end0();
+    end2();
+  } catch (e) {
+    console.log(
+      "\n\n[ERROR] browser tests group failed with:",
+      e.message,
+      e.stack,
+      "\n\n",
+    );
+  }
 }
 
-// this code is a test runner, 
+// this code is a test runner,
 // but is too complex.  So I may need to put a test on it
 // so this is safe to import as it doesn't auto execute
-if(! module.parent) {
-	runTests( TESTS );
-}
-
+//if(! module.parent) {
+runTests(TESTS);
+//}
