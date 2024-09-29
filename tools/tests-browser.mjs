@@ -26,6 +26,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import fs from "fs";
+import https from "https";
 
 import { chromium } from "playwright";
 import express from "express";
@@ -41,12 +42,14 @@ const BROWSER = [
   "/snap/bin/chromium",
   "--user-data-dir=/tmp/js-test",
   "--remote-debugging-port=" + PORT_DEBUG,
+  "--ignore-certificate-errors",
+  "--allow-insecure-localhost",
   "--ignore-this",
 ];
 
 const DIR_TESTS = path.join(__dirname, "..", "dist", "tests");
 const DIR_FIXTURES = path.join(__dirname, "..", "src", "fixtures");
-const CERT_NAME = DIR_FIXTURES + path.sep + "csr.pem";
+const CERT_NAME = DIR_FIXTURES + path.sep + "cert.pem";
 const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
 // cert.pem  csr.pem  index.html  ob1.min.css  private.key
 
@@ -58,33 +61,68 @@ const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
  * @returns {Array} - [null, ()=>void ]
  */
 function spinup_server() {
-  // probably throws...
   const credentials = {
-    key: Buffer.from(fs.readFileSync(CERT_KEY)).toString(),
-    cert: Buffer.from(fs.readFileSync(CERT_NAME)).toString(),
+    key: fs.readFileSync(CERT_KEY),
+    cert: fs.readFileSync(CERT_NAME),
   };
 
-  const app = express(credentials);
-  app.get("/", function (req, res) {
-    res.writeHead(200, { "Content-Type": "text/html; encoding= utf8" });
-    res.sendFile(path.join(DIR_FIXTURES, "index.html"));
-  });
-  app.get("/asset/ob1.min.css", function (req, res) {
-    res.writeHead(200, { "Content-Type": "text/css;charset=UTF-8" });
-    res.sendFile(path.join(DIR_FIXTURES, "ob1.min.css"));
-  });
-  // IOIO possible clash, as asset is used for 2 URLs
-  app.get("/asset/*", express.static(DIR_TESTS));
+  const app = express();
+  const sock = https.createServer(credentials, app);
 
-  const sock = app.listen(PORT_SERVER, URL_SERVER);
-  console.log(
-    "[INFO] Fixture server  https://" +
-      URL_SERVER +
-      ":" +
-      PORT_SERVER +
-      "/ with a local PID of " +
-      process.pid,
-  );
+  app.get("/", function (req, res) {
+    let tt = fs.readFileSync(path.join(DIR_FIXTURES, "index.html"));
+    tt = Buffer.from(tt).toString();
+    if (!("test" in req.query)) {
+      res
+        .status(404)
+        .send("You need to include a unit test to run via test param.");
+      return;
+    }
+    tt = tt.replace(
+      /MARKER/,
+      "https://" +
+        URL_SERVER +
+        ":" +
+        PORT_SERVER +
+        "/scripts/" +
+        req.query.test,
+    );
+    res.status(200);
+    res.append("content-type", "text/html; encoding= utf8");
+    res.send(tt);
+  });
+
+  app.get("/asset/ob1.min.css", function (req, res) {
+    res.sendFile(path.join(DIR_FIXTURES, "ob1.min.css"), {
+      dotfiles: "deny",
+      headers: { "Content-Type": "text/css;charset=UTF-8" },
+    });
+  });
+
+  app.get('/scripts/:nom', function(req, res) {
+	let detect=fs.statSync(
+		path.join( DIR_TESTS, req.params.nom), 
+		{throwIfNoEntry:false}
+				 );
+	if( detect && !detect.isFile() ) {
+		return res.status(404).send("Unknown file "+req.params.nom);
+	}
+    res.sendFile(path.join(DIR_TESTS, req.params.nom), {
+      headers: { "Content-Type": "text/javascript; charset=UTF-8" },
+
+	});
+		 } );
+
+  sock.listen(PORT_SERVER, URL_SERVER, () => {
+    console.log(
+      "[INFO] Fixture server  https://" +
+        URL_SERVER +
+        ":" +
+        PORT_SERVER +
+        "/ with a local PID of " +
+        process.pid,
+    );
+  });
   const closeServer = () => {
     sock.close();
   };
@@ -166,6 +204,7 @@ async function spinup_host(cmd, onSocket) {
       // maybe make an exception
     }
     CHILD.stdin.end();
+    throw new Error("Browser was closed by a human");
   });
   console.log("[INFO] Created a browser instance");
 
@@ -216,7 +255,7 @@ export async function runTests(tests) {
       const URL =
         "https://" + URL_SERVER + ":" + PORT_SERVER + "/?test=" + tests[i];
       await page.goto(URL);
-      await delay(2000); // adjust this after completion
+      await delay(1200000); // adjust this after completion
       // https://stackoverflow.com/questions/61453673/how-to-get-a-collection-of-elements-with-playwright
       // https://hatchjs.com/playwright-get-text-of-element/
       // https://playwright.dev/docs/locators
