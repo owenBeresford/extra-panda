@@ -5,4 +5,7 @@ build/
 src/fixtures/ecdsa.crt
 src/fixtures/ecdsa.pem
 src/fixtures/ecdsa_private.key
+src/fixtures/cert.pem
+src/fixtures/csr.pem
+src/fixtures/private.key
 

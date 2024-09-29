@@ -1,4 +1,4 @@
-i<!doctype html>
+<!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="utf-8" />
@@ -16,74 +16,32 @@ i<!doctype html>
       </ul>
     </details>
     <script defer>
-      function writeLog(str, bold=false, html=false) {
-              const LOG=document.getElementById('log');
-              let li = document.createElement('li');
-              const dd=new Date();
-          let tt=document.createElement('time');
-              tt.dateTime=dd.toString();
-              tt.textContent=dd.getUTCHours()+':'+dd.getUTCMinutes()+':'+dd.getUTCSeconds();
-              li.appendChild(tt);
-              if(html) {
-                      let t2=document.createElement('template');
-                      t2.innerHTML=str;
-                      li.appendChild(t2.content);
-              } else {
-                      li.appendChild(document.createTextNode(" => "+ str));
-              }
-              if( bold) {
-                      li.style="font-size:115%; ";
-              }
-              LOG.append(li);
-      }
-
-      /**
-       * appendIsland
-       * An important util function, which removes the need for jQuery, ShadowDOM AND other innerHTML hacks.
-       * I have a historic avoidance of passing DOM object around the stack as it caused bad memory leaks.
-       * Security note: Executes changes to innerHTML on an Element not attached to the DOM.  It is the callers' responsibility to not inject a JS blob that mines bitcoin by accident.
-       * IMPURE
-       * @param {string|HTMLElement} selector ~ where to appends the new content
-       * @param {string} html ~ what to append
-       * @param {Document =document} dom ~ reference to which DOM tree
-       * @throws some sort of HTML error, if the supplied HTML is malformed.  Browser dependant
-       * @public
-       * @returns {undefined}
-       */
-      function appendIsland(
-        selector: string | HTMLElement,
-        html: string,
-        dom: Document = document,
-      ): void {
-        try {
-          const base: HTMLTemplateElement = dom.createElement("template");
-          base.innerHTML = html;
-          if (typeof selector === "string") {
-            const tt: HTMLElement = dom.querySelector(selector) as HTMLElement;
-            if (tt === null) {
-              throw new Error("Oh no! DOM element not found: " + selector);
-            }
-            return tt.append(base.content);
-          } else {
-            return selector.append(base.content);
-          }
-        } catch (e) {
-          console.log("error", e.toString());
+      function writeLog(str, bold = false, html = false) {
+        const LOG = document.getElementById("log");
+        let li = document.createElement("li");
+        const dd = new Date();
+        let tt = document.createElement("time");
+        tt.dateTime = dd.toString();
+        tt.textContent =
+          dd.getUTCHours() +
+          ":" +
+          dd.getUTCMinutes() +
+          ":" +
+          dd.getUTCSeconds();
+        li.appendChild(tt);
+        if (html) {
+          let t2 = document.createElement("template");
+          t2.innerHTML = str;
+          li.appendChild(t2.content);
+        } else {
+          li.appendChild(document.createTextNode(" => " + str));
         }
+        if (bold) {
+          li.style = "font-size:115%; ";
+        }
+        LOG.append(li);
       }
-
-      function exec() {
-      	const UP=URLSearchParams(location.search);
-      	if(!UP.has('test')) {
-      		writeLog("No test was specified, nothing done");
-      		return;
-      	}
-      	let url="https://127.0.0.1:8081/asset/"+UP.get('test');
-      // IOIO maybe wont work.  Literal script element broken up to avoid various tools dying on close tag
-          appendIsland('head', `<script type="module" src="${url}"></`+'script>');
-      	writeLog("Added script "+UP.get('test'));
-      }
-      exec();
     </script>
+    <script type="module" src="MARKER"></script>
   </body>
 </html>

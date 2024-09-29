@@ -62,6 +62,6 @@ function page_fake(url = "", args = 1) {
  * @return {Array<string>}
  */
 export async function validateHTML(html) {
-// I would like some process to listen to HTML errors in the browser
+  // I would like some process to listen to HTML errors in the browser
   return [];
 }
