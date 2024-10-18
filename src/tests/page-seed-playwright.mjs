@@ -1,3 +1,5 @@
+import { delay } from '../networking';
+
 /**
  * page
  * Build a fake browser to run with tests
@@ -7,9 +9,9 @@
  * @public
  * @return {Array<things>} - see args arg above.
  */
-export function page(url = "", args = 1) {
+export async function page(url = "", args = 1) {
   if (typeof window === "object" && args < 5) {
-    return page_local(url, args);
+    return await page_local(url, args);
   } else if (args < 5) {
     return page_fake(url, args);
   }
@@ -25,16 +27,21 @@ export function page(url = "", args = 1) {
  * @public
  * @return {Array} - many types of object
  */
-function page_local(url = "", args = 1) {
-  const tmp = window.open(url, "test");
+ async function page_local(url = "", args = 1) {
+  const tmp = await window.open(url, "test");
+	await delay(1000);
+  if(tmp.window.document.body.length < 200) {
+		window.reload();
+		return page_local(url, args);
+	}
   if (args === 1) {
-    return [tmp.document];
+    return [tmp.window.document];
   } else if (args === 2) {
-    return [tmp.document, tmp.location];
+    return [tmp.window.document, tmp.window.document.location];
   } else if (args === 3) {
-    return [tmp.document, tmp.location, tmp];
+    return [tmp.window.document, tmp.window.document.location, tmp.window];
   } else if (args === 4) {
-    return [tmp.document, tmp.location, tmp, tmp];
+    return [tmp.window.document, tmp.window.document.location, tmp.window, tmp];
   }
 }
 
