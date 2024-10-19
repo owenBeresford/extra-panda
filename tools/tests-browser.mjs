@@ -20,6 +20,12 @@ Some extra tests that do not run in Node
 // https://dev.to/sonyarianto/how-to-use-playwright-with-externalexisting-chrome-4nf1
 // chromium $new_profile_command --remote-debugging-port 9222 
 // https://github.com/sonyarianto/playwright-using-external-chrome
+
+      // https://stackoverflow.com/questions/61453673/how-to-get-a-collection-of-elements-with-playwright
+      // https://hatchjs.com/playwright-get-text-of-element/
+      // https://playwright.dev/docs/locators
+      // https://playwright.dev/docs/api/class-framelocator#frame-locator-get-by-text
+
 */
 import { spawn } from "node:child_process";
 import path from "path";
@@ -31,6 +37,13 @@ import https from "https";
 import { chromium } from "playwright";
 import express from "express";
 
+/**
+There is only 1 cmd arg to this script at present.
+  --no-close or --close
+
+if more are added see command-line-args
+@see [https://www.npmjs.com/package/command-line-args]
+*/
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TESTS = [
   "modal.webtest.mjs", // extend...
@@ -40,10 +53,18 @@ const PORT_SERVER = 8081;
 const URL_SERVER = "127.0.0.1";
 const BROWSER = [
   "/snap/bin/chromium",
+// This flag is being ignored
   "--user-data-dir=/tmp/js-test",
   "--remote-debugging-port=" + PORT_DEBUG,
+// add no empty window
+// these two flags have been removed
   "--ignore-certificate-errors",
+	"--test-type=webdriver",
   "--allow-insecure-localhost",
+	"--mute-audio",
+// lots of excited press about this 3 y ago, doesn't work now
+//	" --auto-open-devtools-for-tabs",
+// this fake flag is also being ignored
   "--ignore-this",
 ];
 
@@ -52,6 +73,7 @@ const DIR_FIXTURES = path.join(__dirname, "..", "src", "fixtures");
 const CERT_NAME = DIR_FIXTURES + path.sep + "cert.pem";
 const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
 // cert.pem  csr.pem  index.html  ob1.min.css  private.key
+var dDelta=0;
 
 /**
  * spinup_server
@@ -79,7 +101,7 @@ function spinup_server() {
       return;
     }
     tt = tt.replace(
-      /MARKER/,
+      /MARKER1/,
       "https://" +
         URL_SERVER +
         ":" +
@@ -90,6 +112,20 @@ function spinup_server() {
     res.status(200);
     res.append("content-type", "text/html; encoding= utf8");
     res.send(tt);
+  });
+
+  app.get("/home.html", function (req, res) {
+    res.sendFile(path.join(DIR_FIXTURES, "home.html"), {
+      dotfiles: "deny",
+      headers: { "Content-Type": "text/html;charset=UTF-8" },
+    });
+  });
+
+  app.get("/asset/ob1-202406.min.mjs", function (req, res) {
+    res.sendFile(path.join(DIR_FIXTURES, "ob1-202406.min.mjs"), {
+      dotfiles: "deny",
+      headers: { "Content-Type": "text/javascript;charset=UTF-8" },
+    });
   });
 
   app.get("/asset/ob1.min.css", function (req, res) {
@@ -120,12 +156,12 @@ function spinup_server() {
         ":" +
         PORT_SERVER +
         "/ with a local PID of " +
-        process.pid,
-    );
+        process.pid,  );
   });
   const closeServer = () => {
     sock.close();
   };
+// Could return the socket, but not sure this would help anything
   return [null, closeServer];
 }
 
@@ -158,7 +194,7 @@ async function spinup_playwright(debug_url) {
 }
 
 /**
- * spinup_host
+ * spinup_browser
  * A //fairly// generic shell exec replacement, with a watch on stdout
 // sample:
 // DevTools listening on ws://127.0.0.1:9222/devtools/browser/59522268-ee60-43ba-b277-eab59f915f65
@@ -168,7 +204,7 @@ async function spinup_playwright(debug_url) {
  * @protected
  * @returns {Array} - [PID of child, ()=>void]
  */
-async function spinup_host(cmd, onSocket) {
+async function spinup_browser(cmd, onSocket) {
   let buf = "",
     found = false;
   const READ = (data) => {
@@ -183,10 +219,11 @@ async function spinup_host(cmd, onSocket) {
     }
   };
   const READ_ERR = (data) => {
-    console.log("Child said: " + data);
+    console.log("[PASS-BACK] Child process said: " + data);
+	console.log("outer running process has got the debug socket? "+found);
   };
 
-  const CHILD = await spawn(BROWSER[0], BROWSER.slice(1, 3), {
+  const CHILD = await spawn(BROWSER[0], BROWSER.slice(1, BROWSER.length-1), {
     detached: true,
     shell: false,
   });
@@ -195,16 +232,19 @@ async function spinup_host(cmd, onSocket) {
   CHILD.stdout.on("data", READ_ERR);
   CHILD.stderr.on("data", READ);
   CHILD.on("error", (err) => {
-    console.log("CHILD errored with " + err.message);
+    console.log("[PASS-BACK] CHILD errored with " + err.message);
     throw err;
   });
   CHILD.on("close", (code) => {
     if (code !== 0) {
-      console.log(`CHILD exited with code ${code}`);
+      console.log(`[PASS-BACK] CHILD exited with code ${code}`);
       // maybe make an exception
     }
     CHILD.stdin.end();
-    throw new Error("Browser was closed by a human");
+	if(dDelta ===0 ) {
+		console.log(`[PASS-BACK] CHILD exited`);
+    	throw new Error("Browser was closed by a human");
+	}
   });
   console.log("[INFO] Created a browser instance");
 
@@ -222,11 +262,99 @@ async function spinup_host(cmd, onSocket) {
  * @returns {Promise<void>}
  */
 function delay(ms) {
-  return new Promise((good) => setTimeout(good, ms));
+  return new Promise( (good) => setTimeout(good, ms) );
 }
 
 /**
- * runTests - a wrapper  to make code tidier
+ * should_close_tabs()
+ * Map for flags to close the test tabs. 
+ * Not doing so means that humans can read the outcomes, but its litter. 
+ 
+ * @param {Array<string>} args - suggest pass process.argv
+ * @protected
+ * @return {number} - return 1 or 0
+ */
+function should_close_tabs(args) {
+	let close=1;	
+	if(args.includes('--close'))	{
+		close=1;
+	} 
+	if(args.includes('--no-close'))	{
+		close=0;
+	} 
+	return close;
+}
+
+/**
+ * getMethods
+ * Return the methods that are in the current object, and not inherited
+ 
+ * @see [https://stackoverflow.com/questions/2257993/how-to-display-all-methods-of-an-object]
+ * @param {Object} o - this is whatever type it is.  BUT MUST BE AN OBJECT
+ * @protected
+ * @return {Array<strings>}
+ */
+function getMethods(o) {
+  return Object.getOwnPropertyNames(Object.getPrototypeOf(o))
+    .filter(m => 'function' === typeof o[m])
+}
+
+/**
+ * JSON2logging
+ * Just a custom dump function to look like vitest/ jest. 
+ * Prints to console
+ 
+ * @param {string} json1
+ * @protected
+ * @return {void} 
+ */
+function JSON2logging(json1) {
+	let tmp=JSON.parse( json1.trim() );
+	let [title]=tmp.pop();
+	console.log("    ✓ "+title.name);
+
+	for(let i=0; i<tmp.length; i++) {
+		console.log("     ✓ "+ tmp[i].testPath[2]+" ["+(tmp[i].status.toUpperCase())+"]" );
+	}
+}
+
+/**
+ * browser2json
+ * Attempt to map the playwright object to a HTMLIsland, in the Node process
+ * This throws in quite a few places
+ 
+ * @param {Some playwright structure} page
+ * @param {number} weight
+ * @exception if data isn't in correct shape
+ * @protected
+ * @return {string}
+ */
+async function browser2json(page, weight) {
+	const tt1=await page.getByTestId('status');
+	const sz= await tt1.count();
+
+	if(sz>0) {
+		if(sz >1) { throw new Error("Result block not found"); }
+
+		await page.bringToFront();
+// use this in next iteration
+		let ignored=await tt1.all();
+console.log("sleeping");
+		await delay(6_000 * weight);
+console.log("wakeup (hopefully brower execution is done)");
+		const json1= await page.innerText('pre');
+//			testResults = await page.content();
+//			let slice=testResults.match(new RegExp("<pre[^>]*>([^<]*)</pre>", 'mi'));
+//console.log("SDFSDFSDF "+ new Date(),  slice);
+
+		if( json1.length <5) { throw new Error("EMPTY Result block found"); }
+		return json1;
+	}
+	throw new Error("Logic error, ask a dev"); 
+} 
+
+/**
+ * runTests - a wrapper to make code tidier
  *
  * @param {Array<strings>} tests
  * @protected
@@ -238,7 +366,7 @@ export async function runTests(tests) {
     const grab = (data) => {
       dburl = data;
     };
-    const [CHILD, end0] = await spinup_host(BROWSER, grab);
+    const [CHILD, end0] = await spinup_browser(BROWSER, grab);
     const [ignored, end1] = spinup_server();
     await delay(2000);
     // loading chrome on this fairly fast machine takes more than 1s,
@@ -248,27 +376,35 @@ export async function runTests(tests) {
     }
     const [ctx, end2] = await spinup_playwright(dburl);
     for (let i in tests) {
-      // IOIO maybe don't need a new tab each time
-      const page = await ctx.newPage();
+		dDelta=0;
+
+      const [page ]= await ctx.pages();
       // using **https** localhost,
       // test server is to server a HTML file in 'GET /'
-      const URL =
-        "https://" + URL_SERVER + ":" + PORT_SERVER + "/?test=" + tests[i];
+      let URL =
+        "https://" + URL_SERVER + ":" + PORT_SERVER + "/?test=" + tests[i]+ 
+// append "&no-close=1" to stop the browser tabs being closed, so they can be examined
+			"&close="+should_close_tabs( process.argv); 
       await page.goto(URL);
-      await delay(1200000); // adjust this after completion
-      // https://stackoverflow.com/questions/61453673/how-to-get-a-collection-of-elements-with-playwright
-      // https://hatchjs.com/playwright-get-text-of-element/
-      // https://playwright.dev/docs/locators
-      // https://playwright.dev/docs/api/class-framelocator#frame-locator-get-by-text
+	let d1=new Date();
+      await delay(3000); 
+	let json1= await browser2json( page, TESTS.length);
+	JSON2logging(  json1); 
+
+	let d2=new Date();
+	dDelta=d2-d1;
+		await delay(1000);
+
     }
 
+	if( should_close_tabs( process.argv) ) {
     end1();
     end0();
     end2();
+	}
   } catch (e) {
     console.log(
-      "\n\n[ERROR] browser tests group failed with:",
-      e.message,
+      "\n\n[ERROR] browser tests ABORTED with "+ e.message,
       e.stack,
       "\n\n",
     );
@@ -278,6 +414,6 @@ export async function runTests(tests) {
 // this code is a test runner,
 // but is too complex.  So I may need to put a test on it
 // so this is safe to import as it doesn't auto execute
-//if(! module.parent) {
+//if( typeof module === "object" && !("parent" in module) ) {
 runTests(TESTS);
 //}
