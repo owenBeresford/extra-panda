@@ -9,7 +9,7 @@ export default defineConfig({
 
     globals: true,
     include: ["src/tests/*.vitest.mjs"],
-    environment: "jsdom",
+    environment: "node",
     bail: 0,
 
   browser: { 
