@@ -11,7 +11,12 @@ const { default: validator } = await import("html-validator");
  * @return {Array<things>} - see args arg above.
  */
 export function page(url = "", args = 1) {
-  if (typeof window === "object" && args < 5) {
+  if (
+    typeof window === "object" &&
+    window !== undefined &&
+    window !== null &&
+    args < 5
+  ) {
     return page_local(url, args);
   } else if (args < 5) {
     return page_fake(url, args);
@@ -82,6 +87,8 @@ function page_fake(url = "", args = 1) {
 /**
  * validateHTML
  * Build 1 code to check HTML
+ * When vite has built with test.environment == 'node', the library is accessed with less hassle
+ * for test.environment=='jsdom' I need validator.default
 
  * @see ["Using validate.org API" https://html-validate.org/dev/using-api.html]
  * @param {string} html
@@ -92,7 +99,7 @@ function page_fake(url = "", args = 1) {
 export async function validateHTML(html) {
   // I do no know why WhatWG doesn't know Dialog tag
   // I have persistent disagreement on heading levels
-  const lint = await validator.default({
+  const lint = await validator({
     validator: "WHATWG",
     data: html,
     format: "text",
