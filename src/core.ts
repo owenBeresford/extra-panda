@@ -6,8 +6,8 @@ import {
   log,
   debug,
   APPEARANCE_COOKIE,
-  _getCookie,
   runFetch,
+  accessCookie,
 } from "./networking";
 import {
   listContentGroup,
@@ -60,18 +60,17 @@ function _map(where: HTMLElement, action: MultiFuncArg): void {
  *
  * @param {Document =document} dom
  * @param {location =location} loc
+ * @param {Window =window} win
  * @protected
  * @returns {void}
  */
-function initPopupMobile(
-  dom: Document = document,
-  loc: Location = location,
-): void {
-  if (!isLocal(loc.host) && !isMobile(dom, loc)) {
+function initPopupMobile(dom: Document, loc: Location, win: Window): void {
+  const MOBILE = isMobile(dom, loc, win);
+  if (!isLocal(loc.host) && !MOBILE) {
     return;
   }
 
-  if (isMobile(dom, loc)) {
+  if (MOBILE) {
     dom.querySelector("#sendMasto").textContent = "Share article";
   }
   const html: Array<string> = [
@@ -127,7 +126,7 @@ function storeAppearance(
   dir: string,
   clr: string,
 ): void {
-  const COOKIE: Cookieable = _getCookie();
+  const COOKIE: Cookieable = accessCookie();
   const json: string = JSON.stringify({ ft: ft, fs: fs, dn: dir, cr: clr });
   COOKIE.set(APPEARANCE_COOKIE, json, 365.254);
 }
@@ -139,8 +138,8 @@ function storeAppearance(
  * @protected
  * @returns {void}
  */
-function applyAppearance(dom: Document = document): void {
-  const COOKIE: Cookieable = _getCookie();
+function applyAppearance(dom: Document): void {
+  const COOKIE: Cookieable = accessCookie();
 
   const dat: string = COOKIE.get(APPEARANCE_COOKIE);
   if (!dat) {
@@ -176,10 +175,7 @@ function applyAppearance(dom: Document = document): void {
  * @protected
  * @returns {void}
  */
-function burgerMenu(
-  id: string = ".burgerMenu",
-  dom: Document = document,
-): void {
+function burgerMenu(id: string = ".burgerMenu", dom: Document): void {
   const t: HTMLElement = dom.querySelector(id);
   const ico: HTMLElement = dom.querySelector("#pageMenu i");
 
@@ -205,7 +201,7 @@ function burgerMenu(
  * @protected
  * @returns {void}
  */
-function tabChange(id: string | MiscEvent, dom: Document = document): void {
+function tabChange(id: string | MiscEvent, dom: Document): void {
   let thing: HTMLElement | null = null;
   let target: string = "";
 
@@ -258,9 +254,9 @@ function tabChange(id: string | MiscEvent, dom: Document = document): void {
  */
 export async function siteCore(
   opts: CoreProps,
-  dom: Document = document,
-  loc: Location = location,
-  win: Window = window,
+  dom: Document,
+  loc: Location,
+  win: Window,
 ): Promise<void> {
   OPTS = Object.assign(
     OPTS,
@@ -269,7 +265,7 @@ export async function siteCore(
     },
     opts,
   );
-  const ldebug = debug();
+  const ldebug = debug(loc);
 
   if (OPTS.pageInitRun) {
     log("warn", "Extra panda should not be run more than once per page");
@@ -292,7 +288,7 @@ export async function siteCore(
   }
 
   applyVolume(dom, win);
-  initPopupMobile(dom, loc);
+  initPopupMobile(dom, loc, win);
   initMastodon(dom, loc, win);
   const isRefs: boolean = dom.querySelector(".addReferences") !== null;
   addOctoCats(isRefs, dom, win);
@@ -304,7 +300,7 @@ export async function siteCore(
   expandDetails(1040, dom, loc, win);
 
   if (
-    !isMobile(dom, loc) &&
+    !isMobile(dom, loc, win) &&
     loc.pathname !== "/resource/home" &&
     dom.querySelectorAll(".reading").length < 2
   ) {
@@ -316,6 +312,7 @@ export async function siteCore(
         refresh: true,
       },
       dom,
+      loc,
     );
   }
 
@@ -344,7 +341,7 @@ export async function siteCore(
       );
     }
   } else {
-    if (isMobile(dom, loc)) {
+    if (isMobile(dom, loc, win)) {
       await mobileCreateBiblio(
         {
           debug: ldebug,
@@ -358,8 +355,8 @@ export async function siteCore(
       await desktopCreateBiblio(
         {
           debug: ldebug,
-          runFetch: "desktopRunFetch" in OPTS ? OPTS.desktopRunFetch : runFetch,
           renumber: 1,
+          runFetch: "desktopRunFetch" in OPTS ? OPTS.desktopRunFetch : runFetch,
         },
         dom,
         loc,
@@ -394,7 +391,10 @@ export async function siteCore(
   // This is calling out to global scope on purpose, as its outside the module,
   //   I don't rely on which module loads first and I can't import the function
   //   when it isn't there.
-  if (typeof document.pageStartup === "function") {
+  if (
+    typeof document !== "undefined" &&
+    typeof document.pageStartup === "function"
+  ) {
     document.pageStartup();
   } else {
     log(

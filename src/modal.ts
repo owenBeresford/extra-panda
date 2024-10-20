@@ -5,16 +5,19 @@ import { log } from "./networking";
 /**
  * HTMLDetailsTrap
  * If ESC key happens, close any open DETAILS elements
+ * 
  * @param {MiscEvent} e
  * @param {Document = document} dom
  * @protected
  * @returns {boolean} - keypress event, so return false
  */
-function HTMLDetailsTrap(e: MiscEvent, dom: Document = document): boolean {
+function HTMLDetailsTrap(e: MiscEvent, dom: Document): boolean {
   if (e.code === "Escape" || e.key === "Escape") {
     const tt = dom.querySelectorAll("details[open]");
     if (tt.length) {
-      tt[0].open = false;
+		for(let i =0; i< tt.length; i++) {
+			tt[i].open = false;
+		}
     }
     e.preventDefault();
     return false;
@@ -66,7 +69,7 @@ function find(ele: HTMLElement, target: string): undefined | HTMLElement {
  * @protected
  * @returns {boolean} - mouse event, so return false
  */
-function HTMLDetailsClick(e: MiscEvent, dom: Document = document): boolean {
+function HTMLDetailsClick(e: MiscEvent, dom: Document): boolean {
   const act = find(e.target, "DETAILS");
   if (act && act.tagName === "A") {
     // no preventDefault activity as its an A
@@ -114,18 +117,18 @@ function HTMLDetailsClick(e: MiscEvent, dom: Document = document): boolean {
  * @public
  * @returns {void}
  */
-export function modalInit(dom: Document = document): void {
+export function modalInit(dom: Document): void {
   const tmp: Array<HTMLDetailsElement> = Array.from(
     dom.querySelectorAll(".popOverWidget details"),
   );
   if (tmp.length) {
     log("info", "Modal widget found, extra UI features added");
     tmp.forEach(function (a: HTMLDetailsElement): void {
-      a.addEventListener("click", HTMLDetailsClick);
+      a.addEventListener("click", function(e:MiscEvent){ return HTMLDetailsClick(e, dom); });
     });
-    dom.body.addEventListener("click", HTMLDetailsClick);
+    dom.body.addEventListener("click", function(e:MiscEvent){ return HTMLDetailsClick(e, dom); });
 
-    dom.body.addEventListener("keydown", HTMLDetailsTrap);
+    dom.body.addEventListener("keydown", function(e:MiscEvent){ return HTMLDetailsTrap(e, dom) });
   }
   // IOIO see if something can be done for mobile interactions
   // add a listener to the custom back button would be good

@@ -124,7 +124,7 @@ function render(data: Array<NormalisedReference>): string {
  * @protected
  * @returns {void}
  */
-function adjustDom(dat: Array<ReferenceType>, dom: Document = document): void {
+function adjustDom(dat: Array<ReferenceType>, dom: Document): void {
   if (!OPTS.renumber) {
     return;
   }
@@ -150,8 +150,8 @@ function adjustDom(dat: Array<ReferenceType>, dom: Document = document): void {
  */
 export async function createBiblio(
   opts: MobileBiblioProps,
-  dom: Document = document,
-  loc: Location = location,
+  dom: Document,
+  loc: Location,
 ): Promise<void> {
   const OPTS2: MobileBiblioProps = {
     referencesCache: "/resource/XXX-references",
@@ -162,7 +162,7 @@ export async function createBiblio(
     forceToEnd: 1,
     maxDescripLen: 230,
     maxAuthLen: 65,
-    debug: debug(),
+    debug: debug(loc),
     runFetch: runFetch,
   };
   OPTS = Object.assign(OPTS2, opts);
@@ -186,7 +186,11 @@ export async function createBiblio(
     dom,
   );
 
-  const dat = await OPTS.runFetch(makeRefUrl(OPTS.referencesCache, loc), false);
+  const dat = await OPTS.runFetch(
+    makeRefUrl(OPTS.referencesCache, loc),
+    false,
+    loc,
+  );
   if (!dat.ok || !Array.isArray(dat.body)) {
     const html =
       '<p class="error">Unable to get bibliographic data for this article.</p>';

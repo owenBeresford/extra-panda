@@ -25,7 +25,7 @@ import { log, MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./networking";
 export function appendIsland(
   selector: string | HTMLElement,
   html: string,
-  dom: Document = document,
+  dom: Document,
 ): void {
   try {
     if (dom === null) {
@@ -59,10 +59,7 @@ export function appendIsland(
  * @public
  * @returns {void}
  */
-export function ready(
-  callback: GenericEventHandler,
-  dom: Document = document,
-): void {
+export function ready(callback: GenericEventHandler, dom: Document): void {
   if (dom.readyState !== "loading") {
     const e = dom.createEvent();
     callback(e);
@@ -88,7 +85,7 @@ export function ready(
 export function setIsland(
   selector: string | HTMLElement,
   html: string,
-  dom: Document = document,
+  dom: Document,
 ): void {
   const base = dom.createElement("template");
   base.innerHTML = html;
@@ -116,7 +113,11 @@ export function setIsland(
  * @public
  * @returns {boolean}
  */
-export function isFullstack(win: Window = window): boolean {
+export function isFullstack(win: Window): boolean {
+  if (typeof win == "undefined") {
+    return false;
+  }
+
   const isNativeWindow = win.getComputedStyle
     .toString()
     .includes("[native code]");
@@ -140,7 +141,7 @@ export function isFullstack(win: Window = window): boolean {
 export function mapAttribute(
   ele: HTMLElement,
   attrib: BOUNDARY,
-  win: Window = window,
+  win: Window,
 ): number {
   try {
     if (!isFullstack(win)) {
@@ -159,7 +160,8 @@ export function mapAttribute(
  * getArticleWidth
  * A utility to get current article width
  
- * @param {boolean} isLeft - left edge or right edge?
+ * @param {boolean} isLeft - left edge or right edge (of tooltip)?
+ * @param {string} id - the base element for width computation
  * @param {Document =document} dom
  * @param {Window =window} win
  * @public
@@ -167,10 +169,11 @@ export function mapAttribute(
  */
 export function getArticleWidth(
   isLeft: boolean,
-  dom: Document = document,
-  win: Window = window,
+  id: string = ALL_REFERENCE,
+  dom: Document,
+  win: Window,
 ): number {
-  const tmp = dom.querySelector(ALL_REFERENCE);
+  const tmp = dom.querySelector(id);
   if (!tmp) {
     return -1;
   }
@@ -209,10 +212,7 @@ function docOffsets(ele: HTMLElement, offsets: Scrollable): ScreenOffsetArray {
  * @public
  * @returns {void}
  */
-export function applyVolume(
-  dom: Document = document,
-  win: Window = window,
-): void {
+export function applyVolume(dom: Document, win: Window): void {
   dom.querySelector("body").setAttribute("style", "--offset-height: 0;");
   const tt: Array<HTMLElement> = dom.querySelectorAll(
     ".lotsOfWords, .halferWords, .fewWords",
@@ -240,9 +240,9 @@ export function applyVolume(
  */
 export function expandDetails(
   bigScreen: number = 1040,
-  dom: Document = document,
-  loc: Location = location,
-  win: Window = window,
+  dom: Document,
+  loc: Location,
+  win: Window,
 ): void {
   if (!dom.querySelector(".maquetteContainer")) {
     return;
@@ -274,7 +274,7 @@ export function expandDetails(
  * @public
  * @returns {number}
  */
-function screenWidth(loc: Location = location, win: Window = window): number {
+function screenWidth(loc: Location, win: Window): number {
   const u: URLSearchParams = new URLSearchParams(loc.search);
   if (u.has("width")) {
     return parseInt(u.get("width"), 10);
@@ -291,8 +291,8 @@ function screenWidth(loc: Location = location, win: Window = window): number {
  * @returns {boolean}
  */
 function booleanMap(str: string | number): boolean {
-  const TRUE = ["1", 1, "true", "TRUE", "on", "ON", "yes", "YES"];
-  const FALSE = ["0", 0, "false", "FALSE", "off", "OFF", "no", "NO"];
+  const TRUE = ["1", 1, "true", "TRUE", "on", "ON", "yes", "YES", "✔", "✓"];
+  const FALSE = ["0", 0, "false", "FALSE", "off", "OFF", "no", "NO", "🗙", "✕", "✖", "✖", "✗", "✘" ];
 
   if (TRUE.includes(str)) {
     return true;
@@ -312,11 +312,7 @@ function booleanMap(str: string | number): boolean {
  * @public
  * @returns {boolean} ~ is this Mobile?
  */
-export function isMobile(
-  dom: Document = document,
-  loc: Location = location,
-  win: Window = window,
-): boolean {
+export function isMobile(dom: Document, loc: Location, win: Window): boolean {
   const u = new URLSearchParams(loc.search);
   try {
     const tt = dom.createEvent("TouchEvent");
@@ -348,7 +344,7 @@ export function isMobile(
  * @protected
  * @returns {number}
  */
-function calcScreenDPI(dom: Document = document, win: Window = window): number {
+function calcScreenDPI(dom: Document, win: Window): number {
   try {
     const el = dom.createElement("div");
     el.setAttribute("style", "width:1in;");
@@ -372,14 +368,11 @@ function calcScreenDPI(dom: Document = document, win: Window = window): number {
  * Supplied for testing, convert a window to a size
  
  * @param {Document = document} dom 
- * @param {Window = window} win 
+ * @param {Window =window} win 
  * @public
  * @returns {ScreenSizeArray}
  */
-export function currentSize(
-  dom: Document = document,
-  win: Window = window,
-): ScreenSizeArray {
+export function currentSize(dom: Document, win: Window): ScreenSizeArray {
   const root = dom.documentElement,
     body = dom.body;
   const wid = win.innerWidth || root.clientWidth || body.clientWidth;

@@ -4,7 +4,7 @@ import { Document, HTMLAnchorElement, HTMLElement } from "jsdom";
 import { appendIsland } from "./dom-base";
 import { pullout } from "./string-base";
 import { applyDOMpositions } from "./desktop-biblio";
-import { getArticleWidth } from "./dom-base";
+// import { ALL_REFERENCE } from "./networking";
 
 /**
  * link2Txt
@@ -55,13 +55,7 @@ function link2Txt(url: string): string {
  * @public
  * @returns {void}
  */
-export function addOctoCats(
-  refs: boolean,
-  dom: Document = document,
-  win: Window = window,
-): void {
-  const WIDTH: number = getArticleWidth(true, dom);
-
+export function addOctoCats(refs: boolean, dom: Document, win: Window): void {
   dom.querySelectorAll("article a").forEach(function (
     a: HTMLAnchorElement,
   ): void {
@@ -76,7 +70,7 @@ export function addOctoCats(
       );
       if (refs) {
         a.setAttribute("aria-label", link2Txt(a.getAttribute("href")));
-        applyDOMpositions(a, WIDTH, win);
+        applyDOMpositions(a, win);
       } else {
         a.setAttribute("title", "Link to a github project.");
       }
@@ -93,13 +87,7 @@ export function addOctoCats(
  * @public
  * @returns {void}
  */
-export function addBooks(
-  refs: boolean,
-  dom: Document = document,
-  win: Window = window,
-): void {
-  const WIDTH: number = getArticleWidth(true, dom);
-
+export function addBooks(refs: boolean, dom: Document, win: Window): void {
   dom.querySelectorAll("article a").forEach(function (a: HTMLAnchorElement) {
     const tmp = pullout(a);
     if (tmp.trim().toLowerCase() === "docs") {
@@ -116,7 +104,7 @@ export function addBooks(
         "Link to the project docs; it may be a git page, or a separate webpage. ",
       );
       if (refs) {
-        applyDOMpositions(a, WIDTH, win);
+        applyDOMpositions(a, win);
       }
     }
   });
@@ -131,7 +119,7 @@ export function addBooks(
  * @public
  * @returns {void}
  */
-export function addBashSamples(dom: Document = document): void {
+export function addBashSamples(dom: Document): void {
   const r1 = new RegExp("`([^`]+)`", "g");
   const r2 = new RegExp("/ /", "g");
   const bash: Array<HTMLElement> = dom.querySelectorAll(".addBashSamples");
@@ -156,7 +144,7 @@ export function addBashSamples(dom: Document = document): void {
  * @public
  * @returns {void}
  */
-export function addFancyButtonArrow(dom: Document = document): void {
+export function addFancyButtonArrow(dom: Document): void {
   const aa: Array<HTMLElement> = dom.querySelectorAll(".addArrow");
   for (let i = 0; i < aa.length; i++) {
     appendIsland(

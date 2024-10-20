@@ -2,7 +2,7 @@
 import { Document, Location, HTMLAnchorElement, HTMLElement } from "jsdom";
 
 import { DesktopBiblioProps, SimpleResponse, ReferenceType } from "./all-types";
-import { appendIsland, mapAttribute, getArticleWidth } from "./dom-base";
+import { appendIsland, mapAttribute } from "./dom-base";
 import {
   dateMunge,
   articleName,
@@ -32,10 +32,7 @@ let OPTS: DesktopBiblioProps = {} as DesktopBiblioProps;
  * @protected
  * @returns {void}
  */
-function markAllLinksUnknown(
-  dom: Document = document,
-  loc: Location = location,
-): void {
+function markAllLinksUnknown(dom: Document, loc: Location): void {
   const naam: string = articleName(loc);
   const WASSUP: Array<HTMLAnchorElement> =
     dom.querySelectorAll(ALL_REFERENCE_LINKS);
@@ -43,6 +40,7 @@ function markAllLinksUnknown(
     const txt: string = `Reference popup for link [${1 + i}]\nERROR: No valid biblio file found.\nsite admin, today\nHTTP_ERROR, no valid file called ${naam}-references.json found.\n`;
     WASSUP[i].setAttribute("aria-label", "" + txt);
   }
+  dom.querySelector(ALL_REFERENCE).classList.add(SHOW_ERROR);
 }
 
 /**
@@ -140,25 +138,23 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
  * @protected
  * @returns {void}
  */
-export function applyDOMpositions(
-  ele: HTMLElement,
-  WIDTH: number,
-  win: Window = window,
-): void {
+export function applyDOMpositions(ele: HTMLElement, win: Window): void {
   const left = mapAttribute(ele, "left", win);
   const bot = mapAttribute(ele, "bottom", win);
   if (left === -1 && bot === -1) {
     return;
   }
 
-  if (left > WIDTH) {
-    ele.classList.add("leanIn");
-  }
   let tt = ele.parentNode;
   const subItem: Array<string> = ["LI", "SUP", "UL", "OL", "SPAN", "P"];
-  // list doesnt include HTML, BODY or DIV
+  // list doesnt include HTML, BODY, DETAILS or DIV
   while (subItem.includes(tt.tagName)) {
     tt = tt.parentNode;
+  }
+  const WIDTH =
+    Math.round(mapAttribute(tt, "width", win) as number) - 30 * EM_SZ;
+  if (left > WIDTH) {
+    ele.classList.add("leanIn");
   }
 
   const HEIGHT = (mapAttribute(tt, "height", win) as number) - 3 * EM_SZ;
@@ -178,13 +174,7 @@ export function applyDOMpositions(
  * @protected
  * @returns {void}
  */
-function mapPositions(
-  data: Array<string>,
-  dom: Document = document,
-  win: Window = window,
-): void {
-  const WIDTH: number = getArticleWidth(true, dom);
-
+function mapPositions(data: Array<string>, dom: Document, win: Window): void {
   let j = 1;
   const REFS = Array.from(dom.querySelectorAll(ALL_REFERENCE_LINKS));
   if (data.length > REFS.length) {
@@ -197,19 +187,22 @@ function mapPositions(
 
   for (let i = 0; i < data.length; i++) {
     REFS[i].setAttribute("aria-label", "" + data[i]);
-    applyDOMpositions(REFS[i], WIDTH, win);
+    // IOIO TODO: if current A is inside a popup, need to recompute width
+    applyDOMpositions(REFS[i], win);
     if (OPTS.renumber) {
       REFS[i].textContent = "" + j;
     }
     j++;
   }
   if (REFS.length > data.length) {
+    dom.querySelector("p[role=status]").textContent += "Recompile meta data";
+
     let i = data.length;
     while (i < REFS.length) {
       const dit = generateEmpty(i);
       REFS[i].setAttribute("aria-label", "" + dit);
 
-      applyDOMpositions(REFS[i], WIDTH, win);
+      applyDOMpositions(REFS[i], win);
       if (OPTS.renumber) {
         REFS[i].textContent = "" + (i + 1);
       }
@@ -229,7 +222,7 @@ function mapPositions(
  * @protected
  * @returns {void}
  */
-function addMetaAge(xhr: SimpleResponse, dom: Document = document) {
+function addMetaAge(xhr: SimpleResponse, dom: Document) {
   let tstr = xhr.headers.get("last-modified");
   if (!tstr) {
     return;
@@ -262,13 +255,15 @@ function addMetaAge(xhr: SimpleResponse, dom: Document = document) {
  * @param {DesktopBiblioProps} opts
  * @param {Document =document} dom
  * @param {Location =location} loc
+ * @param {Window =window} win
  * @public
  * @returns {void}
  */
 export async function createBiblio(
   opts: DesktopBiblioProps,
-  dom: Document = document,
-  loc: Location = location,
+  dom: Document,
+  loc: Location,
+  win: Window,
 ) {
   OPTS = Object.assign(
     {
@@ -277,7 +272,7 @@ export async function createBiblio(
       referencesCache: "/resource/XXX-references",
       renumber: 1, // set to 0 to disable
       maxAuthLen: 65,
-      debug: debug(),
+      debug: debug(loc),
       runFetch: runFetch,
     },
     opts,
@@ -295,6 +290,7 @@ export async function createBiblio(
   const data: SimpleResponse = await OPTS.runFetch(
     makeRefUrl(OPTS.referencesCache, loc),
     false,
+    loc,
   );
   if (!data.ok || !Array.isArray(data.body)) {
     markAllLinksUnknown(dom, loc);
@@ -318,11 +314,11 @@ export async function createBiblio(
     if (tmp) {
       tmp.setAttribute("style", "");
     }
-    addMetaAge(data);
+    addMetaAge(data, dom);
     const cooked: Array<string> = normaliseData(
       data.body as Array<ReferenceType>,
     );
-    mapPositions(cooked, dom);
+    mapPositions(cooked, dom, win);
 
     // enable reporting of bad values
     dom.querySelector(ALL_REFERENCE).classList.add(SHOW_ERROR);

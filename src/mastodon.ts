@@ -17,15 +17,17 @@ import { log } from "./networking";
  * @param {Event} e - unused at present
  * @param {Document =document} dom
  * @param {Location =location} loc
+ * @param {Window =window} win
  * @public
  * @returns {false}
  */
 function openShare(
   e: Event,
-  dom: Document = document,
-  loc: Location = location,
+  dom: Document,
+  loc: Location,
+  win: Window,
 ): boolean {
-  if (!isLocal(loc.host) && !isMobile(dom, loc)) return false;
+  if (!isLocal(loc.host) && !isMobile(dom, loc, win)) return false;
 
   const t = dom.querySelector("#shareMenu");
   if (t && !t.classList.replace("shareMenuOpen", "shareMenu")) {
@@ -46,9 +48,9 @@ function openShare(
  */
 function shareMastodon(
   e: Event,
-  dom: Document = document,
-  loc: Location = location,
-  win: Window = window,
+  dom: Document,
+  loc: Location,
+  win: Window,
 ): boolean {
   const tmp = dom.querySelector("#mastodonserver");
   let server = tmp.value;
@@ -70,8 +72,8 @@ function shareMastodon(
     // fake exceptions from a fake browser #leSigh
     throw Error("Test passed, for " + server);
   }
-  if (isMobile(dom, loc)) {
-    openShare(e, dom, loc);
+  if (isMobile(dom, loc, win)) {
+    openShare(e, dom, loc, win);
   }
   return false;
 }
@@ -110,11 +112,7 @@ function accessVisibility(
  * @public
  * @returns {void}
  */
-export function initMastodon(
-  dom: Document = document,
-  loc: Location = location,
-  win: Window = window,
-): void {
+export function initMastodon(dom: Document, loc: Location, win: Window): void {
   let BUFFER: HTMLElement = dom.querySelector("#shareMenu #mastoTrigger");
   if (BUFFER) {
     _map2(BUFFER, openMastodon, dom, win);
@@ -138,7 +136,7 @@ export function initMastodon(
     dom.querySelectorAll("#shareMenuTrigger, #shareClose"),
   ); // the second ID will be nought in desktop view
   for (const i in BUFFER2) {
-    _map2(BUFFER2[i], openShare, dom, loc);
+    _map3(BUFFER2[i], openShare, dom, loc, win);
   }
   _map2(dom.querySelector("#hideMasto"), closeMastodon, dom, win);
 }
@@ -153,11 +151,7 @@ export function initMastodon(
  * @public
  * @returns {false}
  */
-function openMastodon(
-  e: Event,
-  dom: Document = document,
-  win: Window = window,
-): boolean {
+function openMastodon(e: Event, dom: Document, win: Window): boolean {
   if (isFullstack(win)) {
     // in JSDOM can't use extra functions, as the fake isn't deep enough
     (dom.querySelector("#popup") as HTMLDialogElement).showModal();
@@ -175,11 +169,7 @@ function openMastodon(
  * @public
  * @returns {false}
  */
-function closeMastodon(
-  e: Event,
-  dom: Document = document,
-  win: Window = window,
-): boolean {
+function closeMastodon(e: Event, dom: Document, win: Window): boolean {
   if (isFullstack(win)) {
     // in JSDOM can't use extra functions, as the fake isn't deep enough
     dom.querySelector("#popup").close();
@@ -195,7 +185,7 @@ function closeMastodon(
  * @public
  * @returns {void}
  */
-function copyURL(loc: Location = location, win: Window = window): void {
+function copyURL(loc: Location, win: Window): void {
   try {
     if (!win.navigator.clipboard) {
       throw new Error("No clipboard available");
@@ -224,14 +214,14 @@ function copyURL(loc: Location = location, win: Window = window): void {
  * Add several event listeners, just a utility
  * @param {HTMLElement} where
  * @param {MiscEventHandler } action
- * @param {Document =document} dom
+ * @param {Document|Location =document} dom
  * @public
  * @returns {void}
  */
 function _map1(
   where: HTMLElement,
   action: MiscEventHandler2,
-  dom: Document | Location = document,
+  dom: Document | Location,
 ): void {
   where.addEventListener("click", (a: Event): boolean => {
     action(a, dom);
@@ -261,7 +251,7 @@ function _map2(
   where: HTMLElement,
   action: MiscEventHandler3,
   dom: Document,
-  loc: Location | Window = location,
+  loc: Location | Window,
 ): void {
   where.addEventListener("click", (a: Event): boolean => {
     action(a, dom, loc);
@@ -292,8 +282,8 @@ function _map3(
   where: HTMLElement,
   action: MiscEventHandler4,
   dom: Document,
-  loc: Location | null = location,
-  win: Window = window,
+  loc: Location | null,
+  win: Window,
 ): void {
   where.addEventListener("click", (a: Event): boolean => {
     action(a, dom, loc, win);

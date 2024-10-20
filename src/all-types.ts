@@ -62,7 +62,7 @@ export interface CoreProps {
   mobileRunFetch?: FetchedExec;
   desktopRunFetch?: FetchedExec;
   adjacentRunFetch?: FetchedExec;
-  debug: () => boolean;
+  debug: (loc: Location) => boolean;
 }
 
 export type Fetch = (u: string, o: RequestInit) => Promise<Response>;

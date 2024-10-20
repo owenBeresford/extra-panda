@@ -23,11 +23,7 @@ let OPTS: AdjacentProps = {} as AdjacentProps;
  * @protected
  * @returns {string} - the desired full URL of this page
  */
-function mapURL(
-  article: string,
-  suffix: string,
-  loc: Location = location,
-): string {
+function mapURL(article: string, suffix: string, loc: Location): string {
   //  let t = loc.protocol + "//" + loc.host,
   let t2 = loc.pathname.split("/"),
     t = "";
@@ -105,7 +101,7 @@ function extractOABName(url: string): string {
  * @throws when insufficient data has been supplied
  * @returns {string}
  */
-function generateGroup(loc: Location = location): string {
+function generateGroup(loc: Location): string {
   let foreward = OPTS.group;
   if (OPTS.group === "XXX") {
     const tmp = new URLSearchParams(loc.search);
@@ -312,19 +308,21 @@ function convert2HTML(list: Array<NormalisedReference>, gname: string): string {
  * @param {string} gname
  * @param {Document =document} dom
  * @param {Location =location} loc
+ * @param {Window =window} win
  * @protected
  * @returns {string} - of HTML
  */
 function convert2IndexHTML(
   list: Array<ReferenceType>,
   gname: string,
-  dom: Document = document,
-  loc: Location = location,
+  dom: Document,
+  loc: Location,
+  win: Window,
 ): string {
   let html = "";
   for (const i in list) {
     const nui = cleanTitle(i, gname),
-      lbreak = isMobile(dom, loc) ? "<br />" : "";
+      lbreak = isMobile(dom, loc, win) ? "<br />" : "";
     let tt = list[i].desc;
     if (tt.length > 235) {
       tt = tt.substr(0, 235) + "...";
@@ -363,7 +361,7 @@ function convert2IndexHTML(
  * @protected
  * @returns {void}
  */
-function updateLabels(gname: string, dom: Document = document): void {
+function updateLabels(gname: string, dom: Document): void {
   const dat: Array<HTMLElement> = dom.querySelectorAll(
     ".top-bar.fullWidth header h1",
   ) as Array<HTMLElement>;
@@ -396,8 +394,8 @@ function updateLabels(gname: string, dom: Document = document): void {
  */
 export function extractGroup(
   ele: HTMLElement | null,
-  loc: Location = location,
-  dom: Document = document,
+  loc: Location,
+  dom: Document,
 ): string {
   const tmp1 = loc.pathname.split("/group-");
   if (Array.isArray(tmp1) && tmp1.length > 1 && tmp1[1] !== "XXX") {
@@ -430,13 +428,15 @@ export function extractGroup(
  * @param {AdjacentParams} opts
  * @param {Document =document} dom
  * @param {Location =location} loc
+ * @param {Window =window} win
  * @public
  * @returns {Promise<void>}
  */
 export async function createAdjacentChart(
   opts: AdjacentProps,
-  dom: Document = document,
-  loc: Location = location,
+  dom: Document,
+  loc: Location,
+  win: Window,
 ): Promise<void> {
   OPTS = Object.assign(
     OPTS,
@@ -449,7 +449,7 @@ export async function createAdjacentChart(
       iteration: 0,
       group: "system",
       count: 1,
-      debug: debug(),
+      debug: debug(loc),
       runFetch: runFetch,
     },
     opts,
@@ -463,7 +463,7 @@ export async function createAdjacentChart(
     OPTS.name === "group-XXX" || OPTS.name === "group-" + OPTS.group;
   const GROUP: string = "group" + OPTS.group;
 
-  if (isMobile(dom, loc) && !isGroupArticle) {
+  if (isMobile(dom, loc, win) && !isGroupArticle) {
     if (dom.querySelectorAll(".adjacentGroup .adjacentItem").length === 1) {
       dom.querySelector(".adjacentGroup p").style["display"] = "none";
     }
@@ -473,7 +473,7 @@ export async function createAdjacentChart(
       dom,
     );
   } else {
-    const data: SimpleResponse = await OPTS.runFetch(OPTS.meta, false);
+    const data: SimpleResponse = await OPTS.runFetch(OPTS.meta, false, loc);
     if (!data.ok || !Array.isArray(data.body)) {
       log("info", "There doesn't seem to be a group meta data file.");
       appendIsland(
@@ -491,6 +491,7 @@ export async function createAdjacentChart(
         GROUP,
         dom,
         loc,
+        win,
       );
       appendIsland("#groupXXX", html, dom);
       updateLabels(generateGroup(loc), dom);

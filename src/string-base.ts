@@ -27,7 +27,7 @@ export function pullout(a: HTMLElement): string {
  * @public
  * @returns {string}
  */
-export function articleName(loc: Location = location): string {
+export function articleName(loc: Location): string {
   return loc.pathname.split("/").pop() || "<name>";
 }
 
@@ -40,7 +40,7 @@ export function articleName(loc: Location = location): string {
  * @public
  * @returns {string}
  */
-export function makeRefUrl(template: string, loc: Location = location): string {
+export function makeRefUrl(template: string, loc: Location): string {
   let tmp2: string[] = [];
 
   tmp2 = loc.pathname.split("/");
