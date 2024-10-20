@@ -9,7 +9,7 @@ import jsdoc from 'eslint-plugin-jsdoc';
 export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  { ignores: [ "dist", "node_modules", "src/tests/" ] },
+  { ignores: [ "dist", "node_modules", "src/tests/", "src/fixtures/" ] },
   {	 
     settings: {
     jsdoc: {
