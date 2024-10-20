@@ -19,7 +19,7 @@
     "#ignore-this-line2": "NOTE: 'build:docs' after 'build' and 'test:web', as they purge the dist directory",
     "docs": "if [ ! -d ./dist/docs ]; then echo 'Build docs first'; else; node ./tools/doc-server.mjs & fi",
 	"build:tests":"export NODE_ENV=web-test; node ./node_modules/.bin/vite -c vite.config.tests.ts build; echo 'add more tests'  ",
-    "test:web": "if [ ! -d './dist/tests' ]; then echo 'Run build:tests first'; else; export NODE_ENV=development; node ./tools/tests-browser.mjs; fi"
+    "test:web": "if [ ! -d './dist/tests' ]; then echo 'Run build:tests first'; else echo 'If running manually, use CLI flags'; export NODE_ENV=development; node ./tools/tests-browser.mjs; fi"
   },
   "repository": {
     "type": "git",
