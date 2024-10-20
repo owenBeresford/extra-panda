@@ -150,12 +150,11 @@ export async function runFetch(
  
  * @param {number} ms
  * @public
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
-export async function delay(ms:number):Promise<void> {
+export async function delay(ms: number): Promise<void> {
   return new Promise((good, bad) => setTimeout(good, ms));
 }
-
 
 /**
  * accessCookie

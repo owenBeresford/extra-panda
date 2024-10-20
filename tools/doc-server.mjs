@@ -38,7 +38,7 @@ try {
       ":" +
       PORT +
       "/ with a local PID of " +
-      process.pid
+      process.pid,
   );
   console.log("Someone should add HTTPS, but this is the local IP.");
 } catch (e) {

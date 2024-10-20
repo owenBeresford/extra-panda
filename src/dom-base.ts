@@ -292,7 +292,22 @@ function screenWidth(loc: Location, win: Window): number {
  */
 function booleanMap(str: string | number): boolean {
   const TRUE = ["1", 1, "true", "TRUE", "on", "ON", "yes", "YES", "✔", "✓"];
-  const FALSE = ["0", 0, "false", "FALSE", "off", "OFF", "no", "NO", "🗙", "✕", "✖", "✖", "✗", "✘" ];
+  const FALSE = [
+    "0",
+    0,
+    "false",
+    "FALSE",
+    "off",
+    "OFF",
+    "no",
+    "NO",
+    "🗙",
+    "✕",
+    "✖",
+    "✖",
+    "✗",
+    "✘",
+  ];
 
   if (TRUE.includes(str)) {
     return true;

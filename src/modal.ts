@@ -5,7 +5,7 @@ import { log } from "./networking";
 /**
  * HTMLDetailsTrap
  * If ESC key happens, close any open DETAILS elements
- * 
+ *
  * @param {MiscEvent} e
  * @param {Document = document} dom
  * @protected
@@ -15,9 +15,9 @@ function HTMLDetailsTrap(e: MiscEvent, dom: Document): boolean {
   if (e.code === "Escape" || e.key === "Escape") {
     const tt = dom.querySelectorAll("details[open]");
     if (tt.length) {
-		for(let i =0; i< tt.length; i++) {
-			tt[i].open = false;
-		}
+      for (let i = 0; i < tt.length; i++) {
+        tt[i].open = false;
+      }
     }
     e.preventDefault();
     return false;
@@ -124,11 +124,17 @@ export function modalInit(dom: Document): void {
   if (tmp.length) {
     log("info", "Modal widget found, extra UI features added");
     tmp.forEach(function (a: HTMLDetailsElement): void {
-      a.addEventListener("click", function(e:MiscEvent){ return HTMLDetailsClick(e, dom); });
+      a.addEventListener("click", function (e: MiscEvent) {
+        return HTMLDetailsClick(e, dom);
+      });
     });
-    dom.body.addEventListener("click", function(e:MiscEvent){ return HTMLDetailsClick(e, dom); });
+    dom.body.addEventListener("click", function (e: MiscEvent) {
+      return HTMLDetailsClick(e, dom);
+    });
 
-    dom.body.addEventListener("keydown", function(e:MiscEvent){ return HTMLDetailsTrap(e, dom) });
+    dom.body.addEventListener("keydown", function (e: MiscEvent) {
+      return HTMLDetailsTrap(e, dom);
+    });
   }
   // IOIO see if something can be done for mobile interactions
   // add a listener to the custom back button would be good

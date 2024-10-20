@@ -272,7 +272,7 @@ function delay(ms) {
  
  * @param {Array<string>} args - suggest pass process.argv
  * @protected
- * @return {number} - return 1 or 0
+ * @returns {number} - return 1 or 0
  */
 function should_close_tabs(args) {
 	let close=1;	
@@ -292,7 +292,7 @@ function should_close_tabs(args) {
  * @see [https://stackoverflow.com/questions/2257993/how-to-display-all-methods-of-an-object]
  * @param {Object} o - this is whatever type it is.  BUT MUST BE AN OBJECT
  * @protected
- * @return {Array<strings>}
+ * @returns {Array<strings>}
  */
 function getMethods(o) {
   return Object.getOwnPropertyNames(Object.getPrototypeOf(o))
@@ -306,7 +306,7 @@ function getMethods(o) {
  
  * @param {string} json1
  * @protected
- * @return {void} 
+ * @returns {void} 
  */
 function JSON2logging(json1) {
 	let tmp=JSON.parse( json1.trim() );
@@ -325,9 +325,9 @@ function JSON2logging(json1) {
  
  * @param {Some playwright structure} page
  * @param {number} weight
- * @exception if data isn't in correct shape
+ * @throws if data isn't in correct shape
  * @protected
- * @return {string}
+ * @returns {string}
  */
 async function browser2json(page, weight) {
 	const tt1=await page.getByTestId('status');

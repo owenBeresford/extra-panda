@@ -1,4 +1,4 @@
-import { delay } from '../networking';
+import { delay } from "../networking";
 
 /**
  * page
@@ -19,8 +19,8 @@ export async function page(url = "", args = 1) {
 }
 
 function generate_name(hash) {
-	const d=new Date();
-	return "test"+hash+"_"+d.getSeconds()+"_"+d.getMilliseconds();
+  const d = new Date();
+  return "test" + hash + "_" + d.getSeconds() + "_" + d.getMilliseconds();
 }
 
 /**
@@ -32,17 +32,17 @@ function generate_name(hash) {
  * @public
  * @return {Array} - many types of object
  */
- async function page_local(url = "", args = 1) {
-	const name=generate_name(args);
+async function page_local(url = "", args = 1) {
+  const name = generate_name(args);
 
   const tmp = await window.open(url, name);
 
-	await delay(1000);
-  if(tmp.window.document.body.length < 200) {
-		window.reload();
-		return page_local(url, args);
-	}
-	tmp.window.TEST_TAB_NAME=name;
+  await delay(1000);
+  if (tmp.window.document.body.length < 200) {
+    window.reload();
+    return page_local(url, args);
+  }
+  tmp.window.TEST_TAB_NAME = name;
   if (args === 1) {
     return [tmp.window.document];
   } else if (args === 2) {
