@@ -16,6 +16,8 @@ import * as Biblio1 from "./desktop-biblio";
 import * as Biblio2 from "./mobile-biblio";
 import * as Reading from "./reading";
 import * as Modal from "./modal";
+import * as COOKIE from "./cookies";
 
-siteCore();
+// this file is only used in the webbuild
+siteCore({}, document, location, window);
 export { runFetch, log, hasBeenRun, appendIsland, isMobile };
