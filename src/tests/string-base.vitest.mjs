@@ -1,6 +1,6 @@
 import { assert, describe, it, assertType } from "vitest";
 
-import { page } from "./page-seed";
+import { page } from "./page-seed-vite";
 /// import { Fetchable, Cookieable } from "../all-types";
 import { appendIsland, setIsland, isFullstack } from "../dom-base";
 import { TEST_ONLY } from "../string-base";
@@ -12,7 +12,6 @@ const {
   runFetch,
   addLineBreaks,
   pad,
-  _getCookie,
   importDate,
   dateMunge,
 } = TEST_ONLY;
@@ -166,7 +165,7 @@ dg ag aga gdgadfg`;
 
   it("go 3: articleName", () => {
     const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
-    assert.equal(articleName(), "<name>", "assert #3");
+    assert.equal(articleName({ pathname: "" }), "<name>", "assert #3");
     assert.equal(articleName(loc), "home", "assert #4");
   });
 

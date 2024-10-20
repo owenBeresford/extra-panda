@@ -165,7 +165,7 @@ describe("TEST core", () => {
       "assert #14",
     );
 
-    let vnt = createEvent(dom.querySelector("#clickProjects a"), win);
+    let vnt = createEvent(dom.querySelector("#clickProjects a"), dom, win);
     tabChange(vnt, dom);
     assert.isTrue(
       dom
@@ -194,7 +194,7 @@ describe("TEST core", () => {
       "assert #18",
     );
 
-    vnt = createEvent(dom.querySelector("#clickArticles a"), win);
+    vnt = createEvent(dom.querySelector("#clickArticles a"), dom, win);
     tabChange(vnt, dom);
     assert.isFalse(
       dom

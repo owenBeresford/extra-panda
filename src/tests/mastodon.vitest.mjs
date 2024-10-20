@@ -25,7 +25,7 @@ describe("TEST mastodon", () => {
     let str = `<div id="shareMenu" class="shareMenu"></div>`;
     appendIsland("#point2", str, dom);
 
-    let vnt = createEvent(dom.querySelector("#shareMenu"), win);
+    let vnt = createEvent(dom.querySelector("#shareMenu"), dom, win);
     assert.equal(
       dom.querySelector("#shareMenu").getAttribute("class"),
       "shareMenu",
@@ -53,7 +53,7 @@ describe("TEST mastodon", () => {
     let str = `<div id="shareMenu" class="shareMenu">
 </div> `;
     appendIsland("#point2", str, dom);
-    let vnt = createEvent(dom.querySelector("#shareMenu"), win);
+    let vnt = createEvent(dom.querySelector("#shareMenu"), dom, win);
 
     assert.equal(
       dom.querySelector("#shareMenu").getAttribute("class"),
@@ -76,7 +76,7 @@ describe("TEST mastodon", () => {
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
 	</dialog>`;
     appendIsland("#point2", str, dom);
-    let vnt = createEvent(dom.querySelector("#id1"), win);
+    let vnt = createEvent(dom.querySelector("#id1"), dom, win);
     assert.throws(
       () => {
         shareMastodon(vnt, dom, loc, win);
@@ -98,7 +98,7 @@ describe("TEST mastodon", () => {
 	</dialog>`;
     appendIsland("#point2", str, dom);
 
-    let vnt = createEvent(dom.querySelector("#id1"), win);
+    let vnt = createEvent(dom.querySelector("#id1"), dom, win);
     assert.throws(
       () => {
         shareMastodon(vnt, dom, loc, win);
@@ -117,7 +117,7 @@ describe("TEST mastodon", () => {
 	</dialog>`;
     appendIsland("#point2", str, dom);
 
-    let vnt = createEvent(dom.querySelector("#id1"));
+    let vnt = createEvent(dom.querySelector("#id1"), dom, win);
     assert.equal(openMastodon(vnt, dom, win), false, "assert #10");
     if (isFullstack(win)) {
       assert.istrue(
@@ -136,7 +136,7 @@ describe("TEST mastodon", () => {
 	</dialog>`;
     appendIsland("#point2", str, dom);
 
-    let vnt = createEvent(dom.querySelector("#id1"), win);
+    let vnt = createEvent(dom.querySelector("#id1"), dom, win);
     assert.equal(closeMastodon(vnt, dom, win), false, "assert #12");
     if (isFullstack(win)) {
       assert.istrue(

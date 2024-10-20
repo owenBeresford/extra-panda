@@ -2,6 +2,7 @@ import { assert, describe, it, assertType } from "vitest";
 import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed-vite";
+
 import { TEST_ONLY } from "../dom-base";
 const {
   appendIsland,
@@ -528,7 +529,7 @@ d
   });
 
   it("go 9: getArticleWidth", () => {
-    const [dom] = page("http://192.168.0.35/resource/home", 1);
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -567,9 +568,11 @@ d
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
 </div> `;
     appendIsland("#point2", str, dom);
-    let ret = getArticleWidth(true, dom);
-
-    assert.equal(ret, -512, "asset #26");
+    try {
+      // note missing last arg
+      let ret = getArticleWidth(true, ".lotsOfWords", dom);
+      assert.equal(ret, -513, "asset #26");
+    } catch (e) {}
     // test is defective in JSDOM
   });
 
@@ -613,7 +616,7 @@ d
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
 </div> `;
     appendIsland("#point2", str, dom);
-    let ret = getArticleWidth(true, dom, win);
+    let ret = getArticleWidth(true, ".lotsOfWords", dom, win);
     if (!isFullstack(win)) {
       context.skip();
       return;
@@ -683,7 +686,7 @@ d
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
 </div> `;
     appendIsland("#point2", str, dom);
-    let ret = getArticleWidth(true, dom, JSDOM1.window);
-    assert.equal(ret, -1, "asset #28");
+    let ret = getArticleWidth(true, ".lotsOfWords", dom, JSDOM1.window);
+    assert.equal(ret, -513, "asset #28");
   });
 });

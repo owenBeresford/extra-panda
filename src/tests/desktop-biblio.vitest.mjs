@@ -68,8 +68,11 @@ describe("TEST desktop-biblio", () => {
   });
 
   it("go 3: mapPositions", () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
-    let str = `
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/reading-list",
+      3,
+    );
+    let str = `<p role="status"> PING</p>
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
@@ -83,7 +86,7 @@ describe("TEST desktop-biblio", () => {
       "sdfsfsd sfsdfsdf sdf sd fsdf sdfsdf ",
     ];
     injectOpts({ renumber: 1 });
-    mapPositions(dat, dom);
+    mapPositions(dat, dom, win);
 
     assert.equal(
       dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]").length,
@@ -102,7 +105,7 @@ describe("TEST desktop-biblio", () => {
       "assert #10",
     );
 
-    str = `
+    str = `<p role="status"> PING</p>
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
@@ -115,7 +118,7 @@ describe("TEST desktop-biblio", () => {
 `;
     setIsland("#point2", str, dom);
     // apply 5 items, as above, and renumber will still be set
-    mapPositions(dat, dom);
+    mapPositions(dat, dom, win);
     assert.equal(
       dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]").length,
       15,
@@ -377,7 +380,10 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
   });
 
   it("go 7: createBiblio", async () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/reading-list",
+      3,
+    );
     let str = `
 <div id="biblio" style="display:none;"></div>
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
@@ -398,6 +404,7 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
       },
       dom,
       loc,
+      win,
     );
     assert.equal(
       dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]").length,
@@ -439,7 +446,11 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
 </html>`,
       { url: url, referrer: url },
     );
-    const [dom, loc] = [brwr.window.document, brwr.window.location];
+    const [dom, loc, win] = [
+      brwr.window.document,
+      brwr.window.location,
+      brwr.window,
+    ];
 
     let str = `
 <div id="biblio" style="display:none;">
@@ -464,6 +475,7 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
       { gainingElement: "#biblio", debug: true, runFetch: mockFetch1 },
       dom,
       loc,
+      win,
     );
     let t2 = getLogCounter();
 
