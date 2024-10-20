@@ -4,13 +4,15 @@
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom   to TESTS
 - Add config for minifier via terser to build step.  Out of time.  IMPORTANT
 - Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages. 
-- Port the everything* tests to storybook
+- Port the everything* tests to storybook, or the browser tests
 - WCAG tests (lighthouse) for whole pages need to go some where (suggest this project) https://www.npmjs.com/package/wcag 
 - Look at https://github.com/githubnext/testpilot - test generator
 - Log fault on validate class for HTML with no doctype header
-- Run tests more often in browser mode, so fill in the isFullstack() tests
-- See if can remove HTML fixtures from tests that are not HTML rendering functions
-- Setup some process to deal with content being removed from articles, but references not yet rebuilt.  Ideally an alarm ~ but will need to be on page load, boo :-( 
+- Create more tests with browser mode, so can fill in the isFullstack() etc tests
+- See if can remove HTML fixtures from unit-tests that are not HTML rendering functions
+- Add a test that includes the index.mjs, or that is a critical fail point.  A browser test?
+- Add feature "take user selection of text, and return standardised word count"
+- Look at the function location again, see booleanMap()
 
 ### Previous Updates
 
@@ -56,4 +58,5 @@
 - DONE: add support for screen readers in the link decorations
 - DONE: add ability to have details opened automatically
 - DONE:     and remove this ability in some cases.
+- DONE: Setup some process to deal with content being removed from articles, but references not yet rebuilt.  Ideally an alarm ~ but will need to be on page load, boo :-( 
 

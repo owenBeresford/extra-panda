@@ -78,7 +78,7 @@ My work sequence has been:
 - ditch unused features, and improve readability/ English
 - split into better modules
 - port to typescript and better CSS/HTML
-- add many tests
+- add many tests using newer test framework
 - split into better modules, refactor, and improve English again
 
 Pls note English is my first language #leSigh.
@@ -127,6 +127,21 @@ Notes:
 - Note I added a UI feature that added extra HTML, but this didn't invalidate any of the unit-tests.
 - I am adding search params for testing, rather than a Mock, as I may want to use them during QA
 - I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together, it's a nul-point difference.   
+
+#### Outsize late in project commit
+- Started to build another test harness, to be able to run Vitest in a browser
+   - Have new smol webserver in Express + HTTPS
+   - Have a fresh captive version of Chrome
+   - Create "fake Vitest output" in the new script so can be integrated with other scripts into larger testing runtime
+- Iterate second build step to achieve this, obviously can't send TS to browser 
+- Discover can't be done, change to jest for browser unit tests
+- Discover can't be done, change jest for jest-lite
+- Remove normal *build* use of JSDOM in Vitest as it was polluting variables
+- Rebuild all the tests due to this change
+- Refactor cookie code for readability
+- Do more code readability changes
+- Add jest-lite unit tests for the skip() sections in vitest
+- Want to add some CSS tests for crucial UI processes, like z-index
 
 #### Metrics that are important to goals
 
