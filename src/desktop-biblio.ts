@@ -133,7 +133,6 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
  * see mapPositions() for the iterators
  * IMPURE.
  * @param {HTMLElement} ele
- * @param {number} WIDTH
  * @param {Window =window} win
  * @protected
  * @returns {void}

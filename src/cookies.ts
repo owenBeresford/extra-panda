@@ -10,7 +10,7 @@ import { Cookieable } from "./all-types";
  * @see [https://www.tabnine.com/academy/javascript/how-to-set-cookies-javascript/]
  *   as common libraries outside of npm seem really flakey
  *
- * @implements Cookieable
+ * @implements {Cookieable}
  * @public
  */
 export class QOOKIE implements Cookieable {
