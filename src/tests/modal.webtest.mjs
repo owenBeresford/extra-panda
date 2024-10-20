@@ -4,6 +4,7 @@ import { describe, expect, it, run } from "jest-lite";
 // https://jestjs.io/docs/next/api#describename-fn
 // https://github.com/kvendrik/jest-lite
 // https://blog.codepen.io/2019/07/17/jest-on-codepen/
+// want this to improve output::
 // https://stackoverflow.com/questions/45348083/how-to-add-custom-message-to-jest-expect
 //
 // it would be possible to put each expect in its own try/catch,
@@ -16,12 +17,17 @@ import { delay } from "../networking";
 
 const { modalInit, HTMLDetailsClick, HTMLDetailsTrap } = TEST_ONLY;
 let SHOULD_CLOSE = 1;
+const LOG_PADDING = "**********************************************";
 
 describe("BROWSER TEST modal ", () => {
   it("func[1] HTMLDetailsClick", async () => {
     const TEST_NAME = "BROWSER TEST func[1] HTMLDetailsClick";
     const [dom, loc, win] = await page("https://127.0.0.1:8081/home.html", 3);
     try {
+      win.console.log(
+        LOG_PADDING + "\nthis is tab " + win.TEST_TAB_NAME + "\n" + LOG_PADDING,
+      );
+      dom.title = win.TEST_TAB_NAME;
       enableGetEventListeners(dom);
       let str = `
 <div class="blocker popOverWidget">
@@ -36,19 +42,25 @@ describe("BROWSER TEST modal ", () => {
 `;
       appendIsland(".home.icerow", str, dom);
       if (!isFullstack(win)) {
-        console.error("This test is only for a browser");
+        console.error(win.TEST_TAB_NAME + " This test is only for a browser");
         throw new Error("This is a browser only test");
       }
       modalInit(dom);
 
       let buf = dom.querySelector("details");
       if (buf === null) {
+        writeLog(
+          win.TEST_TAB_NAME + " " + TEST_NAME + " Can't access DETAILS ",
+          false,
+          false,
+        );
         console.log(win.TEST_TAB_NAME + " Can't access DETAILS, test borked");
         throw new Error("Test DOM broken");
       }
 
       expect(buf.getEventListeners().length).toBe(1); //  "Assert #1");
       expect(dom.body.getEventListeners().length).toBe(2); // "Assert #2");
+      expect(buf.open).toBe(false); //  , "Assert #3");
 
       let toggle = dom.querySelector("summary");
       toggle.click();
@@ -69,7 +81,6 @@ describe("BROWSER TEST modal ", () => {
       toggle.click();
       let key = new KeyboardEvent("keydown", { key: "Escape", code: "Escape" });
       dom.body.dispatchEvent(key);
-      // key = new KeyboardEvent("keydown", { key: "Edfgdfgdfe", code:"Edfgdfgdfge", keyIdentifier:"Edfgdfgdfge" });
       await delay(500);
       // I fire a ESC key sequence with an DETAILS in open state, it closes
       expect(buf.open).toBe(false); //  , "Assert #7");
@@ -99,6 +110,10 @@ describe("BROWSER TEST modal ", () => {
     const TEST_NAME = "BROWSER TEST func[1.2] HTMLDetailsClick";
     const [dom, loc, win] = await page("https://127.0.0.1:8081/home.html", 3);
     try {
+      win.console.log(
+        LOG_PADDING + "\nthis is tab " + win.TEST_TAB_NAME + "\n" + LOG_PADDING,
+      );
+      dom.title = win.TEST_TAB_NAME;
       enableGetEventListeners(dom);
       let str = `
 <div class="blocker popOverWidget">
@@ -120,27 +135,28 @@ describe("BROWSER TEST modal ", () => {
 
       let buf = dom.querySelector("details");
       if (buf === null) {
+        writeLog(
+          win.TEST_TAB_NAME + " " + TEST_NAME + " Can't access DETAILS ",
+          false,
+          false,
+        );
         console.log(win.TEST_TAB_NAME + " Can't access DETAILS, test borked");
         throw new Error("Test DOM broken");
       }
-      console.log("THING 1::", buf.getEventListeners().length);
       expect(buf.getEventListeners().length).toBe(1); //  "Assert #1");
-      console.log("THING 2::", dom.body.getEventListeners().length);
       expect(dom.body.getEventListeners().length).toBe(2); // "Assert #2");
       expect(buf.open).toBe(true);
 
       let toggle = dom.querySelector("summary");
       toggle.click();
-
       // I click on a SUMMARY with no CODE, the DETAILS opens   TICK
-      expect(buf.open).toBe(); //  , "Assert #3");
+      expect(buf.open).toBe(false); //  , "Assert #3");
+
       toggle.click();
       // I click on a SUMMARY with no CODE and is OPEN, the DETAILS closes TICK
-      expect(buf.open).toBe(false); //, "Assert #4");
+      expect(buf.open).toBe(true); //, "Assert #4");
 
       let buf2 = dom.querySelector("#outside");
-      toggle.click();
-      expect(buf.open).toBe(true); //  "Assert #5");
       buf2.click();
       // I click outside the DETAILS, and its open, it closes TICK
       expect(buf.open).toBe(false); //  , "Assert #6");
@@ -177,6 +193,10 @@ describe("BROWSER TEST modal ", () => {
     const TEST_NAME = "BROWSER TEST func[1.1]: HTMLDetailsClick";
     const [dom, loc, win] = await page("https://127.0.0.1:8081/home.html", 3);
     try {
+      win.console.log(
+        LOG_PADDING + "\nthis is tab " + win.TEST_TAB_NAME + "\n" + LOG_PADDING,
+      );
+      dom.title = win.TEST_TAB_NAME;
       enableGetEventListeners(dom);
       let str = `
 <div class="blocker popOverWidget">
@@ -191,6 +211,11 @@ window.alert("SDFSDFSDF SDFSDFSDF");
 `;
       appendIsland(".home.icerow", str, dom);
       if (!isFullstack(win)) {
+        writeLog(
+          win.TEST_TAB_NAME + " " + TEST_NAME + " Can't access DETAILS ",
+          false,
+          false,
+        );
         console.error(win.TEST_TAB_NAME + "This test is only for a browser");
         throw new Error("browser only test");
       }
@@ -205,14 +230,16 @@ window.alert("SDFSDFSDF SDFSDFSDF");
       // I click on a SUMMARY with CODE, the DETAILS opens   TICK
       expect(buf.open).toBe(true); // "Assert #10");
       toggle.click();
-      // I click on a SUMMARY with CODE and is OPEN, it doesnt close so people can interact with the CODE sample
-      expect(buf.open).toBe(true); // "Assert #11");
+      // I click on a SUMMARY with CODE and is OPEN, it doesn't close so people can interact with the CODE sample
+      expect(buf.open).toBe(false); // "Assert #11");
+      toggle.click();
 
       let buf2 = dom.querySelector("#outside");
       buf2.click();
       // I click outside the DETAILS, and its open, it closes TICK
       expect(buf.open).toBe(false); // "Assert #13");
       toggle.click();
+      expect(buf.open).toBe(true);
 
       let key = new KeyboardEvent("keydown", { key: "Escape", code: "Escape" });
       dom.body.dispatchEvent(key);

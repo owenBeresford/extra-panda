@@ -311,7 +311,7 @@ function getMethods(o) {
 function JSON2logging(json1) {
 	let tmp=JSON.parse( json1.trim() );
 	let [title]=tmp.pop();
-	console.log("    ✓ "+title.name);
+	console.log("   ✓ "+title.name);
 
 	for(let i=0; i<tmp.length; i++) {
 		console.log("     ✓ "+ tmp[i].testPath[2]+" ["+(tmp[i].status.toUpperCase())+"]" );
@@ -324,7 +324,7 @@ function JSON2logging(json1) {
  * This throws in quite a few places
  
  * @param {Some playwright structure} page
- * @param {number} weight
+ * @param {number} weight - how many test tabs do you have?
  * @throws if data isn't in correct shape
  * @protected
  * @returns {string}
@@ -339,9 +339,9 @@ async function browser2json(page, weight) {
 		await page.bringToFront();
 // use this in next iteration
 		let ignored=await tt1.all();
-console.log("sleeping");
+console.log("[INFO] Sleeping as DOM data extraction from test tab is laggy");
 		await delay(6_000 * weight);
-console.log("wakeup (hopefully brower execution is done)");
+console.log("[INFO] wakeup (hopefully brower execution is done)");
 		const json1= await page.innerText('pre');
 //			testResults = await page.content();
 //			let slice=testResults.match(new RegExp("<pre[^>]*>([^<]*)</pre>", 'mi'));
@@ -411,6 +411,21 @@ export async function runTests(tests) {
   }
 }
 
+if( process.argv.includes('--help') || 
+    process.argv.includes('-h') ) {
+	const TEXT=`
+Script to be able to manage browser tests from bash.  I wanted to use vitest everywhere, but not possible today.
+The default behaviour is to close the tabs and browser, as most test execution is automated.
+
+supports:
+	--help        ~ this text
+	--no-close    ~ do //not// close the tabs, or the browser. Use to see what happens
+	--close       ~ for automated use, free() resources after use,
+
+`;
+	console.log(TEXT );
+	process.exit(0);
+}
 // this code is a test runner,
 // but is too complex.  So I may need to put a test on it
 // so this is safe to import as it doesn't auto execute
