@@ -38,7 +38,8 @@ export default [
                 ...globals.browser,
                 ...globals.node,
             }
-        }
+        },
+	ignores: ["dist/*", "src/fixtures/*.min.*" ],
 
   }
 ];
