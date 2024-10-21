@@ -145,6 +145,7 @@ Notes:
 - TODO: Add rest of tests
 - TODO: Want to add some CSS tests for crucial UI processes, like z-index
 - TODO: Make support for win32
+- TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
 
 #### Metrics that are important to goals
 
