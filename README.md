@@ -141,8 +141,7 @@ Notes:
 - Rebuild all the tests due to this change
 - Refactor cookie code for readability
 - Do more code readability changes
-- Add jest-lite unit tests for the skip() sections in vitest
-- TODO: Add rest of tests
+- TODO: Add jest-lite/ browser unit-tests for the skip() sections in vitest.  These are often behaviour centric tests
 - TODO: Want to add some CSS tests for crucial UI processes, like z-index
 - TODO: Make support for win32
 - TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
