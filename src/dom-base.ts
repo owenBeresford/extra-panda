@@ -8,6 +8,7 @@ import {
   BOUNDARY,
 } from "./all-types";
 import { log, MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./networking";
+import { booleanMap } from "./string-base";
 
 /**
  * appendIsland
@@ -204,6 +205,38 @@ function docOffsets(ele: HTMLElement, offsets: Scrollable): ScreenOffsetArray {
 }
 
 /**
+ * copyURL
+ * Copy the current URL into the paste buffer, for use in mobile view
+ * @param {Location =location} loc
+ * @param {Window =window} win
+ * @public
+ * @returns {void}
+ */
+export function copyURL(loc: Location, win: Window): void {
+  try {
+    if (!win.navigator.clipboard) {
+      throw new Error("No clipboard available");
+    }
+    win.navigator.clipboard.writeText(loc.url).then(
+      () => {
+        // add class for CSS effect
+        return;
+      },
+      (err: unknown) => {
+        log("error", "FAILED: copy URL " + err);
+      },
+    );
+  } catch (e0: unknown) {
+    log(
+      "error",
+      "FAILED: copy URL feature borked " +
+        e0 +
+        "\nIt will fail on a HTTP site.",
+    );
+  }
+}
+
+/**
  * applyVolume
  * Log pixel offsets so the CSS can work correctly
  
@@ -280,42 +313,6 @@ function screenWidth(loc: Location, win: Window): number {
     return parseInt(u.get("width"), 10);
   }
   return win.innerWidth;
-}
-
-/**
- * booleanMap
- * Convert many possible "English" boolean values to boolean
- * NOTE: js, may not be a string
- * @param {string | number} str
- * @protected
- * @returns {boolean}
- */
-function booleanMap(str: string | number): boolean {
-  const TRUE = ["1", 1, "true", "TRUE", "on", "ON", "yes", "YES", "✔", "✓"];
-  const FALSE = [
-    "0",
-    0,
-    "false",
-    "FALSE",
-    "off",
-    "OFF",
-    "no",
-    "NO",
-    "🗙",
-    "✕",
-    "✖",
-    "✖",
-    "✗",
-    "✘",
-  ];
-
-  if (TRUE.includes(str)) {
-    return true;
-  }
-  if (FALSE.includes(str)) {
-    return false;
-  }
-  throw new Error("Unknown data " + str);
 }
 
 /**
@@ -412,6 +409,7 @@ export const TEST_ONLY = {
   getArticleWidth,
   expandDetails,
   docOffsets,
+  copyURL,
   applyVolume,
   mapAttribute,
   setIsland,

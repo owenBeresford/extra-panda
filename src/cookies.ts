@@ -1,4 +1,5 @@
 import { Cookieable } from "./all-types";
+import { APPEARANCE_COOKIE, accessCookie } from "./networking";
 
 /**
  * COOKIE
@@ -57,8 +58,68 @@ export class QOOKIE implements Cookieable {
   }
 }
 
+/**
+ * storeAppearance
+ * Write supplied data to a COOKIE
+ *
+ * @param {string} ft - font
+ * @param {string} fs - font-size
+ * @param {string} dir - direction, mostly unused
+ * @param {string} clr - color scheme
+ * @protected
+ * @returns {void}
+ */
+export function storeAppearance(
+  ft: string,
+  fs: string,
+  dir: string,
+  clr: string,
+): void {
+  const COOKIE: Cookieable = accessCookie();
+  const json: string = JSON.stringify({ ft: ft, fs: fs, dn: dir, cr: clr });
+  COOKIE.set(APPEARANCE_COOKIE, json, 365.254);
+}
+
+/**
+ * applyAppearance
+ * Apply branding settings found in a COOKIE
+ * @param {Document =document} dom
+ * @protected
+ * @returns {void}
+ */
+export function applyAppearance(dom: Document): void {
+  const COOKIE: Cookieable = accessCookie();
+
+  const dat: string = COOKIE.get(APPEARANCE_COOKIE);
+  if (!dat) {
+    return;
+  }
+
+  const dat2 = JSON.parse(dat);
+  // IOIO FIXME add type-washing to cookie
+
+  if (!(dat2["ft"] && dat2["fs"])) {
+    return;
+  }
+  const CSS: string =
+    "body, .annoyingBody { font-family: " +
+    dat2["ft"] +
+    "; font-size: " +
+    dat2["fs"] +
+    "; direction:" +
+    dat2["dn"] +
+    "; }";
+
+  const STYLE = dom.createElement("style");
+  STYLE.setAttribute("id", "client-set-css");
+  STYLE.innerText = CSS;
+  dom.getElementsByTagName("head")[0].append(STYLE);
+}
+
 /////////////////////////////////////////////////// testing ///////////////////////////////////////////////
 
 export const TEST_ONLY = {
   QOOKIE,
+  applyAppearance,
+  storeAppearance,
 };

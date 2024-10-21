@@ -6,7 +6,7 @@ import {
   MiscEventHandler3,
   MiscEventHandler4,
 } from "./all-types";
-import { isFullstack, isMobile } from "./dom-base";
+import { isFullstack, isMobile, copyURL } from "./dom-base";
 import { isLocal } from "./string-base";
 import { log } from "./networking";
 
@@ -178,38 +178,6 @@ function closeMastodon(e: Event, dom: Document, win: Window): boolean {
 }
 
 /**
- * copyURL
- * Copy the current URL into the paste buffer, for use in mobile view
- * @param {Location =location} loc
- * @param {Window =window} win
- * @public
- * @returns {void}
- */
-function copyURL(loc: Location, win: Window): void {
-  try {
-    if (!win.navigator.clipboard) {
-      throw new Error("No clipboard available");
-    }
-    win.navigator.clipboard.writeText(loc.url).then(
-      () => {
-        // add class for CSS effect
-        return;
-      },
-      (err: unknown) => {
-        log("error", "FAILED: copy URL " + err);
-      },
-    );
-  } catch (e0: unknown) {
-    log(
-      "error",
-      "FAILED: copy URL feature borked " +
-        e0 +
-        "\nIt will fail on a HTTP site.",
-    );
-  }
-}
-
-/**
  * _map1
  * Add several event listeners, just a utility
  * @param {HTMLElement} where
@@ -313,7 +281,6 @@ export const TEST_ONLY = {
   closeMastodon,
   openMastodon,
   initMastodon,
-  copyURL,
   accessVisibility,
   openShare,
 };

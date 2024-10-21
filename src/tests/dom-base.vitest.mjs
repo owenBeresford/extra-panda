@@ -14,6 +14,7 @@ const {
   getArticleWidth,
   applyVolume,
   isFullstack,
+  copyURL,
 } = TEST_ONLY;
 
 describe("TEST dom-base", () => {
@@ -64,6 +65,22 @@ describe("TEST dom-base", () => {
       100,
       "asset #4",
     );
+  });
+
+  it("go 5:  copyURL ", async (context) => {
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    let str = `<div id="shareMenu" class="shareMenu"> </div> 
+  <dialog id="popup" open>
+  <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
+  </dialog>`;
+    appendIsland("#point2", str, dom);
+
+    assert.equal(copyURL(loc, win), undefined, "assert #14");
+    if (!win.navigator.clipboard) {
+      context.skip();
+    }
+    let tt = await win.navigator.clipboard.readText();
+    assert.equal(tt, loc.url, "assert #15");
   });
 
   it("go 5: appendIsland ", () => {

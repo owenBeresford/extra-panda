@@ -174,6 +174,42 @@ function fixArgs(day: string = "", time: string = ""): Array<string> {
 }
 
 /**
+ * booleanMap
+ * Convert many possible "English" boolean values to boolean
+ * NOTE: js, may not be a string
+ * @param {string | number} str
+ * @protected
+ * @returns {boolean}
+ */
+export function booleanMap(str: string | number): boolean {
+  const TRUE = ["1", 1, "true", "TRUE", "on", "ON", "yes", "YES", "✔", "✓"];
+  const FALSE = [
+    "0",
+    0,
+    "false",
+    "FALSE",
+    "off",
+    "OFF",
+    "no",
+    "NO",
+    "🗙",
+    "✕",
+    "✖",
+    "✖",
+    "✗",
+    "✘",
+  ];
+
+  if (TRUE.includes(str)) {
+    return true;
+  }
+  if (FALSE.includes(str)) {
+    return false;
+  }
+  throw new Error("Unknown data " + str);
+}
+
+/**
  * importDate
  * Convert a string or Date with a format to a date
  * For details on format, please see php strtotime()
@@ -310,6 +346,7 @@ export const TEST_ONLY = {
   isLocal,
   articleName,
   addLineBreaks,
+  booleanMap,
   pad,
   makeRefUrl,
   importDate,

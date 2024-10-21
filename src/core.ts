@@ -1,14 +1,8 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Location, Document, HTMLElement } from "jsdom";
 
-import { CoreProps, MiscEvent, Cookieable, MultiFuncArg } from "./all-types";
-import {
-  log,
-  debug,
-  APPEARANCE_COOKIE,
-  runFetch,
-  accessCookie,
-} from "./networking";
+import { CoreProps, MiscEvent, MultiFuncArg } from "./all-types";
+import { log, debug, runFetch } from "./networking";
 import {
   listContentGroup,
   extractGroup,
@@ -27,17 +21,13 @@ import {
 } from "./effect";
 import { readingDuration } from "./reading";
 import { modalInit } from "./modal";
+import { applyAppearance } from "./cookies";
 
 // variables across this module
 // * @protected
 let OPTS: CoreProps = {
   pageInitRun: 0,
 } as CoreProps;
-
-// removed:
-// CorrectionModule.prototype.columnise = function ()    << now CSS
-// CorrectionModule.prototype.biblioExtract = function ()  << runs HEAD
-// CorrectionModule.prototype.extractGET = function (val)  << UNUSED, became language API
 
 /**
  * _map
@@ -107,64 +97,6 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
   html.push("</menu></div></nav>");
 
   appendIsland("#navBar", html.join("\n"), dom);
-}
-
-/**
- * storeAppearance
- * Write supplied data to a COOKIE
- *
- * @param {string} ft - font
- * @param {string} fs - font-size
- * @param {string} dir - direction, mostly unused
- * @param {string} clr - color scheme
- * @protected
- * @returns {void}
- */
-function storeAppearance(
-  ft: string,
-  fs: string,
-  dir: string,
-  clr: string,
-): void {
-  const COOKIE: Cookieable = accessCookie();
-  const json: string = JSON.stringify({ ft: ft, fs: fs, dn: dir, cr: clr });
-  COOKIE.set(APPEARANCE_COOKIE, json, 365.254);
-}
-
-/**
- * applyAppearance
- * Apply branding settings found in a COOKIE
- * @param {Document =document} dom
- * @protected
- * @returns {void}
- */
-function applyAppearance(dom: Document): void {
-  const COOKIE: Cookieable = accessCookie();
-
-  const dat: string = COOKIE.get(APPEARANCE_COOKIE);
-  if (!dat) {
-    return;
-  }
-
-  const dat2 = JSON.parse(dat);
-  // IOIO FIXME add type-washing to cookie
-
-  if (!(dat2["ft"] && dat2["fs"])) {
-    return;
-  }
-  const CSS: string =
-    "body, .annoyingBody { font-family: " +
-    dat2["ft"] +
-    "; font-size: " +
-    dat2["fs"] +
-    "; direction:" +
-    dat2["dn"] +
-    "; }";
-
-  const STYLE = dom.createElement("style");
-  STYLE.setAttribute("id", "client-set-css");
-  STYLE.innerText = CSS;
-  dom.getElementsByTagName("head")[0].append(STYLE);
 }
 
 /**
@@ -441,8 +373,6 @@ export const TEST_ONLY = {
   hasBeenRun,
   _map,
   initPopupMobile,
-  storeAppearance,
-  applyAppearance,
   burgerMenu,
   tabChange,
   siteCore,

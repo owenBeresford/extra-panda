@@ -5,13 +5,7 @@ import { TEST_ONLY } from "../core";
 import { appendIsland, isFullstack } from "../dom-base";
 import { createEvent } from "./vitest-addons";
 
-const {
-  burgerMenu,
-  initPopupMobile,
-  storeAppearance,
-  applyAppearance,
-  tabChange,
-} = TEST_ONLY;
+const { burgerMenu, initPopupMobile, tabChange } = TEST_ONLY;
 
 describe("TEST core", () => {
   it("go 1: burgerMeu", () => {
@@ -309,20 +303,4 @@ describe("TEST core", () => {
   });
 
   // IOIO XXX Add test for running twice
-
-  it("go 2: storeAppearance ", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    if (!isFullstack(win)) {
-      context.skip();
-    }
-    // if browser look at cookies before and after     dom.cookies
-  });
-
-  it("go 3: applyAppearance ", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    if (!isFullstack(win)) {
-      context.skip();
-    }
-    // if browser look at cookies before and after
-  });
 });
