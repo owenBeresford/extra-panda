@@ -126,9 +126,10 @@ Notes:
 - The process of expanding the number of tools in this project is adding features, but also acting as a lint as it shows small oversights.
 - Note I added a UI feature that added extra HTML, but this didn't invalidate any of the unit-tests.
 - I am adding search params for testing, rather than a Mock, as I may want to use them during QA
-- I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together, it's a nul-point difference.   
+- I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together with `rebase`, it's a nul-point difference.   
 
 #### Outsize late in project commit
+- The goal of this is testing HTTPS only features (eg copy-and-paste) in a unit test AND testing CSS (eg z-index) features
 - Started to build another test harness, to be able to run Vitest in a browser
    - Have new smol webserver in Express + HTTPS
    - Have a fresh captive version of Chrome
@@ -140,8 +141,10 @@ Notes:
 - Rebuild all the tests due to this change
 - Refactor cookie code for readability
 - Do more code readability changes
-- Add jest-lite unit tests for the skip() sections in vitest
-- Want to add some CSS tests for crucial UI processes, like z-index
+- TODO: Add jest-lite/ browser unit-tests for the skip() sections in vitest.  These are often behaviour centric tests
+- TODO: Want to add some CSS tests for crucial UI processes, like z-index
+- TODO: Make support for win32
+- TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
 
 #### Metrics that are important to goals
 
