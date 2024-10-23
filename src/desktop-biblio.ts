@@ -146,7 +146,7 @@ export function applyDOMpositions(ele: HTMLElement, win: Window): void {
 
   let tt = ele.parentNode;
   const subItem: Array<string> = ["LI", "SUP", "UL", "OL", "SPAN", "P"];
-  // list doesnt include HTML, BODY, DETAILS or DIV
+  // list doesn't include HTML, BODY, DETAILS or DIV
   while (subItem.includes(tt.tagName)) {
     tt = tt.parentNode;
   }
@@ -178,7 +178,7 @@ function mapPositions(data: Array<string>, dom: Document, win: Window): void {
   const REFS = Array.from(dom.querySelectorAll(ALL_REFERENCE_LINKS));
   if (data.length > REFS.length) {
     dom.querySelector(ALL_REFERENCE).classList.add(SHOW_ERROR);
-    dom.querySelector("p[role=status]").textContent += "Recompile meta data";
+    dom.querySelector("p[role=status]").textContent += " Recompile meta data. ";
     throw new Error(
       "Too many references in meta-data for this article, pls recompile.",
     );
@@ -186,7 +186,6 @@ function mapPositions(data: Array<string>, dom: Document, win: Window): void {
 
   for (let i = 0; i < data.length; i++) {
     REFS[i].setAttribute("aria-label", "" + data[i]);
-    // IOIO TODO: if current A is inside a popup, need to recompute width
     applyDOMpositions(REFS[i], win);
     if (OPTS.renumber) {
       REFS[i].textContent = "" + j;

@@ -195,6 +195,7 @@ export const TEST_ONLY = {
   getFetch,
   log,
   debug,
+  delay,
   accessCookie,
   getLogCounter: (): number => {
     return LOG_USAGE;

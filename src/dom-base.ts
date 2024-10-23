@@ -51,7 +51,7 @@ export function appendIsland(
 
 /**
  * ready
- * Triggers Page start-event
+ * Triggers Page start-event  Very IMPURE
  *
  * @param {GenericEventHandler} callback
  * @param {Document =document} dom
@@ -108,7 +108,7 @@ export function setIsland(
 /**
  * isFullstack
  * Workout if this JS runtime is inside a full range of technology, like a browser.
- * This is mostly used for tests.
+ * This is mostly used for tests.   PURE
  *
  * @param {Window =window} win
  * @public
@@ -159,7 +159,7 @@ export function mapAttribute(
 
 /**
  * getArticleWidth
- * A utility to get current article width
+ * A utility to get current article width  PURE
  
  * @param {boolean} isLeft - left edge or right edge (of tooltip)?
  * @param {string} id - the base element for width computation
@@ -318,6 +318,7 @@ function screenWidth(loc: Location, win: Window): number {
 /**
  * isMobile
  * Statically workout if this JS interpreter is a mobile
+ * IMPURE
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @param {Window =window} win
@@ -350,7 +351,7 @@ export function isMobile(dom: Document, loc: Location, win: Window): boolean {
 
 /**
  * calcScreenDPI
- * as labeled
+ * as labeled, PURE
  * @param {Document =document} dom
  * @param {Window =window} win
  * @protected
@@ -377,7 +378,7 @@ function calcScreenDPI(dom: Document, win: Window): number {
 
 /**
  * currentSize
- * Supplied for testing, convert a window to a size
+ * Supplied for testing, convert a window to a size PURE
  
  * @param {Document = document} dom 
  * @param {Window =window} win 
@@ -413,8 +414,10 @@ export const TEST_ONLY = {
   applyVolume,
   mapAttribute,
   setIsland,
+  screenWidth,
   isFullstack,
   isMobile,
+  ready,
   calcScreenDPI,
   currentSize,
 };

@@ -2,13 +2,14 @@
 
 /**
  * pullout
- * An isolation function, as JSDOM isn't perfect.
+ * An isolation function, as JSDOM isn't perfect.  PURE
  * @param {HTMLElement} a
  * @public
  * @returns {string}
  */
 export function pullout(a: HTMLElement): string {
   if (!a) {
+    // type checking isn't strong at runtime
     throw new Error("No element for text found");
   } else if ("textContent" in a) {
     return a.textContent;
@@ -49,7 +50,7 @@ export function makeRefUrl(template: string, loc: Location): string {
 
 /**
  * isLocal
- * Guess if actual code or test node
+ * Guess if actual node or test node, PURE
  * @param {string} str
  * @public
  * @returns {boolean}
@@ -124,7 +125,7 @@ export function pad(num: number): string {
  * Fix whatever data that I have been given, down to a predictable list #leSigh browsers.
  * This is too complex as I am supporting ALL browsers across a large amount of time/editions.
  * I presume a 'JS purity & primis' person would not support some of the corner cases.
- * Used in importDate()
+ * Used in importDate()   PURE
  * @param {string = ""} day - supports / and - common formats
  * @param {string = ""} time
  * @protected
@@ -176,7 +177,7 @@ function fixArgs(day: string = "", time: string = ""): Array<string> {
 /**
  * booleanMap
  * Convert many possible "English" boolean values to boolean
- * NOTE: js, may not be a string
+ * NOTE: As JS, this may not be a string.  PURE
  * @param {string | number} str
  * @protected
  * @returns {boolean}

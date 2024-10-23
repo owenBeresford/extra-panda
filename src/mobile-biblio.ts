@@ -234,5 +234,6 @@ export const TEST_ONLY = {
   empty,
   normaliseData,
   render,
+  adjustDom,
   createBiblio,
 };
