@@ -7,7 +7,8 @@ import { ALL_REFERENCE_LINKS } from "../networking";
 import { TEST_ONLY } from "../mobile-biblio";
 import { TEST_ONLY as NETWORKING } from "../networking";
 
-const { empty, normaliseData, render, createBiblio } = TEST_ONLY;
+const { empty, normaliseData, render, createBiblio, injectOpts, adjustDom } =
+  TEST_ONLY;
 const { getLogCounter } = NETWORKING;
 
 describe("TEST mobile-biblio", () => {
@@ -275,6 +276,40 @@ describe("TEST mobile-biblio", () => {
       },
     ];
     assert.deepEqual(normaliseData(dat), dat2, "Assert #5");
+  });
+
+  it("go 4: adjustDOM", () => {
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/reading-list",
+      3,
+    );
+    // function adjustDom(dat: Array<ReferenceType>, dom: Document): void
+    let str = `
+<div id="biblio" style="display:none;">
+<p> here is old stuff
+<p> budget cows!!!
+<p> glow in the dark cows
+</div>
+<p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
+<p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
+<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
+<p>sdf sdfs <sup><a href="gibgibgib">7</a> </sup> <sup><a href="gibgibgib">45</a> </sup> sdfsf sdfsdf ssf sd
+<p>sdf sdfs <sup><a href="gibgibgib">-3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
+<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
+<p>sdf sdfs <sup><a href="gibgibgib">9</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
+<p>sdf sdfs <sup><a href="gibgibgib">16</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
+<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">21</a> </sup> 
+`;
+    appendIsland("#point2", str, dom); // 15 links
+    injectOpts({ renumber: 1 });
+
+    assert.equal(dom.querySelectorAll("#point2 a").length, 15, "assert #6");
+    adjustDom([], dom);
+    assert.equal(
+      dom.querySelectorAll('#point2 a[href^="http"]').length,
+      0,
+      "assert #6",
+    );
   });
 
   it("go 3: createBiblio", async () => {

@@ -20,7 +20,8 @@ describe("TEST cookies", () => {
     if (!isFullstack(win)) {
       context.skip();
     }
-    // if browser look at cookies before and after     dom.cookies
+    // if browser look at cookies before and after
+    // look at values in   dom.cookies
   });
 
   it("go 3: applyAppearance ", (context) => {
@@ -29,5 +30,6 @@ describe("TEST cookies", () => {
       context.skip();
     }
     // if browser look at cookies before and after
+    // look at values in   dom.cookies
   });
 });

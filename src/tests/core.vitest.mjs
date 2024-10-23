@@ -5,7 +5,7 @@ import { TEST_ONLY } from "../core";
 import { appendIsland, isFullstack } from "../dom-base";
 import { createEvent } from "./vitest-addons";
 
-const { burgerMenu, initPopupMobile, tabChange } = TEST_ONLY;
+const { burgerMenu, initPopupMobile, tabChange, _map, siteCore } = TEST_ONLY;
 
 describe("TEST core", () => {
   it("go 1: burgerMeu", () => {

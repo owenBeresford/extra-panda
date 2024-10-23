@@ -13,6 +13,8 @@ const {
   mapAttribute,
   getArticleWidth,
   applyVolume,
+  calcScreenDPI,
+  screenWidth,
   isFullstack,
   copyURL,
 } = TEST_ONLY;
@@ -81,6 +83,39 @@ describe("TEST dom-base", () => {
     }
     let tt = await win.navigator.clipboard.readText();
     assert.equal(tt, loc.url, "assert #15");
+  });
+
+  it("go 6: calcScreenDPI ", async (context) => {
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    let str = `<div id="shareMenu" class="shareMenu"> </div> 
+  <dialog id="popup" open>
+  <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
+  </dialog>`;
+    appendIsland("#point2", str, dom);
+    if (!isFullstack(win)) {
+      context.skip();
+    }
+    // I think browser only.
+    assert.equal(calcScreenDPI(dom, win), 150, "Assert #x, the screen DPI");
+  });
+
+  it("go 7: screenWidth ", async (context) => {
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/home?width=150",
+      3,
+    );
+    let str = `<div id="shareMenu" class="shareMenu"> </div> 
+  <dialog id="popup" open>
+  <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
+  </dialog>`;
+    appendIsland("#point2", str, dom);
+    assert.equal(screenWidth(loc, win), 150, "Assert #x,");
+
+    if (!isFullstack(win)) {
+      context.skip();
+    }
+    // I think browser only.
+    assert.equal(screenWidth(loc, win), 1800, "Assert #x, ");
   });
 
   it("go 5: appendIsland ", () => {
