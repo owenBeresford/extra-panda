@@ -426,9 +426,11 @@ supports:
 	console.log(TEXT );
 	process.exit(0);
 }
+
 // this code is a test runner,
 // but is too complex.  So I may need to put a test on it
 // so this is safe to import as it doesn't auto execute
-//if( typeof module === "object" && !("parent" in module) ) {
-runTests(TESTS);
-//}
+if( typeof module === "object" && !("parent" in module) ) {
+	runTests(TESTS);
+}
+
