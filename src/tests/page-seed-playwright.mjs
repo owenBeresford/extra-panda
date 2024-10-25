@@ -1,5 +1,8 @@
-import { delay } from "../networking";
+import { delay, log, domLog } from "../networking";
+import { appendIsland } from "../dom-base";
+import { test_name } from "../string-base";
 
+let SHOULD_CLOSE = 1;
 /**
  * page
  * Build a fake browser to run with tests
@@ -18,11 +21,6 @@ export async function page(url = "", args = 1) {
   throw new Error("Bad data");
 }
 
-function generate_name(hash) {
-  const d = new Date();
-  return "test" + hash + "_" + d.getSeconds() + "_" + d.getMilliseconds();
-}
-
 /**
  * page_local
  * Create a new tab inside a browser
@@ -33,13 +31,13 @@ function generate_name(hash) {
  * @return {Array} - many types of object
  */
 async function page_local(url = "", args = 1) {
-  const name = generate_name(args);
-
+  const name = test_name(args);
   const tmp = await window.open(url, name);
 
   await delay(1000);
   if (tmp.window.document.body.length < 200) {
-    window.reload();
+    log("error", "New browser tab has gone wrong.");
+    tmp.window.reload();
     return page_local(url, args);
   }
   tmp.window.TEST_TAB_NAME = name;
@@ -65,6 +63,62 @@ async function page_local(url = "", args = 1) {
  */
 function page_fake(url = "", args = 1) {
   return [];
+}
+
+/**
+ * wrap
+ * Supply try catch, test name and window management so tests are simpler
+ 
+ * @param {string} name
+ * @param {string} url
+ * @param { (dom, loc, win)=>void } action
+ * @public
+ * @return {Array} - of many types of object
+ */
+export async function wrap(name, url, action) {
+  try {
+    const LOG_PADDING = "**********************************************";
+    const [dom, loc, win] = await page("https://127.0.0.1:8081/home.html", 3);
+    win.console.log(
+      LOG_PADDING + "\nthis is tab " + win.TEST_TAB_NAME + "\n" + LOG_PADDING,
+    );
+    dom.title = win.TEST_TAB_NAME;
+    action(dom, loc, win);
+
+    if (SHOULD_CLOSE) {
+      win.close();
+    }
+    domLog(win.TEST_TAB_NAME + " " + name + " [PASS]", false, false);
+  } catch (e) {
+    domLog(win.TEST_TAB_NAME + " see console for error details", false, false);
+    console.log(win.TEST_TAB_NAME + " ERROR TRAPT ", e.message, "\n", e.stack);
+    if (SHOULD_CLOSE) {
+      win.close();
+    }
+  }
+}
+
+/**
+ * execTest
+ * The end of the browser test files
+ * WARN: Only run in test browser instance
+ 
+ * @param {Function} run - imported from jest-lite in the main test file 
+ * @public
+ * @return {void}
+ */
+export async function execTest(run) {
+  const tt = new URLSearchParams(location.search);
+  if (tt.has("close") && tt.get("close") === "0") {
+    domLog("browser tabs will NOT auto-close", false, false);
+    SHOULD_CLOSE = 0;
+  } else {
+    domLog("browser tabs should auto-close", false, false);
+  }
+
+  const ret = await run();
+  ret.push([{ name: "BROWSER TEST modal", last: true }]);
+  appendIsland("#binLog", JSON.stringify(ret), document);
 }
 
 /**

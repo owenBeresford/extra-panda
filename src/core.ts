@@ -259,7 +259,7 @@ export async function siteCore(
   }
 
   if (loc.pathname.match("group-")) {
-    const tt = extractGroup(null, loc, dom);
+    const tt = extractGroup(null, loc);
     if (tt) {
       await createAdjacentChart(
         {

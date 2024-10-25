@@ -157,6 +157,42 @@ export async function delay(ms: number): Promise<void> {
 }
 
 /**
+ * domLog
+ * Add a message to the current webpage in #log  IMPURE
+ *
+ * @param {string} str - your message
+ * @param {boolean =false} bold
+ * @param {boolean =false} html - set this to true to embed the first arg as HTML, not as text
+ * @public
+ * @returns {void}
+ */
+export function domLog(
+  str: string,
+  bold: boolean = false,
+  html: boolean = false,
+): void {
+  const LOG: HTMLUListElement = document.getElementById("log");
+  const li: HTMLElement = document.createElement("li");
+  const dd = new Date();
+  const tt = document.createElement("time");
+  tt.dateTime = dd.toString();
+  tt.textContent =
+    dd.getUTCHours() + ":" + dd.getUTCMinutes() + ":" + dd.getUTCSeconds();
+  li.appendChild(tt);
+  if (html) {
+    const t2 = document.createElement("template");
+    t2.innerHTML = str;
+    li.appendChild(t2.content);
+  } else {
+    li.appendChild(document.createTextNode(" => " + str));
+  }
+  if (bold) {
+    li.style = "font-size:115%; ";
+  }
+  LOG.append(li);
+}
+
+/**
  * accessCookie
  * Generate a cookie access object PURE
  * The awkward name is not to collide with Chrome extensions.

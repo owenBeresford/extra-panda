@@ -20,6 +20,8 @@ export default defineConfig({
   build: {
     minify: "terser",
     target: "es2022",
+    emptyOutDir: false,
+    outDir: 'dist',
     lib: {
       entry: [path.resolve(__dirname, "src/tests/modal.webtest.mjs")],
     },

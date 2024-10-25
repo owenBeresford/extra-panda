@@ -21,33 +21,6 @@
       aria-role="status"
       data-testid="status"
     ></pre>
-    <script defer>
-      function writeLog(str, bold = false, html = false) {
-        const LOG = document.getElementById("log");
-        let li = document.createElement("li");
-        const dd = new Date();
-        let tt = document.createElement("time");
-        tt.dateTime = dd.toString();
-        tt.textContent =
-          dd.getUTCHours() +
-          ":" +
-          dd.getUTCMinutes() +
-          ":" +
-          dd.getUTCSeconds();
-        li.appendChild(tt);
-        if (html) {
-          let t2 = document.createElement("template");
-          t2.innerHTML = str;
-          li.appendChild(t2.content);
-        } else {
-          li.appendChild(document.createTextNode(" => " + str));
-        }
-        if (bold) {
-          li.style = "font-size:115%; ";
-        }
-        LOG.append(li);
-      }
-    </script>
     <script type="module" src="MARKER1"></script>
     <!-- script type="module" src="MARKER2"></script -->
   </body>

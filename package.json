@@ -13,12 +13,12 @@
 	"test":"export NODE_ENV=development; node ./node_modules/.bin/vitest --typecheck run; if [ ! -d './dist/tests' ]; then echo 'Run build:tests first'; else; export NODE_ENV=development; node ./tools/tests-browser.mjs; fi ",
     "test:unit": "export NODE_ENV=development; node ./node_modules/.bin/vitest --typecheck run",
     "#ignore-lint-notes": "1 function is over complexity by 1 point. . .  && Its an arbitary limit",
-    "lint": "node ./node_modules/.bin/eslint --exit-on-fatal-error --fix --no-cache ; node ./node_modules/.bin/prettier --write ./src; git checkout src/fixtures/*mjs; ",
+    "lint": "node ./node_modules/.bin/eslint --exit-on-fatal-error --fix --no-cache ; node ./node_modules/.bin/prettier --write ./src; node ./node_modules/.bin/prettier --write ./tools/; git checkout src/fixtures/*mjs; ",
     "build:docs": "if [ ! -d './dist/docs' ]; then mkdir -p ./dist/docs; fi; node ./node_modules/.bin/typedoc --options ./typedoc.json --emit both --logLevel 3",
     "#ignore-this-line": "Edit values in this simple script if you have local security policy",
     "#ignore-this-line2": "NOTE: 'build:docs' after 'build' and 'test:web', as they purge the dist directory",
     "docs": "if [ ! -d ./dist/docs ]; then echo 'Build docs first'; else; node ./tools/doc-server.mjs & fi",
-	"build:tests":"export NODE_ENV=web-test; node ./node_modules/.bin/vite -c vite.config.tests.ts build; echo 'add more tests'  ",
+	"build:tests":"export NODE_ENV=web-test; node ./node_modules/.bin/vite -c vite.config.modal.ts build; node ./node_modules/.bin/vite -c vite.config.cookie.ts build;  echo -e '\n\n\t\tAdd more tests'  ",
     "test:web": "if [ ! -d './dist/tests' ]; then echo 'Run build:tests first'; else echo 'If running manually, use CLI flags'; export NODE_ENV=development; node ./tools/tests-browser.mjs; fi"
   },
   "repository": {

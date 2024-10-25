@@ -211,6 +211,19 @@ export function booleanMap(str: string | number): boolean {
 }
 
 /**
+ * test_name
+ * Make a unique name. used in the browser unit tests.
+ * PURE
+ *
+ * @param {string|number} hash
+ * @returns {string}
+ */
+export function test_name(hash: string | number): string {
+  const d = new Date();
+  return "test" + hash + "_" + d.getSeconds() + "_" + d.getMilliseconds();
+}
+
+/**
  * importDate
  * Convert a string or Date with a format to a date
  * For details on format, please see php strtotime()
@@ -349,6 +362,7 @@ export const TEST_ONLY = {
   addLineBreaks,
   booleanMap,
   pad,
+  test_name,
   makeRefUrl,
   importDate,
   dateMunge,

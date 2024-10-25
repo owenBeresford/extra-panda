@@ -26,12 +26,14 @@ Some extra tests that do not run in Node
       // https://playwright.dev/docs/locators
       // https://playwright.dev/docs/api/class-framelocator#frame-locator-get-by-text
 
+// IOIO port to TS, its too complex
+
 */
 import { spawn } from "node:child_process";
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
-import fs from "fs";
+import fs from "node:fs";
 import https from "https";
 
 import { chromium } from "playwright";
@@ -47,24 +49,30 @@ if more are added see command-line-args
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TESTS = [
   "modal.webtest.mjs", // extend...
+  "cookie.webtest.mjs",
 ];
 const PORT_DEBUG = 9222;
 const PORT_SERVER = 8081;
 const URL_SERVER = "127.0.0.1";
 const BROWSER = [
+  // https://peter.sh/experiments/chromium-command-line-switches/
   "/snap/bin/chromium",
-// This flag is being ignored
+  // This flag is being ignored
   "--user-data-dir=/tmp/js-test",
   "--remote-debugging-port=" + PORT_DEBUG,
-// add no empty window
-// these two flags have been removed
+  // add no empty window
+  // these two flags have been removed
   "--ignore-certificate-errors",
-	"--test-type=webdriver",
+  "--test-type=webdriver",
   "--allow-insecure-localhost",
-	"--mute-audio",
-// lots of excited press about this 3 y ago, doesn't work now
-//	" --auto-open-devtools-for-tabs",
-// this fake flag is also being ignored
+  "--mute-audio",
+  "--disable-popup-blocking",
+  "--disable-login-animations",
+  "--disable-default-apps",
+  // lots of excited press about this 3 y ago,
+  // setting this stops the JS executing
+  //	"--auto-open-devtools-for-tabs",
+  // this fake flag is also being ignored
   "--ignore-this",
 ];
 
@@ -73,7 +81,7 @@ const DIR_FIXTURES = path.join(__dirname, "..", "src", "fixtures");
 const CERT_NAME = DIR_FIXTURES + path.sep + "cert.pem";
 const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
 // cert.pem  csr.pem  index.html  ob1.min.css  private.key
-var dDelta=0;
+var dDelta = 0;
 
 /**
  * spinup_server
@@ -135,19 +143,17 @@ function spinup_server() {
     });
   });
 
-  app.get('/scripts/:nom', function(req, res) {
-	let detect=fs.statSync(
-		path.join( DIR_TESTS, req.params.nom), 
-		{throwIfNoEntry:false}
-				 );
-	if( detect && !detect.isFile() ) {
-		return res.status(404).send("Unknown file "+req.params.nom);
-	}
+  app.get("/scripts/:nom", function (req, res) {
+    let detect = fs.statSync(path.join(DIR_TESTS, req.params.nom), {
+      throwIfNoEntry: false,
+    });
+    if (detect && !detect.isFile()) {
+      return res.status(404).send("Unknown file " + req.params.nom);
+    }
     res.sendFile(path.join(DIR_TESTS, req.params.nom), {
       headers: { "Content-Type": "text/javascript; charset=UTF-8" },
-
-	});
-		 } );
+    });
+  });
 
   sock.listen(PORT_SERVER, URL_SERVER, () => {
     console.log(
@@ -156,12 +162,13 @@ function spinup_server() {
         ":" +
         PORT_SERVER +
         "/ with a local PID of " +
-        process.pid,  );
+        process.pid,
+    );
   });
   const closeServer = () => {
     sock.close();
   };
-// Could return the socket, but not sure this would help anything
+  // Could return the socket, but not sure this would help anything
   return [null, closeServer];
 }
 
@@ -220,10 +227,10 @@ async function spinup_browser(cmd, onSocket) {
   };
   const READ_ERR = (data) => {
     console.log("[PASS-BACK] Child process said: " + data);
-	console.log("outer running process has got the debug socket? "+found);
+    console.log("outer running process has got the debug socket? " + found);
   };
 
-  const CHILD = await spawn(BROWSER[0], BROWSER.slice(1, BROWSER.length-1), {
+  const CHILD = await spawn(BROWSER[0], BROWSER.slice(1, BROWSER.length - 1), {
     detached: true,
     shell: false,
   });
@@ -241,10 +248,10 @@ async function spinup_browser(cmd, onSocket) {
       // maybe make an exception
     }
     CHILD.stdin.end();
-	if(dDelta ===0 ) {
-		console.log(`[PASS-BACK] CHILD exited`);
-    	throw new Error("Browser was closed by a human");
-	}
+    if (dDelta === 0) {
+      console.log(`[PASS-BACK] CHILD exited`);
+      throw new Error("Browser was closed by a human");
+    }
   });
   console.log("[INFO] Created a browser instance");
 
@@ -262,7 +269,7 @@ async function spinup_browser(cmd, onSocket) {
  * @returns {Promise<void>}
  */
 function delay(ms) {
-  return new Promise( (good) => setTimeout(good, ms) );
+  return new Promise((good) => setTimeout(good, ms));
 }
 
 /**
@@ -275,14 +282,14 @@ function delay(ms) {
  * @returns {number} - return 1 or 0
  */
 function should_close_tabs(args) {
-	let close=1;	
-	if(args.includes('--close'))	{
-		close=1;
-	} 
-	if(args.includes('--no-close'))	{
-		close=0;
-	} 
-	return close;
+  let close = 1;
+  if (args.includes("--close")) {
+    close = 1;
+  }
+  if (args.includes("--no-close")) {
+    close = 0;
+  }
+  return close;
 }
 
 /**
@@ -295,8 +302,9 @@ function should_close_tabs(args) {
  * @returns {Array<strings>}
  */
 function getMethods(o) {
-  return Object.getOwnPropertyNames(Object.getPrototypeOf(o))
-    .filter(m => 'function' === typeof o[m])
+  return Object.getOwnPropertyNames(Object.getPrototypeOf(o)).filter(
+    (m) => "function" === typeof o[m],
+  );
 }
 
 /**
@@ -309,13 +317,15 @@ function getMethods(o) {
  * @returns {void} 
  */
 function JSON2logging(json1) {
-	let tmp=JSON.parse( json1.trim() );
-	let [title]=tmp.pop();
-	console.log("   ✓ "+title.name);
+  let tmp = JSON.parse(json1.trim());
+  let [title] = tmp.pop();
+  console.log("   ✓ " + title.name);
 
-	for(let i=0; i<tmp.length; i++) {
-		console.log("     ✓ "+ tmp[i].testPath[2]+" ["+(tmp[i].status.toUpperCase())+"]" );
-	}
+  for (let i = 0; i < tmp.length; i++) {
+    console.log(
+      "     ✓ " + tmp[i].testPath[2] + " [" + tmp[i].status.toUpperCase() + "]",
+    );
+  }
 }
 
 /**
@@ -330,28 +340,34 @@ function JSON2logging(json1) {
  * @returns {string}
  */
 async function browser2json(page, weight) {
-	const tt1=await page.getByTestId('status');
-	const sz= await tt1.count();
+  const tt1 = await page.getByTestId("status");
+  const sz = await tt1.count();
 
-	if(sz>0) {
-		if(sz >1) { throw new Error("Result block not found"); }
+  if (sz > 0) {
+    if (sz > 1) {
+      throw new Error("Result block not found");
+    }
 
-		await page.bringToFront();
-// use this in next iteration
-		let ignored=await tt1.all();
-console.log("[INFO] Sleeping as DOM data extraction from test tab is laggy");
-		await delay(6_000 * weight);
-console.log("[INFO] wakeup (hopefully brower execution is done)");
-		const json1= await page.innerText('pre');
-//			testResults = await page.content();
-//			let slice=testResults.match(new RegExp("<pre[^>]*>([^<]*)</pre>", 'mi'));
-//console.log("SDFSDFSDF "+ new Date(),  slice);
+    await page.bringToFront();
+    // use this in next iteration
+    let ignored = await tt1.all();
+    console.log(
+      "[INFO] Sleeping as DOM data extraction from test tab is laggy",
+    );
+    await delay(6_000 * weight);
+    console.log("[INFO] wakeup (hopefully brower execution is done)");
+    const json1 = await page.innerText("pre");
+    //			testResults = await page.content();
+    //			let slice=testResults.match(new RegExp("<pre[^>]*>([^<]*)</pre>", 'mi'));
+    //console.log("SDFSDFSDF "+ new Date(),  slice);
 
-		if( json1.length <5) { throw new Error("EMPTY Result block found"); }
-		return json1;
-	}
-	throw new Error("Logic error, ask a dev"); 
-} 
+    if (json1.length < 5) {
+      throw new Error("EMPTY Result block found");
+    }
+    return json1;
+  }
+  throw new Error("Logic error, ask a dev");
+}
 
 /**
  * runTests - a wrapper to make code tidier
@@ -376,44 +392,61 @@ export async function runTests(tests) {
     }
     const [ctx, end2] = await spinup_playwright(dburl);
     for (let i in tests) {
-		dDelta=0;
+      dDelta = 0;
+      const tExist = fs.statSync(
+        path.join(__dirname, "..", "dist", "tests", tests[i]),
+      );
+      if (!tExist.isFile()) {
+        throw new Error("Compile tests before trying to run " + tests[i]);
+        // this is `npm run build:tests`
+      }
 
-      const [page ]= await ctx.pages();
+      let page;
+      if (i === "0") {
+        // consume the empty page that chrome will start with
+        [page] = await ctx.pages();
+      } else {
+        page = await ctx.newPage();
+      }
       // using **https** localhost,
       // test server is to server a HTML file in 'GET /'
       let URL =
-        "https://" + URL_SERVER + ":" + PORT_SERVER + "/?test=" + tests[i]+ 
-// append "&no-close=1" to stop the browser tabs being closed, so they can be examined
-			"&close="+should_close_tabs( process.argv); 
+        "https://" +
+        URL_SERVER +
+        ":" +
+        PORT_SERVER +
+        "/?test=" +
+        tests[i] +
+        // append "&no-close=1" to stop the browser tabs being closed, so they can be examined
+        "&close=" +
+        should_close_tabs(process.argv);
       await page.goto(URL);
-	let d1=new Date();
-      await delay(3000); 
-	let json1= await browser2json( page, TESTS.length);
-	JSON2logging(  json1); 
+      let d1 = new Date();
+      await delay(3000);
+      let json1 = await browser2json(page, TESTS.length);
+      JSON2logging(json1);
 
-	let d2=new Date();
-	dDelta=d2-d1;
-		await delay(1000);
-
+      let d2 = new Date();
+      dDelta = d2 - d1;
+      await delay(1000);
     }
 
-	if( should_close_tabs( process.argv) ) {
-    end1();
-    end0();
-    end2();
-	}
+    if (should_close_tabs(process.argv)) {
+      end1();
+      end0();
+      end2();
+    }
   } catch (e) {
     console.log(
-      "\n\n[ERROR] browser tests ABORTED with "+ e.message,
+      "\n\n[ERROR] browser tests ABORTED with " + e.message,
       e.stack,
       "\n\n",
     );
   }
 }
 
-if( process.argv.includes('--help') || 
-    process.argv.includes('-h') ) {
-	const TEXT=`
+if (process.argv.includes("--help") || process.argv.includes("-h")) {
+  const TEXT = `
 Script to be able to manage browser tests from bash.  I wanted to use vitest everywhere, but not possible today.
 The default behaviour is to close the tabs and browser, as most test execution is automated.
 
@@ -423,14 +456,13 @@ supports:
 	--close       ~ for automated use, free() resources after use,
 
 `;
-	console.log(TEXT );
-	process.exit(0);
+  console.log(TEXT);
+  process.exit(0);
 }
 
 // this code is a test runner,
 // but is too complex.  So I may need to put a test on it
 // so this is safe to import as it doesn't auto execute
-if( typeof module === "object" && !("parent" in module) ) {
-	runTests(TESTS);
-}
-
+// if (typeof module === "object" && !("parent" in module)) {
+runTests(TESTS);
+//}

@@ -392,11 +392,7 @@ function updateLabels(gname: string, dom: Document): void {
  * @throws Error when there is no known data to extract
  * @returns {string}
  */
-export function extractGroup(
-  ele: HTMLElement | null,
-  loc: Location,
-  dom: Document,
-): string {
+export function extractGroup(ele: HTMLElement | null, loc: Location): string {
   const tmp1 = loc.pathname.split("/group-");
   if (Array.isArray(tmp1) && tmp1.length > 1 && tmp1[1] !== "XXX") {
     return tmp1[1];
