@@ -337,22 +337,22 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     appendIsland("#point2", str, dom);
 
     assert.equal(
-      extractGroup(dom.querySelector("#thing1"), loc, dom),
+      extractGroup(dom.querySelector("#thing1"), loc),
       "engineering",
       "step #25",
     );
     assert.equal(
-      extractGroup(dom.querySelector("#thing2"), loc, dom),
+      extractGroup(dom.querySelector("#thing2"), loc),
       "engineering",
       "step #26",
     );
     assert.equal(
-      extractGroup(dom.querySelector("#thing3"), loc, dom),
+      extractGroup(dom.querySelector("#thing3"), loc),
       "engineering",
       "step #27",
     );
     assert.equal(
-      extractGroup(dom.querySelector("#thing4"), loc, dom),
+      extractGroup(dom.querySelector("#thing4"), loc),
       "engineering",
       "step #28",
     );
@@ -361,14 +361,14 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       url: "http://192.168.0.35/resource/group-XXX?first=martech",
     });
     assert.equal(
-      extractGroup(dom.querySelector("#thing1"), loc, dom),
+      extractGroup(dom.querySelector("#thing1"), loc),
       "martech",
       "step #29",
     );
 
     jsdom.reconfigure({ url: "http://192.168.0.35/resource/group-research" });
     assert.equal(
-      extractGroup(dom.querySelector("#thing1"), loc, dom),
+      extractGroup(dom.querySelector("#thing1"), loc),
       "research",
       "step #30",
     );
