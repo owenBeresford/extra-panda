@@ -152,7 +152,7 @@ export function mapAttribute(
     const STYL = ele.getBoundingClientRect();
     return STYL[attrib];
   } catch (e) {
-    log("error", "Missing data:" + e);
+    log("error", "Missing data:" + e.message);
     return -1;
   }
 }

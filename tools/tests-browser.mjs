@@ -48,8 +48,11 @@ if more are added see command-line-args
 */
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TESTS = [
-  "modal.webtest.mjs", // extend...
-  "cookie.webtest.mjs",
+//  "modal.webtest.mjs",
+//  "cookie.webtest.mjs",
+	"desktop-biblio.webtest.mjs",
+//	"dom-base.webtest.mjs",
+//	"networking.webtest.mjs"
 ];
 const PORT_DEBUG = 9222;
 const PORT_SERVER = 8081;
@@ -59,6 +62,7 @@ const BROWSER = [
   "/snap/bin/chromium",
   // This flag is being ignored
   "--user-data-dir=/tmp/js-test",
+  "--profile-create-if-missing",
   "--remote-debugging-port=" + PORT_DEBUG,
   // add no empty window
   // these two flags have been removed
@@ -69,6 +73,7 @@ const BROWSER = [
   "--disable-popup-blocking",
   "--disable-login-animations",
   "--disable-default-apps",
+  "--unsafely-disable-devtools-self-xss-warnings",
   // lots of excited press about this 3 y ago,
   // setting this stops the JS executing
   //	"--auto-open-devtools-for-tabs",
@@ -364,6 +369,7 @@ async function browser2json(page, weight) {
     if (json1.length < 5) {
       throw new Error("EMPTY Result block found");
     }
+console.log("this should be data from browser", json1);
     return json1;
   }
   throw new Error("Logic error, ask a dev");

@@ -1,4 +1,5 @@
 import { assert, describe, it, run } from "jest-lite";
+import jest from "jest-lite";
 
 import { page, execTest, wrap } from "./page-seed-playwright";
 // import { Cookieable } from "../all-types";
@@ -10,10 +11,10 @@ const { QOOKIE, storeAppearance, applyAppearance } = TEST_ONLY;
 describe("TEST cookies", () => {
   //  it("go 1: getCookie ", () => // There is no point in checking "is a class a class"
 
-  it("go 2: storeAppearance ", (context) => {
+  it("go 2: storeAppearance ", async (context) => {
     const TEST_NAME = "BROWSER TEST func[1] storeAppearance";
 
-    wrap(TEST_NAME, "https://127.0.0.1:8081/home.html", (dom, loc, win) => {
+    await wrap(TEST_NAME, "https://127.0.0.1:8081/home.html", (dom, loc, win) => {
       dom.cookies = "";
       storeAppearances("serif", "14", "ltr", "blue");
       expect(dom.cookies).isNot("");
@@ -21,10 +22,9 @@ describe("TEST cookies", () => {
     });
   });
 
-  it("go 3: applyAppearance ", (context) => {
+  it("go 3: applyAppearance ", async (context) => {
     const TEST_NAME = "BROWSER TEST func[1] applyAppearance";
-
-    wrap(TEST_NAME, "https://127.0.0.1:8081/home.html", (dom, loc, win) => {
+    await wrap(TEST_NAME, "https://127.0.0.1:8081/home.html", (dom, loc, win) => {
       let tmp = JSON.stringify({
         ft: "serif",
         fs: "14",

@@ -73,22 +73,23 @@ function page_fake(url = "", args = 1) {
  * @param {string} url
  * @param { (dom, loc, win)=>void } action
  * @public
- * @return {Array} - of many types of object
+ * @return {void}
  */
 export async function wrap(name, url, action) {
+  var dom, loc, win;
   try {
     const LOG_PADDING = "**********************************************";
-    const [dom, loc, win] = await page("https://127.0.0.1:8081/home.html", 3);
+    [dom, loc, win] = await page_local("https://127.0.0.1:8081/home.html", 3);
     win.console.log(
       LOG_PADDING + "\nthis is tab " + win.TEST_TAB_NAME + "\n" + LOG_PADDING,
     );
     dom.title = win.TEST_TAB_NAME;
     action(dom, loc, win);
 
+    domLog(win.TEST_TAB_NAME + " " + name + " [PASS]", false, false);
     if (SHOULD_CLOSE) {
       win.close();
     }
-    domLog(win.TEST_TAB_NAME + " " + name + " [PASS]", false, false);
   } catch (e) {
     domLog(win.TEST_TAB_NAME + " see console for error details", false, false);
     console.log(win.TEST_TAB_NAME + " ERROR TRAPT ", e.message, "\n", e.stack);
@@ -96,6 +97,7 @@ export async function wrap(name, url, action) {
       win.close();
     }
   }
+console.log("end of wrap", new Date());
 }
 
 /**
@@ -116,7 +118,9 @@ export async function execTest(run) {
     domLog("browser tabs should auto-close", false, false);
   }
 
+console.log("WERWER execTest", new Date());
   const ret = await run();
+console.log("WERWER end execTest", new Date());
   ret.push([{ name: "BROWSER TEST modal", last: true }]);
   appendIsland("#binLog", JSON.stringify(ret), document);
 }
