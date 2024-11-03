@@ -97,7 +97,7 @@ export async function wrap(name, url, action) {
       win.close();
     }
   }
-console.log("end of wrap", new Date());
+  console.log("end of wrap", new Date());
 }
 
 /**
@@ -118,9 +118,9 @@ export async function execTest(run) {
     domLog("browser tabs should auto-close", false, false);
   }
 
-console.log("WERWER execTest", new Date());
+  console.log("WERWER execTest", new Date());
   const ret = await run();
-console.log("WERWER end execTest", new Date());
+  console.log("WERWER end execTest", new Date());
   ret.push([{ name: "BROWSER TEST modal", last: true }]);
   appendIsland("#binLog", JSON.stringify(ret), document);
 }

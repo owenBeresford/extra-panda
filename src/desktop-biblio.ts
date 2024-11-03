@@ -138,7 +138,9 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
  * @returns {void}
  */
 export function applyDOMpositions(ele: HTMLElement, win: Window): void {
-	if(ele === null) { return; }
+  if (ele === null) {
+    return;
+  }
   const left = mapAttribute(ele, "left", win);
   const bot = mapAttribute(ele, "bottom", win);
   if (left === -1 && bot === -1) {
