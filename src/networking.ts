@@ -188,7 +188,7 @@ export function domLog(
     li.appendChild(document.createTextNode(" => " + str));
   }
   if (bold) {
-    li.style = "font-size:115%; ";
+    li.setAttribute('style', "font-size:115%; ");
   }
   LOG.append(li);
 }

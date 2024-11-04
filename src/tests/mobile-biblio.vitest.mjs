@@ -95,6 +95,8 @@ describe("TEST mobile-biblio", () => {
   });
 
   it("go 2: normaliseData ", () => {
+
+//    maxDescripLen: 230,
     let dat = [
       {
         date: +new Date("2000-03-01 09:00:00 Z"),
@@ -143,14 +145,14 @@ describe("TEST mobile-biblio", () => {
       },
       {
         auth: "racheal",
-        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jd",
         date: " 01-April-2000 ",
         offset: 1,
         title: "sdfsdfs 23423432",
         url: "http://192.168.0.35/resource/article2",
       },
       {
-        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jd",
         title: "sdfsdfs 23423432",
         auth: "[No author]",
         date: "[No date]",
@@ -160,7 +162,7 @@ describe("TEST mobile-biblio", () => {
       {
         auth: "[No author]",
         date: " 01-May-2000 ",
-        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jd",
         offset: 3,
         title: "sdfsdfs 23423432",
         url: "http://192.168.0.35/resource/article4",
@@ -226,7 +228,7 @@ describe("TEST mobile-biblio", () => {
       },
       {
         offset: 1,
-        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jd",
         title: "sdfsdfs 23423432",
         date: " 01-April-2000 ",
         auth: "racheal",
@@ -234,7 +236,7 @@ describe("TEST mobile-biblio", () => {
       },
       {
         offset: 2,
-        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jd",
         title: "sdfsdfs 23423432",
         date: "[No date]",
         auth: "[No author]",
@@ -243,7 +245,7 @@ describe("TEST mobile-biblio", () => {
       {
         auth: "[No author]",
         date: " 01-May-2000 ",
-        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
+        desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jd",
         offset: 3,
         title: "sdfsdfs 23423432",
         url: "http://192.168.0.35/resource/article4",

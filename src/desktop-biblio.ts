@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { Document, Location, HTMLAnchorElement, HTMLElement } from "jsdom";
+// import { Document, Location, HTMLAnchorElement, HTMLElement } from "jsdom";
 
 import { DesktopBiblioProps, DesktopBiblioPropsDefinite, SimpleResponse, ReferenceType } from "./all-types";
 import { appendIsland, mapAttribute } from "./dom-base";
@@ -42,8 +42,9 @@ let OPTS: DesktopBiblioPropsDefinite =  {
  */
 function markAllLinksUnknown(dom: Document, loc: Location): void {
   const naam: string = articleName(loc);
-  const WASSUP: Array<HTMLAnchorElement> =
-    dom.querySelectorAll(ALL_REFERENCE_LINKS);
+  const WASSUP: Array<HTMLAnchorElement> = Array.from(
+    dom.querySelectorAll(ALL_REFERENCE_LINKS)) as Array<HTMLAnchorElement>;
+
   for (let i = 0; i < WASSUP.length; i++) {
     const txt: string = `Reference popup for link [${1 + i}]\nERROR: No valid biblio file found.\nsite admin, today\nHTTP_ERROR, no valid file called ${naam}-references.json found.\n`;
     WASSUP[i].setAttribute("aria-label", "" + txt);
@@ -155,11 +156,11 @@ export function applyDOMpositions(ele: HTMLElement, win: Window): void {
     return;
   }
 
-  let tt = ele.parentNode;
+  let tt:HTMLElement = ele.parentNode as HTMLElement;
   const subItem: Array<string> = ["LI", "SUP", "UL", "OL", "SPAN", "P"];
   // list doesn't include HTML, BODY, DETAILS or DIV
   while (subItem.includes(tt.tagName)) {
-    tt = tt.parentNode;
+    tt = tt.parentNode as HTMLElement;
   }
   const WIDTH =
     Math.round(mapAttribute(tt, "width", win) as number) - 30 * EM_SZ;

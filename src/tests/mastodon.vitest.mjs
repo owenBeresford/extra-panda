@@ -7,7 +7,7 @@ import { enableGetEventListeners, createEvent } from "./vitest-addons";
 
 const {
   shareMastodon,
-  _map1,
+  _map4,
   closeMastodon,
   openMastodon,
   initMastodon,
@@ -174,8 +174,8 @@ describe("TEST mastodon", () => {
     assert.equal(accessVisibility(buf, "display", win), "block", "assert #17");
   });
 
-  it("go 7: _map1", (context) => {
-    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
+  it("go 7: _map4", (context) => {
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup" >
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
@@ -186,12 +186,12 @@ describe("TEST mastodon", () => {
     let buf = dom.querySelector("#popup");
     // using lamda func to ensure each one is separate
     assert.equal(
-      _map1(
+      _map4(
         buf,
         (e, f) => {
           console.log("THING HAPPENED to " + e.target.id, f);
         },
-        undefined,
+  		dom, loc, win
       ),
       undefined,
       "assert #18",

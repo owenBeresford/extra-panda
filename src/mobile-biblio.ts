@@ -7,7 +7,7 @@ import {
   runFetch,
   ALL_REFERENCE,
 } from "./networking";
-import { Document, Location } from "jsdom";
+// import { Document, Location } from "jsdom";
 import {
   ReferenceType,
   NormalisedReference,
@@ -142,7 +142,7 @@ function adjustDom(dat: Array<ReferenceType>, dom: Document): void {
     return;
   }
 
-  const LIST = dom.querySelectorAll(OPTS.losingElement + " sup a");
+  const LIST:Array<HTMLAnchorElement> = Array.from(dom.querySelectorAll(OPTS.losingElement + " sup a"));
   for (let i = 0; i < LIST.length; i++) {
     LIST[i].textContent = "" + (i + 1);
     if (OPTS.forceToEnd) {
@@ -180,7 +180,7 @@ export async function createBiblio(
   if (tmp) {
     tmp.setAttribute("style", "");
   }
-  dom.querySelector(OPTS.gainingElement + " *").replaceChildren([]);
+  dom.querySelector(OPTS.gainingElement + " *").replaceChildren();
   appendIsland(
     OPTS.gainingElement,
     `<h2 class="biblioSection">References (for mobile UI)</h2> 

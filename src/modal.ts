@@ -11,7 +11,7 @@ import { log } from "./networking";
  * @protected
  * @returns {boolean} - keypress event, so return false
  */
-function HTMLDetailsTrap(e: MiscEvent, dom: Document): boolean {
+function HTMLDetailsTrap(e: KeyboardEvent, dom: Document): boolean {
   if (e.code === "Escape" || e.key === "Escape") {
     const tt:Array<HTMLDetailsElement> = Array.from(dom.querySelectorAll("details[open]"));
     if (tt.length) {
@@ -70,7 +70,8 @@ function find(ele: HTMLElement, target: string): undefined | HTMLElement {
  * @returns {boolean} - mouse event, so return false
  */
 function HTMLDetailsClick(e: MiscEvent, dom: Document): boolean {
-  const act = find(e.target, "DETAILS");
+	const ele:HTMLElement=e.target as HTMLElement;
+  const act:HTMLElement = find(ele, "DETAILS");
   if (act && act.tagName === "A") {
     // no preventDefault activity as its an A
     return true;
@@ -83,7 +84,7 @@ function HTMLDetailsClick(e: MiscEvent, dom: Document): boolean {
     e.stopPropagation();
     if (act2 && act2.open) {
       if (
-        e.target.tagName !== "SUMMARY" &&
+        ele.tagName !== "SUMMARY" &&
         // looking for CODE blocks, as users will need to select code to copy it
         // ...until a copy widget is added...
         act2.querySelector("code") !== null
@@ -132,7 +133,7 @@ export function modalInit(dom: Document): void {
       return HTMLDetailsClick(e, dom);
     });
 
-    dom.body.addEventListener("keydown", function (e: MiscEvent) {
+    dom.body.addEventListener("keydown", function (e: KeyboardEvent) {
       return HTMLDetailsTrap(e, dom);
     });
   }

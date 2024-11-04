@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { Document, HTMLAnchorElement, HTMLElement } from "jsdom";
+// import { Document, HTMLAnchorElement, HTMLElement } from "jsdom";
 // import { log, debug } from "./networking";
 import { appendIsland } from "./dom-base";
 import { pullout } from "./string-base";
@@ -122,7 +122,7 @@ export function addBooks(refs: boolean, dom: Document, win: Window): void {
 export function addBashSamples(dom: Document): void {
   const r1 = new RegExp("`([^`]+)`", "g");
   const r2 = new RegExp("/ /", "g");
-  const bash: Array<HTMLElement> = dom.querySelectorAll(".addBashSamples");
+  const bash: Array<HTMLElement> = Array.from(dom.querySelectorAll(".addBashSamples")) as Array<HTMLElement>;
 
   if (bash.length > 0) {
     for (let i = 0; i < bash.length; i++) {
@@ -145,7 +145,7 @@ export function addBashSamples(dom: Document): void {
  * @returns {void}
  */
 export function addFancyButtonArrow(dom: Document): void {
-  const aa: Array<HTMLElement> = dom.querySelectorAll(".addArrow");
+  const aa: Array<HTMLElement> = Array.from(dom.querySelectorAll(".addArrow")) as  Array<HTMLElement>;
   for (let i = 0; i < aa.length; i++) {
     appendIsland(
       aa[i].parentElement,

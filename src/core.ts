@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { Location, Document, HTMLElement } from "jsdom";
+// import { Location, Document, HTMLElement } from "jsdom";
 
 import { CoreProps, MiscEvent, MultiFuncArg } from "./all-types";
 import { log, debug, runFetch } from "./networking";
@@ -141,7 +141,7 @@ function tabChange(id: string | MiscEvent, dom: Document): void {
     target = id;
     thing = dom.querySelector(id) as HTMLElement;
   } else {
-    const tmp: HTMLElement = id.target;
+    const tmp: HTMLElement = id.target as HTMLElement;
     thing = dom.querySelector("#" + tmp.id) as HTMLElement;
     target = "" + thing.getAttribute("href");
   }
@@ -150,26 +150,27 @@ function tabChange(id: string | MiscEvent, dom: Document): void {
     return;
   }
 
-  let iter1 = dom.querySelectorAll(".tab-title");
+  const iter1:Array<HTMLLIElement> = Array.from(dom.querySelectorAll(".tab-title"));
   for (let i = 0; i < iter1.length; i++) {
     iter1[i].classList.remove("is-active");
   }
 
-  iter1 = dom.querySelectorAll(".tab-title>a");
-  for (let i = 0; i < iter1.length; i++) {
-    iter1[i].setAttribute("aria-hidden", "true");
-  }
-
-  const iter2 = dom.querySelectorAll(".tabs-content .tabs-panel");
+  const iter2:Array<HTMLAnchorElement> = Array.from(dom.querySelectorAll(".tab-title>a"));
   for (let i = 0; i < iter2.length; i++) {
-    iter2[i].classList.remove("is-active");
     iter2[i].setAttribute("aria-hidden", "true");
   }
 
-  const [alive] = dom.querySelectorAll(".tabs-content " + target);
+  const iter3:Array<HTMLLIElement> = Array.from(dom.querySelectorAll(".tabs-content .tabs-panel"));
+  for (let i = 0; i < iter3.length; i++) {
+    iter3[i].classList.remove("is-active");
+    iter3[i].setAttribute("aria-hidden", "true");
+  }
+
+  const [alive]:Array<HTMLElement> = Array.from(dom.querySelectorAll(".tabs-content " + target));
   alive.classList.add("is-active");
   alive.setAttribute("aria-hidden", "false");
-  thing.parentNode.classList.add("is-active");
+	const thing2:HTMLElement =thing.parentNode as HTMLElement;
+  thing2.classList.add("is-active");
   thing.setAttribute("aria-hidden", "false");
 }
 
@@ -205,14 +206,14 @@ export async function siteCore(
   }
   OPTS.pageInitRun = 1;
 
-  const tt: Array<HTMLElement> = dom.querySelectorAll(".noJS");
+  const tt: Array<HTMLElement> = Array.from(dom.querySelectorAll(".noJS")) as Array<HTMLElement>;
   for (let i = 0; i < tt.length; i++) {
     tt[i].classList.remove("noJS");
   }
 
   const tmp: HTMLElement = dom.querySelector("#pageMenu");
   if (tmp) {
-    _map(tmp, (e: Event): void => {
+    _map(tmp, (e: Event|string): void => {
       return burgerMenu(".burgerMenu", dom);
     });
   } else {
@@ -251,7 +252,7 @@ export async function siteCore(
   {
     const tabs = dom.querySelectorAll(".tabComponent");
     for (let i = 0; i < tabs.length; i++) {
-      const btns = tabs[i].querySelectorAll(".tab-title a");
+      const btns:Array<HTMLElement> = Array.from(tabs[i].querySelectorAll(".tab-title a")) as Array<HTMLElement>;
       for (let j = 0; j < btns.length; j++) {
         _map(btns[j], tabChange);
       }
@@ -283,7 +284,6 @@ export async function siteCore(
         },
         dom,
         loc,
-		win,
       );
     } else {
       await desktopCreateBiblio(

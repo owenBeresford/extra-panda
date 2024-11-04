@@ -207,12 +207,13 @@ function docOffsets(ele: HTMLElement, offsets: Scrollable): ScreenOffsetArray {
 /**
  * copyURL
  * Copy the current URL into the paste buffer, for use in mobile view
+ * @param {Document =document} ignored
  * @param {Location =location} loc
  * @param {Window =window} win
  * @public
  * @returns {void}
  */
-export function copyURL(loc: Location, win: Window): void {
+export function copyURL(ignored:Document, loc: Location, win: Window): void {
   try {
     if (!win.navigator.clipboard) {
       throw new Error("No clipboard available");

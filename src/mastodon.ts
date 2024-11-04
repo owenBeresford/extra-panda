@@ -1,10 +1,11 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { Document, Location, Window, Event, HTMLElement } from "jsdom";
+// import { Document, Location, Window, Event, HTMLElement } from "jsdom";
 
 import {
   MiscEventHandler2,
   MiscEventHandler3,
   MiscEventHandler4,
+  MiscEventHandler5,
 } from "./all-types";
 import { isFullstack, isMobile, copyURL } from "./dom-base";
 import { isLocal } from "./string-base";
@@ -52,7 +53,7 @@ function shareMastodon(
   loc: Location,
   win: Window,
 ): boolean {
-  const tmp = dom.querySelector("#mastodonserver");
+  const tmp:HTMLInputElement = dom.querySelector("#mastodonserver");
   let server = tmp.value;
   const url = tmp.getAttribute("data-url");
   if (server === "" || server === null) {
@@ -81,14 +82,14 @@ function shareMastodon(
 /**
  * accessVisibility
  * A Utility to isolate access to styles
- * @param {HTMLElement} buf
+ * @param {Element} buf
  * @param {string ='display'} what
  * @param {Window =window} win
  * @public
  * @returns {void}
  */
 function accessVisibility(
-  buf: HTMLElement,
+  buf: Element,
   what: string = "display",
   win: Window = window,
 ): string {
@@ -129,14 +130,18 @@ export function initMastodon(dom: Document, loc: Location, win: Window): void {
   }
   BUFFER = dom.querySelector("#copyURL");
   if (BUFFER) {
-    _map1(BUFFER, copyURL, loc);
+    _map4(BUFFER, copyURL, dom, loc, win);
   }
-  _map3(dom.querySelector("#popup #sendMasto"), shareMastodon, dom, loc, win);
-  const BUFFER2 = Array.from(
-    dom.querySelectorAll("#shareMenuTrigger, #shareClose"),
-  ); // the second ID will be nought in desktop view
+  _map5(dom.querySelector("#popup #sendMasto"), shareMastodon, dom, loc, win);
+  const BUFFER2:Array<HTMLElement> = Array.from(
+    dom.querySelectorAll("#shareMenuTrigger, #shareClose")
+  ) as Array<HTMLElement>; 
+	// the second ID will be nought in desktop view
   for (const i in BUFFER2) {
-    _map3(BUFFER2[i], openShare, dom, loc, win);
+// MiscEventHandler3 = ( a: Event, dom: Document, loc: Location | Window, ) => void;
+// function openShare( e: Event, dom: Document, loc: Location, win: Window, 
+
+    _map5(BUFFER2[i], openShare, dom, loc, win);
   }
   _map2(dom.querySelector("#hideMasto"), closeMastodon, dom, win);
 }
@@ -156,7 +161,7 @@ function openMastodon(e: Event, dom: Document, win: Window): boolean {
     // in JSDOM can't use extra functions, as the fake isn't deep enough
     (dom.querySelector("#popup") as HTMLDialogElement).showModal();
   }
-  dom.querySelector("#popup input").focus();
+  (dom.querySelector("#popup input") as HTMLInputElement).focus();
   return false;
 }
 
@@ -172,7 +177,7 @@ function openMastodon(e: Event, dom: Document, win: Window): boolean {
 function closeMastodon(e: Event, dom: Document, win: Window): boolean {
   if (isFullstack(win)) {
     // in JSDOM can't use extra functions, as the fake isn't deep enough
-    dom.querySelector("#popup").close();
+   (dom.querySelector("#popup") as HTMLDialogElement).close();
   }
   return false;
 }
@@ -186,6 +191,7 @@ function closeMastodon(e: Event, dom: Document, win: Window): boolean {
  * @public
  * @returns {void}
  */
+/*
 function _map1(
   where: HTMLElement,
   action: MiscEventHandler2,
@@ -204,6 +210,7 @@ function _map1(
     return false;
   });
 }
+*/
 
 /**
  * _map2
@@ -246,9 +253,10 @@ function _map2(
  * @public
  * @returns {void}
  */
+/*
 function _map3(
   where: HTMLElement,
-  action: MiscEventHandler4,
+  action: MiscEventHandler5,
   dom: Document,
   loc: Location | null,
   win: Window,
@@ -266,6 +274,75 @@ function _map3(
     return false;
   });
 }
+*/
+
+/**
+ * _map4
+ * Add several event listeners, just a utility
+ * @param {HTMLElement} where
+ * @param {MiscEventHandler4 } action
+ * @param {Document =document} dom
+ * @param {Location =location} loc
+ * @param {Window =window} win
+
+ * @public
+ * @returns {void}
+ */
+// export type MiscEventHandler4 = (  a: Event, dom: Document, loc: Location, win: Window,) => void;
+function _map4(
+  where: HTMLElement,
+  action: MiscEventHandler4,
+  dom: Document,
+  loc: Location,
+  win: Window,
+): void {
+  where.addEventListener("click", (a: Event): boolean => {
+    action( dom, loc, win);
+    return false;
+  });
+  where.addEventListener("touch", (a: Event): boolean => {
+    action( dom, loc, win);
+    return false;
+  });
+  where.addEventListener("keypress", (a: Event): boolean => {
+    action( dom, loc, win);
+    return false;
+  });
+}
+
+/**
+ * _map5
+ * Add several event listeners, just a utility
+ * @param {HTMLElement} where
+ * @param {MiscEventHandler5 } action
+ * @param {Document =document} dom
+ * @param {Location|null =location} loc
+ * @param {Window =window} win
+ * @public
+ * @returns {void}
+ */
+function _map5(
+  where: HTMLElement,
+  action: MiscEventHandler5,
+  dom: Document,
+  loc: Location,
+  win: Window,
+): void {
+  where.addEventListener("click", (a: Event): boolean => {
+    action(a, dom, loc, win);
+    return false;
+  });
+  where.addEventListener("touch", (a: Event): boolean => {
+    action(a, dom, loc, win);
+    return false;
+  });
+  where.addEventListener("keypress", (a: Event): boolean => {
+    action(a, dom, loc, win);
+    return false;
+  });
+}
+
+
 
 ///////////////////////////////////////////// TESTING ///////////////////////////////////////////////////////
 // no injectOpts at present
@@ -275,9 +352,11 @@ function _map3(
  */
 export const TEST_ONLY = {
   shareMastodon,
-  _map1,
+//  _map1,
   _map2,
-  _map3,
+//  _map3,
+  _map4,
+  _map5,
   closeMastodon,
   openMastodon,
   initMastodon,

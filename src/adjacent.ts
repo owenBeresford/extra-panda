@@ -1,7 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { dateMunge, articleName } from "./string-base";
 import { log, debug, runFetch } from "./networking";
-import { Document, Location } from "jsdom";
+//import { Document, Location } from "jsdom";
 import {
   SimpleResponse,
   ReferenceType,
@@ -23,7 +23,6 @@ let OPTS: AdjacentPropsDefinite = {
       count: 1,
       debug: true ,
       runFetch: runFetch,
-
 } as AdjacentPropsDefinite;
 
 /**
@@ -39,20 +38,20 @@ let OPTS: AdjacentPropsDefinite = {
 function mapURL(article: string, suffix: string, loc: Location): string {
   //  let t = loc.protocol + "//" + loc.host,
   let t2 = loc.pathname.split("/"),
-    t = "";
-  t2 = t2.pop();
+    t = "",
+	  t3 = t2.pop();
   const tmp = new URLSearchParams(loc.search);
-  if (t2 === "group-XXX" && tmp.has("first")) {
-    t2 = tmp.get("first");
+  if (t3 === "group-XXX" && tmp.has("first")) {
+    t3 = tmp.get("first");
   }
   if (suffix) {
     if (tmp.has("first")) {
-      t += loc.pathname.replace("group-XXX", t2 + "-meta");
+      t += loc.pathname.replace("group-XXX", t3 + "-meta");
     } else {
-      t += loc.pathname.replace(t2, article + "-meta");
+      t += loc.pathname.replace(t3, article + "-meta");
     }
   } else {
-    t += loc.pathname.replace(t2, article);
+    t += loc.pathname.replace(t3, article);
   }
   t += loc.search + loc.hash;
   return t;
@@ -244,20 +243,20 @@ export function listContentGroup(
   if (!grp) {
     return [] as Array<string>;
   }
-  grp = grp.getAttribute("data-group");
-  if (!grp) {
+  let grpDat = grp.getAttribute("data-group");
+  if (!grpDat) {
     return [] as Array<string>;
   }
 
-  grp = grp.split(",");
-  grp = grp.map((a: string, b: number): string => {
+  let grpDat2 = grpDat.split(",");
+  grpDat2 = grpDat2.map((a: string, b: number): string => {
     return a.trim();
   });
-  if (grp[0] === "XXX") {
-    grp.shift();
+  if (grpDat2[0] === "XXX") {
+    grpDat2.shift();
     // in this case, the function will return []
   }
-  return [...grp];
+  return [...grpDat2];
 }
 
 /**
@@ -375,9 +374,9 @@ function convert2IndexHTML(
  * @returns {void}
  */
 function updateLabels(gname: string, dom: Document): void {
-  const dat: Array<HTMLElement> = dom.querySelectorAll(
+  const dat: Array<HTMLElement> = Array.from(dom.querySelectorAll(
     ".top-bar.fullWidth header h1",
-  ) as Array<HTMLElement>;
+  )) as Array<HTMLElement>;
 
   if (
     dat.length &&
@@ -386,9 +385,9 @@ function updateLabels(gname: string, dom: Document): void {
   ) {
     dat[0].textContent = "Group " + gname;
   }
-  const dit: Array<HTMLElement> = dom.querySelectorAll(
+  const dit: Array<HTMLElement> = Array.from(dom.querySelectorAll(
     ".adjacentGroup p",
-  ) as Array<HTMLElement>;
+  )) as Array<HTMLElement>;
   if (dit.length && dit[0].textContent.includes("XXX")) {
     dit[0].textContent = "Some similar articles in " + gname;
   }
@@ -468,7 +467,7 @@ export async function createAdjacentChart(
 
   if (isMobile(dom, loc, win) && !isGroupArticle) {
     if (dom.querySelectorAll(".adjacentGroup .adjacentItem").length === 1) {
-      dom.querySelector(".adjacentGroup p").style["display"] = "none";
+      (dom.querySelector(".adjacentGroup p") as HTMLElement).style["display"] = "none";
     }
     appendIsland(
       "#" + GROUP,

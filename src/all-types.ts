@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { MouseEvent, WheelEvent, TouchEvent, KeyboardEvent } from "jsdom";
+// import { MouseEvent, WheelEvent, TouchEvent, KeyboardEvent } from "jsdom";
 // these are mostly the same, but I thought knowing the different sources may be useful.
 
 export interface ReferenceType {
@@ -26,12 +26,20 @@ export type MiscEventHandler3 = (
   dom: Document,
   loc: Location | Window,
 ) => void;
+
 export type MiscEventHandler4 = (
+  dom: Document,
+  loc: Location,
+  win: Window,
+) => void;
+
+export type MiscEventHandler5 = (
   a: Event,
   dom: Document,
   loc: Location,
   win: Window,
 ) => void;
+
 
 export type BOUNDARY = "top" | "bottom" | "left" | "right" | "height" | "width";
 export type ScreenSizeArray = [number, number];
@@ -72,6 +80,7 @@ export type Fetchable = Fetch | null;
 export type FetchedExec = (
   url: string,
   trap: boolean,
+	loc:Location
 ) => Promise<SimpleResponse>;
 
 export interface SimpleResponse {
