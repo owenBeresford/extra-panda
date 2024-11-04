@@ -6,12 +6,25 @@ import {
   SimpleResponse,
   ReferenceType,
   NormalisedReference,
-  AdjacentProps,
+  AdjacentPropsDefinite, 
+	AdjacentProps,
 } from "./all-types";
 import { isMobile, appendIsland } from "./dom-base";
 
 // variables across this module
-let OPTS: AdjacentProps = {} as AdjacentProps;
+let OPTS: AdjacentPropsDefinite = {
+      name: "",
+      meta: "",
+      perRow: 10,
+      titleLimit: 40,
+      rendered: false,
+      iteration: 0,
+      group: "system",
+      count: 1,
+      debug: true ,
+      runFetch: runFetch,
+
+} as AdjacentPropsDefinite;
 
 /**
  * mapURL
@@ -136,7 +149,7 @@ function normaliseToList(
   //    retries = 0;
   [me, remainder, i] = nextStep(
     extractOABName(data[0].url),
-    OPTS.name,
+    OPTS.name ,
     data.length,
     i,
     me,
@@ -154,7 +167,7 @@ function normaliseToList(
         desc: data[i].desc,
       } as NormalisedReference;
 
-      if (title.length > OPTS.titleLimit) {
+      if (title.length > OPTS.titleLimit ) {
         list[j].title += "...";
       }
       const tt = data[i].desc;
@@ -418,7 +431,7 @@ export function extractGroup(ele: HTMLElement | null, loc: Location): string {
 }
 
 /**
- * createAdjacentChart::
+ * createAdjacentChart
  * Create an adjacent chart at the bottom of the current article.
  *     IMPURE
  * @param {AdjacentParams} opts
@@ -439,17 +452,11 @@ export async function createAdjacentChart(
     {
       name: articleName(loc),
       meta: mapURL(OPTS.group, ".json", loc),
-      perRow: 10,
-      titleLimit: 40,
-      rendered: false,
-      iteration: 0,
-      group: "system",
-      count: 1,
-      debug: debug(loc),
+       debug: debug(loc),
       runFetch: runFetch,
     },
     opts,
-  ) as AdjacentProps;
+  ) as AdjacentPropsDefinite;
   if (OPTS.group === "system") {
     throw new Error("Must set the article group, and not to 'system'.");
   }

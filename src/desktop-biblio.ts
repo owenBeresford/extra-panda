@@ -1,7 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { Document, Location, HTMLAnchorElement, HTMLElement } from "jsdom";
 
-import { DesktopBiblioProps, SimpleResponse, ReferenceType } from "./all-types";
+import { DesktopBiblioProps, DesktopBiblioPropsDefinite, SimpleResponse, ReferenceType } from "./all-types";
 import { appendIsland, mapAttribute } from "./dom-base";
 import {
   dateMunge,
@@ -21,7 +21,15 @@ import {
 
 // variables across this module
 // * @protected
-let OPTS: DesktopBiblioProps = {} as DesktopBiblioProps;
+let OPTS: DesktopBiblioPropsDefinite =  {
+      indexUpdated: 0,
+      gainingElement: "#biblio",
+      referencesCache: "/resource/XXX-references",
+      renumber: 1, // set to 0 to disable
+      maxAuthLen: 65,
+      debug: true,
+      runFetch: runFetch,
+    } as DesktopBiblioPropsDefinite;
 
 /**
  * markAllLinksUnknown
@@ -178,7 +186,7 @@ export function applyDOMpositions(ele: HTMLElement, win: Window): void {
  */
 function mapPositions(data: Array<string>, dom: Document, win: Window): void {
   let j = 1;
-  const REFS = Array.from(dom.querySelectorAll(ALL_REFERENCE_LINKS));
+  const REFS:Array<HTMLAnchorElement> = Array.from(dom.querySelectorAll(ALL_REFERENCE_LINKS));
   if (data.length > REFS.length) {
     dom.querySelector(ALL_REFERENCE).classList.add(SHOW_ERROR);
     dom.querySelector("p[role=status]").textContent += " Recompile meta data. ";
@@ -267,17 +275,12 @@ export async function createBiblio(
   win: Window,
 ) {
   OPTS = Object.assign(
-    {
-      indexUpdated: 0,
-      gainingElement: "#biblio",
-      referencesCache: "/resource/XXX-references",
-      renumber: 1, // set to 0 to disable
-      maxAuthLen: 65,
-      debug: debug(loc),
-      runFetch: runFetch,
-    },
+    OPTS,
+    { 
+		debug:debug(loc),
+	},
     opts,
-  );
+  ) as DesktopBiblioPropsDefinite;
   if (dom.querySelectorAll(ALL_REFERENCE).length === 0) {
     log(
       "info",
@@ -291,7 +294,7 @@ export async function createBiblio(
   const data: SimpleResponse = await OPTS.runFetch(
     makeRefUrl(OPTS.referencesCache, loc),
     false,
-    loc,
+    loc
   );
   if (!data.ok || !Array.isArray(data.body)) {
     markAllLinksUnknown(dom, loc);
@@ -305,7 +308,7 @@ export async function createBiblio(
     );
   } else {
     const REFS = dom.querySelectorAll(ALL_REFERENCE_LINKS);
-    if (REFS.length < data.length) {
+    if (REFS.length < data.body.length) {
       // situation only likely to occur in test data
       throw new Error("Recompile the meta data for  " + loc.pathname);
       return;

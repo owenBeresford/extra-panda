@@ -13,7 +13,7 @@ import { log } from "./networking";
  */
 function HTMLDetailsTrap(e: MiscEvent, dom: Document): boolean {
   if (e.code === "Escape" || e.key === "Escape") {
-    const tt = dom.querySelectorAll("details[open]");
+    const tt:Array<HTMLDetailsElement> = Array.from(dom.querySelectorAll("details[open]"));
     if (tt.length) {
       for (let i = 0; i < tt.length; i++) {
         tt[i].open = false;
@@ -96,7 +96,7 @@ function HTMLDetailsClick(e: MiscEvent, dom: Document): boolean {
       act2.open = true;
     }
   } else {
-    const tt = dom.querySelector("details[open]");
+    const tt:HTMLDetailsElement = dom.querySelector("details[open]") as HTMLDetailsElement;
     if (tt) {
       e.preventDefault();
       e.stopPropagation();

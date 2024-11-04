@@ -62,7 +62,7 @@ export function appendIsland(
  */
 export function ready(callback: GenericEventHandler, dom: Document): void {
   if (dom.readyState !== "loading") {
-    const e = dom.createEvent();
+    const e = dom.createEvent("htmlevents");
     callback(e);
   } else if (dom.addEventListener) {
     dom.addEventListener("DOMContentLoaded", callback);
@@ -174,7 +174,7 @@ export function getArticleWidth(
   dom: Document,
   win: Window,
 ): number {
-  const tmp = dom.querySelector(id);
+  const tmp:HTMLElement = dom.querySelector(id) as HTMLElement;
   if (!tmp) {
     return -1;
   }
@@ -217,7 +217,7 @@ export function copyURL(loc: Location, win: Window): void {
     if (!win.navigator.clipboard) {
       throw new Error("No clipboard available");
     }
-    win.navigator.clipboard.writeText(loc.url).then(
+    win.navigator.clipboard.writeText(loc.href).then(
       () => {
         // add class for CSS effect
         return;
@@ -247,9 +247,9 @@ export function copyURL(loc: Location, win: Window): void {
  */
 export function applyVolume(dom: Document, win: Window): void {
   dom.querySelector("body").setAttribute("style", "--offset-height: 0;");
-  const tt: Array<HTMLElement> = dom.querySelectorAll(
+  const tt: Array<HTMLElement> = Array.from(dom.querySelectorAll(
     ".lotsOfWords, .halferWords, .fewWords",
-  );
+  ));
   for (let i = 0; i < tt.length; i++) {
     tt[i].setAttribute(
       "style",
@@ -283,8 +283,8 @@ export function expandDetails(
 
   if (screenWidth(loc, win) > bigScreen) {
     const THING = Array.from(
-      dom.querySelectorAll(".maquetteContainer details"),
-    );
+      dom.querySelectorAll(".maquetteContainer details") 
+    ) as Array<HTMLDetailsElement>;
     for (let i = 0; i < THING.length; i++) {
       // this IF trap is to avoid the test results widget being locked open, and blocking the screen
       if (

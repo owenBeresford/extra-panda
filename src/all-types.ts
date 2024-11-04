@@ -97,6 +97,19 @@ export interface DesktopBiblioProps {
   debug: boolean;
 }
 
+export interface DesktopBiblioPropsDefinite {
+  indexUpdated: number;
+  referencesCache: string;
+  gainingElement: string;
+
+  maxAuthLen: number;
+  renumber: number;
+
+  runFetch: FetchedExec;
+  debug: boolean;
+}
+
+
 export interface MobileBiblioProps {
   referencesCache?: string;
   gainingElement?: string;
@@ -106,6 +119,20 @@ export interface MobileBiblioProps {
   forceToEnd?: number;
   maxAuthLen?: number;
   maxDescripLen?: number;
+
+  runFetch: FetchedExec;
+  debug: boolean;
+}
+
+export interface MobileBiblioPropsDefinite {
+  referencesCache: string;
+  gainingElement: string;
+  losingElement: string;
+
+  renumber: number;
+  forceToEnd: number;
+  maxAuthLen: number;
+  maxDescripLen: number;
 
   runFetch: FetchedExec;
   debug: boolean;
@@ -123,6 +150,20 @@ export interface AdjacentProps {
   debug: boolean;
   runFetch: FetchedExec;
 }
+
+export interface AdjacentPropsDefinite {
+  name: string;
+  meta: string;
+  perRow: number;
+  titleLimit: number;
+  rendered: boolean;
+  iteration: number;
+  group: string;
+  count: number;
+  debug: boolean;
+  runFetch: FetchedExec;
+}
+
 
 export type BiblioProps = DesktopBiblioProps & MobileBiblioProps;
 

@@ -12,12 +12,25 @@ import {
   ReferenceType,
   NormalisedReference,
   MobileBiblioProps,
+  MobileBiblioPropsDefinite,
 } from "./all-types";
 import { appendIsland } from "./dom-base";
 
 // variables across this module
 // * @protected
-let OPTS: MobileBiblioProps = {} as MobileBiblioProps;
+let OPTS: MobileBiblioPropsDefinite = {
+    referencesCache: "/resource/XXX-references",
+    gainingElement: "#biblio",
+    losingElement: ".addReferences",
+
+    renumber: 1, // set to 0 to disable
+    forceToEnd: 1,
+    maxDescripLen: 230,
+    maxAuthLen: 65,
+    debug: true,
+    runFetch: runFetch,
+
+ } as MobileBiblioPropsDefinite;
 
 /**
  * empty
@@ -153,19 +166,8 @@ export async function createBiblio(
   dom: Document,
   loc: Location,
 ): Promise<void> {
-  const OPTS2: MobileBiblioProps = {
-    referencesCache: "/resource/XXX-references",
-    gainingElement: "#biblio",
-    losingElement: ".addReferences",
 
-    renumber: 1, // set to 0 to disable
-    forceToEnd: 1,
-    maxDescripLen: 230,
-    maxAuthLen: 65,
-    debug: debug(loc),
-    runFetch: runFetch,
-  };
-  OPTS = Object.assign(OPTS2, opts);
+  OPTS = Object.assign(OPTS, { debug:debug(loc), }, opts);
   if (dom.querySelectorAll(ALL_REFERENCE).length === 0) {
     log(
       "info",

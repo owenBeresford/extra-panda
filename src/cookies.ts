@@ -41,13 +41,13 @@ export class QOOKIE implements Cookieable {
  
    * @param {string} cName
    * @public
-   * @returns {void}
+   * @returns {string}
    */
   get(cName: string): string {
     const name = cName + "=";
     const cDecoded = decodeURIComponent(document.cookie);
     const cArr = cDecoded.split("; ");
-    let res;
+    let res="";
 
     cArr.forEach((val) => {
       if (val.indexOf(name) === 0) {

@@ -270,6 +270,7 @@ export async function siteCore(
         },
         dom,
         loc,
+		win,
       );
     }
   } else {
@@ -282,6 +283,7 @@ export async function siteCore(
         },
         dom,
         loc,
+		win,
       );
     } else {
       await desktopCreateBiblio(
@@ -292,6 +294,7 @@ export async function siteCore(
         },
         dom,
         loc,
+		win,
       );
     }
 
@@ -314,6 +317,7 @@ export async function siteCore(
           },
           dom,
           loc,
+			win,
         );
       }
     }

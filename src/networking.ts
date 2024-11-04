@@ -90,7 +90,7 @@ export function getFetch(): Fetchable {
  * @returns {Promise<SimpleResponse>}
  */
 export async function runFetch(
-  url: string | URL,
+  url: string ,
   trap: boolean,
   loc: Location,
 ): Promise<SimpleResponse> {
@@ -159,6 +159,7 @@ export async function delay(ms: number): Promise<void> {
 /**
  * domLog
  * Add a message to the current webpage in #log  IMPURE
+ * NOTE THIS FUNCTION CONTAINS document REFERENCES 
  *
  * @param {string} str - your message
  * @param {boolean =false} bold
@@ -171,7 +172,7 @@ export function domLog(
   bold: boolean = false,
   html: boolean = false,
 ): void {
-  const LOG: HTMLUListElement = document.getElementById("log");
+  const LOG: HTMLUListElement = document.getElementById("log") as HTMLUListElement ;
   const li: HTMLElement = document.createElement("li");
   const dd = new Date();
   const tt = document.createElement("time");
@@ -219,7 +220,7 @@ export function accessCookie(): Cookieable {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       set(cName: string, cValue: string, expDays: number): void {},
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      get(cName: string): string {},
+      get(cName: string): string { return ""; },
     } as Cookieable;
   }
 }
