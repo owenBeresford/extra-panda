@@ -2,7 +2,6 @@
 // import { Document, Location, Window, Event, HTMLElement } from "jsdom";
 
 import {
-  MiscEventHandler2,
   MiscEventHandler3,
   MiscEventHandler4,
   MiscEventHandler5,
@@ -53,7 +52,7 @@ function shareMastodon(
   loc: Location,
   win: Window,
 ): boolean {
-  const tmp:HTMLInputElement = dom.querySelector("#mastodonserver");
+  const tmp: HTMLInputElement = dom.querySelector("#mastodonserver");
   let server = tmp.value;
   const url = tmp.getAttribute("data-url");
   if (server === "" || server === null) {
@@ -133,13 +132,13 @@ export function initMastodon(dom: Document, loc: Location, win: Window): void {
     _map4(BUFFER, copyURL, dom, loc, win);
   }
   _map5(dom.querySelector("#popup #sendMasto"), shareMastodon, dom, loc, win);
-  const BUFFER2:Array<HTMLElement> = Array.from(
-    dom.querySelectorAll("#shareMenuTrigger, #shareClose")
-  ) as Array<HTMLElement>; 
-	// the second ID will be nought in desktop view
+  const BUFFER2: Array<HTMLElement> = Array.from(
+    dom.querySelectorAll("#shareMenuTrigger, #shareClose"),
+  ) as Array<HTMLElement>;
+  // the second ID will be nought in desktop view
   for (const i in BUFFER2) {
-// MiscEventHandler3 = ( a: Event, dom: Document, loc: Location | Window, ) => void;
-// function openShare( e: Event, dom: Document, loc: Location, win: Window, 
+    // MiscEventHandler3 = ( a: Event, dom: Document, loc: Location | Window, ) => void;
+    // function openShare( e: Event, dom: Document, loc: Location, win: Window,
 
     _map5(BUFFER2[i], openShare, dom, loc, win);
   }
@@ -177,7 +176,7 @@ function openMastodon(e: Event, dom: Document, win: Window): boolean {
 function closeMastodon(e: Event, dom: Document, win: Window): boolean {
   if (isFullstack(win)) {
     // in JSDOM can't use extra functions, as the fake isn't deep enough
-   (dom.querySelector("#popup") as HTMLDialogElement).close();
+    (dom.querySelector("#popup") as HTMLDialogElement).close();
   }
   return false;
 }
@@ -297,15 +296,15 @@ function _map4(
   win: Window,
 ): void {
   where.addEventListener("click", (a: Event): boolean => {
-    action( dom, loc, win);
+    action(dom, loc, win);
     return false;
   });
   where.addEventListener("touch", (a: Event): boolean => {
-    action( dom, loc, win);
+    action(dom, loc, win);
     return false;
   });
   where.addEventListener("keypress", (a: Event): boolean => {
-    action( dom, loc, win);
+    action(dom, loc, win);
     return false;
   });
 }
@@ -342,8 +341,6 @@ function _map5(
   });
 }
 
-
-
 ///////////////////////////////////////////// TESTING ///////////////////////////////////////////////////////
 // no injectOpts at present
 
@@ -352,9 +349,9 @@ function _map5(
  */
 export const TEST_ONLY = {
   shareMastodon,
-//  _map1,
+  //  _map1,
   _map2,
-//  _map3,
+  //  _map3,
   _map4,
   _map5,
   closeMastodon,

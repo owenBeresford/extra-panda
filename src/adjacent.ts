@@ -6,23 +6,23 @@ import {
   SimpleResponse,
   ReferenceType,
   NormalisedReference,
-  AdjacentPropsDefinite, 
-	AdjacentProps,
+  AdjacentPropsDefinite,
+  AdjacentProps,
 } from "./all-types";
 import { isMobile, appendIsland } from "./dom-base";
 
 // variables across this module
 let OPTS: AdjacentPropsDefinite = {
-      name: "",
-      meta: "",
-      perRow: 10,
-      titleLimit: 40,
-      rendered: false,
-      iteration: 0,
-      group: "system",
-      count: 1,
-      debug: true ,
-      runFetch: runFetch,
+  name: "",
+  meta: "",
+  perRow: 10,
+  titleLimit: 40,
+  rendered: false,
+  iteration: 0,
+  group: "system",
+  count: 1,
+  debug: true,
+  runFetch: runFetch,
 } as AdjacentPropsDefinite;
 
 /**
@@ -39,7 +39,7 @@ function mapURL(article: string, suffix: string, loc: Location): string {
   //  let t = loc.protocol + "//" + loc.host,
   let t2 = loc.pathname.split("/"),
     t = "",
-	  t3 = t2.pop();
+    t3 = t2.pop();
   const tmp = new URLSearchParams(loc.search);
   if (t3 === "group-XXX" && tmp.has("first")) {
     t3 = tmp.get("first");
@@ -148,7 +148,7 @@ function normaliseToList(
   //    retries = 0;
   [me, remainder, i] = nextStep(
     extractOABName(data[0].url),
-    OPTS.name ,
+    OPTS.name,
     data.length,
     i,
     me,
@@ -166,7 +166,7 @@ function normaliseToList(
         desc: data[i].desc,
       } as NormalisedReference;
 
-      if (title.length > OPTS.titleLimit ) {
+      if (title.length > OPTS.titleLimit) {
         list[j].title += "...";
       }
       const tt = data[i].desc;
@@ -239,11 +239,11 @@ export function listContentGroup(
   id: string,
   dom: Document = document,
 ): Array<string> {
-  let grp = dom.querySelector(id);
+  const grp = dom.querySelector(id);
   if (!grp) {
     return [] as Array<string>;
   }
-  let grpDat = grp.getAttribute("data-group");
+  const grpDat = grp.getAttribute("data-group");
   if (!grpDat) {
     return [] as Array<string>;
   }
@@ -374,9 +374,9 @@ function convert2IndexHTML(
  * @returns {void}
  */
 function updateLabels(gname: string, dom: Document): void {
-  const dat: Array<HTMLElement> = Array.from(dom.querySelectorAll(
-    ".top-bar.fullWidth header h1",
-  )) as Array<HTMLElement>;
+  const dat: Array<HTMLElement> = Array.from(
+    dom.querySelectorAll(".top-bar.fullWidth header h1"),
+  ) as Array<HTMLElement>;
 
   if (
     dat.length &&
@@ -385,9 +385,9 @@ function updateLabels(gname: string, dom: Document): void {
   ) {
     dat[0].textContent = "Group " + gname;
   }
-  const dit: Array<HTMLElement> = Array.from(dom.querySelectorAll(
-    ".adjacentGroup p",
-  )) as Array<HTMLElement>;
+  const dit: Array<HTMLElement> = Array.from(
+    dom.querySelectorAll(".adjacentGroup p"),
+  ) as Array<HTMLElement>;
   if (dit.length && dit[0].textContent.includes("XXX")) {
     dit[0].textContent = "Some similar articles in " + gname;
   }
@@ -451,7 +451,7 @@ export async function createAdjacentChart(
     {
       name: articleName(loc),
       meta: mapURL(OPTS.group, ".json", loc),
-       debug: debug(loc),
+      debug: debug(loc),
       runFetch: runFetch,
     },
     opts,
@@ -467,7 +467,8 @@ export async function createAdjacentChart(
 
   if (isMobile(dom, loc, win) && !isGroupArticle) {
     if (dom.querySelectorAll(".adjacentGroup .adjacentItem").length === 1) {
-      (dom.querySelector(".adjacentGroup p") as HTMLElement).style["display"] = "none";
+      (dom.querySelector(".adjacentGroup p") as HTMLElement).style["display"] =
+        "none";
     }
     appendIsland(
       "#" + GROUP,

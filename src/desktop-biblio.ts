@@ -1,7 +1,12 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 // import { Document, Location, HTMLAnchorElement, HTMLElement } from "jsdom";
 
-import { DesktopBiblioProps, DesktopBiblioPropsDefinite, SimpleResponse, ReferenceType } from "./all-types";
+import {
+  DesktopBiblioProps,
+  DesktopBiblioPropsDefinite,
+  SimpleResponse,
+  ReferenceType,
+} from "./all-types";
 import { appendIsland, mapAttribute } from "./dom-base";
 import {
   dateMunge,
@@ -21,15 +26,15 @@ import {
 
 // variables across this module
 // * @protected
-let OPTS: DesktopBiblioPropsDefinite =  {
-      indexUpdated: 0,
-      gainingElement: "#biblio",
-      referencesCache: "/resource/XXX-references",
-      renumber: 1, // set to 0 to disable
-      maxAuthLen: 65,
-      debug: true,
-      runFetch: runFetch,
-    } as DesktopBiblioPropsDefinite;
+let OPTS: DesktopBiblioPropsDefinite = {
+  indexUpdated: 0,
+  gainingElement: "#biblio",
+  referencesCache: "/resource/XXX-references",
+  renumber: 1, // set to 0 to disable
+  maxAuthLen: 65,
+  debug: true,
+  runFetch: runFetch,
+} as DesktopBiblioPropsDefinite;
 
 /**
  * markAllLinksUnknown
@@ -43,7 +48,8 @@ let OPTS: DesktopBiblioPropsDefinite =  {
 function markAllLinksUnknown(dom: Document, loc: Location): void {
   const naam: string = articleName(loc);
   const WASSUP: Array<HTMLAnchorElement> = Array.from(
-    dom.querySelectorAll(ALL_REFERENCE_LINKS)) as Array<HTMLAnchorElement>;
+    dom.querySelectorAll(ALL_REFERENCE_LINKS),
+  ) as Array<HTMLAnchorElement>;
 
   for (let i = 0; i < WASSUP.length; i++) {
     const txt: string = `Reference popup for link [${1 + i}]\nERROR: No valid biblio file found.\nsite admin, today\nHTTP_ERROR, no valid file called ${naam}-references.json found.\n`;
@@ -156,7 +162,7 @@ export function applyDOMpositions(ele: HTMLElement, win: Window): void {
     return;
   }
 
-  let tt:HTMLElement = ele.parentNode as HTMLElement;
+  let tt: HTMLElement = ele.parentNode as HTMLElement;
   const subItem: Array<string> = ["LI", "SUP", "UL", "OL", "SPAN", "P"];
   // list doesn't include HTML, BODY, DETAILS or DIV
   while (subItem.includes(tt.tagName)) {
@@ -187,7 +193,9 @@ export function applyDOMpositions(ele: HTMLElement, win: Window): void {
  */
 function mapPositions(data: Array<string>, dom: Document, win: Window): void {
   let j = 1;
-  const REFS:Array<HTMLAnchorElement> = Array.from(dom.querySelectorAll(ALL_REFERENCE_LINKS));
+  const REFS: Array<HTMLAnchorElement> = Array.from(
+    dom.querySelectorAll(ALL_REFERENCE_LINKS),
+  );
   if (data.length > REFS.length) {
     dom.querySelector(ALL_REFERENCE).classList.add(SHOW_ERROR);
     dom.querySelector("p[role=status]").textContent += " Recompile meta data. ";
@@ -277,9 +285,9 @@ export async function createBiblio(
 ) {
   OPTS = Object.assign(
     OPTS,
-    { 
-		debug:debug(loc),
-	},
+    {
+      debug: debug(loc),
+    },
     opts,
   ) as DesktopBiblioPropsDefinite;
   if (dom.querySelectorAll(ALL_REFERENCE).length === 0) {
@@ -295,7 +303,7 @@ export async function createBiblio(
   const data: SimpleResponse = await OPTS.runFetch(
     makeRefUrl(OPTS.referencesCache, loc),
     false,
-    loc
+    loc,
   );
   if (!data.ok || !Array.isArray(data.body)) {
     markAllLinksUnknown(dom, loc);

@@ -191,7 +191,9 @@ describe("TEST mastodon", () => {
         (e, f) => {
           console.log("THING HAPPENED to " + e.target.id, f);
         },
-  		dom, loc, win
+        dom,
+        loc,
+        win,
       ),
       undefined,
       "assert #18",

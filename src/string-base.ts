@@ -45,9 +45,9 @@ export function makeRefUrl(template: string, loc: Location): string {
   let tmp2: string[] = [];
 
   tmp2 = loc.pathname.split("/");
-	if(!tmp2 || tmp2.length<2 ) {
-		tmp2=["resource", "home"];
-	}
+  if (!tmp2 || tmp2.length < 2) {
+    tmp2 = ["resource", "home"];
+  }
   return template.replace(/XXX/, tmp2.pop());
 }
 

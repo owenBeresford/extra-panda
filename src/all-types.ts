@@ -40,7 +40,6 @@ export type MiscEventHandler5 = (
   win: Window,
 ) => void;
 
-
 export type BOUNDARY = "top" | "bottom" | "left" | "right" | "height" | "width";
 export type ScreenSizeArray = [number, number];
 export type ScreenOffsetArray = [number, number];
@@ -80,7 +79,7 @@ export type Fetchable = Fetch | null;
 export type FetchedExec = (
   url: string,
   trap: boolean,
-	loc:Location
+  loc: Location,
 ) => Promise<SimpleResponse>;
 
 export interface SimpleResponse {
@@ -117,7 +116,6 @@ export interface DesktopBiblioPropsDefinite {
   runFetch: FetchedExec;
   debug: boolean;
 }
-
 
 export interface MobileBiblioProps {
   referencesCache?: string;
@@ -172,7 +170,6 @@ export interface AdjacentPropsDefinite {
   debug: boolean;
   runFetch: FetchedExec;
 }
-
 
 export type BiblioProps = DesktopBiblioProps & MobileBiblioProps;
 

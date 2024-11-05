@@ -19,18 +19,17 @@ import { appendIsland } from "./dom-base";
 // variables across this module
 // * @protected
 let OPTS: MobileBiblioPropsDefinite = {
-    referencesCache: "/resource/XXX-references",
-    gainingElement: "#biblio",
-    losingElement: ".addReferences",
+  referencesCache: "/resource/XXX-references",
+  gainingElement: "#biblio",
+  losingElement: ".addReferences",
 
-    renumber: 1, // set to 0 to disable
-    forceToEnd: 1,
-    maxDescripLen: 230,
-    maxAuthLen: 65,
-    debug: true,
-    runFetch: runFetch,
-
- } as MobileBiblioPropsDefinite;
+  renumber: 1, // set to 0 to disable
+  forceToEnd: 1,
+  maxDescripLen: 230,
+  maxAuthLen: 65,
+  debug: true,
+  runFetch: runFetch,
+} as MobileBiblioPropsDefinite;
 
 /**
  * empty
@@ -142,7 +141,9 @@ function adjustDom(dat: Array<ReferenceType>, dom: Document): void {
     return;
   }
 
-  const LIST:Array<HTMLAnchorElement> = Array.from(dom.querySelectorAll(OPTS.losingElement + " sup a"));
+  const LIST: Array<HTMLAnchorElement> = Array.from(
+    dom.querySelectorAll(OPTS.losingElement + " sup a"),
+  );
   for (let i = 0; i < LIST.length; i++) {
     LIST[i].textContent = "" + (i + 1);
     if (OPTS.forceToEnd) {
@@ -166,8 +167,7 @@ export async function createBiblio(
   dom: Document,
   loc: Location,
 ): Promise<void> {
-
-  OPTS = Object.assign(OPTS, { debug:debug(loc), }, opts);
+  OPTS = Object.assign(OPTS, { debug: debug(loc) }, opts);
   if (dom.querySelectorAll(ALL_REFERENCE).length === 0) {
     log(
       "info",

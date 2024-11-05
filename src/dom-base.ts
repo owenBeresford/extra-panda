@@ -174,7 +174,7 @@ export function getArticleWidth(
   dom: Document,
   win: Window,
 ): number {
-  const tmp:HTMLElement = dom.querySelector(id) as HTMLElement;
+  const tmp: HTMLElement = dom.querySelector(id) as HTMLElement;
   if (!tmp) {
     return -1;
   }
@@ -213,7 +213,7 @@ function docOffsets(ele: HTMLElement, offsets: Scrollable): ScreenOffsetArray {
  * @public
  * @returns {void}
  */
-export function copyURL(ignored:Document, loc: Location, win: Window): void {
+export function copyURL(ignored: Document, loc: Location, win: Window): void {
   try {
     if (!win.navigator.clipboard) {
       throw new Error("No clipboard available");
@@ -248,9 +248,9 @@ export function copyURL(ignored:Document, loc: Location, win: Window): void {
  */
 export function applyVolume(dom: Document, win: Window): void {
   dom.querySelector("body").setAttribute("style", "--offset-height: 0;");
-  const tt: Array<HTMLElement> = Array.from(dom.querySelectorAll(
-    ".lotsOfWords, .halferWords, .fewWords",
-  ));
+  const tt: Array<HTMLElement> = Array.from(
+    dom.querySelectorAll(".lotsOfWords, .halferWords, .fewWords"),
+  );
   for (let i = 0; i < tt.length; i++) {
     tt[i].setAttribute(
       "style",
@@ -284,7 +284,7 @@ export function expandDetails(
 
   if (screenWidth(loc, win) > bigScreen) {
     const THING = Array.from(
-      dom.querySelectorAll(".maquetteContainer details") 
+      dom.querySelectorAll(".maquetteContainer details"),
     ) as Array<HTMLDetailsElement>;
     for (let i = 0; i < THING.length; i++) {
       // this IF trap is to avoid the test results widget being locked open, and blocking the screen

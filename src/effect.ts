@@ -122,7 +122,9 @@ export function addBooks(refs: boolean, dom: Document, win: Window): void {
 export function addBashSamples(dom: Document): void {
   const r1 = new RegExp("`([^`]+)`", "g");
   const r2 = new RegExp("/ /", "g");
-  const bash: Array<HTMLElement> = Array.from(dom.querySelectorAll(".addBashSamples")) as Array<HTMLElement>;
+  const bash: Array<HTMLElement> = Array.from(
+    dom.querySelectorAll(".addBashSamples"),
+  ) as Array<HTMLElement>;
 
   if (bash.length > 0) {
     for (let i = 0; i < bash.length; i++) {
@@ -145,7 +147,9 @@ export function addBashSamples(dom: Document): void {
  * @returns {void}
  */
 export function addFancyButtonArrow(dom: Document): void {
-  const aa: Array<HTMLElement> = Array.from(dom.querySelectorAll(".addArrow")) as  Array<HTMLElement>;
+  const aa: Array<HTMLElement> = Array.from(
+    dom.querySelectorAll(".addArrow"),
+  ) as Array<HTMLElement>;
   for (let i = 0; i < aa.length; i++) {
     appendIsland(
       aa[i].parentElement,

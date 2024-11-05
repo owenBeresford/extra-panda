@@ -13,7 +13,9 @@ import { log } from "./networking";
  */
 function HTMLDetailsTrap(e: KeyboardEvent, dom: Document): boolean {
   if (e.code === "Escape" || e.key === "Escape") {
-    const tt:Array<HTMLDetailsElement> = Array.from(dom.querySelectorAll("details[open]"));
+    const tt: Array<HTMLDetailsElement> = Array.from(
+      dom.querySelectorAll("details[open]"),
+    );
     if (tt.length) {
       for (let i = 0; i < tt.length; i++) {
         tt[i].open = false;
@@ -70,8 +72,8 @@ function find(ele: HTMLElement, target: string): undefined | HTMLElement {
  * @returns {boolean} - mouse event, so return false
  */
 function HTMLDetailsClick(e: MiscEvent, dom: Document): boolean {
-	const ele:HTMLElement=e.target as HTMLElement;
-  const act:HTMLElement = find(ele, "DETAILS");
+  const ele: HTMLElement = e.target as HTMLElement;
+  const act: HTMLElement = find(ele, "DETAILS");
   if (act && act.tagName === "A") {
     // no preventDefault activity as its an A
     return true;
@@ -97,7 +99,9 @@ function HTMLDetailsClick(e: MiscEvent, dom: Document): boolean {
       act2.open = true;
     }
   } else {
-    const tt:HTMLDetailsElement = dom.querySelector("details[open]") as HTMLDetailsElement;
+    const tt: HTMLDetailsElement = dom.querySelector(
+      "details[open]",
+    ) as HTMLDetailsElement;
     if (tt) {
       e.preventDefault();
       e.stopPropagation();

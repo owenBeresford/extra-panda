@@ -95,8 +95,7 @@ describe("TEST mobile-biblio", () => {
   });
 
   it("go 2: normaliseData ", () => {
-
-//    maxDescripLen: 230,
+    //    maxDescripLen: 230,
     let dat = [
       {
         date: +new Date("2000-03-01 09:00:00 Z"),
