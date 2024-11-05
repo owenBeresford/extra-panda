@@ -9,7 +9,7 @@ import { describe, expect, it, run } from "jest-lite";
 //
 // it would be possible to put each expect in its own try/catch,
 
-import { page, execTest, wrap } from "./page-seed-playwright";
+import { execTest, wrap } from "./page-seed-playwright";
 import { enableGetEventListeners } from "./vitest-addons";
 import { appendIsland, isFullstack } from "../dom-base";
 import { delay, domLog } from "../networking";
@@ -18,10 +18,13 @@ import { TEST_ONLY } from "../modal";
 const { modalInit, HTMLDetailsClick, HTMLDetailsTrap } = TEST_ONLY;
 
 describe("BROWSER TEST modal ", async () => {
+        if (typeof process !=="undefined" ) {
+			throw new Error("This is a browser only test");
+        }
+
   it("func[1] HTMLDetailsClick", async () => {
     const TEST_NAME = "BROWSER TEST func[1] HTMLDetailsClick";
-
-    wrap(
+    return await wrap(
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
@@ -38,10 +41,6 @@ describe("BROWSER TEST modal ", async () => {
 </div>
 `;
         appendIsland(".home.icerow", str, dom);
-        if (!isFullstack(win)) {
-          console.error(win.TEST_TAB_NAME + " This test is only for a browser");
-          throw new Error("This is a browser only test");
-        }
         modalInit(dom);
 
         let buf = dom.querySelector("details");
@@ -55,25 +54,25 @@ describe("BROWSER TEST modal ", async () => {
           throw new Error("Test DOM broken");
         }
 
-        expect(buf.getEventListeners().length).toBe(1); //  "Assert #1");
-        expect(dom.body.getEventListeners().length).toBe(2); // "Assert #2");
-        expect(buf.open).toBe(false); //  , "Assert #3");
+        expect(buf.getEventListeners().length).toBe(1); //  "Assert #1"
+        expect(dom.body.getEventListeners().length).toBe(2); // "Assert #2"
+        expect(buf.open).toBe(false); //  , "Assert #3"
 
         let toggle = dom.querySelector("summary");
         toggle.click();
 
         // I click on a SUMMARY with no CODE, the DETAILS opens   TICK
-        expect(buf.open).toBe(true); //  , "Assert #3");
+        expect(buf.open).toBe(true); //  , "Assert #3"
         toggle.click();
         // I click on a SUMMARY with no CODE and is OPEN, the DETAILS closes TICK
-        expect(buf.open).toBe(false); //, "Assert #4");
+        expect(buf.open).toBe(false); //, "Assert #4"
 
         let buf2 = dom.querySelector("#outside");
         toggle.click();
-        expect(buf.open).toBe(true); //  "Assert #5");
+        expect(buf.open).toBe(true); //  "Assert #5"
         buf2.click();
         // I click outside the DETAILS, and its open, it closes TICK
-        expect(buf.open).toBe(false); //  , "Assert #6");
+        expect(buf.open).toBe(false); //  , "Assert #6"
 
         toggle.click();
         let key = new KeyboardEvent("keydown", {
@@ -83,14 +82,13 @@ describe("BROWSER TEST modal ", async () => {
         dom.body.dispatchEvent(key);
         await delay(500);
         // I fire a ESC key sequence with an DETAILS in open state, it closes
-        expect(buf.open).toBe(false); //  , "Assert #7");
-      },
-    );
+        expect(buf.open).toBe(false); //  , "Assert #7"
+      });
   });
 
   it("func[1.2] HTMLDetailsClick", async () => {
     const TEST_NAME = "BROWSER TEST func[1.2] HTMLDetailsClick";
-    wrap(
+    return await wrap(
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
@@ -107,10 +105,6 @@ describe("BROWSER TEST modal ", async () => {
 </div>
 `;
         appendIsland(".home.icerow", str, dom);
-        if (!isFullstack(win)) {
-          console.error(win.TEST_TAB_NAME + " This test is only for a browser");
-          throw new Error("This is a browser only test");
-        }
         modalInit(dom);
 
         let buf = dom.querySelector("details");
@@ -150,13 +144,12 @@ describe("BROWSER TEST modal ", async () => {
         await delay(500);
         // I fire a ESC key sequence with an DETAILS in open state, it closes
         expect(buf.open).toBe(false); //  , "Assert #7");
-      },
-    );
+      } );
   });
 
   it("func[1.1]: HTMLDetailsClick", async () => {
     const TEST_NAME = "BROWSER TEST func[1.1]: HTMLDetailsClick";
-    wrap(TEST_NAME, "https://127.0.0.1:8081/home.html", (dom, loc, win) => {
+    return await wrap(TEST_NAME, "https://127.0.0.1:8081/home.html", async (dom, loc, win) => {
       enableGetEventListeners(dom);
       let str = `
 <div class="blocker popOverWidget">
@@ -170,15 +163,6 @@ window.alert("SDFSDFSDF SDFSDFSDF");
 </div>
 `;
       appendIsland(".home.icerow", str, dom);
-      if (!isFullstack(win)) {
-        domLog(
-          win.TEST_TAB_NAME + " " + TEST_NAME + " BROWSER ONLY TEST ",
-          false,
-          false,
-        );
-        console.error(win.TEST_TAB_NAME + "This test is only for a browser");
-        throw new Error("browser only test");
-      }
       modalInit(dom);
 
       let buf = dom.querySelector("details");
@@ -203,10 +187,12 @@ window.alert("SDFSDFSDF SDFSDFSDF");
 
       let key = new KeyboardEvent("keydown", { key: "Escape", code: "Escape" });
       dom.body.dispatchEvent(key);
+      await delay(500);
       // I fire a ESC key sequence with an DETAILS in open state, it closes
       expect(buf.open).toBe(false); // "Assert #14");
     });
   });
+
 });
 
 execTest(run);

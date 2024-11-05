@@ -32,13 +32,14 @@ export async function page(url = "", args = 1) {
  */
 async function page_local(url = "", args = 1) {
   const name = test_name(args);
-  const tmp = await window.open(url, name);
+  const tmp = window.open(url, name);
 
-  await delay(1000);
+  await delay(1000); // or the HTML hasn't parsed in the new window
   if (tmp.window.document.body.length < 200) {
     log("error", "New browser tab has gone wrong.");
-    tmp.window.reload();
-    return page_local(url, args);
+// To make execution time consistent, this has been disabled
+//    tmp.window.reload();
+//    return page_local(url, args);
   }
   tmp.window.TEST_TAB_NAME = name;
   if (args === 1) {
@@ -76,26 +77,23 @@ function page_fake(url = "", args = 1) {
  * @return {void}
  */
 export async function wrap(name, url, action) {
-  var dom, loc, win;
+  let dom, loc, win;
   try {
     const LOG_PADDING = "**********************************************";
-    [dom, loc, win] = await page_local("https://127.0.0.1:8081/home.html", 3);
+    [dom, loc, win] = await page_local(url, 3);
     win.console.log(
       LOG_PADDING + "\nthis is tab " + win.TEST_TAB_NAME + "\n" + LOG_PADDING,
     );
     dom.title = win.TEST_TAB_NAME;
     action(dom, loc, win);
 
-    domLog(win.TEST_TAB_NAME + " " + name + " [PASS]", false, false);
-    if (SHOULD_CLOSE) {
-      win.close();
-    }
+    domLog(win.TEST_TAB_NAME + " " + name + " [PASS]- no exceptions", true, false);
   } catch (e) {
     domLog(win.TEST_TAB_NAME + " see console for error details", false, false);
     console.log(win.TEST_TAB_NAME + " ERROR TRAPT ", e.message, "\n", e.stack);
-    if (SHOULD_CLOSE) {
+  }
+  if (SHOULD_CLOSE && win && win.close) {
       win.close();
-    }
   }
   console.log("end of wrap", new Date());
 }
@@ -118,10 +116,14 @@ export async function execTest(run) {
     domLog("browser tabs should auto-close", false, false);
   }
 
-  console.log("WERWER execTest", new Date());
   const ret = await run();
-  console.log("WERWER end execTest", new Date());
-  ret.push([{ name: "BROWSER TEST modal", last: true }]);
+	if( ret.length && ret[0].errors.length && ret[0].errors[0].match("Exceeded timeout") ) {
+    	domLog(""+ ret[0].errors[0], false, false);
+	}
+	let nom=tt.get('test');
+	nom=nom.substr(0, nom.indexOf('.'));
+
+  ret.push([{ name: "BROWSER TEST "+nom, last: true }]);
   appendIsland("#binLog", JSON.stringify(ret), document);
 }
 
@@ -139,3 +141,4 @@ export async function validateHTML(html) {
   // I would like some process to listen to HTML errors in the browser
   return [];
 }
+

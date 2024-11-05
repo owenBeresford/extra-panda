@@ -190,7 +190,7 @@ export function domLog(
     li.appendChild(document.createTextNode(" => " + str));
   }
   if (bold) {
-    li.setAttribute("style", "font-size:115%; ");
+    li.setAttribute("style", "font-weight:115%; font-size:115%; ");
   }
   LOG.append(li);
 }
