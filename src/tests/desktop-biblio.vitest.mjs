@@ -1,7 +1,7 @@
 import { assert, describe, it } from "vitest";
 import { JSDOM } from "jsdom";
 
-import { page } from "./page-seed";
+import { page } from "./page-seed-vite";
 import { appendIsland, setIsland, isFullstack } from "../dom-base";
 import { ALL_REFERENCE_LINKS } from "../networking";
 import { TEST_ONLY } from "../desktop-biblio";
@@ -14,7 +14,7 @@ const {
   markAllLinksUnknown,
   generateEmpty,
   normaliseData,
-  applyDOMpostions,
+  applyDOMpositions,
   mapPositions,
   addMetaAge,
   createBiblio,
@@ -68,8 +68,11 @@ describe("TEST desktop-biblio", () => {
   });
 
   it("go 3: mapPositions", () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
-    let str = `
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/reading-list",
+      3,
+    );
+    let str = `<p role="status"> PING</p>
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
@@ -83,7 +86,7 @@ describe("TEST desktop-biblio", () => {
       "sdfsfsd sfsdfsdf sdf sd fsdf sdfsdf ",
     ];
     injectOpts({ renumber: 1 });
-    mapPositions(dat, dom);
+    mapPositions(dat, dom, win);
 
     assert.equal(
       dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]").length,
@@ -102,7 +105,7 @@ describe("TEST desktop-biblio", () => {
       "assert #10",
     );
 
-    str = `
+    str = `<p role="status"> PING</p>
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
@@ -115,7 +118,7 @@ describe("TEST desktop-biblio", () => {
 `;
     setIsland("#point2", str, dom);
     // apply 5 items, as above, and renumber will still be set
-    mapPositions(dat, dom);
+    mapPositions(dat, dom, win);
     assert.equal(
       dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]").length,
       15,
@@ -333,23 +336,26 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
     assert.deepEqual(normaliseData(dat), dat2, "assert #18");
   });
 
-  it("go 6: applyDOMpostions", (context) => {
-    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
+  it("go 6: applyDOMpositions", (context) => {
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/reading-list",
+      3,
+    );
     let str = `<span id="uniq1">GDG</span>
 <span id="uniq2">WER</span>
 <span id="uniq3">IOP</span>
 <span id="uniq4">ASD</span>
 `;
     appendIsland("#point2", str, dom);
-    if (!isFullstack()) {
+    if (!isFullstack(win)) {
       context.skip();
       return;
     }
 
-    applyDOMpostions(dom.querySelector("#uniq1"), 200);
-    applyDOMpostions(dom.querySelector("#uniq2"), 400);
-    applyDOMpostions(dom.querySelector("#uniq3"), 600);
-    applyDOMpostions(dom.querySelector("#uniq4"), 800);
+    applyDOMpositions(dom.querySelector("#uniq1"), 200);
+    applyDOMpositions(dom.querySelector("#uniq2"), 400);
+    applyDOMpositions(dom.querySelector("#uniq3"), 600);
+    applyDOMpositions(dom.querySelector("#uniq4"), 800);
     assert.equal(
       dom.querySelector("#uniq1").getAttribute("class"),
       "",
@@ -374,7 +380,10 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
   });
 
   it("go 7: createBiblio", async () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/reading-list",
+      3,
+    );
     let str = `
 <div id="biblio" style="display:none;"></div>
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
@@ -395,6 +404,7 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
       },
       dom,
       loc,
+      win,
     );
     assert.equal(
       dom.querySelectorAll(ALL_REFERENCE_LINKS + "[aria-label]").length,
@@ -436,7 +446,11 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
 </html>`,
       { url: url, referrer: url },
     );
-    const [dom, loc] = [brwr.window.document, brwr.window.location];
+    const [dom, loc, win] = [
+      brwr.window.document,
+      brwr.window.location,
+      brwr.window,
+    ];
 
     let str = `
 <div id="biblio" style="display:none;">
@@ -461,6 +475,7 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
       { gainingElement: "#biblio", debug: true, runFetch: mockFetch1 },
       dom,
       loc,
+      win,
     );
     let t2 = getLogCounter();
 

@@ -5,20 +5,26 @@ import { log } from "./networking";
 /**
  * HTMLDetailsTrap
  * If ESC key happens, close any open DETAILS elements
+ *
  * @param {MiscEvent} e
  * @param {Document = document} dom
  * @protected
  * @returns {boolean} - keypress event, so return false
  */
-function HTMLDetailsTrap(e: MiscEvent, dom: Document = document): boolean {
+function HTMLDetailsTrap(e: KeyboardEvent, dom: Document): boolean {
   if (e.code === "Escape" || e.key === "Escape") {
-    const tt = dom.querySelectorAll("details[open]");
+    const tt: Array<HTMLDetailsElement> = Array.from(
+      dom.querySelectorAll("details[open]"),
+    );
     if (tt.length) {
-      tt[0].open = false;
+      for (let i = 0; i < tt.length; i++) {
+        tt[i].open = false;
+      }
     }
+    e.preventDefault();
+    return false;
   }
-  e.preventDefault();
-  return false;
+  return true;
 }
 
 /**
@@ -46,6 +52,10 @@ function find(ele: HTMLElement, target: string): undefined | HTMLElement {
     if (ele.tagName === "BODY") {
       return undefined;
     }
+    // #leSigh these two features shouldn't collide but they are.
+    if (ele.classList.contains("maquette")) {
+      return undefined;
+    }
 
     ele = ele.parentElement;
   }
@@ -61,21 +71,22 @@ function find(ele: HTMLElement, target: string): undefined | HTMLElement {
  * @protected
  * @returns {boolean} - mouse event, so return false
  */
-function HTMLDetailsClick(e: MiscEvent, dom: Document = document): boolean {
-  const act = find(e.target, "DETAILS");
+function HTMLDetailsClick(e: MiscEvent, dom: Document): boolean {
+  const ele: HTMLElement = e.target as HTMLElement;
+  const act: HTMLElement = find(ele, "DETAILS");
   if (act && act.tagName === "A") {
     // no preventDefault activity as its an A
     return true;
   }
 
-  e.preventDefault();
-  e.stopPropagation();
   if (act) {
     const act2: HTMLDetailsElement = act as HTMLDetailsElement;
 
+    e.preventDefault();
+    e.stopPropagation();
     if (act2 && act2.open) {
       if (
-        e.target.tagName !== "SUMMARY" &&
+        ele.tagName !== "SUMMARY" &&
         // looking for CODE blocks, as users will need to select code to copy it
         // ...until a copy widget is added...
         act2.querySelector("code") !== null
@@ -88,9 +99,16 @@ function HTMLDetailsClick(e: MiscEvent, dom: Document = document): boolean {
       act2.open = true;
     }
   } else {
-    const tt = dom.querySelector("details[open]");
+    const tt: HTMLDetailsElement = dom.querySelector(
+      "details[open]",
+    ) as HTMLDetailsElement;
     if (tt) {
+      e.preventDefault();
+      e.stopPropagation();
       tt.open = false;
+    } else {
+      // this click has nothing todo with DETAILS
+      return true;
     }
   }
 
@@ -104,18 +122,24 @@ function HTMLDetailsClick(e: MiscEvent, dom: Document = document): boolean {
  * @public
  * @returns {void}
  */
-export function modalInit(dom: Document = document): void {
+export function modalInit(dom: Document): void {
   const tmp: Array<HTMLDetailsElement> = Array.from(
     dom.querySelectorAll(".popOverWidget details"),
   );
   if (tmp.length) {
     log("info", "Modal widget found, extra UI features added");
     tmp.forEach(function (a: HTMLDetailsElement): void {
-      a.addEventListener("click", HTMLDetailsClick);
+      a.addEventListener("click", function (e: MiscEvent) {
+        return HTMLDetailsClick(e, dom);
+      });
     });
-    dom.body.addEventListener("click", HTMLDetailsClick);
+    dom.body.addEventListener("click", function (e: MiscEvent) {
+      return HTMLDetailsClick(e, dom);
+    });
 
-    dom.body.addEventListener("keydown", HTMLDetailsTrap);
+    dom.body.addEventListener("keydown", function (e: KeyboardEvent) {
+      return HTMLDetailsTrap(e, dom);
+    });
   }
   // IOIO see if something can be done for mobile interactions
   // add a listener to the custom back button would be good

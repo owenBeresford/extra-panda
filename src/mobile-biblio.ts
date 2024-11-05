@@ -7,17 +7,29 @@ import {
   runFetch,
   ALL_REFERENCE,
 } from "./networking";
-import { Document, Location } from "jsdom";
+// import { Document, Location } from "jsdom";
 import {
   ReferenceType,
   NormalisedReference,
   MobileBiblioProps,
+  MobileBiblioPropsDefinite,
 } from "./all-types";
 import { appendIsland } from "./dom-base";
 
 // variables across this module
 // * @protected
-let OPTS: MobileBiblioProps = {} as MobileBiblioProps;
+let OPTS: MobileBiblioPropsDefinite = {
+  referencesCache: "/resource/XXX-references",
+  gainingElement: "#biblio",
+  losingElement: ".addReferences",
+
+  renumber: 1, // set to 0 to disable
+  forceToEnd: 1,
+  maxDescripLen: 230,
+  maxAuthLen: 65,
+  debug: true,
+  runFetch: runFetch,
+} as MobileBiblioPropsDefinite;
 
 /**
  * empty
@@ -95,7 +107,7 @@ function normaliseData(
 /**
  * render
  * Function to convert the data to HTML
- * @link ["interesting notes to create accessible footnotes", https://www.davidmacd.com/blog/html51-footnotes.html]
+ * @see ["interesting notes to create accessible footnotes", https://www.davidmacd.com/blog/html51-footnotes.html]
  * @param {Array<NormalisedReference>} data - technically synthetic reference data.
  * @protected
  * @returns {string} - the HTML
@@ -124,12 +136,14 @@ function render(data: Array<NormalisedReference>): string {
  * @protected
  * @returns {void}
  */
-function adjustDom(dat: Array<ReferenceType>, dom: Document = document): void {
+function adjustDom(dat: Array<ReferenceType>, dom: Document): void {
   if (!OPTS.renumber) {
     return;
   }
 
-  const LIST = dom.querySelectorAll(OPTS.losingElement + " sup a");
+  const LIST: Array<HTMLAnchorElement> = Array.from(
+    dom.querySelectorAll(OPTS.losingElement + " sup a"),
+  );
   for (let i = 0; i < LIST.length; i++) {
     LIST[i].textContent = "" + (i + 1);
     if (OPTS.forceToEnd) {
@@ -150,22 +164,10 @@ function adjustDom(dat: Array<ReferenceType>, dom: Document = document): void {
  */
 export async function createBiblio(
   opts: MobileBiblioProps,
-  dom: Document = document,
-  loc: Location = location,
+  dom: Document,
+  loc: Location,
 ): Promise<void> {
-  const OPTS2: MobileBiblioProps = {
-    referencesCache: "/resource/XXX-references",
-    gainingElement: "#biblio",
-    losingElement: ".addReferences",
-
-    renumber: 1, // set to 0 to disable
-    forceToEnd: 1,
-    maxDescripLen: 230,
-    maxAuthLen: 65,
-    debug: debug(),
-    runFetch: runFetch,
-  };
-  OPTS = Object.assign(OPTS2, opts);
+  OPTS = Object.assign(OPTS, { debug: debug(loc) }, opts);
   if (dom.querySelectorAll(ALL_REFERENCE).length === 0) {
     log(
       "info",
@@ -178,7 +180,7 @@ export async function createBiblio(
   if (tmp) {
     tmp.setAttribute("style", "");
   }
-  dom.querySelector(OPTS.gainingElement + " *").replaceChildren([]);
+  dom.querySelector(OPTS.gainingElement + " *").replaceChildren();
   appendIsland(
     OPTS.gainingElement,
     `<h2 class="biblioSection">References (for mobile UI)</h2> 
@@ -186,7 +188,11 @@ export async function createBiblio(
     dom,
   );
 
-  const dat = await OPTS.runFetch(makeRefUrl(OPTS.referencesCache, loc), false);
+  const dat = await OPTS.runFetch(
+    makeRefUrl(OPTS.referencesCache, loc),
+    false,
+    loc,
+  );
   if (!dat.ok || !Array.isArray(dat.body)) {
     const html =
       '<p class="error">Unable to get bibliographic data for this article.</p>';
@@ -216,7 +222,7 @@ export async function createBiblio(
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {
-    console.error("ERROR: to use injectOpts, you must set NODE_ENV");
+    log("error", "to use injectOpts, you must set NODE_ENV");
     return;
   }
   OPTS = Object.assign(OPTS, a);
@@ -230,5 +236,6 @@ export const TEST_ONLY = {
   empty,
   normaliseData,
   render,
+  adjustDom,
   createBiblio,
 };

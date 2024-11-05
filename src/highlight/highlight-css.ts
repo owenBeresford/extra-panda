@@ -24,6 +24,6 @@ export function execHighlight(dom: Document = document): void {
   });
 }
 
-if (typeof window.process === "undefined") {
+if (typeof window !== "undefined" && typeof window.process === "undefined") {
   execHighlight(document);
 }

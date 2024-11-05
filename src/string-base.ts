@@ -2,13 +2,14 @@
 
 /**
  * pullout
- * An isolation function, as JSDOM isn't perfect.
+ * An isolation function, as JSDOM isn't perfect.  PURE
  * @param {HTMLElement} a
  * @public
  * @returns {string}
  */
 export function pullout(a: HTMLElement): string {
   if (!a) {
+    // type checking isn't strong at runtime
     throw new Error("No element for text found");
   } else if ("textContent" in a) {
     return a.textContent;
@@ -27,7 +28,7 @@ export function pullout(a: HTMLElement): string {
  * @public
  * @returns {string}
  */
-export function articleName(loc: Location = location): string {
+export function articleName(loc: Location): string {
   return loc.pathname.split("/").pop() || "<name>";
 }
 
@@ -40,16 +41,19 @@ export function articleName(loc: Location = location): string {
  * @public
  * @returns {string}
  */
-export function makeRefUrl(template: string, loc: Location = location): string {
+export function makeRefUrl(template: string, loc: Location): string {
   let tmp2: string[] = [];
 
   tmp2 = loc.pathname.split("/");
+  if (!tmp2 || tmp2.length < 2) {
+    tmp2 = ["resource", "home"];
+  }
   return template.replace(/XXX/, tmp2.pop());
 }
 
 /**
  * isLocal
- * Guess if actual code or test node
+ * Guess if actual node or test node, PURE
  * @param {string} str
  * @public
  * @returns {boolean}
@@ -124,7 +128,7 @@ export function pad(num: number): string {
  * Fix whatever data that I have been given, down to a predictable list #leSigh browsers.
  * This is too complex as I am supporting ALL browsers across a large amount of time/editions.
  * I presume a 'JS purity & primis' person would not support some of the corner cases.
- * Used in importDate()
+ * Used in importDate()   PURE
  * @param {string = ""} day - supports / and - common formats
  * @param {string = ""} time
  * @protected
@@ -171,6 +175,55 @@ function fixArgs(day: string = "", time: string = ""): Array<string> {
   }
   buf = [...day1a, ...time1a];
   return buf;
+}
+
+/**
+ * booleanMap
+ * Convert many possible "English" boolean values to boolean
+ * NOTE: As JS, this may not be a string.  PURE
+ * @param {string | number} str
+ * @protected
+ * @returns {boolean}
+ */
+export function booleanMap(str: string | number): boolean {
+  const TRUE = ["1", 1, "true", "TRUE", "on", "ON", "yes", "YES", "✔", "✓"];
+  const FALSE = [
+    "0",
+    0,
+    "false",
+    "FALSE",
+    "off",
+    "OFF",
+    "no",
+    "NO",
+    "🗙",
+    "✕",
+    "✖",
+    "✖",
+    "✗",
+    "✘",
+  ];
+
+  if (TRUE.includes(str)) {
+    return true;
+  }
+  if (FALSE.includes(str)) {
+    return false;
+  }
+  throw new Error("Unknown data " + str);
+}
+
+/**
+ * test_name
+ * Make a unique name. used in the browser unit tests.
+ * PURE
+ *
+ * @param {string|number} hash
+ * @returns {string}
+ */
+export function test_name(hash: string | number): string {
+  const d = new Date();
+  return "test" + hash + "_" + d.getSeconds() + "_" + d.getMilliseconds();
 }
 
 /**
@@ -310,7 +363,9 @@ export const TEST_ONLY = {
   isLocal,
   articleName,
   addLineBreaks,
+  booleanMap,
   pad,
+  test_name,
   makeRefUrl,
   importDate,
   dateMunge,

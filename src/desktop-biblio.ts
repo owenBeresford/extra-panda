@@ -1,8 +1,13 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { Document, Location, HTMLAnchorElement, HTMLElement } from "jsdom";
+// import { Document, Location, HTMLAnchorElement, HTMLElement } from "jsdom";
 
-import { DesktopBiblioProps, SimpleResponse, ReferenceType } from "./all-types";
-import { appendIsland, mapAttribute, getArticleWidth } from "./dom-base";
+import {
+  DesktopBiblioProps,
+  DesktopBiblioPropsDefinite,
+  SimpleResponse,
+  ReferenceType,
+} from "./all-types";
+import { appendIsland, mapAttribute } from "./dom-base";
 import {
   dateMunge,
   articleName,
@@ -13,6 +18,7 @@ import {
   log,
   debug,
   ALL_REFERENCE,
+  SHOW_ERROR,
   ALL_REFERENCE_LINKS,
   runFetch,
   EM_SZ,
@@ -20,7 +26,15 @@ import {
 
 // variables across this module
 // * @protected
-let OPTS: DesktopBiblioProps = {} as DesktopBiblioProps;
+let OPTS: DesktopBiblioPropsDefinite = {
+  indexUpdated: 0,
+  gainingElement: "#biblio",
+  referencesCache: "/resource/XXX-references",
+  renumber: 1, // set to 0 to disable
+  maxAuthLen: 65,
+  debug: true,
+  runFetch: runFetch,
+} as DesktopBiblioPropsDefinite;
 
 /**
  * markAllLinksUnknown
@@ -31,17 +45,17 @@ let OPTS: DesktopBiblioProps = {} as DesktopBiblioProps;
  * @protected
  * @returns {void}
  */
-function markAllLinksUnknown(
-  dom: Document = document,
-  loc: Location = location,
-): void {
+function markAllLinksUnknown(dom: Document, loc: Location): void {
   const naam: string = articleName(loc);
-  const WASSUP: Array<HTMLAnchorElement> =
-    dom.querySelectorAll(ALL_REFERENCE_LINKS);
+  const WASSUP: Array<HTMLAnchorElement> = Array.from(
+    dom.querySelectorAll(ALL_REFERENCE_LINKS),
+  ) as Array<HTMLAnchorElement>;
+
   for (let i = 0; i < WASSUP.length; i++) {
     const txt: string = `Reference popup for link [${1 + i}]\nERROR: No valid biblio file found.\nsite admin, today\nHTTP_ERROR, no valid file called ${naam}-references.json found.\n`;
     WASSUP[i].setAttribute("aria-label", "" + txt);
   }
+  dom.querySelector(ALL_REFERENCE).classList.add(SHOW_ERROR);
 }
 
 /**
@@ -129,33 +143,38 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
 }
 
 /**
- * applyDOMpostions
+ * applyDOMpositions
  * Actually does the CSS class insertion here.
  * see mapPositions() for the iterators
  * IMPURE.
  * @param {HTMLElement} ele
- * @param {number} WIDTH
+ * @param {Window =window} win
  * @protected
  * @returns {void}
  */
-export function applyDOMpostions(ele: HTMLElement, WIDTH: number): void {
-  const left = mapAttribute(ele, "left");
-  const bot = mapAttribute(ele, "bottom");
+export function applyDOMpositions(ele: HTMLElement, win: Window): void {
+  if (ele === null) {
+    return;
+  }
+  const left = mapAttribute(ele, "left", win);
+  const bot = mapAttribute(ele, "bottom", win);
   if (left === -1 && bot === -1) {
     return;
   }
 
+  let tt: HTMLElement = ele.parentNode as HTMLElement;
+  const subItem: Array<string> = ["LI", "SUP", "UL", "OL", "SPAN", "P"];
+  // list doesn't include HTML, BODY, DETAILS or DIV
+  while (subItem.includes(tt.tagName)) {
+    tt = tt.parentNode as HTMLElement;
+  }
+  const WIDTH =
+    Math.round(mapAttribute(tt, "width", win) as number) - 30 * EM_SZ;
   if (left > WIDTH) {
     ele.classList.add("leanIn");
   }
-  let tt = ele.parentNode;
-  const subItem: Array<string> = ["LI", "SUP", "UL", "OL", "SPAN", "P"];
-  // list doesnt include HTML, BODY or DIV
-  while (subItem.includes(tt.tagName)) {
-    tt = tt.parentNode;
-  }
 
-  const HEIGHT = (mapAttribute(tt, "height") as number) - 3 * EM_SZ;
+  const HEIGHT = (mapAttribute(tt, "height", win) as number) - 3 * EM_SZ;
   if (bot > HEIGHT) {
     ele.classList.add("leanUp");
   }
@@ -165,32 +184,43 @@ export function applyDOMpostions(ele: HTMLElement, WIDTH: number): void {
  * mapPositions
  * Apply list of values previously made to DOM, and add CSS adjustments.
  * IMPURE.
+ *
  * @param {Array<string>} data ~ the results of normaliseData()
  * @param {Document =document} dom
+ * @param {Window =window} win
  * @protected
  * @returns {void}
  */
-function mapPositions(data: Array<string>, dom: Document = document): void {
-  const WIDTH: number = getArticleWidth(true, dom);
-
+function mapPositions(data: Array<string>, dom: Document, win: Window): void {
   let j = 1;
-  const REFS = dom.querySelectorAll(ALL_REFERENCE_LINKS);
+  const REFS: Array<HTMLAnchorElement> = Array.from(
+    dom.querySelectorAll(ALL_REFERENCE_LINKS),
+  );
+  if (data.length > REFS.length) {
+    dom.querySelector(ALL_REFERENCE).classList.add(SHOW_ERROR);
+    dom.querySelector("p[role=status]").textContent += " Recompile meta data. ";
+    throw new Error(
+      "Too many references in meta-data for this article, pls recompile.",
+    );
+  }
 
-  for (const i in data) {
+  for (let i = 0; i < data.length; i++) {
     REFS[i].setAttribute("aria-label", "" + data[i]);
-    applyDOMpostions(REFS[i], WIDTH);
+    applyDOMpositions(REFS[i], win);
     if (OPTS.renumber) {
       REFS[i].textContent = "" + j;
     }
     j++;
   }
   if (REFS.length > data.length) {
+    dom.querySelector("p[role=status]").textContent += "Recompile meta data";
+
     let i = data.length;
     while (i < REFS.length) {
       const dit = generateEmpty(i);
       REFS[i].setAttribute("aria-label", "" + dit);
 
-      applyDOMpostions(REFS[i], WIDTH);
+      applyDOMpositions(REFS[i], win);
       if (OPTS.renumber) {
         REFS[i].textContent = "" + (i + 1);
       }
@@ -210,7 +240,7 @@ function mapPositions(data: Array<string>, dom: Document = document): void {
  * @protected
  * @returns {void}
  */
-function addMetaAge(xhr: SimpleResponse, dom: Document = document) {
+function addMetaAge(xhr: SimpleResponse, dom: Document) {
   let tstr = xhr.headers.get("last-modified");
   if (!tstr) {
     return;
@@ -243,26 +273,23 @@ function addMetaAge(xhr: SimpleResponse, dom: Document = document) {
  * @param {DesktopBiblioProps} opts
  * @param {Document =document} dom
  * @param {Location =location} loc
+ * @param {Window =window} win
  * @public
  * @returns {void}
  */
 export async function createBiblio(
   opts: DesktopBiblioProps,
-  dom: Document = document,
-  loc: Location = location,
+  dom: Document,
+  loc: Location,
+  win: Window,
 ) {
   OPTS = Object.assign(
+    OPTS,
     {
-      indexUpdated: 0,
-      gainingElement: "#biblio",
-      referencesCache: "/resource/XXX-references",
-      renumber: 1, // set to 0 to disable
-      maxAuthLen: 65,
-      debug: debug(),
-      runFetch: runFetch,
+      debug: debug(loc),
     },
     opts,
-  );
+  ) as DesktopBiblioPropsDefinite;
   if (dom.querySelectorAll(ALL_REFERENCE).length === 0) {
     log(
       "info",
@@ -276,6 +303,7 @@ export async function createBiblio(
   const data: SimpleResponse = await OPTS.runFetch(
     makeRefUrl(OPTS.referencesCache, loc),
     false,
+    loc,
   );
   if (!data.ok || !Array.isArray(data.body)) {
     markAllLinksUnknown(dom, loc);
@@ -289,7 +317,7 @@ export async function createBiblio(
     );
   } else {
     const REFS = dom.querySelectorAll(ALL_REFERENCE_LINKS);
-    if (REFS.length < data.length) {
+    if (REFS.length < data.body.length) {
       // situation only likely to occur in test data
       throw new Error("Recompile the meta data for  " + loc.pathname);
       return;
@@ -299,14 +327,14 @@ export async function createBiblio(
     if (tmp) {
       tmp.setAttribute("style", "");
     }
-    addMetaAge(data);
+    addMetaAge(data, dom);
     const cooked: Array<string> = normaliseData(
       data.body as Array<ReferenceType>,
     );
-    mapPositions(cooked, dom);
+    mapPositions(cooked, dom, win);
 
     // enable reporting of bad values
-    dom.querySelector(ALL_REFERENCE).classList.add("showBiblioErrors");
+    dom.querySelector(ALL_REFERENCE).classList.add(SHOW_ERROR);
   }
 }
 
@@ -322,7 +350,7 @@ export async function createBiblio(
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {
-    console.error("ERROR: to use injectOpts, you must set NODE_ENV");
+    log("error", "to use injectOpts, you must set NODE_ENV");
     return;
   }
   OPTS = Object.assign(OPTS, a);
@@ -336,7 +364,7 @@ export const TEST_ONLY = {
   markAllLinksUnknown,
   generateEmpty,
   normaliseData,
-  applyDOMpostions,
+  applyDOMpositions,
   mapPositions,
   addMetaAge,
   createBiblio,

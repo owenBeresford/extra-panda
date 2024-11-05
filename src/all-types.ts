@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { MouseEvent, WheelEvent, TouchEvent, KeyboardEvent } from "jsdom";
+// import { MouseEvent, WheelEvent, TouchEvent, KeyboardEvent } from "jsdom";
 // these are mostly the same, but I thought knowing the different sources may be useful.
 
 export interface ReferenceType {
@@ -26,7 +26,14 @@ export type MiscEventHandler3 = (
   dom: Document,
   loc: Location | Window,
 ) => void;
+
 export type MiscEventHandler4 = (
+  dom: Document,
+  loc: Location,
+  win: Window,
+) => void;
+
+export type MiscEventHandler5 = (
   a: Event,
   dom: Document,
   loc: Location,
@@ -62,7 +69,7 @@ export interface CoreProps {
   mobileRunFetch?: FetchedExec;
   desktopRunFetch?: FetchedExec;
   adjacentRunFetch?: FetchedExec;
-  debug: () => boolean;
+  debug: (loc: Location) => boolean;
 }
 
 export type Fetch = (u: string, o: RequestInit) => Promise<Response>;
@@ -72,6 +79,7 @@ export type Fetchable = Fetch | null;
 export type FetchedExec = (
   url: string,
   trap: boolean,
+  loc: Location,
 ) => Promise<SimpleResponse>;
 
 export interface SimpleResponse {
@@ -97,6 +105,18 @@ export interface DesktopBiblioProps {
   debug: boolean;
 }
 
+export interface DesktopBiblioPropsDefinite {
+  indexUpdated: number;
+  referencesCache: string;
+  gainingElement: string;
+
+  maxAuthLen: number;
+  renumber: number;
+
+  runFetch: FetchedExec;
+  debug: boolean;
+}
+
 export interface MobileBiblioProps {
   referencesCache?: string;
   gainingElement?: string;
@@ -111,6 +131,20 @@ export interface MobileBiblioProps {
   debug: boolean;
 }
 
+export interface MobileBiblioPropsDefinite {
+  referencesCache: string;
+  gainingElement: string;
+  losingElement: string;
+
+  renumber: number;
+  forceToEnd: number;
+  maxAuthLen: number;
+  maxDescripLen: number;
+
+  runFetch: FetchedExec;
+  debug: boolean;
+}
+
 export interface AdjacentProps {
   name?: string;
   meta?: string;
@@ -120,6 +154,19 @@ export interface AdjacentProps {
   iteration?: number;
   group: string;
   count?: number;
+  debug: boolean;
+  runFetch: FetchedExec;
+}
+
+export interface AdjacentPropsDefinite {
+  name: string;
+  meta: string;
+  perRow: number;
+  titleLimit: number;
+  rendered: boolean;
+  iteration: number;
+  group: string;
+  count: number;
   debug: boolean;
   runFetch: FetchedExec;
 }

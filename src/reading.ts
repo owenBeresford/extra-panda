@@ -11,10 +11,15 @@ import { ReadingProps } from "./all-types";
  * Note: conversion to minutes is still hard coded, mostly as I cannot see value in other formats.
  * @param {ReadingProps} opts
  * @param {Document =document} dom
+ * @param {Location =location} loc
  * @public
  * @returns {void}
  */
-export function readingDuration(opts: ReadingProps, dom = document): void {
+export function readingDuration(
+  opts: ReadingProps,
+  dom: Document,
+  loc: Location,
+): void {
   const RE = /[ \t\n\r.(),~]/g;
   const options = Object.assign(
     {},
@@ -25,7 +30,7 @@ export function readingDuration(opts: ReadingProps, dom = document): void {
       wordPerMin: 275,
       codeSelector: "code",
       refresh: false,
-      debug: debug(),
+      debug: debug(loc),
     },
     opts,
   ) as ReadingProps;

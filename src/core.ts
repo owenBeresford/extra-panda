@@ -1,14 +1,8 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { Location, Document, HTMLElement } from "jsdom";
+// import { Location, Document, HTMLElement } from "jsdom";
 
-import { CoreProps, MiscEvent, Cookieable, MultiFuncArg } from "./all-types";
-import {
-  log,
-  debug,
-  APPEARANCE_COOKIE,
-  _getCookie,
-  runFetch,
-} from "./networking";
+import { CoreProps, MiscEvent, MultiFuncArg } from "./all-types";
+import { log, debug, runFetch } from "./networking";
 import {
   listContentGroup,
   extractGroup,
@@ -27,17 +21,13 @@ import {
 } from "./effect";
 import { readingDuration } from "./reading";
 import { modalInit } from "./modal";
+import { applyAppearance } from "./cookies";
 
 // variables across this module
 // * @protected
 let OPTS: CoreProps = {
   pageInitRun: 0,
 } as CoreProps;
-
-// removed:
-// CorrectionModule.prototype.columnise = function ()    << now CSS
-// CorrectionModule.prototype.biblioExtract = function ()  << runs HEAD
-// CorrectionModule.prototype.extractGET = function (val)  << UNUSED, became language API
 
 /**
  * _map
@@ -60,18 +50,17 @@ function _map(where: HTMLElement, action: MultiFuncArg): void {
  *
  * @param {Document =document} dom
  * @param {location =location} loc
+ * @param {Window =window} win
  * @protected
  * @returns {void}
  */
-function initPopupMobile(
-  dom: Document = document,
-  loc: Location = location,
-): void {
-  if (!isLocal(loc.host) && !isMobile(dom, loc)) {
+function initPopupMobile(dom: Document, loc: Location, win: Window): void {
+  const MOBILE = isMobile(dom, loc, win);
+  if (!isLocal(loc.host) && !MOBILE) {
     return;
   }
 
-  if (isMobile(dom, loc)) {
+  if (MOBILE) {
     dom.querySelector("#sendMasto").textContent = "Share article";
   }
   const html: Array<string> = [
@@ -111,64 +100,6 @@ function initPopupMobile(
 }
 
 /**
- * storeAppearance
- * Write supplied data to a COOKIE
- *
- * @param {string} ft - font
- * @param {string} fs - font-size
- * @param {string} dir - direction, mostly unused
- * @param {string} clr - color scheme
- * @protected
- * @returns {void}
- */
-function storeAppearance(
-  ft: string,
-  fs: string,
-  dir: string,
-  clr: string,
-): void {
-  const COOKIE: Cookieable = _getCookie();
-  const json: string = JSON.stringify({ ft: ft, fs: fs, dn: dir, cr: clr });
-  COOKIE.set(APPEARANCE_COOKIE, json, 365.254);
-}
-
-/**
- * applyAppearance
- * Apply branding settings found in a COOKIE
- * @param {Document =document} dom
- * @protected
- * @returns {void}
- */
-function applyAppearance(dom: Document = document): void {
-  const COOKIE: Cookieable = _getCookie();
-
-  const dat: string = COOKIE.get(APPEARANCE_COOKIE);
-  if (!dat) {
-    return;
-  }
-
-  const dat2 = JSON.parse(dat);
-  // IOIO FIXME add type-washing to cookie
-
-  if (!(dat2["ft"] && dat2["fs"])) {
-    return;
-  }
-  const CSS: string =
-    "body, .annoyingBody { font-family: " +
-    dat2["ft"] +
-    "; font-size: " +
-    dat2["fs"] +
-    "; direction:" +
-    dat2["dn"] +
-    "; }";
-
-  const STYLE = dom.createElement("style");
-  STYLE.setAttribute("id", "client-set-css");
-  STYLE.innerText = CSS;
-  dom.getElementsByTagName("head")[0].append(STYLE);
-}
-
-/**
  * burgerMenu
  * A utility to manage the State in the burgermenu
  * @param {string =".burgerMenu"} id - HTML id for the menu
@@ -176,10 +107,7 @@ function applyAppearance(dom: Document = document): void {
  * @protected
  * @returns {void}
  */
-function burgerMenu(
-  id: string = ".burgerMenu",
-  dom: Document = document,
-): void {
+function burgerMenu(id: string = ".burgerMenu", dom: Document): void {
   const t: HTMLElement = dom.querySelector(id);
   const ico: HTMLElement = dom.querySelector("#pageMenu i");
 
@@ -205,7 +133,7 @@ function burgerMenu(
  * @protected
  * @returns {void}
  */
-function tabChange(id: string | MiscEvent, dom: Document = document): void {
+function tabChange(id: string | MiscEvent, dom: Document): void {
   let thing: HTMLElement | null = null;
   let target: string = "";
 
@@ -213,7 +141,7 @@ function tabChange(id: string | MiscEvent, dom: Document = document): void {
     target = id;
     thing = dom.querySelector(id) as HTMLElement;
   } else {
-    const tmp: HTMLElement = id.target;
+    const tmp: HTMLElement = id.target as HTMLElement;
     thing = dom.querySelector("#" + tmp.id) as HTMLElement;
     target = "" + thing.getAttribute("href");
   }
@@ -222,26 +150,35 @@ function tabChange(id: string | MiscEvent, dom: Document = document): void {
     return;
   }
 
-  let iter1 = dom.querySelectorAll(".tab-title");
+  const iter1: Array<HTMLLIElement> = Array.from(
+    dom.querySelectorAll(".tab-title"),
+  );
   for (let i = 0; i < iter1.length; i++) {
     iter1[i].classList.remove("is-active");
   }
 
-  iter1 = dom.querySelectorAll(".tab-title>a");
-  for (let i = 0; i < iter1.length; i++) {
-    iter1[i].setAttribute("aria-hidden", "true");
-  }
-
-  const iter2 = dom.querySelectorAll(".tabs-content .tabs-panel");
+  const iter2: Array<HTMLAnchorElement> = Array.from(
+    dom.querySelectorAll(".tab-title>a"),
+  );
   for (let i = 0; i < iter2.length; i++) {
-    iter2[i].classList.remove("is-active");
     iter2[i].setAttribute("aria-hidden", "true");
   }
 
-  const [alive] = dom.querySelectorAll(".tabs-content " + target);
+  const iter3: Array<HTMLLIElement> = Array.from(
+    dom.querySelectorAll(".tabs-content .tabs-panel"),
+  );
+  for (let i = 0; i < iter3.length; i++) {
+    iter3[i].classList.remove("is-active");
+    iter3[i].setAttribute("aria-hidden", "true");
+  }
+
+  const [alive]: Array<HTMLElement> = Array.from(
+    dom.querySelectorAll(".tabs-content " + target),
+  );
   alive.classList.add("is-active");
   alive.setAttribute("aria-hidden", "false");
-  thing.parentNode.classList.add("is-active");
+  const thing2: HTMLElement = thing.parentNode as HTMLElement;
+  thing2.classList.add("is-active");
   thing.setAttribute("aria-hidden", "false");
 }
 
@@ -258,9 +195,9 @@ function tabChange(id: string | MiscEvent, dom: Document = document): void {
  */
 export async function siteCore(
   opts: CoreProps,
-  dom: Document = document,
-  loc: Location = location,
-  win: Window = window,
+  dom: Document,
+  loc: Location,
+  win: Window,
 ): Promise<void> {
   OPTS = Object.assign(
     OPTS,
@@ -269,7 +206,7 @@ export async function siteCore(
     },
     opts,
   );
-  const ldebug = debug();
+  const ldebug = debug(loc);
 
   if (OPTS.pageInitRun) {
     log("warn", "Extra panda should not be run more than once per page");
@@ -277,14 +214,16 @@ export async function siteCore(
   }
   OPTS.pageInitRun = 1;
 
-  const tt: Array<HTMLElement> = dom.querySelectorAll(".noJS");
+  const tt: Array<HTMLElement> = Array.from(
+    dom.querySelectorAll(".noJS"),
+  ) as Array<HTMLElement>;
   for (let i = 0; i < tt.length; i++) {
     tt[i].classList.remove("noJS");
   }
 
   const tmp: HTMLElement = dom.querySelector("#pageMenu");
   if (tmp) {
-    _map(tmp, (e: Event): void => {
+    _map(tmp, (e: Event | string): void => {
       return burgerMenu(".burgerMenu", dom);
     });
   } else {
@@ -292,11 +231,11 @@ export async function siteCore(
   }
 
   applyVolume(dom, win);
-  initPopupMobile(dom, loc);
+  initPopupMobile(dom, loc, win);
   initMastodon(dom, loc, win);
   const isRefs: boolean = dom.querySelector(".addReferences") !== null;
-  addOctoCats(isRefs, dom);
-  addBooks(isRefs, dom);
+  addOctoCats(isRefs, dom, win);
+  addBooks(isRefs, dom, win);
   addFancyButtonArrow(dom);
   addBashSamples(dom);
   applyAppearance(dom);
@@ -304,7 +243,7 @@ export async function siteCore(
   expandDetails(1040, dom, loc, win);
 
   if (
-    !isMobile(dom, loc) &&
+    !isMobile(dom, loc, win) &&
     loc.pathname !== "/resource/home" &&
     dom.querySelectorAll(".reading").length < 2
   ) {
@@ -316,13 +255,16 @@ export async function siteCore(
         refresh: true,
       },
       dom,
+      loc,
     );
   }
 
   {
     const tabs = dom.querySelectorAll(".tabComponent");
     for (let i = 0; i < tabs.length; i++) {
-      const btns = tabs[i].querySelectorAll(".tab-title a");
+      const btns: Array<HTMLElement> = Array.from(
+        tabs[i].querySelectorAll(".tab-title a"),
+      ) as Array<HTMLElement>;
       for (let j = 0; j < btns.length; j++) {
         _map(btns[j], tabChange);
       }
@@ -330,7 +272,7 @@ export async function siteCore(
   }
 
   if (loc.pathname.match("group-")) {
-    const tt = extractGroup(null, loc, dom);
+    const tt = extractGroup(null, loc);
     if (tt) {
       await createAdjacentChart(
         {
@@ -341,10 +283,11 @@ export async function siteCore(
         },
         dom,
         loc,
+        win,
       );
     }
   } else {
-    if (isMobile(dom, loc)) {
+    if (isMobile(dom, loc, win)) {
       await mobileCreateBiblio(
         {
           debug: ldebug,
@@ -358,11 +301,12 @@ export async function siteCore(
       await desktopCreateBiblio(
         {
           debug: ldebug,
-          runFetch: "desktopRunFetch" in OPTS ? OPTS.desktopRunFetch : runFetch,
           renumber: 1,
+          runFetch: "desktopRunFetch" in OPTS ? OPTS.desktopRunFetch : runFetch,
         },
         dom,
         loc,
+        win,
       );
     }
 
@@ -385,6 +329,7 @@ export async function siteCore(
           },
           dom,
           loc,
+          win,
         );
       }
     }
@@ -394,7 +339,10 @@ export async function siteCore(
   // This is calling out to global scope on purpose, as its outside the module,
   //   I don't rely on which module loads first and I can't import the function
   //   when it isn't there.
-  if (typeof document.pageStartup === "function") {
+  if (
+    typeof document !== "undefined" &&
+    typeof document.pageStartup === "function"
+  ) {
     document.pageStartup();
   } else {
     log(
@@ -427,7 +375,7 @@ export function hasBeenRun(): number {
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {
-    console.error("To use injectOpts, you must set NODE_ENV");
+    log("error", "To use injectOpts, you must set NODE_ENV");
     return;
   }
   OPTS = Object.assign(OPTS, a);
@@ -441,8 +389,6 @@ export const TEST_ONLY = {
   hasBeenRun,
   _map,
   initPopupMobile,
-  storeAppearance,
-  applyAppearance,
   burgerMenu,
   tabChange,
   siteCore,

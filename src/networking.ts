@@ -1,7 +1,10 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
 import { Fetchable, SimpleResponse, Cookieable } from "./all-types";
+// this uses document as an in-code literal,
+// I have an alternative dynamic load if this static load breaks anything.
+import { QOOKIE } from "./cookies";
 
-// Yes I know full well this is a dups of Mocks available in Jest
+// Yes I know full well this is a dup of Mocks available in Jest
 // Vitest also can do those Mocks
 // but this is just a simple counter, not an object
 // adding a dep for 1 int is overkill.
@@ -14,7 +17,7 @@ let LOG_USAGE: number = 0;
  * @public
  * @returns {boolean}
  */
-export function debug(loc: Location = location): boolean {
+export function debug(loc: Location): boolean {
   const u: URLSearchParams = new URLSearchParams(loc.search);
   return u.has("debug");
 }
@@ -43,14 +46,15 @@ export const URL_PLACEHOLDER = "https://owenberesford.me.uk/";
 export const TEST_MACHINE = "192.168.0.35";
 export const APPEARANCE_COOKIE = "appearance";
 export const EM_SZ = 16;
+export const SHOW_ERROR = "showBiblioErrors";
 
 /**
   According to the internet a current phone is likely to have a PPI of over 300
   (historical trend) a cheap lazer will have a PPI of 300, 600 or 900 PPI
-  a desktop / laptop is likely to hve a 80-150 PPI
+  a desktop / laptop is likely to have a 80-150 PPI
  
-https://www.displayninja.com/what-is-pixel-density/
-https://phonesdata.com/en/best/screenppi/
+  @see https://www.displayninja.com/what-is-pixel-density/
+  @see https://phonesdata.com/en/best/screenppi/
  */
 export const MOBILE_MIN_PPI = 180;
 
@@ -80,16 +84,18 @@ export function getFetch(): Fetchable {
  * This behaves as a VERY SIMPLE middle-ware.
  * @param {string|URL} url
  * @param {boolean} trap ~ return null rather than an exception
+ * @param {Location =location} loc
  * @public
  * @throws {Error} = predictably, in case of network issue
  * @returns {Promise<SimpleResponse>}
  */
 export async function runFetch(
-  url: string | URL,
+  url: string,
   trap: boolean,
+  loc: Location,
 ): Promise<SimpleResponse> {
   const f = getFetch();
-  const ldebug = debug();
+  const ldebug = debug(loc);
   try {
     const trans: Response = await f(url, { credentials: "same-origin" });
     if (!trans.ok) {
@@ -102,6 +108,10 @@ export async function runFetch(
         throw new Error("ERROR getting asset " + url);
       }
     }
+    if (trans.status === 404) {
+      throw new Error("got HTTP 404");
+    }
+
     let payload = "";
     if (
       trans.headers
@@ -129,70 +139,105 @@ export async function runFetch(
     if (trap) {
       return { body: "nothing", headers: {} as Headers, ok: false };
     } else {
-      throw new Error("ERROR getting asset " + url);
+      throw new Error("ERROR getting asset " + url + " " + e.toString());
     }
   }
 }
 
-// source code copied from: then amended
-// https://www.tabnine.com/academy/javascript/how-to-set-cookies-javascript/
-// as common libraries outside of npm seem really flakey
-
 /**
-  A class to allow access to cookies
-  This version is mostly used by FF
+ * delay
+ * a method for testing that pretends to be thread.sleep()
+ 
+ * @param {number} ms
+ * @public
+ * @returns {Promise<void>}
  */
-class COOKIE implements Cookieable {
-  set(cName: string, cValue: string, expDays: number): void {
-    let expires = "";
-    if (expDays) {
-      const d1 = new Date();
-      d1.setTime(d1.getTime() + expDays * 24 * 60 * 60 * 1000);
-      expires = "expires=" + d1.toUTCString();
-    }
-    document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
-  }
-
-  get(cName: string): string {
-    const name = cName + "=";
-    const cDecoded = decodeURIComponent(document.cookie);
-    const cArr = cDecoded.split("; ");
-    let res;
-
-    cArr.forEach((val) => {
-      if (val.indexOf(name) === 0) {
-        res = val.substring(name.length);
-      }
-    });
-    return res;
-  }
+export async function delay(ms: number): Promise<void> {
+  return new Promise((good, bad) => setTimeout(good, ms));
 }
 
 /**
- * getCookie
+ * domLog
+ * Add a message to the current webpage in #log  IMPURE
+ * NOTE THIS FUNCTION CONTAINS document REFERENCES
+ *
+ * @param {string} str - your message
+ * @param {boolean =false} bold
+ * @param {boolean =false} html - set this to true to embed the first arg as HTML, not as text
+ * @public
+ * @returns {void}
+ */
+export function domLog(
+  str: string,
+  bold: boolean = false,
+  html: boolean = false,
+): void {
+  const LOG: HTMLUListElement = document.getElementById(
+    "log",
+  ) as HTMLUListElement;
+  const li: HTMLElement = document.createElement("li");
+  const dd = new Date();
+  const tt = document.createElement("time");
+  tt.dateTime = dd.toString();
+  tt.textContent =
+    dd.getUTCHours() + ":" + dd.getUTCMinutes() + ":" + dd.getUTCSeconds();
+  li.appendChild(tt);
+  if (html) {
+    const t2 = document.createElement("template");
+    t2.innerHTML = str;
+    li.appendChild(t2.content);
+  } else {
+    li.appendChild(document.createTextNode(" => " + str));
+  }
+  if (bold) {
+    li.setAttribute("style", "font-weight:115%; font-size:115%; ");
+  }
+  LOG.append(li);
+}
+
+/**
+ * accessCookie
  * Generate a cookie access object PURE
  * The awkward name is not to collide with Chrome extensions.
  * The commented code should run faster in Chrome, however it was making errors in tests, so I commented it
  * @public
  * @returns {Cookieable }
  */
-export function _getCookie(): Cookieable {
+export function accessCookie(): Cookieable {
   // first option is for chrome based browsers,
   // technically served via a JS plugin that is always present
+  // Typescript really doesnt like this
   //  if (typeof getCookie === "function") {
   //    return { get: getCookie, set: setCookie } as Cookieable;
   //  }
-  return new COOKIE();
+  // ELSE:
+  if (typeof document !== "undefined") {
+    //		const { QOOKIE } =import('./cookies');
+    return new QOOKIE();
+  } else {
+    // void implementation for unit tests
+    // test with cookies need to be run **inside** a browser
+    // cookie behaviour is more complex than in the 90s.
+    return {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      set(cName: string, cValue: string, expDays: number): void {},
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      get(cName: string): string {
+        return "";
+      },
+    } as Cookieable;
+  }
 }
 
 /////////////////////////////////////////////////// testing ///////////////////////////////////////////////
 
 export const TEST_ONLY = {
-  _getCookie,
   runFetch,
   getFetch,
   log,
   debug,
+  delay,
+  accessCookie,
   getLogCounter: (): number => {
     return LOG_USAGE;
   },

@@ -1,6 +1,6 @@
 import { assert, describe, it } from "vitest";
 
-import { page } from "./page-seed";
+import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../modal";
 import { enableGetEventListeners } from "./vitest-addons";
 import { appendIsland, isFullstack } from "../dom-base";
@@ -8,7 +8,6 @@ import { appendIsland, isFullstack } from "../dom-base";
 const { modalInit, HTMLDetailsClick, HTMLDetailsTrap } = TEST_ONLY;
 
 describe("TEST modal ", () => {
-  // IOIO I need to do more usability on this feature
   it("go 1: HTMLDetailsClick", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     enableGetEventListeners(dom);
@@ -30,32 +29,30 @@ describe("TEST modal ", () => {
     assert.equal(buf.getEventListeners().length, 1, "Assert #1");
     assert.equal(dom.body.getEventListeners().length, 2, "Assert #2");
 
-	if (!isFullstack()) {	
+    if (!isFullstack(win)) {
       context.skip();
-	}
+    }
 
     let toggle = dom.querySelector("summary");
-	toggle.click( );
-  // I click on a SUMMARY with no CODE, the DETAILS opens   TICK
-	assert.equal("true", buf.getAttribute('open'), "Assert #3");
-	toggle.click( );
-  // I click on a SUMMARY with no CODE and is OPEN, the DETAILS closes TICK 
-	assert.equal("", buf.getAttribute('open'), "Assert #4");
-
+    toggle.click();
+    // I click on a SUMMARY with no CODE, the DETAILS opens   TICK
+    assert.equal("true", buf.getAttribute("open"), "Assert #3");
+    toggle.click();
+    // I click on a SUMMARY with no CODE and is OPEN, the DETAILS closes TICK
+    assert.equal("", buf.getAttribute("open"), "Assert #4");
 
     let buf2 = dom.querySelector("#outside");
-	toggle.click( );
-	assert.equal("true", buf.getAttribute('open'), "Assert #5");
-	buf2.click( );
-  // I click outside the DETAILS, and its open, it closes TICK
-	assert.equal("", buf.getAttribute('open'), "Assert #6");
+    toggle.click();
+    assert.equal("true", buf.getAttribute("open"), "Assert #5");
+    buf2.click();
+    // I click outside the DETAILS, and its open, it closes TICK
+    assert.equal("", buf.getAttribute("open"), "Assert #6");
 
-	toggle.click( );
-	let key=new KeyboardEvent("keypress", { key: "Escape", });
-	dom.dispatchEvent(key);
-  // I fire a ESC key sequence with an DETAILS in open state, it closes
-	assert.equal("", buf.getAttribute('open'), "Assert #7");
-
+    toggle.click();
+    let key = new KeyboardEvent("keypress", { key: "Escape" });
+    dom.dispatchEvent(key);
+    // I fire a ESC key sequence with an DETAILS in open state, it closes
+    assert.equal("", buf.getAttribute("open"), "Assert #7");
   });
 
   it("go 1.1: HTMLDetailsClick", (context) => {
@@ -79,30 +76,27 @@ window.alert("SDFSDFSDF SDFSDFSDF");
     assert.equal(buf.getEventListeners().length, 1, "Assert #8");
     assert.equal(dom.body.getEventListeners().length, 2, "Assert #9");
 
-	if (!isFullstack()) {	
+    if (!isFullstack(win)) {
       context.skip();
-	}
+    }
 
     let toggle = dom.querySelector("summary");
-	toggle.click( );
-  // I click on a SUMMARY with CODE, the DETAILS opens   TICK
-	assert.equal("true", buf.getAttribute('open'), "Assert #10");
-	toggle.click( );
-  // I click on a SUMMARY with CODE and is OPEN, it doesnt close so people can interact with the CODE sample
-	assert.equal("true", buf.getAttribute('open'), "Assert #11");
-
+    toggle.click();
+    // I click on a SUMMARY with CODE, the DETAILS opens   TICK
+    assert.equal("true", buf.getAttribute("open"), "Assert #10");
+    toggle.click();
+    // I click on a SUMMARY with CODE and is OPEN, it doesnt close so people can interact with the CODE sample
+    assert.equal("true", buf.getAttribute("open"), "Assert #11");
 
     let buf2 = dom.querySelector("#outside");
-	buf2.click( );
-  // I click outside the DETAILS, and its open, it closes TICK
-	assert.equal("", buf.getAttribute('open'), "Assert #13");
+    buf2.click();
+    // I click outside the DETAILS, and its open, it closes TICK
+    assert.equal("", buf.getAttribute("open"), "Assert #13");
 
-	toggle.click( );
-	let key=new KeyboardEvent("keypress", { key: "Escape", });
-	dom.dispatchEvent(key);
-  // I fire a ESC key sequence with an DETAILS in open state, it closes
-	assert.equal("", buf.getAttribute('open'), "Assert #14");
-
+    toggle.click();
+    let key = new KeyboardEvent("keypress", { key: "Escape" });
+    dom.dispatchEvent(key);
+    // I fire a ESC key sequence with an DETAILS in open state, it closes
+    assert.equal("", buf.getAttribute("open"), "Assert #14");
   });
-
 });

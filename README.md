@@ -78,7 +78,7 @@ My work sequence has been:
 - ditch unused features, and improve readability/ English
 - split into better modules
 - port to typescript and better CSS/HTML
-- add many tests
+- add many tests using newer test framework
 - split into better modules, refactor, and improve English again
 
 Pls note English is my first language #leSigh.
@@ -107,7 +107,7 @@ Notes:
 - **_NOTE_** Commits at the start of this project are completely meaningless, as it's just when I moved the code back to my dev machine. They are meaningless duration markers, rather than feature markers.
 - Some of these unit tests are less meaningful than others, regrettably (running from Node).   It would be nice to setup test from a browser.  To *look* at the UX (as in, I am being the success / fail criterion), I did some manual testing
 - Use new language features (ADD a few KB of source) without jQuery (DROP >300KB of source). Dropping jQuery, as "select downloaded features" feature has been removed from https://jquery.com
-- Use TEST_ONLY symbols that expose entire module to unit tests.   I will add config to strip them in release build.   I didn't invent this structure, but I have used it ever since I started with JS modules, rather than plain JS.
+- Use TEST_ONLY symbols that expose entire module to unit tests.   Tree-shaking means these do not show in release builds and is a free feature of most build tools.   I didn't invent this structure, but I have used it ever since I started with JS modules, rather than plain JS.
 - Proper TDD units, as I have better tools now (JS modules + a fake DOM), make code better ~ separately to, and above every other bullet point. WARN: Some tests cannot be run outside a real webrowser.
 - Vastly improve English / readability of the code. Gain is separate to all other points.
 - As all this code is made after a minimiser script is adopted, faction code more finely into logical modules. So it's more readable.
@@ -126,7 +126,26 @@ Notes:
 - The process of expanding the number of tools in this project is adding features, but also acting as a lint as it shows small oversights.
 - Note I added a UI feature that added extra HTML, but this didn't invalidate any of the unit-tests.
 - I am adding search params for testing, rather than a Mock, as I may want to use them during QA
-- I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together, it's a nul-point difference.   
+- I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together with `rebase`, it's a nul-point difference.   
+
+#### Outsize late in project commit
+- The goal of this is testing HTTPS only features (eg copy-and-paste) in a unit test AND testing CSS (eg z-index) features
+- Started to build another test harness, to be able to run Vitest in a browser
+   - Have new smol webserver in Express + HTTPS
+   - Have a fresh captive version of Chrome
+   - Create "fake Vitest output" in the new script so can be integrated with other scripts into larger testing runtime
+- Iterate second build step to achieve this, obviously can't send TS to browser.
+- Discover can't be done, change to jest for browser unit tests
+- Discover can't be done, change jest for jest-lite
+- Remove normal *build* use of JSDOM in Vitest as it was polluting variables
+- Rebuild all the tests due to this change (line above)
+- Refactor cookie code for readability
+- Do more code readability changes
+- DONE: Add jest-lite/ browser unit-tests for the skip() sections in vitest.  These are often behaviour centric tests
+- As suit sits in Nov 2024, it takes 1m to exec.
+- TODO: Want to add some CSS tests for crucial UI processes, like z-index
+- TODO: Make support for win32
+- TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
 
 #### Metrics that are important to goals
 
@@ -146,13 +165,17 @@ Notes:
 </details>
 <details>
 <summary> Lists of technical names </summary>
+#### values for 'NODE_ENV'
+- development ~ used at runtime, in tests
+- web-test ~ used at compile time, to make tests (affects linked libraries), '''RARE'''
+- production ~ includes less libraries, used at build time and runtime
 
-#### Known params that this code processes
+#### Known URL params that this code processes
 
 - ''first'' string - only used in the group-indexes articles
 - ''debug'' boolean - adjusts how many log messages are written
 - ''width'' number - adds a fake width to the browser
-- ''mobile'' boolean - force interpretation of current machine as a mobile device. In unit tests this MUST BE SET (1 or 0), as JSdom isn't a phone
+- ''mobile'' boolean - force interpretation of current machine as a mobile device. Boolean value. In unit tests this MUST BE SET, as JSdom isn't a phone
 
 #### Known CSS containers that this code processes
 
@@ -165,11 +188,13 @@ Notes:
 - .adjacentGroup 
 - .addReferences
 - .showBiblioErrors - this turns the broken link alert ON, which is OFF before all the content is downloaded
+- .screenDocs - suppress DETAILS expansion on page load, as these are full width docs 
+- .maquette - do not apply any effects ~ like DETAILS ~ to code demos
 - Basic Containers
 - .lotsOfWords
 - .halferWords
 - .fewWords
 -
-- please ensure .sr-only is defined (from bootstrap)
+- **Please ensure .sr-only is defined (from bootstrap)**
 </details>
 

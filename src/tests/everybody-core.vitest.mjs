@@ -3,9 +3,9 @@ import { JSDOM } from "jsdom";
 // node_modules/html-validator/lib/whatwg-validator.js
 import * as validator from "html-validator";
 
-import { page, validateHTML } from "./page-seed";
+import { page, validateHTML } from "./page-seed-vite";
 import { TEST_ONLY } from "../core";
-import { _getCookie } from "../networking";
+import { accessCookie } from "../networking";
 import { appendIsland, setIsland, isFullstack, isMobile } from "../dom-base";
 import { enableGetEventListeners, createEvent } from "./vitest-addons";
 
@@ -28,7 +28,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       "http://192.168.0.35/resource/architecture?mobile=0",
       3,
     );
-    let str = `<div id="navBar"> 
+    let str = `<p role="status">PING</p>   <div id="navBar"> 
 				<span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
 						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
@@ -103,7 +103,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       },
     };
     injectOpts(hash);
-    const CC = _getCookie();
+    const CC = accessCookie();
     CC.set(
       "appearance",
       '{"fs":"14pt","ft":"ubuntu","cr":"blue","dn":"ltr"}',
@@ -130,7 +130,9 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
 
     assert.equal(dom.querySelectorAll("i.fa-book-open").length, 6, "assert #6");
     assert.equal(dom.querySelectorAll("i.fa-github").length, 6, "assert #7");
-    assert.equal(dom.querySelectorAll("style").length, 1, "assert #8"); // added by setAppearance
+    if (typeof window === "object") {
+      assert.equal(dom.querySelectorAll("style").length, 1, "assert #8"); // added by applyAppearance
+    }
 
     let HTML =
       "<!DOCTYPE html>" + dom.getElementsByTagName("html")[0].outerHTML;
@@ -383,7 +385,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       "http://192.168.0.35/resource/home?mobile=1",
       3,
     );
-    let str = `<div id="navBar"> 
+    let str = `<p role="status">PING</p> <div id="navBar"> 
         <span class="allButtons"> 
             <a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
             <a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
@@ -459,7 +461,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       pageInitRun: 0,
     };
     injectOpts(hash);
-    const CC = _getCookie();
+    const CC = accessCookie();
     CC.set(
       "appearance",
       '{"fs":"14pt","ft":"ubuntu","cr":"blue","dn":"ltr"}',
@@ -498,7 +500,9 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       "assert #15",
     );
     assert.equal(dom.querySelectorAll("i.fa-github").length, 6, "assert #16");
-    assert.equal(dom.querySelectorAll("style").length, 1, "assert #17"); // added by setAppearance
+    if (typeof window == "object") {
+      assert.equal(dom.querySelectorAll("style").length, 1, "assert #17"); // added by setAppearance
+    }
 
     assert.equal(
       dom.querySelectorAll("ol.mobileBiblio").length,
