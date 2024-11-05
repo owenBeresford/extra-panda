@@ -134,14 +134,15 @@ Notes:
    - Have new smol webserver in Express + HTTPS
    - Have a fresh captive version of Chrome
    - Create "fake Vitest output" in the new script so can be integrated with other scripts into larger testing runtime
-- Iterate second build step to achieve this, obviously can't send TS to browser 
+- Iterate second build step to achieve this, obviously can't send TS to browser.
 - Discover can't be done, change to jest for browser unit tests
 - Discover can't be done, change jest for jest-lite
 - Remove normal *build* use of JSDOM in Vitest as it was polluting variables
-- Rebuild all the tests due to this change
+- Rebuild all the tests due to this change (line above)
 - Refactor cookie code for readability
 - Do more code readability changes
-- TODO: Add jest-lite/ browser unit-tests for the skip() sections in vitest.  These are often behaviour centric tests
+- DONE: Add jest-lite/ browser unit-tests for the skip() sections in vitest.  These are often behaviour centric tests
+- As suit sits in Nov 2024, it takes 1m to exec.
 - TODO: Want to add some CSS tests for crucial UI processes, like z-index
 - TODO: Make support for win32
 - TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
@@ -169,12 +170,12 @@ Notes:
 - web-test ~ used at compile time, to make tests (affects linked libraries), '''RARE'''
 - production ~ includes less libraries, used at build time and runtime
 
-#### Known params that this code processes
+#### Known URL params that this code processes
 
 - ''first'' string - only used in the group-indexes articles
 - ''debug'' boolean - adjusts how many log messages are written
 - ''width'' number - adds a fake width to the browser
-- ''mobile'' boolean - force interpretation of current machine as a mobile device. In unit tests this MUST BE SET (1 or 0), as JSdom isn't a phone
+- ''mobile'' boolean - force interpretation of current machine as a mobile device. Boolean value. In unit tests this MUST BE SET, as JSdom isn't a phone
 
 #### Known CSS containers that this code processes
 
@@ -194,6 +195,6 @@ Notes:
 - .halferWords
 - .fewWords
 -
-- please ensure .sr-only is defined (from bootstrap)
+- **Please ensure .sr-only is defined (from bootstrap)**
 </details>
 

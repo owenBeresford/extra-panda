@@ -382,6 +382,7 @@ async function browser2json(page, weight) {
  * @returns {void}
  */
 export async function runTests(tests) {
+	console.log("INFO: this suite takes about 1m to exec on a normal PC.  Opens many tabs in Chrome");
   try {
     let dburl = "";
     const grab = (data) => {
