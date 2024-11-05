@@ -1,7 +1,7 @@
 import { assert, describe, it } from "vitest";
 import hljs from "highlight.js/lib/core";
 
-import { page, validateHTML } from "./page-seed";
+import { page, validateHTML } from "./page-seed-vite";
 import { execHighlight } from "../highlight/highlight-css";
 import { appendIsland, isFullstack } from "../dom-base";
 import { enableGetEventListeners, createEvent } from "./vitest-addons";

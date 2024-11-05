@@ -8,6 +8,7 @@ import {
   BOUNDARY,
 } from "./all-types";
 import { log, MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./networking";
+import { booleanMap } from "./string-base";
 
 /**
  * appendIsland
@@ -25,7 +26,7 @@ import { log, MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./networking";
 export function appendIsland(
   selector: string | HTMLElement,
   html: string,
-  dom: Document = document,
+  dom: Document,
 ): void {
   try {
     if (dom === null) {
@@ -50,7 +51,7 @@ export function appendIsland(
 
 /**
  * ready
- * Triggers Page start-event
+ * Triggers Page start-event  Very IMPURE
  *
  * @param {GenericEventHandler} callback
  * @param {Document =document} dom
@@ -59,12 +60,9 @@ export function appendIsland(
  * @public
  * @returns {void}
  */
-export function ready(
-  callback: GenericEventHandler,
-  dom: Document = document,
-): void {
+export function ready(callback: GenericEventHandler, dom: Document): void {
   if (dom.readyState !== "loading") {
-    const e = dom.createEvent();
+    const e = dom.createEvent("htmlevents");
     callback(e);
   } else if (dom.addEventListener) {
     dom.addEventListener("DOMContentLoaded", callback);
@@ -88,7 +86,7 @@ export function ready(
 export function setIsland(
   selector: string | HTMLElement,
   html: string,
-  dom: Document = document,
+  dom: Document,
 ): void {
   const base = dom.createElement("template");
   base.innerHTML = html;
@@ -110,22 +108,21 @@ export function setIsland(
 /**
  * isFullstack
  * Workout if this JS runtime is inside a full range of technology, like a browser.
- * This is mostly used for tests.
+ * This is mostly used for tests.   PURE
  *
+ * @param {Window =window} win
  * @public
  * @returns {boolean}
  */
-export function isFullstack(): boolean {
-  let isNativeWindow;
-  if (typeof _window == "object") {
-    isNativeWindow = Object.getOwnPropertyDescriptor(_window, "window")
-      ?.get?.toString()
-      .includes("[native code]");
-  } else {
-    isNativeWindow = Object.getOwnPropertyDescriptor(window, "window")
-      ?.get?.toString()
-      .includes("[native code]");
+export function isFullstack(win: Window): boolean {
+  if (typeof win == "undefined") {
+    return false;
   }
+
+  const isNativeWindow = win.getComputedStyle
+    .toString()
+    .includes("[native code]");
+
   if (typeof isNativeWindow === "boolean" && isNativeWindow) {
     return true;
   }
@@ -138,42 +135,51 @@ export function isFullstack(): boolean {
  * PURE
  * @param {HTMLElement} ele
  * @param {BOUNDARY} attrib - One of top|bottom|left|right|width|height
+ * @param {Window =window} win
  * @public
  * @returns {number} - the value of the requested
  */
-export function mapAttribute(ele: HTMLElement, attrib: BOUNDARY): number {
+export function mapAttribute(
+  ele: HTMLElement,
+  attrib: BOUNDARY,
+  win: Window,
+): number {
   try {
-    if (!isFullstack()) {
+    if (!isFullstack(win)) {
       return -1;
     }
 
     const STYL = ele.getBoundingClientRect();
     return STYL[attrib];
   } catch (e) {
-    log("error", "Missing data:" + e);
+    log("error", "Missing data:" + e.message);
     return -1;
   }
 }
 
 /**
  * getArticleWidth
- * A utility to get current article width
+ * A utility to get current article width  PURE
  
- * @param {boolean} isLeft - left edge or right edge?
- * @param {Document=document} dom
+ * @param {boolean} isLeft - left edge or right edge (of tooltip)?
+ * @param {string} id - the base element for width computation
+ * @param {Document =document} dom
+ * @param {Window =window} win
  * @public
  * @returns {number} - will return -1 on mal-compliant webpages
  */
 export function getArticleWidth(
   isLeft: boolean,
-  dom: Document = document,
+  id: string = ALL_REFERENCE,
+  dom: Document,
+  win: Window,
 ): number {
-  const tmp = dom.querySelector(ALL_REFERENCE);
+  const tmp: HTMLElement = dom.querySelector(id) as HTMLElement;
   if (!tmp) {
     return -1;
   }
 
-  const wid: number = Math.round(mapAttribute(tmp, "width"));
+  const wid: number = Math.round(mapAttribute(tmp, "width", win));
   if (isLeft) {
     return wid - 32 * EM_SZ;
   } else {
@@ -199,6 +205,39 @@ function docOffsets(ele: HTMLElement, offsets: Scrollable): ScreenOffsetArray {
 }
 
 /**
+ * copyURL
+ * Copy the current URL into the paste buffer, for use in mobile view
+ * @param {Document =document} ignored
+ * @param {Location =location} loc
+ * @param {Window =window} win
+ * @public
+ * @returns {void}
+ */
+export function copyURL(ignored: Document, loc: Location, win: Window): void {
+  try {
+    if (!win.navigator.clipboard) {
+      throw new Error("No clipboard available");
+    }
+    win.navigator.clipboard.writeText(loc.href).then(
+      () => {
+        // add class for CSS effect
+        return;
+      },
+      (err: unknown) => {
+        log("error", "FAILED: copy URL " + err);
+      },
+    );
+  } catch (e0: unknown) {
+    log(
+      "error",
+      "FAILED: copy URL feature borked " +
+        e0 +
+        "\nIt will fail on a HTTP site.",
+    );
+  }
+}
+
+/**
  * applyVolume
  * Log pixel offsets so the CSS can work correctly
  
@@ -207,13 +246,10 @@ function docOffsets(ele: HTMLElement, offsets: Scrollable): ScreenOffsetArray {
  * @public
  * @returns {void}
  */
-export function applyVolume(
-  dom: Document = document,
-  win: Window = window,
-): void {
+export function applyVolume(dom: Document, win: Window): void {
   dom.querySelector("body").setAttribute("style", "--offset-height: 0;");
-  const tt: Array<HTMLElement> = dom.querySelectorAll(
-    ".lotsOfWords, .halferWords, .fewWords",
+  const tt: Array<HTMLElement> = Array.from(
+    dom.querySelectorAll(".lotsOfWords, .halferWords, .fewWords"),
   );
   for (let i = 0; i < tt.length; i++) {
     tt[i].setAttribute(
@@ -238,9 +274,9 @@ export function applyVolume(
  */
 export function expandDetails(
   bigScreen: number = 1040,
-  dom: Document = document,
-  loc: Location = location,
-  win: Window = window,
+  dom: Document,
+  loc: Location,
+  win: Window,
 ): void {
   if (!dom.querySelector(".maquetteContainer")) {
     return;
@@ -249,10 +285,13 @@ export function expandDetails(
   if (screenWidth(loc, win) > bigScreen) {
     const THING = Array.from(
       dom.querySelectorAll(".maquetteContainer details"),
-    );
+    ) as Array<HTMLDetailsElement>;
     for (let i = 0; i < THING.length; i++) {
       // this IF trap is to avoid the test results widget being locked open, and blocking the screen
-      if (!THING[i].classList.contains("singlePopup")) {
+      if (
+        !THING[i].classList.contains("singlePopup") &&
+        !THING[i].classList.contains("screenDocs")
+      ) {
         THING[i].open = true;
       }
     }
@@ -269,7 +308,7 @@ export function expandDetails(
  * @public
  * @returns {number}
  */
-function screenWidth(loc: Location = location, win: Window = window): number {
+function screenWidth(loc: Location, win: Window): number {
   const u: URLSearchParams = new URLSearchParams(loc.search);
   if (u.has("width")) {
     return parseInt(u.get("width"), 10);
@@ -278,40 +317,16 @@ function screenWidth(loc: Location = location, win: Window = window): number {
 }
 
 /**
- * booleanMap
- * Convert many possible "English" boolean values to boolean
- * NOTE: js, may not be a string
- * @param {string | number} str
- * @protected
- * @returns {boolean}
- */
-function booleanMap(str: string | number): boolean {
-  const TRUE = ["1", 1, "true", "TRUE", "on", "ON", "yes", "YES"];
-  const FALSE = ["0", 0, "false", "FALSE", "off", "OFF", "no", "NO"];
-
-  if (TRUE.includes(str)) {
-    return true;
-  }
-  if (FALSE.includes(str)) {
-    return false;
-  }
-  throw new Error("Unknown data " + str);
-}
-
-/**
  * isMobile
  * Statically workout if this JS interpreter is a mobile
+ * IMPURE
  * @param {Document =document} dom
  * @param {Location =location} loc
  * @param {Window =window} win
  * @public
  * @returns {boolean} ~ is this Mobile?
  */
-export function isMobile(
-  dom: Document = document,
-  loc: Location = location,
-  win: Window = window,
-): boolean {
+export function isMobile(dom: Document, loc: Location, win: Window): boolean {
   const u = new URLSearchParams(loc.search);
   try {
     const tt = dom.createEvent("TouchEvent");
@@ -337,13 +352,13 @@ export function isMobile(
 
 /**
  * calcScreenDPI
- * as labeled
+ * as labeled, PURE
  * @param {Document =document} dom
  * @param {Window =window} win
  * @protected
  * @returns {number}
  */
-function calcScreenDPI(dom: Document = document, win: Window = window): number {
+function calcScreenDPI(dom: Document, win: Window): number {
   try {
     const el = dom.createElement("div");
     el.setAttribute("style", "width:1in;");
@@ -364,17 +379,14 @@ function calcScreenDPI(dom: Document = document, win: Window = window): number {
 
 /**
  * currentSize
- * Supplied for testing, convert a window to a size
+ * Supplied for testing, convert a window to a size PURE
  
  * @param {Document = document} dom 
- * @param {Window = window} win 
+ * @param {Window =window} win 
  * @public
  * @returns {ScreenSizeArray}
  */
-export function currentSize(
-  dom: Document = document,
-  win: Window = window,
-): ScreenSizeArray {
+export function currentSize(dom: Document, win: Window): ScreenSizeArray {
   const root = dom.documentElement,
     body = dom.body;
   const wid = win.innerWidth || root.clientWidth || body.clientWidth;
@@ -399,11 +411,14 @@ export const TEST_ONLY = {
   getArticleWidth,
   expandDetails,
   docOffsets,
+  copyURL,
   applyVolume,
   mapAttribute,
   setIsland,
+  screenWidth,
   isFullstack,
   isMobile,
+  ready,
   calcScreenDPI,
   currentSize,
 };

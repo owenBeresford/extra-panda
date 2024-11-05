@@ -1,17 +1,29 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { dateMunge, articleName } from "./string-base";
 import { log, debug, runFetch } from "./networking";
-import { Document, Location } from "jsdom";
+//import { Document, Location } from "jsdom";
 import {
   SimpleResponse,
   ReferenceType,
   NormalisedReference,
+  AdjacentPropsDefinite,
   AdjacentProps,
 } from "./all-types";
 import { isMobile, appendIsland } from "./dom-base";
 
 // variables across this module
-let OPTS: AdjacentProps = {} as AdjacentProps;
+let OPTS: AdjacentPropsDefinite = {
+  name: "",
+  meta: "",
+  perRow: 10,
+  titleLimit: 40,
+  rendered: false,
+  iteration: 0,
+  group: "system",
+  count: 1,
+  debug: true,
+  runFetch: runFetch,
+} as AdjacentPropsDefinite;
 
 /**
  * mapURL
@@ -23,27 +35,23 @@ let OPTS: AdjacentProps = {} as AdjacentProps;
  * @protected
  * @returns {string} - the desired full URL of this page
  */
-function mapURL(
-  article: string,
-  suffix: string,
-  loc: Location = location,
-): string {
+function mapURL(article: string, suffix: string, loc: Location): string {
   //  let t = loc.protocol + "//" + loc.host,
   let t2 = loc.pathname.split("/"),
-    t = "";
-  t2 = t2.pop();
+    t = "",
+    t3 = t2.pop();
   const tmp = new URLSearchParams(loc.search);
-  if (t2 === "group-XXX" && tmp.has("first")) {
-    t2 = tmp.get("first");
+  if (t3 === "group-XXX" && tmp.has("first")) {
+    t3 = tmp.get("first");
   }
   if (suffix) {
     if (tmp.has("first")) {
-      t += loc.pathname.replace("group-XXX", t2 + "-meta");
+      t += loc.pathname.replace("group-XXX", t3 + "-meta");
     } else {
-      t += loc.pathname.replace(t2, article + "-meta");
+      t += loc.pathname.replace(t3, article + "-meta");
     }
   } else {
-    t += loc.pathname.replace(t2, article);
+    t += loc.pathname.replace(t3, article);
   }
   t += loc.search + loc.hash;
   return t;
@@ -105,7 +113,7 @@ function extractOABName(url: string): string {
  * @throws when insufficient data has been supplied
  * @returns {string}
  */
-function generateGroup(loc: Location = location): string {
+function generateGroup(loc: Location): string {
   let foreward = OPTS.group;
   if (OPTS.group === "XXX") {
     const tmp = new URLSearchParams(loc.search);
@@ -231,24 +239,24 @@ export function listContentGroup(
   id: string,
   dom: Document = document,
 ): Array<string> {
-  let grp = dom.querySelector(id);
+  const grp = dom.querySelector(id);
   if (!grp) {
     return [] as Array<string>;
   }
-  grp = grp.getAttribute("data-group");
-  if (!grp) {
+  const grpDat = grp.getAttribute("data-group");
+  if (!grpDat) {
     return [] as Array<string>;
   }
 
-  grp = grp.split(",");
-  grp = grp.map((a: string, b: number): string => {
+  let grpDat2 = grpDat.split(",");
+  grpDat2 = grpDat2.map((a: string, b: number): string => {
     return a.trim();
   });
-  if (grp[0] === "XXX") {
-    grp.shift();
+  if (grpDat2[0] === "XXX") {
+    grpDat2.shift();
     // in this case, the function will return []
   }
-  return [...grp];
+  return [...grpDat2];
 }
 
 /**
@@ -312,19 +320,21 @@ function convert2HTML(list: Array<NormalisedReference>, gname: string): string {
  * @param {string} gname
  * @param {Document =document} dom
  * @param {Location =location} loc
+ * @param {Window =window} win
  * @protected
  * @returns {string} - of HTML
  */
 function convert2IndexHTML(
   list: Array<ReferenceType>,
   gname: string,
-  dom: Document = document,
-  loc: Location = location,
+  dom: Document,
+  loc: Location,
+  win: Window,
 ): string {
   let html = "";
   for (const i in list) {
     const nui = cleanTitle(i, gname),
-      lbreak = isMobile(dom, loc) ? "<br />" : "";
+      lbreak = isMobile(dom, loc, win) ? "<br />" : "";
     let tt = list[i].desc;
     if (tt.length > 235) {
       tt = tt.substr(0, 235) + "...";
@@ -363,9 +373,9 @@ function convert2IndexHTML(
  * @protected
  * @returns {void}
  */
-function updateLabels(gname: string, dom: Document = document): void {
-  const dat: Array<HTMLElement> = dom.querySelectorAll(
-    ".top-bar.fullWidth header h1",
+function updateLabels(gname: string, dom: Document): void {
+  const dat: Array<HTMLElement> = Array.from(
+    dom.querySelectorAll(".top-bar.fullWidth header h1"),
   ) as Array<HTMLElement>;
 
   if (
@@ -375,8 +385,8 @@ function updateLabels(gname: string, dom: Document = document): void {
   ) {
     dat[0].textContent = "Group " + gname;
   }
-  const dit: Array<HTMLElement> = dom.querySelectorAll(
-    ".adjacentGroup p",
+  const dit: Array<HTMLElement> = Array.from(
+    dom.querySelectorAll(".adjacentGroup p"),
   ) as Array<HTMLElement>;
   if (dit.length && dit[0].textContent.includes("XXX")) {
     dit[0].textContent = "Some similar articles in " + gname;
@@ -394,11 +404,7 @@ function updateLabels(gname: string, dom: Document = document): void {
  * @throws Error when there is no known data to extract
  * @returns {string}
  */
-export function extractGroup(
-  ele: HTMLElement | null,
-  loc: Location = location,
-  dom: Document = document,
-): string {
+export function extractGroup(ele: HTMLElement | null, loc: Location): string {
   const tmp1 = loc.pathname.split("/group-");
   if (Array.isArray(tmp1) && tmp1.length > 1 && tmp1[1] !== "XXX") {
     return tmp1[1];
@@ -424,36 +430,32 @@ export function extractGroup(
 }
 
 /**
- * createAdjacentChart::
+ * createAdjacentChart
  * Create an adjacent chart at the bottom of the current article.
  *     IMPURE
  * @param {AdjacentParams} opts
  * @param {Document =document} dom
  * @param {Location =location} loc
+ * @param {Window =window} win
  * @public
  * @returns {Promise<void>}
  */
 export async function createAdjacentChart(
   opts: AdjacentProps,
-  dom: Document = document,
-  loc: Location = location,
+  dom: Document,
+  loc: Location,
+  win: Window,
 ): Promise<void> {
   OPTS = Object.assign(
     OPTS,
     {
       name: articleName(loc),
       meta: mapURL(OPTS.group, ".json", loc),
-      perRow: 10,
-      titleLimit: 40,
-      rendered: false,
-      iteration: 0,
-      group: "system",
-      count: 1,
-      debug: debug(),
+      debug: debug(loc),
       runFetch: runFetch,
     },
     opts,
-  ) as AdjacentProps;
+  ) as AdjacentPropsDefinite;
   if (OPTS.group === "system") {
     throw new Error("Must set the article group, and not to 'system'.");
   }
@@ -463,9 +465,10 @@ export async function createAdjacentChart(
     OPTS.name === "group-XXX" || OPTS.name === "group-" + OPTS.group;
   const GROUP: string = "group" + OPTS.group;
 
-  if (isMobile(dom, loc) && !isGroupArticle) {
+  if (isMobile(dom, loc, win) && !isGroupArticle) {
     if (dom.querySelectorAll(".adjacentGroup .adjacentItem").length === 1) {
-      dom.querySelector(".adjacentGroup p").style["display"] = "none";
+      (dom.querySelector(".adjacentGroup p") as HTMLElement).style["display"] =
+        "none";
     }
     appendIsland(
       "#" + GROUP,
@@ -473,7 +476,7 @@ export async function createAdjacentChart(
       dom,
     );
   } else {
-    const data: SimpleResponse = await OPTS.runFetch(OPTS.meta, false);
+    const data: SimpleResponse = await OPTS.runFetch(OPTS.meta, false, loc);
     if (!data.ok || !Array.isArray(data.body)) {
       log("info", "There doesn't seem to be a group meta data file.");
       appendIsland(
@@ -491,6 +494,7 @@ export async function createAdjacentChart(
         GROUP,
         dom,
         loc,
+        win,
       );
       appendIsland("#groupXXX", html, dom);
       updateLabels(generateGroup(loc), dom);
@@ -514,7 +518,7 @@ export async function createAdjacentChart(
  */
 function injectOpts(a: object): void {
   if (process.env["NODE_ENV"] !== "development") {
-    console.error("ERROR: to use injectOpts, you must set NODE_ENV");
+    log("error", "to use injectOpts, you must set NODE_ENV");
     return;
   }
   OPTS = Object.assign(OPTS, a);

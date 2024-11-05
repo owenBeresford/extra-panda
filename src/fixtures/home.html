@@ -1,0 +1,991 @@
+<!doctype html>
+<html lang="en-GB" class="noJS" itemscope itemtype="http://schema.org/Article">
+  <head>
+    <!-- This website is written by a guy who claims to have lots of specialised technical skills, but this website only partially demonstrates them.  This website is a vehicle for about ~200,000 words, please read some of them. -->
+    <title>IT and process</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="en-GB" />
+    <meta name="Author" content="Owen Beresford" />
+    <meta
+      name="Description"
+      content="Assorted articles and processes on the current state of software engineering. Please click through to articles..."
+    />
+    <meta itemprop="name" content="IT and process" />
+    <meta
+      itemprop="description"
+      content="Assorted articles and processes on the current state of software engineering. Please click through to articles..."
+    />
+    <!-- meta name="twitter:card" content="summary_large_image" -->
+    <meta name="twitter:site" content="@channelOwen" />
+    <meta name="twitter:title" content="IT and process" />
+    <meta
+      name="twitter:description"
+      content="Assorted articles and processes on the current state of software engineering. Please click through to articles..."
+    />
+    <meta name="twitter:creator" content="@channelOwen" />
+    <meta property="og:title" content="IT and process" />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://owenberesford.me.uk/resource/home"
+    />
+    <meta
+      property="og:description"
+      content="Assorted articles and processes on the current state of software engineering. Please click through to articles..."
+    />
+    <meta property="og:site_name" content="OwenBeresford's very wordy site" />
+    <meta
+      property="article:published_time"
+      content="16th of Oct 2024, 7:57:52"
+    />
+    <meta property="article:modified_time" content="9th of Oct 2024" />
+    <!-- meta property="article:tag" content="Article Tag" /  -->
+    <!-- link href="/asset/favicon-32x32.png" rel="icon" type="image/png" / -->
+    <!-- link rel="canonical" href="https://owenberesford.me.uk/" / -->
+    <link rel="stylesheet" href="/asset/ob1.min.css" />
+    <style rel="stylesheet">
+      /* duplicate definition here, to improve google score
+// UX note: the Google bot may be the only thing to access this index */
+      @font-face {
+        font-family: "Ubuntu";
+        src:
+          url("/fonts/ubuntu-regular-webfont.woff2") format("woff2"),
+          url("/fonts/ubuntu-regular-webfont.woff") format("woff");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "fontello";
+        src:
+          url("../fonts/fontello.woff2?51750023") format("woff2"),
+          url("../fonts/fontello.woff?51750023") format("woff");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+    </style>
+  </head>
+  <body id="body" class="annoyingBody homeContainer addImages">
+    <div class="h4_page wholeArticle">
+      <div class="after_menu articleContent">
+        <main id="main">
+          <article>
+            <div class="home icerow">
+              <div class="home column">
+                <div class="chunkStatus">
+                  <p>
+                    This is a simple site with alot of words. My objective is
+                    communication. <br />
+                    When I don't have large projects going on, I am adding more
+                    content (and when I do, I am scribbling notes to publish
+                    later).
+                  </p>
+
+                  <p>
+                    This site is to discuss and describe software architecture
+                    and systems, along with practical usage from my hands-on
+                    experience of various tools and systems. My emphasis with
+                    this space is on engineering content presented with
+                    engineering English. Every article on my website has been
+                    thoroughly researched. All longer articles contain from 70
+                    to 150 references, I read over 500 specific SERPs, and the
+                    longer texts take a month each to write. <br />
+                    Hope you find the reading useful and helpful but I do not
+                    consider my articles to be a blog.
+                  </p>
+                </div>
+                <div class="chunkAbout">
+                  <h2 class="dontend" id="toc0">
+                    <a href="#toc0" title="Jump to this section.">
+                      About the site
+                      <sup
+                        ><i
+                          class="fa fa-link invert"
+                          aria-label="Jump this to this section."
+                          aria-hidden="true"
+                        ></i
+                      ></sup>
+                    </a>
+                  </h2>
+                  <p>
+                    Please note, there are many bloggers who write
+                    <i>evergreen articles</i>. I do not understand how this
+                    works in detail. If you blog about a recent victory for your
+                    local football team: it is <strong>news</strong> for a week;
+                    if well written, a <strong>current reference</strong> for
+                    six months/ a year; after that, its just a webpage. Your
+                    team will have changed squad, division, manager, maybe
+                    location. If those changes don't make your article
+                    irrelevant its not useful to read to start with ( . . . it
+                    could be entertaining).
+                  </p>
+
+                  <p>
+                    I am tagging creation years on many articles, as I think its
+                    more useful to know the context; and periodically I add a
+                    new article on the same topic.
+                  </p>
+
+                  <p>The site is:</p>
+
+                  <ol>
+                    <li>Assessments of various technology and processes.</li>
+                    <li>
+                      Lots of material removed from my CV, so I can keep that
+                      concise.
+                    </li>
+                    <li>
+                      “late reading”, so I am current with typical technology
+                      for today, rather than I graduated
+                    </li>
+                    <li>Mostly, a lot of words; with lots of bibliography</li>
+                  </ol>
+
+                  <a
+                    class="button"
+                    href="/resource/changelog"
+                    title="View important tech changes to this site"
+                    >Show boring notes about this site
+                  </a>
+                </div>
+              </div>
+              <div class="chunkArticles column tabComponent">
+                <ul
+                  class="tabList tabs"
+                  data-tab
+                  role="tablist"
+                  data-options="scroll_to_content: false"
+                >
+                  <li class="tab-title is-active" role="presentation">
+                    <a
+                      id="clickArticles"
+                      href="#blockArticles"
+                      role="tab"
+                      aria-selected="true"
+                      aria-controls="blockArticles"
+                    >
+                      Articles</a
+                    >
+                  </li>
+                  <li class="tab-title" role="presentation">
+                    <a
+                      id="clickProjects"
+                      href="#blockProjects"
+                      role="tab"
+                      aria-selected="true"
+                      aria-controls="blockProjects"
+                    >
+                      Projects</a
+                    >
+                  </li>
+                  <li role="presentation">
+                    <img
+                      src="/asset/ob1.webp"
+                      role="presentation"
+                      class="myUglyFace"
+                      loading="lazy"
+                      width="200"
+                      height="200"
+                      alt="Many bloggers say adding a photo of yourself makes it look more authentic. IMO, my face is not a reason to hire me."
+                    />
+                  </li>
+                </ul>
+                <fieldset class="tabs-content">
+                  <section
+                    id="blockArticles"
+                    role="tabpanel"
+                    aria-hidden="false"
+                    class="tabs-panel is-active"
+                  >
+                    <br />
+                    <ul class="ulbasic">
+                      <li>
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/whats-changed-2022#"
+                          >whats-changed-2022</a
+                        >
+                      </li>
+                      <li>
+                        2020 Notes I wrote at
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/js-nation-live-notes#"
+                          >JS nation</a
+                        >
+                      </li>
+                      <li>
+                        2021 Notes from
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/guardian-masterclass-notes#"
+                          >Guardian Masterclass</a
+                        >
+                      </li>
+                      <li>
+                        2023: some UTF8 toys:
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/utf8-richtext-maquette#"
+                          >utf8-richtext-maquette</a
+                        >,
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/diverse-emoji#"
+                          >diverse-emoji</a
+                        >,
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/colourise-emoji#"
+                          >colourise-emoji</a
+                        >,
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/progress-animation-maquette#"
+                          >progress-animation-maquette</a
+                        >,
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/search-text-sample#"
+                          >search-text-sample</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/ai-launching-llm#"
+                          >A series of 10 articles on LLM based AI</a
+                        >, 7 pushed in oct 2024
+                      </li>
+                      <li>
+                        On
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/fullstack-JS#"
+                          >Article on JS process</a
+                        >.
+                      </li>
+                      <li>
+                        Notes for a
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/ux-verify#"
+                          >UX verification</a
+                        >
+                        library 2019.
+                      </li>
+                      <li>
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/symfony-usage#"
+                          >I list my normal use of Symfony</a
+                        >
+                      </li>
+                      <li>
+                        Some
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/code-metrics#"
+                          >code metrics</a
+                        >
+                      </li>
+                      <li>
+                        My public
+                        <a
+                          href="https://github.com/owenBeresford/"
+                          target="_blank"
+                          >git</a
+                        >
+                        account.
+                      </li>
+                      <li>
+                        My most frequent
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/design-patterns#"
+                          >design patterns</a
+                        >.
+                      </li>
+                      <li>
+                        Several long articles from 2022: On
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/graphql-notes#"
+                          >graphQL</a
+                        >,
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/react18-notes#"
+                          >React18</a
+                        >,
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/next-media-strategy#"
+                          >next-media-strategy</a
+                        >
+                      </li>
+                      <li>
+                        On
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/web-font-2024#"
+                          >web-font-2024</a
+                        >,
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/web-font-2020#"
+                          >web fonts</a
+                        >,
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/readable-fonts#"
+                          >readable-fonts</a
+                        >
+                        ~ 2022 and
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/symbol-tools#"
+                          >symbol-tools</a
+                        >
+                        ~ 2020.
+                      </li>
+                      <li>
+                        A personal
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/usability-casestudy-01#"
+                          >usability case study</a
+                        >, and
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/usability-casestudy-02#"
+                          >a second usability case study</a
+                        >
+                      </li>
+                      <li>
+                        UPDATE 2023 On
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/svg-format-notes#"
+                          >SVG editing</a
+                        >
+                        and
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/progress-animation-maquette#"
+                          >progress-animation-maquette</a
+                        >
+                      </li>
+                      <li>
+                        2020, On
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/online-pictures#"
+                          >image performance</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/professional-development-2017#"
+                          >professional-development-2017</a
+                        >,
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/professional-development-2018#"
+                          >professional-development-2018</a
+                        >, recent work is in
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/reading-list#"
+                          >reading-list</a
+                        >
+                      </li>
+                      <li>
+                        UPDATED in 2023
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/JS-test-frameworks#"
+                          >JS test frameworks</a
+                        >.
+                      </li>
+                      <li>
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/js-modules-notes#"
+                          >js-modules-notes</a
+                        >
+                        2020, On
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/JS-memory-tracking#"
+                          >tracking JS memory</a
+                        >
+                        usage.
+                      </li>
+                      <li>
+                        Epic on
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/JS-epic#"
+                        >
+                          JS articles</a
+                        >
+                        .
+                      </li>
+                      <li>
+                        Epic on
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/testing-epic#"
+                          >test methods and styles</a
+                        >.
+                      </li>
+                      <li>
+                        Epics on
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/data-visualisation-epic#"
+                          >Data visualisation toolkits</a
+                        >, and
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/databases-epic#"
+                        >
+                          databases</a
+                        >
+                      </li>
+                      <li>
+                        On
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/html5-img#"
+                          >html5-img</a
+                        >
+                        ~ 2015;
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/webpage-micro-data#"
+                          >micro-formats</a
+                        >
+                        ~ 2021
+                      </li>
+                      <li>
+                        On
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/favicon-notes#"
+                          >favicon-notes</a
+                        >
+                        ~ 2020
+                      </li>
+                      <li>
+                        On
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/reactive-architecture#"
+                          >reactive-architecture</a
+                        >
+                        ~ 2019
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/user-tracking-tools#"
+                          >user-tracking-tools</a
+                        >
+                        ~ 2021
+                      </li>
+                      <li>
+                        Some notes on
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/search-failures#"
+                          >search-failures</a
+                        >
+                      </li>
+                    </ul>
+                  </section>
+                  <section
+                    id="blockProjects"
+                    role="tabpanel"
+                    aria-hidden="true"
+                    class="tabs-panel"
+                  >
+                    <br />
+                    <ul class="ulbasic">
+                      <li>
+                        Short role
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/reactnative-developer#"
+                          >reactnative-developer</a
+                        >
+                        I was targeting for learning.
+                      </li>
+                      <li>
+                        A 2016-2021 role
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/UX-engineer#"
+                          >UX-engineer</a
+                        >.
+                      </li>
+                      <li>
+                        My public
+                        <a
+                          href="https://github.com/owenBeresford/"
+                          target="_blank"
+                          >git</a
+                        >
+                        account.
+                      </li>
+                      <li>
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/webrtc-test#"
+                          >webrtc-test</a
+                        >
+                        ~ listing many errors.
+                      </li>
+                      <li>
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/svg-format-notes#"
+                          >svg-format-notes</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/ai-launching-llm#"
+                        >
+                          my articles on LLM based AI</a
+                        >
+                      </li>
+                      <li>
+                        best/ most recent graph demo on this site
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/highcharts-demo#"
+                          >highcharts-demo</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/geolocation-demo#"
+                          >geolocation-demo</a
+                        >
+                        ~ enumeration of possible errors.
+                      </li>
+                      <li>
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/language-setups#"
+                          >Group article for language tooling setups</a
+                        >.
+                      </li>
+                      <li>
+                        A 2015 role
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/lead-engineer#"
+                          >lead-engineer</a
+                        >.
+                      </li>
+                      <li>
+                        2020
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/dev-casestudy-03#"
+                          >dev-casestudy-03</a
+                        >.
+                      </li>
+                      <li>
+                        A 2018 article on
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/js-async-io#"
+                          >callback management</a
+                        >.
+                      </li>
+                      <li>
+                        2019 Notes for a
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/ux-verify#"
+                          >UX verification</a
+                        >
+                        library.
+                      </li>
+                      <li>
+                        2017
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/phpunit-skelgen#"
+                          >phpunit-skelgen</a
+                        >
+                      </li>
+                      <li>
+                        End 2014,
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/punit#"
+                          >perl unit</a
+                        >
+                        tester framework, also
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/punit-implementation#"
+                          >punit-implementation</a
+                        >
+                        specifically to reduce the cost of having good coverage.
+                      </li>
+                      <li>
+                        Notes on
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/unit-tests#"
+                          >unit-tests</a
+                        >, the developers edition.
+                      </li>
+                      <li>
+                        2012, A list of
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/ms-projects#"
+                          >visible projects</a
+                        >
+                        I wrote as a web applications developer.
+                      </li>
+                      <li>
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/html5-img#"
+                          >html5-img</a
+                        >
+                        RWD scaling image demo for 200px through 1500px.
+                      </li>
+                      <li>
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/shopping-list#"
+                          >shopping-list</a
+                        >, I had drama with drag and drop events; some test code
+                      </li>
+                      <li>
+                        2015 a
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/jQuery-biblio#"
+                          >jQuery plugin</a
+                        >
+                        to extract the biblio, for better UX on mobile.
+                      </li>
+                      <li>
+                        2014, Build a narrow purpose
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/senior-web-developer#"
+                          >CMS</a
+                        >.
+                      </li>
+                      <li>
+                        2014, Another
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/symfony-developer#"
+                          >contract</a
+                        >, to build a prototype.
+                      </li>
+                      <li>
+                        2004, Work to assist a friends PhD project called
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/cain-project#"
+                          >CAIN</a
+                        >
+                        written in Perl5.
+                      </li>
+                      <li>
+                        2004-2010, Notes on learning and experience in
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/systems-developer#"
+                          >a long term role</a
+                        >.
+                      </li>
+                      <li>
+                        2011, Notes on learning and experience in
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/applications-developer#"
+                          >a shorter role</a
+                        >.
+                      </li>
+                      <li>
+                        2012, Notes on learning and experience in
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/web-application-developer#"
+                          >a pure web agency role</a
+                        >.
+                      </li>
+                      <li>
+                        2013, Notes on learning and experience in
+                        <a
+                          class=""
+                          href="https://owenberesford.me.uk/resource/php-perl-developer#"
+                          >a previous permanent role</a
+                        >. Previously, I listed the clients I had worked on at
+                        this employer; but marketing products move/ redefine,
+                        and I don't wish to talk about dead URLs.
+                      </li>
+                    </ul>
+                  </section>
+                </fieldset>
+              </div>
+            </div>
+          </article>
+        </main>
+      </div>
+      <fieldset class="outer_menu articleHeader">
+        <legend></legend>
+        <nav>
+          <div id="navBar" class="row">
+            <div class="column">
+              <div class="top-bar fullWidth">
+                <header><h1>IT and process</h1></header>
+                <p class="bigScreenOnly" role="status">
+                  Literate programming: ~200,000 words and rising, ~ 250
+                  articles
+                </p>
+              </div>
+              <div id="shareGroup" class="bibbles row addReading">
+                <span class="allButtons">
+                  <a
+                    id="siteChartLink"
+                    class="button smallScreenOnly"
+                    href="/resource/site-chart"
+                    title="open a webpage of what articles this site holds."
+                    >Sitemap</a
+                  >
+                  <a
+                    id="rssLink"
+                    href="https://owenberesford.me.uk/resource/rss"
+                    title="Access the sites RSS feed."
+                  >
+                    <i
+                      class="fa fa-rss"
+                      aria-label="Open the RSS for this site."
+                      aria-hidden="true"
+                    ></i>
+                  </a>
+                  <span
+                    class="button smallScreenOnly"
+                    id="shareMenuTrigger"
+                    rel="nofollow"
+                  >
+                    Share
+                  </span>
+                  <span class="bigScreenOnly">Share: </span>
+                  <a
+                    href="https://twitter.com/intent/tweet?text=I+think+this+is+important+https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fhome"
+                    title="Share this resource on your twitter account."
+                    target="_blank"
+                    class="bigScreenOnly"
+                  >
+                    <i
+                      class="fa fa-twitter"
+                      aria-label="Share this resource on your twitter account."
+                      aria-hidden="true"
+                    ></i
+                  ></a>
+                  <a
+                    href="#"
+                    id="mastoTrigger"
+                    class="masto bigScreenOnly"
+                    title="Share to *your* mastodon server"
+                    ><i
+                      aria-label="Share to *your* mastodon server."
+                      class="fa fa-mastodon"
+                      aria-hidden="true"
+                    ></i
+                  ></a>
+                  <a
+                    href="https://www.reddit.com/submit?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fhome"
+                    target="_blank"
+                    title="Share this article on reddit"
+                    class="bigScreenOnly"
+                    ><i
+                      aria-label="Share this article on reddit."
+                      class="fa fa-reddit-square"
+                      aria-hidden="true"
+                    ></i
+                  ></a>
+                  <a
+                    href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fhome"
+                    aria-label="share to linked-in"
+                    target="_blank"
+                    class="bigScreenOnly"
+                    title="Share this article on linked-in."
+                    ><i
+                      class="fa fa-linkedin-square"
+                      aria-hidden="true"
+                      aria-label="Share this article on linked-in."
+                    ></i
+                  ></a>
+                  <a
+                    title="Share current article to Hacker news/ Y combinator"
+                    aria-label="Share current article to Hacker news/ Y combinator"
+                    target="_blank"
+                    class="bigScreenOnly"
+                    href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fhome&amp;t=IT+and+process"
+                  >
+                    <i
+                      class="fa fa-hacker-news"
+                      aria-label="Share this resource on your Y combinator account."
+                      aria-hidden="true"
+                    >
+                    </i
+                  ></a>
+                  <a
+                    title="Share this article with your Xing audience."
+                    href="https://www.xing.com/spi/shares/new?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fhome"
+                    target="_blank"
+                    class="bigScreenOnly"
+                    ><i
+                      class="fa fa-xing-square"
+                      aria-hidden="true"
+                      aria-label="Share this article with your Xing audience."
+                    ></i>
+                  </a>
+                </span>
+
+                <span class="ultraSkinny bigScreenOnly">
+                  <span
+                    >Edit
+                    <time datetime="2024-10-09T15:30:16"
+                      >9th of Oct 2024</time
+                    ></span
+                  >
+                  <span
+                    >Creat
+                    <time
+                      datetime="2015-03-15T00:00:00"
+                      title="if the value says 03-03-2015; its wrong but that is when this project was moved to the current git project"
+                      ><strong> &gt;7 Years ago</strong></time
+                    >
+                  </span>
+                </span>
+              </div>
+            </div>
+            <dialog id="popup" class="popup1 bigScreenOnly">
+              <form
+                method="dialog"
+                encoding="multipart/form-data"
+                action="."
+                name="mastoSelection"
+              >
+                <label for="mastodonserver"
+                  >your server:
+                  <input
+                    id="mastodonserver"
+                    max-length="50"
+                    data-url="https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fhome"
+                    type="text"
+                    value=""
+                    placeholder="mastodon.social"
+                  />
+                </label>
+                <a
+                  id="sendMasto"
+                  class="button masto"
+                  href="#"
+                  title="Share article to *your* mastodon server"
+                  >Share now</a
+                >
+                <a
+                  class="button trimmed"
+                  id="hideMasto"
+                  href="#"
+                  title="Close popup"
+                >
+                  <i class="fa fa-cancel" aria-hidden="true"></i>
+                </a>
+              </form>
+            </dialog>
+          </div>
+        </nav>
+      </fieldset>
+    </div>
+
+    <footer>
+      <div class="h4_footer">
+        <div class="leftFooter">
+          <a href="https://jigsaw.w3.org/css-validator/check/referer"
+            ><img
+              src="/asset/validCSS.webp"
+              alt="Valid CSS!"
+              width="88"
+              height="31"
+          /></a>
+          <a href="https://validator.w3.org/check?uri=referer"
+            ><img
+              src="/asset/valid-xhtml10.webp"
+              alt="Valid XHTML 1.0 Transitional"
+              width="88"
+              height="31"
+          /></a>
+        </div>
+        <div class="leftFooter">
+          <a
+            href="https://www.plainenglish.co.uk/services/internet-crystal-mark.html"
+            target="_blank"
+            title="They, er, don't have a service for >200,000 word sites, so no logo."
+            >Campaign for Plain English</a
+          ><br />
+          My profile:
+          <a
+            href="https://www.linkedin.com/in/owen-beresford-bb6ab030/"
+            target="_blank"
+            title="Load my linked-in profile"
+            ><i
+              class="fixLinkedSq fa fa-linkedin-square"
+              aria-hidden="true"
+              aria-label="Open my linked in profile"
+            ></i
+          ></a>
+        </div>
+        Page rendered
+        <time datetime="2024-10-16T07:57:52">16th of Oct 2024, 7:57:52</time>,
+        Copyright &copy; 2022 Owen Beresford,
+        <a class="" href="https://owenberesford.me.uk/resource/contact-me#"
+          >contact me</a
+        >. Last modified
+        <time datetime="2024-10-09T15:30:16">9th of Oct 2024</time>. <br />
+
+        Read the generous
+        <a
+          rel="license"
+          href="https://owenberesford.me.uk/resource/licence#"
+          title="Load the license term; but not that interesting"
+          >licence terms</a
+        >, if you feel the need, there is a
+        <a
+          href="https://owenberesford.me.uk/resource/privacy#"
+          title="Load the privacy terms"
+          >privacy here</a
+        >. View the
+        <a
+          href="https://owenberesford.me.uk/resource/site-chart#"
+          title="Load a page showing all the articles on this site"
+          >site map</a
+        >. <a href="#pageMenu">Jump to menu</a>
+      </div>
+    </footer>
+    <script type="module" src="/asset/ob1-202406.min.mjs"></script>
+  </body>
+</html>

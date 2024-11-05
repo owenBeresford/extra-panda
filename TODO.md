@@ -1,12 +1,20 @@
 ### TODO
 - Add type washing to JSON ingestion used in multiple places https://github.com/samchon/typia 
-- add multilingual support
-- Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom   to TESTS
 - Add config for minifier via terser to build step.  Out of time.  IMPORTANT
+- Add multilingual support
+- Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom   to TESTS
 - Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages. 
-- port the everything* tests to storybook
+- Port the everything* tests to storybook, or the browser tests
 - WCAG tests (lighthouse) for whole pages need to go some where (suggest this project) https://www.npmjs.com/package/wcag 
-- log fault on validate class for HTML with no doctype header
+- Look at https://github.com/githubnext/testpilot - test generator
+- Log fault on validate class for HTML with no doctype header
+- See if can remove HTML fixtures from unit-tests that are not HTML rendering functions
+- Add a test that includes the index.mjs, or that is a critical fail point.  A browser test?
+- Add feature "take user selection of text, and return standardised word count"
+- The modal popups and tooltips features fight each other.  Yes, this item currently blocked on a new test tool that reads CSS.
+- Make RAM usage and execution-cost tests-and-monitoring more mature
+- Look for cookie validation libraries, append feature to cookie.webtest
+- Implement Networking browser test script
 
 ### Previous Updates
 
@@ -18,9 +26,8 @@
 - DONE check accessibility of currentSize
 - DONE move inpage JS to pageStartup
 - DONE Add further modules
-- DONE move post handler in search to JS, as this can't work on mew site 
+- DONE move post handler in search to JS, as this can't work on new site 
 - DONE copy back the top functions for vanilla 
-- DONE check base.mjs is OK
 - DONE lookup fetch stuff 
 - DONE add vite to build
 - DONE add vitest
@@ -49,7 +56,12 @@
 - DONE adjacent links no longer erase first group label when there is multiple adjacent groups
 - DONE made it more clear that the 10 items in the adjacent list are not the full list, but a browser width option.
 - WONTFIX A legacy version of JS that **can't read JS modules** may be breached if someone overloads window.Array, and parses JSON. ["AJAX security tips" https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html] ["Historic JSON parsing problems" https://security.stackexchange.com/questions/159609/how-is-it-possible-to-poison-javascript-array-constructor-and-how-does-ecmascrip]
-- DONE: locate and terminate-with-extreme-prejudice the source of page jitter whilst displaying tooltips. 
-- DONE: add support for screen readers in the link decorations
-- DONE: add ability to have details opened automatically
+- DONE: Locate and terminate-with-extreme-prejudice the source of page jitter whilst displaying tooltips. 
+- DONE: Add support for screen readers in the link decorations
+- DONE: Add ability to have details opened automatically
+- DONE:     and remove this ability in some cases.
+- DONE:     and add it in some third cases. #leSigh
+- DONE: Setup some process to deal with content being removed from articles, but references not yet rebuilt.  Ideally an alarm ~ but will need to be on page load, boo :-( 
+- DONE: Move code around again for readability.  It is convenient that these functions are mostly state-free, so they can be moved
+- DONE Create more tests with browser mode, so can fill in the isFullstack() etc tests
 

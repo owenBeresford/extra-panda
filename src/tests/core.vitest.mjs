@@ -1,17 +1,11 @@
 import { assert, describe, it } from "vitest";
 
-import { page } from "./page-seed";
+import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../core";
 import { appendIsland, isFullstack } from "../dom-base";
 import { createEvent } from "./vitest-addons";
 
-const {
-  burgerMenu,
-  initPopupMobile,
-  storeAppearance,
-  applyAppearance,
-  tabChange,
-} = TEST_ONLY;
+const { burgerMenu, initPopupMobile, tabChange, _map, siteCore } = TEST_ONLY;
 
 describe("TEST core", () => {
   it("go 1: burgerMeu", () => {
@@ -75,7 +69,7 @@ describe("TEST core", () => {
   });
 
   it("go 4: tabChange ", (context) => {
-    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div class="chunkArticles column">
 <ul class="tabList tabs" data-tab="" role="tablist">
 <li id="clickArticles" class="tab-title is-active" role="presentation"> <a id="annoying1" href="#blockArticles" role="tab" aria-selected="true" aria-controls="blockArticles"> Articles</a></li>
@@ -165,7 +159,7 @@ describe("TEST core", () => {
       "assert #14",
     );
 
-    let vnt = createEvent(dom.querySelector("#clickProjects a"));
+    let vnt = createEvent(dom.querySelector("#clickProjects a"), dom, win);
     tabChange(vnt, dom);
     assert.isTrue(
       dom
@@ -194,7 +188,7 @@ describe("TEST core", () => {
       "assert #18",
     );
 
-    vnt = createEvent(dom.querySelector("#clickArticles a"));
+    vnt = createEvent(dom.querySelector("#clickArticles a"), dom, win);
     tabChange(vnt, dom);
     assert.isFalse(
       dom
@@ -309,20 +303,4 @@ describe("TEST core", () => {
   });
 
   // IOIO XXX Add test for running twice
-
-  it("go 2: storeAppearance ", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    if (!isFullstack()) {
-      context.skip();
-    }
-    // if browser look at cookies before and after     dom.cookies
-  });
-
-  it("go 3: applyAppearance ", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    if (!isFullstack()) {
-      context.skip();
-    }
-    // if browser look at cookies before and after
-  });
 });

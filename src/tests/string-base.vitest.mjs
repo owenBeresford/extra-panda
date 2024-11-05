@@ -1,7 +1,7 @@
 import { assert, describe, it, assertType } from "vitest";
 
-import { page } from "./page-seed";
-import { Fetchable, Cookieable } from "../all-types";
+import { page } from "./page-seed-vite";
+/// import { Fetchable, Cookieable } from "../all-types";
 import { appendIsland, setIsland, isFullstack } from "../dom-base";
 import { TEST_ONLY } from "../string-base";
 const {
@@ -12,13 +12,14 @@ const {
   runFetch,
   addLineBreaks,
   pad,
-  _getCookie,
+  isLocal,
+  booleanMap,
   importDate,
   dateMunge,
 } = TEST_ONLY;
 
 describe("TEST string-base", () => {
-  it("go 4: pad", () => {
+  it("go 1: pad", () => {
     assert.equal(pad(1), "01", "assert #4");
     assert.equal(pad(10), "10", "assert #5");
     assert.equal(pad(1000), "1000", "assert #6");
@@ -38,7 +39,43 @@ describe("TEST string-base", () => {
     );
   });
 
-  it("go 7: importDate", () => {
+  it("go 2: isLocal", () => {
+    assert.equal(true, isLocal("192.168.0.1"), "assert ");
+    assert.equal(true, isLocal("127.0.0.1"), "assert ");
+    assert.equal(true, isLocal("localhost"), "assert ");
+    assert.equal(true, isLocal("192.168.0.666"), "assert ");
+    // malformed IP, but is local
+    assert.equal(true, isLocal("0:0:0:0:0:0:0:1"), "assert ");
+    assert.equal(true, isLocal("::1"), "assert ");
+
+    assert.equal(false, isLocal("http://google.com"), "assert ");
+    assert.equal(false, isLocal("https://google.com"), "assert ");
+    assert.equal(false, isLocal("google.com"), "assert ");
+    assert.equal(false, isLocal("google.fr"), "assert ");
+    assert.equal(false, isLocal("12.34.56.78"), "assert ");
+    assert.equal(false, isLocal("0x66.0x66.0x66.0x66"), "assert ");
+    assert.equal(false, isLocal(""), "assert ");
+    assert.equal(false, isLocal("23.56.34/24"), "assert ");
+    assert.equal(false, isLocal("23.56.34.12"), "assert ");
+  });
+
+  it("go 3: booleanMap", () => {
+    assert.equal(true, booleanMap("true"), "assert ");
+    assert.equal(true, booleanMap("TRUE"), "assert ");
+    assert.equal(true, booleanMap("1"), "assert ");
+    assert.equal(true, booleanMap(1), "assert ");
+    assert.equal(true, booleanMap("ON"), "assert ");
+    assert.equal(true, booleanMap("on"), "assert ");
+
+    assert.equal(false, booleanMap("false"), "assert ");
+    assert.equal(false, booleanMap("FALSE"), "assert ");
+    assert.equal(false, booleanMap("0"), "assert ");
+    assert.equal(false, booleanMap(0), "assert ");
+    assert.equal(false, booleanMap("OFF"), "assert ");
+    assert.equal(false, booleanMap("off"), "assert ");
+  });
+
+  it("go 4: importDate", () => {
     assert.equal(
       importDate("ymdhis", "2024-06-01 09:00:00").toString(),
       new Date("2024-06-01 09:00:00").toString(),
@@ -87,7 +124,7 @@ describe("TEST string-base", () => {
     );
   });
 
-  it("go 8: dateMunge", () => {
+  it("go 5: dateMunge", () => {
     assert.equal(
       dateMunge(
         new Date("1980-02-19 00:00:00").getTime() / 1000,
@@ -132,7 +169,7 @@ describe("TEST string-base", () => {
     );
   });
 
-  it("go 10: addLineBreak", () => {
+  it("go 6: addLineBreak", () => {
     let str1 =
       "fgsd gdfggaz gdfgadfg agadfg agadg adfgadgad gadfgadfgadga fgaga ag aga gdgadfg";
     let str2 = str1;
@@ -164,13 +201,13 @@ dg ag aga gdgadfg`;
     assert.equal(addLineBreaks(str1, 60, "PING"), str2, "assert #29");
   });
 
-  it("go 3: articleName", () => {
+  it("go 7: articleName", () => {
     const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
-    assert.equal(articleName(), "<name>", "assert #3");
+    assert.equal(articleName({ pathname: "" }), "<name>", "assert #3");
     assert.equal(articleName(loc), "home", "assert #4");
   });
 
-  it("go 15: makeRefUrl", () => {
+  it("go 8: makeRefUrl", () => {
     const [dom, loc] = page("http://192.168.0.35/resource/react18-notes", 2);
     assert.equal(
       makeRefUrl("/resources/XXX-references", loc),
@@ -179,7 +216,7 @@ dg ag aga gdgadfg`;
     );
   });
 
-  it("go 15.1 makeRefUrl", () => {
+  it("go 8.1 makeRefUrl", () => {
     const [dom, loc] = page(
       "http://192.168.0.35/resource/react18-notes?variable=value",
       2,
@@ -191,7 +228,7 @@ dg ag aga gdgadfg`;
     );
   });
 
-  it("go 15.2 makeRefUrl", () => {
+  it("go 8.2 makeRefUrl", () => {
     const [dom, loc] = page(
       "http://192.168.0.35/resource/react18-notes#results",
       2,
@@ -203,7 +240,7 @@ dg ag aga gdgadfg`;
     );
   });
 
-  it("go 15.3 makeRefUrl", () => {
+  it("go 8.3 makeRefUrl", () => {
     const [dom, loc] = page(
       "http://192.168.0.35/resource/react18-notes?variable=value#results",
       2,
@@ -214,9 +251,4 @@ dg ag aga gdgadfg`;
       "assert #36",
     );
   });
-
-  //  it("go 5: pad", () => {
-  //	  const [dom, loc]=page("http://192.168.0.35/resource/home");
-  //
-  //  });
 });

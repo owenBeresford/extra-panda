@@ -1,10 +1,10 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { Document, HTMLAnchorElement, HTMLElement } from "jsdom";
+// import { Document, HTMLAnchorElement, HTMLElement } from "jsdom";
 // import { log, debug } from "./networking";
 import { appendIsland } from "./dom-base";
 import { pullout } from "./string-base";
-import { applyDOMpostions } from "./desktop-biblio";
-import { getArticleWidth } from "./dom-base";
+import { applyDOMpositions } from "./desktop-biblio";
+// import { ALL_REFERENCE } from "./networking";
 
 /**
  * link2Txt
@@ -50,13 +50,12 @@ function link2Txt(url: string): string {
  * Convert links labelled 'git' to the github logo
  * @param {boolean} refs
  * @param {Document =document} dom
+ * @param {Window =window} win
  * @see [https://fontawesome.com/v4/accessibility/]
  * @public
  * @returns {void}
  */
-export function addOctoCats(refs: boolean, dom: Document = document): void {
-  const WIDTH: number = getArticleWidth(true, dom);
-
+export function addOctoCats(refs: boolean, dom: Document, win: Window): void {
   dom.querySelectorAll("article a").forEach(function (
     a: HTMLAnchorElement,
   ): void {
@@ -71,7 +70,7 @@ export function addOctoCats(refs: boolean, dom: Document = document): void {
       );
       if (refs) {
         a.setAttribute("aria-label", link2Txt(a.getAttribute("href")));
-        applyDOMpostions(a, WIDTH);
+        applyDOMpositions(a, win);
       } else {
         a.setAttribute("title", "Link to a github project.");
       }
@@ -84,12 +83,11 @@ export function addOctoCats(refs: boolean, dom: Document = document): void {
  * Convert links labelled 'docs' to an open book logo
  * @param {boolean} refs
  * @param {Document =document} dom
+ * @param {Window =window} win
  * @public
  * @returns {void}
  */
-export function addBooks(refs: boolean, dom: Document = document): void {
-  const WIDTH: number = getArticleWidth(true, dom);
-
+export function addBooks(refs: boolean, dom: Document, win: Window): void {
   dom.querySelectorAll("article a").forEach(function (a: HTMLAnchorElement) {
     const tmp = pullout(a);
     if (tmp.trim().toLowerCase() === "docs") {
@@ -106,7 +104,7 @@ export function addBooks(refs: boolean, dom: Document = document): void {
         "Link to the project docs; it may be a git page, or a separate webpage. ",
       );
       if (refs) {
-        applyDOMpostions(a, WIDTH);
+        applyDOMpositions(a, win);
       }
     }
   });
@@ -121,10 +119,12 @@ export function addBooks(refs: boolean, dom: Document = document): void {
  * @public
  * @returns {void}
  */
-export function addBashSamples(dom: Document = document): void {
+export function addBashSamples(dom: Document): void {
   const r1 = new RegExp("`([^`]+)`", "g");
   const r2 = new RegExp("/ /", "g");
-  const bash: Array<HTMLElement> = dom.querySelectorAll(".addBashSamples");
+  const bash: Array<HTMLElement> = Array.from(
+    dom.querySelectorAll(".addBashSamples"),
+  ) as Array<HTMLElement>;
 
   if (bash.length > 0) {
     for (let i = 0; i < bash.length; i++) {
@@ -146,8 +146,10 @@ export function addBashSamples(dom: Document = document): void {
  * @public
  * @returns {void}
  */
-export function addFancyButtonArrow(dom: Document = document): void {
-  const aa: Array<HTMLElement> = dom.querySelectorAll(".addArrow");
+export function addFancyButtonArrow(dom: Document): void {
+  const aa: Array<HTMLElement> = Array.from(
+    dom.querySelectorAll(".addArrow"),
+  ) as Array<HTMLElement>;
   for (let i = 0; i < aa.length; i++) {
     appendIsland(
       aa[i].parentElement,
