@@ -8,9 +8,9 @@ import { TEST_ONLY } from "../cookies";
 const { QOOKIE, storeAppearance, applyAppearance } = TEST_ONLY;
 
 describe("TEST cookies", async () => {
-        if (typeof process !=="undefined" ) {
-			throw new Error("This is a browser only test");
-        }
+  if (typeof process !== "undefined") {
+    throw new Error("This is a browser only test");
+  }
   //  it("go 1: getCookie ", () => // There is no point in checking "is a class a class"
 
   it("go 2: storeAppearance ", async () => {
@@ -23,7 +23,7 @@ describe("TEST cookies", async () => {
         storeAppearances("serif", "14", "ltr", "blue");
         expect(dom.cookies).isNot("");
         console.log("IOIO Extend this cookie test ", dom.cookie);
-      	await delay(100);
+        await delay(100);
       },
     );
   });
@@ -46,8 +46,9 @@ describe("TEST cookies", async () => {
 
         let tmp2 = dom.getElementById("client-set-css");
         expect(tmp2).isNot(null).isNot(undefined);
-      	await delay(100);
-      } );
+        await delay(100);
+      },
+    );
   });
 });
 

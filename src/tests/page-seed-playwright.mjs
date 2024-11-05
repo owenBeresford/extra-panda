@@ -37,9 +37,9 @@ async function page_local(url = "", args = 1) {
   await delay(1000); // or the HTML hasn't parsed in the new window
   if (tmp.window.document.body.length < 200) {
     log("error", "New browser tab has gone wrong.");
-// To make execution time consistent, this has been disabled
-//    tmp.window.reload();
-//    return page_local(url, args);
+    // To make execution time consistent, this has been disabled
+    //    tmp.window.reload();
+    //    return page_local(url, args);
   }
   tmp.window.TEST_TAB_NAME = name;
   if (args === 1) {
@@ -87,13 +87,17 @@ export async function wrap(name, url, action) {
     dom.title = win.TEST_TAB_NAME;
     action(dom, loc, win);
 
-    domLog(win.TEST_TAB_NAME + " " + name + " [PASS]- no exceptions", true, false);
+    domLog(
+      win.TEST_TAB_NAME + " " + name + " [PASS]- no exceptions",
+      true,
+      false,
+    );
   } catch (e) {
     domLog(win.TEST_TAB_NAME + " see console for error details", false, false);
     console.log(win.TEST_TAB_NAME + " ERROR TRAPT ", e.message, "\n", e.stack);
   }
   if (SHOULD_CLOSE && win && win.close) {
-      win.close();
+    win.close();
   }
   console.log("end of wrap", new Date());
 }
@@ -117,13 +121,17 @@ export async function execTest(run) {
   }
 
   const ret = await run();
-	if( ret.length && ret[0].errors.length && ret[0].errors[0].match("Exceeded timeout") ) {
-    	domLog(""+ ret[0].errors[0], false, false);
-	}
-	let nom=tt.get('test');
-	nom=nom.substr(0, nom.indexOf('.'));
+  if (
+    ret.length &&
+    ret[0].errors.length &&
+    ret[0].errors[0].match("Exceeded timeout")
+  ) {
+    domLog("" + ret[0].errors[0], false, false);
+  }
+  let nom = tt.get("test");
+  nom = nom.substr(0, nom.indexOf("."));
 
-  ret.push([{ name: "BROWSER TEST "+nom, last: true }]);
+  ret.push([{ name: "BROWSER TEST " + nom, last: true }]);
   appendIsland("#binLog", JSON.stringify(ret), document);
 }
 
@@ -141,4 +149,3 @@ export async function validateHTML(html) {
   // I would like some process to listen to HTML errors in the browser
   return [];
 }
-

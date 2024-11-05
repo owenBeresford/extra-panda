@@ -19,10 +19,10 @@ const {
 } = TEST_ONLY;
 
 describe("TEST BROWSER dom-base", async () => {
-        if (typeof process !=="undefined" ) {
-			throw new Error("This is a browser only test");
-        }
- 
+  if (typeof process !== "undefined") {
+    throw new Error("This is a browser only test");
+  }
+
   it("go 1: currentSize", async () => {
     const TEST_NAME = "BROWSER TEST func[1] currentSize";
     return await wrap(
@@ -33,9 +33,10 @@ describe("TEST BROWSER dom-base", async () => {
         // i could set window size then look at it,
         // but this needs a env test and compat test, not a logic test
 
-       expect(Array.isArray(currentSize())).toBe(true); // "got an array back, assert #2")
-		await delay(100);
-      });
+        expect(Array.isArray(currentSize())).toBe(true); // "got an array back, assert #2")
+        await delay(100);
+      },
+    );
   });
 
   it("go 2: isFullStack", async () => {
@@ -45,9 +46,9 @@ describe("TEST BROWSER dom-base", async () => {
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
         expect(isFullstack(win)).toBe(true);
-		await delay(100);
-
-      } );
+        await delay(100);
+      },
+    );
   });
 
   it("go 2.1: isFullStack", async () => {
@@ -57,8 +58,9 @@ describe("TEST BROWSER dom-base", async () => {
       "https://127.0.0.1:8081/home.html?mobile=1",
       async (dom, loc, win) => {
         expect(isFullstack(win)).toBe(false);
-		await delay(100);
-      } );
+        await delay(100);
+      },
+    );
   });
 
   it("go 3: isMobile", async () => {
@@ -70,8 +72,9 @@ describe("TEST BROWSER dom-base", async () => {
         expect(isMobile(dom, loc, win)).toBe(false);
         loc.search = "?mobile=1";
         expect(isMobile(dom, loc, win)).toBe(true);
-		await delay(100);
-      });
+        await delay(100);
+      },
+    );
   });
 
   it("go 4: mapAttribute", async () => {
@@ -90,9 +93,9 @@ describe("TEST BROWSER dom-base", async () => {
         expect(mapAttribute(dom.querySelector("#item1"), "right", win)).toBe(
           100,
         ); //  "asset #4",
-		await delay(100);
-
-      });
+        await delay(100);
+      },
+    );
   });
 
   it("go 5:  copyURL ", async () => {
@@ -108,12 +111,13 @@ describe("TEST BROWSER dom-base", async () => {
         appendIsland(".home.icerow", str, dom);
         expect(copyURL(loc, win)).toBe(undefined); // "assert #14");
 
-        expect(!!win.navigator.clipboard).toBe(true ); 
+        expect(!!win.navigator.clipboard).toBe(true);
 
         let tt = await win.navigator.clipboard.readText();
         expect(tt).toBe(loc.url); // "assert #15");
-		await delay(100);
-      });
+        await delay(100);
+      },
+    );
   });
 
   it("go 6: calcScreenDPI ", async () => {
@@ -129,8 +133,9 @@ describe("TEST BROWSER dom-base", async () => {
         appendIsland(".home.icerow", str, dom);
 
         expect(calcScreenDPI(dom, win)).toBe(150); //  "Assert #x, the screen DPI");
-		await delay(100);
-      });
+        await delay(100);
+      },
+    );
   });
 
   it("go 7: screenWidth ", async () => {
@@ -147,8 +152,9 @@ describe("TEST BROWSER dom-base", async () => {
         expect(screenWidth(loc, win)).toBe(150); //  "Assert #x,");
         loc.search = "?width=1800";
         expect(screenWidth(loc, win)).toBe(1800); // "Assert #x, ");
-		await delay(100);
-      });
+        await delay(100);
+      },
+    );
   });
 
   it("go 5: appendIsland ", async () => {
@@ -171,8 +177,9 @@ describe("TEST BROWSER dom-base", async () => {
         expect(dom.getElementsByTagName("h2").length).toBe(2); //, "assert #6");
         appendIsland("#point1", str, dom);
         expect(dom.getElementsByTagtame("h2").length).toBe(3); // , "assert #7");
-		await delay(100);
-      });
+        await delay(100);
+      },
+    );
   });
 
   it("go 6: setIsland ", async () => {
@@ -197,8 +204,9 @@ describe("TEST BROWSER dom-base", async () => {
         expect(dom.getElementsByTagName("h2").length).toBe(2); // "assert #10");
         setIsland("#point1", "", dom);
         expect(dom.getElementsByTagName("h2").length).toBe(0); // "assert #11");
-		await delay(100);
-      } );
+        await delay(100);
+      },
+    );
   });
 
   it("go 7:  docOffsets ", async () => {
@@ -249,8 +257,9 @@ describe("TEST BROWSER dom-base", async () => {
 
         expect(docOffsets(ELE, { scrollY: 100, scrollX: 0 })).toBe([100, 0]); // "assert #12",
         expect(docOffsets(ELE, { scrollY: 900, scrollX: 0 })).toBe([900, 0]); // "assert #13",
-		await delay(100);
-      } );
+        await delay(100);
+      },
+    );
   });
 
   it("go 10: expandDetails", async () => {
@@ -289,8 +298,9 @@ d
         expect(dom.querySelector("details").open).toBe(false); // "asset #14");
         expandDetails(1040, dom, loc);
         expect(dom.querySelector("details").open).toBe(true); // "asset #15");
-		await delay(100);
-      });
+        await delay(100);
+      },
+    );
   });
 
   it("go 10.1: expandDetails", async () => {
@@ -329,8 +339,9 @@ d
         expect(dom.querySelector("details").open).toBe(false); // "asset #16");
         expandDetails(1040, dom, loc);
         expect(dom.querySelector("details").open).toBe(false); // "asset #16");
-		await delay(100);
-      } );
+        await delay(100);
+      },
+    );
   });
 
   it("go 10.2: expandDetails", async (context) => {
@@ -369,8 +380,9 @@ d
         expect(dom.querySelector("details").open).toBe(false); // "asset #14");
         expandDetails(1040, dom, loc);
         expect(dom.querySelector("details").open).toBe(false); // "asset #15");
-		await delay(100);
-      } );
+        await delay(100);
+      },
+    );
   });
 
   it("go 8: applyVolume", async () => {
@@ -425,8 +437,9 @@ d
         expect(dom.querySelector(".lotsOfWords").getAttribute("style")).toBe(
           "--offset-height: XXpx;",
         ); //      "asset #18",
-		await delay(100);
-      });
+        await delay(100);
+      },
+    );
   });
 
   it("go 8.1: applyVolume", async () => {
@@ -481,8 +494,9 @@ d
         expect(dom.querySelector(".lotsOfWords").getAttribute("style")).toBe(
           "--offset-height: XXpx;",
         ); //  "asset #20",
-		await delay(100);
-      } );
+        await delay(100);
+      },
+    );
   });
 
   it("go 8.2: applyVolume", async () => {
@@ -561,8 +575,9 @@ d
         expect(dom.querySelector(".fewWords").getAttribute("style")).toBe(
           "--offset-height: XXpx;",
         ); //  "asset #23",
-		await delay(100);
-      } );
+        await delay(100);
+      },
+    );
   });
 
   it("go 8.3: applyVolume", async () => {
@@ -620,9 +635,10 @@ d
           expect(["div", "body"].includes(tmp[i].tagName.toLowerCase())).toBe(
             true,
           ); //  "asset #25",
-		await delay(100);
+          await delay(100);
         }
-      } );
+      },
+    );
   });
 
   it("go 9: getArticleWidth", async () => {
@@ -669,13 +685,14 @@ d
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
 </div> `;
         appendIsland(".home.icerow", str, dom);
-		await delay(100);
+        await delay(100);
         try {
           // note missing last arg
           let ret = getArticleWidth(true, ".lotsOfWords", dom);
           expect(ret).toBe(-513); // "asset #26");
         } catch (e) {}
-      } );
+      },
+    );
   });
 
   it("go 9.1: getArticleWidth", async () => {
@@ -725,8 +742,9 @@ d
         let ret = getArticleWidth(true, ".lotsOfWords", dom, win);
         expect(ret).toBe(200); // "asset #27");
 
-		await delay(100);
-      } );
+        await delay(100);
+      },
+    );
   });
 
   it("go 9.2: getArticleWidth", async () => {
@@ -777,8 +795,9 @@ d
         appendIsland(".home.icerow", str, dom);
         let ret = getArticleWidth(true, ".lotsOfWords", dom, win);
         expect(ret).toBe(-513); // "asset #28");
-		await delay(100);
-      });
+        await delay(100);
+      },
+    );
   });
 });
 

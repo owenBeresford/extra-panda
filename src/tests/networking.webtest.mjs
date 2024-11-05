@@ -17,12 +17,10 @@ describe("TEST networking", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+        runFetch(); // IOIO KLAXOON KLAXOON add test here
 
-
-        runFetch();  // IOIO KLAXOON KLAXOON add test here
-
- 
-		await delay(100);
-     } );
+        await delay(100);
+      },
+    );
   });
 });

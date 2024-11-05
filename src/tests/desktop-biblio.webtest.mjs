@@ -17,13 +17,13 @@ const {
 } = TEST_ONLY;
 
 describe("TEST BROWSER desktop-biblio", async () => {
-        if (typeof process !=="undefined" ) {
-			throw new Error("This is a browser only test");
-        }
+  if (typeof process !== "undefined") {
+    throw new Error("This is a browser only test");
+  }
 
   it("go 6: applyDOMpositions", async () => {
     const TEST_NAME = "BROWSER TEST func[1] applyDOMPositions";
-// IOIO add extra test, where the base HTML is adjusted to the test results mean more
+    // IOIO add extra test, where the base HTML is adjusted to the test results mean more
     return await wrap(
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
@@ -51,11 +51,11 @@ describe("TEST BROWSER desktop-biblio", async () => {
         ); // "assert #21",
         expect(dom.querySelector("#uniq4").getAttribute("class")).toBe(
           "leanIn leanUp",
-       ); // "assert #22",
-      await delay(100);
-      });
+        ); // "assert #22",
+        await delay(100);
+      },
+    );
   });
 });
 
 execTest(run);
-

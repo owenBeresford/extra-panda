@@ -12,7 +12,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 /** @type {import('vite').UserConfig} */
 export default defineConfig({
   plugins: [ts()],
-  clearScreen:false,
+  clearScreen: false,
   root: ".",
   server: {
     hmr: false,
@@ -21,7 +21,7 @@ export default defineConfig({
     minify: "terser",
     target: "es2022",
     emptyOutDir: false,
-    outDir: 'dist',
+    outDir: "dist",
     lib: {
       entry: [path.resolve(__dirname, "src/tests/modal.webtest.mjs")],
     },

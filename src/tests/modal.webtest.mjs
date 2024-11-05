@@ -18,9 +18,9 @@ import { TEST_ONLY } from "../modal";
 const { modalInit, HTMLDetailsClick, HTMLDetailsTrap } = TEST_ONLY;
 
 describe("BROWSER TEST modal ", async () => {
-        if (typeof process !=="undefined" ) {
-			throw new Error("This is a browser only test");
-        }
+  if (typeof process !== "undefined") {
+    throw new Error("This is a browser only test");
+  }
 
   it("func[1] HTMLDetailsClick", async () => {
     const TEST_NAME = "BROWSER TEST func[1] HTMLDetailsClick";
@@ -83,7 +83,8 @@ describe("BROWSER TEST modal ", async () => {
         await delay(500);
         // I fire a ESC key sequence with an DETAILS in open state, it closes
         expect(buf.open).toBe(false); //  , "Assert #7"
-      });
+      },
+    );
   });
 
   it("func[1.2] HTMLDetailsClick", async () => {
@@ -144,14 +145,18 @@ describe("BROWSER TEST modal ", async () => {
         await delay(500);
         // I fire a ESC key sequence with an DETAILS in open state, it closes
         expect(buf.open).toBe(false); //  , "Assert #7");
-      } );
+      },
+    );
   });
 
   it("func[1.1]: HTMLDetailsClick", async () => {
     const TEST_NAME = "BROWSER TEST func[1.1]: HTMLDetailsClick";
-    return await wrap(TEST_NAME, "https://127.0.0.1:8081/home.html", async (dom, loc, win) => {
-      enableGetEventListeners(dom);
-      let str = `
+    return await wrap(
+      TEST_NAME,
+      "https://127.0.0.1:8081/home.html",
+      async (dom, loc, win) => {
+        enableGetEventListeners(dom);
+        let str = `
 <div class="blocker popOverWidget">
 <details class="singlePopup">
 <summary> TEST THIS!!!!!1 </summary>
@@ -162,37 +167,40 @@ window.alert("SDFSDFSDF SDFSDFSDF");
 <span id="outside">CLOSE EVERYTHING</span>
 </div>
 `;
-      appendIsland(".home.icerow", str, dom);
-      modalInit(dom);
+        appendIsland(".home.icerow", str, dom);
+        modalInit(dom);
 
-      let buf = dom.querySelector("details");
-      expect(buf.getEventListeners().length).toBe(1); // "Assert #8");
-      expect(dom.body.getEventListeners().length).toBe(2); // "Assert #9");
+        let buf = dom.querySelector("details");
+        expect(buf.getEventListeners().length).toBe(1); // "Assert #8");
+        expect(dom.body.getEventListeners().length).toBe(2); // "Assert #9");
 
-      let toggle = dom.querySelector("summary");
-      toggle.click();
-      // I click on a SUMMARY with CODE, the DETAILS opens   TICK
-      expect(buf.open).toBe(true); // "Assert #10");
-      toggle.click();
-      // I click on a SUMMARY with CODE and is OPEN, it doesn't close so people can interact with the CODE sample
-      expect(buf.open).toBe(false); // "Assert #11");
-      toggle.click();
+        let toggle = dom.querySelector("summary");
+        toggle.click();
+        // I click on a SUMMARY with CODE, the DETAILS opens   TICK
+        expect(buf.open).toBe(true); // "Assert #10");
+        toggle.click();
+        // I click on a SUMMARY with CODE and is OPEN, it doesn't close so people can interact with the CODE sample
+        expect(buf.open).toBe(false); // "Assert #11");
+        toggle.click();
 
-      let buf2 = dom.querySelector("#outside");
-      buf2.click();
-      // I click outside the DETAILS, and its open, it closes TICK
-      expect(buf.open).toBe(false); // "Assert #13");
-      toggle.click();
-      expect(buf.open).toBe(true);
+        let buf2 = dom.querySelector("#outside");
+        buf2.click();
+        // I click outside the DETAILS, and its open, it closes TICK
+        expect(buf.open).toBe(false); // "Assert #13");
+        toggle.click();
+        expect(buf.open).toBe(true);
 
-      let key = new KeyboardEvent("keydown", { key: "Escape", code: "Escape" });
-      dom.body.dispatchEvent(key);
-      await delay(500);
-      // I fire a ESC key sequence with an DETAILS in open state, it closes
-      expect(buf.open).toBe(false); // "Assert #14");
-    });
+        let key = new KeyboardEvent("keydown", {
+          key: "Escape",
+          code: "Escape",
+        });
+        dom.body.dispatchEvent(key);
+        await delay(500);
+        // I fire a ESC key sequence with an DETAILS in open state, it closes
+        expect(buf.open).toBe(false); // "Assert #14");
+      },
+    );
   });
-
 });
 
 execTest(run);
