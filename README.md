@@ -143,7 +143,7 @@ Notes:
 - Do more code readability changes.
 - DONE: Add jest-lite/ browser unit-tests for the skip() sections in vitest.  These are often behaviour centric tests.
 - As the suite sits in Nov 2024, it takes about a minute to exec on a fast PC.   Most of the exec delay is **sleep()** due to the many process model in these tests.
-- //I will iterate to make this a standalone test repo.//  I have added template files, for later extension.  
+- `I will iterate to make this a standalone test repo.`  I have added template files, for later extension.  
 - TODO: Want to add some CSS tests for crucial UI processes, like z-index
 - TODO: Make support for win32
 - TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
