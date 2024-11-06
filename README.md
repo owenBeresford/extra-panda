@@ -137,9 +137,10 @@ Notes:
 - Iterate second build step to achieve this, obviously can't send TS to browser.
 - Discover can't be done, change to jest for browser unit tests.
 - Discover can't be done, change jest for jest-lite.
-- Remove normal *build* use of JSDOM in Vitest as it was polluting variables.
+- Remove normal *build* use of JSDOM in Vitest as it was polluting variables.  This required moving the global variables round again.
 - Rebuild all the tests due to this change (line above).
-- Refactor cookie code for readability
+- Revalidate against TSC, as types became invalid.
+- Refactor cookie code for readability.
 - Do more code readability changes.
 - DONE: Add jest-lite/ browser unit-tests for the skip() sections in vitest.  These are often behaviour centric tests.
 - As the suite sits in Nov 2024, it takes about a minute to exec on a fast PC.   Most of the exec delay is **sleep()** due to the many process model in these tests.
