@@ -21,7 +21,7 @@ Functions tagged "PURE" do not effect the DOM, and tend to test quickly.
 - This has a fairly high test coverage, as the early dev time was after I had done a long run, and was then sat on a train ~ sometimes with the sun in my eyes.   Multiple train trips.  I am testing-in to get improved confidence and adding types as a further safety.   Factoid: today, 73% of the code volume is tests. 
 - Some previous feedback: "your history/commits are messy".  True, its messier than I would like.  I can delete my Git history from any work I do for you if you wish ~ but my Dyslexia is permanent.  This project is building towards good Software engineering code from a lower jQuery baseline.  As the only version that a third party would use is the **complete copy** I lean towards a complete audit.   
 
-<details>
+<details open>
 <summary> User journeys in this project </summary>
 
 ### User journeys in this project
