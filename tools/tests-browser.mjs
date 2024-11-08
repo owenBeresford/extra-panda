@@ -52,7 +52,7 @@ const TESTS = [
   "cookie.webtest.mjs",
   "desktop-biblio.webtest.mjs",
   "dom-base.webtest.mjs",
-  //   "networking.webtest.mjs"
+  "networking.webtest.mjs"
 ];
 const PORT_DEBUG = 9222;
 const PORT_SERVER = 8081;
@@ -129,6 +129,12 @@ function spinup_server() {
 
   app.get("/home.html", function (req, res) {
     res.sendFile(path.join(DIR_FIXTURES, "home.html"), {
+      dotfiles: "deny",
+      headers: { "Content-Type": "text/html;charset=UTF-8" },
+    });
+  });
+  app.get("/domposition.html", function (req, res) {
+    res.sendFile(path.join(DIR_FIXTURES, "domposition.html"), {
       dotfiles: "deny",
       headers: { "Content-Type": "text/html;charset=UTF-8" },
     });
@@ -383,7 +389,7 @@ async function browser2json(page, weight) {
  */
 export async function runTests(tests) {
   console.log(
-    "INFO: this suite takes about 1m to exec on a normal PC.  Opens many tabs in Chrome",
+    "[INFO] This suite takes about 1m to exec on a normal PC.  Opens many tabs in Chrome",
   );
   try {
     let dburl = "";

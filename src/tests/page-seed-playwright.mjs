@@ -85,16 +85,17 @@ export async function wrap(name, url, action) {
       LOG_PADDING + "\nthis is tab " + win.TEST_TAB_NAME + "\n" + LOG_PADDING,
     );
     dom.title = win.TEST_TAB_NAME;
-    action(dom, loc, win);
+    await action(dom, loc, win);
 
     domLog(
       win.TEST_TAB_NAME + " " + name + " [PASS]- no exceptions",
-      true,
+      false,
       false,
     );
   } catch (e) {
-    domLog(win.TEST_TAB_NAME + " see console for error details", false, false);
+    domLog(win.TEST_TAB_NAME + " "+name +" [FAIL], see console for error details", true, false);
     console.log(win.TEST_TAB_NAME + " ERROR TRAPT ", e.message, "\n", e.stack);
+	if(e.message.match(/expect\(received\)/)) { throw e; }
   }
   if (SHOULD_CLOSE && win && win.close) {
     win.close();
