@@ -1,5 +1,4 @@
 I'm dragging this group of features kicking and screaming into the century of the fruitbat.   If I didn't think needed a website, I have made other things with my dev-time.   I normally use 3rd party libraries to reduce dev time, but here I didn't see things that are relevant.  
-Functions tagged "PURE" do not effect the DOM, and tend to test quickly.
 
 ## "business english" changelog
 
@@ -104,6 +103,7 @@ Software architecture
 * Sensible question: why doesn't this use Alpine, Stimulus or something (modern JS, and modules)?  I am trying to migrate the DOM fiddling sections over to CSS, and without those this code is small and not in a 3rd party framework.  This rewrite was to make everything SMALL. 
 
 Notes:
+- Functions tagged "PURE" do not effect the DOM, and tend to test quickly.
 - **_NOTE_** Commits at the start of this project are completely meaningless, as it's just when I moved the code back to my dev machine. They are meaningless duration markers, rather than feature markers.
 - Some of these unit tests are less meaningful than others, regrettably (running from Node).   It would be nice to setup test from a browser.  To *look* at the UX (as in, I am being the success / fail criterion), I did some manual testing
 - Use new language features (ADD a few KB of source) without jQuery (DROP >300KB of source). Dropping jQuery, as "select downloaded features" feature has been removed from https://jquery.com
