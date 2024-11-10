@@ -93,9 +93,15 @@ export async function wrap(name, url, action) {
       false,
     );
   } catch (e) {
-    domLog(win.TEST_TAB_NAME + " "+name +" [FAIL], see console for error details", true, false);
+    domLog(
+      win.TEST_TAB_NAME + " " + name + " [FAIL], see console for error details",
+      true,
+      false,
+    );
     console.log(win.TEST_TAB_NAME + " ERROR TRAPT ", e.message, "\n", e.stack);
-	if(e.message.match(/expect\(received\)/)) { throw e; }
+    if (e.message.match(/expect\(received\)/)) {
+      throw e;
+    }
   }
   if (SHOULD_CLOSE && win && win.close) {
     win.close();

@@ -52,7 +52,7 @@ const TESTS = [
   "cookie.webtest.mjs",
   "desktop-biblio.webtest.mjs",
   "dom-base.webtest.mjs",
-  "networking.webtest.mjs"
+  "networking.webtest.mjs",
 ];
 const PORT_DEBUG = 9222;
 const PORT_SERVER = 8081;
