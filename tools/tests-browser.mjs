@@ -32,11 +32,12 @@ Some extra tests that do not run in Node
 import { spawn } from "node:child_process";
 import path from "path";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
+import { dirname, basename } from "path";
 import fs from "node:fs";
 import https from "https";
 
 import { chromium } from "playwright";
+import { expect, test } from "@playwright/test";
 import express from "express";
 
 /**
@@ -47,6 +48,7 @@ if more are added see command-line-args
 @see [https://www.npmjs.com/package/command-line-args]
 */
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const __filename = basename(fileURLToPath(import.meta.url));
 const TESTS = [
   "modal.webtest.mjs",
   "cookie.webtest.mjs",
@@ -329,12 +331,15 @@ function getMethods(o) {
  */
 function JSON2logging(json1) {
   let tmp = JSON.parse(json1.trim());
-  let [title] = tmp.pop();
+	tmp=Array.from( tmp); // as Array;
+	const LEN= tmp.length-1;
+  let title = tmp[ LEN ];
   console.log("   ✓ " + title.name);
 
-  for (let i = 0; i < tmp.length; i++) {
+  for (let i = 0; i <LEN; i++) {
+	let cur=tmp[i];
     console.log(
-      "     ✓ " + tmp[i].testPath[2] + " [" + tmp[i].status.toUpperCase() + "]",
+      "     ✓ " + cur.testPath[2].padEnd(30, ' ') + " [" + cur.status.toUpperCase() + "] ["+cur.duration+"ms]",
     );
   }
 }
@@ -359,15 +364,17 @@ async function browser2json(page, weight) {
       throw new Error("Result block not found");
     }
 
-    await page.bringToFront();
-    // use this in next iteration
-    let ignored = await tt1.all();
+//    await page.bringToFront();
     console.log(
       "[INFO] Sleeping as DOM data extraction from test tab is laggy",
     );
-    await delay(6_000 * weight);
+    // use this in next iteration
+   // let ignored = await tt1.all();
+	await expect(tt1).toHaveAttribute("data-status", "done", { timeout: 30_000 });
     console.log("[INFO] wakeup (hopefully brower execution is done)");
-    const json1 = await page.innerText("pre");
+
+    const json1 = await tt1.textContent();
+//  const json1 = await page.innerText("pre");
     //			testResults = await page.content();
     //			let slice=testResults.match(new RegExp("<pre[^>]*>([^<]*)</pre>", 'mi'));
     //console.log("SDFSDFSDF "+ new Date(),  slice);
@@ -459,6 +466,24 @@ export async function runTests(tests) {
   }
 }
 
+/**
+ * runDirectly
+ * util function to make code more readable
+ 
+ * @param {Object} p - alias for process
+ * @public
+ * @returns {boolean}
+ */
+function runDirectly(p) {
+  // document.currentScript
+  // meta.url
+  // !("parent" in module)
+  if (p && p.argv && p.argv.length > 1 && p.argv[1].includes(__filename)) {
+    return true;
+  }
+  return false;
+}
+
 if (process.argv.includes("--help") || process.argv.includes("-h")) {
   const TEXT = `
 Script to be able to manage browser tests from bash.  I wanted to use vitest everywhere, but not possible today.
@@ -466,8 +491,8 @@ The default behaviour is to close the tabs and browser, as most test execution i
 
 supports:
 	--help        ~ this text
-	--no-close    ~ do //not// close the tabs, or the browser. Use to see what happens
-	--close       ~ for automated use, free() resources after use,
+	--no-close    ~ do //not// close the tabs, or the browser. Use to see what happens.
+	--close       ~ for automated use, free() resources after use,  This is the default behaviour.  
 
 `;
   console.log(TEXT);
@@ -477,6 +502,6 @@ supports:
 // this code is a test runner,
 // but is too complex.  So I may need to put a test on it
 // so this is safe to import as it doesn't auto execute
-// if (typeof module === "object" && !("parent" in module)) {
-runTests(TESTS);
-//}
+if (runDirectly(process)) {
+  await runTests(TESTS);
+}
