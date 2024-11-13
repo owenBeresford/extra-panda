@@ -1,8 +1,7 @@
 import { expect, describe, it, run } from "jest-lite";
 
-import { page, execTest, wrap } from "./page-seed-playwright";
-import { isFullstack } from "../dom-base";
-import { delay, domLog } from "../networking";
+import { execTest, wrap } from "./page-seed-playwright";
+import { delay } from "../networking";
 import { TEST_ONLY } from "../cookies";
 
 const { QOOKIE, storeAppearance, applyAppearance } = TEST_ONLY;

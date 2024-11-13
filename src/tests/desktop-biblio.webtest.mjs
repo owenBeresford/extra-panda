@@ -1,19 +1,13 @@
 import { expect, describe, it, run } from "jest-lite";
 
 import { execTest, wrap } from "./page-seed-playwright";
-import { appendIsland, setIsland, isFullstack } from "../dom-base";
-import { delay, domLog } from "../networking";
+import { appendIsland } from "../dom-base";
+import { delay } from "../networking";
 import { TEST_ONLY } from "../desktop-biblio";
 
 const {
   injectOpts,
-  markAllLinksUnknown,
-  generateEmpty,
-  normaliseData,
   applyDOMpositions,
-  mapPositions,
-  addMetaAge,
-  createBiblio,
 } = TEST_ONLY;
 
 describe("TEST BROWSER desktop-biblio", async () => {

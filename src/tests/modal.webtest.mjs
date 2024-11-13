@@ -11,7 +11,7 @@ import { describe, expect, it, run } from "jest-lite";
 
 import { execTest, wrap } from "./page-seed-playwright";
 import { enableGetEventListeners } from "./vitest-addons";
-import { appendIsland, isFullstack } from "../dom-base";
+import { appendIsland } from "../dom-base";
 import { delay, domLog } from "../networking";
 import { TEST_ONLY } from "../modal";
 
