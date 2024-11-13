@@ -142,10 +142,21 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
   return out;
 }
 
+/*eslint complexity: ["error", 12]*/
 /**
  * applyDOMpositions
  * Actually does the CSS class insertion here.
  * see mapPositions() for the iterators
+ * Function is abit complex.
+
+EXAMPLE NUMBERS
+Container:left:676   top:676    width:800
+tooltip:  height:80  width:480  
+anchor:   left:1012  top:572    bot:588 
+
+leanRight= anchor.left<(container.left+ tooltip.width)
+leanLeft= anchor.left>(container.left +container.width - tooltip.width)
+
  * IMPURE.
  * @param {HTMLElement} ele
  * @param {Window =window} win
@@ -157,7 +168,7 @@ export function applyDOMpositions(ele: HTMLElement, win: Window): void {
     return;
   }
   const left = mapAttribute(ele, "left", win);
-  const bot = mapAttribute(ele, "bottom", win);
+  const bot = mapAttribute(ele, "top", win);
   if (left === -1 && bot === -1) {
     return;
   }
@@ -168,14 +179,39 @@ export function applyDOMpositions(ele: HTMLElement, win: Window): void {
   while (subItem.includes(tt.tagName)) {
     tt = tt.parentNode as HTMLElement;
   }
-  const WIDTH =
-    Math.round(mapAttribute(tt, "width", win) as number) - 30 * EM_SZ;
-  if (left > WIDTH) {
-    ele.classList.add("leanIn");
+
+  const LEFT = Math.round(mapAttribute(tt, "left", win) as number);
+  const TOP = Math.round(mapAttribute(tt, "top", win) as number);
+  const WIDTH = Math.round(mapAttribute(tt, "width", win) as number);
+  const TTWIDTH = 30 * EM_SZ;
+  const TTHEIGHT = 5 * EM_SZ;
+  if (WIDTH < 600) {
+    // currently arbitrary limit, may need tuning
+    // tooltip is 30em so 480px
+    ele.classList.add("leanCentre");
+  } else {
+    if (left > LEFT + WIDTH - TTWIDTH) {
+      ele.classList.add("leanLeft");
+    }
+    if (left < LEFT + TTWIDTH) {
+      ele.classList.add("leanRight");
+    }
+    if (
+      ele.classList.contains("leanRight") &&
+      ele.classList.contains("leanLeft")
+    ) {
+      // ie its a small container   #leSigh, but dynamic window sizes
+      ele.classList.remove("leanRight");
+      ele.classList.remove("leanLeft");
+      ele.classList.add("leanCentre");
+    }
   }
 
-  const HEIGHT = (mapAttribute(tt, "height", win) as number) - 3 * EM_SZ;
-  if (bot > HEIGHT) {
+  const HEIGHT = TOP - TTHEIGHT;
+  if (bot < HEIGHT) {
+    ele.classList.add("leanDown");
+  }
+  if (bot > TOP + Math.round(mapAttribute(tt, "height", win) as number)) {
     ele.classList.add("leanUp");
   }
 }

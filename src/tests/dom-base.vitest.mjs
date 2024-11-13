@@ -1,4 +1,4 @@
-import { assert, describe, it, assertType } from "vitest";
+import { assert, describe, it } from "vitest";
 import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed-vite";
@@ -9,7 +9,6 @@ const {
   setIsland,
   docOffsets,
   expandDetails,
-  currentSize,
   mapAttribute,
   getArticleWidth,
   applyVolume,
@@ -20,16 +19,6 @@ const {
 } = TEST_ONLY;
 
 describe("TEST dom-base", () => {
-  it("go 1: currentSize", (context) => {
-    if (process && process.env) {
-      context.skip();
-    }
-    assertType < Array < number >> (currentSize(), "assert #1");
-    // i could set window size then look at it,
-    // but this needs a env test and compat test, not a logic test
-    assert.isTrue(Array.isArray(currentSize()), "got an array back, assert #2");
-  });
-
   it("go 2: isFullStack", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
 
@@ -77,7 +66,7 @@ describe("TEST dom-base", () => {
   </dialog>`;
     appendIsland("#point2", str, dom);
 
-    assert.equal(copyURL(loc, win), undefined, "assert #14");
+    assert.equal(await copyURL(loc, win), undefined, "assert #14");
     if (!win.navigator.clipboard) {
       context.skip();
     }
@@ -212,7 +201,7 @@ describe("TEST dom-base", () => {
     );
   });
 
-  it("go 10: expandDetails", (context) => {
+  it("go 10: expandDetails", () => {
     const [dom, loc, win] = page(
       "http://192.168.0.35/resource/home?width=1100",
       3,
@@ -249,7 +238,7 @@ d
     assert.equal(dom.querySelector("details").open, true, "asset #15");
   });
 
-  it("go 10.1: expandDetails", (context) => {
+  it("go 10.1: expandDetails", () => {
     const [dom, loc, win] = page(
       "http://192.168.0.35/resource/home?width=600",
       3,
@@ -286,7 +275,7 @@ d
     assert.equal(dom.querySelector("details").open, false, "asset #16");
   });
 
-  it("go 10.2: expandDetails", (context) => {
+  it("go 10.2: expandDetails", () => {
     const [dom, loc, win] = page(
       "http://192.168.0.35/resource/home?width=1100",
       3,
@@ -523,7 +512,7 @@ d
     );
   });
 
-  it("go 8.3: applyVolume", (context) => {
+  it("go 8.3: applyVolume", () => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div class="some words">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
@@ -678,7 +667,7 @@ d
     // test is defective in JSDOM
   });
 
-  it("go 9.2: getArticleWidth", (context) => {
+  it("go 9.2: getArticleWidth", () => {
     const URL = "http://192.168.0.35/resource/home";
     // NOTE no addReferences block
     const JSDOM1 = new JSDOM(

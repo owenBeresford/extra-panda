@@ -10,7 +10,7 @@ let SHOULD_CLOSE = 1;
  * @param {string =''} url - thou shalt pass a relevant URL for the test, as it is used
  * @param {number =1} args - 1=dom, 2= +loc, 3= +win
  * @public
- * @return {Array<things>} - see args arg above.
+ * @returns {Array<things>} - see args arg above.
  */
 export async function page(url = "", args = 1) {
   if (typeof window === "object" && args < 5) {
@@ -28,7 +28,7 @@ export async function page(url = "", args = 1) {
  * @param {string =""} url
  * @param {number =1} args 
  * @public
- * @return {Array} - many types of object
+ * @returns {Array} - many types of object
  */
 async function page_local(url = "", args = 1) {
   const name = test_name(args);
@@ -60,7 +60,7 @@ async function page_local(url = "", args = 1) {
  * @param {string =""} url
  * @param {number =1} args 
  * @public
- * @return {Array} - of many types of object
+ * @returns {Array} - of many types of object
  */
 function page_fake(url = "", args = 1) {
   return [];
@@ -74,7 +74,7 @@ function page_fake(url = "", args = 1) {
  * @param {string} url
  * @param { (dom, loc, win)=>void } action
  * @public
- * @return {void}
+ * @returns {void}
  */
 export async function wrap(name, url, action) {
   let dom, loc, win;
@@ -85,16 +85,23 @@ export async function wrap(name, url, action) {
       LOG_PADDING + "\nthis is tab " + win.TEST_TAB_NAME + "\n" + LOG_PADDING,
     );
     dom.title = win.TEST_TAB_NAME;
-    action(dom, loc, win);
+    await action(dom, loc, win);
 
     domLog(
       win.TEST_TAB_NAME + " " + name + " [PASS]- no exceptions",
-      true,
+      false,
       false,
     );
   } catch (e) {
-    domLog(win.TEST_TAB_NAME + " see console for error details", false, false);
+    domLog(
+      win.TEST_TAB_NAME + " " + name + " [FAIL], see console for error details",
+      true,
+      false,
+    );
     console.log(win.TEST_TAB_NAME + " ERROR TRAPT ", e.message, "\n", e.stack);
+    if (e.message.match(/expect\(received\)/)) {
+      throw e;
+    }
   }
   if (SHOULD_CLOSE && win && win.close) {
     win.close();
@@ -109,7 +116,7 @@ export async function wrap(name, url, action) {
  
  * @param {Function} run - imported from jest-lite in the main test file 
  * @public
- * @return {void}
+ * @returns {void}
  */
 export async function execTest(run) {
   const tt = new URLSearchParams(location.search);
@@ -120,7 +127,9 @@ export async function execTest(run) {
     domLog("browser tabs should auto-close", false, false);
   }
 
+	document.querySelector("#binLog").setAttribute("data-status", "busy");
   const ret = await run();
+	document.querySelector("#binLog").setAttribute("data-status", "done");
   if (
     ret.length &&
     ret[0].errors.length &&
@@ -131,7 +140,7 @@ export async function execTest(run) {
   let nom = tt.get("test");
   nom = nom.substr(0, nom.indexOf("."));
 
-  ret.push([{ name: "BROWSER TEST " + nom, last: true }]);
+  ret.push({ name: "BROWSER TEST " + nom, last: true });
   appendIsland("#binLog", JSON.stringify(ret), document);
 }
 
@@ -143,7 +152,7 @@ export async function execTest(run) {
  * @param {string} html
  * @param {boolean} emit
  * @public
- * @return {Array<string>}
+ * @returns {Array<string>}
  */
 export async function validateHTML(html) {
   // I would like some process to listen to HTML errors in the browser

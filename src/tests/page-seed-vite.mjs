@@ -8,7 +8,7 @@ const { default: validator } = await import("html-validator");
  * @param {string =''} url - thou shalt pass a relevant URL for the test, as it is used
  * @param {number =1} args - 1=dom, 2= +loc, 3= +win
  * @public
- * @return {Array<things>} - see args arg above.
+ * @returns {Array<things>} - see args arg above.
  */
 export function page(url = "", args = 1) {
   if (
@@ -31,7 +31,7 @@ export function page(url = "", args = 1) {
  * @param {string =""} url
  * @param {number =1} args 
  * @public
- * @return {Array} - many types of object
+ * @returns {Array} - many types of object
  */
 function page_local(url = "", args = 1) {
   const tmp = window.open(url, "test");
@@ -53,7 +53,7 @@ function page_local(url = "", args = 1) {
  * @param {string =""} url
  * @param {number =1} args 
  * @public
- * @return {Array} - of many types of object
+ * @returns {Array} - of many types of object
  */
 function page_fake(url = "", args = 1) {
   const dom = new JSDOM(
@@ -94,7 +94,7 @@ function page_fake(url = "", args = 1) {
  * @param {string} html
  * @param {boolean} emit
  * @public
- * @return {Array<string>}
+ * @returns {Array<string>}
  */
 export async function validateHTML(html) {
   // I do no know why WhatWG doesn't know Dialog tag

@@ -142,7 +142,7 @@ function normaliseToList(
 ): Array<NormalisedReference> {
   let me: number = -1,
     remainder: number = OPTS.perRow,
-    list: Array<NormalisedReference> = [],
+    list: Array<NormalisedReference> = [], // this array is written to, see below
     i = 0,
     j = 0;
   //    retries = 0;

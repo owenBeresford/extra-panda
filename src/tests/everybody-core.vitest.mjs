@@ -1,24 +1,21 @@
 import { assert, describe, it } from "vitest";
-import { JSDOM } from "jsdom";
-// node_modules/html-validator/lib/whatwg-validator.js
-import * as validator from "html-validator";
 
 import { page, validateHTML } from "./page-seed-vite";
 import { TEST_ONLY } from "../core";
 import { accessCookie } from "../networking";
-import { appendIsland, setIsland, isFullstack, isMobile } from "../dom-base";
-import { enableGetEventListeners, createEvent } from "./vitest-addons";
+import { appendIsland } from "../dom-base";
+import { enableGetEventListeners } from "./vitest-addons";
 
 const { siteCore, injectOpts } = TEST_ONLY;
 
-// you ALL have to have take your hands off the keyb.  E'ribody.
+// You ALL have to have take your hands off the keyb.  E'ribody.
 describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now!", () => {
   let ram1 = 0;
   if (process) {
     ram1 = process.memoryUsage();
   }
 
-  it("go 6: siteCore (as desktop)", async (context) => {
+  it("go 6: siteCore (as desktop)", async () => {
     let ram1 = 0;
     if (process) {
       ram1 = process.memoryUsage();
@@ -151,6 +148,11 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     }
   });
 
+  /**
+   * A fixture mock runFetch()
+   *
+   * @returns {Promise<SimpleResponse>}
+   */
   function mockt1_1() {
     // desktop biblio
     let hh = new Headers();
@@ -227,6 +229,11 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     });
   }
 
+  /**
+   * A fixture mock runFetch()
+   *
+   * @returns {Promise<SimpleResponse>}
+   */
   function mockt1_2() {
     // adjacent
     let hh = new Headers();
@@ -299,6 +306,11 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     });
   }
 
+  /**
+   * A fixture mock runFetch()
+   *
+   * @returns {Promise<SimpleResponse>}
+   */
   function mockt1_3() {
     // mobile biblio
     let hh = new Headers();
@@ -375,7 +387,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     });
   }
 
-  it("go 6.1: siteCore (as phone)", async (context) => {
+  it("go 6.1: siteCore (as phone)", async () => {
     let ram1 = 0;
     if (process) {
       ram1 = process.memoryUsage();
@@ -545,6 +557,11 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     }
   });
 
+  /**
+   * A fixture mock runFetch()
+   *
+   * @returns {Promise<SimpleResponse>}
+   */
   function mockt2_1() {
     // desktop biblio
     let hh = new Headers();
@@ -621,6 +638,11 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     });
   }
 
+  /**
+   * A fixture mock runFetch()
+   *
+   * @returns {Promise<SimpleResponse>}
+   */
   function mockt2_2() {
     // adjacent
     let hh = new Headers();
@@ -693,6 +715,11 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     });
   }
 
+  /**
+   * A fixture mock runFetch()
+   *
+   * @returns {Promise<SimpleResponse>}
+   */
   function mockt2_3() {
     // mobile biblio
     let hh = new Headers();

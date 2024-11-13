@@ -1,11 +1,11 @@
-import { assert, describe, it, assertType } from "vitest";
+import { describe, it, assertType } from "vitest";
 
 import { page } from "./page-seed-vite";
 import { Cookieable } from "../all-types";
 import { isFullstack } from "../dom-base";
 import { TEST_ONLY } from "../cookies";
 
-const { QOOKIE, storeAppearance, applyAppearance } = TEST_ONLY;
+const { QOOKIE, } = TEST_ONLY;
 
 describe("TEST cookies", () => {
   it("go 1: getCookie ", () => {

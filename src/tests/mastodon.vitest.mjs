@@ -174,7 +174,7 @@ describe("TEST mastodon", () => {
     assert.equal(accessVisibility(buf, "display", win), "block", "assert #17");
   });
 
-  it("go 7: _map4", (context) => {
+  it("go 7: _map4", () => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div id="shareMenu" class="shareMenu"> </div> 
 	<dialog id="popup" >
@@ -209,7 +209,7 @@ describe("TEST mastodon", () => {
     assert.equal(buf.getEventListeners("touch").length, 1, "Assert #22");
   });
 
-  it("go 8: initMastodon", (context) => {
+  it("go 8: initMastodon", () => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div id="shareGroup"> 
 	<div id="shareMenu" class="shareMenu allButtons">

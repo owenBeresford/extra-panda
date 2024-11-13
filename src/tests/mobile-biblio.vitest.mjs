@@ -291,15 +291,15 @@ describe("TEST mobile-biblio", () => {
 <p> budget cows!!!
 <p> glow in the dark cows
 </div>
-<p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
-<p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
-<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
-<p>sdf sdfs <sup><a href="gibgibgib">7</a> </sup> <sup><a href="gibgibgib">45</a> </sup> sdfsf sdfsdf ssf sd
-<p>sdf sdfs <sup><a href="gibgibgib">-3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
-<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
-<p>sdf sdfs <sup><a href="gibgibgib">9</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
-<p>sdf sdfs <sup><a href="gibgibgib">16</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
-<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">21</a> </sup> 
+<p>sdf sdfs <sup><a href="https://gibgibgib">1</a> </sup> <sup><a href="https://gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
+<p>sdf sdfs <sup><a href="https://gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
+<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="https://gibgibgib">66</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
+<p>sdf sdfs <sup><a href="https://gibgibgib">7</a> </sup> <sup><a href="gibgibgib">45</a> </sup> sdfsf sdfsdf ssf sd
+<p>sdf sdfs <sup><a href="https://gibgibgib">-3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
+<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="https://gibgibgib">66</a> </sup> <sup><a href="https://gibgibgib">5</a> </sup> 
+<p>sdf sdfs <sup><a href="gibgibgib">9</a> </sup> <sup><a href="https://gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
+<p>sdf sdfs <sup><a href="https://gibgibgib">16</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
+<p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="https://gibgibgib">66</a> </sup> <sup><a href="https://gibgibgib">21</a> </sup> 
 `;
     appendIsland("#point2", str, dom); // 15 links
     injectOpts({ renumber: 1 });
@@ -399,6 +399,13 @@ describe("TEST mobile-biblio", () => {
     );
   });
 
+  /**
+   * mockFetch[0-9] - Func to return fixture for this test file
+
+   * @param {string} url
+   * @param {boolean} hasExcept
+   * @returns {SimpleResponse}
+   */
   function mockFetch1(url, hasExcept) {
     return new Promise((good, bad) => {
       let str = `

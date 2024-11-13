@@ -1,15 +1,12 @@
-import { assert, describe, it, assertType } from "vitest";
+import { assert, describe, it } from "vitest";
 
 import { page } from "./page-seed-vite";
 /// import { Fetchable, Cookieable } from "../all-types";
-import { appendIsland, setIsland, isFullstack } from "../dom-base";
 import { TEST_ONLY } from "../string-base";
 const {
   getFetch,
   articleName,
-  pullout,
   makeRefUrl,
-  runFetch,
   addLineBreaks,
   pad,
   isLocal,
