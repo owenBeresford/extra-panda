@@ -14,6 +14,8 @@
 - Make RAM usage and execution-cost tests-and-monitoring more mature
 - Look for cookie validation libraries, append feature to cookie.webtest
 - Implement Networking browser test script
+- URGENT: if no references file, don't abort other JS
+- add logging of pid of browser in output
 
 ### Previous Updates
 
@@ -64,4 +66,6 @@
 - DONE: Move code around again for readability.  It is convenient that these functions are mostly state-free, so they can be moved
 - DONE: Create more tests with browser mode, so can fill in the isFullstack() etc tests
 - DONE: The modal popups and tooltips features fight each other.  Stop this.
+- DONE: Improve output driver on my runner, dealing with delays etc
+- DONE: Improve cookie code for modern internet, and improve code readability 
 
