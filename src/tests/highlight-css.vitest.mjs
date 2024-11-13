@@ -3,12 +3,11 @@ import hljs from "highlight.js/lib/core";
 
 import { page, validateHTML } from "./page-seed-vite";
 import { execHighlight } from "../highlight/highlight-css";
-import { appendIsland, isFullstack } from "../dom-base";
-import { enableGetEventListeners, createEvent } from "./vitest-addons";
+import { appendIsland } from "../dom-base";
 
 describe("TEST highlight CSS", () => {
   it("go 1: CSS test1", async () => {
-    const [dom, loc, win, jsdom] = page("http://192.168.0.35/resource/home", 4);
+    const [dom] = page("http://192.168.0.35/resource/home", 1);
     let str = `<h2 class="dontend" id="toc2"> <a href="#toc2" title="Jump to this section." > Prototype Toy  <sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h2>
 <p>UPDATE: also <a href="https://flexboxzombies.com/p/flexbox-zombies" target="_blank">this toy^H^H^Hgame</a> <br />
 As a minimum, not recommended for industrial use:</p>
@@ -59,10 +58,7 @@ As a minimum, not recommended for industrial use:</p>
   });
 
   it("go 1.2: CSS test3", async () => {
-    const [dom, loc, win, jsdom] = page(
-      "http://192.168.0.35/resource/home?mobile=1",
-      4,
-    );
+    const [dom] = page("http://192.168.0.35/resource/home?mobile=1", 1);
     let str = `<h2 class="dontend" id="toc2"> <a href="#toc2" title="Jump to this section." > Prototype Toy  <sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h2>
 <p>UPDATE: also <a href="https://flexboxzombies.com/p/flexbox-zombies" target="_blank">this toy^H^H^Hgame</a> <br />
 As a minimum, not recommended for industrial use:</p>
@@ -113,7 +109,7 @@ As a minimum, not recommended for industrial use:</p>
   });
 
   it("go 1.1: CSS test2", async () => {
-    const [dom, loc, win, jsdom] = page("http://192.168.0.35/resource/home", 4);
+    const [dom] = page("http://192.168.0.35/resource/home", 1);
     let str = `<h2 class="dontend" id="toc2"> <a href="#toc2" title="Jump to this section." > Prototype Toy  <sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h2>
 <p>UPDATE: also <a href="https://flexboxzombies.com/p/flexbox-zombies" target="_blank">this toy^H^H^Hgame</a> <br />
 As a minimum, not recommended for industrial use:</p>

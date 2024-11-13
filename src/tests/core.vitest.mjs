@@ -2,10 +2,10 @@ import { assert, describe, it } from "vitest";
 
 import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../core";
-import { appendIsland, isFullstack } from "../dom-base";
+import { appendIsland } from "../dom-base";
 import { createEvent } from "./vitest-addons";
 
-const { burgerMenu, initPopupMobile, tabChange, _map, siteCore } = TEST_ONLY;
+const { burgerMenu, initPopupMobile, tabChange } = TEST_ONLY;
 
 describe("TEST core", () => {
   it("go 1: burgerMeu", () => {
@@ -218,7 +218,7 @@ describe("TEST core", () => {
     );
   });
 
-  it("go 5: initPopupMobile", (context) => {
+  it("go 5: initPopupMobile", () => {
     const [dom, loc] = page("http://192.168.0.35/resource/home?mobile=1", 2);
     let str = `<div id="navBar"> 
 <span class="allButtons"> 
@@ -246,7 +246,7 @@ describe("TEST core", () => {
     assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #24");
   });
 
-  it("go 5.1: initPopupMobile", (context) => {
+  it("go 5.1: initPopupMobile", () => {
     const [dom, loc] = page("http://192.168.0.35/resource/home?mobile=0", 2);
     let str = `<div id="navBar">
 <span class="allButtons"> 
@@ -274,7 +274,7 @@ describe("TEST core", () => {
     assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #26");
   });
 
-  it("go 5.2: initPopupMobile", (context) => {
+  it("go 5.2: initPopupMobile", () => {
     const [dom, loc] = page("http://6.6.6.6/resource/home?mobile=1", 2);
     let str = `<div id="navBar">
 				<span class="allButtons"> 

@@ -399,6 +399,13 @@ describe("TEST mobile-biblio", () => {
     );
   });
 
+  /**
+   * mockFetch[0-9] - Func to return fixture for this test file
+
+   * @param {string} url
+   * @param {boolean} hasExcept
+   * @returns {SimpleResponse}
+   */
   function mockFetch1(url, hasExcept) {
     return new Promise((good, bad) => {
       let str = `

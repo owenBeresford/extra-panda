@@ -489,6 +489,13 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
     );
   });
 
+  /**
+   * mochFetch1() ~ a fixture for tests
+
+   * @param {string} url
+   * @param {boolean} hasExcept
+   * @returns {Promise<SimpleResponse>}
+   */
   function mockFetch1(url, hasExcept) {
     return new Promise((good, bad) => {
       let str = `
