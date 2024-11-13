@@ -18,33 +18,35 @@ export class QOOKIE implements Cookieable {
   /**
    * set
    * Write to the local document
- 
-   * @param {string} cName
+   * Am setting ";secure" flag, but not ";samesite"
+   * @see [https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie] 
+
+   * @param {string} nom
    * @param {string} cValue
    * @param {number} expDays
    * @public
    * @returns {void}
    */
-  set(cName: string, cValue: string, expDays: number): void {
+  set(nom: string, cValue: string, expDays: number): void {
     let expires = "";
     if (expDays) {
       const d1 = new Date();
       d1.setTime(d1.getTime() + expDays * 24 * 60 * 60 * 1000);
       expires = "expires=" + d1.toUTCString();
     }
-    document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
+    document.cookie = nom + "=" + cValue + "; " + expires + "; path=/ ;secure";
   }
 
   /**
    * get
    * Retrieve data from the document
  
-   * @param {string} cName
+   * @param {string} nom
    * @public
    * @returns {string}
    */
-  get(cName: string): string {
-    const name = cName + "=";
+  get(nom: string): string {
+    const name = nom + "=";
     const cDecoded = decodeURIComponent(document.cookie);
     const cArr = cDecoded.split("; ");
     let res = "";
@@ -55,6 +57,22 @@ export class QOOKIE implements Cookieable {
       }
     });
     return res;
+  }
+
+  /**
+     * wipe
+     * Erase a cookie that is there
+ 
+     * @param {string} nom
+     * @public
+     * @returns {void}
+     */
+  wipe(nom: string): void {
+    const d1 = new Date();
+    d1.setTime(d1.getTime() + 8 * 60 * 60 * 1000);
+    const expires = "expires=" + d1.toUTCString();
+    document.cookie = nom + "= ; " + expires + "; path=/ ;secure";
+    document.cookie = nom + "= ; " + expires + "; path=/ ";
   }
 }
 
@@ -76,6 +94,11 @@ export function storeAppearance(
   clr: string,
 ): void {
   const COOKIE: Cookieable = accessCookie();
+  ft = ft.replaceAll(";", "%38");
+  clr = clr.replaceAll(";", "%38");
+  dir = dir.replaceAll(";", "%38");
+  fs = fs.replaceAll(";", "%38");
+
   const json: string = JSON.stringify({ ft: ft, fs: fs, dn: dir, cr: clr });
   COOKIE.set(APPEARANCE_COOKIE, json, 365.254);
 }
@@ -96,6 +119,11 @@ export function applyAppearance(dom: Document): void {
   }
 
   const dat2 = JSON.parse(dat);
+  dat2["ft"] = dat2["ft"].replaceAll("%38", ";");
+  dat2["cr"] = dat2["cr"].replaceAll("%38", ";");
+  dat2["dn"] = dat2["dn"].replaceAll("%38", ";");
+  dat2["fs"] = dat2["fs"].replaceAll("%38", ";");
+
   // IOIO FIXME add type-washing to cookie
 
   if (!(dat2["ft"] && dat2["fs"])) {

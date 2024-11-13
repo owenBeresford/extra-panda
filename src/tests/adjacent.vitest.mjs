@@ -747,6 +747,13 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
     );
   });
 
+  /**
+   * A mock Fixture for runFetch
+   *
+   * @param {string} url
+   * @param {boolean} hasExcept
+   * @returns {Promise<SimpleResponse>}
+   */
   function mockFetch1(url, hasExcept) {
     return new Promise((good, bad) => {
       let str = [
@@ -788,6 +795,13 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
     });
   }
 
+  /**
+   * A mock Fixture for runFetch
+   *
+   * @param {string} url
+   * @param {boolean} hasExcept
+   * @returns {Promise<SimpleResponse>}
+   */
   function mockFetch2(url, hasExcept) {
     return new Promise((good, bad) => {
       let str = [
@@ -827,6 +841,13 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
     });
   }
 
+  /**
+   * A mock Fixture for runFetch
+   *
+   * @param {string} url
+   * @param {boolean} hasExcept
+   * @returns {Promise<SimpleResponse>}
+   */
   function mockFetch3(url, hasExcept) {
     return new Promise((good, bad) => {
       let str = [

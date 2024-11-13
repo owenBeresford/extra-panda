@@ -1,5 +1,4 @@
 I'm dragging this group of features kicking and screaming into the century of the fruitbat.   If I didn't think needed a website, I have made other things with my dev-time.   I normally use 3rd party libraries to reduce dev time, but here I didn't see things that are relevant.  
-Functions tagged "PURE" do not effect the DOM, and tend to test quickly.
 
 ## "business english" changelog
 
@@ -64,7 +63,7 @@ I am making a copy of the user interactions here (in the new project), as I woul
 	- On a more code focussed page, AJ sees the links have been decorated with some sort of emoji.   The little logos for docs and Github.  Cute, improves readability, but again not significant.
 
 </details>
-<details>
+<details open>
 <summary> Engineering details </summary>
 
 ## Engineering
@@ -104,6 +103,7 @@ Software architecture
 * Sensible question: why doesn't this use Alpine, Stimulus or something (modern JS, and modules)?  I am trying to migrate the DOM fiddling sections over to CSS, and without those this code is small and not in a 3rd party framework.  This rewrite was to make everything SMALL. 
 
 Notes:
+- Functions tagged "PURE" do not effect the DOM, and tend to test quickly.
 - **_NOTE_** Commits at the start of this project are completely meaningless, as it's just when I moved the code back to my dev machine. They are meaningless duration markers, rather than feature markers.
 - Some of these unit tests are less meaningful than others, regrettably (running from Node).   It would be nice to setup test from a browser.  To *look* at the UX (as in, I am being the success / fail criterion), I did some manual testing
 - Use new language features (ADD a few KB of source) without jQuery (DROP >300KB of source). Dropping jQuery, as "select downloaded features" feature has been removed from https://jquery.com
@@ -129,20 +129,22 @@ Notes:
 - I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together with `rebase`, it's a nul-point difference.   
 
 #### Outsize late in project commit
-- The goal of this is testing HTTPS only features (eg copy-and-paste) in a unit test AND testing CSS (eg z-index) features
-- Started to build another test harness, to be able to run Vitest in a browser
-   - Have new smol webserver in Express + HTTPS
-   - Have a fresh captive version of Chrome
-   - Create "fake Vitest output" in the new script so can be integrated with other scripts into larger testing runtime
+- The goal of this is testing HTTPS only features (eg copy-and-paste) in a unit test AND testing CSS (eg z-index) features.
+- Started to build another test harness, to be able to run Vitest in a browser.
+   - Have new smol webserver in Express + HTTPS.
+   - Have a fresh captive version of Chrome.
+   - Create "fake Vitest output" in the new script so can be integrated with other scripts into larger testing runtime.
 - Iterate second build step to achieve this, obviously can't send TS to browser.
-- Discover can't be done, change to jest for browser unit tests
-- Discover can't be done, change jest for jest-lite
-- Remove normal *build* use of JSDOM in Vitest as it was polluting variables
-- Rebuild all the tests due to this change (line above)
-- Refactor cookie code for readability
-- Do more code readability changes
-- DONE: Add jest-lite/ browser unit-tests for the skip() sections in vitest.  These are often behaviour centric tests
-- As suit sits in Nov 2024, it takes 1m to exec.
+- Discover can't be done, change to jest for browser unit tests.
+- Discover can't be done, change jest for jest-lite.
+- Remove normal *build* use of JSDOM in Vitest as it was polluting variables.  This required moving the global variables round again.
+- Rebuild all the tests due to this change (line above).
+- Revalidate against TSC, as types became invalid.
+- Refactor cookie code for readability.
+- Do more code readability changes.
+- DONE: Add jest-lite/ browser unit-tests for the skip() sections in vitest.  These are often behaviour centric tests.
+- As the suite sits in Nov 2024, it takes about a minute to exec on a fast PC.   Most of the exec delay is **sleep()** due to the many process model in these tests.
+- `I will iterate to make this a standalone test repo.`  I have added template files, for later extension.  
 - TODO: Want to add some CSS tests for crucial UI processes, like z-index
 - TODO: Make support for win32
 - TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.

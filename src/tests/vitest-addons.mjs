@@ -1,5 +1,6 @@
 import { isFullstack } from "../dom-base";
-("use strict");
+// have had to remove this as ESlint is complaining
+// ("use strict");
 
 /**
  * enableGetEventListeners
@@ -13,7 +14,7 @@ import { isFullstack } from "../dom-base";
 
  * @param {Document =document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function enableGetEventListeners(dom = document) {
   const step1 = dom.getElementsByTagName("body")[0];
@@ -89,7 +90,7 @@ export function enableGetEventListeners(dom = document) {
  * @param {Document}  dom
  * @param {Window} win - 
  * @public
- * @return {MiscEvent}
+ * @returns {MiscEvent}
  */
 export function createEvent(tar, dom, win) {
   let vnt = null;

@@ -144,6 +144,13 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     }
   });
 
+  /**
+   * A mock Fixture for runFetch
+   *
+   * @param {string } url
+   * @param {boolean} trapExcept
+   * @returns {Promise<SimpleResponse>}
+   */
   function mockt1_1() {
     // desktop biblio
     let hh = new Headers();
@@ -220,6 +227,13 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     });
   }
 
+  /**
+   * A mock Fixture for runFetch
+   *
+   * @param {string } url
+   * @param {boolean} trapExcept
+   * @returns {Promise<SimpleResponse>}
+   */
   function mockt1_2() {
     // adjacent
     let hh = new Headers();
@@ -292,6 +306,13 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     });
   }
 
+  /**
+   * A mock Fixture for runFetch
+   *
+   * @param {string } url
+   * @param {boolean} trapExcept
+   * @returns {Promise<SimpleResponse>}
+   */
   function mockt1_3() {
     // mobile biblio
     let hh = new Headers();
@@ -534,7 +555,14 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     }
   });
 
-  function mockt2_1() {
+  /**
+   * A mock Fixture for runFetch
+   *
+   * @param {string } url
+   * @param {boolean} trapExcept
+   * @returns {Promise<SimpleResponse>}
+   */
+  function mockt2_1(url, trapExcept ) {
     // desktop biblio
     let hh = new Headers();
     hh.append("content-encoding", "application/json");
@@ -610,7 +638,14 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     });
   }
 
-  function mockt2_2() {
+  /**
+   * A mock Fixture for runFetch
+   *
+   * @param {string } url
+   * @param {boolean} trapExcept
+   * @returns {Promise<SimpleResponse>}
+   */
+  function mockt2_2(url, trapExcept ) {
     // adjacent
     let hh = new Headers();
     hh.append("content-encoding", "application/json");
@@ -682,7 +717,14 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     });
   }
 
-  function mockt2_3() {
+  /**
+   * A mock Fixture for runFetch
+   *
+   * @param {string } url
+   * @param {boolean} trapExcept
+   * @returns {Promise<SimpleResponse>}
+   */
+  function mockt2_3(url, trapExcept ) {
     // mobile biblio
     let hh = new Headers();
     hh.append("content-encoding", "application/json");

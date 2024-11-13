@@ -213,25 +213,21 @@ function docOffsets(ele: HTMLElement, offsets: Scrollable): ScreenOffsetArray {
  * @public
  * @returns {void}
  */
-export function copyURL(ignored: Document, loc: Location, win: Window): void {
+export async function copyURL(
+  ignored: Document,
+  loc: Location,
+  win: Window,
+): void {
   try {
     if (!win.navigator.clipboard) {
       throw new Error("No clipboard available");
     }
-    win.navigator.clipboard.writeText(loc.href).then(
-      () => {
-        // add class for CSS effect
-        return;
-      },
-      (err: unknown) => {
-        log("error", "FAILED: copy URL " + err);
-      },
-    );
+    await win.navigator.clipboard.writeText(loc.href);
   } catch (e0: unknown) {
     log(
       "error",
       "FAILED: copy URL feature borked " +
-        e0 +
+        e0.message +
         "\nIt will fail on a HTTP site.",
     );
   }

@@ -11,10 +11,11 @@
 - See if can remove HTML fixtures from unit-tests that are not HTML rendering functions
 - Add a test that includes the index.mjs, or that is a critical fail point.  A browser test?
 - Add feature "take user selection of text, and return standardised word count"
-- The modal popups and tooltips features fight each other.  Yes, this item currently blocked on a new test tool that reads CSS.
 - Make RAM usage and execution-cost tests-and-monitoring more mature
 - Look for cookie validation libraries, append feature to cookie.webtest
 - Implement Networking browser test script
+- URGENT: if no references file, don't abort other JS
+- add logging of pid of browser in output
 
 ### Previous Updates
 
@@ -63,5 +64,8 @@
 - DONE:     and add it in some third cases. #leSigh
 - DONE: Setup some process to deal with content being removed from articles, but references not yet rebuilt.  Ideally an alarm ~ but will need to be on page load, boo :-( 
 - DONE: Move code around again for readability.  It is convenient that these functions are mostly state-free, so they can be moved
-- DONE Create more tests with browser mode, so can fill in the isFullstack() etc tests
+- DONE: Create more tests with browser mode, so can fill in the isFullstack() etc tests
+- DONE: The modal popups and tooltips features fight each other.  Stop this.
+- DONE: Improve output driver on my runner, dealing with delays etc
+- DONE: Improve cookie code for modern internet, and improve code readability 
 
