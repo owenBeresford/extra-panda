@@ -9,7 +9,7 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "export NODE_ENV=production; node ./node_modules/.bin/vite --config ./vite.config.lib.ts build && node ./node_modules/.bin/uglifyjs ./dist/ob1.mjs -o /tmp/ob1.min.mjs && echo 'generated /tmp/ob1.min.mjs' ; node node_modules/.bin/vite --config vite.config.lang-go.ts build ; node node_modules/.bin/vite --config vite.config.lang-bash.ts build ; node node_modules/.bin/vite --config vite.config.lang-conf.ts build ; node node_modules/.bin/vite --config vite.config.lang-html.ts build ; node node_modules/.bin/vite --config vite.config.lang-js.ts build ; node node_modules/.bin/vite --config vite.config.lang-php.ts build ; node node_modules/.bin/vite --config vite.config.lang-xml.ts build ; node node_modules/.bin/vite --config vite.config.lang-sql.ts build ; node node_modules/.bin/vite --config vite.config.lang-ts.ts build ; node node_modules/.bin/vite --config vite.config.lang-perl.ts build ; node node_modules/.bin/vite --config vite.config.lang-css.ts build; rm dist/magic-string*",
+    "build": "./tools/build.bash",
     "test": "export NODE_ENV=development; node ./node_modules/.bin/vitest --typecheck run; if [ ! -d './dist/tests' ]; then echo 'Run build:tests first'; else export NODE_ENV=development; node ./tools/tests-browser.mjs; fi ",
     "test:unit": "export NODE_ENV=development; node ./node_modules/.bin/vitest --typecheck run",
     "#ignore-lint-notes": "1 function is over complexity by 1 point. . .  && Its an arbitary limit",
@@ -18,7 +18,7 @@
     "#ignore-this-line": "Edit values in this simple script if you have local security policy",
     "#ignore-this-line2": "NOTE: 'build:docs' after 'build' and 'test:web', as they purge the dist directory",
     "docs": "if [ ! -d ./dist/docs ]; then echo 'Build docs first'; else; node ./tools/doc-server.mjs & fi",
-    "build:tests": "export NODE_ENV=web-test; node ./node_modules/.bin/vite -c vite.config.modal.ts build; node ./node_modules/.bin/vite -c vite.config.cookie.ts build;  node ./node_modules/.bin/vite -c vite.config.desktop-biblio.ts build  ; node ./node_modules/.bin/vite -c vite.config.dom-base.ts build ; node ./node_modules/.bin/vite -c vite.config.networking.ts build; echo -e '\n\n\t\tAdd more tests' ",
+    "build:tests": "./tools/build-tests.bash",
     "test:web": "if [ ! -d './dist/tests' ]; then echo 'Run build:tests first'; else echo 'If running manually, use CLI flags'; export NODE_ENV=development; node ./tools/tests-browser.mjs; fi"
   },
   "repository": {

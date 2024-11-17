@@ -55,6 +55,7 @@ const TESTS = [
   "desktop-biblio.webtest.mjs",
   "dom-base.webtest.mjs",
   "networking.webtest.mjs",
+  "index.webtest.mjs",
 ];
 const PORT_DEBUG = 9222;
 const PORT_SERVER = 8081;
@@ -203,7 +204,9 @@ async function spinup_playwright(debug_url) {
   if (CTX.length < 1) {
     throw new Error("Can't connect to captive browser (contexts)");
   }
-  console.log("[INFO] Playwright admin via " + debug_url);
+  console.log(
+    `[INFO] In process ${process.pid}, Playwright admin via ` + debug_url,
+  );
 
   const ctx = CTX[0];
   const closure = async () => {
@@ -247,26 +250,27 @@ async function spinup_browser(cmd, onSocket) {
     detached: true,
     shell: false,
   });
+  const PID = CHILD.pid;
   CHILD.stdout.setEncoding("utf8");
   CHILD.stderr.setEncoding("utf8");
   CHILD.stdout.on("data", READ_ERR);
   CHILD.stderr.on("data", READ);
   CHILD.on("error", (err) => {
-    console.log("[PASS-BACK] CHILD errored with " + err.message);
+    console.log(`[PASS-BACK] CHILD ${PID} errored with ` + err.message);
     throw err;
   });
   CHILD.on("close", (code) => {
     if (code !== 0) {
-      console.log(`[PASS-BACK] CHILD exited with code ${code}`);
+      console.log(`[PASS-BACK] CHILD ${PID} exited with code ${code}`);
       // maybe make an exception
     }
     CHILD.stdin.end();
     if (dDelta === 0) {
-      console.log(`[PASS-BACK] CHILD exited`);
+      console.log(`[PASS-BACK] CHILD ${PID} exited `);
       throw new Error("Browser was closed by a human");
     }
   });
-  console.log("[INFO] Created a browser instance");
+  console.log("[INFO] Created a browser instance with " + CHILD.pid);
 
   const closure = () => {
     if (!CHILD.killed) {
@@ -331,15 +335,21 @@ function getMethods(o) {
  */
 function JSON2logging(json1) {
   let tmp = JSON.parse(json1.trim());
-	tmp=Array.from( tmp); // as Array;
-	const LEN= tmp.length-1;
-  let title = tmp[ LEN ];
+  tmp = Array.from(tmp); // as Array;
+  const LEN = tmp.length - 1;
+  let title = tmp[LEN];
   console.log("   ✓ " + title.name);
 
-  for (let i = 0; i <LEN; i++) {
-	let cur=tmp[i];
+  for (let i = 0; i < LEN; i++) {
+    let cur = tmp[i];
     console.log(
-      "     ✓ " + cur.testPath[2].padEnd(30, ' ') + " [" + cur.status.toUpperCase() + "] ["+cur.duration+"ms]",
+      "     ✓ " +
+        cur.testPath[2].padEnd(30, " ") +
+        " [" +
+        cur.status.toUpperCase() +
+        "] [" +
+        cur.duration +
+        "ms]",
     );
   }
 }
@@ -364,17 +374,19 @@ async function browser2json(page, weight) {
       throw new Error("Result block not found");
     }
 
-//    await page.bringToFront();
+    //    await page.bringToFront();
     console.log(
       "[INFO] Sleeping as DOM data extraction from test tab is laggy",
     );
     // use this in next iteration
-   // let ignored = await tt1.all();
-	await expect(tt1).toHaveAttribute("data-status", "done", { timeout: 30_000 });
+    // let ignored = await tt1.all();
+    await expect(tt1).toHaveAttribute("data-status", "done", {
+      timeout: 30_000,
+    });
     console.log("[INFO] wakeup (hopefully brower execution is done)");
 
     const json1 = await tt1.textContent();
-//  const json1 = await page.innerText("pre");
+    //  const json1 = await page.innerText("pre");
     //			testResults = await page.content();
     //			let slice=testResults.match(new RegExp("<pre[^>]*>([^<]*)</pre>", 'mi'));
     //console.log("SDFSDFSDF "+ new Date(),  slice);
@@ -418,8 +430,10 @@ export async function runTests(tests) {
         path.join(__dirname, "..", "dist", "tests", tests[i]),
       );
       if (!tExist.isFile()) {
-        throw new Error("Compile tests before trying to run " + tests[i]);
-        // this is `npm run build:tests`
+        throw (
+          new Error("Compile tests before trying to run " + tests[i]) +
+          ".\nThis is 'npm run build:tests'."
+        );
       }
 
       let page;
