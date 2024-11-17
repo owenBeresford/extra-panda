@@ -1,9 +1,7 @@
 import { assert, describe, it, assertType } from "vitest";
 
 import { TEST_ONLY } from "../dom-base";
-const {
-  currentSize,
-} = TEST_ONLY;
+const { currentSize } = TEST_ONLY;
 
 describe("TEST dom-base", () => {
   it("go 1: currentSize", (context) => {
@@ -15,7 +13,4 @@ describe("TEST dom-base", () => {
     // but this needs a env test and compat test, not a logic test
     assert.isTrue(Array.isArray(currentSize()), "got an array back, assert #2");
   });
-
 });
-
-

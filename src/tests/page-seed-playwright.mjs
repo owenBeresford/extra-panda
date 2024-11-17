@@ -102,6 +102,9 @@ export async function wrap(name, url, action) {
     if (e.message.match(/expect\(received\)/)) {
       throw e;
     }
+    if (e.message.match(/Failed to fetch dynamically imported module/)) {
+      throw e;
+    }
   }
   if (SHOULD_CLOSE && win && win.close) {
     win.close();
@@ -127,9 +130,9 @@ export async function execTest(run) {
     domLog("browser tabs should auto-close", false, false);
   }
 
-	document.querySelector("#binLog").setAttribute("data-status", "busy");
+  document.querySelector("#binLog").setAttribute("data-status", "busy");
   const ret = await run();
-	document.querySelector("#binLog").setAttribute("data-status", "done");
+  document.querySelector("#binLog").setAttribute("data-status", "done");
   if (
     ret.length &&
     ret[0].errors.length &&
