@@ -99,7 +99,7 @@ describe("TEST BROWSER dom-base", async () => {
   <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/home?" /> 
   </dialog>`;
         appendIsland(".home.icerow", str, dom);
-        expect( await copyURL(dom, loc, win)).toBe( undefined); // "assert #14");
+        expect(await copyURL(dom, loc, win)).toBe(undefined); // "assert #14");
 
         expect(!!win.navigator.clipboard).toBe(true);
         await delay(1);

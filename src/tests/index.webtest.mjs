@@ -13,16 +13,16 @@ describe("BROWSER TEST index ", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (document, location, window) => {
-// this is just a test to report compile failures induced by file renaming, 
-// and issues like that.
-	const ALL = await import("../index" );	
-console.log( ALL);
-//    If it get this far, it works
-	expect( typeof ALL ).toBe( "object");  
-//    assert.equal(typeof ALL, "object", "assert #1");
-
+        // this is just a test to report compile failures induced by file renaming,
+        // and issues like that.
+        const ALL = await import("../index");
+        console.log(ALL);
+        //    If it get this far, it works
+        expect(typeof ALL).toBe("object");
+        //    assert.equal(typeof ALL, "object", "assert #1");
+      },
+    );
   });
-	});
 });
 
 execTest(run);
