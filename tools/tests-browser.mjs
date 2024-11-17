@@ -50,11 +50,12 @@ if more are added see command-line-args
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const __filename = basename(fileURLToPath(import.meta.url));
 const TESTS = [
-  "modal.webtest.mjs",
-  "cookie.webtest.mjs",
-  "desktop-biblio.webtest.mjs",
-  "dom-base.webtest.mjs",
-  "networking.webtest.mjs",
+    "modal.webtest.mjs",
+    "cookie.webtest.mjs",
+    "desktop-biblio.webtest.mjs",
+    "dom-base.webtest.mjs",
+    "networking.webtest.mjs",
+	"index.webtest.mjs",
 ];
 const PORT_DEBUG = 9222;
 const PORT_SERVER = 8081;
@@ -168,6 +169,21 @@ function spinup_server() {
     });
   });
 
+/*
+// index-DZqBLDVW.js
+  app.get("/index-DZqBLDVW.js", function (req, res) {
+   let detect = fs.statSync(path.join(DIR_TESTS, "..", "index-DZqBLDVW.js"), {
+      throwIfNoEntry: false,
+    });
+    if (detect && !detect.isFile()) {
+      return res.status(404).send("Unknown file " + req.params.nom);
+    }
+    res.sendFile(path.join(DIR_TESTS, req.params.nom), {
+      headers: { "Content-Type": "text/javascript; charset=UTF-8" },
+    });
+	});
+*/
+ 
   sock.listen(PORT_SERVER, URL_SERVER, () => {
     console.log(
       "[INFO] Fixture server  https://" +
@@ -203,8 +219,8 @@ async function spinup_playwright(debug_url) {
   if (CTX.length < 1) {
     throw new Error("Can't connect to captive browser (contexts)");
   }
-  console.log("[INFO] Playwright admin via " + debug_url);
-
+  console.log(`[INFO] In process ${process.pid}, Playwright admin via ` + debug_url);
+    
   const ctx = CTX[0];
   const closure = async () => {
     await ctx.close();
@@ -247,26 +263,27 @@ async function spinup_browser(cmd, onSocket) {
     detached: true,
     shell: false,
   });
+	const PID=CHILD.pid;
   CHILD.stdout.setEncoding("utf8");
   CHILD.stderr.setEncoding("utf8");
   CHILD.stdout.on("data", READ_ERR);
   CHILD.stderr.on("data", READ);
   CHILD.on("error", (err) => {
-    console.log("[PASS-BACK] CHILD errored with " + err.message);
+    console.log(`[PASS-BACK] CHILD ${PID} errored with ` + err.message);
     throw err;
   });
   CHILD.on("close", (code) => {
     if (code !== 0) {
-      console.log(`[PASS-BACK] CHILD exited with code ${code}`);
+      console.log(`[PASS-BACK] CHILD ${PID} exited with code ${code}`);
       // maybe make an exception
     }
     CHILD.stdin.end();
     if (dDelta === 0) {
-      console.log(`[PASS-BACK] CHILD exited`);
+      console.log(`[PASS-BACK] CHILD ${PID} exited `);
       throw new Error("Browser was closed by a human");
     }
   });
-  console.log("[INFO] Created a browser instance");
+  console.log("[INFO] Created a browser instance with "+CHILD.pid);
 
   const closure = () => {
     if (!CHILD.killed) {
@@ -418,8 +435,7 @@ export async function runTests(tests) {
         path.join(__dirname, "..", "dist", "tests", tests[i]),
       );
       if (!tExist.isFile()) {
-        throw new Error("Compile tests before trying to run " + tests[i]);
-        // this is `npm run build:tests`
+        throw new Error("Compile tests before trying to run " + tests[i])+".\nThis is 'npm run build:tests'.";
       }
 
       let page;
