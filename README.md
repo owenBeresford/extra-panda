@@ -63,7 +63,7 @@ I am making a copy of the user interactions here (in the new project), as I woul
 	- On a more code focussed page, AJ sees the links have been decorated with some sort of emoji.   The little logos for docs and Github.  Cute, improves readability, but again not significant.
 
 </details>
-<details open>
+<details>
 <summary> Engineering details </summary>
 
 ## Engineering
@@ -128,6 +128,25 @@ Notes:
 - I am adding search params for testing, rather than a Mock, as I may want to use them during QA
 - I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together with `rebase`, it's a nul-point difference.   
 
+#### Metrics that are important to goals
+
+- OLD TECH:: 
+  - first bundle: 1MB flat
+  - second bundle (smaller stdlib): 670KB
+  - above but with with minify: 361KB
+  - above but with dead code removal: 250KB
+- NEW TECH (ignoring unit tests)::
+  - complete build: 75KB flat files
+  - above with with minification: 23KB
+  - Note dead code removal didn't make any impact here, as tree shaking works properly now
+  - above with gzip: 9KB   
+    - UPDATE: due to further features, I have crept over the 10k boundary &lt;Meme: "so it begins"&gt;
+  - I think I have perfect feature match, and new solution is 4% of volume of previous solution.
+
+</details>
+<details open>
+<summary> Engineering details </summary>
+
 #### Outsize late in project commit
 - The goal of this is testing HTTPS only features (eg copy-and-paste) in a unit test AND testing CSS (eg z-index) features.
 - Started to build another test harness, to be able to run Vitest in a browser.
@@ -148,21 +167,6 @@ Notes:
 - TODO: Want to add some CSS tests for crucial UI processes, like z-index
 - TODO: Make support for win32
 - TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
-
-#### Metrics that are important to goals
-
-- OLD TECH:: 
-  - first bundle: 1MB flat
-  - second bundle (smaller stdlib): 670KB
-  - above but with with minify: 361KB
-  - above but with dead code removal: 250KB
-- NEW TECH (ignoring unit tests)::
-  - complete build: 75KB flat files
-  - above with with minification: 23KB
-  - Note dead code removal didn't make any impact here, as tree shaking works properly now
-  - above with gzip: 9KB   
-    - UPDATE: due to further features, I have crept over the 10k boundary &lt;Meme: "so it begins"&gt;
-  - I think I have perfect feature match, and new solution is 4% of volume of previous solution.
 
 </details>
 <details>
