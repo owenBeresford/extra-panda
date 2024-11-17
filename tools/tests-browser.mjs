@@ -169,21 +169,6 @@ function spinup_server() {
     });
   });
 
-/*
-// index-DZqBLDVW.js
-  app.get("/index-DZqBLDVW.js", function (req, res) {
-   let detect = fs.statSync(path.join(DIR_TESTS, "..", "index-DZqBLDVW.js"), {
-      throwIfNoEntry: false,
-    });
-    if (detect && !detect.isFile()) {
-      return res.status(404).send("Unknown file " + req.params.nom);
-    }
-    res.sendFile(path.join(DIR_TESTS, req.params.nom), {
-      headers: { "Content-Type": "text/javascript; charset=UTF-8" },
-    });
-	});
-*/
- 
   sock.listen(PORT_SERVER, URL_SERVER, () => {
     console.log(
       "[INFO] Fixture server  https://" +
