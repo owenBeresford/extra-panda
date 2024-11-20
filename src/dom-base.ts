@@ -354,7 +354,7 @@ export function isMobile(dom: Document, loc: Location, win: Window): boolean {
  * @protected
  * @returns {number}
  */
-function calcScreenDPI(dom: Document, win: Window): number {
+export function calcScreenDPI(dom: Document, win: Window): number {
   try {
     const el = dom.createElement("div");
     el.setAttribute("style", "width:1in;");
