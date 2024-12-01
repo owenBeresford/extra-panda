@@ -17,7 +17,7 @@ hljs.registerLanguage("javascript", (hl: HLJSApi): Language => {
  */
 export function execHighlight(dom: Document = document): void {
   dom
-    .querySelectorAll('code[lang="javascript"]')
+    .querySelectorAll('code[lang="javascript"],code[lang="js"]')
     .forEach((el: HTMLElement): void => {
       hljs.highlightElement(el);
     });

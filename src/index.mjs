@@ -21,5 +21,13 @@ import * as QUOKIE from "./cookies";
 
 // this file is only used in the webbuild
 siteCore({}, document, location, window);
-export { runFetch, log, hasBeenRun, appendIsland, isMobile, storeAppearance, currentSize, calcScreenDPI };
-
+export {
+  runFetch,
+  log,
+  hasBeenRun,
+  appendIsland,
+  isMobile,
+  storeAppearance,
+  currentSize,
+  calcScreenDPI,
+};

@@ -10,6 +10,7 @@
 - Log fault on validate class for HTML with no doctype header
 - See if can remove HTML fixtures from unit-tests that are not HTML rendering functions
 - Add feature "take user selection of text, and return standardised word count"
+- Add feature dump (ie download as attachment) in-HTML file JS assets, or SVG assets, or CSS assets.  Need to think about UI for this feature.
 - Make RAM usage and execution-cost tests-and-monitoring more mature
 - Implement Networking browser test script
 
