@@ -221,15 +221,6 @@ export async function siteCore(
     tt[i].classList.remove("noJS");
   }
 
-  const tmp: HTMLElement = dom.querySelector("#pageMenu");
-  if (tmp) {
-    _map(tmp, (e: Event | string): void => {
-      return burgerMenu(".burgerMenu", dom);
-    });
-  } else {
-    log("info", "This URL '" + loc.pathname + "' has no burger menu");
-  }
-
   applyVolume(dom, win);
   initPopupMobile(dom, loc, win);
   initMastodon(dom, loc, win);
@@ -393,3 +384,4 @@ export const TEST_ONLY = {
   tabChange,
   siteCore,
 };
+
