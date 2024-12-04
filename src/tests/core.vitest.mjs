@@ -68,7 +68,7 @@ describe("TEST core", () => {
     );
   });
 
-  it("go 4: tabChange ", (context) => {
+  it("go 4: tabChange ", () => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
     let str = `<div class="chunkArticles column">
 <ul class="tabList tabs" data-tab="" role="tablist">
@@ -132,6 +132,18 @@ describe("TEST core", () => {
       "true",
       "assert #10",
     );
+    assert.equal(
+      dom.querySelector('.tabList li a[href="#blockArticles"]').getAttribute("aria-hidden"),
+      "true",
+      "assert #11",
+    );
+    assert.equal(
+      dom.querySelector('.tabList li a[href="#blockProjects"]').getAttribute("aria-hidden"),
+      "false",
+      "assert #12",
+    );
+
+
 
     tabChange("#blockArticles", dom);
     assert.isFalse(
@@ -139,24 +151,24 @@ describe("TEST core", () => {
         .querySelector("#blockProjects")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #11",
+      "assert #13",
     );
     assert.equal(
       dom.querySelector("#blockProjects").getAttribute("aria-hidden"),
       "true",
-      "assert #12",
+      "assert #14",
     );
     assert.isTrue(
       dom
         .querySelector("#blockArticles")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #13",
+      "assert #15",
     );
     assert.equal(
       dom.querySelector("#blockArticles").getAttribute("aria-hidden"),
       "false",
-      "assert #14",
+      "assert #16",
     );
 
     let vnt = createEvent(dom.querySelector("#clickProjects a"), dom, win);
@@ -166,26 +178,26 @@ describe("TEST core", () => {
         .querySelector("#blockProjects")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #15",
+      "assert #17",
     );
     assert.isFalse(
       dom
         .querySelector("#blockArticles")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #16",
+      "assert #18",
     );
 
     assert.equal(
       dom.querySelectorAll(".tabList .tab-title.is-active").length,
       1,
-      "assert #17",
+      "assert #19",
     );
 
     assert.equal(
       dom.querySelector(".tabList .tab-title.is-active").id,
       "clickProjects",
-      "assert #18",
+      "assert #20",
     );
 
     vnt = createEvent(dom.querySelector("#clickArticles a"), dom, win);
@@ -195,26 +207,26 @@ describe("TEST core", () => {
         .querySelector("#blockProjects")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #19",
+      "assert #21",
     );
     assert.isTrue(
       dom
         .querySelector("#blockArticles")
         .getAttribute("class")
         .includes("is-active"),
-      "assert #20",
+      "assert #22",
     );
 
     assert.equal(
       dom.querySelectorAll(".tabList .tab-title.is-active").length,
       1,
-      "assert #21",
+      "assert #23",
     );
 
     assert.equal(
       dom.querySelector(".tabList .tab-title.is-active").id,
       "clickArticles",
-      "assert #22",
+      "assert #24",
     );
   });
 

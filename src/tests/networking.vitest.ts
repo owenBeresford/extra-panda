@@ -3,7 +3,7 @@ import { assert, describe, it, assertType } from "vitest";
 import { Cookieable, Fetchable } from "../all-types";
 import { TEST_ONLY } from "../networking";
 
-const { getFetch, runFetch, accessCookie, log, delay } = TEST_ONLY;
+const { getFetch, accessCookie, log, delay } = TEST_ONLY;
 
 describe("TEST networking", () => {
   it("go 1: getFetch", () => {
