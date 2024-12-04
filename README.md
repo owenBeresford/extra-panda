@@ -3,7 +3,7 @@ I'm dragging this group of features kicking and screaming into the century of th
 ## "business english" changelog
 
 - Improve Google ranking on site as JS is smaller and faster.
-- Port UI features from 2010 tech to more recent 2020 JS with 2022 compile and test tools.
+- Port UI features from 2010 tech to more recent 2021 JS with 2022 compile and test tools.
 - Due to better technology environment, I vastly improve software engineering quality metrics.
 
 ### Motivation
