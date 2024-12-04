@@ -134,19 +134,28 @@ function burgerMenu(id: string = ".burgerMenu", dom: Document): void {
  * @returns {void}
  */
 function tabChange(id: string | MiscEvent, dom: Document): void {
-  let thing: HTMLElement | null = null;
+  let click: HTMLLIElement | null = null;
   let target: string = "";
 
   if (typeof id === "string") {
     target = id;
-    thing = dom.querySelector(id) as HTMLElement;
+    const thing = dom.querySelector(id) as HTMLElement;
+    if (thing.tagName === "SECTION") {
+      click = dom.querySelector('.tabList a[href="' + id + '"] ');
+    } else {
+      log("error", "what is this? ", thing, thing.tagName);
+      throw new Error("Bad call");
+    }
   } else {
     const tmp: HTMLElement = id.target as HTMLElement;
-    thing = dom.querySelector("#" + tmp.id) as HTMLElement;
-    target = "" + thing.getAttribute("href");
+    click = dom.querySelector("#" + tmp.id) as HTMLElement;
+    target = "" + click.getAttribute("href");
   }
-  if (!thing) {
-    log("ERROR", "Malconfigured tabs!! " + id + " matches nothing");
+  if (!target) {
+    log(
+      "ERROR",
+      "Malconfigured tabs!! " + id + " => '" + target + "' matches nothing",
+    );
     return;
   }
 
@@ -177,9 +186,10 @@ function tabChange(id: string | MiscEvent, dom: Document): void {
   );
   alive.classList.add("is-active");
   alive.setAttribute("aria-hidden", "false");
-  const thing2: HTMLElement = thing.parentNode as HTMLElement;
+
+  const thing2: HTMLElement = click.parentNode as HTMLElement;
   thing2.classList.add("is-active");
-  thing.setAttribute("aria-hidden", "false");
+  click.setAttribute("aria-hidden", "false");
 }
 
 /*eslint complexity: ["error", 30]*/
@@ -221,15 +231,6 @@ export async function siteCore(
     tt[i].classList.remove("noJS");
   }
 
-  const tmp: HTMLElement = dom.querySelector("#pageMenu");
-  if (tmp) {
-    _map(tmp, (e: Event | string): void => {
-      return burgerMenu(".burgerMenu", dom);
-    });
-  } else {
-    log("info", "This URL '" + loc.pathname + "' has no burger menu");
-  }
-
   applyVolume(dom, win);
   initPopupMobile(dom, loc, win);
   initMastodon(dom, loc, win);
@@ -266,8 +267,14 @@ export async function siteCore(
         tabs[i].querySelectorAll(".tab-title a"),
       ) as Array<HTMLElement>;
       for (let j = 0; j < btns.length; j++) {
-        _map(btns[j], tabChange);
+        _map(btns[j], (e) => {
+          tabChange(e, dom);
+        });
       }
+    }
+
+    if (loc.hash !== "") {
+      tabChange(loc.hash, dom);
     }
   }
 

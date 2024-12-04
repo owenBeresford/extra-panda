@@ -4,7 +4,6 @@ import { page } from "./page-seed-vite";
 /// import { Fetchable, Cookieable } from "../all-types";
 import { TEST_ONLY } from "../string-base";
 const {
-  getFetch,
   articleName,
   makeRefUrl,
   addLineBreaks,

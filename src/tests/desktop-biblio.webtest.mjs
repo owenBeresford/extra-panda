@@ -5,7 +5,7 @@ import { appendIsland } from "../dom-base";
 import { delay } from "../networking";
 import { TEST_ONLY } from "../desktop-biblio";
 
-const { injectOpts, applyDOMpositions } = TEST_ONLY;
+const { applyDOMpositions } = TEST_ONLY;
 
 describe("TEST BROWSER desktop-biblio", async () => {
   if (typeof process !== "undefined") {
