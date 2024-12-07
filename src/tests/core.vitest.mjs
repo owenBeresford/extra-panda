@@ -69,7 +69,10 @@ describe("TEST core", () => {
   });
 
   it("go 4: tabChange ", () => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/home?debug=1",
+      3,
+    );
     let str = `<div class="chunkArticles column">
 <ul class="tabList tabs" data-tab="" role="tablist">
 <li id="clickArticles" class="tab-title is-active" role="presentation"> <a id="annoying1" href="#blockArticles" role="tab" aria-selected="true" aria-controls="blockArticles"> Articles</a></li>
@@ -133,17 +136,19 @@ describe("TEST core", () => {
       "assert #10",
     );
     assert.equal(
-      dom.querySelector('.tabList li a[href="#blockArticles"]').getAttribute("aria-hidden"),
+      dom
+        .querySelector('.tabList li a[href="#blockArticles"]')
+        .getAttribute("aria-hidden"),
       "true",
       "assert #11",
     );
     assert.equal(
-      dom.querySelector('.tabList li a[href="#blockProjects"]').getAttribute("aria-hidden"),
+      dom
+        .querySelector('.tabList li a[href="#blockProjects"]')
+        .getAttribute("aria-hidden"),
       "false",
       "assert #12",
     );
-
-
 
     tabChange("#blockArticles", dom);
     assert.isFalse(
@@ -231,7 +236,10 @@ describe("TEST core", () => {
   });
 
   it("go 5: initPopupMobile", () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/home?mobile=1", 2);
+    const [dom, loc] = page(
+      "http://192.168.0.35/resource/home?mobile=1&debug=1",
+      2,
+    );
     let str = `<div id="navBar"> 
 <span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
@@ -255,11 +263,15 @@ describe("TEST core", () => {
     // mobile yes, local yes
     initPopupMobile(dom, loc);
     assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #23");
+
     assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #24");
   });
 
   it("go 5.1: initPopupMobile", () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/home?mobile=0", 2);
+    const [dom, loc] = page(
+      "http://192.168.0.35/resource/home?mobile=0&debug=1",
+      2,
+    );
     let str = `<div id="navBar">
 <span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
@@ -287,7 +299,7 @@ describe("TEST core", () => {
   });
 
   it("go 5.2: initPopupMobile", () => {
-    const [dom, loc] = page("http://6.6.6.6/resource/home?mobile=1", 2);
+    const [dom, loc] = page("http://6.6.6.6/resource/home?mobile=1&debug=1", 2);
     let str = `<div id="navBar">
 				<span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>

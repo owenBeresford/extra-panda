@@ -34,7 +34,7 @@ let OPTS: CoreProps = {
  * Add several event listeners, just a utility
  *
  * @param {HTMLElement} where
- * @param { (id: string | MiscEvent, dom: Document ) =>void} action
+ * @param { (id: string | MiscEvent) =>void} action
  * @protected
  * @returns {void}
  */
@@ -74,6 +74,9 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
   const BUFFER: Array<HTMLAnchorElement> = Array.from(
     dom.querySelectorAll(".allButtons a"),
   );
+
+  const ldebug = debug(loc);
+  const PARENT: HTMLDivElement = dom.querySelector(".allButtons");
   for (const i in BUFFER) {
     if (bigScreenElements.includes(BUFFER[i].id)) {
       continue;
@@ -82,6 +85,9 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
     const local: HTMLAnchorElement = BUFFER[i].cloneNode(
       true,
     ) as HTMLAnchorElement;
+    if (!ldebug) {
+      PARENT.removeChild(BUFFER[i]);
+    }
     local.classList.remove("bigScreenOnly");
     html.push("<li>");
     html.push(local.outerHTML); // I don't like this line
@@ -134,7 +140,7 @@ function burgerMenu(id: string = ".burgerMenu", dom: Document): void {
  * @returns {void}
  */
 function tabChange(id: string | MiscEvent, dom: Document): void {
-  let click: HTMLLIElement | null = null;
+  let click: HTMLAnchorElement | null = null;
   let target: string = "";
 
   if (typeof id === "string") {
@@ -143,12 +149,12 @@ function tabChange(id: string | MiscEvent, dom: Document): void {
     if (thing.tagName === "SECTION") {
       click = dom.querySelector('.tabList a[href="' + id + '"] ');
     } else {
-      log("error", "what is this? ", thing, thing.tagName);
+      log("error", "what is this? ", thing.outerHTML, thing.tagName);
       throw new Error("Bad call");
     }
   } else {
     const tmp: HTMLElement = id.target as HTMLElement;
-    click = dom.querySelector("#" + tmp.id) as HTMLElement;
+    click = dom.querySelector("#" + tmp.id) as HTMLAnchorElement;
     target = "" + click.getAttribute("href");
   }
   if (!target) {
@@ -195,7 +201,7 @@ function tabChange(id: string | MiscEvent, dom: Document): void {
 /*eslint complexity: ["error", 30]*/
 /**
  * siteCore
- * Applies all the functions in this file to the DOM
+ * Applies all the functions in this project to the DOM
  * @param {CoreProps} opts - see docs, at top of file
  * @param {Document =document} dom
  * @param {Location =location} loc
