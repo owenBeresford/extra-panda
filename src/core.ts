@@ -75,7 +75,7 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
     dom.querySelectorAll(".allButtons a"),
   );
 
-  const ldebug = debug(loc);
+  const ldebug:boolean = !isLocal(loc.host) && !debug(loc);
   const PARENT: HTMLDivElement = dom.querySelector(".allButtons");
   for (const i in BUFFER) {
     if (bigScreenElements.includes(BUFFER[i].id)) {
@@ -85,7 +85,7 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
     const local: HTMLAnchorElement = BUFFER[i].cloneNode(
       true,
     ) as HTMLAnchorElement;
-    if (!ldebug) {
+    if (ldebug ) {
       PARENT.removeChild(BUFFER[i]);
     }
     local.classList.remove("bigScreenOnly");
