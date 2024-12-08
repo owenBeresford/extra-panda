@@ -1,0 +1,2 @@
+Please do not use these compiled files, except for the tests
+I suppose I should amend the build process to put a copy in the fixtues

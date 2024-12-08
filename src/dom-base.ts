@@ -217,7 +217,7 @@ export async function copyURL(
   ignored: Document,
   loc: Location,
   win: Window,
-): void {
+): Promise<void> {
   try {
     if (!win.navigator.clipboard) {
       throw new Error("No clipboard available");

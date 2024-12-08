@@ -22,7 +22,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     }
 
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/architecture?mobile=0",
+      "http://192.168.0.35/resource/architecture?mobile=0&debug=1",
       3,
     );
     let str = `<p role="status">PING</p>   <div id="navBar"> 
@@ -394,7 +394,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     }
 
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/home?mobile=1",
+      "http://192.168.0.35/resource/home?mobile=1&debug=1",
       3,
     );
     let str = `<p role="status">PING</p> <div id="navBar"> 
