@@ -51,7 +51,7 @@ export interface Scrollable {
 
 export type GenericEventHandler = (e: Event) => void;
 
-export type MultiFuncArg = (id: string | MiscEvent, dom: Document) => void;
+export type MultiFuncArg = (id: string | MiscEvent) => void;
 
 export interface ReadingProps {
   dataLocation: string;

@@ -295,15 +295,15 @@ function _map4(
   loc: Location,
   win: Window,
 ): void {
-  where.addEventListener("click", async (a: Event): boolean => {
+  where.addEventListener("click", async (a: Event): Promise<boolean> => {
     await action(dom, loc, win);
     return false;
   });
-  where.addEventListener("touch", async (a: Event): boolean => {
+  where.addEventListener("touch", async (a: Event): Promise<boolean> => {
     await action(dom, loc, win);
     return false;
   });
-  where.addEventListener("keypress", async (a: Event): boolean => {
+  where.addEventListener("keypress", async (a: Event): Promise<boolean> => {
     await action(dom, loc, win);
     return false;
   });
