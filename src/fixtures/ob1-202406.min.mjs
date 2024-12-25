@@ -27,8 +27,8 @@ function t(e2, t2, n2, r2) {
   const a2 = JSON.stringify({ ft: e2, fs: t2, dn: n2, cr: r2 });
   o2.set(s, a2, 365.254);
 }
-function n(e2) {
-  return new URLSearchParams(e2.search).has("debug");
+function n(e2, t2 = "debug") {
+  return new URLSearchParams(e2.search).has(t2);
 }
 function r(e2, ...t2) {
   e2 in console ? console[e2](`[${e2.toUpperCase()}] ${t2.join(", ")}`) : console.log(`[${e2.toUpperCase()}] ${t2.join(", ")}`);
@@ -148,7 +148,7 @@ function E(e2, t2) {
   const n2 = e2.getBoundingClientRect();
   return [Math.round(t2.scrollY + n2.top), Math.round(t2.scrollX + n2.left)];
 }
-async function q(e2, t2, n2) {
+async function v(e2, t2, n2) {
   try {
     if (!n2.navigator.clipboard)
       throw new Error("No clipboard available");
@@ -157,7 +157,7 @@ async function q(e2, t2, n2) {
     r("error", "FAILED: copy URL feature borked " + e3.message + "\nIt will fail on a HTTP site.");
   }
 }
-function v(e2 = 1040, t2, n2, r2) {
+function q(e2 = 1040, t2, n2, r2) {
   if (t2.querySelector(".maquetteContainer") && function(e3, t3) {
     const n3 = new URLSearchParams(e3.search);
     if (n3.has("width"))
@@ -193,8 +193,8 @@ function x(e2, t2) {
   let i2 = 0, s2 = 0;
   return s2 = "string" == typeof a2 ? parseInt(a2, 10) : a2, i2 = "string" == typeof o2 ? parseInt(o2, 10) : o2, [i2, s2];
 }
-let X = { indexUpdated: 0, gainingElement: "#biblio", referencesCache: "/resource/XXX-references", renumber: 1, maxAuthLen: 65, debug: true, runFetch: d };
-function C(e2) {
+let C = { indexUpdated: 0, gainingElement: "#biblio", referencesCache: "/resource/XXX-references", renumber: 1, maxAuthLen: 65, debug: true, runFetch: d };
+function X(e2) {
   const t2 = "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.";
   return "Reference popup for link [" + (e2 + 1) + "]\n\nHTTP_ERROR, Site admin: recompile this meta file, as this is a new link.\n " + A(+/* @__PURE__ */ new Date("07-June-2024"), "not used", true) + "\n\n" + t2;
 }
@@ -212,10 +212,10 @@ function N(e2, t2) {
   c2 < 600 ? e2.classList.add("leanCentre") : (n2 > i2 + c2 - u2 && e2.classList.add("leanLeft"), n2 < i2 + u2 && e2.classList.add("leanRight"), e2.classList.contains("leanRight") && e2.classList.contains("leanLeft") && (e2.classList.remove("leanRight"), e2.classList.remove("leanLeft"), e2.classList.add("leanCentre")));
   r2 < s2 - d2 && e2.classList.add("leanDown"), r2 > s2 + Math.round(R(o2, "height", t2)) && e2.classList.add("leanUp");
 }
-async function M(e2, t2, i2, s2) {
-  if (X = Object.assign(X, { debug: n(i2) }, e2), 0 === t2.querySelectorAll(o).length)
+async function O(e2, t2, i2, s2) {
+  if (C = Object.assign(C, { debug: n(i2) }, e2), 0 === t2.querySelectorAll(o).length)
     return void r("info", "This URL '" + i2.pathname + "' isn't marked-up for references, so skipped");
-  const l2 = await X.runFetch(g(X.referencesCache, i2), false, i2);
+  const l2 = await C.runFetch(g(C.referencesCache, i2), false, i2);
   if (l2.ok && Array.isArray(l2.body)) {
     if (t2.querySelectorAll(a).length < l2.body.length)
       throw new Error("Recompile the meta data for  " + i2.pathname);
@@ -232,14 +232,14 @@ async function M(e2, t2, i2, s2) {
       const t3 = ["[No author]", "Resource doesn't set a description tag.", "[No date]"], n3 = [];
       for (let r2 = 0; r2 < e4.length; r2++) {
         if (null === e4[r2]) {
-          n3.push(C(r2));
+          n3.push(X(r2));
           continue;
         }
         const o2 = A(e4[r2].date, t3[2], true);
         let a2 = e4[r2].title + "", i3 = e4[r2].desc;
         i3 = y(i3, 80), a2 = a2.replace(".", ". "), a2 = y(a2, 80);
         let s3 = e4[r2].auth || t3[0];
-        "unknown" === e4[r2].auth && (s3 = t3[0]), s3.length > X.maxAuthLen && (s3 = s3.substring(0, X.maxAuthLen)), n3.push("Reference popup for link [" + (r2 + 1) + "]\n\n" + a2 + "\n" + s3 + " " + o2 + "\n\n" + i3);
+        "unknown" === e4[r2].auth && (s3 = t3[0]), s3.length > C.maxAuthLen && (s3 = s3.substring(0, C.maxAuthLen)), n3.push("Reference popup for link [" + (r2 + 1) + "]\n\n" + a2 + "\n" + s3 + " " + o2 + "\n\n" + i3);
       }
       return n3;
     }(l2.body);
@@ -249,13 +249,13 @@ async function M(e2, t2, i2, s2) {
       if (e4.length > i3.length)
         throw t3.querySelector(o).classList.add(c), t3.querySelector("p[role=status]").textContent += " Recompile meta data. ", new Error("Too many references in meta-data for this article, pls recompile.");
       for (let t4 = 0; t4 < e4.length; t4++)
-        i3[t4].setAttribute("aria-label", "" + e4[t4]), N(i3[t4], n3), X.renumber && (i3[t4].textContent = "" + r2), r2++;
+        i3[t4].setAttribute("aria-label", "" + e4[t4]), N(i3[t4], n3), C.renumber && (i3[t4].textContent = "" + r2), r2++;
       if (i3.length > e4.length) {
         t3.querySelector("p[role=status]").textContent += "Recompile meta data";
         let r3 = e4.length;
         for (; r3 < i3.length; ) {
-          const e5 = C(r3);
-          i3[r3].setAttribute("aria-label", "" + e5), N(i3[r3], n3), X.renumber && (i3[r3].textContent = "" + (r3 + 1)), r3++;
+          const e5 = X(r3);
+          i3[r3].setAttribute("aria-label", "" + e5), N(i3[r3], n3), C.renumber && (i3[r3].textContent = "" + (r3 + 1)), r3++;
         }
       }
     }(n2, t2, s2), t2.querySelector(o).classList.add(c);
@@ -273,10 +273,10 @@ HTTP_ERROR, no valid file called ${n2}-references.json found.
       e4.querySelector(o).classList.add(c);
     }(t2, i2);
     const e3 = '<p class="error">Unable to get bibliographic data for this article.</p>';
-    S(X.gainingElement, e3, t2), r("warn", "Unable to get meta data " + g(X.referencesCache, i2), JSON.stringify(Array.from(l2.headers.entries())));
+    S(C.gainingElement, e3, t2), r("warn", "Unable to get meta data " + g(C.referencesCache, i2), JSON.stringify(Array.from(l2.headers.entries())));
   }
 }
-function O(e2, t2, n2) {
+function M(e2, t2, n2) {
   t2.querySelectorAll("article a").forEach(function(r2) {
     "git" === h(r2).trim().toLowerCase() && (r2.textContent = "", S(r2, '<i class="fa fa-github" aria-hidden="true"></i> \n		 <span class="sr-only">git</span>', t2), e2 ? (r2.setAttribute("aria-label", function(e3) {
       const t3 = new URL(e3);
@@ -318,7 +318,7 @@ function F(e2, t2, n2) {
   }(r2, "display", n2);
   o2 && "none" !== o2 && (r2.addEventListener("click", (t3) => P(t3, e2, n2)), r2.addEventListener("keypress", (t3) => P(t3, e2, n2))), r2 = e2.querySelector("#copyURL"), r2 && function(e3, t3, n3, r3, o3) {
     e3.addEventListener("click", async (e4) => (await t3(n3, r3, o3), false)), e3.addEventListener("touch", async (e4) => (await t3(n3, r3, o3), false)), e3.addEventListener("keypress", async (e4) => (await t3(n3, r3, o3), false));
-  }(r2, q, e2, t2, n2), H(e2.querySelector("#popup #sendMasto"), j, e2, t2, n2);
+  }(r2, v, e2, t2, n2), H(e2.querySelector("#popup #sendMasto"), j, e2, t2, n2);
   const a2 = Array.from(e2.querySelectorAll("#shareMenuTrigger, #shareClose"));
   for (const r3 in a2)
     H(a2[r3], U, e2, t2, n2);
@@ -362,10 +362,10 @@ function _(e2) {
     throw new Error("Thou shalt supply the group somewhere");
   return t2;
 }
-function Y(e2, t2, n2, r2, o2) {
+function K(e2, t2, n2, r2, o2) {
   return B.name === "group-" + B.group || (t2 === e2 && (o2 = r2), r2 > 0 && o2 > 0 && n2 > 0 && r2 >= n2 - 1 && (r2 = 0)), [o2, n2, r2];
 }
-async function K(e2, t2, o2, a2) {
+async function Y(e2, t2, o2, a2) {
   if (B = Object.assign(B, { name: p(o2), meta: W(B.group, ".json", o2), debug: n(o2), runFetch: d }, e2), "system" === B.group)
     throw new Error("Must set the article group, and not to 'system'.");
   B.meta = W(B.group, ".json", o2);
@@ -395,14 +395,14 @@ async function K(e2, t2, o2, a2) {
     } else {
       const n2 = function(e4) {
         let t3 = -1, n3 = B.perRow, r2 = [], o3 = 0, a3 = 0;
-        for ([t3, n3, o3] = Y(G(e4[0].url), B.name, e4.length, o3, t3); o3 < e4.length; o3++) {
+        for ([t3, n3, o3] = K(G(e4[0].url), B.name, e4.length, o3, t3); o3 < e4.length; o3++) {
           const i3 = e4[o3].title;
           if (i3 && t3 >= 0 && n3 > 0) {
             r2[a3] = { auth: e4[o3].auth, date: A(e4[o3].date, "[Unknown time]", true), url: e4[o3].url, offset: o3, title: e4[o3].title.substr(0, B.titleLimit), desc: e4[o3].desc }, i3.length > B.titleLimit && (r2[a3].title += "...");
             const t4 = e4[o3].desc;
             t4.length > 235 && (r2[a3].desc = t4.substr(0, 235) + "..."), n3--, a3++;
           }
-          if ([t3, n3, o3] = Y(G(e4[o3].url), B.name, n3, o3, t3), r2.length === e4.length)
+          if ([t3, n3, o3] = K(G(e4[o3].url), B.name, n3, o3, t3), r2.length === e4.length)
             break;
           if (r2.length >= B.perRow)
             break;
@@ -530,7 +530,7 @@ function te(e2, t2) {
     o2 = e2;
     const a3 = t2.querySelector(e2);
     if ("SECTION" !== a3.tagName)
-      throw r("error", "what is this? ", a3, a3.tagName), new Error("Bad call");
+      throw r("error", "what is this? ", a3.outerHTML, a3.tagName), new Error("Bad call");
     n2 = t2.querySelector('.tabList a[href="' + e2 + '"] ');
   } else {
     const r2 = e2.target;
@@ -568,22 +568,22 @@ function ne() {
     const n2 = Array.from(e3.querySelectorAll(".lotsOfWords, .halferWords, .fewWords"));
     for (let e4 = 0; e4 < n2.length; e4++)
       n2[e4].setAttribute("style", "--offset-height: " + E(n2[e4], t3)[0] + "px;");
-  }(t2, a2), function(e3, t3, n2) {
-    const r2 = k(e3, t3, n2);
-    if (!m(t3.host) && !r2)
+  }(t2, a2), function(e3, t3, r2) {
+    const o3 = k(e3, t3, r2);
+    if (!m(t3.host) && !o3)
       return;
-    r2 && (e3.querySelector("#sendMasto").textContent = "Share article");
-    const o3 = ['<li id="shareClose"> <i class="fa fa-cancel" aria-hidden="true"></i> </li>	<li> <a class="hunchUp" id="copyURL"><i class="fa fa-copy" aria-hidden="true"></i><span class="hunchUp"> copy<br /> URL</span> </a> </li>'], a3 = ["shareMenuTrigger", "siteChartLink", "rssLink"], i3 = Array.from(e3.querySelectorAll(".allButtons a"));
-    for (const e4 in i3) {
-      if (a3.includes(i3[e4].id))
+    o3 && (e3.querySelector("#sendMasto").textContent = "Share article");
+    const a3 = ['<li id="shareClose"> <i class="fa fa-cancel" aria-hidden="true"></i> </li>	<li> <a class="hunchUp" id="copyURL"><i class="fa fa-copy" aria-hidden="true"></i><span class="hunchUp"> copy<br /> URL</span> </a> </li>'], i3 = ["shareMenuTrigger", "siteChartLink", "rssLink"], s2 = Array.from(e3.querySelectorAll(".allButtons a")), l3 = !m(t3.host) && !n(t3), c3 = e3.querySelector(".allButtons");
+    for (const e4 in s2) {
+      if (i3.includes(s2[e4].id))
         continue;
-      const t4 = i3[e4].cloneNode(true);
-      t4.classList.remove("bigScreenOnly"), o3.push("<li>"), o3.push(t4.outerHTML), o3.push("</li>"), i3[e4].getAttribute("id") && i3[e4].setAttribute("id", "old" + i3[e4].getAttribute("id"));
+      const t4 = s2[e4].cloneNode(true);
+      l3 && c3.removeChild(s2[e4]), t4.classList.remove("bigScreenOnly"), a3.push("<li>"), a3.push(t4.outerHTML), a3.push("</li>"), s2[e4].getAttribute("id") && s2[e4].setAttribute("id", "old" + s2[e4].getAttribute("id"));
     }
-    o3.unshift('<nav><div class="shareMenu" id="shareMenu"><menu id="mobileMenu">'), o3.push("</menu></div></nav>"), S("#navBar", o3.join("\n"), e3);
+    a3.unshift('<nav><div class="shareMenu" id="shareMenu"><menu id="mobileMenu">'), a3.push("</menu></div></nav>"), S("#navBar", a3.join("\n"), e3);
   }(t2, o2, a2), F(t2, o2, a2);
   const c2 = null !== t2.querySelector(".addReferences");
-  O(c2, t2, a2), function(e3, t3, n2) {
+  M(c2, t2, a2), function(e3, t3, n2) {
     t3.querySelectorAll("article a").forEach(function(r2) {
       "docs" === h(r2).trim().toLowerCase() && (r2.textContent = "", S(r2, '<i class="fa fa-book-open" aria-hidden="true"></i>\n		 <span class="sr-only">docs</span>', t3), r2.setAttribute(e3 ? "aria-label" : "title", "Link to the project docs; it may be a git page, or a separate webpage. "), e3 && N(r2, n2));
     });
@@ -605,7 +605,7 @@ function ne() {
       return;
     const r2 = "body, .annoyingBody { font-family: " + n2.ft + "; font-size: " + n2.fs + "; direction:" + n2.dn + "; }", o3 = e3.createElement("style");
     o3.setAttribute("id", "client-set-css"), o3.innerText = r2, e3.getElementsByTagName("head")[0].append(o3);
-  }(t2), Z(t2), v(1040, t2, o2, a2), !k(t2, o2, a2) && "/resource/home" !== o2.pathname && t2.querySelectorAll(".reading").length < 2 && function(e3, t3, o3) {
+  }(t2), Z(t2), q(1040, t2, o2, a2), !k(t2, o2, a2) && "/resource/home" !== o2.pathname && t2.querySelectorAll(".reading").length < 2 && function(e3, t3, o3) {
     const a3 = /[ \t\n\r.(),~]/g, i3 = Object.assign({}, { timeFormat: "m", dataLocation: ".blocker", target: "#shareGroup", wordPerMin: 275, codeSelector: "code", refresh: false, debug: n(o3) }, e3), s2 = i3.dataLocation + " img, " + i3.dataLocation + " picture, " + i3.dataLocation + " object";
     let l3 = h(t3.querySelector(i3.dataLocation)).split(a3).filter((e4) => e4).length / i3.wordPerMin;
     if (l3 += t3.querySelectorAll(s2).length / 5, i3.codeSelector && t3.querySelectorAll(i3.codeSelector)) {
@@ -650,9 +650,9 @@ function ne() {
       }
       throw new Error("KLAXON, KLAXON, I do not know how to build an adjacent list for " + t3.href);
     }(null, o2);
-    e3 && await K({ group: e3, debug: i2, runFetch: "adjacentRunFetch" in ee ? ee.adjacentRunFetch : d }, t2, o2, a2);
+    e3 && await Y({ group: e3, debug: i2, runFetch: "adjacentRunFetch" in ee ? ee.adjacentRunFetch : d }, t2, o2, a2);
   } else {
-    k(t2, o2, a2) ? await z({ debug: i2, renumber: 1, runFetch: "mobileRunFetch" in ee ? ee.mobileRunFetch : d }, t2, o2) : await M({ debug: i2, renumber: 1, runFetch: "desktopRunFetch" in ee ? ee.desktopRunFetch : d }, t2, o2, a2);
+    k(t2, o2, a2) ? await z({ debug: i2, renumber: 1, runFetch: "mobileRunFetch" in ee ? ee.mobileRunFetch : d }, t2, o2) : await O({ debug: i2, renumber: 1, runFetch: "desktopRunFetch" in ee ? ee.desktopRunFetch : d }, t2, o2, a2);
     const e3 = function(e4, t3 = document) {
       const n2 = t3.querySelector(e4);
       if (!n2)
@@ -667,9 +667,21 @@ function ne() {
       r("info", "This URL '" + o2.pathname + "' has no Adjacent groups defined.");
     else
       for (let n2 = 0; n2 < e3.length; n2++)
-        await K({ group: e3[n2], debug: i2, iteration: n2, count: e3.length, runFetch: "adjacentRunFetch" in ee ? ee.adjacentRunFetch : d }, t2, o2, a2);
+        await Y({ group: e3[n2], debug: i2, iteration: n2, count: e3.length, runFetch: "adjacentRunFetch" in ee ? ee.adjacentRunFetch : d }, t2, o2, a2);
   }
-  "undefined" != typeof document && "function" == typeof document.pageStartup ? document.pageStartup() : r("info", "No article specific scripting found, (it may load manually ATF)");
+  n(o2, "select") && (r("info", "select and word count feature is ENABLED.  Access= <alt> + w"), t2.addEventListener("keydown", (e3) => {
+    "w" === e3.key && e3.altKey && r("info", "Word count of selection: " + function(e4) {
+      const t3 = /^[0-9]{1,3}$/;
+      return Array.from(e4.matchAll(/[^ \t\n\r.(),~]+/g)).filter((e5) => !("" === e5[0] || e5[0].match(t3))).length;
+    }(function(e4) {
+      try {
+        const t3 = e4.getSelection().getRangeAt(0);
+        return t3.startOffset === t3.endOffset ? "" : "" + t3.cloneContents().textContent;
+      } catch (e5) {
+        return r("warn", "Unable to get data for selection", e5.message), "";
+      }
+    }(a2)));
+  })), "undefined" != typeof document && "function" == typeof document.pageStartup ? document.pageStartup() : r("info", "No article specific scripting found, (it may load manually ATF)");
 }({}, document, location, window);
 export {
   S as appendIsland,
