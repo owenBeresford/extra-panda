@@ -117,10 +117,10 @@ export function standardisedWordCount(sample: string): number {
   const RE2 = /^[0-9]{1,3}$/;
 
   const list = Array.from(
-    sample.matchAll(RE1).filter((a) => {
+    	sample.matchAll(RE1)
+			).filter((a) => {
       return !(a[0] === "" || a[0].match(RE2));
-    }),
-  );
+    });
   // log("debug", "SAMPLE TAKEN:", list);
   return list.length;
 }
