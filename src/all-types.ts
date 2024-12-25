@@ -175,3 +175,5 @@ export type BiblioProps = DesktopBiblioProps & MobileBiblioProps;
 
 // add other possible events here
 export type MiscEvent = MouseEvent | WheelEvent | TouchEvent | KeyboardEvent;
+
+export const ENABLE_SELECT = "select";

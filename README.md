@@ -183,6 +183,7 @@ Notes:
 - ''debug'' boolean - adjusts how many log messages are written
 - ''width'' number - adds a fake width to the browser
 - ''mobile'' boolean - force interpretation of current machine as a mobile device. Boolean value. In unit tests this MUST BE SET, as JSdom isn't a phone
+- ''select'' - enable select and word count feature
 
 #### Known CSS containers that this code processes
 

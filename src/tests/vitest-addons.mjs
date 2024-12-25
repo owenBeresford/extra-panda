@@ -109,3 +109,35 @@ export function createEvent(tar, dom, win) {
   }
   return vnt;
 }
+
+/**
+//	A type for keyboard events
+export interface Keyable {
+	code:	string,
+	altKey: boolean,
+	shiftKey: boolean,
+	ctrlKey: boolean,
+};
+*/
+
+/**
+ * createKeyEvent
+ * A wrapper to create keyboard events
+ 
+ * @param {Keyable } keys
+ * @public
+ * @returns {Keyboardevent }
+ */
+export function createKeyEvent(keys) {
+  //  let vnt = null;
+  //  if (isFullstack(win)) {
+  // I hope the target is still present after type washing
+  let vnt = new KeyboardEvent("keydown", {
+    altKey: keys.alltKey ?? false,
+    shiftKey: keys.shifttKey ?? false,
+    ctrlKey: keys.ctrlKey ?? false,
+    code: keys.code,
+  });
+  //    Object.defineProperty(vnt, "target", { writable: false, value: tar });
+  return vnt;
+}

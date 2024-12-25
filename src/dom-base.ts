@@ -71,6 +71,28 @@ export function ready(callback: GenericEventHandler, dom: Document): void {
 }
 
 /**
+ * duplicateSelection
+ * Copy the text of the highlighted DOM nodes
+ *
+ * TODO check RAM used
+ * @param {Window} win
+ * @public
+ * @returns {string}
+ */
+export function duplicateSelection(win: Window): string {
+  try {
+    const tmp = win.getSelection().getRangeAt(0);
+    if (tmp.startOffset === tmp.endOffset) {
+      return "";
+    }
+    return "" + tmp.cloneContents().textContent;
+  } catch (e) {
+    log("warn", "Unable to get data for selection", e.message);
+    return "";
+  }
+}
+
+/**
  * setIsland
  * Replace the whole of the subtree with the param
  * I have a historic avoidance of passing DOM object around the stack as it caused bad memory leaks.
@@ -407,6 +429,7 @@ export const TEST_ONLY = {
   getArticleWidth,
   expandDetails,
   docOffsets,
+  duplicateSelection,
   copyURL,
   applyVolume,
   mapAttribute,

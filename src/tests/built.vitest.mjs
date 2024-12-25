@@ -562,7 +562,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
    * @param {boolean} trapExcept
    * @returns {Promise<SimpleResponse>}
    */
-  function mockt2_1(url, trapExcept) {
+  function mockt2_1(url) {
     // desktop biblio
     let hh = new Headers();
     hh.append("content-encoding", "application/json");
@@ -645,7 +645,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
    * @param {boolean} trapExcept
    * @returns {Promise<SimpleResponse>}
    */
-  function mockt2_2(url, trapExcept) {
+  function mockt2_2(url) {
     // adjacent
     let hh = new Headers();
     hh.append("content-encoding", "application/json");
@@ -724,7 +724,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
    * @param {boolean} trapExcept
    * @returns {Promise<SimpleResponse>}
    */
-  function mockt2_3(url, trapExcept) {
+  function mockt2_3(url) {
     // mobile biblio
     let hh = new Headers();
     hh.append("content-encoding", "application/json");

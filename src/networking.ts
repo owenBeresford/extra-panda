@@ -14,12 +14,13 @@ let LOG_USAGE: number = 0;
  * debug
  * a debug tool
  * @param {Location = location} loc
+ * @param {string ="debug"} target
  * @public
  * @returns {boolean}
  */
-export function debug(loc: Location): boolean {
+export function debug(loc: Location, target: string = "debug"): boolean {
   const u: URLSearchParams = new URLSearchParams(loc.search);
-  return u.has("debug");
+  return u.has(target);
 }
 
 /**

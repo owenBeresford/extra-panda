@@ -8,8 +8,6 @@
 - WCAG tests (lighthouse) for whole pages need to go some where (suggest this project) https://www.npmjs.com/package/wcag 
 - Look at https://github.com/githubnext/testpilot - test generator
 - Log fault on validate class for HTML with no doctype header
-- See if can remove HTML fixtures from unit-tests that are not HTML rendering functions
-- Add feature "take user selection of text, and return standardised word count"
 - Add feature dump (ie download as attachment) in-HTML file JS assets, or SVG assets, or CSS assets.  Need to think about UI for this feature.
 - Make RAM usage and execution-cost tests-and-monitoring more mature
 - Implement Networking browser test script
@@ -68,4 +66,5 @@
 - DONE: Add a test that includes the index.mjs, or that is a critical fail point.  A browser test?
 - DONE: Add ability to read current tab from location.hash.
 - DONE: Make mobile menu for SM invalidate desktop menu for SM, as both interactions doesn't make sense
+- DOME: Add feature "take user selection of text, and return standardised word count of it"
 

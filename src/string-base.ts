@@ -1,4 +1,5 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
+import { log } from "./networking";
 
 /**
  * pullout
@@ -100,6 +101,28 @@ export function addLineBreaks(
     marker += len;
   }
   return out.join("\n");
+}
+
+/**
+ * standardisedWordCount 
+ * Build magic to convert string sample to a word count PURE
+ * I have plans about about removing stop words. 
+
+ * @param {string} sample
+ * @public
+ * @returns {number}
+ */
+export function standardisedWordCount(sample: string): number {
+  const RE1 = /[^ \t\n\r.(),~]+/g;
+  const RE2 = /^[0-9]{1,3}$/;
+
+  const list = Array.from(
+    sample.matchAll(RE1).filter((a) => {
+      return !(a[0] === "" || a[0].match(RE2));
+    }),
+  );
+  // log("debug", "SAMPLE TAKEN:", list);
+  return list.length;
 }
 
 /**
@@ -363,6 +386,7 @@ export const TEST_ONLY = {
   isLocal,
   articleName,
   addLineBreaks,
+  standardisedWordCount,
   booleanMap,
   pad,
   test_name,

@@ -9,6 +9,7 @@ const {
   docOffsets,
   expandDetails,
   currentSize,
+  duplicateSelection,
   mapAttribute,
   getArticleWidth,
   applyVolume,
@@ -799,7 +800,42 @@ d
 </div> `;
         appendIsland(".home.icerow", str, dom);
         let ret = getArticleWidth(true, ".lotsOfWords", dom, win);
-        expect(ret).toBeGreaterThan(200); // "asset #28");
+        expect(ret).toBeGreaterThan(200); // "asset #28";
+        await delay(100);
+      },
+    );
+  });
+
+  it("go 10: duplicateSelection ", async () => {
+    const TEST_NAME = "BROWSER TEST func[3] duplicateSelection";
+    return await wrap(
+      TEST_NAME,
+      "https://127.0.0.1:8081/home.html?select=1",
+      async (dom, loc, win) => {
+        // https://javascript.info/selection-range
+        let range1 = new Range();
+        range1.setStart(dom.querySelector("article p:first-child"), 5);
+        range1.setEnd(dom.querySelector("article p:nth-child(4)"), 5);
+        let ret = duplicateSelection(win);
+        const sample1 = ` is a simple wordy site. My objective is communication.
+When I don't have large current projects, I am adding more content, and when I do, I am scribbling notes to publish later.
+
+The purpose of my site is to discuss and describe software architecture and systems, along with practical usage from my hands-on experience of various tools and systems. The emphasis with this space is on engineering content presented with engineering English. Every article on my website has been thoroughly researched. All longer articles contain from 70 to 150 references, I read over 500 specific SERPs, and the longer texts take a month each to write.
+Hope you find the reading useful and helpful, I do not consider my articles to be a blog.
+About the site
+
+Please note, there are many bloggers who write evergreen articles. I do not understand how this works in detail. If you blog about a recent victory for your local football team: it is news for a week; if well written, a current reference for six months / a year; after that, it's just a webpage. Your team will have changed squad, division, manager, maybe location. If those changes don't make your article irrelevant, it's not useful to read to start with ( . . . although it could be entertaining).
+
+I am tagging creation years on many articles, as I think it's more useful to know the context; periodically I add a new article on the same topic.
+For performance, I have stripped many off-the-shelf components from this site, so I can cram more content per page on the larger pages. As aside from the demo pages, this represents poor engineering practice. The demos show browser compatibility and vision, and are not production code.
+
+The s`;
+        expect(duplicateSelection(win)).toBe(sample1);
+
+        win.getSelection().removeAllRanges();
+        expect(duplicateSelection(win)).toBe("");
+
+        expect(isMobile(dom, loc, win)).toBe(true);
         await delay(100);
       },
     );

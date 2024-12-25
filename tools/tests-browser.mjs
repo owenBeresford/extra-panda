@@ -360,12 +360,12 @@ function JSON2logging(json1) {
  * This throws in quite a few places
  
  * @param {Some playwright structure} page
- * @param {number} weight - how many test tabs do you have?
+ * @param {number} weight - REMOVED how many test tabs do you have?
  * @throws if data isn't in correct shape
  * @protected
  * @returns {string}
  */
-async function browser2json(page, weight) {
+async function browser2json(page) {
   const tt1 = await page.getByTestId("status");
   const sz = await tt1.count();
 
@@ -458,7 +458,7 @@ export async function runTests(tests) {
       await page.goto(URL);
       let d1 = new Date();
       await delay(3000);
-      let json1 = await browser2json(page, TESTS.length);
+      let json1 = await browser2json(page);
       JSON2logging(json1);
 
       let d2 = new Date();
