@@ -2,7 +2,9 @@ import { describe, expect, it, run } from "jest-lite";
 
 import { execTest, wrap } from "./page-seed-playwright";
 import { createKeyEvent } from "./vitest-addons";
-import { getLogCounter } from "../networking";
+import { TEST_ONLY } from '../networking';
+
+const { getLogCounter } = TEST_ONLY;
 
 describe("BROWSER TEST index ", async () => {
   if (typeof process !== "undefined") {
