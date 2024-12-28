@@ -113,11 +113,16 @@ function accessVisibility(
  * @returns {void}
  */
 export function initMastodon(dom: Document, loc: Location, win: Window): void {
-  let BUFFER: HTMLElement = dom.querySelector("#shareMenu #mastoTrigger");
-  if (BUFFER) {
-    _map2(BUFFER, openMastodon, dom, win);
-  }
+  let BUFFER: HTMLElement|null = dom.querySelector("#shareMenu #mastoTrigger");
+  if (!BUFFER) {
+	return;
+	}	
+  _map2(BUFFER, openMastodon, dom, win);
+
   BUFFER = dom.querySelector("#shareGroup .allButtons #mastoTrigger");
+  if (!BUFFER) {
+	return;
+	}	
   const canSee: string = accessVisibility(BUFFER, "display", win);
   if (canSee && canSee !== "none") {
     BUFFER.addEventListener("click", (e: Event): boolean => {

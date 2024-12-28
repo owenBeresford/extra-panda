@@ -42,9 +42,10 @@ export function readingDuration(
     " picture, " +
     options.dataLocation +
     " object";
-  const count: number = pullout(
-    dom.querySelector(options.dataLocation) as HTMLElement,
-  )
+	let root:HTMLElement|null =dom.querySelector(options.dataLocation) as HTMLElement;
+	if(!root) { return; }
+
+  const count: number = pullout( root )
     .split(RE)
     .filter((n) => n).length;
 
