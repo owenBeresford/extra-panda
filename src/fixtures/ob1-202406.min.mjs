@@ -135,7 +135,7 @@ function L(e2) {
   const t2 = e2.getComputedStyle.toString().includes("[native code]");
   return !("boolean" != typeof t2 || !t2);
 }
-function R(e2, t2, n2) {
+function E(e2, t2, n2) {
   try {
     if (!L(n2))
       return -1;
@@ -144,7 +144,7 @@ function R(e2, t2, n2) {
     return r("error", "Missing data:" + e3.message), -1;
   }
 }
-function E(e2, t2) {
+function R(e2, t2) {
   const n2 = e2.getBoundingClientRect();
   return [Math.round(t2.scrollY + n2.top), Math.round(t2.scrollX + n2.left)];
 }
@@ -201,16 +201,16 @@ function X(e2) {
 function N(e2, t2) {
   if (null === e2)
     return;
-  const n2 = R(e2, "left", t2), r2 = R(e2, "top", t2);
+  const n2 = E(e2, "left", t2), r2 = E(e2, "top", t2);
   if (-1 === n2 && -1 === r2)
     return;
   let o2 = e2.parentNode;
   const a2 = ["LI", "SUP", "UL", "OL", "SPAN", "P"];
   for (; a2.includes(o2.tagName); )
     o2 = o2.parentNode;
-  const i2 = Math.round(R(o2, "left", t2)), s2 = Math.round(R(o2, "top", t2)), c2 = Math.round(R(o2, "width", t2)), u2 = 30 * l, d2 = 5 * l;
+  const i2 = Math.round(E(o2, "left", t2)), s2 = Math.round(E(o2, "top", t2)), c2 = Math.round(E(o2, "width", t2)), u2 = 30 * l, d2 = 5 * l;
   c2 < 600 ? e2.classList.add("leanCentre") : (n2 > i2 + c2 - u2 && e2.classList.add("leanLeft"), n2 < i2 + u2 && e2.classList.add("leanRight"), e2.classList.contains("leanRight") && e2.classList.contains("leanLeft") && (e2.classList.remove("leanRight"), e2.classList.remove("leanLeft"), e2.classList.add("leanCentre")));
-  r2 < s2 - d2 && e2.classList.add("leanDown"), r2 > s2 + Math.round(R(o2, "height", t2)) && e2.classList.add("leanUp");
+  r2 < s2 - d2 && e2.classList.add("leanDown"), r2 > s2 + Math.round(E(o2, "height", t2)) && e2.classList.add("leanUp");
 }
 async function O(e2, t2, i2, s2) {
   if (C = Object.assign(C, { debug: n(i2) }, e2), 0 === t2.querySelectorAll(o).length)
@@ -310,7 +310,10 @@ function j(e2, t2, n2, o2) {
 }
 function F(e2, t2, n2) {
   let r2 = e2.querySelector("#shareMenu #mastoTrigger");
-  r2 && I(r2, P, e2, n2), r2 = e2.querySelector("#shareGroup .allButtons #mastoTrigger");
+  if (!r2)
+    return;
+  if (I(r2, P, e2, n2), r2 = e2.querySelector("#shareGroup .allButtons #mastoTrigger"), !r2)
+    return;
   const o2 = function(e3, t3 = "display", n3 = window) {
     let r3 = "";
     e3 && e3.computedStyleMap ? r3 = e3.computedStyleMap()[t3] : e3 && (r3 = n3.getComputedStyle(e3, null).getPropertyValue(t3));
@@ -554,7 +557,9 @@ function te(e2, t2) {
 function ne() {
   return ee.pageInitRun;
 }
-!async function(e2, t2, o2, a2) {
+window.fireKeybEvent = function(e2) {
+  return window.dispatchEvent(e2);
+}, async function(e2, t2, o2, a2) {
   ee = Object.assign(ee, {}, e2);
   const i2 = n(o2);
   if (ee.pageInitRun)
@@ -567,7 +572,7 @@ function ne() {
     e3.querySelector("body").setAttribute("style", "--offset-height: 0;");
     const n2 = Array.from(e3.querySelectorAll(".lotsOfWords, .halferWords, .fewWords"));
     for (let e4 = 0; e4 < n2.length; e4++)
-      n2[e4].setAttribute("style", "--offset-height: " + E(n2[e4], t3)[0] + "px;");
+      n2[e4].setAttribute("style", "--offset-height: " + R(n2[e4], t3)[0] + "px;");
   }(t2, a2), function(e3, t3, r2) {
     const o3 = k(e3, t3, r2);
     if (!m(t3.host) && !o3)
@@ -607,22 +612,25 @@ function ne() {
     o3.setAttribute("id", "client-set-css"), o3.innerText = r2, e3.getElementsByTagName("head")[0].append(o3);
   }(t2), Z(t2), q(1040, t2, o2, a2), !k(t2, o2, a2) && "/resource/home" !== o2.pathname && t2.querySelectorAll(".reading").length < 2 && function(e3, t3, o3) {
     const a3 = /[ \t\n\r.(),~]/g, i3 = Object.assign({}, { timeFormat: "m", dataLocation: ".blocker", target: "#shareGroup", wordPerMin: 275, codeSelector: "code", refresh: false, debug: n(o3) }, e3), s2 = i3.dataLocation + " img, " + i3.dataLocation + " picture, " + i3.dataLocation + " object";
-    let l3 = h(t3.querySelector(i3.dataLocation)).split(a3).filter((e4) => e4).length / i3.wordPerMin;
-    if (l3 += t3.querySelectorAll(s2).length / 5, i3.codeSelector && t3.querySelectorAll(i3.codeSelector)) {
+    let l3 = t3.querySelector(i3.dataLocation);
+    if (!l3)
+      return;
+    let c3 = h(l3).split(a3).filter((e4) => e4).length / i3.wordPerMin;
+    if (c3 += t3.querySelectorAll(s2).length / 5, i3.codeSelector && t3.querySelectorAll(i3.codeSelector)) {
       let e4 = 0;
       t3.querySelectorAll(i3.codeSelector).forEach(function(t4) {
         e4 += h(t4).split(a3).filter((e5) => e5).length;
-      }), e4 && (l3 += 3 * e4 / i3.wordPerMin);
+      }), e4 && (c3 += 3 * e4 / i3.wordPerMin);
     }
-    if (l3 < 1)
+    if (c3 < 1)
       return void r("info", "No reading time displayed for this article");
     if (i3.refresh) {
       const e4 = t3.querySelector(i3.target + " a.reading");
       e4 && e4.parentNode.removeChild(e4);
     }
-    l3 = Math.round(l3);
-    const c3 = '<a class="reading" title="See longer version of this reading guide." href="/resource/jQuery-reading-duration">To read: ' + l3 + i3.timeFormat + "</a>";
-    S(i3.target, c3, t3);
+    c3 = Math.round(c3);
+    const u3 = '<a class="reading" title="See longer version of this reading guide." href="/resource/jQuery-reading-duration">To read: ' + c3 + i3.timeFormat + "</a>";
+    S(i3.target, u3, t3);
   }({ dataLocation: "#main", target: ".addReading", debug: i2, refresh: true }, t2, o2);
   {
     const e3 = t2.querySelectorAll(".tabComponent");
@@ -669,8 +677,8 @@ function ne() {
       for (let n2 = 0; n2 < e3.length; n2++)
         await Y({ group: e3[n2], debug: i2, iteration: n2, count: e3.length, runFetch: "adjacentRunFetch" in ee ? ee.adjacentRunFetch : d }, t2, o2, a2);
   }
-  n(o2, "select") && (r("info", "select and word count feature is ENABLED.  Access= <alt> + w"), t2.addEventListener("keydown", (e3) => {
-    "w" === e3.key && e3.altKey && r("info", "Word count of selection: " + function(e4) {
+  n(o2, "select") && (r("info", "select and word count feature is ENABLED.  Access= <alt> + w"), t2.body.addEventListener("keydown", (e3) => {
+    r("debug", "TEMP LOG ", e3), "w" === e3.key && e3.altKey && r("info", "Word count of selection: " + function(e4) {
       const t3 = /^[0-9]{1,3}$/;
       return Array.from(e4.matchAll(/[^ \t\n\r.(),~]+/g)).filter((e5) => !("" === e5[0] || e5[0].match(t3))).length;
     }(function(e4) {
