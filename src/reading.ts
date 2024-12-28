@@ -42,7 +42,7 @@ export function readingDuration(
     " picture, " +
     options.dataLocation +
     " object";
-	let root:HTMLElement|null =dom.querySelector(options.dataLocation) as HTMLElement;
+	const root:HTMLElement|null =dom.querySelector(options.dataLocation) as HTMLElement;
 	if(!root) { return; }
 
   const count: number = pullout( root )
