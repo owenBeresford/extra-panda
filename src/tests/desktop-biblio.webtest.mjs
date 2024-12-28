@@ -2,7 +2,7 @@ import { expect, describe, it, run } from "jest-lite";
 
 import { execTest, wrap } from "./page-seed-playwright";
 import { appendIsland } from "../dom-base";
-import { delay, log } from "../networking";
+import { delay } from "../networking";
 import { TEST_ONLY } from "../desktop-biblio";
 
 const { applyDOMpositions } = TEST_ONLY;

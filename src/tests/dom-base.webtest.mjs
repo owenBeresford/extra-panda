@@ -816,7 +816,6 @@ d
         let range1 = new Range();
         range1.setStart(dom.querySelector("article p:first-child"), 5);
         range1.setEnd(dom.querySelector("article p:nth-child(4)"), 5);
-        let ret = duplicateSelection(win);
         const sample1 = ` is a simple wordy site. My objective is communication.
 When I don't have large current projects, I am adding more content, and when I do, I am scribbling notes to publish later.
 
@@ -830,6 +829,8 @@ I am tagging creation years on many articles, as I think it's more useful to kno
 For performance, I have stripped many off-the-shelf components from this site, so I can cram more content per page on the larger pages. As aside from the demo pages, this represents poor engineering practice. The demos show browser compatibility and vision, and are not production code.
 
 The s`;
+        expect(duplicateSelection(win)).toBe(sample1);
+// tests can read this twice safely
         expect(duplicateSelection(win)).toBe(sample1);
 
         win.getSelection().removeAllRanges();
