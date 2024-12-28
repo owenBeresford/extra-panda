@@ -23,7 +23,6 @@ describe("BROWSER TEST index ", async () => {
         console.log(ALL);
         //    If it get this far, it works
         expect(typeof ALL).toBe("object");
-        //    assert.equal(typeof ALL, "object", "assert #1");
       },
     );
   });
@@ -34,13 +33,20 @@ describe("BROWSER TEST index ", async () => {
     return await wrap(
       TEST_NAME,
       "https://127.0.0.1:8081/home.html?select=1",
-      async (document, location, window) => {
+      async (dom, loc, win) => {
         let range1 = new Range();
-        range1.setStart(document.querySelector("article p:first-child"), 5);
-        range1.setEnd(document.querySelector("article p:nth-child(4)"), 5);
+        range1.setStart(dom.querySelector("article p:first-child"), 0);
+        range1.setEnd(dom.querySelector("article p:nth-child(4)"), 0);
         let step1 = getLogCounter();
-        createKeyEvent({ code: "w", altKey: true, ctrl: false, aftKey: false });
+// this should emit 241
+    	dom.body.addEventListener("keydown", (e) => { win.console.log("[TEST SCRIPT] Have keyb ", e); });
+        let tmp=createKeyEvent({ code: 'KeyW', key:"w", altKey: true, ctrlKey: false, shiftKey: false }, dom.body, win);
+		expect( win.fireKeybEvent(tmp ) ).toBe(true);
+		/// will return false if cancellable, and has been,  otherwise true
+//		expect( dom.body.dispatchEvent(tmp) ).toBe(true);
+//		win.dispatchEvent(tmp); 
         let step2 = getLogCounter();
+		win.console.log("TEST MESSAGE (test script to child PID code-under-test)");
 
         expect(step2 - step1).toBe(1);
       },

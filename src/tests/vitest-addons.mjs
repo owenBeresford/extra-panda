@@ -124,20 +124,27 @@ export interface Keyable {
  * createKeyEvent
  * A wrapper to create keyboard events
  
- * @param {Keyable } keys
+ * @param {Keyable }    keys
+ * @param {HTMLElement} ele
+ * @param {Window}      win
  * @public
  * @returns {Keyboardevent }
  */
-export function createKeyEvent(keys) {
+export function createKeyEvent(keys, ele, win) {
   //  let vnt = null;
-  //  if (isFullstack(win)) {
+  //  if (isFullstack(win)) {    }
   // I hope the target is still present after type washing
   let vnt = new KeyboardEvent("keydown", {
-    altKey: keys.alltKey ?? false,
-    shiftKey: keys.shifttKey ?? false,
-    ctrlKey: keys.ctrlKey ?? false,
-    code: keys.code,
+    altKey:   keys.altKey ?? false,
+    shiftKey: keys.shiftKey ?? false,
+    ctrlKey:  keys.ctrlKey ?? false,
+    code:     keys.code,
+	key:      keys.key,
+	charCode: keys.key.charCodeAt(0), 
+    keyCode:  keys.key.charCodeAt(0), 
   });
-  //    Object.defineProperty(vnt, "target", { writable: false, value: tar });
+//  Object.defineProperty(vnt, "target", { writable: false, value: ele });
+//  Object.defineProperty(vnt, "view", { writable: false, value: win });
   return vnt;
 }
+
