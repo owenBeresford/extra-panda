@@ -5,7 +5,7 @@ import { isFullstack } from "../dom-base";
 import { delay, domLog } from "../networking";
 import { TEST_ONLY } from "../***MODULE_UNDER_TEST***";
 
-// import functions from TEST_ONLY
+const { THING1, THING2} = TEST_ONLY;
 
 describe("TEST ***XXXXX**", async () => {
   if (typeof process !== "undefined") {
@@ -31,6 +31,7 @@ describe("TEST ***XXXXX**", async () => {
     const TEST_NAME = "BROWSER TEST func[2] XXXXX";
     // ...
         console.log("IOIO Implement test ");
+        await delay(10);
   });
 });
 
