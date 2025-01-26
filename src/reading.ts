@@ -1,8 +1,16 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
 import { debug, log } from "./networking";
 import { appendIsland } from "./dom-base";
-import { pullout } from "./string-base";
-import { ReadingProps } from "./all-types";
+import { pullout, standardisedWordCount } from "./string-base";
+import type { ReadingProps } from "./all-types";
+
+function extract(get: string, dom: Document): number {
+  let ret = 0;
+  dom.querySelectorAll(get).forEach(function (a: HTMLElement) {
+    ret += standardisedWordCount(pullout(a));
+  });
+  return ret;
+}
 
 /**
  * readingDuration
@@ -20,7 +28,6 @@ export function readingDuration(
   dom: Document,
   loc: Location,
 ): void {
-  const RE = /[ \t\n\r.(),~]/g;
   const options = Object.assign(
     {},
     {
@@ -35,36 +42,27 @@ export function readingDuration(
     opts,
   ) as ReadingProps;
   // I would like to move this into the config
-  const mm =
+  const IMAGE_SEARCH =
     options.dataLocation +
     " img, " +
     options.dataLocation +
     " picture, " +
     options.dataLocation +
     " object";
-	const root:HTMLElement|null =dom.querySelector(options.dataLocation) as HTMLElement;
-	if(!root) { return; }
 
-  const count: number = pullout( root )
-    .split(RE)
-    .filter((n) => n).length;
-
-  let duration: number = count / options.wordPerMin;
-  duration += dom.querySelectorAll(mm).length / 5;
-
-  if (options.codeSelector && dom.querySelectorAll(options.codeSelector)) {
-    let tt = 0;
-    dom.querySelectorAll(options.codeSelector).forEach(function (
-      a: HTMLElement,
-    ) {
-      tt += pullout(a)
-        .split(RE)
-        .filter((n) => n).length;
-    });
-    if (tt) {
-      duration += (tt * 3) / options.wordPerMin;
-    }
+  const plain: number = extract(options.dataLocation, dom);
+  if (!plain) {
+    return;
   }
+
+  let code = 0;
+  if (options.codeSelector) {
+    code += extract(options.codeSelector, dom);
+  }
+  let duration: number =
+    (plain - code) / options.wordPerMin +
+    dom.querySelectorAll(IMAGE_SEARCH).length * 5 +
+    (code * 2) / options.wordPerMin;
   if (duration < 1) {
     log("info", "No reading time displayed for this article");
     return;
@@ -90,4 +88,4 @@ export function readingDuration(
 // injectOpts not needed, only 1 function
 /* access to functions for unit tests */
 
-export const TEST_ONLY = { readingDuration };
+export const TEST_ONLY = { readingDuration, extract };
