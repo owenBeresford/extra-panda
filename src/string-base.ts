@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { log } from "./networking";
+// import { log } from "./networking";
 
 /**
  * pullout
@@ -116,12 +116,9 @@ export function standardisedWordCount(sample: string): number {
   const RE1 = /[^ \t\n\r.(),~]+/g;
   const RE2 = /^[0-9]{1,3}$/;
 
-  const list = Array.from(
-    	sample.matchAll(RE1)
-			).filter((a) => {
-      return !(a[0] === "" || a[0].match(RE2));
-    });
-  // log("debug", "SAMPLE TAKEN:", list);
+  const list = Array.from(sample.matchAll(RE1)).filter((a) => {
+    return !(a[0] === "" || a[0].match(RE2));
+  });
   return list.length;
 }
 

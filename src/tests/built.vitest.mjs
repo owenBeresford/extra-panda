@@ -3,7 +3,7 @@ import { assert, describe, it } from "vitest";
 import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../core";
 import { accessCookie } from "../networking";
-import { appendIsland } from "../dom-base";
+import { appendIsland, isMobile } from "../dom-base";
 import { enableGetEventListeners } from "./vitest-addons";
 
 const { siteCore, injectOpts } = TEST_ONLY;
@@ -25,6 +25,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       3,
     );
     let str = `<p role="status">PING</p> <div id="navBar"> 
+				<div id="shareGroup" class="bibbles row addReading">
 				<span class="allButtons"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
 						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
@@ -37,6 +38,8 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
 						<a title="Share current article with Hacker news/ Y combinator audience" target="_blank" class="bigScreenOnly" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette&amp;t=3D+effects+demo%2F+maquette"> <i class="fa fa-hacker-news" aria-label="Share this article with your Y combinator audience." aria-hidden="true"> </i></a>
 						<a title="Share this article with your Xing audience." href="https://www.xing.com/spi/shares/new?url=https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" target="_blank" class="bigScreenOnly"><i class="fa fa-xing-square" aria-hidden="true" aria-label="Share this article with your Xing audience."></i> </a>
 					</span>
+			<span class="ultraSkinny bigScreenOnly"> </span>
+				</div>
 
 <fieldset class="h4_menu column bigScreenOnly">
 <legend><span id="pageMenu"><i class="fa fa-ob1burger" aria-hidden="true"></i> </span></legend>
@@ -52,10 +55,15 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
 <li class="h4_odd"><a href="/resource/contact-me">Contact me <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 <li class=""><a href="#contentGroup">Similar articles</a></li>
 </menu>
-	<dialog id="popup" >
-	<span id="sendMasto">TICK</span> <span id="hideMasto">CROSS</span>
-	<input id="mastodonserver" value="panda.testing" data-url="giggle.co.uk?" /> 
-	</dialog> 
+	<dialog id="popup" class="popup1 bigScreenOnly">
+				<form method="dialog" encoding="multipart/form-data" action="." name="mastoSelection">
+					<label for="mastodonserver">your server: 
+						<input id="mastodonserver" max-length="50" data-url="https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Ftesting-epic" type="text" value="" placeholder="mastodon.social">  
+					</label> 
+					<span id="sendMasto" class="button masto" title="Share article to *your* mastodon server">Share article now</span>
+					<span class="button trimmed" id="hideMasto" title="Close popup"> <i class="fa fa-cancel" aria-hidden="true"></i> Cancel </span>
+				</form>
+	</dialog>
 
 </div>
 <main id="main">
@@ -394,12 +402,13 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     if (process) {
       ram1 = process.memoryUsage();
     }
-
+// #shareGroup #mastoTrigger
     const [dom, loc, win] = page(
       "http://192.168.0.35/resource/home?mobile=1&debug=1",
       3,
     );
     let str = `<p role="status">PING</p> <div id="navBar"> 
+		<div id="shareGroup" class="bibbles row addReading">
         <span class="allButtons"> 
             <a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
             <a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
@@ -412,6 +421,8 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
             <a title="Share current article with Hacker news/ Y combinator audience" target="_blank" class="bigScreenOnly" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette&amp;t=3D+effects+demo%2F+maquette"> <i class="fa fa-hacker-news" aria-label="Share this article with your Y combinator audience." aria-hidden="true"> </i></a>
             <a title="Share this article with your Xing audience." href="https://www.xing.com/spi/shares/new?url=https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" target="_blank" class="bigScreenOnly"><i class="fa fa-xing-square" aria-hidden="true" aria-label="Share this article with your Xing audience."></i> </a>
           </span>
+			<span class="ultraSkinny bigScreenOnly"> </span>
+			</div>
 
 <fieldset class="h4_menu column bigScreenOnly">
 <legend><span id="pageMenu"><i class="fa fa-ob1burger" aria-hidden="true"></i> </span></legend>
@@ -427,10 +438,15 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
 <li class="h4_odd"><a href="/resource/contact-me">Contact me <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 <li class=""><a href="#contentGroup">Similar articles</a></li>
 </menu>
-  <dialog id="popup" >
-  <span id="sendMasto">TICK</span> <span id="hideMasto">CROSS</span>
-  <input id="mastodonserver" value="panda.testing" data-url="giggle.co.uk?" /> 
-  </dialog> 
+	<dialog id="popup" class="popup1 bigScreenOnly">
+				<form method="dialog" encoding="multipart/form-data" action="." name="mastoSelection">
+					<label for="mastodonserver">your server: 
+						<input id="mastodonserver" max-length="50" data-url="https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Ftesting-epic" type="text" value="" placeholder="mastodon.social">  
+					</label> 
+					<span id="sendMasto" class="button masto" title="Share article to *your* mastodon server">Share article now</span>
+					<span class="button trimmed" id="hideMasto" title="Close popup"> <i class="fa fa-cancel" aria-hidden="true"></i> Cancel </span>
+				</form>
+	</dialog>
 
 </div>
 <main id="main">
@@ -484,6 +500,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     );
 
     await siteCore({}, dom, loc, win);
+    let buf = dom.querySelector("#sendMasto");
     assert.equal(
       dom.querySelectorAll("#groupengineering .adjacentList").length,
       0,
@@ -501,11 +518,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       "assert #11",
     );
 
-    let buf = dom.querySelector("#sendMasto");
-    assert.equal(buf.getEventListeners().length, 3, "Assert #12");
-    buf = dom.querySelector("#hideMasto");
-    assert.equal(buf.getEventListeners().length, 3, "Assert #13");
-    // this is absent for mobile
+   // this is absent for mobile
     //   buf = dom.querySelector("#shareGroup a.reading");
     //   assert(buf.textContent, "To read: 1m", "assert #14");
 
@@ -540,6 +553,10 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       "assert #21",
     );
 
+    assert.equal(buf.getEventListeners().length, 3, "Assert #12");
+    buf = dom.querySelector("#hideMasto");
+    assert.equal(buf.getEventListeners().length, 3, "Assert #13");
+ 
     // add tabs test
     // test modal
 

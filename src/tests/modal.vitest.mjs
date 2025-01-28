@@ -5,12 +5,12 @@ import { TEST_ONLY } from "../modal";
 import { enableGetEventListeners } from "./vitest-addons";
 import { appendIsland, isFullstack } from "../dom-base";
 
-const { modalInit, HTMLDetailsClick, HTMLDetailsTrap } = TEST_ONLY;
+const { modalInit } = TEST_ONLY;
 
 describe("TEST modal ", () => {
   it("go 1: HTMLDetailsClick", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    enableGetEventListeners(dom);
+
     let str = `
 <div class="blocker popOverWidget">
 <details class="singlePopup">
@@ -23,6 +23,8 @@ describe("TEST modal ", () => {
 </div>
 `;
     appendIsland("#point2", str, dom);
+    enableGetEventListeners(dom);
+
     modalInit(dom);
 
     let buf = dom.querySelector("details");
@@ -57,7 +59,6 @@ describe("TEST modal ", () => {
 
   it("go 1.1: HTMLDetailsClick", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    enableGetEventListeners(dom);
     let str = `
 <div class="blocker popOverWidget">
 <details class="singlePopup">
@@ -70,6 +71,7 @@ window.alert("SDFSDFSDF SDFSDFSDF");
 </div>
 `;
     appendIsland("#point2", str, dom);
+    enableGetEventListeners(dom);
     modalInit(dom);
 
     let buf = dom.querySelector("details");

@@ -1,7 +1,9 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 // import { Location, Document, HTMLElement } from "jsdom";
 
-import { CoreProps, MiscEvent, MultiFuncArg, ENABLE_SELECT } from "./all-types";
+import type { CoreProps, MiscEvent, MultiFuncArg } from "./all-types";
+import { ENABLE_SELECT } from "./all-types";
+
 import { log, debug, runFetch } from "./networking";
 import {
   listContentGroup,
@@ -117,6 +119,7 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
  * @param {string =".burgerMenu"} id - HTML id for the menu
  * @param {Document =document} dom
  * @protected
+ * @deprecated I moved this feature into HTML DETAILS/ SUMMARY tags
  * @returns {void}
  */
 function burgerMenu(id: string = ".burgerMenu", dom: Document): void {
@@ -358,18 +361,14 @@ export async function siteCore(
   if (select) {
     log("info", "select and word count feature is ENABLED.  Access= <alt> + w");
     // not sure about performance of this code, so disabled by default
-    dom.addEventListener("keydown", (e) => {
+    dom.body.addEventListener("keydown", (e) => {
       if (e.key === "w" && e.altKey) {
         log(
           "info",
           "Word count of selection: " +
             standardisedWordCount(duplicateSelection(win)),
         );
-        // on pressed, run 		// run:  win.getSelection().removeAllRanges();
-
-        //			} else {
-        //				log("debug", "OTHER KEY "+e.key+" "+e.code+" isCtl="+e.ctrlKey+" isShift="+e.shiftKey+" isAlt="+e.altKey);
-      }
+     }
     });
   }
 

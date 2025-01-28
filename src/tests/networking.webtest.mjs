@@ -1,7 +1,7 @@
 import { expect, describe, it, run } from "jest-lite";
 
 import { execTest, wrap } from "./page-seed-playwright";
-import { Cookieable, Fetchable } from "../all-types";
+// import type { Cookieable, Fetchable } from "../all-types";
 import { TEST_ONLY } from "../networking";
 import { delay, domLog } from "../networking";
 const { runFetch } = TEST_ONLY;

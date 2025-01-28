@@ -1,4 +1,4 @@
-import { Cookieable } from "./all-types";
+import type { Cookieable } from "./all-types";
 import { APPEARANCE_COOKIE, accessCookie } from "./networking";
 
 /**
@@ -27,7 +27,7 @@ export class QOOKIE implements Cookieable {
    * @public
    * @returns {void}
    */
-  set(nom: string, cValue: string, expDays: number): void {
+  public set(nom: string, cValue: string, expDays: number): void {
     let expires = "";
     if (expDays) {
       const d1 = new Date();
@@ -45,7 +45,7 @@ export class QOOKIE implements Cookieable {
    * @public
    * @returns {string}
    */
-  get(nom: string): string {
+  public get(nom: string): string {
     const name = nom + "=";
     const cDecoded = decodeURIComponent(document.cookie);
     const cArr = cDecoded.split("; ");
@@ -67,7 +67,7 @@ export class QOOKIE implements Cookieable {
      * @public
      * @returns {void}
      */
-  wipe(nom: string): void {
+  public wipe(nom: string): void {
     const d1 = new Date();
     d1.setTime(d1.getTime() + 8 * 60 * 60 * 1000);
     const expires = "expires=" + d1.toUTCString();

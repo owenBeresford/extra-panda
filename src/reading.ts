@@ -4,6 +4,15 @@ import { appendIsland } from "./dom-base";
 import { pullout, standardisedWordCount } from "./string-base";
 import type { ReadingProps } from "./all-types";
 
+/**
+ * extract
+ * I may move this responsibility to another file, this func is obvious 
+ *
+ * @param {string} get
+ * @param {Document} dom
+ * @public
+ * @returns {number}
+ */
 function extract(get: string, dom: Document): number {
   let ret = 0;
   dom.querySelectorAll(get).forEach(function (a: HTMLElement) {

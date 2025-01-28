@@ -133,7 +133,7 @@ export async function execTest(run) {
   }
 
   document.querySelector("#binLog").setAttribute("data-status", "busy");
-  const ret = await run({silent:false});
+  const ret = await run({ silent: false });
   document.querySelector("#binLog").setAttribute("data-status", "done");
   if (
     ret.length &&

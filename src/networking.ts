@@ -1,14 +1,8 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
-import { Fetchable, SimpleResponse, Cookieable } from "./all-types";
+import type { Fetchable, SimpleResponse, Cookieable } from "./all-types";
 // this uses document as an in-code literal,
 // I have an alternative dynamic load if this static load breaks anything.
 import { QOOKIE } from "./cookies";
-
-// Yes I know full well this is a dup of Mocks available in Jest
-// Vitest also can do those Mocks
-// but this is just a simple counter, not an object
-// adding a dep for 1 int is overkill.
-let LOG_USAGE: number = 0;
 
 /**
  * debug
@@ -23,6 +17,26 @@ export function debug(loc: Location, target: string = "debug"): boolean {
   return u.has(target);
 }
 
+type BetterConsole = typeof console & { LOG_USAGE:number; };
+type VisabiltityToLogging= ()=>number;
+let localConsole=console;
+
+function enableLogCounter(cons:BetterConsole ):VisabiltityToLogging {
+	const nom:string='LOG_USAGE';
+	if(! Object.hasOwn( cons, nom)) {
+		Object.defineProperty(cons, nom, {
+			value: 0,
+			writable: true,
+			enumerable: true,
+			configurable: false
+		});
+	}
+	cons[nom]=0;
+	localConsole=cons;
+	return () => { return cons[nom]; }	
+}
+
+
 /**
  * log
  * A simple console.log alias, to make a later extension easier
@@ -32,11 +46,11 @@ export function debug(loc: Location, target: string = "debug"): boolean {
  * @returns {void}
  */
 export function log(typ: string, ...inputs: string[]): void {
-  LOG_USAGE++;
+  localConsole.LOG_USAGE++;
   if (typ in console) {
-    console[typ](`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
+     localConsole[typ](`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
   } else {
-    console.log(`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
+     localConsole.log(`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
   }
 }
 
@@ -239,7 +253,5 @@ export const TEST_ONLY = {
   debug,
   delay,
   accessCookie,
-  getLogCounter: (): number => {
-    return LOG_USAGE;
-  },
+  enableLogCounter,
 };

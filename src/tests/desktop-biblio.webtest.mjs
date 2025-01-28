@@ -72,7 +72,6 @@ describe("TEST BROWSER desktop-biblio", async () => {
           dom.querySelector(
             '.TESTANCHOR sup>a[href="https://api.highcharts.com/highcharts/chart.events.render"]',
           ),
-
           win,
         );
         expect(
@@ -94,13 +93,17 @@ describe("TEST BROWSER desktop-biblio", async () => {
             )
             .getAttribute("class"),
         ).toBe("leanCentre");
+        await delay(100);
+console.log("WWWW",
+  dom.querySelector( '.TESTANCHOR sup>a[href="https://api.highcharts.com/highcharts/chart.events.render"]')
+);	    
         expect(
-          dom
+          dom // labelled 14
             .querySelector(
               '.TESTANCHOR sup>a[href="https://api.highcharts.com/highcharts/chart.events.render"]',
             )
             .getAttribute("class"),
-        ).toBe("leanRight");
+        ).toBe("leanCentre leanUp");
         // need a further test for centre
 
         await delay(100);

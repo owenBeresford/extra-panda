@@ -90,6 +90,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
 <div id="biblio" style="display:none;"></div>
 `;
     appendIsland("#point2", str, dom);
+
     enableGetEventListeners(dom);
     let hash = {
       desktopRunFetch: mockt1_1,

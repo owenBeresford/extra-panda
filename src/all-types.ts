@@ -31,7 +31,7 @@ export type MiscEventHandler4 = (
   dom: Document,
   loc: Location,
   win: Window,
-) => void;
+) => Promise<void>;
 
 export type MiscEventHandler5 = (
   a: Event,
@@ -43,6 +43,7 @@ export type MiscEventHandler5 = (
 export type BOUNDARY = "top" | "bottom" | "left" | "right" | "height" | "width";
 export type ScreenSizeArray = [number, number];
 export type ScreenOffsetArray = [number, number];
+export type AccessDebugState = (loc: Location, nom: string) => boolean;
 
 export interface Scrollable {
   scrollY: number;
@@ -69,7 +70,7 @@ export interface CoreProps {
   mobileRunFetch?: FetchedExec;
   desktopRunFetch?: FetchedExec;
   adjacentRunFetch?: FetchedExec;
-  debug: (loc: Location) => boolean;
+  debug: AccessDebugState;
 }
 
 export type Fetch = (u: string, o: RequestInit) => Promise<Response>;

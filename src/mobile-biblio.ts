@@ -7,8 +7,7 @@ import {
   runFetch,
   ALL_REFERENCE,
 } from "./networking";
-// import { Document, Location } from "jsdom";
-import {
+import type {
   ReferenceType,
   NormalisedReference,
   MobileBiblioProps,

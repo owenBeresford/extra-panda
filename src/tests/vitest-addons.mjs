@@ -1,6 +1,5 @@
 import { isFullstack } from "../dom-base";
-// have had to remove this as ESlint is complaining
-// ("use strict");
+// this would be hard to make as a TS module
 
 /**
  * enableGetEventListeners
@@ -16,14 +15,21 @@ import { isFullstack } from "../dom-base";
  * @public
  * @returns {void}
  */
-export function enableGetEventListeners(dom = document) {
+export function enableGetEventListeners(dom ) {
   const step1 = dom.getElementsByTagName("body")[0];
-  const step2 = Object.getPrototypeOf(
-    Object.getPrototypeOf(Object.getPrototypeOf(step1)),
-  );
+//  const step1 = dom.getElementById("sendMasto");
+  let  step2;
+	try {
+		step2 = Object.getPrototypeOf(
+		    Object.getPrototypeOf(Object.getPrototypeOf(step1)),
+  				);
+	} catch(e) {
+    	throw new Error("KLAXON! KLAXON! [1] the sky is falling");
+	}
+
   // this should be an Element type.
   if (step2.constructor.name !== "Element") {
-    throw new Error("KLAXON! KLAXON! the sky is falling");
+    throw new Error("KLAXON! KLAXON! [2] the sky is falling");
   }
   const step3 = Object.getPrototypeOf(step2);
 
@@ -31,25 +37,44 @@ export function enableGetEventListeners(dom = document) {
   step3._addEventListener = step2.addEventListener;
   step3._removeEventListener = step2.removeEventListener;
 
+/**
+ * An alternate implementation of addEventListener, so there is an inline spy
+ *  
+ * @see [https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener]
+ * @param {string} type
+ * @param {Function} listener
+ * @param {boolean =false} useCapture 
+ * @public
+ * @returns {void}
+ */
   step3.addEventListener = function (type, listener, useCapture = false) {
     this._addEventListener(type, listener, useCapture);
-
-    if (!this.eventListenerList) {
-      this.eventListenerList = {};
-    }
+	if(! this.eventListenerList ) {
+	  this.eventListenerList = {};
+	}
     if (!this.eventListenerList[type]) {
       this.eventListenerList[type] = [];
     }
 
-    this.eventListenerList[type].push({ type, listener, useCapture });
+    this.eventListenerList[type].push({ type, listener, useCapture, id:""+this.id });
   };
 
+/**
+ * An alternate implementation of removeEventListener, so there is an inline spy
+ *  
+ * @see [https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener]
+ * @param {string} type
+ * @param {Function} listener
+ * @param {boolean =false} useCapture 
+ * @public
+ * @returns {void}
+ */
   step3.removeEventListener = function (type, listener, useCapture = false) {
     this._removeEventListener(type, listener, useCapture);
+	if(! this.eventListenerList ) {
+	  this.eventListenerList = {};
+	}
 
-    if (!this.eventListenerList) {
-      this.eventListenerList = {};
-    }
     if (!this.eventListenerList[type]) {
       this.eventListenerList[type] = [];
     }
@@ -68,13 +93,24 @@ export function enableGetEventListeners(dom = document) {
     }
   };
 
+/**
+ * Return a copy of currently registered eventListeners
+ 
+ * @param {string|undefined} type
+ * @public
+ * @returns {Array<Function>|Object} - depending if param is supplied, what output format
+ */
   step3.getEventListeners = function (type) {
-    if (!this.eventListenerList) {
-      this.eventListenerList = {};
-    }
+	if(! this.eventListenerList ) {
+	  this.eventListenerList = {};
+	}
 
     if (type === undefined) {
-      return Object.values(this.eventListenerList);
+		let ret=[];
+		for(let i in this.eventListenerList ) {
+			ret.push( ...this.eventListenerList[i] );
+		}
+      return ret;
     }
     return Object.values(this.eventListenerList[type]);
   };
@@ -102,6 +138,7 @@ export function createEvent(tar, dom, win) {
       cancelable: true,
     });
     Object.defineProperty(vnt, "target", { writable: false, value: tar });
+
   } else {
     vnt = dom.createEvent("TouchEvent", { bubbles: false, cancelable: true });
     Object.defineProperty(vnt, "target", { writable: false, value: tar });
@@ -111,7 +148,8 @@ export function createEvent(tar, dom, win) {
 }
 
 /**
-//	A type for keyboard events
+// A type for keyboard events
+//       yes I'm writing TS, oops
 export interface Keyable {
 	code:	string,
 	altKey: boolean,
@@ -131,20 +169,16 @@ export interface Keyable {
  * @returns {Keyboardevent }
  */
 export function createKeyEvent(keys, ele, win) {
-  //  let vnt = null;
-  //  if (isFullstack(win)) {    }
   // I hope the target is still present after type washing
   let vnt = new KeyboardEvent("keydown", {
-    altKey:   keys.altKey ?? false,
+    altKey: keys.altKey ?? false,
     shiftKey: keys.shiftKey ?? false,
-    ctrlKey:  keys.ctrlKey ?? false,
-    code:     keys.code,
-	key:      keys.key,
-	charCode: keys.key.charCodeAt(0), 
-    keyCode:  keys.key.charCodeAt(0), 
+    ctrlKey: keys.ctrlKey ?? false,
+    code: keys.code,
+    key: keys.key,
+    charCode: keys.key.charCodeAt(0),
+    keyCode: keys.key.charCodeAt(0),
   });
-//  Object.defineProperty(vnt, "target", { writable: false, value: ele });
-//  Object.defineProperty(vnt, "view", { writable: false, value: win });
   return vnt;
 }
 

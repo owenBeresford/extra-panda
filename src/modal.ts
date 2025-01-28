@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
-import { MiscEvent } from "./all-types";
+import type { MiscEvent } from "./all-types";
 import { log } from "./networking";
 
 /**

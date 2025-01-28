@@ -830,7 +830,7 @@ For performance, I have stripped many off-the-shelf components from this site, s
 
 The s`;
         expect(duplicateSelection(win)).toBe(sample1);
-// tests can read this twice safely
+        // tests can read this twice safely
         expect(duplicateSelection(win)).toBe(sample1);
 
         win.getSelection().removeAllRanges();

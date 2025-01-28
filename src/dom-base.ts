@@ -1,6 +1,6 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
-import {
+import type {
   ScreenSizeArray,
   GenericEventHandler,
   Scrollable,
