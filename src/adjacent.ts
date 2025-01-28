@@ -1,8 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { dateMunge, articleName } from "./string-base";
 import { log, debug, runFetch } from "./networking";
-//import { Document, Location } from "jsdom";
-import {
+import type {
   SimpleResponse,
   ReferenceType,
   NormalisedReference,
@@ -405,11 +404,11 @@ function updateLabels(gname: string, dom: Document): void {
  * @returns {string}
  */
 export function extractGroup(ele: HTMLElement | null, loc: Location): string {
-  const tmp1 = loc.pathname.split("/group-");
+  const tmp1: Array<string> = loc.pathname.split("/group-");
   if (Array.isArray(tmp1) && tmp1.length > 1 && tmp1[1] !== "XXX") {
     return tmp1[1];
   }
-  const tmp2 = new URLSearchParams(loc.search);
+  const tmp2: URLSearchParams = new URLSearchParams(loc.search);
   if (tmp2.has("first")) {
     return tmp2.get("first");
   }

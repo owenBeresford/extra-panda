@@ -7,7 +7,7 @@ import { ALL_REFERENCE_LINKS } from "../networking";
 import { TEST_ONLY } from "../desktop-biblio";
 import { TEST_ONLY as NETWORKING } from "../networking";
 
-const { getLogCounter } = NETWORKING;
+const { enableLogCounter } = NETWORKING;
 
 const {
   injectOpts,
@@ -469,15 +469,16 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">21</a> </sup> 
 `;
     appendIsland("#point2", str, dom); // 15 links
+    const logCount = enableLogCounter(win.console);
 
-    let t1 = getLogCounter();
+    let t1 = logCount();
     await createBiblio(
       { gainingElement: "#biblio", debug: true, runFetch: mockFetch1 },
       dom,
       loc,
       win,
     );
-    let t2 = getLogCounter();
+    let t2 = logCount();
 
     // this test counts log messages, as the mockFetch isn't a real network thing
     assert.equal(t2 - t1, 1, "assert #25");

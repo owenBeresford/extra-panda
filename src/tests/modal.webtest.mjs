@@ -15,7 +15,7 @@ import { appendIsland } from "../dom-base";
 import { delay, domLog } from "../networking";
 import { TEST_ONLY } from "../modal";
 
-const { modalInit, HTMLDetailsClick, HTMLDetailsTrap } = TEST_ONLY;
+const { modalInit } = TEST_ONLY;
 
 describe("BROWSER TEST modal ", async () => {
   if (typeof process !== "undefined") {
@@ -50,7 +50,7 @@ describe("BROWSER TEST modal ", async () => {
             false,
             false,
           );
-          console.log(win.TEST_TAB_NAME + " Can't access DETAILS, test borked");
+          //          console.log(win.TEST_TAB_NAME + " Can't access DETAILS, test borked");
           throw new Error("Test DOM broken");
         }
 
@@ -115,7 +115,7 @@ describe("BROWSER TEST modal ", async () => {
             false,
             false,
           );
-          console.log(win.TEST_TAB_NAME + " Can't access DETAILS, test borked");
+          //          console.log(win.TEST_TAB_NAME + " Can't access DETAILS, test borked");
           throw new Error("Test DOM broken");
         }
         expect(buf.getEventListeners().length).toBe(1); //  "Assert #1");

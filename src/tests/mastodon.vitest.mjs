@@ -210,8 +210,12 @@ describe("TEST mastodon", () => {
   });
 
   it("go 8: initMastodon", () => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    let str = `<div id="shareGroup"> 
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/home?mobile=0",
+      3,
+    );
+    let str = `<nav id="navBar">
+	<div id="shareGroup"> 
 	<div id="shareMenu" class="shareMenu allButtons">
 		<span class="shareMenutrigger">BTN[1]</span>  
  		<span id="mastoTrigger">BTN[2]</span>  
@@ -224,7 +228,7 @@ describe("TEST mastodon", () => {
 	<span id="sendMasto">TICK</span> <span id="hideMasto">CROSS</span>
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
 	</dialog> 
-	</div>`;
+	</div></nav>`;
 
     appendIsland("#point2", str, dom);
     enableGetEventListeners(dom);

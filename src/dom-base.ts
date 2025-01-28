@@ -1,6 +1,6 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
-import {
+import type {
   ScreenSizeArray,
   GenericEventHandler,
   Scrollable,
@@ -68,6 +68,28 @@ export function ready(callback: GenericEventHandler, dom: Document): void {
     dom.addEventListener("DOMContentLoaded", callback);
   }
   throw new Error("Unknown JS interpreter, can't register code");
+}
+
+/**
+ * duplicateSelection
+ * Copy the text of the highlighted DOM nodes
+ *
+ * TODO check RAM used
+ * @param {Window} win
+ * @public
+ * @returns {string}
+ */
+export function duplicateSelection(win: Window): string {
+  try {
+    const tmp = win.getSelection().getRangeAt(0);
+    if (tmp.startOffset === tmp.endOffset) {
+      return "";
+    }
+    return "" + tmp.cloneContents().textContent;
+  } catch (e) {
+    log("warn", "Unable to get data for selection", e.message);
+    return "";
+  }
 }
 
 /**
@@ -407,6 +429,7 @@ export const TEST_ONLY = {
   getArticleWidth,
   expandDetails,
   docOffsets,
+  duplicateSelection,
   copyURL,
   applyVolume,
   mapAttribute,

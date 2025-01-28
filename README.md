@@ -127,6 +127,8 @@ Notes:
 - The process of expanding the number of tools in this project is adding features, but also acting as a lint as it shows small oversights.
 - Note I added a UI feature that added extra HTML, but this didn't invalidate any of the unit-tests.
 - I am adding search params for testing, rather than a Mock, as I may want to use them during QA
+- It is expensive [in devtime] to create keyboard events in a different tab/ window.
+- Why do I not tidy-up unused vars in this code base?  Most are in unit tests, its better readability if *standard* args are present, IMO (Promises, forEach or map etc)
 - I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together with `rebase`, it's a nul-point difference.   
 
 #### Metrics that are important to goals
@@ -183,6 +185,7 @@ Notes:
 - ''debug'' boolean - adjusts how many log messages are written
 - ''width'' number - adds a fake width to the browser
 - ''mobile'' boolean - force interpretation of current machine as a mobile device. Boolean value. In unit tests this MUST BE SET, as JSdom isn't a phone
+- ''select'' - enable select and word count feature
 
 #### Known CSS containers that this code processes
 

@@ -1,7 +1,7 @@
 import { describe, it, assertType } from "vitest";
 
 import { page } from "./page-seed-vite";
-import { Cookieable } from "../all-types";
+import type { Cookieable } from "../all-types";
 import { isFullstack } from "../dom-base";
 import { TEST_ONLY } from "../cookies";
 

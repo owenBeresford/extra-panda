@@ -98,6 +98,8 @@ export async function wrap(name, url, action) {
       true,
       false,
     );
+    win.console.log(" ERROR TRAPT ", e.message, "\n", e.stack);
+
     console.log(win.TEST_TAB_NAME + " ERROR TRAPT ", e.message, "\n", e.stack);
     if (e.message.match(/expect\(received\)/)) {
       throw e;
@@ -131,7 +133,7 @@ export async function execTest(run) {
   }
 
   document.querySelector("#binLog").setAttribute("data-status", "busy");
-  const ret = await run();
+  const ret = await run({ silent: false });
   document.querySelector("#binLog").setAttribute("data-status", "done");
   if (
     ret.length &&

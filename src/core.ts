@@ -1,7 +1,9 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 // import { Location, Document, HTMLElement } from "jsdom";
 
-import { CoreProps, MiscEvent, MultiFuncArg } from "./all-types";
+import type { CoreProps, MiscEvent, MultiFuncArg } from "./all-types";
+import { ENABLE_SELECT } from "./all-types";
+
 import { log, debug, runFetch } from "./networking";
 import {
   listContentGroup,
@@ -9,8 +11,14 @@ import {
   createAdjacentChart,
 } from "./adjacent";
 import { initMastodon } from "./mastodon";
-import { isLocal } from "./string-base";
-import { isMobile, appendIsland, applyVolume, expandDetails } from "./dom-base";
+import { isLocal, standardisedWordCount } from "./string-base";
+import {
+  isMobile,
+  appendIsland,
+  applyVolume,
+  expandDetails,
+  duplicateSelection,
+} from "./dom-base";
 import { createBiblio as mobileCreateBiblio } from "./mobile-biblio";
 import { createBiblio as desktopCreateBiblio } from "./desktop-biblio";
 import {
@@ -75,7 +83,7 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
     dom.querySelectorAll(".allButtons a"),
   );
 
-  const ldebug = debug(loc);
+  const ldebug: boolean = !isLocal(loc.host) && !debug(loc);
   const PARENT: HTMLDivElement = dom.querySelector(".allButtons");
   for (const i in BUFFER) {
     if (bigScreenElements.includes(BUFFER[i].id)) {
@@ -85,7 +93,7 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
     const local: HTMLAnchorElement = BUFFER[i].cloneNode(
       true,
     ) as HTMLAnchorElement;
-    if (!ldebug) {
+    if (ldebug) {
       PARENT.removeChild(BUFFER[i]);
     }
     local.classList.remove("bigScreenOnly");
@@ -111,6 +119,7 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
  * @param {string =".burgerMenu"} id - HTML id for the menu
  * @param {Document =document} dom
  * @protected
+ * @deprecated I moved this feature into HTML DETAILS/ SUMMARY tags
  * @returns {void}
  */
 function burgerMenu(id: string = ".burgerMenu", dom: Document): void {
@@ -346,6 +355,21 @@ export async function siteCore(
         );
       }
     }
+  }
+
+  const select = debug(loc, ENABLE_SELECT);
+  if (select) {
+    log("info", "select and word count feature is ENABLED.  Access= <alt> + w");
+    // not sure about performance of this code, so disabled by default
+    dom.body.addEventListener("keydown", (e) => {
+      if (e.key === "w" && e.altKey) {
+        log(
+          "info",
+          "Word count of selection: " +
+            standardisedWordCount(duplicateSelection(win)),
+        );
+      }
+    });
   }
 
   // There may be a pageStartup() in 20-30% of the articles.

@@ -21,7 +21,7 @@ describe("TEST cookies", async () => {
       async (dom, loc, win) => {
         const tmp = JSON.stringify({
           ft: "serif",
-          fs: "14",
+          fs: "14pt",
           dn: "ltr",
           cr: "blue",
         });
@@ -44,12 +44,12 @@ describe("TEST cookies", async () => {
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
         new QOOKIE().wipe(APPEARANCE_COOKIE);
-        storeAppearance("ubuntu", "12", "ltr", "green");
+        storeAppearance("ubuntu", "12pt", "ltr", "green");
         expect(dom.cookie).not.toBe("");
 
         const tmp = JSON.stringify({
           ft: "ubuntu",
-          fs: "12",
+          fs: "12pt",
           dn: "ltr",
           cr: "green",
         });

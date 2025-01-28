@@ -8,6 +8,7 @@ const {
   makeRefUrl,
   addLineBreaks,
   pad,
+  standardisedWordCount,
   isLocal,
   booleanMap,
   importDate,
@@ -246,5 +247,18 @@ dg ag aga gdgadfg`;
       "/resources/react18-notes-references",
       "assert #36",
     );
+  });
+
+  it("go 9 standardisedWordCount", () => {
+    const sample1 = "The cat sat on the mat";
+    const sample2 =
+      "                                                                           ";
+    const sample3 = "dfg 5 fgdfg 4 sdf 444 sdfsdfs 2             ";
+    const sample4 = "The c.a.t. sat on the mat";
+
+    assert.equal(standardisedWordCount(sample1), 6, "assert #37");
+    assert.equal(standardisedWordCount(sample2), 0, "assert #38");
+    assert.equal(standardisedWordCount(sample3), 4, "assert #39");
+    assert.equal(standardisedWordCount(sample4), 8, "assert #40");
   });
 });

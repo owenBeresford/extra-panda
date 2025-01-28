@@ -754,7 +754,7 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
    * @param {boolean} hasExcept
    * @returns {Promise<SimpleResponse>}
    */
-  function mockFetch1(url, hasExcept) {
+  function mockFetch1(url) {
     return new Promise((good, bad) => {
       let str = [
         {
@@ -802,7 +802,7 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
    * @param {boolean} hasExcept
    * @returns {Promise<SimpleResponse>}
    */
-  function mockFetch2(url, hasExcept) {
+  function mockFetch2(url) {
     return new Promise((good, bad) => {
       let str = [
         {
@@ -848,7 +848,7 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
    * @param {boolean} hasExcept
    * @returns {Promise<SimpleResponse>}
    */
-  function mockFetch3(url, hasExcept) {
+  function mockFetch3(url) {
     return new Promise((good, bad) => {
       let str = [
         {

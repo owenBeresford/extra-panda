@@ -294,8 +294,8 @@ describe("TEST core", () => {
     appendIsland("#point2", str, dom);
     // mobile no, local yes
     initPopupMobile(dom, loc);
-    assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #25");
-    assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #26");
+    assert.isTrue(dom.querySelector("#mobileMenu") === null, "Assert #25");
+    assert.equal(dom.querySelectorAll("#mobileMenu a").length, 0, "Assert #26");
   });
 
   it("go 5.2: initPopupMobile", () => {

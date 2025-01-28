@@ -1,7 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 // import { Document, Location, HTMLAnchorElement, HTMLElement } from "jsdom";
 
-import {
+import type {
   DesktopBiblioProps,
   DesktopBiblioPropsDefinite,
   SimpleResponse,
@@ -185,7 +185,7 @@ export function applyDOMpositions(ele: HTMLElement, win: Window): void {
   const WIDTH = Math.round(mapAttribute(tt, "width", win) as number);
   const TTWIDTH = 30 * EM_SZ;
   const TTHEIGHT = 5 * EM_SZ;
-  if (WIDTH < 600) {
+  if (WIDTH < 650) {
     // currently arbitrary limit, may need tuning
     // tooltip is 30em so 480px
     ele.classList.add("leanCentre");
@@ -271,12 +271,12 @@ function mapPositions(data: Array<string>, dom: Document, win: Window): void {
  * Unneeded in small screens.
  * IMPURE.
 
- * @param {SimpleResponse} xhr - the whole objects from runFetch
+ * @param {SimpleResponse} xhr - the whole object from runFetch
  * @param {Document =document} dom
  * @protected
  * @returns {void}
  */
-function addMetaAge(xhr: SimpleResponse, dom: Document) {
+function addMetaAge(xhr: SimpleResponse, dom: Document): void {
   let tstr = xhr.headers.get("last-modified");
   if (!tstr) {
     return;
@@ -318,7 +318,7 @@ export async function createBiblio(
   dom: Document,
   loc: Location,
   win: Window,
-) {
+): Promise<void> {
   OPTS = Object.assign(
     OPTS,
     {

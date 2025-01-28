@@ -151,6 +151,5 @@ As a minimum, not recommended for industrial use:</p>
     } catch (e) {
       assert.equal(1, 2, "Highlight on this block failed [assert #13] " + e);
     }
-    //	console.log("WWWW", dom.getElementById('replacement').outerHTML );
   });
 });

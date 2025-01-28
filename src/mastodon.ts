@@ -1,7 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 // import { Document, Location, Window, Event, HTMLElement } from "jsdom";
 
-import {
+import type {
   MiscEventHandler3,
   MiscEventHandler4,
   MiscEventHandler5,
@@ -113,19 +113,23 @@ function accessVisibility(
  * @returns {void}
  */
 export function initMastodon(dom: Document, loc: Location, win: Window): void {
-  let BUFFER: HTMLElement = dom.querySelector("#shareMenu #mastoTrigger");
-  if (BUFFER) {
-    _map2(BUFFER, openMastodon, dom, win);
+  let BUFFER: HTMLElement | null = dom.querySelector("#navBar #mastoTrigger");
+  if (!BUFFER) {
+    return;
   }
+  _map2(BUFFER, openMastodon, dom, win);
+
   BUFFER = dom.querySelector("#shareGroup .allButtons #mastoTrigger");
-  const canSee: string = accessVisibility(BUFFER, "display", win);
-  if (canSee && canSee !== "none") {
-    BUFFER.addEventListener("click", (e: Event): boolean => {
-      return openMastodon(e, dom, win);
-    });
-    BUFFER.addEventListener("keypress", (e: Event): boolean => {
-      return openMastodon(e, dom, win);
-    });
+  if (BUFFER) {
+    const canSee: string = accessVisibility(BUFFER, "display", win);
+    if (canSee && canSee !== "none") {
+      BUFFER.addEventListener("click", (e: Event): boolean => {
+        return openMastodon(e, dom, win);
+      });
+      BUFFER.addEventListener("keypress", (e: Event): boolean => {
+        return openMastodon(e, dom, win);
+      });
+    }
   }
   BUFFER = dom.querySelector("#copyURL");
   if (BUFFER) {
@@ -137,9 +141,6 @@ export function initMastodon(dom: Document, loc: Location, win: Window): void {
   ) as Array<HTMLElement>;
   // the second ID will be nought in desktop view
   for (const i in BUFFER2) {
-    // MiscEventHandler3 = ( a: Event, dom: Document, loc: Location | Window, ) => void;
-    // function openShare( e: Event, dom: Document, loc: Location, win: Window,
-
     _map5(BUFFER2[i], openShare, dom, loc, win);
   }
   _map2(dom.querySelector("#hideMasto"), closeMastodon, dom, win);

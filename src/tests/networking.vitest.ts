@@ -1,6 +1,6 @@
 import { assert, describe, it, assertType } from "vitest";
 
-import { Cookieable, Fetchable } from "../all-types";
+import type { Cookieable, Fetchable } from "../all-types";
 import { TEST_ONLY } from "../networking";
 
 const { getFetch, accessCookie, log, delay } = TEST_ONLY;

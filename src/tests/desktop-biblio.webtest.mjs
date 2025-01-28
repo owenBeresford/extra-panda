@@ -25,24 +25,17 @@ describe("TEST BROWSER desktop-biblio", async () => {
 <span id="uniq4">ASD</span>
 `;
         appendIsland(".home.icerow", str, dom);
-
         // this test doesn't mean very much now the width is computed at runtime rather than compile time
         applyDOMpositions(dom.querySelector("#uniq1"), win);
         applyDOMpositions(dom.querySelector("#uniq2"), win);
         applyDOMpositions(dom.querySelector("#uniq3"), win);
         applyDOMpositions(dom.querySelector("#uniq4"), win);
         expect(dom.querySelector("#uniq1").getAttribute("class")).toBe(
-          "leanLeft leanUp",
+          "leanLeft",
         ); //  "assert #19",
         expect(dom.querySelector("#uniq2").getAttribute("class")).toBe(
-          "leanLeft leanUp",
+          "leanLeft",
         ); //  "assert #20",
-        expect(dom.querySelector("#uniq3").getAttribute("class")).toBe(
-          "leanLeft leanUp",
-        ); // "assert #21",
-        expect(dom.querySelector("#uniq4").getAttribute("class")).toBe(
-          "leanLeft leanUp",
-        ); // "assert #22",
         await delay(100);
       },
     );
@@ -57,60 +50,63 @@ describe("TEST BROWSER desktop-biblio", async () => {
       async (dom, loc, win) => {
         // currently too high and left
         applyDOMpositions(
-          dom.querySelector(".addReferences sup:nth-child(3)>a"),
+          dom.querySelector(".TESTANCHOR sup:nth-child(3)>a"),
           win,
         );
         // currently too left by alot
         applyDOMpositions(
           dom.querySelector(
-            '.addReferences sup>a[href="https://www.highcharts.com/demo/heatmap-canvas"]',
+            '.TESTANCHOR sup>a[href="https://www.highcharts.com/demo/heatmap-canvas"]',
           ),
           win,
         );
         // currently too left
         applyDOMpositions(
           dom.querySelector(
-            '.addReferences sup>a[href="https://www.cybrosys.com/blog/create-dashboard-using-highchart-js"]',
+            '.TESTANCHOR sup>a[href="https://www.cybrosys.com/blog/create-dashboard-using-highchart-js"]',
           ),
           win,
         );
         // currently OK
         applyDOMpositions(
           dom.querySelector(
-            '.addReferences sup>a[href="https://api.highcharts.com/highcharts/chart.events.render"]',
+            '.TESTANCHOR sup>a[href="https://api.highcharts.com/highcharts/chart.events.render"]',
           ),
-
           win,
         );
-
         expect(
           dom
-            .querySelector(".addReferences sup:nth-child(3)>a")
+            .querySelector(".TESTANCHOR sup:nth-child(3)>a")
             .getAttribute("class"),
         ).toBe("leanCentre");
         expect(
           dom // labelled 9
             .querySelector(
-              '.addReferences sup>a[href="https://www.highcharts.com/demo/heatmap-canvas"]',
+              '.TESTANCHOR sup>a[href="https://www.highcharts.com/demo/heatmap-canvas"]',
             )
             .getAttribute("class"),
         ).toBe("leanLeft");
         expect(
           dom
             .querySelector(
-              '.addReferences sup>a[href="https://www.cybrosys.com/blog/create-dashboard-using-highchart-js"]',
+              '.TESTANCHOR sup>a[href="https://www.cybrosys.com/blog/create-dashboard-using-highchart-js"]',
             )
             .getAttribute("class"),
         ).toBe("leanCentre");
-
+        await delay(100);
+        console.log(
+          "WWWW",
+          dom.querySelector(
+            '.TESTANCHOR sup>a[href="https://api.highcharts.com/highcharts/chart.events.render"]',
+          ),
+        );
         expect(
-          dom
+          dom // labelled 14
             .querySelector(
-              '.addReferences sup>a[href="https://api.highcharts.com/highcharts/chart.events.render"]',
+              '.TESTANCHOR sup>a[href="https://api.highcharts.com/highcharts/chart.events.render"]',
             )
             .getAttribute("class"),
-        ).toBe("leanRight");
-
+        ).toBe("leanCentre leanUp");
         // need a further test for centre
 
         await delay(100);

@@ -613,7 +613,7 @@ d
       // note missing last arg
       let ret = getArticleWidth(true, ".lotsOfWords", dom);
       assert.equal(ret, -513, "asset #26");
-    } catch (e) { ; }
+    } catch (e) {}
     // test is defective in JSDOM
   });
 
