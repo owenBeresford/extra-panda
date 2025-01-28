@@ -4,30 +4,51 @@ import tseslint from "typescript-eslint";
 import jsdoc from 'eslint-plugin-jsdoc';
 import vitest from "eslint-plugin-vitest";
 import jest from "eslint-plugin-jest"; 
-import * as NoFakePromises  from "eslint-plugin-no-floating-promise"; 
+import * as parser from '@typescript-eslint/parser';
 // eslint-plugin-jsx-a11y, eslint-plugin-vuejs-accessibility, eslint-plugin-react-native-a11y, eslint-plugin-styled-components-a11y 
-// eslint-plugin-jest, eslint-plugin-vitest: WTB a rule for count-of-skips vs count-of-real-tests
+// import prettierPlugin from 'eslint-plugin-prettier';  IOIO when stable add this
 
+// this doesn't seem to work in this edition, so disabled.
+//const NoFloatingPromises = await import( "eslint-plugin-no-floating-promise"); 
+//NoFloatingPromises.default.config={}; 
 
 export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-// "src/tests/", 
 // I may want to add a new config for the tests, AND MOST-DEF THE tools/test-browser script
-  { ignores: [ "dist", "node_modules", "src/fixtures/" ] },
-  {	 
+  {
+//    files: [ 'src/highlight/*.ts', 'src/tests/*.ts', 'src/*.ts',],
+//    files: [ 'src/tests/*.vitest.ts', ],
     settings: {
     jsdoc: {
       mode: "typescript",
     },
 	vitest: {
-        typecheck: true
+        typecheck: true,
     }
 	},
-    plugins: { jsdoc, "no-floating-promise":NoFakePromises, vitest, jest },
+//    plugins: { jsdoc, "no-floating-promise":NoFakePromises, vitest, jest },
+    plugins: { tseslint, jsdoc, vitest, jest, },
 	"rules": { 
 	"complexity": ["error", 10],	
-	"no-floating-promise/no-floating-promise": 2,
+	"linebreak-style": ['error', 'unix'],
+    semi: ['warn', 'always'],
+	"no-alert"  : "error",
+// lint/prettier should be doing this step already
+//	"no-tabs": 0,
+//	"no-floating-promise/no-floating-promise": 2,
+	"@typescript-eslint/no-duplicate-type-constituents": [ "error", { ignoreIntersections: false, ignoreUnions: false } ],
+// Rate of wrong reports on the following is too high
+//	"@typescript-eslint/no-redundant-type-constituents": "error",
+	"@typescript-eslint/explicit-module-boundary-types": "error",
+ 	"@typescript-eslint/await-thenable": "warn",
+	"@typescript-eslint/consistent-generic-constructors": "warn",
+	"@typescript-eslint/consistent-generic-constructors": "warn",
+	"@typescript-eslint/consistent-type-imports": "error",
+	"@typescript-eslint/explicit-function-return-type": "error",
+ 	"@typescript-eslint/explicit-member-accessibility": "error",
+	"@typescript-eslint/method-signature-style": [ "error", 'method' ],
+
     "jsdoc/check-tag-names": 1,
     "jsdoc/require-jsdoc": 1,
     "jsdoc/newline-after-description": 0,
@@ -40,28 +61,6 @@ export default [
     "jsdoc/require-returns-description": 0,
     "jsdoc/require-yields": 1,
 
-	"jest/consistent-test-it": 0,
-
-	"jest/expect-expect":1, 
-	"jest/max-expects":0,
-	"jest/no-conditional-expect":1,
-	"jest/no-conditional-in-test":0,
-	"jest/no-confusing-set-timeout":1,
-	"jest/no-deprecated-functions":1,
-	"jest/no-disabled-tests":1,
-	"jest/no-duplicate-hooks":1, 
-	"jest/no-export":1,
-	"jest/no-focused-tests":1,
-	"jest/no-identical-title":1,
-	"jest/no-large-snapshots":1,
-	"jest/no-untyped-mock-factory":1,
-	"jest/prefer-comparison-matcher":1,
-	"jest/require-to-throw-message":1,
-	"jest/require-top-level-describe":1,
-	"jest/valid-describe-callback":1,
-	"jest/valid-expect":1,
-	"jest/valid-expect-in-promise":1,	
-
 		},
 	languageOptions: {
             ecmaVersion: 2022,
@@ -69,10 +68,15 @@ export default [
             globals: {
                 ...globals.browser,
                 ...globals.node,
-				...vitest.environments.env.globals, 
-           }
+		       process: "readonly",
+		       console: "readonly",
+		       fetch: "readonly",
+           },
+		  parser: tseslint.parser,
+		"parserOptions": { programs:[ parser.createProgram('./tsconfig.json') ],  }
         },
-	ignores: ["dist/*", "src/fixtures/*.min.*" ],
+	ignores: ["dist/*", "src/fixtures/*.min.*", "src/fixtures/*mjs", "node_modules/*", "package-lock.json", "vite.config*.ts" ],
 
   },
+
 ];
