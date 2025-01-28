@@ -17,10 +17,22 @@ export function debug(loc: Location, target: string = "debug"): boolean {
   return u.has(target);
 }
 
+/**
+ A better hack for counting log messages, that is better TS.
+ Unfortunately is is about 4x times longer. 
+*/
 type BetterConsole = typeof console & { LOG_USAGE: number };
 type VisabiltityToLogging = () => number;
 let localConsole = console;
 
+/**
+ * enableLogCounter
+ * A function to setup a log counter, and return an access function
+ 
+ * @param  {BetterConsole} cons
+ * @public
+ * @returns {VisabiltityToLogging}
+ */
 function enableLogCounter(cons: BetterConsole): VisabiltityToLogging {
   const nom: string = "LOG_USAGE";
   if (!Object.hasOwn(cons, nom)) {
