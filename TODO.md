@@ -11,6 +11,7 @@
 - Add feature dump (ie download as attachment) in-HTML file JS assets, or SVG assets, or CSS assets.  Need to think about UI for this feature.
 - Make RAM usage and execution-cost tests-and-monitoring more mature
 - Implement Networking browser test script
+- QUE£STION: how to KB only people use DETAILS elements
 
 ### Previous Updates
 
@@ -67,4 +68,5 @@
 - DONE: Add ability to read current tab from location.hash.
 - DONE: Make mobile menu for SM invalidate desktop menu for SM, as both interactions doesn't make sense
 - DOME: Add feature "take user selection of text, and return standardised word count of it"
+- DONE: change implementation on reading word-count 
 
