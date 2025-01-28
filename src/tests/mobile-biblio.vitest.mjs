@@ -9,7 +9,7 @@ import { TEST_ONLY as NETWORKING } from "../networking";
 
 const { empty, normaliseData, render, createBiblio, injectOpts, adjustDom } =
   TEST_ONLY;
-const {  enableLogCounter } = NETWORKING;
+const { enableLogCounter } = NETWORKING;
 
 describe("TEST mobile-biblio", () => {
   it("go 1: empty", () => {
@@ -362,8 +362,12 @@ describe("TEST mobile-biblio", () => {
 </html>`,
       { url: url, referrer: url },
     );
-	// adding types to this array is left as an exercise
-    const [dom, loc, win] = [brwr.window.document, brwr.window.location, brwr.window];
+    // adding types to this array is left as an exercise
+    const [dom, loc, win] = [
+      brwr.window.document,
+      brwr.window.location,
+      brwr.window,
+    ];
 
     let str = `
 <div id="biblio" style="display:none;">
@@ -382,7 +386,7 @@ describe("TEST mobile-biblio", () => {
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">21</a> </sup> 
 `;
     appendIsland("#point2", str, dom); // 15 links
-	const logCount= enableLogCounter( win.console);
+    const logCount = enableLogCounter(win.console);
 
     let t1 = logCount();
     await createBiblio(

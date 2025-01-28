@@ -113,9 +113,7 @@ function accessVisibility(
  * @returns {void}
  */
 export function initMastodon(dom: Document, loc: Location, win: Window): void {
-  let BUFFER: HTMLElement | null = dom.querySelector(
-    "#navBar #mastoTrigger",
-  );
+  let BUFFER: HTMLElement | null = dom.querySelector("#navBar #mastoTrigger");
   if (!BUFFER) {
     return;
   }
@@ -123,16 +121,16 @@ export function initMastodon(dom: Document, loc: Location, win: Window): void {
 
   BUFFER = dom.querySelector("#shareGroup .allButtons #mastoTrigger");
   if (BUFFER) {
-  const canSee: string = accessVisibility(BUFFER, "display", win);
-  if (canSee && canSee !== "none") {
-    BUFFER.addEventListener("click", (e: Event): boolean => {
-      return openMastodon(e, dom, win);
-    });
-    BUFFER.addEventListener("keypress", (e: Event): boolean => {
-      return openMastodon(e, dom, win);
-    });
+    const canSee: string = accessVisibility(BUFFER, "display", win);
+    if (canSee && canSee !== "none") {
+      BUFFER.addEventListener("click", (e: Event): boolean => {
+        return openMastodon(e, dom, win);
+      });
+      BUFFER.addEventListener("keypress", (e: Event): boolean => {
+        return openMastodon(e, dom, win);
+      });
+    }
   }
-	}
   BUFFER = dom.querySelector("#copyURL");
   if (BUFFER) {
     _map4(BUFFER, copyURL, dom, loc, win);

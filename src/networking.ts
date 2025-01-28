@@ -17,25 +17,26 @@ export function debug(loc: Location, target: string = "debug"): boolean {
   return u.has(target);
 }
 
-type BetterConsole = typeof console & { LOG_USAGE:number; };
-type VisabiltityToLogging= ()=>number;
-let localConsole=console;
+type BetterConsole = typeof console & { LOG_USAGE: number };
+type VisabiltityToLogging = () => number;
+let localConsole = console;
 
-function enableLogCounter(cons:BetterConsole ):VisabiltityToLogging {
-	const nom:string='LOG_USAGE';
-	if(! Object.hasOwn( cons, nom)) {
-		Object.defineProperty(cons, nom, {
-			value: 0,
-			writable: true,
-			enumerable: true,
-			configurable: false
-		});
-	}
-	cons[nom]=0;
-	localConsole=cons;
-	return () => { return cons[nom]; }	
+function enableLogCounter(cons: BetterConsole): VisabiltityToLogging {
+  const nom: string = "LOG_USAGE";
+  if (!Object.hasOwn(cons, nom)) {
+    Object.defineProperty(cons, nom, {
+      value: 0,
+      writable: true,
+      enumerable: true,
+      configurable: false,
+    });
+  }
+  cons[nom] = 0;
+  localConsole = cons;
+  return () => {
+    return cons[nom];
+  };
 }
-
 
 /**
  * log
@@ -48,9 +49,9 @@ function enableLogCounter(cons:BetterConsole ):VisabiltityToLogging {
 export function log(typ: string, ...inputs: string[]): void {
   localConsole.LOG_USAGE++;
   if (typ in console) {
-     localConsole[typ](`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
+    localConsole[typ](`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
   } else {
-     localConsole.log(`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
+    localConsole.log(`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
   }
 }
 

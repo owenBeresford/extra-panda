@@ -6,7 +6,7 @@ import type { ReadingProps } from "./all-types";
 
 /**
  * extract
- * I may move this responsibility to another file, this func is obvious 
+ * I may move this responsibility to another file, this func is obvious
  *
  * @param {string} get
  * @param {Document} dom

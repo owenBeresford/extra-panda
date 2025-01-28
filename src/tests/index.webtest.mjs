@@ -20,7 +20,10 @@ describe("BROWSER TEST index ", async () => {
         // this is just a test to report compile failures induced by file renaming,
         // and issues like that.
         const ALL = await import("../index");
-        console.log("Have I loaded a module correctly [seeing message means it didnt crash]?", ALL);
+        console.log(
+          "Have I loaded a module correctly [seeing message means it didnt crash]?",
+          ALL,
+        );
         //    If it get this far, it works
         expect(typeof ALL).toBe("object");
       },

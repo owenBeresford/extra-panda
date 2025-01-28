@@ -402,7 +402,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     if (process) {
       ram1 = process.memoryUsage();
     }
-// #shareGroup #mastoTrigger
+    // #shareGroup #mastoTrigger
     const [dom, loc, win] = page(
       "http://192.168.0.35/resource/home?mobile=1&debug=1",
       3,
@@ -518,7 +518,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       "assert #11",
     );
 
-   // this is absent for mobile
+    // this is absent for mobile
     //   buf = dom.querySelector("#shareGroup a.reading");
     //   assert(buf.textContent, "To read: 1m", "assert #14");
 
@@ -556,7 +556,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     assert.equal(buf.getEventListeners().length, 3, "Assert #12");
     buf = dom.querySelector("#hideMasto");
     assert.equal(buf.getEventListeners().length, 3, "Assert #13");
- 
+
     // add tabs test
     // test modal
 

@@ -210,8 +210,11 @@ describe("TEST mastodon", () => {
   });
 
   it("go 8: initMastodon", () => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home?mobile=0", 3);
-	let str = `<nav id="navBar">
+    const [dom, loc, win] = page(
+      "http://192.168.0.35/resource/home?mobile=0",
+      3,
+    );
+    let str = `<nav id="navBar">
 	<div id="shareGroup"> 
 	<div id="shareMenu" class="shareMenu allButtons">
 		<span class="shareMenutrigger">BTN[1]</span>  

@@ -469,7 +469,7 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">66</a> </sup> <sup><a href="gibgibgib">21</a> </sup> 
 `;
     appendIsland("#point2", str, dom); // 15 links
-	const logCount= enableLogCounter( win.console);
+    const logCount = enableLogCounter(win.console);
 
     let t1 = logCount();
     await createBiblio(

@@ -368,7 +368,7 @@ export async function siteCore(
           "Word count of selection: " +
             standardisedWordCount(duplicateSelection(win)),
         );
-     }
+      }
     });
   }
 

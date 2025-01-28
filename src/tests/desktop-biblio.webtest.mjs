@@ -94,9 +94,12 @@ describe("TEST BROWSER desktop-biblio", async () => {
             .getAttribute("class"),
         ).toBe("leanCentre");
         await delay(100);
-console.log("WWWW",
-  dom.querySelector( '.TESTANCHOR sup>a[href="https://api.highcharts.com/highcharts/chart.events.render"]')
-);	    
+        console.log(
+          "WWWW",
+          dom.querySelector(
+            '.TESTANCHOR sup>a[href="https://api.highcharts.com/highcharts/chart.events.render"]',
+          ),
+        );
         expect(
           dom // labelled 14
             .querySelector(
