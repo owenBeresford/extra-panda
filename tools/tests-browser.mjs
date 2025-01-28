@@ -37,7 +37,7 @@ import fs from "node:fs";
 import https from "https";
 
 import { chromium } from "playwright";
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 import express from "express";
 
 /**
