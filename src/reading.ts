@@ -86,7 +86,9 @@ export function readingDuration(
 
   duration = Math.round(duration);
   const h1 =
-    '<a class="reading" title="See longer version of this reading guide." href="/resource/jQuery-reading-duration">To read: ' +
+    '<a class="reading" title="The text is ' +
+    (code + plain) +
+    ' normalised words long.  Link is a longer version of this reading guide guesstimate." href="/resource/jQuery-reading-duration">To read: ' +
     duration +
     options.timeFormat +
     "</a>";

@@ -17,7 +17,6 @@ import { isFullstack } from "../dom-base";
  */
 export function enableGetEventListeners(dom) {
   const step1 = dom.getElementsByTagName("body")[0];
-  //  const step1 = dom.getElementById("sendMasto");
   let step2;
   try {
     step2 = Object.getPrototypeOf(
@@ -142,12 +141,17 @@ export function createEvent(tar, dom, win) {
       bubbles: false,
       cancelable: true,
     });
-    Object.defineProperty(vnt, "target", { writable: false, value: tar });
   } else {
-    vnt = dom.createEvent("TouchEvent", { bubbles: false, cancelable: true });
-    Object.defineProperty(vnt, "target", { writable: false, value: tar });
+    vnt = dom.createEvent("MouseEvent", { bubbles: false, cancelable: true });
     //		vnt.initTouchEvent('touchstart');  // from old docs, not supported
   }
+  Object.defineProperty(vnt, "target", {
+    writable: false,
+    enumerable: true,
+    configurable: false,
+    value: tar,
+  });
+
   return vnt;
 }
 

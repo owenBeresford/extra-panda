@@ -69,4 +69,5 @@
 - DONE: Make mobile menu for SM invalidate desktop menu for SM, as both interactions doesn't make sense
 - DOME: Add feature "take user selection of text, and return standardised word count of it"
 - DONE: change implementation on reading word-count 
+- DONE: extracted Tab feature to own module, as I'm not updating that now
 
