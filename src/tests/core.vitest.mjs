@@ -68,7 +68,6 @@ describe("TEST core", () => {
     );
   });
 
-
   it("go 5: initPopupMobile", () => {
     const [dom, loc] = page(
       "http://192.168.0.35/resource/home?mobile=1&debug=1",

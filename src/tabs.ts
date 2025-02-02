@@ -34,6 +34,8 @@ function hasTabs(dom:Document):boolean {
  * tabInit
  * Assign the tab event handler.
  
+ * @param {Document} dom
+ * @param {Location} loc
  * @public
  * @return {void}
  */
@@ -59,10 +61,9 @@ export function initTabs(dom:Document, loc:Location ):void {
 /**
  * tabChange
  * Change which tab is visible
- * IOIO REWRITE when tabs are replaced
  * I don't think this needs exporting, aside from tests
  * @param {string|MiscEvent} id - HTML id for the menu
- * @param {Document =document} dom
+ * @param {Document } dom
  * @protected
  * @returns {void}
  */
@@ -131,6 +132,7 @@ function tabChange(id: string | MiscEvent, dom: Document): void {
  * injectOpts
  * PURELY FOR UNIT TESTS, adds ability to set initial state per internal function
  * READS process.env
+
  * @param {object} a - I could add a new interface where all the options were optional
  * @public
  * @returns {void}

@@ -192,8 +192,8 @@ export async function siteCore(
       loc,
     );
   }
-	initTabs(dom, loc);
-  
+  initTabs(dom, loc);
+
   if (loc.pathname.match("group-")) {
     const tt = extractGroup(null, loc);
     if (tt) {

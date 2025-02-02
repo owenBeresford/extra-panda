@@ -5,7 +5,7 @@ import { TEST_ONLY } from "../tabs";
 import { appendIsland } from "../dom-base";
 import { createEvent, enableGetEventListeners } from "./vitest-addons";
 
-const {  tabChange, initTabs } = TEST_ONLY;
+const { tabChange, initTabs } = TEST_ONLY;
 // see HTML driven version, but fails as it needs Js for exclusive group https://codepen.io/anon/pen/YPyPVY
 
 describe("TEST tabs", () => {
@@ -146,7 +146,6 @@ describe("TEST tabs", () => {
       "assert #20",
     );
 
-
     vnt = createEvent(dom.querySelector("#clickArticles"), dom, win);
     tabChange(vnt, dom);
     assert.isFalse(
@@ -217,18 +216,16 @@ describe("TEST tabs", () => {
 `;
     appendIsland("#point2", str, dom);
 
-	 enableGetEventListeners(dom);
-	initTabs(dom, loc);
+    enableGetEventListeners(dom);
+    initTabs(dom, loc);
 
     const PROJECTS = dom.querySelector("#clickProjects");
 
-	  assert.isTrue(
-		PROJECTS
-        .getAttribute("aria-controls")
-        .includes("blockProjects"),
+    assert.isTrue(
+      PROJECTS.getAttribute("aria-controls").includes("blockProjects"),
       "assert #25",
     );
-	  assert.isTrue(
+    assert.isTrue(
       dom
         .querySelector("#clickArticles")
         .getAttribute("href")
@@ -236,22 +233,24 @@ describe("TEST tabs", () => {
       "assert #26",
     );
 
-	  assert.isTrue(
+    assert.isTrue(
       dom
         .querySelector("#clickArticles")
         .getAttribute("aria-controls")
         .includes("blockArticles"),
       "assert #27",
     );
-	  assert.isTrue(
-		PROJECTS
-        .getAttribute("href")
-        .includes("#blockProjects"),
+    assert.isTrue(
+      PROJECTS.getAttribute("href").includes("#blockProjects"),
       "assert #28",
     );
 
- 	assert.equal(PROJECTS.getEventListeners().length, 3, "There is a handler for each modailty of input on this tab" );	 
-	});
+    assert.equal(
+      PROJECTS.getEventListeners().length,
+      3,
+      "There is a handler for each modailty of input on this tab",
+    );
+  });
 
   it("go 2.1: initTabs ", () => {
     const [dom, loc, win] = page(
@@ -293,17 +292,28 @@ describe("TEST tabs", () => {
 `;
     appendIsland("#point2", str, dom);
 
-	initTabs(dom, loc);
+    initTabs(dom, loc);
 
     const PROJECTS = dom.querySelector("#blockProjects");
- 	assert.equal(PROJECTS.getAttribute('aria-hidden'), "false", "There is a handler for each modailty of input on this tab" );
- 	assert.isTrue(PROJECTS.classList.contains('is-active'), "There is a handler for each modailty of input on this tab" );
+    assert.equal(
+      PROJECTS.getAttribute("aria-hidden"),
+      "false",
+      "There is a handler for each modailty of input on this tab",
+    );
+    assert.isTrue(
+      PROJECTS.classList.contains("is-active"),
+      "There is a handler for each modailty of input on this tab",
+    );
 
     const ARTICLES = dom.querySelector("#blockArticles");
- 	assert.equal(ARTICLES.getAttribute('aria-hidden'), "true", "There is a handler for each modailty of input on this tab" );
- 	assert.isFalse(ARTICLES.classList.contains('is-active'), "There is a handler for each modailty of input on this tab" );
-
-	});
-
+    assert.equal(
+      ARTICLES.getAttribute("aria-hidden"),
+      "true",
+      "There is a handler for each modailty of input on this tab",
+    );
+    assert.isFalse(
+      ARTICLES.classList.contains("is-active"),
+      "There is a handler for each modailty of input on this tab",
+    );
+  });
 });
-

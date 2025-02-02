@@ -145,10 +145,12 @@ export function createEvent(tar, dom, win) {
     vnt = dom.createEvent("MouseEvent", { bubbles: false, cancelable: true });
     //		vnt.initTouchEvent('touchstart');  // from old docs, not supported
   }
-   Object.defineProperty(vnt, "target", { writable: false, 
-		enumerable: true,
-		configurable: false,
-value: tar });
+  Object.defineProperty(vnt, "target", {
+    writable: false,
+    enumerable: true,
+    configurable: false,
+    value: tar,
+  });
 
   return vnt;
 }
