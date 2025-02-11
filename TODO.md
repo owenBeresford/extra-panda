@@ -11,7 +11,7 @@
 - Add feature dump (ie download as attachment) in-HTML file JS assets, or SVG assets, or CSS assets.  Need to think about UI for this feature.
 - Make RAM usage and execution-cost tests-and-monitoring more mature
 - Implement Networking browser test script
-- QUE£STION: how to KB only people use DETAILS elements
+- QUESTION: how to KB only people use DETAILS elements
 
 ### Previous Updates
 
@@ -64,10 +64,10 @@
 - DONE: The modal popups and tooltips features fight each other.  Stop this.
 - DONE: Improve output driver on my runner, dealing with delays etc.
 - DONE: Improve cookie code for modern internet, and improve cookie readability.
-- DONE: Add a test that includes the index.mjs, or that is a critical fail point.  A browser test?
-- DONE: Add ability to read current tab from location.hash.
+- DONE: Add a test that includes the index.mjs, or that is a critical fail point. 
+- DONE: Add ability to read current tab from location.hash
 - DONE: Make mobile menu for SM invalidate desktop menu for SM, as both interactions doesn't make sense
 - DOME: Add feature "take user selection of text, and return standardised word count of it"
 - DONE: change implementation on reading word-count 
-- DONE: extracted Tab feature to own module, as I'm not updating that now
+- DONE: extracted Tab feature to own TS module, as I'm not updating the tabs UI to pure HTML5 now.
 

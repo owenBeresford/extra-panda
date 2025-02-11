@@ -1,5 +1,4 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-// import { MouseEvent, WheelEvent, TouchEvent, KeyboardEvent } from "jsdom";
 // these are mostly the same, but I thought knowing the different sources may be useful.
 
 export interface ReferenceType {
@@ -175,6 +174,6 @@ export interface AdjacentPropsDefinite {
 export type BiblioProps = DesktopBiblioProps & MobileBiblioProps;
 
 // add other possible events here
-export type MiscEvent = MouseEvent | WheelEvent | TouchEvent | KeyboardEvent;
+export type MiscEvent = MouseEvent | TouchEvent | KeyboardEvent;
 
 export const ENABLE_SELECT = "select";
