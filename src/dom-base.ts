@@ -246,7 +246,7 @@ export async function copyURL(
     }
     await win.navigator.clipboard.writeText(loc.href);
   } catch (e0: unknown) {
-	const e1 = e0 as Error;
+    const e1 = e0 as Error;
     log(
       "error",
       "FAILED: copy URL feature borked " +
