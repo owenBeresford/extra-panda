@@ -23,7 +23,7 @@ export function debug(loc: Location, target: string = "debug"): boolean {
 */
 type BetterConsole = typeof console & { LOG_USAGE: number };
 type VisabiltityToLogging = () => number;
-let localConsole = console;
+let localConsole = console as BetterConsole;
 
 /**
  * enableLogCounter
