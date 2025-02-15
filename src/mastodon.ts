@@ -1,5 +1,4 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-// import { Document, Location, Window, Event, HTMLElement } from "jsdom";
 
 import type {
   MiscEventHandler3,
@@ -8,7 +7,7 @@ import type {
 } from "./all-types";
 import { isFullstack, isMobile, copyURL } from "./dom-base";
 import { isLocal } from "./string-base";
-import { log } from "./networking";
+import { log } from "./log-services";
 
 /**
  * openShare

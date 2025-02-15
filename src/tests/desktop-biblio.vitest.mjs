@@ -3,12 +3,11 @@ import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed-vite";
 import { appendIsland, setIsland, isFullstack } from "../dom-base";
-import { ALL_REFERENCE_LINKS } from "../networking";
+import { ALL_REFERENCE_LINKS } from "../immutables";
 import { TEST_ONLY } from "../desktop-biblio";
-import { TEST_ONLY as NETWORKING } from "../networking";
+import { TEST_ONLY as LOG_ONLY  } from "../log-services";
 
-const { enableLogCounter } = NETWORKING;
-
+const { enableLogCounter } =LOG_ONLY;
 const {
   injectOpts,
   markAllLinksUnknown,

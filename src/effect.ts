@@ -1,10 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-// import { Document, HTMLAnchorElement, HTMLElement } from "jsdom";
-// import { log, debug } from "./networking";
 import { appendIsland } from "./dom-base";
 import { pullout } from "./string-base";
 import { applyDOMpositions } from "./desktop-biblio";
-// import { ALL_REFERENCE } from "./networking";
 
 /**
  * link2Txt

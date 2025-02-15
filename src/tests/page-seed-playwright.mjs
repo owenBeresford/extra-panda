@@ -1,4 +1,5 @@
-import { delay, log, domLog } from "../networking";
+import { delay, } from "../networking";
+import { log, domLog } from "../log-services";
 import { appendIsland } from "../dom-base";
 import { test_name } from "../string-base";
 

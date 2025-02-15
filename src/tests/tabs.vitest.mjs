@@ -1,9 +1,9 @@
 import { assert, describe, it } from "vitest";
 
+import { createEvent, enableGetEventListeners } from "./vitest-addons";
 import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../tabs";
 import { appendIsland } from "../dom-base";
-import { createEvent, enableGetEventListeners } from "./vitest-addons";
 
 const { tabChange, initTabs } = TEST_ONLY;
 // see HTML driven version, but fails as it needs Js for exclusive group https://codepen.io/anon/pen/YPyPVY

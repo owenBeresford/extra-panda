@@ -1,5 +1,4 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-// import { Document, Location, HTMLAnchorElement, HTMLElement } from "jsdom";
 
 import type {
   DesktopBiblioProps,
@@ -17,12 +16,14 @@ import {
 import {
   log,
   debug,
+	} from "./log-services";
+import {  runFetch, } from "./networking";
+import {
   ALL_REFERENCE,
   SHOW_ERROR,
   ALL_REFERENCE_LINKS,
-  runFetch,
   EM_SZ,
-} from "./networking";
+} from "./immutables";
 
 // variables across this module
 // * @protected

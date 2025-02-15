@@ -2,7 +2,7 @@ import { describe, expect, it, run } from "jest-lite";
 
 import { execTest, wrap } from "./page-seed-playwright";
 import { createKeyEvent } from "./vitest-addons";
-import { TEST_ONLY } from "../networking";
+import { TEST_ONLY } from "../log-services";
 
 const { getLogCounter } = TEST_ONLY;
 

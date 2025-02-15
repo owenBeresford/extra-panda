@@ -7,7 +7,8 @@ import type {
   ScreenOffsetArray,
   BOUNDARY,
 } from "./all-types";
-import { log, MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./networking";
+import { log, } from "./log-services";
+import { MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./immutables";
 import { booleanMap } from "./string-base";
 
 /**

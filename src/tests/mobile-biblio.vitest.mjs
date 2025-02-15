@@ -3,9 +3,9 @@ import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed-vite";
 import { appendIsland } from "../dom-base";
-import { ALL_REFERENCE_LINKS } from "../networking";
+import { ALL_REFERENCE_LINKS } from "../immutables";
 import { TEST_ONLY } from "../mobile-biblio";
-import { TEST_ONLY as NETWORKING } from "../networking";
+import { TEST_ONLY as NETWORKING } from "../log-services";
 
 const { empty, normaliseData, render, createBiblio, injectOpts, adjustDom } =
   TEST_ONLY;
