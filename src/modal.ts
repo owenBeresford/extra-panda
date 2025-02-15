@@ -1,6 +1,6 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
 import type { MiscEvent } from "./all-types";
-import { log } from "./networking";
+import { log } from "./log-services";
 
 /**
  * HTMLDetailsTrap

@@ -1,18 +1,22 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 import { dateMunge, makeRefUrl } from "./string-base";
 import {
-  log,
-  debug,
-  URL_PLACEHOLDER,
   runFetch,
-  ALL_REFERENCE,
 } from "./networking";
+import {
+  URL_PLACEHOLDER,
+  ALL_REFERENCE,
+} from "./immutables";
 import type {
   ReferenceType,
   NormalisedReference,
   MobileBiblioProps,
   MobileBiblioPropsDefinite,
 } from "./all-types";
+import {
+  log,
+  debug,
+} from "./log-services";
 import { appendIsland } from "./dom-base";
 
 // variables across this module

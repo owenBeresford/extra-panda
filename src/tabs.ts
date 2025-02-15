@@ -1,5 +1,5 @@
 
-import { log, debug } from "./networking";
+import { log, debug } from "./log-services";
 
 /**
  * _map

@@ -1,5 +1,6 @@
 import type { Cookieable } from "./all-types";
-import { APPEARANCE_COOKIE, accessCookie } from "./networking";
+import { APPEARANCE_COOKIE, } from "./immutables";
+import { accessCookie } from "./networking";
 
 /**
  * COOKIE

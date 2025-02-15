@@ -8,7 +8,7 @@ import type {
 } from "./all-types";
 import { isFullstack, isMobile, copyURL } from "./dom-base";
 import { isLocal } from "./string-base";
-import { log } from "./networking";
+import { log } from "./log-services";
 
 /**
  * openShare

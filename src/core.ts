@@ -1,10 +1,10 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-// import { Location, Document, HTMLElement } from "jsdom";
 
 import type { CoreProps, MiscEvent, MultiFuncArg } from "./all-types";
 import { ENABLE_SELECT } from "./all-types";
 
-import { log, debug, runFetch } from "./networking";
+import { log, debug,} from "./log-services"; 
+import {runFetch } from "./networking";
 import {
   listContentGroup,
   extractGroup,
