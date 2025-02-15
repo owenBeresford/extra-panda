@@ -1,5 +1,4 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-// import { Document, Location, HTMLAnchorElement, HTMLElement } from "jsdom";
 
 import type {
   DesktopBiblioProps,

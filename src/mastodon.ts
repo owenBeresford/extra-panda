@@ -1,5 +1,4 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-// import { Document, Location, Window, Event, HTMLElement } from "jsdom";
 
 import type {
   MiscEventHandler3,
