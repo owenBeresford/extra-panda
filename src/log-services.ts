@@ -110,7 +110,7 @@ export function domLog(
 export const TEST_ONLY = {
   log,
   debug,
-  delay,
+  domLog,
   enableLogCounter,
 };
 

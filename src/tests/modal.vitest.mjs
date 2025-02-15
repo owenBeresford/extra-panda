@@ -1,8 +1,8 @@
 import { assert, describe, it } from "vitest";
 
 import { page } from "./page-seed-vite";
-import { TEST_ONLY } from "../modal";
 import { enableGetEventListeners } from "./vitest-addons";
+import { TEST_ONLY } from "../modal";
 import { appendIsland, isFullstack } from "../dom-base";
 
 const { modalInit } = TEST_ONLY;
