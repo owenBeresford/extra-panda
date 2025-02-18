@@ -1,5 +1,5 @@
 
-import { log, debug } from "./log-services";
+import { log } from "./log-services";
 
 /**
  * _map
@@ -23,7 +23,7 @@ function _map(where: HTMLElement, action: MultiFuncArg): void {
  
  * @param {Document} dom
  * @public
- * @return {boolean}
+ * @returns {boolean}
  */
 function hasTabs(dom:Document):boolean {
     const tabs = dom.querySelectorAll(".tabComponent");
@@ -37,7 +37,7 @@ function hasTabs(dom:Document):boolean {
  * @param {Document} dom
  * @param {Location} loc
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function initTabs(dom:Document, loc:Location ):void {
     const tabs = dom.querySelectorAll(".tabComponent");
@@ -151,6 +151,8 @@ function injectOpts(a: object): void {
 export const TEST_ONLY = {
   injectOpts,
   tabChange,
-  initTabs,
+  hasTabs,
+ initTabs,
+
 };
 

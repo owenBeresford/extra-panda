@@ -1,5 +1,7 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
 // this uses document as an in-code literal,
+// this file has no unit test at the mo,
+// but I think this is less important, as its just an output driver.
 
 /**
  * debug
@@ -26,7 +28,7 @@ let localConsole = console as BetterConsole;
  * enableLogCounter
  * A function to setup a log counter, and return an access function
  *   NOT EXPORTED, except via TEST_ONLY
- * 
+ *
  * @param  {BetterConsole} cons
  * @public
  * @returns {VisabiltityToLogging}
@@ -104,7 +106,6 @@ export function domLog(
   LOG.append(li);
 }
 
-
 /////////////////////////////////////////////////// testing ///////////////////////////////////////////////
 
 export const TEST_ONLY = {
@@ -113,4 +114,3 @@ export const TEST_ONLY = {
   domLog,
   enableLogCounter,
 };
-

@@ -3,7 +3,7 @@ import { expect, describe, it, run } from "jest-lite";
 import { execTest, wrap } from "./page-seed-playwright";
 // import type { Cookieable, Fetchable } from "../all-types";
 import { TEST_ONLY } from "../networking";
-import { delay, } from "../networking";
+import { delay } from "../networking";
 import { domLog } from "../log-services";
 const { runFetch } = TEST_ONLY;
 

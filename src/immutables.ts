@@ -16,5 +16,3 @@ export const SHOW_ERROR = "showBiblioErrors";
   @see https://phonesdata.com/en/best/screenppi/
  */
 export const MOBILE_MIN_PPI = 180;
-
-

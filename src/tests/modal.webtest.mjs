@@ -12,7 +12,7 @@ import { describe, expect, it, run } from "jest-lite";
 import { execTest, wrap } from "./page-seed-playwright";
 import { enableGetEventListeners } from "./vitest-addons";
 import { appendIsland } from "../dom-base";
-import { delay, } from "../networking";
+import { delay } from "../networking";
 import { domLog } from "../log-services";
 import { TEST_ONLY } from "../modal";
 
