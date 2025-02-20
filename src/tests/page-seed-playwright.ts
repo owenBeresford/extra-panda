@@ -2,9 +2,14 @@ import { delay } from "../networking";
 import { log, domLog } from "../log-services";
 import { appendIsland } from "../dom-base";
 import { test_name } from "../string-base";
+import type {PageGeneration } from './page-seed-vite';
 
-import type {} from 'jest-types';
-type Actionable= (dom:Document, loc:Location, win:Window)=>void; 
+// import type {  } from 'jest-types';
+type Actionable= (dom:Document, loc:Location, win:Window)=>Promise<void>; 
+
+// this is jest-circus run method,. but i can't find an exported typedef.
+type RunType   =  ()=>Promise<Array<object>>;
+
 
 let SHOULD_CLOSE:number = 1;
 
@@ -17,7 +22,7 @@ let SHOULD_CLOSE:number = 1;
  * @public
  * @returns {Array<things>} - see args arg above.
  */
-export async function page(url:string = "", args:number = 1) {
+export async function page(url:string = "", args:number = 1):Promise<Array<PageGeneration >> {
 	if(args>4 ) { 
 		throw new Error("Bad data"); 
 	}
@@ -58,7 +63,7 @@ export async function page(url:string = "", args:number = 1) {
  * @public
  * @returns {void}
  */
-export async function wrap(name:string, url:string, action:Actionable):void {
+export async function wrap(name:string, url:string, action:Actionable):Promise<void> {
   let dom:Document, loc:Location, win:Window;
   try {
     const LOG_PADDING:string = "**********************************************";
@@ -107,7 +112,7 @@ export async function wrap(name:string, url:string, action:Actionable):void {
  * @public
  * @returns {void}
  */
-export async function execTest(run:Function):void {
+export async function execTest(run:RunType):Promise<void> {
   const tt = new URLSearchParams(location.search);
   if (tt.has("close") && tt.get("close") === "0") {
     domLog("browser tabs will NOT auto-close", false, false);

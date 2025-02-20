@@ -12,7 +12,6 @@ export interface PageWrap {
 	page_fake(url:string, results:number):Array<PageGeneration>;
 
 	page_local(url:string, results:number):Array<PageGeneration>;
-
 }
 
 /**
