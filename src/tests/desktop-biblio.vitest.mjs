@@ -5,9 +5,9 @@ import { page } from "./page-seed-vite";
 import { appendIsland, setIsland, isFullstack } from "../dom-base";
 import { ALL_REFERENCE_LINKS } from "../immutables";
 import { TEST_ONLY } from "../desktop-biblio";
-import { TEST_ONLY as LOG_ONLY  } from "../log-services";
+import { TEST_ONLY as LOG_ONLY } from "../log-services";
 
-const { enableLogCounter } =LOG_ONLY;
+const { enableLogCounter } = LOG_ONLY;
 const {
   injectOpts,
   markAllLinksUnknown,

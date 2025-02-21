@@ -1,5 +1,5 @@
 ### TODO
-- Add type washing to JSON ingestion used in multiple places https://github.com/samchon/typia 
+- Add type washing to JSON ingestion used in multiple places https://github.com/samchon/typia https://medium.com/@jkc5186/understanding-typescript-types-with-prisma-e0e41a7d98f3 
 - Add config for minifier via terser to build step.  Out of time.  IMPORTANT
 - Add multilingual support
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom   to TESTS

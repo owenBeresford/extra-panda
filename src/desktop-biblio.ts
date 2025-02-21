@@ -13,11 +13,8 @@ import {
   addLineBreaks,
   makeRefUrl,
 } from "./string-base";
-import {
-  log,
-  debug,
-	} from "./log-services";
-import {  runFetch, } from "./networking";
+import { log, debug } from "./log-services";
+import { runFetch } from "./networking";
 import {
   ALL_REFERENCE,
   SHOW_ERROR,

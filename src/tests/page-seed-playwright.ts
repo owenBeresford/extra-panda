@@ -1,39 +1,40 @@
-import { delay, } from "../networking";
+import { delay } from "../networking";
 import { log, domLog } from "../log-services";
 import { appendIsland } from "../dom-base";
 import { test_name } from "../string-base";
+import type { PageGeneration } from "./page-seed-vite";
 
-let SHOULD_CLOSE = 1;
+// import type {  } from 'jest-types';
+type Actionable = (dom: Document, loc: Location, win: Window) => Promise<void>;
+
+// this is jest-circus run method,. but i can't find an exported typedef.
+type RunType = () => Promise<Array<object>>;
+
+let SHOULD_CLOSE: number = 1;
+
 /**
  * page
- * Build a fake browser to run with tests
+ * Build a real browser tab to run with tests
  
  * @param {string =''} url - thou shalt pass a relevant URL for the test, as it is used
- * @param {number =1} args - 1=dom, 2= +loc, 3= +win
+ * @param {number =1} args - 1=dom, 2= +loc, 3= +win 4= +the browser global 
  * @public
  * @returns {Array<things>} - see args arg above.
  */
-export async function page(url = "", args = 1) {
-  if (typeof window === "object" && args < 5) {
-    return await page_local(url, args);
-  } else if (args < 5) {
-    return page_fake(url, args);
+export async function page(
+  url: string = "",
+  args: number = 1,
+): Promise<Array<PageGeneration>> {
+  if (args > 4) {
+    throw new Error("Bad data");
   }
-  throw new Error("Bad data");
-}
 
-/**
- * page_local
- * Create a new tab inside a browser
- 
- * @param {string =""} url
- * @param {number =1} args 
- * @public
- * @returns {Array} - many types of object
- */
-async function page_local(url = "", args = 1) {
-  const name = test_name(args);
-  const tmp = window.open(url, name);
+  if (typeof window !== "object") {
+    throw new Error("Bad data");
+  }
+
+  const name: string = test_name(args);
+  const tmp: WindowProxy = window.open(url, name);
 
   await delay(1000); // or the HTML hasn't parsed in the new window
   if (tmp.window.document.body.length < 200) {
@@ -55,33 +56,25 @@ async function page_local(url = "", args = 1) {
 }
 
 /**
- * page_fake
- * Create a new tab inside JSDOM
- 
- * @param {string =""} url
- * @param {number =1} args 
- * @public
- * @returns {Array} - of many types of object
- */
-function page_fake(url = "", args = 1) {
-  return [];
-}
-
-/**
  * wrap
  * Supply try catch, test name and window management so tests are simpler
  
  * @param {string} name
  * @param {string} url
- * @param { (dom, loc, win)=>void } action
+ * @param { Actionable } action
  * @public
  * @returns {void}
  */
-export async function wrap(name, url, action) {
-  let dom, loc, win;
+export async function wrap(
+  name: string,
+  url: string,
+  action: Actionable,
+): Promise<void> {
+  let dom: Document, loc: Location, win: Window;
   try {
-    const LOG_PADDING = "**********************************************";
-    [dom, loc, win] = await page_local(url, 3);
+    const LOG_PADDING: string =
+      "**********************************************";
+    [dom, loc, win] = await page(url, 3);
     win.console.log(
       LOG_PADDING + "\nthis is tab " + win.TEST_TAB_NAME + "\n" + LOG_PADDING,
     );
@@ -102,6 +95,7 @@ export async function wrap(name, url, action) {
     win.console.log(" ERROR TRAPT ", e.message, "\n", e.stack);
 
     console.log(win.TEST_TAB_NAME + " ERROR TRAPT ", e.message, "\n", e.stack);
+    // Some messages are fed back into the callstack, so the unit-test code will report correctly.
     if (e.message.match(/expect\(received\)/)) {
       throw e;
     }
@@ -109,6 +103,7 @@ export async function wrap(name, url, action) {
       throw e;
     }
   }
+  // cunning auto-close
   if (SHOULD_CLOSE && win && win.close) {
     win.close();
   }
@@ -124,7 +119,7 @@ export async function wrap(name, url, action) {
  * @public
  * @returns {void}
  */
-export async function execTest(run) {
+export async function execTest(run: RunType): Promise<void> {
   const tt = new URLSearchParams(location.search);
   if (tt.has("close") && tt.get("close") === "0") {
     domLog("browser tabs will NOT auto-close", false, false);
@@ -148,19 +143,4 @@ export async function execTest(run) {
 
   ret.push({ name: "BROWSER TEST " + nom, last: true });
   appendIsland("#binLog", JSON.stringify(ret), document);
-}
-
-/**
- * validateHTML
- * Build 1 code to check HTML
-
- * @see ["Using validate.org API" https://html-validate.org/dev/using-api.html]
- * @param {string} html
- * @param {boolean} emit
- * @public
- * @returns {Array<string>}
- */
-export async function validateHTML(html) {
-  // I would like some process to listen to HTML errors in the browser
-  return [];
 }

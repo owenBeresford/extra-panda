@@ -1,10 +1,10 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
-import type { CoreProps, MiscEvent, MultiFuncArg } from "./all-types";
+import type { CoreProps,} from "./all-types";
 import { ENABLE_SELECT } from "./all-types";
 
-import { log, debug,} from "./log-services"; 
-import {runFetch } from "./networking";
+import { log, debug } from "./log-services";
+import { runFetch } from "./networking";
 import {
   listContentGroup,
   extractGroup,
