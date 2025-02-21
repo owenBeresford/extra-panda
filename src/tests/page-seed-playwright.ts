@@ -2,16 +2,15 @@ import { delay } from "../networking";
 import { log, domLog } from "../log-services";
 import { appendIsland } from "../dom-base";
 import { test_name } from "../string-base";
-import type {PageGeneration } from './page-seed-vite';
+import type { PageGeneration } from "./page-seed-vite";
 
 // import type {  } from 'jest-types';
-type Actionable= (dom:Document, loc:Location, win:Window)=>Promise<void>; 
+type Actionable = (dom: Document, loc: Location, win: Window) => Promise<void>;
 
 // this is jest-circus run method,. but i can't find an exported typedef.
-type RunType   =  ()=>Promise<Array<object>>;
+type RunType = () => Promise<Array<object>>;
 
-
-let SHOULD_CLOSE:number = 1;
+let SHOULD_CLOSE: number = 1;
 
 /**
  * page
@@ -22,17 +21,20 @@ let SHOULD_CLOSE:number = 1;
  * @public
  * @returns {Array<things>} - see args arg above.
  */
-export async function page(url:string = "", args:number = 1):Promise<Array<PageGeneration >> {
-	if(args>4 ) { 
-		throw new Error("Bad data"); 
-	}
+export async function page(
+  url: string = "",
+  args: number = 1,
+): Promise<Array<PageGeneration>> {
+  if (args > 4) {
+    throw new Error("Bad data");
+  }
 
- 	if (typeof window !== "object") {
-		throw new Error("Bad data"); 
-	}
+  if (typeof window !== "object") {
+    throw new Error("Bad data");
+  }
 
-  const name:string = test_name(args);
-  const tmp:WindowProxy = window.open(url, name);
+  const name: string = test_name(args);
+  const tmp: WindowProxy = window.open(url, name);
 
   await delay(1000); // or the HTML hasn't parsed in the new window
   if (tmp.window.document.body.length < 200) {
@@ -63,10 +65,15 @@ export async function page(url:string = "", args:number = 1):Promise<Array<PageG
  * @public
  * @returns {void}
  */
-export async function wrap(name:string, url:string, action:Actionable):Promise<void> {
-  let dom:Document, loc:Location, win:Window;
+export async function wrap(
+  name: string,
+  url: string,
+  action: Actionable,
+): Promise<void> {
+  let dom: Document, loc: Location, win: Window;
   try {
-    const LOG_PADDING:string = "**********************************************";
+    const LOG_PADDING: string =
+      "**********************************************";
     [dom, loc, win] = await page(url, 3);
     win.console.log(
       LOG_PADDING + "\nthis is tab " + win.TEST_TAB_NAME + "\n" + LOG_PADDING,
@@ -88,7 +95,7 @@ export async function wrap(name:string, url:string, action:Actionable):Promise<v
     win.console.log(" ERROR TRAPT ", e.message, "\n", e.stack);
 
     console.log(win.TEST_TAB_NAME + " ERROR TRAPT ", e.message, "\n", e.stack);
-// Some messages are fed back into the callstack, so the unit-test code will report correctly.
+    // Some messages are fed back into the callstack, so the unit-test code will report correctly.
     if (e.message.match(/expect\(received\)/)) {
       throw e;
     }
@@ -96,7 +103,7 @@ export async function wrap(name:string, url:string, action:Actionable):Promise<v
       throw e;
     }
   }
-// cunning auto-close
+  // cunning auto-close
   if (SHOULD_CLOSE && win && win.close) {
     win.close();
   }
@@ -112,7 +119,7 @@ export async function wrap(name:string, url:string, action:Actionable):Promise<v
  * @public
  * @returns {void}
  */
-export async function execTest(run:RunType):Promise<void> {
+export async function execTest(run: RunType): Promise<void> {
   const tt = new URLSearchParams(location.search);
   if (tt.has("close") && tt.get("close") === "0") {
     domLog("browser tabs will NOT auto-close", false, false);
@@ -137,5 +144,3 @@ export async function execTest(run:RunType):Promise<void> {
   ret.push({ name: "BROWSER TEST " + nom, last: true });
   appendIsland("#binLog", JSON.stringify(ret), document);
 }
-
-

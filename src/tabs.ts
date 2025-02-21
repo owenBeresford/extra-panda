@@ -1,4 +1,3 @@
-
 import { log } from "./log-services";
 
 /**
@@ -16,7 +15,6 @@ function _map(where: HTMLElement, action: MultiFuncArg): void {
   where.addEventListener("keypress", action);
 }
 
-
 /**
  * hasTabs
  * Unused function to report if tabs ~ the event handlers ~ should be enabled
@@ -25,9 +23,9 @@ function _map(where: HTMLElement, action: MultiFuncArg): void {
  * @public
  * @returns {boolean}
  */
-function hasTabs(dom:Document):boolean {
-    const tabs = dom.querySelectorAll(".tabComponent");
-	return tabs.length >0;
+function hasTabs(dom: Document): boolean {
+  const tabs = dom.querySelectorAll(".tabComponent");
+  return tabs.length > 0;
 }
 
 /**
@@ -39,23 +37,23 @@ function hasTabs(dom:Document):boolean {
  * @public
  * @returns {void}
  */
-export function initTabs(dom:Document, loc:Location ):void {
-    const tabs = dom.querySelectorAll(".tabComponent");
-    for (let i = 0; i < tabs.length; i++) {
-      const btns: Array<HTMLElement> = Array.from(
-        tabs[i].querySelectorAll(".tab-title a"),
-      ) as Array<HTMLElement>;
+export function initTabs(dom: Document, loc: Location): void {
+  const tabs = dom.querySelectorAll(".tabComponent");
+  for (let i = 0; i < tabs.length; i++) {
+    const btns: Array<HTMLElement> = Array.from(
+      tabs[i].querySelectorAll(".tab-title a"),
+    ) as Array<HTMLElement>;
 
-      for (let j = 0; j < btns.length; j++) {
-        _map(btns[j], (e) => {
-          tabChange(e, dom);
-        });
-      }
+    for (let j = 0; j < btns.length; j++) {
+      _map(btns[j], (e) => {
+        tabChange(e, dom);
+      });
     }
+  }
 
-    if (loc.hash !== "") {
-      tabChange(loc.hash, dom);
-    }
+  if (loc.hash !== "") {
+    tabChange(loc.hash, dom);
+  }
 }
 
 /**
@@ -152,7 +150,5 @@ export const TEST_ONLY = {
   injectOpts,
   tabChange,
   hasTabs,
- initTabs,
-
+  initTabs,
 };
-

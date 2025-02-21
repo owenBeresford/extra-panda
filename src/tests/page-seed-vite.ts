@@ -1,17 +1,16 @@
 import type { HtmlValidator } from "html-validator";
-import type { JSDOM as JSDOMClass} from '@types/jsdom';
-const { default: validator  } = await import("html-validator");
+import type { JSDOM as JSDOMClass } from "@types/jsdom";
+const { default: validator } = await import("html-validator");
 const { JSDOM } = await import("jsdom");
-
 
 export type PageGeneration = Window | Document | Location | JSDOMClass;
 
 export interface PageWrap {
-	page(url:string, results:number ):Array<PageGeneration>;
+  page(url: string, results: number): Array<PageGeneration>;
 
-	page_fake(url:string, results:number):Array<PageGeneration>;
+  page_fake(url: string, results: number): Array<PageGeneration>;
 
-	page_local(url:string, results:number):Array<PageGeneration>;
+  page_local(url: string, results: number): Array<PageGeneration>;
 }
 
 /**
@@ -23,7 +22,10 @@ export interface PageWrap {
  * @public
  * @returns {Array<things>} - see args arg above.
  */
-export function page(url:string = "", args:number = 1):Array<PageGeneration> {
+export function page(
+  url: string = "",
+  args: number = 1,
+): Array<PageGeneration> {
   if (
     typeof window === "object" &&
     window !== undefined &&
@@ -37,7 +39,6 @@ export function page(url:string = "", args:number = 1):Array<PageGeneration> {
   throw new Error("Bad data");
 }
 
-
 /**
  * page_local
  * Create a new tab inside a browser
@@ -47,8 +48,8 @@ export function page(url:string = "", args:number = 1):Array<PageGeneration> {
  * @public
  * @returns {Array} - many types of object
  */
-function page_local(url:string = "", args:number = 1):Array<PageGeneration> {
-  const tmp:WindowProxy = window.open(url, "test");
+function page_local(url: string = "", args: number = 1): Array<PageGeneration> {
+  const tmp: WindowProxy = window.open(url, "test");
   if (args === 1) {
     return [tmp.document];
   } else if (args === 2) {
@@ -60,8 +61,6 @@ function page_local(url:string = "", args:number = 1):Array<PageGeneration> {
   }
 }
 
-
-
 /**
  * page_fake
  * Create a new tab inside JSDOM
@@ -71,8 +70,8 @@ function page_local(url:string = "", args:number = 1):Array<PageGeneration> {
  * @public
  * @returns {Array} - of many types of object
  */
-function page_fake(url:string = "", args:number = 1):Array<PageGeneration> {
-  const dom:JSDOMClass = new JSDOM(
+function page_fake(url: string = "", args: number = 1): Array<PageGeneration> {
+  const dom: JSDOMClass = new JSDOM(
     `<!DOCTYPE html>
 <html lang="en-GB">
 <head><title>test1</title></head>
@@ -112,10 +111,10 @@ function page_fake(url:string = "", args:number = 1):Array<PageGeneration> {
  * @public
  * @returns {Array<string>}
  */
-export async function validateHTML(html:string):Array<string> {
+export async function validateHTML(html: string): Array<string> {
   // I do no know why WhatWG doesn't know Dialog tag
   // I have persistent disagreement on heading levels
-  const lint:HtmlValidator.ParsedJsonAsValidationResults = await validator({
+  const lint: HtmlValidator.ParsedJsonAsValidationResults = await validator({
     validator: "WHATWG",
     data: html,
     format: "text",
@@ -125,10 +124,9 @@ export async function validateHTML(html:string):Array<string> {
       "Heading level can only increase by one, expected <h2> but got <h3>",
       "Heading level can only increase by one, expected <h3> but got <h5>",
     ],
-  } as HtmlValidator.OptionsForHtmlFileAsValidationTarget );
+  } as HtmlValidator.OptionsForHtmlFileAsValidationTarget);
 
   // I do no know why WhatWG doesn't know Dialog tag
   // I have persistent disagreement on heading levels
   return [...lint.errors];
 }
-
