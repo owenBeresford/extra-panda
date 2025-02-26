@@ -77,7 +77,7 @@ My work sequence has been:
 - ditch unused features, and improve readability/ English
 - split into better modules
 - port to typescript and better CSS/HTML
-- add many tests using newer test framework
+- add many tests using newer test frameworks
 - split into better modules, refactor, and improve English again
 
 Pls note English is my first language #leSigh.
@@ -89,7 +89,7 @@ Software architecture
 * None of this features are "long lived", they just tweak the document on page load
 * This does show SRP, and layering
 * This does show clear reporting on errors
-* This doesn't have any global variables 
+* This doesn't have any global variables (i.e. document or window)
 * With JS modules, there are less functions inside functions, so unit tests are easier and faster to build.   Improved unit-test coverage as it's now feasible (rather than behaviour testing).
 * Early versions did have actual object composition, but I removed that as it made the types too complex
 * this is not currently OO code, but would be when:
@@ -106,17 +106,17 @@ Software architecture
 Notes:
 - Functions tagged "PURE" do not effect the DOM, and tend to test quickly.
 - **_NOTE_** Commits at the start of this project are completely meaningless, as it's just when I moved the code back to my dev machine. They are meaningless duration markers, rather than feature markers.
-- Some of these unit tests are less meaningful than others, regrettably (running from Node).   It would be nice to setup test from a browser.  To *look* at the UX (as in, I am being the success / fail criterion), I did some manual testing
+- Proper TDD units, as I have better tools now (JS modules + a fake DOM), make code better ~ separately to, and above every other bullet point.
+- Vastly improve English / readability of the code. Gain is separate to all other points.
+- Some of these unit tests are less meaningful than others, regrettably (running from Node).   It would be nice to setup test from a browser **UPDATE** I did, see `npm run web:test` .  Initially, to *look* at the UX (as in, I am being the success / fail criterion), I did some manual testing
 - Use new language features (ADD a few KB of source) without jQuery (DROP >300KB of source). Dropping jQuery, as "select downloaded features" feature has been removed from https://jquery.com
 - Use TEST_ONLY symbols that expose entire module to unit tests.   Tree-shaking means these do not show in release builds and is a free feature of most build tools.   I didn't invent this structure, but I have used it ever since I started with JS modules, rather than plain JS.
-- Proper TDD units, as I have better tools now (JS modules + a fake DOM), make code better ~ separately to, and above every other bullet point. WARN: Some tests cannot be run outside a real webrowser.
-- Vastly improve English / readability of the code. Gain is separate to all other points.
 - As all this code is made after a minimiser script is adopted, faction code more finely into logical modules. So it's more readable.
 - As a very non-funny joke: the first two versions of the SM sharebar are legacy HTML, but very easy to unit-test. Now I have much better test tech and libraries and less good tests on this feature.
 - Assuming this project is frozen on feature completion, I do not need an installer.   I will manually copy 1 compiled file to the static-host local-image.   This project may not have any rollbacks/ reverts, tests are mandated.   
 - I have used a short term solution to minification, as I need to move forward.  XXX #FIXME
-- As far as Vite is a _code bundler_, I need to make all these separate outcome files as separate configs.  I probably can reduce the amount of configs duplication at a later date.   To repeat for clarity, each generated file is a separate file to syntax high-lighting for other languages.  Note again via this library, CSS syntax highlighting isn't perfect. 
-- There are some pages that I will need to retire or use CDN to host needed libraries.
+- As far as Vite is a _code bundler_, I need to make all these separate outcome files as separate configs.  I probably can reduce the amount of configs duplication at a later date.   To repeat for clarity, each generated file is a separate file to syntax high-lighting for other languages.  Again via this library, CSS syntax highlighting isn't perfect. 
+- There are some demo pages that I will need to retire or use CDN to host needed libraries.
 - There isn't much logging, but logging is held to a wrapper, so I could jump to a centralised log (such as ELK) if I need to in future.
 - My code has complex / unexpected behaviour if you change the DOM / document object without changing state.  This shouldn't be an issue outside tests, as this code doesn't support SSR presently.
 - I want to reduce the amount of manually made snap-shot tests, as again it's a code smell (test and measure outcomes, not the recipe to achieve them, or the recipe is forced to be immutable).
@@ -125,11 +125,13 @@ Notes:
 - This has a function equivalent to `int main(int argc, char * argv[])`, called _core_.  This is allowed to have a high volume and complexity as it wraps *all the other* methods.  As an architecture detail, this isn't avoidable.
 - The highlight source is now in TS, as I found the type definitions.
 - The process of expanding the number of tools in this project is adding features, but also acting as a lint as it shows small oversights.
-- Note I added a UI feature that added extra HTML, but this didn't invalidate any of the unit-tests.
+- I added a UI feature that added extra HTML, but this didn't invalidate any of the unit-tests ~ they are not snapshot tests.
 - I am adding search params for testing, rather than a Mock, as I may want to use them during QA
 - It is expensive [in devtime] to create keyboard events in a different tab/ window.
 - Why do I not tidy-up unused vars in this code base?  Most are in unit tests, its better readability if *standard* args are present, IMO (Promises, forEach or map etc)
-- I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together with `rebase`, it's a nul-point difference.   
+- I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together with `rebase`, it's a nul-point difference.  UPDATE: the expanded eslint config does make garbage changes on some files, I do not know why.
+- More recently, I made the eslint config more complex, and this reports extra details.
+- I am also moving the MJS files in tests to TS.
 
 #### Metrics that are important to goals
 
@@ -144,7 +146,7 @@ Notes:
   - Note dead code removal didn't make any impact here, as tree shaking works properly now
   - above with gzip: 9KB   
     - UPDATE: due to further features, I have crept over the 10k boundary &lt;Meme: "so it begins"&gt;
-  - I think I have perfect feature match, and new solution is 4% of volume of previous solution.
+  - I think I have perfect feature match, and new solution is 4% of volume of previous solution. UPDATE 6% in 2025
 
 </details>
 <details open>
@@ -205,6 +207,6 @@ Notes:
 - .halferWords
 - .fewWords
 -
-- **Please ensure .sr-only is defined (from bootstrap)**
+- **Please ensure .sr-only is defined (idea from bootstrap)**
 </details>
 

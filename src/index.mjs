@@ -5,6 +5,7 @@ import { runFetch } from "./networking";
 import { log } from "./log-services";
 import { appendIsland, isMobile, currentSize, calcScreenDPI } from "./dom-base";
 import { storeAppearance } from "./cookies";
+import { SELF_VERSION } from './immutables';
 
 // this file is only used in the webbuild
 siteCore({}, document, location, window);
@@ -17,4 +18,5 @@ export {
   storeAppearance,
   currentSize,
   calcScreenDPI,
+  SELF_VERSION,
 };

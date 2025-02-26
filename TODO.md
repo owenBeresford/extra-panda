@@ -12,6 +12,8 @@
 - Make RAM usage and execution-cost tests-and-monitoring more mature
 - Implement Networking browser test script
 - QUESTION: how to KB only people use DETAILS elements
+- Port remaining non-production files to TS.   Add module declarations
+- declare namespace https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
 
 ### Previous Updates
 
@@ -68,6 +70,6 @@
 - DONE: Add ability to read current tab from location.hash
 - DONE: Make mobile menu for SM invalidate desktop menu for SM, as both interactions doesn't make sense
 - DOME: Add feature "take user selection of text, and return standardised word count of it"
-- DONE: change implementation on reading word-count 
-- DONE: extracted Tab feature to own TS module, as I'm not updating the tabs UI to pure HTML5 now.
+- DONE: Change implementation on reading word-count 
+- DONE: Extracted Tab feature to own TS module, as I'm not updating the tabs UI to pure HTML5 now.
 
