@@ -70,7 +70,7 @@ export function log(typ: string, ...inputs: string[]): void {
 /**
  * domLog
  * Add a message to the current webpage in #log  IMPURE
- * NOTE THIS FUNCTION CONTAINS document REFERENCES
+ * NOTE THIS FUNCTION CONTAINS document REFERENCES as it should only be used in tests
  *
  * @param {string} str - your message
  * @param {boolean =false} bold

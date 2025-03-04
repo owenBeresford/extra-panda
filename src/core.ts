@@ -10,7 +10,7 @@ import {
   createAdjacentChart,
 } from "./adjacent";
 import { initMastodon } from "./mastodon";
-import { initTabs } from "./tabs";
+import { initTabs, newInitState } from "./tabs";
 import { isLocal, standardisedWordCount } from "./string-base";
 import {
   isMobile,
@@ -175,6 +175,7 @@ export async function siteCore(
   applyAppearance(dom);
   modalInit(dom);
   expandDetails(1040, dom, loc, win);
+  isLibreWolf(dom, win.navigator );
 
   if (
     !isMobile(dom, loc, win) &&
@@ -192,9 +193,11 @@ export async function siteCore(
       loc,
     );
   }
-	if(SELF_VERSION <= '1.0.4') {
+	if(SELF_VERSION < '1.0.4') {
 // disabled in that version, as I ported to HTML/CSS
 		initTabs(dom, loc);
+	} else {
+		newInitState(dom, loc); 
 	}
 
   if (loc.pathname.match("group-")) {

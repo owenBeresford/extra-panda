@@ -29,6 +29,26 @@ function hasTabs(dom: Document): boolean {
 }
 
 /**
+ * newInitState
+ * Force a tab name in the location.hash to be honored.
+ 
+ * @param {Document} dom
+ * @param {Location} loc
+ * @public
+ * @return {void}
+ */
+export function newInitState(dom:Document, loc:Location):void {
+	if(!loc.hash) { return; }
+
+	const JUMP=dom.querySelector(loc.hash);
+	if(JUMP && JUMP.tagName==="INPUT" ) {
+		JUMP.checked="checked";
+	} else {
+		log("error", "failed to find "+loc.hash+" element");
+	}
+}
+
+/**
  * tabInit
  * Assign the tab event handler.
  
@@ -150,5 +170,6 @@ export const TEST_ONLY = {
   injectOpts,
   tabChange,
   hasTabs,
+	newInitState,
   initTabs,
 };

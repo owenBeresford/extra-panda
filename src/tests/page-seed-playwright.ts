@@ -4,11 +4,12 @@ import { appendIsland } from "../dom-base";
 import { test_name } from "../string-base";
 import type { PageGeneration } from "./page-seed-vite";
 
-// import type {  } from 'jest-types';
 type Actionable = (dom: Document, loc: Location, win: Window) => Promise<void>;
 
-// this is jest-circus run method,. but i can't find an exported typedef.
+// this is jest-circus run method,. but I can't find an exported typedef.
 type RunType = () => Promise<Array<object>>;
+
+type TestWindow = Window & { TEST_TAB_NAME:string|undefined };
 
 let SHOULD_CLOSE: number = 1;
 
@@ -28,7 +29,6 @@ export async function page(
   if (args > 4) {
     throw new Error("Bad data");
   }
-
   if (typeof window !== "object") {
     throw new Error("Bad data");
   }
@@ -37,21 +37,25 @@ export async function page(
   const tmp: WindowProxy = window.open(url, name);
 
   await delay(1000); // or the HTML hasn't parsed in the new window
-  if (tmp.window.document.body.length < 200) {
+
+  if (tmp.document && tmp.document.body.length < 200) {
+    domLog( "New browser tab has gone wrong.", false, false);
     log("error", "New browser tab has gone wrong.");
     // To make execution time consistent, this has been disabled
     //    tmp.window.reload();
     //    return page_local(url, args);
   }
   tmp.window.TEST_TAB_NAME = name;
+  tmp.window.name = name;
+
   if (args === 1) {
-    return [tmp.window.document];
+    return [tmp.document];
   } else if (args === 2) {
-    return [tmp.window.document, tmp.window.document.location];
+    return [tmp.document, tmp.window.location];
   } else if (args === 3) {
-    return [tmp.window.document, tmp.window.document.location, tmp.window];
+    return [tmp.document, tmp.window.location, tmp.window];
   } else if (args === 4) {
-    return [tmp.window.document, tmp.window.document.location, tmp.window, tmp];
+    return [tmp.document, tmp.window.location, tmp.window, tmp];
   }
 }
 
@@ -87,14 +91,18 @@ export async function wrap(
       false,
     );
   } catch (e) {
+	let prefix="[ERROR]";
+	if(win) { 
+		prefix=win.TEST_TAB_NAME;
+    	win.console.log(" ERROR TRAPT ", e.message, "\n", e.stack);
+ 	}
+    console.log(prefix + " ERROR TRAPT ", e.message, "\n", e.stack);
+
     domLog(
-      win.TEST_TAB_NAME + " " + name + " [FAIL], see console for error details",
+      prefix + " " + name + " [FAIL], see console for error details",
       true,
       false,
     );
-    win.console.log(" ERROR TRAPT ", e.message, "\n", e.stack);
-
-    console.log(win.TEST_TAB_NAME + " ERROR TRAPT ", e.message, "\n", e.stack);
     // Some messages are fed back into the callstack, so the unit-test code will report correctly.
     if (e.message.match(/expect\(received\)/)) {
       throw e;
