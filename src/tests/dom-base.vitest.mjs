@@ -735,8 +735,7 @@ d
   it("go 10: isLibreWolf", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
 
-// export function isLibreWolf(dom:Document, nav:Navigator):boolean 
-    assert.isTrue(false === isLibreWolf(dom, win.navigator), "A plain Node instance is false");
+    assert.isTrue(false === isLibreWolf(dom, win.navigator), "this JSDOM instance is not librewolf.");
   });
 
  

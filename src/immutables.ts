@@ -26,7 +26,7 @@ export const EM_SZ = 16;
 export const SHOW_ERROR = "showBiblioErrors";   
 
 // TS doesn't have an IPaddr type?
-// Pretend I have patch String.   #blerg
+// ...Pretend I have patched String type.   #blerg
 export const TEST_MACHINE = "192.168.0.35";
 
 /**

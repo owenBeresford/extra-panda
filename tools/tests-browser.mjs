@@ -50,13 +50,13 @@ if more are added see command-line-args
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const __filename = basename(fileURLToPath(import.meta.url));
 const TESTS = [
-//  "modal.webtest.mjs",
+  "modal.webtest.mjs",
   "tabs.webtest.mjs",
-//  "cookie.webtest.mjs",
-//  "desktop-biblio.webtest.mjs",
-//  "dom-base.webtest.mjs",
-//  "networking.webtest.mjs",
-//  "index.webtest.mjs",
+  "cookie.webtest.mjs",
+  "desktop-biblio.webtest.mjs",
+  "dom-base.webtest.mjs",
+  "networking.webtest.mjs",
+  "index.webtest.mjs",
 ];
 const PORT_DEBUG = 9222;
 const PORT_SERVER = 8081;
