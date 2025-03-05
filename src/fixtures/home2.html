@@ -92,7 +92,7 @@ For performance, I have stripped many off-the-shelf components from this site, s
 </div>
 <div class="column tabContainer chunkArticles">
 		<span role="presentation" class="fakeTab" style="left:0em;" rel="me" >
-			 <img src="/asset/ob1.webp" role="presentation" class="myUglyFace" loading="lazy" width="100" height="100" alt="Many bloggers say adding a photo of yourself makes it look more authentic. IMO, my face is not a reason to hire me."  /> 
+			 <img src="https://owenberesford.me.uk/asset/ob1.webp" role="presentation" class="myUglyFace" loading="lazy" width="100" height="100" alt="Many bloggers say adding a photo of yourself makes it look more authentic. IMO, my face is not a reason to hire me."  /> 
 		</span>
 
 	<fieldset class="tabs-content" role="tab">
@@ -291,7 +291,9 @@ if( navigator &&
 }
 
 .tabContainer .tabs-content { border-top: 1px solid #e6e6e6; }
-.tabContainer { position: relative; top: -14em; }
+.tabContainer { position: relative; top: -3em; }
+// in the unit-test browser, but not normal use the -14em needs to be -2em, I have no idea why
+// ?maybe I should fix the image URL?
 .tabContainer .tabs-content { width:fit-content; display: inline-block; background:inherit; }
 .tabContainer .tabs-content ul { display:none; margin-top:10em; }
 .tabContainer legend { white-space:nowrap; z-index:0; margin-top:2em; } 

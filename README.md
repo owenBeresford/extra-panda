@@ -173,7 +173,7 @@ Notes:
 - TODO: Make support for win32
 - TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
 
-#### Notes for me \#leSigh
+#### Process to add a new webtest \#leSigh
 I ought to improve this process.
 * make src/test/\*webtest.mjs
 * ensure execTest line is on the end of the new test
@@ -181,6 +181,8 @@ I ought to improve this process.
 * update build script (the bash file) to include new artefact
 * update file list in the test runner
 * run npm run build
+* copy compiled code to the fixtures dir (ts->min.mjs, css->min.css)
+* if the test refers to any HTML, the HTML will need to be added as a fixture, or CORs will shut you down. 
 * run npm run build:test
 * run npm run test:web
 

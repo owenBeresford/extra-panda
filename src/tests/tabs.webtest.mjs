@@ -20,52 +20,23 @@ describe("TEST BROWSER CSS based tabs", async () => {
       TEST_NAME,
       "/home2.html?debug=1",
       async (dom, loc, win) => {
-	    let str = `<div class="chunkArticles column tabContainer">
-<span role="presentation" class="fakeTab">
- <img src="/asset/ob1.webp" role="presentation" class="myUglyFace" width="200" height="200" alt="Many bloggers say adding a photo of yourself makes it look more authentic. IMO, my face is not a reason to hire me." title="Many bloggers say adding a photo of yourself makes it look more authentic. IMO, my face is not a reason to hire me." /> 
-</span>
-
-<fieldset class="tabs-content" >
-<legend>
-<label> Articles <input type="radio" value="articles" name="tabs" id="btn1" checked /> </label>
-</legend>
-<br>
-<ul class="ulbasic">
-    <li><a href="#">SSS 1</a></li>
-    <li><a href="#">SSS 2</a></li>
-    <li><a href="#">SSS 3</a></li>
-    <li><a href="#">SSS 4</a></li>
-</ul>
-</fieldset>
-
-<fieldset class="tabs-content" >
-<legend>
-<label> Projects <input type="radio" value="projects" name="tabs" id="btn2" /> </label>
-</legend>
-<br>
-<ul class="ulbasic">
-    <li>Short role <a href="#">DDD 1</a></li>
-    <li>Short role <a href="#">DDD 2</a></li>
-    <li>Short role <a href="#">DDD 3</a></li>
-    <li>Short role <a href="#">DDD 4</a></li>
-</ul>
-</fieldset>
-</div>
-`;
- //   	appendIsland(".chunkArticles", str, dom);
-
-// in this file pay attention to HTML ids
-    const [BTN2, BTN1] = dom.querySelectorAll("#btn2, #btn1");
 	
-	expect(getCSSAttr('fieldset:has( #btn1 ) ul', 'display', dom, win)).toBe('inline-block');
-	expect(getCSSAttr('fieldset:has( #btn2 ) ul', 'display', dom, win)).toBe('none');
+	expect(getCSSAttr('fieldset:has( #articles ) ul', 'display', dom, win)).toBe('inline-block');
+	expect(getCSSAttr('fieldset:has( #projects ) ul', 'display', dom, win)).toBe('none');
+// this line is a poor test, but I don't have the colour libs imported here
+	expect(getCSSAttr('fieldset:has( #articles ) label', 'background-color', dom, win)).toBe('rgb(215, 242, 250)');
+	expect(getCSSAttr('fieldset:has( #projects ) label', 'background-color', dom, win)).toBe('rgb(0, 73, 135)');
 
-	const EVT1= createEvent( BTN1, dom, win);
-	expect( dom.body.dispatchEvent(EVT1) ).toBe(true);
+	const EVT1  = new MouseEvent("click", { bubbles: true, cancelable: true, view: win });
+// this handler is supposed to be sync
+	expect( dom.querySelector('#projects').dispatchEvent(EVT1) ).toBe(true);
 
-	expect(getCSSAttr('fieldset:has( #btn2 ) ul', 'display', dom, win)).toBe('inline-block');
-	expect(getCSSAttr('fieldset:has( #btn1 ) ul', 'display', dom, win)).toBe('none');
- 
+	expect(getCSSAttr('fieldset:has( #projects ) ul', 'display', dom, win)).toBe('inline-block');
+	expect(getCSSAttr('fieldset:has( #articles ) ul', 'display', dom, win)).toBe('none');
+// this line is a poor test, but I don't have the colour libs imported here
+	expect(getCSSAttr('fieldset:has( #projects ) label', 'background-color', dom, win)).toBe('rgb(215, 242, 250)');
+	expect(getCSSAttr('fieldset:has( #articles ) label', 'background-color', dom, win)).toBe('rgb(0, 73, 135)');
+
         await delay(100);
       }, );
   });
@@ -77,52 +48,24 @@ describe("TEST BROWSER CSS based tabs", async () => {
       "/home2.html?debug=1#projects",
       async (dom, loc, win) => {
 
-	    let str = `<div class="chunkArticles column tabContainer">
-<span role="presentation" class="fakeTab">
- <img src="/asset/ob1.webp" role="presentation" class="myUglyFace" width="200" height="200" alt="Many bloggers say adding a photo of yourself makes it look more authentic. IMO, my face is not a reason to hire me." title="Many bloggers say adding a photo of yourself makes it look more authentic. IMO, my face is not a reason to hire me." /> 
-</span>
-
-<fieldset class="tabs-content" >
-<legend>
-<label> Articles <input type="radio" value="articles" name="tabs" id="btn1" checked /> </label>
-</legend>
-<br>
-<ul class="ulbasic">
-    <li><a href="#">SSS 1</a></li>
-    <li><a href="#">SSS 2</a></li>
-    <li><a href="#">SSS 3</a></li>
-    <li><a href="#">SSS 4</a></li>
-</ul>
-</fieldset>
-
-<fieldset class="tabs-content" >
-<legend>
-<label> Projects <input type="radio" value="projects" name="tabs" id="btn2" /> </label>
-</legend>
-<br>
-<ul class="ulbasic">
-    <li>Short role <a href="#">DDD 1</a></li>
-    <li>Short role <a href="#">DDD 2</a></li>
-    <li>Short role <a href="#">DDD 3</a></li>
-    <li>Short role <a href="#">DDD 4</a></li>
-</ul>
-</fieldset>
-</div>
-`;
-// domLog("chunkArticles should be enhanced", false, false );
-//    	appendIsland(".chunkArticles", str, dom);
-
 // in this file pay attention to HTML ids
     const [BTN2, BTN1] = dom.querySelectorAll("#btn2, #btn1");
 	
-	expect(getCSSAttr('fieldset:has( #btn2 ) ul', 'display', dom, win)).toBe('inline-block');
-	expect(getCSSAttr('fieldset:has( #btn1 ) ul', 'display', dom, win)).toBe('none');
+	expect(getCSSAttr('fieldset:has( #projects ) ul', 'display', dom, win)).toBe('inline-block');
+	expect(getCSSAttr('fieldset:has( #articles ) ul', 'display', dom, win)).toBe('none');
+// this line is a poor test, but I don't have the colour libs imported here
+	expect(getCSSAttr('fieldset:has( #projects ) label', 'background-color', dom, win)).toBe('rgb(215, 242, 250)');
+	expect(getCSSAttr('fieldset:has( #articles ) label', 'background-color', dom, win)).toBe('rgb(0, 73, 135)');
 
-	const EVT1= createEvent( BTN1, dom, win);
-	expect( dom.body.dispatchEvent(EVT1) ).toBe(true);
+	const EVT1  = new MouseEvent("click", { bubbles: true, cancelable: true, view: win });
+// this handler is supposed to be sync
+	expect( dom.querySelector('#articles').dispatchEvent(EVT1) ).toBe(true);
 
-	expect(getCSSAttr('fieldset:has( #btn1 ) ul', 'display', dom, win)).toBe('inline-block');
-	expect(getCSSAttr('fieldset:has( #btn2 ) ul', 'display', dom, win)).toBe('none');
+	expect(getCSSAttr('fieldset:has( #articles ) ul', 'display', dom, win)).toBe('inline-block');
+	expect(getCSSAttr('fieldset:has( #projects ) ul', 'display', dom, win)).toBe('none');
+	expect(getCSSAttr('fieldset:has( #articles ) label', 'background-color', dom, win)).toBe('rgb(215, 242, 250)');
+	expect(getCSSAttr('fieldset:has( #projects ) label', 'background-color', dom, win)).toBe('rgb(0, 73, 135)');
+
         await delay(100);
       }, );
   });
