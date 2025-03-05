@@ -13,7 +13,8 @@ const {
   getArticleWidth,
   applyVolume,
   calcScreenDPI,
-  screenWidth,
+ isLibreWolf,
+ screenWidth,
   isFullstack,
   copyURL,
 } = TEST_ONLY;
@@ -730,4 +731,13 @@ d
     let ret = getArticleWidth(true, ".lotsOfWords", dom, JSDOM1.window);
     assert.equal(ret, -513, "asset #28");
   });
+
+  it("go 10: isLibreWolf", (context) => {
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+
+// export function isLibreWolf(dom:Document, nav:Navigator):boolean 
+    assert.isTrue(false === isLibreWolf(dom, win.navigator), "A plain Node instance is false");
+  });
+
+ 
 });

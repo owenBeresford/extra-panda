@@ -158,7 +158,8 @@ export function isFullstack(win: Window): boolean {
  * LibreWolf reports the DPI resolution is twice what the OS thinks it is
  * Bug not found in recent editions of FF.
  * For a single hardware, run the attached link in FF, Chrome and Librewolf to see issue outside of my code
- *  NOT PURE
+ *  NOT PURE, and I have no non-manual way to show this works. 
+ *  THIS IS EXPECTED TO NEED TO CHANGE ON LATER VERSIONS OF LIBREWOLF, #leSIGH
 
  * @see [https://www.infobyip.com/detectmonitordpi.php]
  * @param {Document} dom
@@ -469,6 +470,7 @@ export const TEST_ONLY = {
   applyVolume,
   mapAttribute,
   setIsland,
+  isLibreWolf,
   screenWidth,
   isFullstack,
   isMobile,

@@ -16,6 +16,7 @@ import {
   isMobile,
   appendIsland,
   applyVolume,
+  isLibreWolf,
   expandDetails,
   duplicateSelection,
 } from "./dom-base";
