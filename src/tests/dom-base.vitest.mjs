@@ -13,8 +13,8 @@ const {
   getArticleWidth,
   applyVolume,
   calcScreenDPI,
- isLibreWolf,
- screenWidth,
+  isLibreWolf,
+  screenWidth,
   isFullstack,
   copyURL,
 } = TEST_ONLY;
@@ -735,8 +735,9 @@ d
   it("go 10: isLibreWolf", (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
 
-    assert.isTrue(false === isLibreWolf(dom, win.navigator), "this JSDOM instance is not librewolf.");
+    assert.isTrue(
+      false === isLibreWolf(dom, win.navigator),
+      "this JSDOM instance is not librewolf.",
+    );
   });
-
- 
 });

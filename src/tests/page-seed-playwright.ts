@@ -9,7 +9,7 @@ type Actionable = (dom: Document, loc: Location, win: Window) => Promise<void>;
 // this is jest-circus run method,. but I can't find an exported typedef.
 type RunType = () => Promise<Array<object>>;
 
-type TestWindow = Window & { TEST_TAB_NAME:string|undefined };
+type TestWindow = Window & { TEST_TAB_NAME: string | undefined };
 
 let SHOULD_CLOSE: number = 1;
 
@@ -39,7 +39,7 @@ export async function page(
   await delay(1000); // or the HTML hasn't parsed in the new window
 
   if (tmp.document && tmp.document.body.length < 200) {
-    domLog( "New browser tab has gone wrong.", false, false);
+    domLog("New browser tab has gone wrong.", false, false);
     log("error", "New browser tab has gone wrong.");
     // To make execution time consistent, this has been disabled
     //    tmp.window.reload();
@@ -91,11 +91,11 @@ export async function wrap(
       false,
     );
   } catch (e) {
-	let prefix="[ERROR]";
-	if(win) { 
-		prefix=win.TEST_TAB_NAME;
-    	win.console.log(" ERROR TRAPT ", e.message, "\n", e.stack);
- 	}
+    let prefix = "[ERROR]";
+    if (win) {
+      prefix = win.TEST_TAB_NAME;
+      win.console.log(" ERROR TRAPT ", e.message, "\n", e.stack);
+    }
     console.log(prefix + " ERROR TRAPT ", e.message, "\n", e.stack);
 
     domLog(
