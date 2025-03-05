@@ -149,11 +149,11 @@ function v(e2, t2, r2) {
     return n("error", "Missing data:" + e3.message), -1;
   }
 }
-function q(e2, t2) {
+function T(e2, t2) {
   const n2 = e2.getBoundingClientRect();
   return [Math.round(t2.scrollY + n2.top), Math.round(t2.scrollX + n2.left)];
 }
-async function T(e2, t2, r2) {
+async function q(e2, t2, r2) {
   try {
     if (!r2.navigator.clipboard)
       throw new Error("No clipboard available");
@@ -312,7 +312,7 @@ function W(e2, t2, n2) {
   }
   r2 = e2.querySelector("#copyURL"), r2 && function(e3, t3, n3, r3, o3) {
     e3.addEventListener("click", async (e4) => (await t3(n3, r3, o3), false)), e3.addEventListener("touch", async (e4) => (await t3(n3, r3, o3), false)), e3.addEventListener("keypress", async (e4) => (await t3(n3, r3, o3), false));
-  }(r2, T, e2, t2, n2), _(e2.querySelector("#popup #sendMasto"), B, e2, t2, n2);
+  }(r2, q, e2, t2, n2), _(e2.querySelector("#popup #sendMasto"), B, e2, t2, n2);
   const o2 = Array.from(e2.querySelectorAll("#shareMenuTrigger, #shareClose"));
   for (const r3 in o2)
     _(o2[r3], H, e2, t2, n2);
@@ -330,13 +330,13 @@ function J(e2, t2, n2, r2) {
 function _(e2, t2, n2, r2, o2) {
   e2.addEventListener("click", (e3) => (t2(e3, n2, r2, o2), false)), e2.addEventListener("touch", (e3) => (t2(e3, n2, r2, o2), false)), e2.addEventListener("keypress", (e3) => (t2(e3, n2, r2, o2), false));
 }
-let K = { referencesCache: "/resource/XXX-references", gainingElement: "#biblio", losingElement: ".addReferences", renumber: 1, forceToEnd: 1, maxDescripLen: 230, maxAuthLen: 65, debug: true, runFetch: h };
-async function Y(t2, r2, i2) {
-  if (K = Object.assign(K, { debug: e(i2) }, t2), 0 === r2.querySelectorAll(a).length)
+let Y = { referencesCache: "/resource/XXX-references", gainingElement: "#biblio", losingElement: ".addReferences", renumber: 1, forceToEnd: 1, maxDescripLen: 230, maxAuthLen: 65, debug: true, runFetch: h };
+async function K(t2, r2, i2) {
+  if (Y = Object.assign(Y, { debug: e(i2) }, t2), 0 === r2.querySelectorAll(a).length)
     return void n("info", "URL '" + i2.pathname + "' isn't marked-up for references, so skipped");
   const s2 = r2.querySelector("#biblio");
-  s2 && s2.setAttribute("style", ""), r2.querySelector(K.gainingElement + " *").replaceChildren(), E(K.gainingElement, '<h2 class="biblioSection">References (for mobile UI)</h2> \n<p>The references embedded in the text are displayed here. </p>', r2);
-  const l2 = await K.runFetch(y(K.referencesCache, i2), false, i2);
+  s2 && s2.setAttribute("style", ""), r2.querySelector(Y.gainingElement + " *").replaceChildren(), E(Y.gainingElement, '<h2 class="biblioSection">References (for mobile UI)</h2> \n<p>The references embedded in the text are displayed here. </p>', r2);
+  const l2 = await Y.runFetch(y(Y.referencesCache, i2), false, i2);
   if (l2.ok && Array.isArray(l2.body)) {
     const e2 = function(e3) {
       let t3 = '<aside role="footnote"><ol class="mobileBiblio">';
@@ -361,22 +361,22 @@ async function Y(t2, r2, i2) {
         let i3 = e3[r3].title + "";
         i3 = i3.replace(".", ".  ");
         let s3 = e3[r3].desc + "";
-        s3.length > K.maxDescripLen && (s3 = s3.substring(0, K.maxDescripLen));
+        s3.length > Y.maxDescripLen && (s3 = s3.substring(0, Y.maxDescripLen));
         let l3 = e3[r3].auth || t3[0];
-        "unknown" === e3[r3].auth && (l3 = t3[0]), l3.length > K.maxAuthLen && (l3 = l3.substring(0, K.maxAuthLen)), n2.push({ auth: l3, date: a2, desc: s3, offset: parseInt(r3, 10), title: i3, url: e3[r3].url });
+        "unknown" === e3[r3].auth && (l3 = t3[0]), l3.length > Y.maxAuthLen && (l3 = l3.substring(0, Y.maxAuthLen)), n2.push({ auth: l3, date: a2, desc: s3, offset: parseInt(r3, 10), title: i3, url: e3[r3].url });
       }
       return n2;
     }(l2.body));
     !function(e3, t3) {
-      if (!K.renumber)
+      if (!Y.renumber)
         return;
-      const n2 = Array.from(t3.querySelectorAll(K.losingElement + " sup a"));
+      const n2 = Array.from(t3.querySelectorAll(Y.losingElement + " sup a"));
       for (let e4 = 0; e4 < n2.length; e4++)
-        n2[e4].textContent = "" + (e4 + 1), K.forceToEnd && (n2[e4].href = "#biblio");
-    }(l2.body, r2), E(K.gainingElement, e2, r2);
+        n2[e4].textContent = "" + (e4 + 1), Y.forceToEnd && (n2[e4].href = "#biblio");
+    }(l2.body, r2), E(Y.gainingElement, e2, r2);
   } else {
     const e2 = '<p class="error">Unable to get bibliographic data for this article.</p>';
-    E(K.gainingElement, e2, r2), n("warn", "Unable to get meta data " + y(K.referencesCache, i2), JSON.stringify(Array.from(l2.headers.entries())));
+    E(Y.gainingElement, e2, r2), n("warn", "Unable to get meta data " + y(Y.referencesCache, i2), JSON.stringify(Array.from(l2.headers.entries())));
   }
 }
 let V = { indexUpdated: 0, gainingElement: "#biblio", referencesCache: "/resource/XXX-references", renumber: 1, maxAuthLen: 65, debug: true, runFetch: h };
@@ -555,7 +555,7 @@ function ae() {
     e2.querySelector("body").setAttribute("style", "--offset-height: 0;");
     const n2 = Array.from(e2.querySelectorAll(".lotsOfWords, .halferWords, .fewWords"));
     for (let e3 = 0; e3 < n2.length; e3++)
-      n2[e3].setAttribute("style", "--offset-height: " + q(n2[e3], t3)[0] + "px;");
+      n2[e3].setAttribute("style", "--offset-height: " + T(n2[e3], t3)[0] + "px;");
   }(r2, a2), function(t3, n2, r3) {
     const o3 = C(t3, n2, r3);
     if (!b(n2.host) && !o3)
@@ -593,7 +593,14 @@ function ae() {
       return;
     const r3 = "body, .annoyingBody { font-family: " + n2.ft + "; font-size: " + n2.fs + "; direction:" + n2.dn + "; }", o3 = e2.createElement("style");
     o3.setAttribute("id", "client-set-css"), o3.innerText = r3, e2.getElementsByTagName("head")[0].append(o3);
-  }(r2), re(r2), x(1040, r2, o2, a2), !C(r2, o2, a2) && "/resource/home" !== o2.pathname && r2.querySelectorAll(".reading").length < 2 && function(t3, r3, o3) {
+  }(r2), re(r2), x(1040, r2, o2, a2), function(e2, t3) {
+    var n2 = false;
+    try {
+      document.createEvent("TouchEvent"), n2 = true;
+    } catch (e3) {
+    }
+    !(t3 && "Gecko" === t3.product && t3.maxTouchPoints > 0) || n2 || (console.warn("You seem to be using librewolf, could you report to me if this is wrong."), e2.body.classList.contains("IAmLibreWolf") || e2.body.classList.add("IAmLibreWolf"));
+  }(r2, a2.navigator), !C(r2, o2, a2) && "/resource/home" !== o2.pathname && r2.querySelectorAll(".reading").length < 2 && function(t3, r3, o3) {
     const a3 = Object.assign({}, { timeFormat: "m", dataLocation: ".blocker", target: "#shareGroup", wordPerMin: 275, codeSelector: "code", refresh: false, debug: e(o3) }, t3), i3 = a3.dataLocation + " img, " + a3.dataLocation + " picture, " + a3.dataLocation + " object", s2 = te(a3.dataLocation, r3);
     if (!s2)
       return;
@@ -630,7 +637,7 @@ function ae() {
     }(null, o2);
     e2 && await I({ group: e2, debug: i2, runFetch: "adjacentRunFetch" in oe ? oe.adjacentRunFetch : h }, r2, o2, a2);
   } else {
-    C(r2, o2, a2) ? await Y({ debug: i2, renumber: 1, runFetch: "mobileRunFetch" in oe ? oe.mobileRunFetch : h }, r2, o2) : await Z({ debug: i2, renumber: 1, runFetch: "desktopRunFetch" in oe ? oe.desktopRunFetch : h }, r2, o2, a2);
+    C(r2, o2, a2) ? await K({ debug: i2, renumber: 1, runFetch: "mobileRunFetch" in oe ? oe.mobileRunFetch : h }, r2, o2) : await Z({ debug: i2, renumber: 1, runFetch: "desktopRunFetch" in oe ? oe.desktopRunFetch : h }, r2, o2, a2);
     const e2 = function(e3, t3 = document) {
       const n2 = t3.querySelector(e3);
       if (!n2)
