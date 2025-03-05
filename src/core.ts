@@ -1,7 +1,6 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
-import type { CoreProps,} from "./all-types";
-import { ENABLE_SELECT } from "./all-types";
+import type { CoreProps } from "./all-types";
 
 import { log, debug } from "./log-services";
 import { runFetch } from "./networking";
@@ -11,12 +10,13 @@ import {
   createAdjacentChart,
 } from "./adjacent";
 import { initMastodon } from "./mastodon";
-import { initTabs } from "./tabs";
+import { initTabs, newInitState } from "./tabs";
 import { isLocal, standardisedWordCount } from "./string-base";
 import {
   isMobile,
   appendIsland,
   applyVolume,
+  isLibreWolf,
   expandDetails,
   duplicateSelection,
 } from "./dom-base";
@@ -28,6 +28,7 @@ import {
   addFancyButtonArrow,
   addBashSamples,
 } from "./effect";
+import { SELF_VERSION, ENABLE_SELECT } from "./immutables";
 import { readingDuration } from "./reading";
 import { modalInit } from "./modal";
 import { applyAppearance } from "./cookies";
@@ -175,6 +176,7 @@ export async function siteCore(
   applyAppearance(dom);
   modalInit(dom);
   expandDetails(1040, dom, loc, win);
+  isLibreWolf(dom, win.navigator);
 
   if (
     !isMobile(dom, loc, win) &&
@@ -192,7 +194,12 @@ export async function siteCore(
       loc,
     );
   }
-  initTabs(dom, loc);
+  if (SELF_VERSION < "1.0.4") {
+    // disabled in that version, as I ported to HTML/CSS
+    initTabs(dom, loc);
+  } else {
+    newInitState(dom, loc);
+  }
 
   if (loc.pathname.match("group-")) {
     const tt = extractGroup(null, loc);

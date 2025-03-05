@@ -221,3 +221,31 @@ export function createKeyEvent(keys:Keyable, ele:HTMLElement, win:Window):Keyboa
   });
   return vnt;
 }
+
+
+/**
+ * getCSSAttr
+ * A util to see CSS values, should be using PresentationAsserts
+// Pseudo elements like '::marker' not supported today
+ 
+ * @param {string} htmlid
+ * @param {string} cssid
+ * @param {Document} dom
+ * @param {Window} win
+ * @public
+ * @returns {string} - I have picked up error states to return ""
+ */
+ export function getCSSAttr(htmlid:string, cssid:string, dom:Document, win:Window):string {
+	try {
+		const CANSEE=dom.querySelector(htmlid);
+		if(!CANSEE) { return ""; }
+
+		const STYLE=win.getComputedStyle(CANSEE, null);
+		return STYLE.getPropertyValue(cssid);
+
+	} catch(e) {
+		return "";
+	}
+}
+
+

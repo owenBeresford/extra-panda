@@ -18,7 +18,7 @@
     "#ignore-this-line": "Edit values in this simple script if you have local security policy",
     "#ignore-this-line2": "NOTE: 'build:docs' after 'build' and 'test:web', as they purge the dist directory",
     "docs": "if [ ! -d ./dist/docs ]; then echo 'Build docs first'; else; node ./tools/doc-server.mjs & fi",
-    "build:tests": "./tools/build-tests.bash",
+    "build:test": "./tools/build-tests.bash",
     "test:web": "if [ ! -d './dist/tests' ]; then echo 'Run build:tests first'; else echo 'If running manually, use CLI flags'; export NODE_ENV=development; node ./tools/tests-browser.mjs; fi"
   },
   "repository": {

@@ -13,6 +13,7 @@ const {
   getArticleWidth,
   applyVolume,
   calcScreenDPI,
+  isLibreWolf,
   screenWidth,
   isFullstack,
   copyURL,
@@ -729,5 +730,14 @@ d
     appendIsland("#point2", str, dom);
     let ret = getArticleWidth(true, ".lotsOfWords", dom, JSDOM1.window);
     assert.equal(ret, -513, "asset #28");
+  });
+
+  it("go 10: isLibreWolf", (context) => {
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+
+    assert.isTrue(
+      false === isLibreWolf(dom, win.navigator),
+      "this JSDOM instance is not librewolf.",
+    );
   });
 });

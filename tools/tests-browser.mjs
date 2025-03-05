@@ -51,6 +51,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const __filename = basename(fileURLToPath(import.meta.url));
 const TESTS = [
   "modal.webtest.mjs",
+  "tabs.webtest.mjs",
   "cookie.webtest.mjs",
   "desktop-biblio.webtest.mjs",
   "dom-base.webtest.mjs",
@@ -62,6 +63,7 @@ const PORT_SERVER = 8081;
 const URL_SERVER = "127.0.0.1";
 const BROWSER = [
   // https://peter.sh/experiments/chromium-command-line-switches/
+  // The above list is assembled from source code analysis, an is updated automatically frequently
   "/snap/bin/chromium",
   // This flag is being ignored
   "--user-data-dir=/tmp/js-test",
@@ -136,6 +138,13 @@ function spinup_server() {
       headers: { "Content-Type": "text/html;charset=UTF-8" },
     });
   });
+  app.get("/home2.html", function (req, res) {
+    res.sendFile(path.join(DIR_FIXTURES, "home2.html"), {
+      dotfiles: "deny",
+      headers: { "Content-Type": "text/html;charset=UTF-8" },
+    });
+  });
+
   app.get("/domposition.html", function (req, res) {
     res.sendFile(path.join(DIR_FIXTURES, "domposition.html"), {
       dotfiles: "deny",
@@ -463,7 +472,7 @@ export async function runTests(tests) {
 
       let d2 = new Date();
       dDelta = d2 - d1;
-      await delay(1000);
+      await delay(100);
     }
 
     if (should_close_tabs(process.argv)) {

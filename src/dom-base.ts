@@ -153,6 +153,40 @@ export function isFullstack(win: Window): boolean {
 }
 
 /**
+ * isLibreWolf
+ * Annoying but necessary hack to detect if this is running in LibreWolf
+ * LibreWolf reports the DPI resolution is twice what the OS thinks it is
+ * Bug not found in recent editions of FF.
+ * For a single hardware, run the attached link in FF, Chrome and Librewolf to see issue outside of my code
+ *  NOT PURE, and I have no non-manual way to show this works. 
+ *  THIS IS EXPECTED TO NEED TO CHANGE ON LATER VERSIONS OF LIBREWOLF, #leSIGH
+
+ * @see [https://www.infobyip.com/detectmonitordpi.php]
+ * @param {Document} dom
+ * @param {Navigator} nav
+ * @public
+ * @returns {boolean}
+ */
+export function isLibreWolf(dom:Document, nav:Navigator):boolean {
+	var canTouch=false;
+	try { document.createEvent("TouchEvent"); canTouch=true; }
+	catch (e) { let noop=1; }
+
+	if( nav && 
+		nav.product==="Gecko" &&
+		nav.maxTouchPoints>0 &&
+		!canTouch
+	 ) {
+		console.warn("You seem to be using librewolf, could you report to me if this is wrong.");
+		if(! dom.body.classList.contains("IAmLibreWolf") ) {
+			dom.body.classList.add("IAmLibreWolf");
+		}
+		return true;
+	}
+	return false;
+}
+
+/**
  * mapAttribute
  * Extract the named limit of the element
  * PURE
@@ -436,6 +470,7 @@ export const TEST_ONLY = {
   applyVolume,
   mapAttribute,
   setIsland,
+  isLibreWolf,
   screenWidth,
   isFullstack,
   isMobile,
