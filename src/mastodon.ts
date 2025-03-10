@@ -51,7 +51,7 @@ function shareMastodon(
   loc: Location,
   win: Window,
 ): boolean {
-  const tmp: HTMLInputElement = dom.querySelector("#mastodonserver");
+  const tmp: HTMLInputElement = dom.querySelector("#mastodonserver") as HTMLInputElement;
   let server = tmp.value;
   const url = tmp.getAttribute("data-url");
   if (server === "" || server === null) {
@@ -134,7 +134,7 @@ export function initMastodon(dom: Document, loc: Location, win: Window): void {
   if (BUFFER) {
     _map4(BUFFER, copyURL, dom, loc, win);
   }
-  _map5(dom.querySelector("#popup #sendMasto"), shareMastodon, dom, loc, win);
+  _map5((dom.querySelector("#popup #sendMasto") as HTMLElement), shareMastodon, dom, loc, win);
   const BUFFER2: Array<HTMLElement> = Array.from(
     dom.querySelectorAll("#shareMenuTrigger, #shareClose"),
   ) as Array<HTMLElement>;
@@ -142,7 +142,7 @@ export function initMastodon(dom: Document, loc: Location, win: Window): void {
   for (const i in BUFFER2) {
     _map5(BUFFER2[i], openShare, dom, loc, win);
   }
-  _map2(dom.querySelector("#hideMasto"), closeMastodon, dom, win);
+  _map2(dom.querySelector("#hideMasto") as HTMLElement, closeMastodon, dom, win);
 }
 
 /**

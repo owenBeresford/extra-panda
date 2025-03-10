@@ -39,10 +39,10 @@ function mapURL(article: string, suffix: string, loc: Location): string {
   //  let t = loc.protocol + "//" + loc.host,
   let t2 = loc.pathname.split("/"),
     t = "",
-    t3 = t2.pop();
+    t3 = t2.pop() as string;
   const tmp = new URLSearchParams(loc.search);
   if (t3 === "group-XXX" && tmp.has("first")) {
-    t3 = tmp.get("first");
+    t3 = tmp.get("first") ?? "logic-error";
   }
   if (suffix) {
     if (tmp.has("first")) {
@@ -99,7 +99,8 @@ function cleanTitle(id: string, group: string): string {
  * @returns {string}
  */
 function extractOABName(url: string): string {
-  return url.split("/").pop();
+  const TMP = url.split("/");
+  return TMP.pop() ?? "";
 }
 
 /**
@@ -118,7 +119,7 @@ function generateGroup(loc: Location): string {
   if (OPTS.group === "XXX") {
     const tmp = new URLSearchParams(loc.search);
     if (tmp.has("first")) {
-      foreward = tmp.get("first");
+      foreward = tmp.get("first") as string;
     }
   }
   if (foreward === "XXX") {
@@ -379,7 +380,7 @@ function updateLabels(gname: string, dom: Document): void {
   ) as Array<HTMLElement>;
 
   if (
-    dat.length &&
+    dat.length && dat[0].textContent &&
     (dat[0].textContent.includes("whatsmyname") ||
       dat[0].textContent.includes("XXX"))
   ) {
@@ -388,7 +389,7 @@ function updateLabels(gname: string, dom: Document): void {
   const dit: Array<HTMLElement> = Array.from(
     dom.querySelectorAll(".adjacentGroup p"),
   ) as Array<HTMLElement>;
-  if (dit.length && dit[0].textContent.includes("XXX")) {
+  if (dit.length && dit[0].textContent && dit[0].textContent.includes("XXX")) {
     dit[0].textContent = "Some similar articles in " + gname;
   }
 }
@@ -411,12 +412,12 @@ export function extractGroup(ele: HTMLElement | null, loc: Location): string {
   }
   const tmp2: URLSearchParams = new URLSearchParams(loc.search);
   if (tmp2.has("first")) {
-    return tmp2.get("first");
+    return tmp2.get("first") ?? "";
   }
 
   // this third option is just a back stop;
   if (ele && ele.getAttribute("data-group")) {
-    let tmp = ele.getAttribute("data-group");
+    let tmp = ele.getAttribute("data-group") ?? "";
     tmp = tmp.trim();
     const tmp2 = tmp.split(",").map((a, b) => {
       return a.trim();
@@ -425,7 +426,7 @@ export function extractGroup(ele: HTMLElement | null, loc: Location): string {
   }
   throw new Error(
     "KLAXON, KLAXON, I do not know how to build an adjacent list for " +
-      loc.href,
+    loc.href,
   );
 }
 

@@ -5,6 +5,7 @@ import type {
   DesktopBiblioPropsDefinite,
   SimpleResponse,
   ReferenceType,
+  NormalisedReference,
 } from "./all-types";
 import { appendIsland, mapAttribute } from "./dom-base";
 import {
@@ -53,7 +54,7 @@ function markAllLinksUnknown(dom: Document, loc: Location): void {
     const txt: string = `Reference popup for link [${1 + i}]\nERROR: No valid biblio file found.\nsite admin, today\nHTTP_ERROR, no valid file called ${naam}-references.json found.\n`;
     WASSUP[i].setAttribute("aria-label", "" + txt);
   }
-  dom.querySelector(ALL_REFERENCE).classList.add(SHOW_ERROR);
+  (dom.querySelector(ALL_REFERENCE) as HTMLElement).classList.add(SHOW_ERROR);
 }
 
 /**
@@ -100,11 +101,11 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
     "Resource doesn't set a description tag.",
     "[No date]",
   ];
-  const out = [];
+  const out: Array<string> = [];
 
   for (let i = 0; i < data.length; i++) {
     if (data[i] === null) {
-      out.push(generateEmpty(i));
+      out.push(generateEmpty(i) as string);
       continue;
     }
 
@@ -126,15 +127,15 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
 
     out.push(
       "Reference popup for link [" +
-        (i + 1) +
-        "]\n\n" +
-        title +
-        "\n" +
-        auth +
-        " " +
-        date +
-        "\n\n" +
-        desc,
+      (i + 1) +
+      "]\n\n" +
+      title +
+      "\n" +
+      auth +
+      " " +
+      date +
+      "\n\n" +
+      desc,
     );
   }
   return out;
@@ -231,8 +232,8 @@ function mapPositions(data: Array<string>, dom: Document, win: Window): void {
     dom.querySelectorAll(ALL_REFERENCE_LINKS),
   );
   if (data.length > REFS.length) {
-    dom.querySelector(ALL_REFERENCE).classList.add(SHOW_ERROR);
-    dom.querySelector("p[role=status]").textContent += " Recompile meta data. ";
+    (dom.querySelector(ALL_REFERENCE) as HTMLElement).classList.add(SHOW_ERROR);
+    (dom.querySelector("p[role=status]") as HTMLElement).textContent += " Recompile meta data. ";
     throw new Error(
       "Too many references in meta-data for this article, pls recompile.",
     );
@@ -247,7 +248,7 @@ function mapPositions(data: Array<string>, dom: Document, win: Window): void {
     j++;
   }
   if (REFS.length > data.length) {
-    dom.querySelector("p[role=status]").textContent += "Recompile meta data";
+    (dom.querySelector("p[role=status]") as HTMLElement).textContent += "Recompile meta data";
 
     let i = data.length;
     while (i < REFS.length) {
@@ -328,8 +329,8 @@ export async function createBiblio(
     log(
       "info",
       "This URL '" +
-        loc.pathname +
-        "' isn't marked-up for references, so skipped",
+      loc.pathname +
+      "' isn't marked-up for references, so skipped",
     );
     return;
   }
@@ -368,7 +369,7 @@ export async function createBiblio(
     mapPositions(cooked, dom, win);
 
     // enable reporting of bad values
-    dom.querySelector(ALL_REFERENCE).classList.add(SHOW_ERROR);
+    (dom.querySelector(ALL_REFERENCE) as HTMLElement).classList.add(SHOW_ERROR);
   }
 }
 

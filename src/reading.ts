@@ -15,7 +15,7 @@ import type { ReadingProps } from "./all-types";
  */
 function extract(get: string, dom: Document): number {
   let ret = 0;
-  dom.querySelectorAll(get).forEach(function (a: HTMLElement) {
+  dom.querySelectorAll(get).forEach(function (a: Element) {
     ret += standardisedWordCount(pullout(a));
   });
   return ret;
@@ -37,7 +37,7 @@ export function readingDuration(
   dom: Document,
   loc: Location,
 ): void {
-  const options = Object.assign(
+  const options: ReadingProps = Object.assign(
     {},
     {
       timeFormat: "m",
@@ -47,7 +47,7 @@ export function readingDuration(
       codeSelector: "code",
       refresh: false,
       debug: debug(loc),
-    },
+    } as ReadingProps,
     opts,
   ) as ReadingProps;
   // I would like to move this into the config
@@ -78,9 +78,9 @@ export function readingDuration(
   }
 
   if (options.refresh) {
-    const tt = dom.querySelector(options.target + " a.reading");
+    const tt = dom.querySelector(options.target + " a.reading") as HTMLElement;
     if (tt) {
-      tt.parentNode.removeChild(tt);
+      (tt.parentNode as HTMLElement).removeChild(tt);
     }
   }
 

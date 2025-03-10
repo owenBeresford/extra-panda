@@ -54,9 +54,12 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
   if (!isLocal(loc.host) && !MOBILE) {
     return;
   }
+  if (isLibreWolf(dom, win.navigator) && !MOBILE) {
+    return;
+  }
 
   if (MOBILE) {
-    dom.querySelector("#sendMasto").textContent = "Share article";
+    (dom.querySelector("#sendMasto") as HTMLElement).textContent = "Share article";
   }
   const html: Array<string> = [
     `<li id="shareClose"> <i class="fa fa-cancel" aria-hidden="true"></i> </li>	<li> <a class="hunchUp" id="copyURL"><i class="fa fa-copy" aria-hidden="true"></i><span class="hunchUp"> copy<br /> URL</span> </a> </li>`,
@@ -71,7 +74,7 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
   );
 
   const ldebug: boolean = !isLocal(loc.host) && !debug(loc);
-  const PARENT: HTMLDivElement = dom.querySelector(".allButtons");
+  const PARENT: HTMLDivElement = dom.querySelector(".allButtons") as HTMLDivElement;
   for (const i in BUFFER) {
     if (bigScreenElements.includes(BUFFER[i].id)) {
       continue;
@@ -110,8 +113,8 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
  * @returns {void}
  */
 function burgerMenu(id: string = ".burgerMenu", dom: Document): void {
-  const t: HTMLElement = dom.querySelector(id);
-  const ico: HTMLElement = dom.querySelector("#pageMenu i");
+  const t: HTMLElement = dom.querySelector(id) as HTMLElement;
+  const ico: HTMLElement = dom.querySelector("#pageMenu i") as HTMLElement;
 
   if (!t.getAttribute("data-state")) {
     t.classList.add("burgerMenuOpen");
@@ -274,7 +277,7 @@ export async function siteCore(
         log(
           "info",
           "Word count of selection: " +
-            standardisedWordCount(duplicateSelection(win)),
+          standardisedWordCount(duplicateSelection(win)),
         );
       }
     });
@@ -307,7 +310,7 @@ export async function siteCore(
  * @returns {number}
  */
 export function hasBeenRun(): number {
-  return OPTS["pageInitRun"];
+  return OPTS["pageInitRun"] as number;
 }
 
 /**

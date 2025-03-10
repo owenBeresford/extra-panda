@@ -57,7 +57,7 @@ function find(ele: HTMLElement, target: string): undefined | HTMLElement {
       return undefined;
     }
 
-    ele = ele.parentElement;
+    ele = ele.parentElement as HTMLElement;
   }
   return ele;
 }
@@ -73,7 +73,7 @@ function find(ele: HTMLElement, target: string): undefined | HTMLElement {
  */
 function HTMLDetailsClick(e: MiscEvent, dom: Document): boolean {
   const ele: HTMLElement = e.target as HTMLElement;
-  const act: HTMLElement = find(ele, "DETAILS");
+  const act: HTMLElement = find(ele, "DETAILS") as HTMLElement;
   if (act && act.tagName === "A") {
     // no preventDefault activity as its an A
     return true;

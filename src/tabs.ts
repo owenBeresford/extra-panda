@@ -1,5 +1,7 @@
 import { log } from "./log-services";
+import type { MultiFuncArg, MiscEvent } from './all-types'; 
 
+let OPTS={};
 /**
  * _map
  * Add several event listeners, just a utility
@@ -40,9 +42,9 @@ function hasTabs(dom: Document): boolean {
 export function newInitState(dom:Document, loc:Location):void {
 	if(!loc.hash) { return; }
 
-	const JUMP=dom.querySelector(loc.hash);
+	const JUMP:HTMLInputElement=dom.querySelector(loc.hash) as HTMLInputElement;
 	if(JUMP && JUMP.tagName==="INPUT" ) {
-		JUMP.checked="checked";
+		JUMP.checked=true;
 	} else {
 		log("error", "failed to find "+loc.hash+" element");
 	}
@@ -51,7 +53,8 @@ export function newInitState(dom:Document, loc:Location):void {
 /**
  * tabInit
  * Assign the tab event handler.
- 
+ * 
+ * @deprecated - I moved this feature to HTML, but initNewState is still needed as CSS can't read URL params
  * @param {Document} dom
  * @param {Location} loc
  * @public
@@ -93,7 +96,7 @@ function tabChange(id: string | MiscEvent, dom: Document): void {
     target = id;
     const thing = dom.querySelector(id) as HTMLElement;
     if (thing && thing.tagName === "SECTION") {
-      click = dom.querySelector('.tabList a[href="' + id + '"] ');
+      click = dom.querySelector('.tabList a[href="' + id + '"] ') as HTMLAnchorElement;
     } else {
       log("error", "what is this? ", thing.outerHTML, thing.tagName);
       throw new Error("Bad call");
