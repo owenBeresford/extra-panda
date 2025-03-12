@@ -16,6 +16,11 @@
 - declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
 - Somehow properly test isLibreWolf
 - Maybe look at Qutebrowser for browser unit-tests, uses less RAM, and is //a recent version// of Chrome project https://qutebrowser.org/doc/install.html#tox
+- Maybe poll for Chrome, and install Qutebrowser if absent. QQ how do I poll in the package.json?
+https://lit.dev/
+https://www.npmjs.com/package/eslint-plugin-no-only-tests
+https://www.npmjs.com/package/eslint-plugin-promise
+https://www.npmjs.com/package/eslint-plugin-n << yes ends in -n
 
 ### Previous Updates
 

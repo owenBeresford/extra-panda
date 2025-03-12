@@ -5,6 +5,7 @@ import jsdoc from 'eslint-plugin-jsdoc';
 import vitest from "eslint-plugin-vitest";
 import jest from "eslint-plugin-jest"; 
 import * as parser from '@typescript-eslint/parser';
+// If appropriate eslint-plugin-cypress
 // eslint-plugin-jsx-a11y, eslint-plugin-vuejs-accessibility, eslint-plugin-react-native-a11y, eslint-plugin-styled-components-a11y 
 // import prettierPlugin from 'eslint-plugin-prettier';  IOIO when stable add this
 

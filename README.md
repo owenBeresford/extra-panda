@@ -173,9 +173,13 @@ Notes:
 - TODO: Make support for win32
 - TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
 
+</details>
+<details>
+<summary> Lists of technical names </summary>
+
 #### Process to add a new webtest \#leSigh
 I ought to improve this process.
-* make src/test/\*webtest.mjs
+* make src/test/\*webtest.mjs not the vitest files which are automated
 * ensure execTest line is on the end of the new test
 * copy config and rename files inside vite.config.*.ts 
 * update build script (the bash file) to include new artefact
@@ -186,9 +190,6 @@ I ought to improve this process.
 * run npm run build:test
 * run npm run test:web
 
-</details>
-<details>
-<summary> Lists of technical names </summary>
 #### values for 'NODE_ENV'
 - development ~ used at runtime, in tests
 - web-test ~ used at compile time, to make tests (affects linked libraries), '''RARE'''
@@ -201,6 +202,8 @@ I ought to improve this process.
 - ''width'' number - adds a fake width to the browser
 - ''mobile'' boolean - force interpretation of current machine as a mobile device. Boolean value. In unit tests this MUST BE SET, as JSdom isn't a phone
 - ''select'' - enable select and word count feature
+- ''dump-css'' number 1 or 2
+- ''aspect''   used with ''dump-css''
 
 #### Known CSS containers that this code processes
 
