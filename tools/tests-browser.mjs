@@ -152,6 +152,14 @@ function spinup_server() {
     });
   });
 
+  app.get("/route-plotting.html", function (req, res) {
+    res.sendFile(path.join(DIR_FIXTURES, "route-plotting.html"), {
+      dotfiles: "deny",
+      headers: { "Content-Type": "text/html;charset=UTF-8" },
+    });
+  });
+
+
   app.get("/asset/ob1-202406.min.mjs", function (req, res) {
     res.sendFile(path.join(DIR_FIXTURES, "ob1-202406.min.mjs"), {
       dotfiles: "deny",
@@ -228,8 +236,6 @@ async function spinup_playwright(debug_url) {
 /**
  * spinup_browser
  * A //fairly// generic shell exec replacement, with a watch on stdout
-// sample:
-// DevTools listening on ws://127.0.0.1:9222/devtools/browser/59522268-ee60-43ba-b277-eab59f915f65
  
  * @param {Array<string>} cmd
  * @param {(str)=>void } onSocket
@@ -408,6 +414,66 @@ async function browser2json(page) {
   throw new Error("Logic error, ask a dev");
 }
 
+async function runExtract(urn) {
+  console.log(
+    "[INFO] You need to catch the file savee-as dialogs,  Opens some tabs in Chrome",
+  );
+	const SCREENS=[
+			'(min-width:1024px)',
+			'(max-width:800px) and (min-resolution:150dpi)', 
+				];
+	let closing=[], CHILD, end0;
+
+    dDelta = 3000;
+    [CHILD, end0] = spinup_server();
+	closing.push(end0);
+	await delay(1000);
+	let LBROWSER=BROWSER;
+	LBROWSER[3]="";
+	LBROWSER.push( 
+			"--ash-host-window-bounds=\"1280x900*1\"", 
+			"--force-media-resolution-height",
+			"--force-media-resolution-width",
+			"--enable-ui-devtools" ,
+			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[0] ,
+				);
+	[CHILD, end0] = await spinup_browser(LBROWSER, function(a) {});
+	closing.push( end0);
+
+	LBROWSER=BROWSER;
+	LBROWSER[3]="";
+	LBROWSER.push( 
+			"--ash-host-window-bounds=\"800x400*2\"", 
+			"--force-media-resolution-height",
+			"--force-media-resolution-width",
+			"--enable-ui-devtools" ,
+			"--enable-tablet-form-factor",
+			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[1] ,
+				);
+	[CHILD, end0] = await spinup_browser(LBROWSER, function(a) {});
+	closing.push( end0);
+
+	LBROWSER=BROWSER;
+	LBROWSER[3]="";
+	LBROWSER.push( 
+			"--ash-host-window-bounds=\"500x350*2\"", 
+			"--force-media-resolution-height",
+			"--force-media-resolution-width",
+			"--enable-ui-devtools" ,
+			"--enable-tablet-form-factor",
+			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[1] ,
+				);
+	[CHILD, end0] = await spinup_browser(LBROWSER, function(a) {});
+	closing.push( end0);
+
+	await delay(300_000);
+	console.log( "[INFO] Closing tabs now" );
+	for(let end of closing) {
+		end();
+	}
+	// should be able to exit here...
+}
+
 /**
  * runTests - a wrapper to make code tidier
  *
@@ -514,17 +580,28 @@ The default behaviour is to close the tabs and browser, as most test execution i
 
 supports:
 	--help        ~ this text
-	--no-close    ~ do //not// close the tabs, or the browser. Use to see what happens.
+	--no-close    ~ do //not// close the tabs, or the browser.  Use to see what happens.
 	--close       ~ for automated use, free() resources after use,  This is the default behaviour.  
+    --extract-css ~ pass in an URN to use
 
 `;
   console.log(TEXT);
   process.exit(0);
 }
 
+if (runDirectly(process)) {
+	if(process.argv.includes('--extract-css')) {
+// option to dump CSS
+// needs to be done interactively, as a human needs to use the file-as dialog
+		runExtract( 
+			process.argv[
+				process.argv.indexOf('--extract-css')+1
+						]);
+
+	} else {
 // this code is a test runner,
 // but is too complex.  So I may need to put a test on it
 // so this is safe to import as it doesn't auto execute
-if (runDirectly(process)) {
-  await runTests(TESTS);
+		await runTests(TESTS);
+	}
 }

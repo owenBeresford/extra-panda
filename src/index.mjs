@@ -1,7 +1,7 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
 
 import { siteCore, hasBeenRun } from "./core";
-import { runFetch } from "./networking";
+import { runFetch, delay } from "./networking";
 import { log } from "./log-services";
 import { appendIsland, isMobile, currentSize, calcScreenDPI } from "./dom-base";
 import { storeAppearance } from "./cookies";
@@ -16,7 +16,8 @@ siteCore({}, document, location, window);
 let PARAMS=new URLSearchParams(location.search);
 if( PARAMS.has('dump-css') ) {
 // I made need to add a thing to get it to execute after local scripting has completed
-	dump_it( await generate_CSS_file(document, window),  parseInt(PARAMS.get('dump-css'), 10), PARAMS.get('aspect')??"width:100%" );
+	await delay(1000);
+	dump_it( await generate_CSS_file(document, window),  parseInt(PARAMS.get('dump-css'), 10), PARAMS.get('aspect')??"(width:100%)" );
 }
 
 export {

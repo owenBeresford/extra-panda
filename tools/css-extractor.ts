@@ -12,6 +12,7 @@ type HashHashHashtable = Record<string, HashHashtable>;
 type ExportMode= 1 | 2; // 1=CSS, 2=JSON
 
 // IOIO XXX Split class from output drivers & probably split class  Map -> Reduce sections
+// thing for units
 
 /**
  * hash2CSSblock
@@ -61,6 +62,8 @@ function hash2CSS(sel: string, src: Hashtable): string {
  * @returns {string}
  */
 function hash2json(src: Hashtable): string {
+	if( Object.keys(src).length===0 ) { return "{}"; }
+
 	let src2:Hashtable={} ;
 	// everything should be a string, so no bare words, so it should be valid JSON.
 	if(typeof (Object.values(src)[0])=== "string") {
@@ -119,7 +122,9 @@ class Extract {
 		null,
 		"before",
 		"after",
-		"marker",
+		":marker",    // this needs double ':', so leads with one 
+		"hover",
+		'focus-within',
 	];
 
 	static CSS_ACTIVE:Array<string> =[
@@ -702,7 +707,7 @@ class Extract {
 
 			for (let j = 0; j < keys.length; j++) {
 				if (keys[j] in buf) {
-					console.info("[SKIP] DUPLICATE element " + list[j]);
+					console.assert(!(keys[j] in buf), "[SKIP] Duplicate element " + list[j]);
 					continue;
 				}
 				if (j === 0) {
@@ -713,7 +718,7 @@ class Extract {
 			}
 		}
 
-		buf=this.filterCommonTags(buf, base);
+		buf=this.filterEmpty(this.filterCommonTags(buf, base));
 		if(location.protocol==="https:") {  
 			// maybe remove this if-trap on production code
 			buf=await this.generateInvert(buf );
@@ -734,14 +739,13 @@ class Extract {
      */
 	 filterCommonTags(buf:HashHashtable, root:string):HashHashtable {
 		let ZERO=this.extractLocal(this.exportClassname(root, true), null);
-console.log("ZERO "+root, ZERO, buf );
 		for(let i in buf) {
 			for(let j of Object.keys( buf[i] )) {
 			/* If trap reads:
 					* current CSS attribute is in the root element
 					* and the selector isn't the root selector
 					* and value of the attribute is the same
-                then delete it, as it will inherit
+               then delete it, as it will inherit
 			*/
 				if( j in ZERO && i!==root && ZERO[j] === buf[i][j] ) {
 					delete buf[i][j];
@@ -750,7 +754,6 @@ console.log("ZERO "+root, ZERO, buf );
 		}
 
 		ZERO=this.extractLocal("body",  null );
-console.log("ZERO 'body'", ZERO, buf );
 		for(let i in buf) {
 			for(let j of Object.keys( buf[i] )) {
 				if( j in ZERO && ZERO[j] === buf[i][j] ) {
@@ -758,7 +761,15 @@ console.log("ZERO 'body'", ZERO, buf );
 				}
 			}
 		}
-console.log("ZERO END", buf );
+		return buf;
+	}
+
+	filterEmpty(buf:HashHashtable):HashHashtable {
+		for(let i of Object.keys(buf)) {
+			if( Object.values(buf[i]).length===0 ) {
+				delete buf[i];
+			}
+		}
 		return buf;
 	}
 
@@ -1074,7 +1085,7 @@ function output(dat: string, fn: string = "generated-sample.css"): void {
 export async function generate_CSS_file(dom: Document, win: Window):Promise<HashHashtable> {
 // items in components should be written as in the HTML, without dots/ hashes
 	let components = ["defaultLinksMenu", "h4_footer", "articleContent", "adjacentGroup", "articleHeader row",];
-	const vendor:Array<string>=[".fa-", ".fa.fa-"];
+	const vendor:Array<string>=[".fa-", ".fa.fa-", ".hljs-"];
 	let buf: HashHashtable = {} as HashHashtable;
 	let extr: Extract = new Extract(dom, win);
 
@@ -1095,13 +1106,16 @@ export function dump_it(css:HashHashtable, mode:ExportMode, pattern:string):void
 	let css1:string;
 	switch(mode) {
 	case 1:
-		css1=hash2CSSblock(css, pattern, "\n"); break;
+		css1=hash2CSSblock(css, pattern, "\n"); 
+		output(css1, "generated-css.css");  
+		break;
 	case 2:
-		css1=hashHash2json(css); break;
+		css1=hashHash2json(css); 
+		output(css1, "generated-css.json");  
+		break;
 	default: 
 		throw new Error("Unknown value "+mode);
 	}
-	output(css1);  
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
