@@ -15,7 +15,7 @@ I'm dragging this group of features kicking and screaming into the century of th
 ### Accounting
 
 - This is an outsize, painful, death march of a rewrite for hygiene and flow improvements.  Every PM would say 'this is Bad Planning', and I agree.  I cannot see any means to split this change into smaller releases.
-- Note, PMs would also be happy that I kept 2010 era code this long, as good return on investment.
+- PMs would also be happy that I kept 2010 era code this long, as good return on investment.
 - I wrote the first edition of these features as I was unable to find anything that existed previously (aside from syntax highlighting).  
 - This has a fairly high test coverage, as the early dev time was after I had done a long run, and was then sat on a train ~ sometimes with the sun in my eyes.   Multiple train trips.  I am testing-in to get improved confidence and adding types as a further safety.   Factoid: today, 73% of the code volume is tests. 
 - Some previous feedback: "your history/commits are messy".  True, its messier than I would like.  I can delete my Git history from any work I do for you if you wish ~ but my Dyslexia is permanent.  This project is building towards good Software engineering code from a lower jQuery baseline.  As the only version that a third party would use is the **complete copy** I lean towards a complete audit.   
@@ -140,10 +140,10 @@ Notes:
   - second bundle (smaller stdlib): 670KB
   - above but with with minify: 361KB
   - above but with dead code removal: 250KB
-- NEW TECH (ignoring unit tests)::
-  - complete build: 75KB flat files
+- initial NEW TECH (ignoring unit tests)::
+  - complete build: 75KB flat files             >50% volume is comment headers
   - above with with minification: 23KB
-  - Note dead code removal didn't make any impact here, as tree shaking works properly now
+  - Dead code removal didn't make any impact here, as tree shaking works properly now
   - above with gzip: 9KB   
     - UPDATE: due to further features, I have crept over the 10k boundary &lt;Meme: "so it begins"&gt;
   - I think I have perfect feature match, and new solution is 4% of volume of previous solution. UPDATE 6% in 2025
@@ -153,7 +153,7 @@ Notes:
 <summary> Engineering details </summary>
 
 #### Outsize late in project commit
-- The goal of this change is testing HTTPS only features (eg copy-and-paste) in a unit test AND testing CSS (eg z-index) features.   I never expected this thing to be useful in the longer term, just I couldn't find how to use some Vitest features. UPDATE: as of 2025, the docs are updated, or a feature finished, or I found the information, in 2024 I was unable to find "how do I get a page object".
+- The goal of this change is testing HTTPS only features (eg copy-and-paste) in a unit test AND testing CSS (eg z-index) features.   I never expected this thing to be useful in the longer term, just I couldn't find how to use some Vitest features. UPDATE: as of 2025, the docs are updated, or a feature finished, or I found the information, in 2024 I was unable to find "how do I get a page object" (I also use playwright, but that info isn't useful here).  This is a two-three day hack.
 - **This code isn't a reference, just due process on (boring) website features **   
 - Started to build another test harness, to be able to run Vitest in a browser.
    - Have new smol webserver in Express + HTTPS.
