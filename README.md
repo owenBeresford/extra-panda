@@ -153,7 +153,8 @@ Notes:
 <summary> Engineering details </summary>
 
 #### Outsize late in project commit
-- The goal of this is testing HTTPS only features (eg copy-and-paste) in a unit test AND testing CSS (eg z-index) features.
+- The goal of this change is testing HTTPS only features (eg copy-and-paste) in a unit test AND testing CSS (eg z-index) features.   I never expected this thing to be useful in the longer term, just I couldn't find how to use some Vitest features. UPDATE: as of 2025, the docs are updated, or a feature finished, or I found the information, in 2024 I was unable to find "how do I get a page object".
+- **This code isn't a reference, just due process on (boring) website features **   
 - Started to build another test harness, to be able to run Vitest in a browser.
    - Have new smol webserver in Express + HTTPS.
    - Have a fresh captive version of Chrome.
