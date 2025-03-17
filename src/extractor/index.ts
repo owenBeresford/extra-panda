@@ -14,7 +14,7 @@ import { ExtractMap } from './extract-map';
  */
 export async function generate_CSS_file(dom: Document, win: Window): Promise<HashHashtable> {
     // items in components should be written as in the HTML, without dots/ hashes
-    let components = ["defaultLinksMenu", "h4_footer", "articleContent", "adjacentGroup", "articleHeader row",];
+    let components = ["defaultLinksMenu", "bibbles", "h4_footer", "articleContent", "adjacentGroup", "articleHeader row",];
     const vendor: Array<string> = [".fa-", ".fa.fa-", ".hljs-"];
     let buf: HashHashtable = {} as HashHashtable;
     let extr: ExtractMap = new ExtractMap(new ExtractReduce(dom, win), dom, win);

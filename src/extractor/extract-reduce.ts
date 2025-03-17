@@ -19,7 +19,6 @@ export class ExtractReduce {
         this.#win = win;
      }
 
-
   /**
      * filterCommonTags
      * For CSS attributes present on the body element, don't repeat.  Edits param
