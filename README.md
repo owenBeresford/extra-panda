@@ -153,10 +153,10 @@ Notes:
 <summary> Engineering details </summary>
 
 #### Outsize late in project commit
-- The goal of this change is testing HTTPS only features (eg copy-and-paste) in a unit test AND testing CSS (eg z-index) features.   I never expected this thing to be useful in the longer term, just I couldn't find how to use some Vitest features. UPDATE: as of 2025, the docs are updated, or a feature finished, or I found the information, in 2024 I was unable to find "how do I get a page object" (I also use playwright, but that info isn't useful here).  This is a two-three day hack.
+- The goal of this change is testing HTTPS only features (eg copy-and-paste) in a unit test AND testing CSS (eg z-index) features.   I never expected this thing to be useful in the longer term, just I couldn't find how to use some Vitest features.   UPDATE: as of 2025, the docs are updated, or a feature finished, or I found the information, in 2024 I was unable to find "how do I get a Page object in Vitest" (I also use playwright, but that architecture info isn't useful here).   This is a two-three day hack.
 - **This code isn't a reference, just due process on (boring) website features **   
 - Started to build another test harness, to be able to run Vitest in a browser.
-   - Have new smol webserver in Express + HTTPS.
+   - Have new smol webserver in Express + HTTPS - this is NOT what I mean when I say I build internal services in Node as its lower initial dev-cost, this is just a test rig.   Never let this use an externally accessible IP.
    - Have a fresh captive version of Chrome.
    - Create "fake Vitest output" in the new script so can be integrated with other scripts into larger testing runtime.
 - Iterate second build step to achieve this, obviously can't send TS to browser.

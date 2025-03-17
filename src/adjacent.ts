@@ -308,7 +308,7 @@ function convert2HTML(list: Array<NormalisedReference>, gname: string): string {
     html +=
       '<li><a class="adjacentItem button" href="/resource/group-XXX?first=' +
       gname +
-      '" aria-label="This article lists all items in worklog group."> See full list </a></li></ul>';
+      '" aria-label="This article lists all items in '+gname+' group."> See full list </a></li></ul>';
   }
   return html;
 }
