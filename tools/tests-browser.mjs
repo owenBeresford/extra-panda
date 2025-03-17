@@ -78,7 +78,9 @@ const BROWSER = [
   "--disable-popup-blocking",
   "--disable-login-animations",
   "--disable-default-apps",
+  "--allow-running-insecure-content",
   "--unsafely-disable-devtools-self-xss-warnings",
+  // --bwsi 
   // lots of excited press about this 3 y ago,
   // setting this stops the JS executing
   //	"--auto-open-devtools-for-tabs",
@@ -158,7 +160,6 @@ function spinup_server() {
       headers: { "Content-Type": "text/html;charset=UTF-8" },
     });
   });
-
 
   app.get("/asset/ob1-202406.min.mjs", function (req, res) {
     res.sendFile(path.join(DIR_FIXTURES, "ob1-202406.min.mjs"), {
@@ -414,6 +415,8 @@ async function browser2json(page) {
   throw new Error("Logic error, ask a dev");
 }
 
+// https://superuser.com/questions/1139259/how-to-adjust-ui-scaling-for-chrome
+// https://stackoverflow.com/questions/62001125/chrome-dev-tools-simulating-different-resolution-pc-screen
 async function runExtract(urn) {
   console.log(
     "[INFO] You need to catch the file savee-as dialogs,  Opens some tabs in Chrome",
@@ -435,6 +438,9 @@ async function runExtract(urn) {
 			"--force-media-resolution-height",
 			"--force-media-resolution-width",
 			"--enable-ui-devtools" ,
+			"--alt-high-dpi-setting=96",
+			"--high-dpi-support=1",
+			"--force-device-scale-factor=1",
 			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[0] ,
 				);
 	[CHILD, end0] = await spinup_browser(LBROWSER, function(a) {});
@@ -444,10 +450,13 @@ async function runExtract(urn) {
 	LBROWSER[3]="";
 	LBROWSER.push( 
 			"--ash-host-window-bounds=\"800x400*2\"", 
+			"--ash-no-nudges",
 			"--force-media-resolution-height",
 			"--force-media-resolution-width",
 			"--enable-ui-devtools" ,
 			"--enable-tablet-form-factor",
+			"--high-dpi-support=1",
+			"--force-device-scale-factor=2.71",
 			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[1] ,
 				);
 	[CHILD, end0] = await spinup_browser(LBROWSER, function(a) {});
@@ -456,11 +465,14 @@ async function runExtract(urn) {
 	LBROWSER=BROWSER;
 	LBROWSER[3]="";
 	LBROWSER.push( 
-			"--ash-host-window-bounds=\"500x350*2\"", 
+			"--ash-host-window-bounds=\"500x350*3.5\"", 
+			"--ash-no-nudges",
 			"--force-media-resolution-height",
 			"--force-media-resolution-width",
 			"--enable-ui-devtools" ,
 			"--enable-tablet-form-factor",
+			"--high-dpi-support=1",
+			"--force-device-scale-factor=3.5",
 			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[1] ,
 				);
 	[CHILD, end0] = await spinup_browser(LBROWSER, function(a) {});
