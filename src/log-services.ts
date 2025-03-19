@@ -60,7 +60,9 @@ function enableLogCounter(cons: BetterConsole): VisabiltityToLogging {
  */
 export function log(typ: string, ...inputs: string[]): void {
   localConsole.LOG_USAGE++;
-  if (typ in console) {
+  if( typ === "assert") {
+	localConsole.assert(...inputs);
+  } else if (typ in console) {
     localConsole[typ](`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
   } else {
     localConsole.log(`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
