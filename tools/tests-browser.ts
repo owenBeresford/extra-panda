@@ -31,22 +31,24 @@ Some extra tests that do not run in Node
       // https://playwright.dev/docs/api/class-framelocator#frame-locator-get-by-text
 // node_modules/playwright/types/*
 */
-
-import * as PROC  from "node:child_process";
-import path from "node:path";
-import URL from "node:url";
-import fs from "node:fs";
-import https from "https";
-
 import type { ServerOptions, Server } from "https";
 import type { Express, Request as ERequest, Response as EResponse } from 'express';
 import type { Page } from 'playwright';
 import type { NodeJS } from '@types/node';
 import type { Circus, Global } from '@jest/types';
 
-import { chromium } from "playwright";
-import { expect } from "@playwright/test";
-import express from "express";
+const path = await import( "node:path");
+const URL = await import ("node:url");
+const __dirname = path.dirname(URL.fileURLToPath(import.meta.url));
+const __filename = path.basename(URL.fileURLToPath(import.meta.url));
+
+const PROC = await import("node:child_process");
+const fs = await import("node:fs");
+const https = await import("https");
+const express = await import("express");
+
+const { chromium } = await import("playwright");
+const { expect } = await import( "@playwright/test");
 
 console.log("looking for __dirname", process.version, import.meta, process.env.PWD );
 /**
@@ -56,9 +58,9 @@ There is only 1 cmd arg to this script at present.
 If more are added, see command-line-args
 @see [https://www.npmjs.com/package/command-line-args]
 */
-const __dirname = path.dirname(URL.fileURLToPath(import.meta.url));
-const __filename = path.basename(URL.fileURLToPath(import.meta.url));
-globals.__dirname=__dirname;
+//iconst __dirname = path.dirname(URL.fileURLToPath(import.meta.url));
+//const __filename = path.basename(URL.fileURLToPath(import.meta.url));
+//globals.__dirname=__dirname;
 
 const TESTS:Readonly<Array<string>> = [
   "modal.webtest.mjs", // extend...
@@ -464,6 +466,11 @@ async function runExtract(urn:string):Promise<void> {
 	let LBROWSER=[...BROWSER];
 	LBROWSER[3]="";
 	LBROWSER.push( 
+// https://developer.chrome.com/docs/devtools/device-mode/
+           "--auto-open-devtools-for-tabs",
+// try CTRL+SHIFT+M. to load the  "toggle device toolbar"
+// https://github.com/GoogleChrome/lighthouse/blob/ff41f6a289a3171ed0ec70c389de0181d8e59ca2/lighthouse-core/lib/emulation.js#L76-L80
+
 			"--ash-host-window-bounds=\"1280x900*1\"", 
 			"--force-media-resolution-height",
 			"--force-media-resolution-width",
@@ -471,7 +478,7 @@ async function runExtract(urn:string):Promise<void> {
 			"--alt-high-dpi-setting=96",
 			"--high-dpi-support=1",
 			"--force-device-scale-factor=1",
-			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[0] ,
+			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[0]+"&force-mobile=1" ,
 				);
 	[CHILD, end0] = await spinup_browser(LBROWSER, function(a:any):void {});
 	closing.push( end0);
@@ -479,6 +486,12 @@ async function runExtract(urn:string):Promise<void> {
 	LBROWSER=[...BROWSER];
 	LBROWSER[3]="";
 	LBROWSER.push( 
+// https://developer.chrome.com/docs/devtools/device-mode/
+           "--auto-open-devtools-for-tabs",
+// try CTRL+SHIFT+M. to load the  "toggle device toolbar"
+// https://github.com/GoogleChrome/lighthouse/blob/ff41f6a289a3171ed0ec70c389de0181d8e59ca2/lighthouse-core/lib/emulation.js#L76-L80
+
+
 			"--ash-host-window-bounds=\"800x400*2\"", 
 			"--ash-no-nudges",
 			"--force-media-resolution-height",
@@ -487,7 +500,7 @@ async function runExtract(urn:string):Promise<void> {
 			"--enable-tablet-form-factor",
 			"--high-dpi-support=1",
 			"--force-device-scale-factor=2.71",
-			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[1] ,
+			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[1]+"&force-mobile=1",
 				);
 	[CHILD, end0] = await spinup_browser(LBROWSER, function(a:any):void {});
 	closing.push( end0);
@@ -495,6 +508,7 @@ async function runExtract(urn:string):Promise<void> {
 	LBROWSER=[...BROWSER];
 	LBROWSER[3]="";
   LBROWSER.push( 
+           "--auto-open-devtools-for-tabs",
 			"--ash-host-window-bounds=\"500x350*3.5\"", 
 			"--ash-no-nudges",
 			"--force-mediconstesolution-height",
@@ -503,7 +517,7 @@ async function runExtract(urn:string):Promise<void> {
 			"--enable-tabletconstrm-factor",
 			"--high-dpi-support=1",
 			"--force-device-scale-factor=3.5",
-			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[1] ,
+			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[1]+"&force-mobile=1",
 				);
 	[CHILD, end0] = await spinup_browser(LBROWSER, function(a:any):void {});
 	closing.push( end0);
