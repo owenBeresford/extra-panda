@@ -1,6 +1,7 @@
 import type { Pseudable, Hashtable, HashHashtable, HashHashHashtable, ExportMode } from './types';
 import { hash2json } from './output-formats';
 import { ExtractReduce } from './extract-reduce';
+import { log, changeCount_simple } from "../log-services";
 
 export class ExtractMap {
     #dom: Document;
@@ -603,7 +604,7 @@ export class ExtractMap {
 
             for (let j = 0; j < keys.length; j++) {
                 if (keys[j] in buf) {
-                    console.assert(!(keys[j] in buf), "[SKIP] Duplicate element " + list[j]);
+                    log('assert', !(keys[j] in buf), "[SKIP] Duplicate element " + list[j]);
                     continue;
                 }
                 if (j === 0) {
@@ -646,12 +647,17 @@ export class ExtractMap {
             list.push(...tmp);
             tmp.map(function (a2, b2) { list.push(SELF.treeWalk(a2, a as HTMLElement, base)); });
         });
+
+		log("warn", "initial select found "+list.length);
+    	changeCount_simple(list, "");
         // likely to be duplicates of a class usage 
         let swap = new Set(list);
+        list= Array.from(swap);
+    	changeCount_simple(list, "taggedElements[dedup]");
 
         // maybe other elements after this,,.	
         // maybe manual logged from mouse events?
-        return Array.from(swap);
+        return list;
     }
 
     /**
@@ -671,12 +677,16 @@ export class ExtractMap {
       */
     extractLocal(sel: string, pseud: Pseudable = null): Hashtable {
         const TARGET = this.#dom.querySelector(sel) as Element;
-        console.assert(TARGET !== null, "Value passed '" + sel + "' into localExtract doesnt work in current doc.");
+        if(TARGET === null) {
+			log("assert", TARGET!==null, "Value passed '" + sel + "' into localExtract doesnt work in current doc.");
+			return {};
+		}
         const PARENT: Element = TARGET.parentNode as Element;
         const STYLES = this.#win.getComputedStyle(TARGET, pseud);
         const PSTYLES = this.#win.getComputedStyle(PARENT, pseud);
         let hash: Hashtable = {} as Hashtable;
 
+    	changeCount_simple([], "");
         for (let i = 0; i < STYLES.length; i++) {
             if (this.isUsefulCSSAttribute(
                 STYLES.item(i),
@@ -686,6 +696,7 @@ export class ExtractMap {
                 hash[STYLES.item(i)] = STYLES.getPropertyValue(STYLES.item(i));
             }
         }
+    	changeCount_simple(hash, "extractLocal["+sel+"]");
         return hash;
     }
 
@@ -739,10 +750,10 @@ export class ExtractMap {
      * @returns {HashHashtable }
      */
     mapPseudo(sel: string): HashHashtable {
-        console.assert(sel.trim() !== ".", "bad data extaction, got '.'");
+        log("assert", (sel.trim() !== "."), "Bad data extaction, got '.'");
         let hash: HashHashtable = {} as HashHashtable;
         const TMP: HTMLElement = this.#dom.querySelector(sel) as HTMLElement;
-        console.assert(TMP !== null, "bad data extraction for " + sel);
+        log("assert", (TMP !== null), "Bad data extraction for " + sel);
         for (let i in ExtractMap.PSEUDO) {
             if (this.hasStyles(sel, ExtractMap.PSEUDO[i])) {
                 let nom = sel;
@@ -809,7 +820,7 @@ export class ExtractMap {
     // works unless there are ids in the CSS
  
      * @param {string} cls
-     * @param {boolean =false } nest
+     * @param {boolean =false } nest - the nest flag makes the result include spaces, so be a more complex selector
      * @public
      * @returns {string}
      */

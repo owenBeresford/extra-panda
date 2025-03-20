@@ -1,6 +1,7 @@
 import type { Pseudable, Hashtable, HashHashtable, HashHashHashtable, ExportMode } from './types';
 import { hash2json } from './output-formats';
 import { ExtractMap } from './extract-map';
+import { log, debug, changeCount_simple  } from "../log-services";
  
 export class ExtractReduce {
     #dom:Document;
@@ -31,36 +32,51 @@ export class ExtractReduce {
   filterCommonTags(buf:HashHashtable, root:string, src:ExtractMap):HashHashtable {
     let ZERO=src.extractLocal(src.exportClassname(root, true), null);
     for(let i in buf) {
+    	changeCount_simple(buf[i], "");
         for(let j of Object.keys( buf[i] )) {
         /* If trap reads:
                 * current CSS attribute is in the root element
                 * and the selector isn't the root selector
                 * and value of the attribute is the same
-           then delete it, as it will inherit
+           then delete it, as the value will inherit
         */
             if( j in ZERO && i!==root && ZERO[j] === buf[i][j] ) {
                 delete buf[i][j];
             }
         }
+    	changeCount_simple(buf[i], "filterCommonTags["+root+"] - "+i);
     }
 
     ZERO=src.extractLocal("body",  null );
     for(let i in buf) {
+    	changeCount_simple(buf[i], "");
         for(let j of Object.keys( buf[i] )) {
             if( j in ZERO && ZERO[j] === buf[i][j] ) {
                 delete buf[i][j];
             }
         }
+    	changeCount_simple(buf[i], "filterCommonTags[body] - "+i);
     }
+	
     return buf;
 }
 
+/**
+ * filterEmpty
+ * Remove CSS names that have no attributes in them, as that is noise
+ 
+ * @param {HashHashtable} buf
+ * @public
+ * @return {HashHashtable}
+ */
 filterEmpty(buf:HashHashtable):HashHashtable {
+    changeCount_simple(buf, ""); 
     for(let i of Object.keys(buf)) {
         if( Object.values(buf[i]).length===0 ) {
             delete buf[i];
         }
     }
+    changeCount_simple(buf, "filterEmpty");
     return buf;
 }
 
@@ -73,12 +89,19 @@ filterEmpty(buf:HashHashtable):HashHashtable {
  * @returns {string}
  */
 async generateKey(val:Hashtable ):Promise<string> {
-    let t1= JSON.stringify(val);
-    const encoder = new TextEncoder();
-    const data = encoder.encode(t1);
+	try {
+	    let t1= JSON.stringify(val);
+	    const encoder = new TextEncoder();
+	    const data = encoder.encode(t1);
     
-    let t2= await this.#win.crypto.subtle.digest("SHA-1", data);
-    return String.fromCharCode.apply(null, Array.from(new Uint8Array(t2)));
+	    let t2= await this.#win.crypto.subtle.digest("SHA-1", data);
+	    return String.fromCharCode.apply(null, Array.from(new Uint8Array(t2)));
+	} catch(e) {
+		const CATCHES_ARE_VERY_ANNOYING_IN_TYPESCRIPT=e as Error; // worse than Java
+		log("error",  "Unable to make a hash?? " + CATCHES_ARE_VERY_ANNOYING_IN_TYPESCRIPT.message,
+						CATCHES_ARE_VERY_ANNOYING_IN_TYPESCRIPT.stack);
+		return "";
+	}
  }
 
 /**
@@ -90,6 +113,7 @@ async generateKey(val:Hashtable ):Promise<string> {
  * @returns {HashHashtable} 
  */
 async generateInvert(buf:HashHashtable ):Promise<HashHashtable> {
+    changeCount_simple(buf, "");
     let inv:Hashtable={} as Hashtable;
     for(let i in buf) {
         let key=await this.generateKey(buf[i]);
@@ -102,6 +126,7 @@ async generateInvert(buf:HashHashtable ):Promise<HashHashtable> {
             delete buf[i];
         }
     }
+    changeCount_simple(buf, "generateInvert");
     return buf;
 }
 
@@ -115,6 +140,7 @@ async generateInvert(buf:HashHashtable ):Promise<HashHashtable> {
  * @returns {Array<string>}
  */
 externalFilter(raw:Array<string>, prefixes:Array<string>):Array<string> {
+    changeCount_simple(raw, "");
     let ret:Array<string>=[];
     for(let i=0; i<raw.length; i++) {
         let found=false;
@@ -125,6 +151,7 @@ externalFilter(raw:Array<string>, prefixes:Array<string>):Array<string> {
             } );
         if(!found) { ret.push(raw[i]); }
     }
+    changeCount_simple(ret, "externalFilter");
     return ret;
 }
 
