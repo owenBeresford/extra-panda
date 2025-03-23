@@ -164,11 +164,11 @@ function O(e2, t2, n2) {
     return o("error", "Missing data:" + e3.message), -1;
   }
 }
-function j(e2, t2) {
+function T(e2, t2) {
   const n2 = e2.getBoundingClientRect();
   return [Math.round(t2.scrollY + n2.top), Math.round(t2.scrollX + n2.left)];
 }
-async function T(e2, t2, n2) {
+async function j(e2, t2, n2) {
   try {
     if (!n2.navigator.clipboard)
       throw new Error("No clipboard available");
@@ -216,8 +216,8 @@ function X(e2, t2) {
   let a2 = 0, s2 = 0;
   return s2 = "string" == typeof i2 ? parseInt(i2, 10) : i2, a2 = "string" == typeof o2 ? parseInt(o2, 10) : o2, [a2, s2];
 }
-let M = { name: "", meta: "", perRow: 10, titleLimit: 40, rendered: false, iteration: 0, group: "system", count: 1, debug: true, runFetch: g };
-function P(e2, t2, n2) {
+let P = { name: "", meta: "", perRow: 10, titleLimit: 40, rendered: false, iteration: 0, group: "system", count: 1, debug: true, runFetch: g };
+function M(e2, t2, n2) {
   let r2 = "", o2 = n2.pathname.split("/").pop();
   const i2 = new URLSearchParams(n2.search);
   return "group-XXX" === o2 && i2.has("first") && (o2 = i2.get("first") ?? "logic-error"), t2 ? i2.has("first") ? r2 += n2.pathname.replace("group-XXX", o2 + "-meta") : r2 += n2.pathname.replace(o2, e2 + "-meta") : r2 += n2.pathname.replace(o2, e2), r2 += n2.search + n2.hash, r2;
@@ -233,8 +233,8 @@ function F(e2) {
   return e2.split("/").pop() ?? "";
 }
 function z(e2) {
-  let t2 = M.group;
-  if ("XXX" === M.group) {
+  let t2 = P.group;
+  if ("XXX" === P.group) {
     const n2 = new URLSearchParams(e2.search);
     n2.has("first") && (t2 = n2.get("first"));
   }
@@ -243,18 +243,18 @@ function z(e2) {
   return t2;
 }
 function W(e2, t2, n2, r2, o2) {
-  return M.name === "group-" + M.group || (t2 === e2 && (o2 = r2), r2 > 0 && o2 > 0 && n2 > 0 && r2 >= n2 - 1 && (r2 = 0)), [o2, n2, r2];
+  return P.name === "group-" + P.group || (t2 === e2 && (o2 = r2), r2 > 0 && o2 > 0 && n2 > 0 && r2 >= n2 - 1 && (r2 = 0)), [o2, n2, r2];
 }
 async function B(t2, n2, r2, i2) {
-  if (M = Object.assign(M, { name: y(r2), meta: P(M.group, ".json", r2), debug: e(r2), runFetch: g }, t2), "system" === M.group)
+  if (P = Object.assign(P, { name: y(r2), meta: M(P.group, ".json", r2), debug: e(r2), runFetch: g }, t2), "system" === P.group)
     throw new Error("Must set the article group, and not to 'system'.");
-  M.meta = P(M.group, ".json", r2);
-  const a2 = "group-XXX" === M.name || M.name === "group-" + M.group, s2 = "group" + M.group;
+  P.meta = M(P.group, ".json", r2);
+  const a2 = "group-XXX" === P.name || P.name === "group-" + P.group, s2 = "group" + P.group;
   if (N(n2, r2, i2) && !a2)
     1 === n2.querySelectorAll(".adjacentGroup .adjacentItem").length && (n2.querySelector(".adjacentGroup p").style.display = "none"), E("#" + s2, "<p>As mobile View, use the full page link to the left</p>", n2);
   else {
-    const e2 = await M.runFetch(M.meta, false, r2);
-    if (!e2.ok || !Array.isArray(e2.body))
+    const e2 = await P.runFetch(P.meta, true, r2);
+    if (!("ok" in e2) || !e2.ok || !Array.isArray(e2.body))
       return o("info", "There doesn't seem to be a group meta data file."), void E("#" + s2, "<p>Internal error. Hopefully this will be fixed shortly. </p>", n2);
     if (a2) {
       const t3 = function(e3, t4, n3, r3, o2) {
@@ -274,17 +274,17 @@ async function B(t2, n2, r2, i2) {
       }(z(r2), n2);
     } else {
       const t3 = function(e3) {
-        let t4 = -1, n3 = M.perRow, r3 = [], o2 = 0, i3 = 0;
-        for ([t4, n3, o2] = W(F(e3[0].url), M.name, e3.length, o2, t4); o2 < e3.length; o2++) {
+        let t4 = -1, n3 = P.perRow, r3 = [], o2 = 0, i3 = 0;
+        for ([t4, n3, o2] = W(F(e3[0].url), P.name, e3.length, o2, t4); o2 < e3.length; o2++) {
           const a3 = e3[o2].title;
           if (a3 && t4 >= 0 && n3 > 0) {
-            r3[i3] = { auth: e3[o2].auth, date: L(e3[o2].date, "[Unknown time]", true), url: e3[o2].url, offset: o2, title: e3[o2].title.substr(0, M.titleLimit), desc: e3[o2].desc }, a3.length > M.titleLimit && (r3[i3].title += "...");
+            r3[i3] = { auth: e3[o2].auth, date: L(e3[o2].date, "[Unknown time]", true), url: e3[o2].url, offset: o2, title: e3[o2].title.substr(0, P.titleLimit), desc: e3[o2].desc }, a3.length > P.titleLimit && (r3[i3].title += "...");
             const t5 = e3[o2].desc;
             t5.length > 235 && (r3[i3].desc = t5.substr(0, 235) + "..."), n3--, i3++;
           }
-          if ([t4, n3, o2] = W(F(e3[o2].url), M.name, n3, o2, t4), r3.length === e3.length)
+          if ([t4, n3, o2] = W(F(e3[o2].url), P.name, n3, o2, t4), r3.length === e3.length)
             break;
-          if (r3.length >= M.perRow)
+          if (r3.length >= P.perRow)
             break;
         }
         return r3;
@@ -306,7 +306,7 @@ function H(e2, t2, n2, r2) {
   const o2 = t2.querySelector("#shareMenu");
   return o2 && !o2.classList.replace("shareMenuOpen", "shareMenu") && o2.classList.replace("shareMenu", "shareMenuOpen"), false;
 }
-function K(e2, t2, n2, r2) {
+function $(e2, t2, n2, r2) {
   const i2 = t2.querySelector("#mastodonserver");
   let a2 = i2.value;
   const s2 = i2.getAttribute("data-url");
@@ -316,33 +316,33 @@ function K(e2, t2, n2, r2) {
     throw Error("Test passed, for " + a2);
   return t2.querySelector("#popup").close(), r2.open(a2, "_blank"), N(t2, n2, r2) && H(0, t2, n2, r2), false;
 }
-function $(e2, t2, n2) {
+function J(e2, t2, n2) {
   let r2 = e2.querySelector("#navBar #mastoTrigger");
   if (!r2)
     return;
-  if (_(r2, J, e2, n2), r2 = e2.querySelector("#shareGroup .allButtons #mastoTrigger"), r2) {
+  if (K(r2, G, e2, n2), r2 = e2.querySelector("#shareGroup .allButtons #mastoTrigger"), r2) {
     const t3 = function(e3, t4 = "display", n3 = window) {
       let r3 = "";
       e3 && e3.computedStyleMap ? r3 = e3.computedStyleMap()[t4] : e3 && (r3 = n3.getComputedStyle(e3, null).getPropertyValue(t4));
       return r3;
     }(r2, "display", n2);
-    t3 && "none" !== t3 && (r2.addEventListener("click", (t4) => J(t4, e2, n2)), r2.addEventListener("keypress", (t4) => J(t4, e2, n2)));
+    t3 && "none" !== t3 && (r2.addEventListener("click", (t4) => G(t4, e2, n2)), r2.addEventListener("keypress", (t4) => G(t4, e2, n2)));
   }
   r2 = e2.querySelector("#copyURL"), r2 && function(e3, t3, n3, r3, o3) {
     e3.addEventListener("click", async (e4) => (await t3(n3, r3, o3), false)), e3.addEventListener("touch", async (e4) => (await t3(n3, r3, o3), false)), e3.addEventListener("keypress", async (e4) => (await t3(n3, r3, o3), false));
-  }(r2, T, e2, t2, n2), V(e2.querySelector("#popup #sendMasto"), K, e2, t2, n2);
+  }(r2, j, e2, t2, n2), V(e2.querySelector("#popup #sendMasto"), $, e2, t2, n2);
   const o2 = Array.from(e2.querySelectorAll("#shareMenuTrigger, #shareClose"));
   for (const r3 in o2)
     V(o2[r3], H, e2, t2, n2);
-  _(e2.querySelector("#hideMasto"), G, e2, n2);
-}
-function J(e2, t2, n2) {
-  return R(n2) && t2.querySelector("#popup").showModal(), t2.querySelector("#popup input").focus(), false;
+  K(e2.querySelector("#hideMasto"), _, e2, n2);
 }
 function G(e2, t2, n2) {
+  return R(n2) && t2.querySelector("#popup").showModal(), t2.querySelector("#popup input").focus(), false;
+}
+function _(e2, t2, n2) {
   return R(n2) && t2.querySelector("#popup").close(), false;
 }
-function _(e2, t2, n2, r2) {
+function K(e2, t2, n2, r2) {
   e2.addEventListener("click", (e3) => (t2(e3, n2, r2), false)), e2.addEventListener("touch", (e3) => (t2(e3, n2, r2), false)), e2.addEventListener("keypress", (e3) => (t2(e3, n2, r2), false));
 }
 function V(e2, t2, n2, r2, o2) {
@@ -354,7 +354,7 @@ async function Q(t2, n2, r2) {
     return void o("info", "URL '" + r2.pathname + "' isn't marked-up for references, so skipped");
   const i2 = n2.querySelector("#biblio");
   i2 && i2.setAttribute("style", ""), n2.querySelector(Y.gainingElement + " *").replaceChildren(), E(Y.gainingElement, '<h2 class="biblioSection">References (for mobile UI)</h2> \n<p>The references embedded in the text are displayed here. </p>', n2);
-  const l2 = await Y.runFetch(w(Y.referencesCache, r2), false, r2);
+  const l2 = await Y.runFetch(w(Y.referencesCache, r2), true, r2);
   if (l2.ok && Array.isArray(l2.body)) {
     const e2 = function(e3) {
       let t3 = '<aside role="footnote"><ol class="mobileBiblio">';
@@ -419,7 +419,7 @@ function te(e2, t2) {
 async function ne(t2, n2, r2, i2) {
   if (Z = Object.assign(Z, { debug: e(r2) }, t2), 0 === n2.querySelectorAll(s).length)
     return void o("info", "This URL '" + r2.pathname + "' isn't marked-up for references, so skipped");
-  const a2 = await Z.runFetch(w(Z.referencesCache, r2), false, r2);
+  const a2 = await Z.runFetch(w(Z.referencesCache, r2), true, r2);
   if (a2.ok && Array.isArray(a2.body)) {
     if (n2.querySelectorAll(l).length < a2.body.length)
       throw new Error("Recompile the meta data for  " + r2.pathname);
@@ -668,7 +668,7 @@ class pe {
       for (let e4 = 0; e4 < i2.length; e4++)
         i2[e4] in n2 ? o("assert", !(i2[e4] in n2), "[SKIP] Duplicate element " + t3[e4]) : 0 === e4 ? n2[i2[e4]] = t3[i2[e4]] : this.compareTrees(t3[i2[0]], t3[i2[e4]]) || (n2[i2[e4]] = t3[i2[e4]]);
     }
-    return n2 = this.#n.filterEmpty(this.#n.filterCommonTags(n2, e2, this)), "https:" === location.protocol && (n2 = await this.#n.generateInvert(n2)), n2;
+    return n2 = this.#n.filterEmpty(this.#n.filterCommonTags(n2, e2, this)), "https:" === location.protocol && (n2 = await this.#n.generateInvert(n2)), console.log("reasults of compose", n2), n2;
   }
   taggedElements(e2) {
     let t2 = [];
@@ -757,7 +757,7 @@ await async function(t2, n2, r2, i2) {
     e2.querySelector("body").setAttribute("style", "--offset-height: 0;");
     const n3 = Array.from(e2.querySelectorAll(".lotsOfWords, .halferWords, .fewWords"));
     for (let e3 = 0; e3 < n3.length; e3++)
-      n3[e3].setAttribute("style", "--offset-height: " + j(n3[e3], t3)[0] + "px;");
+      n3[e3].setAttribute("style", "--offset-height: " + T(n3[e3], t3)[0] + "px;");
   }(n2, i2), function(t3, n3, r3) {
     const o2 = N(t3, n3, r3);
     if (!k(n3.host) && !o2)
@@ -773,7 +773,7 @@ await async function(t2, n2, r2, i2) {
       l3 && c2.removeChild(s3[e2]), t4.classList.remove("bigScreenOnly"), i3.push("<li>"), i3.push(t4.outerHTML), i3.push("</li>"), s3[e2].getAttribute("id") && s3[e2].setAttribute("id", "old" + s3[e2].getAttribute("id"));
     }
     i3.unshift('<nav><div class="shareMenu" id="shareMenu"><menu id="mobileMenu">'), i3.push("</menu></div></nav>"), E("#navBar", i3.join("\n"), t3);
-  }(n2, r2, i2), $(n2, r2, i2);
+  }(n2, r2, i2), J(n2, r2, i2);
   const l2 = null !== n2.querySelector(".addReferences");
   if (re(l2, n2, i2), function(e2, t3, n3) {
     t3.querySelectorAll("article a").forEach(function(r3) {
@@ -866,43 +866,39 @@ await async function(t2, n2, r2, i2) {
   })), "undefined" != typeof document && "function" == typeof document.pageStartup ? document.pageStartup() : o("info", "No article specific scripting found, (it may load manually ATF)");
 }({}, document, location, window);
 let he = new URLSearchParams(location.search);
-if (he.has("dump-css")) {
-  if (he.has("force-mobile")) {
-    let e2 = createKeyEvent({ code: "KeyM", key: "m", altKey: false, ctrlKey: true, shiftKey: true }, document.body, window);
-    console.log("Sent event"), document.body.dispatchEvent(e2);
+he.has("dump-css") && (console.log("Open tools now"), await async function(e2) {
+  return new Promise((t2, n2) => setTimeout(t2, e2));
+}(5e3), function(e2, t2, n2) {
+  let r2;
+  switch (t2) {
+    case 1:
+      r2 = ce(e2, n2, "\n"), de(r2, "generated-css.css");
+      break;
+    case 2:
+      r2 = function(e3) {
+        let t3 = Object.keys(e3);
+        for (let n3 in t3) {
+          "string" == typeof t3[n3] && (t3[n3] = t3[n3].replaceAll('"', '\\"'));
+          for (let r3 in e3[t3[n3]])
+            e3[t3[n3]][r3] = e3[t3[n3]][r3].replaceAll('"', '\\"');
+        }
+        return JSON.stringify(e3);
+      }(e2), de(r2, "generated-css.json");
+      break;
+    default:
+      throw new Error("Unknown value " + t2);
   }
-  !function(e2, t2, n2) {
-    let r2;
-    switch (t2) {
-      case 1:
-        r2 = ce(e2, n2, "\n"), de(r2, "generated-css.css");
-        break;
-      case 2:
-        r2 = function(e3) {
-          let t3 = Object.keys(e3);
-          for (let n3 in t3) {
-            "string" == typeof t3[n3] && (t3[n3] = t3[n3].replaceAll('"', '\\"'));
-            for (let r3 in e3[t3[n3]])
-              e3[t3[n3]][r3] = e3[t3[n3]][r3].replaceAll('"', '\\"');
-          }
-          return JSON.stringify(e3);
-        }(e2), de(r2, "generated-css.json");
-        break;
-      default:
-        throw new Error("Unknown value " + t2);
-    }
-  }(await async function(e2, t2) {
-    let n2 = ["defaultLinksMenu", "bibbles", "h4_footer", "articleContent", "adjacentGroup", "articleHeader row"];
-    const r2 = [".fa-", ".fa.fa-", ".hljs-"];
-    let o2 = {}, i2 = new pe(new fe(e2, t2), e2, t2);
-    for (let e3 in n2) {
-      let t3 = await i2.compose(n2[e3], r2);
-      for (let e4 of Object.keys(t3))
-        o2[e4] = e4 in o2 ? Object.assign(o2[e4], t3[e4]) : t3[e4];
-    }
-    return o2;
-  }(document, window), parseInt(he.get("dump-css"), 10), he.get("aspect") ?? "(width:100%)");
-}
+}(await async function(e2, t2) {
+  let n2 = ["defaultLinksMenu", "bibbles", "h4_footer", "articleContent", "adjacentGroup", "articleHeader row"];
+  const r2 = [".fa-", ".fa.fa-", ".hljs-"];
+  let o2 = {}, i2 = new pe(new fe(e2, t2), e2, t2);
+  for (let e3 in n2) {
+    let t3 = await i2.compose(n2[e3], r2);
+    for (let e4 of Object.keys(t3))
+      o2[e4] = e4 in o2 ? Object.assign(o2[e4], t3[e4]) : t3[e4];
+  }
+  return o2;
+}(document, window), parseInt(he.get("dump-css"), 10), he.get("aspect") ?? "(width:100%)"));
 export {
   i as SELF_VERSION,
   E as appendIsland,
