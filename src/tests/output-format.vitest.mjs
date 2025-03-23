@@ -57,7 +57,7 @@ describe("TEST generate CSS ", () => {
 			 ".second":{ "color":"green", "font":'"jibber, jabber"', "background":"red" }
 					};
 		const DST=`@media screen and (min-resolution:100dpi) {.first { font:"jibber, jabber"; font-size:0.8em; }.second { color:green; font:"jibber, jabber"; background:red; }}`;
-		assert.equal(hash2CSSblock( SRC, "screen and (min-resolution:100dpi)" ), DST, "bullet #8");
+		assert.equal(hash2CSSblock( SRC, "(min-resolution:100dpi)" ), DST, "bullet #8");
 
 	// IOIO add more here
 	});

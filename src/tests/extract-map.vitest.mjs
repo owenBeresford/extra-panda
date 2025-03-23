@@ -29,7 +29,7 @@ describe("TEST generate CSS ", () => {
 	
 	it("go 5.1: Extract->compare", () => {
 		const [dom, loc, win] = page("http://192.168.0.35/", 3);
-		const OBJ=new ExtractiMap(dom, win);
+		const OBJ=new ExtractMap(dom, win);
 	
 	/*
 	compose(base: string):HashHashtable 
@@ -37,9 +37,9 @@ describe("TEST generate CSS ", () => {
 	extractLocal(sel: string, pseud: Pseudable = null): Hashtable
 	mapPseudo(sel: string): HashHashtable 
 	taggedElements(base: string): Array<string> 
-    */
 		// IOIO add more here
 	});
+    */
 	
 	});
  

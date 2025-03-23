@@ -270,7 +270,7 @@ Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf 
 <li> <a id="linkengineering2" class="button lower" href="http://www.thirddata.com/" aria-label="Title: DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...
 Author: gdgdg &nbsp; &nbsp; Last edit:  04-March-2024 
 Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg..." >DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...</a> </li>
-<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in worklog group."> See full list </a></li></ul>`;
+<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in engineering group."> See full list </a></li></ul>`;
     assert.deepEqual(convert2HTML(d1, "engineering"), d2, "step #22");
   });
 
@@ -489,7 +489,7 @@ Description: 16 Considerations for REST API, construction and why REST API are u
 <li> <a id="linkengineering3" class="button" href="https://owenberesford.me.uk/resource/goals" aria-label="Title: “Zones of development”
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
 Description: What concepts or areas of development are important.    This is a higher level chart..">“Zones of development”</a> </li>
-<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in worklog group."> See full list </a></li>`;
+<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in engineering group."> See full list </a></li>`;
     assert.equal(
       dom.querySelector("#groupengineering .adjacentList").innerHTML,
       sample1,
@@ -644,7 +644,7 @@ Description: Short article for how to control APC.">Opcache notes</a> </li>
 <li> <a id="linkengineering14" class="button" href="https://owenberesford.me.uk/resource/php-benchmark-2017" aria-label="Title: PHP benchmark 2017
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
 Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> </li>
-<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in worklog group."> See full list </a></li>`;
+<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in engineering group."> See full list </a></li>`;
     assert.equal(
       dom.querySelector("#groupengineering .adjacentList").innerHTML,
       sample1,
@@ -739,7 +739,7 @@ Description: Short article for how to control APC.">Opcache notes</a> </li>
 <li> <a id="linkengineering14" class="button" href="https://owenberesford.me.uk/resource/php-benchmark-2017" aria-label="Title: PHP benchmark 2017
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
 Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> </li>
-<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in worklog group."> See full list </a></li>`;
+<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in engineering group."> See full list </a></li>`;
     assert.equal(
       dom.querySelector("#groupengineering .adjacentList").innerHTML,
       sample1,
