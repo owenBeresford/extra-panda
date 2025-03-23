@@ -32,10 +32,11 @@ let OPTS: AdjacentPropsDefinite = {
  * @param {string} article
  * @param {string} suffix
  * @param {Location =location} loc
+ * @param {boolean =true} search
  * @protected
  * @returns {string} - the desired full URL of this page
  */
-function mapURL(article: string, suffix: string, loc: Location): string {
+function mapURL(article: string, suffix: string, loc: Location, search:boolean =true): string {
   //  let t = loc.protocol + "//" + loc.host,
   let t2 = loc.pathname.split("/"),
     t = "",
@@ -53,7 +54,10 @@ function mapURL(article: string, suffix: string, loc: Location): string {
   } else {
     t += loc.pathname.replace(t3, article);
   }
-  t += loc.search + loc.hash;
+
+	if(search) {
+		t += loc.search + loc.hash;
+	}
   return t;
 }
 
@@ -99,8 +103,15 @@ function cleanTitle(id: string, group: string): string {
  * @returns {string}
  */
 function extractOABName(url: string): string {
-  const TMP = url.split("/");
-  return TMP.pop() ?? "";
+  let TMP:string=url;
+	if(url.lastIndexOf('#')>0) {
+		TMP=url.substring(0, url.lastIndexOf('#'));
+	}
+	if(url.lastIndexOf('?')>0) {
+		TMP=url.substring(0, url.lastIndexOf('?'));
+	}
+  let TMP2 = TMP.split("/");
+  return TMP2.pop() ?? "";
 }
 
 /**
@@ -451,7 +462,7 @@ export async function createAdjacentChart(
     OPTS,
     {
       name: articleName(loc),
-      meta: mapURL(OPTS.group, ".json", loc),
+      meta: mapURL(OPTS.group, ".json", loc, false),
       debug: debug(loc),
       runFetch: runFetch,
     },
@@ -460,7 +471,7 @@ export async function createAdjacentChart(
   if (OPTS.group === "system") {
     throw new Error("Must set the article group, and not to 'system'.");
   }
-  OPTS.meta = mapURL(OPTS.group, ".json", loc);
+  OPTS.meta = mapURL(OPTS.group, ".json", loc, false);
 
   const isGroupArticle: boolean =
     OPTS.name === "group-XXX" || OPTS.name === "group-" + OPTS.group;
@@ -477,8 +488,8 @@ export async function createAdjacentChart(
       dom,
     );
   } else {
-    const data: SimpleResponse = await OPTS.runFetch(OPTS.meta, false, loc);
-    if (!data.ok || !Array.isArray(data.body)) {
+    const data: SimpleResponse = await OPTS.runFetch(OPTS.meta, true, loc);
+    if (!('ok' in data) || !data.ok || !Array.isArray(data.body)) {
       log("info", "There doesn't seem to be a group meta data file.");
       appendIsland(
         "#" + GROUP,
