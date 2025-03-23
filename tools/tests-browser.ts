@@ -467,11 +467,10 @@ async function runExtract(urn:string):Promise<void> {
 	LBROWSER[3]="";
 	LBROWSER.push( 
 // https://developer.chrome.com/docs/devtools/device-mode/
-           "--auto-open-devtools-for-tabs",
 // try CTRL+SHIFT+M. to load the  "toggle device toolbar"
 // https://github.com/GoogleChrome/lighthouse/blob/ff41f6a289a3171ed0ec70c389de0181d8e59ca2/lighthouse-core/lib/emulation.js#L76-L80
 
-			"--ash-host-window-bounds=\"1280x900*1\"", 
+           "--auto-open-devtools-for-tabs",
 			"--force-media-resolution-height",
 			"--force-media-resolution-width",
 			"--enable-ui-devtools" ,
@@ -487,19 +486,17 @@ async function runExtract(urn:string):Promise<void> {
 	LBROWSER[3]="";
 	LBROWSER.push( 
 // https://developer.chrome.com/docs/devtools/device-mode/
-           "--auto-open-devtools-for-tabs",
 // try CTRL+SHIFT+M. to load the  "toggle device toolbar"
 // https://github.com/GoogleChrome/lighthouse/blob/ff41f6a289a3171ed0ec70c389de0181d8e59ca2/lighthouse-core/lib/emulation.js#L76-L80
 
-
-			"--ash-host-window-bounds=\"800x400*2\"", 
+           "--auto-open-devtools-for-tabs",
 			"--ash-no-nudges",
 			"--force-media-resolution-height",
 			"--force-media-resolution-width",
 			"--enable-ui-devtools" ,
-			"--enable-tablet-form-factor",
+			"--alt-high-dpi-setting=151",
 			"--high-dpi-support=1",
-			"--force-device-scale-factor=2.71",
+			"--force-device-scale-factor=1.71",
 			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[1]+"&force-mobile=1",
 				);
 	[CHILD, end0] = await spinup_browser(LBROWSER, function(a:any):void {});
@@ -509,16 +506,25 @@ async function runExtract(urn:string):Promise<void> {
 	LBROWSER[3]="";
   LBROWSER.push( 
            "--auto-open-devtools-for-tabs",
-			"--ash-host-window-bounds=\"500x350*3.5\"", 
 			"--ash-no-nudges",
-			"--force-mediconstesolution-height",
+			"--force-media-resolution-height",
 			"--force-media-resolution-width",
-			"--enable-ui-consttools" ,
-			"--enable-tabletconstrm-factor",
+			"--enable-ui-devtools" ,
 			"--high-dpi-support=1",
-			"--force-device-scale-factor=3.5",
+			"--alt-high-dpi-setting=171",
+			"--force-device-scale-factor=2.01",
 			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[1]+"&force-mobile=1",
 				);
+
+// first ED
+// /snap/bin/chromium --user-data-dir=/tmp/js-test2 --profile-create-if-missing --ignore-certificate-errors --test-type=webdriver --allow-insecure-localhost --mute-audio --disable-popup-blocking --disable-login-animations --disable-default-apps --allow-running-insecure-content --unsafely-disable-devtools-self-xss-warnings --auto-open-devtools-for-tabs --ash-host-window-bounds="500x350*3.5" --ash-no-nudges --force-media-resolution-height --force-media-resolution-width --enable-ui-devtools --enable-tablet-form-factor --high-dpi-support=1 --force-device-scale-factor=3.5 "https://127.0.0.1:8081/route-plotting.html?dump-css=2&aspect=ATEST&force-mobile=1" 
+// after testing a few times, rationalise
+// /snap/bin/chromium --user-data-dir=/tmp/js-test2 --profile-create-if-missing --ignore-certificate-errors --test-type=webdriver --allow-insecure-localhost --mute-audio --disable-popup-blocking --disable-login-animations --disable-default-apps --allow-running-insecure-content --unsafely-disable-devtools-self-xss-warnings --auto-open-devtools-for-tabs  --ash-no-nudges --force-media-resolution-height --force-media-resolution-width --enable-ui-devtools --high-dpi-support=1 --force-device-scale-factor=2.0 "https://127.0.0.1:8081/route-plotting.html?dump-css=2&aspect=ATEST&force-mobile=1"
+// set mobile emulation ON
+// set "browser" to be my phone
+// set console log display to be ALL
+// /snap/bin/chromium --user-data-dir=/tmp/js-test3 --profile-create-if-missing --ignore-certificate-errors --test-type=webdriver --allow-insecure-localhost --mute-audio --disable-popup-blocking --disable-login-animations --disable-default-apps --allow-running-insecure-content --unsafely-disable-devtools-self-xss-warnings --auto-open-devtools-for-tabs --ash-no-nudges --force-media-resolution-height --force-media-resolution-width --enable-ui-devtools --force-device-scale-factor=1.7 "https://127.0.0.1:8081/route-plotting.html?dump-css=2&aspect=ATEST&force-mobile=1"  
+
 	[CHILD, end0] = await spinup_browser(LBROWSER, function(a:any):void {});
 	closing.push( end0);
 
