@@ -288,9 +288,14 @@ function addMetaAge(xhr: SimpleResponse, dom: Document): void {
   const updated: number = new Date(tstr).getTime();
   if (updated > 0) {
     const str: string =
-      '<span>Links updated <time datetime="' +
+      '<span>Links <time datetime="' +
       updated +
-      '" title="When this was last recompiled">' +
+      '" title="When this was last recompiled'+
+		  new Date(updated).toLocaleDateString("en-GB", {
+	        hour12: false,
+	        dateStyle: "medium",
+	      })
+		+'">' +
       new Date(updated).toLocaleDateString("en-GB", {
         hour12: false,
         dateStyle: "medium",

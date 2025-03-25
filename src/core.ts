@@ -189,7 +189,7 @@ export async function siteCore(
     readingDuration(
       {
         dataLocation: "#main",
-        target: ".addReading",
+        target: ".addReading .allButtons",
         debug: ldebug,
         refresh: true,
       },

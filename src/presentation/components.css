@@ -49,7 +49,8 @@ This is big screen mac, should work with wide versions
 	}
 }
 .bibbles span.ultraSkinny { margin:0.5em; padding:0; display:inline; list-style:none; list-style-type:none; 
-			list-style-position:unset; margin-bottom:0px; margin-top: 0; vertical-align: top; }
+			list-style-position:unset; margin-bottom:0px; margin-top: 0; vertical-align: top; 
+			max-width: calc(100% - 27em); }
 .bibbles span.ultraSkinny span { margin:0em 0.5em; padding:0; line-height: 1.2; 
 		display:inline-block; margin-bottom:0px; white-space: nowrap; } 
 @media screen and ( min-width:1000px ) {
@@ -60,7 +61,7 @@ This is big screen mac, should work with wide versions
 	.bibbles span.ultraSkinny { width:13em; display:inline-block; }
 }
 @media screen and (min-resolution: 150dpi) {
-	.bibbles span.ultraSkinny { font-size: 100%;  } 
+	.bibbles span.ultraSkinny span { font-size: 100%;  } 
 }
 
 /** articleHeader 
@@ -234,9 +235,10 @@ div.addReferences sup a.leanIn:before { left: calc( 18cqw - 32em ); }
 
 /** allButtons 
 	every page */
-.allButtons { padding: 0; vertical-align: super; display:inline-block; white-space:nowrap; flex: 10 1 0px; }
+.allButtons { padding: 0; vertical-align: super; display:inline-block; white-space:nowrap; width: 31em; }
 .allButtons a, .allButtons span { display:inline-block; width:3em; text-align:center; padding:0.5em 0.3em; }
 .allButtons a:first-child { width:5em; }
+.allButtons a:last-child { vertical-align:middle; }
 @media screen and (min-resolution: 150dpi) {
 	.allButtons a.bigScreenOnly, .allButtons span.bigScreenOnly, .bigScreenOnly, .ultraSkinny.bigScreenOnly,
 	 .allButtons a.bigScreenOnly { display:none; }
