@@ -81,9 +81,6 @@ const BROWSER = [
   "--allow-running-insecure-content",
   "--unsafely-disable-devtools-self-xss-warnings",
   // --bwsi 
-  // lots of excited press about this 3 y ago,
-  // setting this stops the JS executing
-  //	"--auto-open-devtools-for-tabs",
   // this fake flag is also being ignored
   "--ignore-this",
 ];
@@ -92,7 +89,6 @@ const DIR_TESTS = path.join(__dirname, "..", "dist", "tests");
 const DIR_FIXTURES = path.join(__dirname, "..", "src", "fixtures");
 const CERT_NAME = DIR_FIXTURES + path.sep + "cert.pem";
 const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
-// cert.pem  csr.pem  index.html  ob1.min.css  private.key
 var dDelta = 0;
 
 /**
@@ -390,22 +386,15 @@ async function browser2json(page) {
       throw new Error("Result block not found");
     }
 
-    //    await page.bringToFront();
     console.log(
       "[INFO] Sleeping as DOM data extraction from test tab is laggy",
     );
-    // use this in next iteration
-    // let ignored = await tt1.all();
     await expect(tt1).toHaveAttribute("data-status", "done", {
       timeout: 30_000,
     });
     console.log("[INFO] wakeup (hopefully brower execution is done)");
 
     const json1 = await tt1.textContent();
-    //  const json1 = await page.innerText("pre");
-    //			testResults = await page.content();
-    //			let slice=testResults.match(new RegExp("<pre[^>]*>([^<]*)</pre>", 'mi'));
-    //console.log("SDFSDFSDF "+ new Date(),  slice);
 
     if (json1.length < 5) {
       throw new Error("EMPTY Result block found");

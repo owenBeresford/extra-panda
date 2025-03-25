@@ -54,13 +54,11 @@ console.log("looking for __dirname", process.version, import.meta, process.env.P
 /**
 There is only 1 cmd arg to this script at present.
   --no-close or --close
+  UPDATE and --extract-css
 
 If more are added, see command-line-args
 @see [https://www.npmjs.com/package/command-line-args]
 */
-//iconst __dirname = path.dirname(URL.fileURLToPath(import.meta.url));
-//const __filename = path.basename(URL.fileURLToPath(import.meta.url));
-//globals.__dirname=__dirname;
 
 const TESTS:Readonly<Array<string>> = [
   "modal.webtest.mjs", // extend...
@@ -95,9 +93,6 @@ const BROWSER:Readonly<Array<string>> = [
   "--allow-running-insecure-content",
   "--unsafely-disable-devtools-self-xss-warnings",
   // --bwsi 
-  // lots of excited press about this 3 y ago,
-  // setting this stops the JS executing
-  //	"--auto-open-devtools-for-tabs",
   // this fake flag is also being ignored
   "--ignore-this",
 ] as Readonly<Array<string>>;
@@ -119,10 +114,7 @@ const DIR_TESTS = path.join(__dirname, "..", "dist", "tests");
 const DIR_FIXTURES = path.join(__dirname, "..", "src", "fixtures");
 const CERT_NAME = DIR_FIXTURES + path.sep + "cert.pem";
 const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
-// cert.pem  csr.pem  index.html  ob1.min.css  private.key
 let dDelta = 0;
-// IOIO lookup IO response types
-
 
 /**
  * spinup_server
@@ -241,7 +233,7 @@ function spinup_server():Array<Triggerage> {
  
  * @protected
  * @param {string} debug_url
- * @returns {Array} - /**
+ * @returns {Promise<Array<Triggerage>>} - 
  *
  */
 async function spinup_playwright(debug_url:string):Promise<Array<Triggerage>> {
@@ -278,7 +270,7 @@ async function spinup_browser(cmd:Readonly<Array<string>>, onSocket:DEBUG_CHANNE
       found = false;
 
   const READ = (data:string):void => {
-    // being cautious on lconst buffering:
+    // being cautious on line buffering:
     buf += data;
     const tmp:Array<string> = buf.split("\n");
     for (let i = 0; i < tmp.length; i++) {
@@ -374,8 +366,8 @@ function getMethods(o:any):Array<string> {
  * JSON2logging
  * Just a custom dump function to look like vitest/ jest. 
  * Prints to console
- * Code was written from exploration.  Jest-circus includes the run() whih returns a RunResult
- * This doesn't look like what I get.  Don't know how to vet Jest version numbers in this thing. 
+ * Code was written from exploration.  Jest-circus includes the run() which returns a RunResult
+ * This doesn't look like what I get. 
  
  * @param {string} json1
  * @protected
@@ -422,22 +414,15 @@ async function browser2json(page:Page):Promise<string> {
       throw new Error("Result block not found");
     }
 
-    //    await page.bringToFront();
     console.log(
       "[INFO] Sleeping as DOM data extraction from test tab is laggy",
     );
-    // use this in next iteration
-    // let ignored = await tt1.all();
     await expect(tt1).toHaveAttribute("data-status", "done", {
       timeout: 30_000,
     });
     console.log("[INFO] wakeup (hopefully brower execution is done)");
 
     const json1 = await tt1.textContent();
-    //  const json1 = await page.innerText("pre");
-    //			testResults = await page.content();
-    //			let slice=testResults.match(new RegExp("<pre[^>]*>([^<]*)</pre>", 'mi'));
-    //console.log("SDFSDFSDF "+ new Date(),  slice);
 
     if (json1.length < 5) {
       throw new Error("EMPTY Result block found");
@@ -523,6 +508,7 @@ async function runExtract(urn:string):Promise<void> {
 // set mobile emulation ON
 // set "browser" to be my phone
 // set console log display to be ALL
+// practical hack, setup profile in manual interaction before launching the export script
 // /snap/bin/chromium --user-data-dir=/tmp/js-test3 --profile-create-if-missing --ignore-certificate-errors --test-type=webdriver --allow-insecure-localhost --mute-audio --disable-popup-blocking --disable-login-animations --disable-default-apps --allow-running-insecure-content --unsafely-disable-devtools-self-xss-warnings --auto-open-devtools-for-tabs --ash-no-nudges --force-media-resolution-height --force-media-resolution-width --enable-ui-devtools --force-device-scale-factor=1.7 "https://127.0.0.1:8081/route-plotting.html?dump-css=2&aspect=ATEST&force-mobile=1"  
 
 	[CHILD, end0] = await spinup_browser(LBROWSER, function(a:any):void {});
@@ -541,7 +527,7 @@ async function runExtract(urn:string):Promise<void> {
  *
  * @param {Array<string>} tests
  * @protected
- * @returns {void}
+ * @returns {Promise<void>}
  */
 export async function runTests(tests:Readonly<Array<string>>):Promise<void> {
   console.log(
@@ -590,7 +576,6 @@ export async function runTests(tests:Readonly<Array<string>>):Promise<void> {
         PORT_SERVER +
         "/?test=" +
         tests[i] +
-        // append "&no-close=1" to stop the browser tabs being closed, so they can be examined
         "&close=" +
         should_close_tabs(process.argv);
       await page.goto(URL);
