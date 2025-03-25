@@ -415,8 +415,20 @@ async function browser2json(page) {
   throw new Error("Logic error, ask a dev");
 }
 
+
+
+/**
+ * runExtract
+ * A function to create tabs to launch a CSS extract script in the test browser
+ * VALUE: I can pick this up for RWD tests (the CLI args), so I'm not deleting it 
+
+ * @DEPRECATED
 // https://superuser.com/questions/1139259/how-to-adjust-ui-scaling-for-chrome
 // https://stackoverflow.com/questions/62001125/chrome-dev-tools-simulating-different-resolution-pc-screen
+ * @param {string} urn
+ * @public
+ * @returns {void}
+ */
 async function runExtract(urn) {
   console.log(
     "[INFO] You need to catch the file savee-as dialogs,  Opens some tabs in Chrome",
