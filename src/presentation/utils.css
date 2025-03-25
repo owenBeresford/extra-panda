@@ -12,9 +12,9 @@
 @media screen and (min-resolution: 150dpi) {
 	.annoyingBody p, .annoyingBody li, .annoyingBody span, .annoyingBody a, label { font-size:120%; width:fit-content; max-width:100vw; }
 	.annoyingBody .tabs-content p, .annoyingBody .tabs-content li, .annoyingBody .tabs-content a { font-size:120%; }
- 	.annoyingBody.wholeArticle { width:fit-content; }
+ 	.annoyingBody .wholeArticle { width:fit-content; }
 	.annoyingBody li li, .annoyingBody li span, .annoyingBody li a, div.annoyingBody p span, 
-	div.annoyingBody p sup a, div.annoyingBody p a, div.annoyingBody li a { font-size:100%; width:fit-content;  max-width:100vw; }	
+	div.annoyingBody p sup a, div.annoyingBody p a, div.annoyingBody li a { font-size:100%; width:fit-content; max-width:100vw; }	
 }
 
 .lotsOfWords { column-gap:1em; column-count:7; columns: 7 25em; }
@@ -23,16 +23,16 @@
     .lotsOfWords { column-gap:2em; margin-bottom:2em; }
 }
 	
-.halferWords { width:680px; text-align:center; margin-left: auto; margin-right: auto ; }
+.halferWords { width:680px; text-align:center; margin-left: auto; margin-right: auto; }
 .halferWords ul, .halferWords ol, .halferWords p { text-align:left; }
 @media screen and (min-resolution: 150dpi) {
-	.halferWords { width:100vw; align-self: stretch; }
+	.halferWords { width:100vw; align-self: stretch; margin: 1em 0em; }
 }
 	
 .fewWords { width:480px; text-align:center; margin-left: auto; margin-right: auto ; }
 .fewWords ul, .fewWords ol, .fewWords p { text-align:left; }
 @media screen and (min-resolution: 150dpi) {
-	.fewWords { width:100vw;  }
+	.fewWords { width:100vw; margin-left:0; margin-right:0;  }
 }
 
 /* IOIO RENAME */
@@ -44,6 +44,7 @@ hr.blocker { width: 90%;}
 
 /* used here as the wiki-engine proffers it, without the Wiki, this is unneeded  
    used in every page with a list... nearly 90%? */
+.ulbasic, ol { list-style-type:none; }
 .ulbasic li::before, ol li::before { content: "✨"; display: inline-block; width: 1.5em; }
 @media screen and (max-width:700px) {
 	.ulbasic { margin-left:0; }
@@ -112,8 +113,8 @@ This is big screen mac, should work with wide versions
 }}
 
 /* small screen mac, AKA iphone/ ipad */
-@supports (-webkit-touch-callout)  {
-	@media screen and (max-width:800px) and (min-resolution:120dpi) {
+@media screen and (max-width:800px) and (min-resolution:120dpi) {
+	@supports (-webkit-touch-callout)  {
 	.bigScreenOnly, .ultraSkinny.bigScreenOnly, .allButtons a.bigScreenOnly { display:none; }
  	.smallScreenOnly { display:inline-block; }
 }}

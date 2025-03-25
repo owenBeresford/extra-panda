@@ -67,46 +67,97 @@
    .hashTablesContainer div.fewWords p img { margin-left: inherit; }
 }
 
-
-.homeContainer .tabs-panel.is-active { padding-top:0 }
-.homeContainer .tabs-panel, .homeContainer .tabs-content, .homeContainer .tabs { max-width:25rem; }
-.homeContainer .tabList li a { display:inline-block; padding:1rem; text-align:center; }
-.homeContainer .tabList li { display:inline-block; width:30%; }
+.homeContainer .tabs-content, .homeContainer .tabs { max-width:25rem; }
 .homeContainer .home.icerow { margin:0px; max-width:100%; display: flex; flex-direction: row; }
 .homeContainer .home.column { flex: 2 1 0px; }
-.homeContainer #blockArticles .ulbasic, .homeContainer #blockProjects .ulbasic { margin-bottom:0px; }
-.homeContainer .myUglyFace { border: var(--attentionfg) 2px solid; margin-left:0.6em; text-align:right; border-radius:50px; }
-.homeContainer .tab-title { white-space:nowrap; }
+.homeContainer .myUglyFace { border: var(--attentionbg) 2px solid; margin-left:0.6em; text-align:right; border-radius:50px; }
 .homeContainer #navBar .column { margin-left:0px; padding-left:0px; }
 .homeContainer #navBar.row { max-width:100%; }
-.homeContainer #blockArticles li:nth-child(4) a { margin-right:1em; }
-
 .homeContainer .h4_page { margin:15px; }
-.homeContainer a[rel="me"] { margin: initial; padding: 0.65em 0.8em; }
+.homeContainer span[rel="me"] { margin: initial; padding: 0.65em 0.8em; }
 .homeContainer div.fullWidth { width: 65%; }
+
 @media screen and (min-resolution: 150dpi) {
   .homeContainer  .after_menu.articleContent, .h4_page.wholeArticle { min-width: 100vw; }
    .homeContainer .halferWords {  width: 100vw; }
-	.homeContainer .home.column, .homeContainer .chunkArticles.column {  flex: 1 100 0px; }
+	.homeContainer .home.column, .homeContainer .chunkArticles.column { flex: 1 100 0px; }
 	.homeContainer dialog#popup1 a.trimmed i { padding:0.3em; margin:0px; }
 	.homeContainer div.fullWidth { width: 100vw; }
-	.homeContainer #siteChartLink { margin-left:0;  }
-   .homeContainer  #navBar .shareMenuOpen a.button.masto { padding-left: 0.2em; padding-right: 0.2em; margin-left: 0; }
+	.homeContainer #siteChartLink { margin-left:0; }
+    .homeContainer #navBar .shareMenuOpen a.button.masto { padding-left: 0.2em; padding-right: 0.2em; margin-left: 0; }
 	.homeContainer p, .homeContainer  li, .homeContainer span { font-size:100%; }
 	.homeContainer p span { font-size:100%; }
 	.homeContainer li { margin:10px; }
-	.homeContainer h1, .homeContainer h2, .homeContainer h3, .homeContainer h4, .homeContainer h5, .homeContainer  h6 { font-size:250%; }
-   .homeContainer .tabs-content p, .homeContainer .tabs-content li, .homeContainer .tabs-content a { font-size:150%; }
-	.homeContainer .tabs-content li a { font-size:100%; }
-	.homeContainer .tabList li  { padding-left:0px; padding-right:0px; max-width:30%; width:30%; }
-	.homeContainer .tabList li a { padding-left:0px; padding-right:0px; }
+	.homeContainer h1, .homeContainer h2, .homeContainer h3, .homeContainer h4, .homeContainer h5, 
+					.homeContainer h6 { font-size:250%; }
 	.homeContainer .column { padding-left:0px; padding-right:0px; }
-	.homeContainer ul.tabList.tabs, .homeContainer fieldset.tabs-content { width:100%; max-width:100%; }
+	.homeContainer fieldset.tabs-content { width:100%; max-width:100%; }
 	.homeContainer div#navBar a { font-size: 120%; padding: 0.3em 0.3em; }
 	.homeContainer div#navBar a i { margin:0.75em; }
 }
 @media screen and (min-width:700px) and (max-width:900px)  {
 	.homeContainer div.chunkArticles { min-width: 15em; flex: 2 1 0px; }
+}
+
+@media screen and (min-resolution: 200dpi) {
+	.IAmLibreWolf .bigScreenOnly { display:none; }
+	.IAmLibreWolf .smallScreenOnly { display:inline-block; }
+ 	.IAmLibreWolf .homeContainer .home.column { flex: 1 100 0px; }	
+    .IAmLibreWolf .popup1 input { width: 100vw; min-width: 10em; display: inline-block; }
+	
+}
+@media screen and (max-resolution: 199dpi) {
+    .IAmLibreWolf .allButtons span.bigScreenOnly, .IAmLibreWolf .allButtons span.bigScreenOnly,
+	.IAmLibreWolf .bigScreenOnly,  .IAmLibreWolf .allButtons a.bigScreenOnly { display:inline-block; }
+
+	.IAmLibreWolf .smallScreenOnly { display:none; }
+ 	.IAmLibreWolf .homeContainer .home.column { flex: 2 1 0px; }
+    .IAmLibreWolf .popup1 input { width:15em; display:inline-block; font-size:100%; }
+
+    .IAmLibreWolf .h4_page p, .IAmLibreWolf .h4_page li, .IAmLibreWolf .h4_page span,  
+	.IAmLibreWolf .h4_page a, .IAmLibreWolf label {
+
+    font-size: 100%; width: fit-content; max-width: 15em;
+  }
+}
+
+@media screen and (max-resolution: 199dpi) and (min-aspect-ratio: 3 / 5) and (min-width: 800px) {
+	.IAmLibreWolf .popup1.bigScreenOnly { display: none; }
+	.IAmLibreWolf .popup1.bigScreenOnly[open] { display: block; }
+}
+
+@media screen and (min-resolution: 200dpi) and (min-aspect-ratio: 3 / 5) and (min-width: 800px) {
+	.IAmLibreWolf .popup1.bigScreenOnly { display: none; }
+	.IAmLibreWolf .popup1.bigScreenOnly[open] { display: block; }
+}
+
+.tabContainer .tabs-content { border-top: 1px solid #e6e6e6; }
+.tabContainer { position: relative; top: -14em; }
+.tabContainer .tabs-content { width:fit-content; display: inline-block; background:inherit; }
+.tabContainer .tabs-content ul { display:none; margin-top:10em; }
+.tabContainer legend { white-space:nowrap; z-index:0; margin-top:2em; } 
+.tabContainer .tabs-content:has( legend>label>input[type="radio"]:checked ) ul { display:inline-block;  
+			transition: all .5s ease; }
+.tabContainer legend label { padding:1em; min-width:8em; --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245;
+                 --fgg: 245; --fgb: 245; text-align:center; z-index:2; }
+.tabContainer .tabs-content:has( legend>label>input[type="radio"]:checked ) label { --bgr: 215; --bgg: 242;
+				 --bgb: 250; --fgr: 37; --fgg: 37; --fgb: 37; }
+
+.tabContainer legend, .tabContainer .fakeTab { display: inline-block; width:fit-content; height:fit-content; 
+			position:absolute; top:0em; margin-left:1em; background:transparent; } 
+.tabContainer input[type="radio"] { visibility:hidden; display:none; margin-bottom:0; padding-bottom:0; } 
+
+.tabContainer .tabs-content:nth-child(2) legend { left:9em; }
+.tabContainer .tabs-content:nth-child(3) legend { left:18em; }
+ .column.tabContainer { min-width: 400px; flex: inherit; }
+.homeContainer .allButtons { flex:inherit; }
+
+@media screen and (max-width:1180px)  {
+	.homeContainer .bibbles span.ultraSkinny { width:160px; } 
+}
+@media screen and (max-width:1280px)  {
+	.tabContainer .tabs-content:nth-child(2) legend { left:7em; }
+	.tabContainer .tabs-content:nth-child(3) legend { left:16em; }
 }
 
 
@@ -300,4 +351,4 @@ ol.Alist { width:auto; } /* unused */
 }
 .popOverWidget:has( .maquetteContainer>details.docs[open] ) { --fgcontrast: 0.95; --bgcontrast: 1; }
 
-/
+
