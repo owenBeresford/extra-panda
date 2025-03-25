@@ -15,22 +15,8 @@ await siteCore({}, document, location, window);
 // External module, this code should be masked out in production builds
 let PARAMS=new URLSearchParams(location.search);
 if( PARAMS.has('dump-css') ) {
-	if(PARAMS.has('force-mobile')) {
-		let key = createKeyEvent(
-          {
-// try CTRL+SHIFT+M. to load the  "toggle device toolbar"
-            code: "KeyM",
-            key: "m",
-            altKey: false,
-            ctrlKey: true,
-            shiftKey: true,
-          },
-          document.body,
-          window,
-        );
-console.log("Sent event");
-		document.body.dispatchEvent(key); 
-	}
+	console.log("Open tools now");
+	await delay(5000);
 	dump_it( await generate_CSS_file(document, window),  parseInt(PARAMS.get('dump-css'), 10), PARAMS.get('aspect')??"(width:100%)" );
 }
 
