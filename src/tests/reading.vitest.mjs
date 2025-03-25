@@ -108,6 +108,45 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
 
     readingDuration({ refresh: true }, dom, loc);
     let tt = dom.querySelector("#shareGroup a.reading").textContent;
+    assert.equal(tt, "To read: 6m", "assert #8");
+  });
+
+  it("go 3.1: extra text and images", () => {
+    const [dom, loc] = page("https://192.168.0.35/", 2);
+    let txt = `<img src="dfgdfg" width="30%" /> <img src="dfgdfdfgg" width="30%" /> <img src="df234gdfg" width="30%" />
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+wer werwer wer werwer wer werwer werwer wer werwer wer 
+`;
+    appendIsland(".blocker", txt, dom);
+    assert.notEqual(dom.getElementById("point2"), null, "assert #7");
+
+    readingDuration({ refresh: true }, dom, loc);
+    let tt = dom.querySelector("#shareGroup a.reading").textContent;
     assert.equal(tt, "To read: 16m", "assert #8");
   });
 

@@ -55,7 +55,7 @@ export function readingDuration(
     options.dataLocation +
     " img, " +
     options.dataLocation +
-    " picture, " +
+    " source, " +
     options.dataLocation +
     " object";
 
@@ -70,8 +70,16 @@ export function readingDuration(
   }
   let duration: number =
     (plain - code) / options.wordPerMin +
-    dom.querySelectorAll(IMAGE_SEARCH).length * 5 +
     (code * 2) / options.wordPerMin;
+
+	const IMGS:Array<string>= Array.from(
+								new Set(
+								Array.from(
+								dom.querySelectorAll(IMAGE_SEARCH))
+								.map(iter)
+									)
+									);
+	duration += IMGS.length * 5;
   if (duration < 1) {
     log("info", "No reading time displayed for this article");
     return;
@@ -94,6 +102,14 @@ export function readingDuration(
     "</a>";
   appendIsland(options.target, h1, dom);
 }
+
+	function iter(ele:HTMLElement, i:number):string {
+		switch(ele.tagName) {
+		case 'IMG': return ele.getAttribute('src'); break;
+		case 'OBJECT': return ele.getAttribute('data'); break;
+		case 'SOURCE': return ele.getAttribute('srcset'); break;
+		}
+	} 
 
 /////////////////////////////////////////////// testing ////////////////////////////////////////////
 // injectOpts not needed, only 1 function
