@@ -1,0 +1,201 @@
+/* Colours can be changed annotation type at https://rgbacolorpicker.com/rgba-to-hex  */
+/* I am not storing variables in :root, not sure why */
+/* if this was a larger project, I would add pre-processing to drop this file after line ~ 82 */
+body { --fgcontrast: 0.95; --bgcontrast:1; --fgr: 37; --fgg: 37; --fgb: 37; --bgr: 255; --bgg: 255; --bgb: 250; 
+		--errorbg:#7D0000; --starkfg:#fff; --hardfg:#aaa; --scroll1:darkgrey; --scroll2:slategrey; --attentionbg:#2ba6cb; }
+
+/*
+@miunau@meow.social
+https://fosstodon.org/deck/@miunau@meow.social
+
+assuming --bgColor contains your background color:
+
+    span {
+        color: var(--bgColor);
+        filter: invert(1) grayscale(1) brightness(1.3) contrast(9000);
+        mix-blend-mode: luminosity;
+        opacity: 0.95;
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    }
+*/
+
+@media screen and (prefers-contrast : more) {
+  html { --fgcontrast: 0.85; --bgcontrast:1; }
+}
+
+@media screen and (prefers-contrast : less) {
+  html { --fgcontrast: 1; --bgcontrast:0.8; }
+  @-moz-document url-prefix() {
+  	html { --fgcontrast: 1; --bgcontrast:0.65; }
+  }
+}
+
+.test_intense { --fgcontrast: 0.85; --bgcontrast:1; }
+.test_muted {  --fgcontrast: 1; --bgcontrast:0.8;  }
+/* currently unneeded control flag 
+.dark    { --bgcontrast: 0.75; }
+.darker  { --bgcontrast: 0.50; }
+.darkest { --bgcontrast: 0.25; }
+*/
+
+/* define 7 bg colours, 3 fg colours / re-define these colours for dark-mode / possible attention-seeking-mode also / need to have 1 low and 1 high colour per element */
+.fg_hi1 { --fgr: 37; --fgg: 37; --fgb: 37; } /*     deep grey */
+
+.fg_hi2 { --fgr: 0; --fgg: 82; --fgb: 137; } /*     deep blue */
+
+.fg_low1 { --fgr: 245; --fgg: 245; --fgb: 245; } /* pale grey */
+
+.bg_low1 { --bgr: 255; --bgg: 255; --bgb: 240; } /* pale yellow */
+
+.bg_low2 { --bgr: 240; --bgg: 255; --bgb: 255; } /* very pale blue */
+
+.bg_low3 { --bgr: 215; --bgg: 242; --bgb: 250; } /* pale blue */
+
+.bg_low4 { --bgr: 204; --bgg: 255; --bgb: 153; } /* grass green */
+
+.bg_low5 { --bgr: 204; --bgg: 204; --bgb: 255; } /* pale purple */
+
+.bg_low6 { --bgr:255; --bgg:171; --bgb:80; } /*     roughly egg yolk */
+
+.bg_hi1 { --bgr: 0; --bgg: 73; --bgb: 135; } /*     deep blue, below navy */
+
+@media screen and (prefers-contrast : more) {
+	.fg_low1 { --fgr: 253; --fgg: 253; --fgb: 253; } /* pale grey */
+	.bg_hi1 { --bgr: 0; --bgg: 63; --bgb: 115; } /* deep blue, below navy */
+}
+.fg_low1.test_intense { --fgr: 253; --fgg: 253; --fgb: 253; --fgcontrast:1 }
+.bg_hi1.test_intense  { --bgr: 0; --bgg: 63; --bgb: 115; }
+
+/* the extra selectors are needed to override a thing in foundation */
+body *, .top-bar, .button { 
+  color: rgba(
+                  calc(var(--fgr) * var(--fgcontrast)), 
+                  calc(var(--fgg) * var(--fgcontrast)), 
+                  calc(var(--fgb) * var(--fgcontrast)),
+					1.0
+                );
+  background-color: rgba(
+                  calc(var(--bgr) * var(--bgcontrast)), 
+                  calc(var(--bgg) * var(--bgcontrast)), 
+                  calc(var(--bgb) * var(--bgcontrast)),
+					1.0
+                );
+}
+
+.button:hover { background-color: rgba(
+                  var(--bgr) , 
+                  var(--bgg) , 
+                  var(--bgb) ,
+					1.0
+                );
+				color: rgba(
+                  var(--fgr) , 
+                  var(--fgg) , 
+                  var(--fgb) ,
+					1.0
+                );
+
+ }
+
+.mobileBiblio li:hover>a>h5 { color:var( --attentionbg); } 
+textarea { background-color:var(--starkfg, #fff); } 
+del { text-decoration-color:var(--errorbg); text-decoration-style: double; cursor:not-allowed; }
+ins { color:green; }
+.deadImages span:has( svg, picture, img )::before { color:red; border:red 2px solid; }
+
+.tab-title.is-active { --bgr: 215; --bgg: 242; --bgb: 250; --fgr: 37; --fgg: 37; --fgb: 37; } 
+.tab-title.is-active a { --fgr: 37; --fgg: 37; --fgb: 37; } 
+a { --fgr: 0; --fgg: 82; --fgb: 137; } 
+ul.ulbasic li::before, ol li::before { color: transparent; text-shadow: 0 0 0 var(--attentionbg); }
+
+.burgerMenu { --fgr: 245; --fgg: 245; --fgb: 245; } 
+.burgerMenu li, .burgerMenu li a { --bgr: 215; --bgg: 242; --bgb: 250; } 
+.burgerMenu li:hover, .burgerMenu li a:hover { --bgr: 240; --bgg: 255; --bgb: 255; } 
+.burgerMenu li:first-child { --bgr: 0; --bgg: 73; --bgb: 135; } 
+.pullout   { --bgr: 204; --bgg: 255; --bgb: 153; border-bottom:solid 3px var(--starkfg); font-style:italic; }
+.pullout2  { --bgr: 215; --bgg: 242; --bgb: 250; border-bottom:solid 3px var(--starkfg); font-style:italic; } 
+.left      { --fgr: 245; --fgg: 245; --fgb: 245; border-bottom:solid 3px var(--starkfg); } 
+.warn      { --bgr:255; --bgg:171; --bgb:80; } 
+form .error { font-weight:bold; --bgr:255; --bgg:171; --bgb:80; }
+.linguisticsDemoContainer table tbody tr { --bgr: 204; --bgg: 255; --bgb: 153; font-family:monospace; } 
+.tabList li.tabActive { --bgr: 240; --bgg: 255; --bgb: 255; }
+.summaryActive { --bgr: 240; --bgg: 255; --bgb: 255; } 
+ol.Alist li a:hover, a:hover  { --bgr: 215; --bgg: 242; --bgb: 250; }
+dialog.popup1[open] { --bgr: 255; --bgg: 255; --bgb: 240; }  
+dialog.popup1 a.button.masto { --fgr: 0; --fgg: 82; --fgb: 137; }  
+div.top-bar.fullWidth { --bgr: 240; --bgg: 255; --bgb: 255; }
+.button.addArrow { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; }
+.twitterLink { --bg: 215; --bgg: 242; --bgb: 250; }  
+.twitterLink:hover { --bgr: 255; --bgg: 255; --bgb: 240; --fgr: 245; --fgg: 245; --fgb: 245; }  
+#errorLog { --bgr:255; --bgg:171; --bgb:80; }
+.alert { --bgr:255; --bgg:171; --bgb:80; }  
+.adjacentGroup { --bgr: 240; --bgg: 255; --bgb: 255; } 
+.adjacentItem:hover p, .adjacentGroup a:hover p { --bgr: 244; --bgg: 255; --bgb: 255; }
+.adjacentItem:hover, .adjacentGroup a:hover { --bgcontrast:1; }
+/* created by JS, only exists when mobile  */
+.shareMenuOpen { background-color: var(--starkfg); } 
+a.button, span.button, input[type="submit"].button { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; }  
+a[href="#"].button { --fgr: 0; --fgg: 82; --fgb: 137; --bgr: 240; --bgg: 255; --bgb: 255; } 
+a.button.masto { --fgr: 0; --fgg: 82; --fgb: 137; }  
+a:hover { --bgr: 240; --bgg: 255; --bgb: 255; } 
+/*
+a.button.masto:hover  { --bgr: 240; --bgg: 255; --bgb: 255; }
+a:hover.button.masto { --bgr: 240; --bgg: 255; --bgb: 255; } 
+*/
+a:hover.button, dialog.popup1 a:hover.button.masto { --bgr: 0; --bgg: 85;--bgb: 150; --bgcontrast:1.1; --fgr:255; --fgg:255; --fgb:255; }
+dialog.popup1 a.button.masto { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; }
+i.fa-remove { --bgr: 240; --bgg: 255; --bgb: 255; --fgr: 37; --fgg: 37; --fgb: 37; border:var(--hardfg) solid 1px; } 
+/* 
+i.buttonWide { transition: background-color 0.25s ease-out, color 0.25s ease-out; --fgr: 245; --fgg: 245; --fgb: 245; } 
+i.buttonWide { --fgr: 245; --fgg: 245; --fgb: 245; } 
+*/ 
+/* this a letter used as a shape, want FG */
+i.specialPointer { --fgr: 0; --fgg: 82; --fgb: 137; }   
+input.button.addArrow:hover { --fgcontrast:1.1 } 
+input.addArrow:hover+i.specialPointer { --fgcontrast:1.1 }   
+.popOverWidget summary::marker { color: var(--attentionbg); }
+
+.highlight, .bashSample { --bgr: 204; --bgg: 204; --bgb: 255; --fgr: 37; --fgg: 37; --fgb: 37; --fgcontrast: 1; --bgcontrast: 0.8; }
+
+@media screen and (min-resolution: 150dpi) { sub, sup { --fgr: 37; --fgg: 37; --fgb: 37; } } 
+.popOverWidget details[open] summary:hover { --bgr: 240; --bgg: 255; --bgb: 255; } 
+.popOverWidget details li a::after { --fgr: 37; --fgg: 37; --fgb: 37; } 
+.groupIndexContainer .itsMe { background-color:inherit; --fgr: 0; --fgg: 82; --fgb: 137;  border:var(--attentionbg) 1px solid; } 
+.homeContainer summary.button { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; } 
+.paradigmShiftContainer .pullout { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; } 
+.shoppingContainer details[open] summary:hover { --bgr: 240; --bgg: 255; --bgb: 255; } 
+i.buttonWide { --fgr: 0; --fgg: 73; --fgb: 135; }  
+
+ol.Alist li a:hover { background-color:#C0DEED; }
+.h4tooltip { --bgr: 215; --bgg: 242; --bgb: 250; }
+.h4tooltip cite { --bgcontrast:1; }
+.h4tooltip cite:hover { --bgr: 240; --bgg: 255; --bgb: 255; }
+.h4tooltip div { --bgr: 240; --bgg: 255; --bgb: 255; }
+.h4tooltip div:hover { --bgcontrast:1;  }
+.popup1 .button.trimmed { --bgr: 215; --bgg: 242; --bgb: 250; --fgr: 37; --fgg: 37; --fgb: 37;  }
+.svgNotesContainers span.button.disabled { --bgr: 215; --bgg: 242; --bgb: 250; --fgr: 0; --fgg: 82; --fgb: 137;  }
+input[type="button"].button { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; }
+.carbonContainer li.libasic a[target="_blank"]:hover { --fgcontrast:1; --fgr: 37; --fgg: 37; --fgb: 37; }
+
+/* should be safari only */
+@media not all and (min-resolution:.001dpcm) { 
+/* Safari uses different colour models, see colourise-emoji for details */  
+	ul.ulbasic li::before, ol li::before { color: var(--attentionbg); filter: contrast(1) grayscale(100%) invert(1); }
+
+/* this block is code is to reduce odds of the sums leading to a float number, or safari barfs
+ means I cannot have the varying brightness :-(  */
+    body { --fgcontrast: 1; --bgcontrast:1;  }
+	input.button.addArrow:hover { --fgcontrast:1; } 
+	input.addArrow:hover+i.specialPointer { --fgcontrast:1; }   
+	input.button.addArrow:hover { --fgcontrast:1 } 
+	input.addArrow:hover+i.specialPointer { --fgcontrast:1 }   
+}
+
+details.logWidget ul li:nth-child(odd) { --bgr: 240; --bgg: 255; --bgb: 255; }
+details.logWidget summary:hover { --bgr: 215; --bgg: 242; --bgb: 250; } 
+
+a.adjacentItem:before, .adjacentGroup a:hover, .adjacentGroup a:hover:before, .references sup a:before { color:rgb( 0, 73, 135);  border-color:rgb( 0, 73, 135);  background-color:rgb(245, 245, 245); }
+

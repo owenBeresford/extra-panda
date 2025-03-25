@@ -1,0 +1,136 @@
+/** basic containers */
+.wholeArticle { display: flex; flex-direction:column-reverse; align-items: stretch; }
+.wholeArticle h2 sup, .wholeArticle h3 sup, .wholeArticle h4 sup, .wholeArticle h5 sup { font-size:50%; }
+.wholeArticle a sup i.fa.invert { transform: rotate(90deg); font-size:70%; }
+
+@media screen and (min-resolution: 150dpi) {
+	.wholeArticle a sup i.fa.invert { font-size:90%; }
+	.wholeArticle a sup:has( i.invert ) { font-size:50%; }
+}
+
+.annoyingBody { direction:ltr; }
+@media screen and (min-resolution: 150dpi) {
+	.annoyingBody p, .annoyingBody li, .annoyingBody span, .annoyingBody a, label { font-size:120%; width:fit-content; max-width:100vw; }
+	.annoyingBody .tabs-content p, .annoyingBody .tabs-content li, .annoyingBody .tabs-content a { font-size:120%; }
+ 	.annoyingBody.wholeArticle { width:fit-content; }
+	.annoyingBody li li, .annoyingBody li span, .annoyingBody li a, div.annoyingBody p span, 
+	div.annoyingBody p sup a, div.annoyingBody p a, div.annoyingBody li a { font-size:100%; width:fit-content;  max-width:100vw; }	
+}
+
+.lotsOfWords { column-gap:1em; column-count:7; columns: 7 25em; }
+.lotsOfWords:has( code.highlight ) { column-width:28em; }
+@media screen and ( min-width:1000px ) {
+    .lotsOfWords { column-gap:2em; margin-bottom:2em; }
+}
+	
+.halferWords { width:680px; text-align:center; margin-left: auto; margin-right: auto ; }
+.halferWords ul, .halferWords ol, .halferWords p { text-align:left; }
+@media screen and (min-resolution: 150dpi) {
+	.halferWords { width:100vw; align-self: stretch; }
+}
+	
+.fewWords { width:480px; text-align:center; margin-left: auto; margin-right: auto ; }
+.fewWords ul, .fewWords ol, .fewWords p { text-align:left; }
+@media screen and (min-resolution: 150dpi) {
+	.fewWords { width:100vw;  }
+}
+
+/* IOIO RENAME */
+.blocker { clear:both;  }
+hr.blocker { width: 90%;}
+@media screen and (min-width: 900px) {
+	.blocker { margin:1em; }
+}	
+
+/* used here as the wiki-engine proffers it, without the Wiki, this is unneeded  
+   used in every page with a list... nearly 90%? */
+.ulbasic li::before, ol li::before { content: "✨"; display: inline-block; width: 1.5em; }
+@media screen and (max-width:700px) {
+	.ulbasic { margin-left:0; }
+}
+	
+.pullout { padding-top: 0.5em; padding-right: 1em; padding-left: 1em; padding-bottom: 0.3em; }
+.pullout2 { padding-top: 0.5em; padding-right: 1em; padding-left: 1em; padding-bottom: 0.3em; }
+.pullout i, .pullout2 i { font-style:normal; }
+/* CSS imported from testing-epic */
+@media screen and (min-width:900px) {
+	.pullout.localPullout { width:calc( 100% - 400px ); display:inline-block; margin-top:1em; }
+}
+
+.addArrow { z-index:3; position: relative; border-bottom-right-radius:0px; border-top-right-radius:0px; padding-right:0.7em; min-width:10em; }
+
+i.specialPointer { z-index:2; vertical-align: inherit; font-size:4em; position: relative; top: 0.17em; left:-36px; } 
+@media screen and (min-resolution: 150dpi) {
+	i.specialPointer { font-size:6em; left: -0.3em; top: 0.25em; }
+}
+
+/* A useful class that will slap a big warning on span containing images (various formats) 
+   Adjust selector to suit needs.  The warning is about 150px on most peoples machines  */
+.deadImages span:has( svg, picture, img )::before { z-index:2; line-height:0.70; position:absolute; border:red 2px solid; content:" 🗙 "; font-size:8em; padding:0.1em; border-radius:40%; margin-top: 0.5em; margin-left: 0.15em; padding-bottom: 0.25em; pointer-events: none; }
+
+.alert { padding:7px; padding-left:20px; display:block; float:right; border-radius:4px; margin-top:15px; width:600px; text-align:right; }
+
+/** settings for the symbol font, may be moved to overrides */
+i.fa { font-size: 145%; vertical-align: middle; line-height: 1; }
+a svg { vertical-align:middle; }
+i.fa-remove { padding:3px; padding-left:7px; padding-bottom:7px; z-index:2; border-bottom:0px; border-left:0px; }
+
+/* https://fontawesome.com/v4/accessibility/
+   https://webaim.org/techniques/css/invisiblecontent/ 
+*/
+.sr-only { clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); height: 1px; width: 1px; left:-10000px; margin: -1px; overflow: hidden; padding: 0; position: absolute; }
+/* Backup definition
+.sr-only { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
+*/
+
+/** bigScreen / smallScreen
+   every page
+  */
+@media screen and ( max-resolution: 130dpi) and (min-aspect-ratio:3/5 ) and (min-width: 800px ) {
+	.bigScreenOnly { display:inline-block; }
+	.popup1.bigScreenOnly { display:none; }
+	.smallScreenOnly, .button.smallScreenOnly { display:none; } 
+	.allButtons a.smallScreenOnly { display:none; }
+}
+
+@media screen and (min-resolution: 150dpi) {
+	.allButtons a.bigScreenOnly, .allButtons span.bigScreenOnly, .bigScreenOnly, .ultraSkinny.bigScreenOnly, .allButtons a.bigScreenOnly { display:none; }
+ 	.smallScreenOnly { display:inline-block; }
+    span.button.smallScreenOnly { font-size:120%; padding:0.5em 0.3em; }
+}
+
+/* re-apply everything for a mac 
+This is big screen mac, should work with wide versions
+*/
+@media not all and (min-resolution:.001dpcm) { 
+  @supports (-webkit-appearance: none) {
+
+	.bigScreenOnly { display:inline-block; }
+	.popup1.bigScreenOnly { display:none; }
+	.smallScreenOnly { display:none; }
+	.allButtons a.smallScreenOnly { display:none; }
+}}
+
+/* small screen mac, AKA iphone/ ipad */
+@supports (-webkit-touch-callout)  {
+	@media screen and (max-width:800px) and (min-resolution:120dpi) {
+	.bigScreenOnly, .ultraSkinny.bigScreenOnly, .allButtons a.bigScreenOnly { display:none; }
+ 	.smallScreenOnly { display:inline-block; }
+}}
+
+@media screen and (min-device-width: 600px) 
+				and ( min-resolution: 150dpi) {
+    span.button.smallScreenOnly { font-size:120%; padding:0.45em 0.65em; }
+}
+
+@media screen and (min-resolution: 150dpi) {
+	h2.biblioSection { font-size:150%; }
+}
+
+.button.masto { border-width: 0px; padding: 0.6em; vertical-align: baseline; margin:0.65em; margin-bottom:0.1em; } 
+@media screen and (min-resolution: 150dpi) {
+	dialog.popup1 a.button.masto { margin-right:1em; padding:0.7em; margin-left:3em; }
+}
+
+.outerQuote { width:50%; margin-left:25%; }
+

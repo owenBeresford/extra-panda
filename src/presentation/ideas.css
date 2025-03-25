@@ -1,0 +1,18 @@
+
+/* check support bramus@front-end.social
+.log {
+  scroll-snap-type: y proximity;
+  align-content: end;
+}
+.log::after {
+  display: block;
+  content: "";
+  scroll-snap-align: end;
+}
+*/
+
+/*
+https://developer.mozilla.org/en-US/docs/Web/CSS/place-self
+*/
+
+

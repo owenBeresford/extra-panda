@@ -1,0 +1,61 @@
+@font-face {
+ font-family: 'Ubuntu';
+ src: url('/fonts/ubuntu-regular-webfont.woff2') format('woff2'),
+ url('/fonts/ubuntu-regular-webfont.woff') format('woff');
+ font-weight: normal;
+ font-style: normal;
+ font-display: swap;
+}
+@font-face {
+ font-family: 'OpenDyslexic';
+ src: url('/fonts/OpenDyslexic-Regular.woff2') format('woff2'),
+ url('/fonts/OpenDyslexic-Regular.woff') format('woff');
+ font-weight: normal;
+ font-style: normal;
+ font-display: swap;
+}
+@font-face {
+ font-family:'atkinson';
+ src: url('/fonts/Atkinson-Hyperlegible-Regular-102a.woff2') format('woff2'),
+ url('/fonts/Atkinson-Hyperlegible-Regular-102.woff') format('woff');
+ font-weight: normal;
+ font-style: normal;
+ font-display: swap;
+}
+@font-face {
+ font-family:'olivia';
+ src: url('/fonts/InclusiveSans-Regular.woff2') format('woff2'),
+ font-weight: normal;
+ font-style: normal;
+ font-display: swap;
+}
+
+/**   this font is only useful for titles, and it has soo many jaggies
+      i'll leave the 1980s in the past
+      although I would have been very impressed when using MS-DOS in 1992
+@font-face {
+ font-family: 'retro';
+ src: url('/fonts/coolfont.woff2') format('woff2'),
+ font-weight: normal;
+ font-style: normal;
+ font-display: swap;
+}
+
+https://app.color.io/
+
+*/
+/* 
+https://github.com/LivKing/Inclusive-Sans?
+https://www.oliviaking.com/inclusive-sans
+https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-alternates
+*/
+
+.h4_page { font-family: 'ubuntu', sans-serif;  }
+.highlight { font-family:monospace; }
+.bashSample { font-family:monospace; }
+
+/*
+#filteredWords { font-family:serif; }
+#filteredWords tbody tr { font-family:serif; }
+*/
+
