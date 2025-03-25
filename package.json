@@ -18,9 +18,10 @@
     "#ignore-this-line": "Edit values in this simple script if you have local security policy",
     "#ignore-this-line2": "NOTE: 'build:docs' after 'build' and 'test:web', as they purge the dist directory",
     "docs": "if [ ! -d ./dist/docs ]; then echo 'Build docs first'; else; node ./tools/doc-server.mjs & fi",
-    "build:test": "./tools/build-tests.bash",
+    "build:tests": "./tools/build-tests.bash",
     "test:web": "if [ ! -d './dist/tests' ]; then echo 'Run build:test first'; else echo 'If running manually, use CLI flags'; export NODE_ENV=development; node ./tools/tests-browser.mjs; fi",
-    "build:css": "export NODE_ENV=production; node ./node_modules/.bin/vite --config ./vite.config.lib.ts build; node ./node_modules/.bin/vite --config ./vite.config.tests.ts build tools/test-browser.ts; ",
+    "build:css": "export NODE_ENV=production; node ./node_modules/.bin/vite --config ./vite.config.lib.ts build; node ./node_modules/.bin/vite --config ./vite.config.tests.ts build tools/test-browser.ts;",
+"#comment":" # mv ./tools/test-browser.ts/dist/tests-browser.mjs dist/tests-browser.mjs; rmdir ./tools/test-browser.ts/dist/; rmdir ./tools/test-browser.ts/ ",
     "css": "node dist/tests-browser.mjs --extract-css $1 "
   },
   "repository": {

@@ -17,6 +17,7 @@
 - Somehow properly test isLibreWolf
 - Maybe look at Qutebrowser for browser unit-tests, uses less RAM, and is //a recent version// of Chrome project https://qutebrowser.org/doc/install.html#tox
 - Maybe poll for Chrome, and install Qutebrowser if absent. QQ how do I poll in the package.json?
+- Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
 https://lit.dev/
 https://www.npmjs.com/package/eslint-plugin-no-only-tests
 https://www.npmjs.com/package/eslint-plugin-promise
