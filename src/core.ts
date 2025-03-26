@@ -96,7 +96,7 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
     }
   }
   html.unshift(
-    '<nav><div class="shareMenu" id="shareMenu"><menu id="mobileMenu">',
+    '<nav><div class="shareMenu" id="shareMenu"><menu id="mobileMenu" class="mobilePopup">',
   );
   html.push("</menu></div></nav>");
 

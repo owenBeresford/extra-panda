@@ -15,7 +15,6 @@ h2 a, h3 a, h4 a, h5 a { background-color: inherit; color: inherit; }
 .wideLink ul li>a:first-of-type { display:inline-block; width:12em; text-align:center; 
 		margin-right: 0.3em; }
 .wideLink ul li sup a { width:auto; }
-/* .wideLink .ulbasic>li>sup>a { display:inline; width:inherit; margin-right: 0; } */
 
 /** if a list item is splitted due to page wrapping, maybe unused now  */
 li.split:before { content:"…"; }
@@ -38,4 +37,10 @@ li.split:before { content:"…"; }
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 { font-family: inherit; }
 body, .annoyingBody { font-family: 'ubuntu', sans-serif;  }
+
+.fixLinkedSq { font-size:200%; margin-bottom:0px; }
+#linkedinpix { width:20px; height:20px; }
+
+pre { text-align: left; }
+
 

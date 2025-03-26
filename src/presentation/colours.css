@@ -4,23 +4,7 @@
 body { --fgcontrast: 0.95; --bgcontrast:1; --fgr: 37; --fgg: 37; --fgb: 37; --bgr: 255; --bgg: 255; --bgb: 250; 
 		--errorbg:#7D0000; --starkfg:#fff; --hardfg:#aaa; --scroll1:darkgrey; --scroll2:slategrey; --attentionbg:#2ba6cb; }
 
-/*
-@miunau@meow.social
-https://fosstodon.org/deck/@miunau@meow.social
 
-assuming --bgColor contains your background color:
-
-    span {
-        color: var(--bgColor);
-        filter: invert(1) grayscale(1) brightness(1.3) contrast(9000);
-        mix-blend-mode: luminosity;
-        opacity: 0.95;
-
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    }
-*/
 
 @media screen and (prefers-contrast : more) {
   html { --fgcontrast: 0.85; --bgcontrast:1; }
@@ -35,11 +19,6 @@ assuming --bgColor contains your background color:
 
 .test_intense { --fgcontrast: 0.85; --bgcontrast:1; }
 .test_muted {  --fgcontrast: 1; --bgcontrast:0.8;  }
-/* currently unneeded control flag 
-.dark    { --bgcontrast: 0.75; }
-.darker  { --bgcontrast: 0.50; }
-.darkest { --bgcontrast: 0.25; }
-*/
 
 /* define 7 bg colours, 3 fg colours / re-define these colours for dark-mode / possible attention-seeking-mode also / need to have 1 low and 1 high colour per element */
 .fg_hi1 { --fgr: 37; --fgg: 37; --fgb: 37; } /*     deep grey */
@@ -169,7 +148,6 @@ input.addArrow:hover+i.specialPointer { --fgcontrast:1.1 }
 .shoppingContainer details[open] summary:hover { --bgr: 240; --bgg: 255; --bgb: 255; } 
 i.buttonWide { --fgr: 0; --fgg: 73; --fgb: 135; }  
 
-ol.Alist li a:hover { background-color:#C0DEED; }
 .h4tooltip { --bgr: 215; --bgg: 242; --bgb: 250; }
 .h4tooltip cite { --bgcontrast:1; }
 .h4tooltip cite:hover { --bgr: 240; --bgg: 255; --bgb: 255; }

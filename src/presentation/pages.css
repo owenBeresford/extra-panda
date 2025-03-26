@@ -32,7 +32,7 @@
 	.groupIndexContainer .h4_page p { font-size:1rem; }
     .groupIndexContainer .buttonBar { width:100vw; margin-left:0; margin-right:0; }
 	.groupIndexContainer .buttonBar li { width:100vw; font-size: 110%; } 
- 	.groupIndexContainer div#navBar a { font-size: 1rem; }
+ 	.groupIndexContainer .articleHeader nav.row a { font-size: 1rem; }
 	.groupIndexContainer .adjacentItem a.button { font-size:110%; }
 	.shareMenuOpen span.hunchUp { text-align: left; padding-left: 0; margin-left: 0px; font-size: 100%; line-height: 0.8; vertical-align: text-top; }
 	.groupIndexContainer .button { display:block; } 
@@ -71,9 +71,9 @@
 .homeContainer .home.icerow { margin:0px; max-width:100%; display: flex; flex-direction: row; }
 .homeContainer .home.column { flex: 2 1 0px; }
 .homeContainer .myUglyFace { border: var(--attentionbg) 2px solid; margin-left:0.6em; text-align:right; border-radius:50px; }
-.homeContainer #navBar .column { margin-left:0px; padding-left:0px; }
-.homeContainer #navBar.row { max-width:100%; }
-.homeContainer .h4_page { margin:15px; }
+.homeContainer .articleHeader .column { margin-left:0px; padding-left:0px; }
+.homeContainer nav.row { max-width:100%; }
+.homeContainer .wholeArticle { margin:15px; }
 .homeContainer span[rel="me"] { margin: initial; padding: 0.65em 0.8em; }
 .homeContainer div.fullWidth { width: 65%; }
 
@@ -84,7 +84,7 @@
 	.homeContainer dialog#popup1 a.trimmed i { padding:0.3em; margin:0px; }
 	.homeContainer div.fullWidth { width: 100vw; }
 	.homeContainer #siteChartLink { margin-left:0; }
-    .homeContainer #navBar .shareMenuOpen a.button.masto { padding-left: 0.2em; padding-right: 0.2em; margin-left: 0; }
+    .homeContainer nav.row .shareMenuOpen a.button.masto { padding-left: 0.2em; padding-right: 0.2em; margin-left: 0; }
 	.homeContainer p, .homeContainer  li, .homeContainer span { font-size:100%; }
 	.homeContainer p span { font-size:100%; }
 	.homeContainer li { margin:10px; }
@@ -92,8 +92,8 @@
 					.homeContainer h6 { font-size:250%; }
 	.homeContainer .column { padding-left:0px; padding-right:0px; }
 	.homeContainer fieldset.tabs-content { width:100%; max-width:100%; }
-	.homeContainer div#navBar a { font-size: 120%; padding: 0.3em 0.3em; }
-	.homeContainer div#navBar a i { margin:0.75em; }
+	.homeContainer nav.row a { font-size: 120%; padding: 0.3em 0.3em; }
+	.homeContainer nav.row a i { margin:0.75em; }
 }
 @media screen and (min-width:700px) and (max-width:900px)  {
 	.homeContainer div.chunkArticles { min-width: 15em; flex: 2 1 0px; }

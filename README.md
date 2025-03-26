@@ -135,7 +135,7 @@ Notes:
 
 #### Metrics that are important to goals
 
-- OLD TECH:: 
+- OLD TECH (for the JS):: 
   - first bundle: 1MB flat
   - second bundle (smaller stdlib): 670KB
   - above but with with minify: 361KB
@@ -147,6 +147,9 @@ Notes:
   - above with gzip: 9KB   
     - UPDATE: due to further features, I have crept over the 10k boundary &lt;Meme: "so it begins"&gt;
   - I think I have perfect feature match, and new solution is 4% of volume of previous solution. UPDATE 6% in 2025
+
+- OLD TECH for CSS
+  - #TODO
 
 </details>
 <details open>
@@ -174,6 +177,13 @@ Notes:
 - TODO: Make support for win32
 - TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
 
+</details>
+<details>
+<summary>There is CSS ?</summary>
+I moved the CSS into this project, and rationalised it.
+...
+basic site has 24 CSS components
+some pages have localised extensions, or new ones
 </details>
 <details>
 <summary> Lists of technical names </summary>

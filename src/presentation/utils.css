@@ -28,13 +28,19 @@
 @media screen and (min-resolution: 150dpi) {
 	.halferWords { width:100vw; align-self: stretch; margin: 1em 0em; }
 }
+@media screen and (max-width:600px ) {
+	.halferWords {  width: 100vw; } 
+}
 	
 .fewWords { width:480px; text-align:center; margin-left: auto; margin-right: auto ; }
 .fewWords ul, .fewWords ol, .fewWords p { text-align:left; }
 @media screen and (min-resolution: 150dpi) {
 	.fewWords { width:100vw; margin-left:0; margin-right:0;  }
 }
-
+@media screen and (max-width:600px ) {
+	.fewWords {  width: 100vw; } 
+}
+	
 /* IOIO RENAME */
 .blocker { clear:both;  }
 hr.blocker { width: 90%;}

@@ -22,5 +22,40 @@ https://www.oliviaking.com/inclusive-sans
 TARGET https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-alternates
 */
 
+/*
+@miunau@meow.social
+https://fosstodon.org/deck/@miunau@meow.social
 
+assuming --bgColor contains your background color:
 
+    span {
+        color: var(--bgColor);
+        filter: invert(1) grayscale(1) brightness(1.3) contrast(9000);
+        mix-blend-mode: luminosity;
+        opacity: 0.95;
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    }
+*/
+
+/**   this font is only useful for titles, and it has soo many jaggies
+      i'll leave the 1980s in the past
+      although I would have been very impressed when using MS-DOS in 1992
+@font-face {
+ font-family: 'retro';
+ src: url('/fonts/coolfont.woff2') format('woff2'),
+ font-weight: normal;
+ font-style: normal;
+ font-display: swap;
+}
+
+https://app.color.io/
+
+*/
+/* 
+https://github.com/LivKing/Inclusive-Sans?
+https://www.oliviaking.com/inclusive-sans
+https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-alternates
+*/
