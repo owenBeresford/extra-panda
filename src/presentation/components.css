@@ -55,13 +55,14 @@ This is big screen mac, should work with wide versions
 		display:inline-block; margin-bottom:0px; white-space: nowrap; } 
 @media screen and ( min-width:1000px ) {
 	.bibbles span.ultraSkinny span { vertical-align: middle; }
-	.bibbles span.ultraSkinny { display:inline-block; margin-top:0.5em;  }
+	.bibbles span.ultraSkinny { display:inline-block; margin-top:0.5em; }
 }
 @media screen and ( max-resolution: 100dpi) and (max-width:1000px) {
 	.bibbles span.ultraSkinny { width:13em; display:inline-block; }
 }
 @media screen and (min-resolution: 150dpi) {
-	.bibbles span.ultraSkinny span { font-size: 100%;  } 
+	.bibbles span.ultraSkinny span { font-size: 100%; margin-left:0; } 
+	.bibbles span.ultraSkinny { max-width:100vw; margin-left:1em; padding-left:0px;  }
 }
 
 
@@ -222,20 +223,20 @@ This is big screen mac, should work with wide versions
  .defaultLinksMenu[open] { z-index:2; position:fixed; right:4%;  }
 
  .dfl { --bgr: 215; --bgg: 242; --bgb: 250; --fgr: 245; --fgg: 245; --fgb: 245; 
-		list-style: none; margin-top:2px; padding-left:0px; }
+		list-style: none; margin-top:2px; padding-left:0px; border: 1px solid var(--scroll1); }
  .dfl li a { width: calc( 100% - 2em ); display: inline-block; padding:0.4em 1em; }
  .dfl li:nth-child(even) a, .dfl li:nth-child(even) { --bgr: 240; --bgg: 255; --bgb: 255; }
  .dfl li:first-child { --bgr: 0; --bgg: 73; --bgb: 135; width: calc( 100% - 2em ); 
 					display: inline-block; padding: 0.3em 1em; }
 
  .titleHolder summary { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; 
-					width: calc( 100% - 2em ); padding:0px 1em; } 
+					width: calc( 100% - 2em ); padding:0px 1em; min-width:9em; } 
  .titleHolder summary::marker { font-size:2em; text-align:left; }
- .titleHolder summary div { width: 73%; display: inline-block; padding-bottom: .80em; padding-right: 0.7em; }
+ .titleHolder summary div { width: calc(100% - 2.4em); display: inline-block; padding-bottom: .80em; padding-right: 0.7em; }
  .titleHolder { z-index:1; position:fixed; right:4%; }
  .titleHolder:not( :has( .titleList> * ) ) { display:none; }
  .titleList { list-style:none; padding-left: 0; margin:0; border: 1px solid var( --scroll1 );  }
- .titleHolder[open] summary div { padding-right:0px; }
+ .titleHolder[open] summary div { padding-right:4px; transition:border-right 0.5s, width 2s; }
  .titleList a { width: calc( 100% - 2em ); display: inline-block; padding:0.4em 1em; }
  .titleList li:nth-child(even) { --bgr: 240; --bgg: 255; --bgb: 255; }
  .defaultLinksMenu:has( .defaultLinksMenu[open] ) .titleList { margin-top:4em; }
@@ -247,6 +248,9 @@ This is big screen mac, should work with wide versions
 .browserTestingContainer legend { font-size:1.6em; }
 @media screen and (min-width:1280px) {
 	.browserTestingContainer { width: 40em; }
+}
+@media screen and (min-resolution: 150dpi) {
+	.browserTestingContainer { width: 100vw; }
 }
 
 /** adjacent  group holds list * X holds item * X 
@@ -314,6 +318,10 @@ p.buttonBar a:first-child { margin-left:0px; }
 @media screen and (max-width:900px) {
 	.buttonBar { width:100vw; } /* this will lead to wrapping on smaller screens */
 }
+@media screen and (min-resolution: 150dpi) {
+	.buttonBar { padding-left:0; padding-right:0; }
+}
+
 
 /**  mobileMenu  RENAME
  only rendered on mobile view
@@ -461,7 +469,7 @@ code[lang="html"].highlight::before, .highlight.wide::before { content:""; }
 
 @media screen and (min-resolution: 150dpi) {
 	.articleHeader .row a { font-size:120%; }
-	.articleHeader .row { display:block; width:100vw; max-width:min-content; }
+	.articleHeader nav.row { display:block; width:100vw; max-width:min-content; }
 
 	.articleHeader .row a i { margin:1em 0.7em; }
 	.articleHeader .row a svg { margin-left:0.4em; }
@@ -492,7 +500,15 @@ This is big screen mac, should work with wide versions
   @supports (-webkit-appearance: none) {
 	.articleHeader .fullWidth p:empty { display:none; }
 }}
+.articleHeader nav.row:not( :has(.titleHolder) ) .bibbles.row  { width: calc(100vw - 6%); max-width:100vw; }
 
+@media screen and (max-width: 1080px) {
+	.articleHeader nav.row:not( :has(.titleHolder) ) .bibbles.row .allButtons  { width: 28.5em; }
+}
+@media screen and (min-resolution: 150dpi) {
+	.articleHeader nav.row:not( :has(.titleHolder) ) .bibbles.row .allButtons  { width: auto; }
+
+}
 
 /** mixed navBar stuff
 	every page
@@ -592,5 +608,4 @@ sup a[aria-label], .reading, footer a { text-decoration:underline; }
 @media screen and (max-width: 800px) {
 	sup a { line-height:2; }
 }
-
 
