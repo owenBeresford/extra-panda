@@ -172,24 +172,68 @@ Notes:
 - Do more code readability changes.
 - DONE: Add jest-lite/ browser unit-tests for the skip() sections in vitest.  These are often behaviour centric tests.
 - As the suite sits in Nov 2024, it takes about a minute to exec on a fast PC.   Most of the exec delay is **sleep()** due to the many process model in these tests.
-- `I will iterate to make this a standalone test repo.`  I have added template files, for later extension.  
-- TODO: Want to add some CSS tests for crucial UI processes, like z-index
-- TODO: Make support for win32
+- I have added template files, for later extension.  
+- TODO: Want to add some CSS tests for crucial UI processes, like z-index.
+- TODO: Make support for win32.
 - TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
+- Am I aware that Vitest supports a GUI mode? [✔].   It was doing that when I first started using this tool, see [https://vitest.dev/guide/ui.html].   Unless I read this wrongly, this is just an output driver, not running the modules in the browser.     
 
 </details>
 <details>
-<summary>There is CSS ?</summary>
-I moved the CSS into this project, and rationalised it.
-...
-basic site has 24 CSS components
-some pages have localised extensions, or new ones
+<summary>There is CSS here?</summary>
+This project now holds the CSS used to style the site.   There is a slow moving change to move as much display logic into CSS as this is still presentation work.  I have structured the CSS to modern standards (2008 knowledge !== 2025 knowledge).   Most of my previous experience is "making a new feature with current tools" (each time).  
+
+- I moved the CSS into this project, and rationalised it.
+- The standards and browsers have moved since my first edition, and using newer CSS features works better.
+- I have refactored the CSS to make it more readable, rather than minimum-spend "append abit more to the end".  My investment was all on English texts.   
+- For browsers in 2005-8, I thought that CSS via HTML IDs worked better.   This may have been true for MSIE 5-6, but is false today.   I have reduced the number of HTML IDs used as CSS selectors.   
+- I restructured the CSS into "features", rather than cloud of unique IDs/ class names.   I think I have improved the names used so it will be more clear to any readers.
+- I have removed various old commented CSS, and also aggregated all my ideas notes into a single ideas file that I might read [ever].
+- In 2022, I pulled any CSS blobs from the articles into the single CSS sheet, as I was hoping this would mean I could factor common sections and have less code.  This has worked somewhat.
+- I discarded SOME older work when I imported Foundation [https://get.foundation/sites/docs/installation.html installation] [https://get.foundation/sites/docs/ docs] in 2017.   Most of the current CSS volume is Foundation
+The articles with no extra/ dedicated CSS are composed of "standard components".  This is 26 features ~ all with enough RWD support:
+
+- accessSrc         ~ right aligned container for source repo links, 
+- betterDL          ~ where I define a list of terms, they are rendered via this,
+- buttonBar	        ~ some longer articles are chopped up, the button bar holds links to each sub article,
+- addReferences     ~ a marker to enable references extra UI features
+- tabs-content      ~ CSS for a tabsWidget, some code is Foundation, so different naming scheme 
+- maquetteContainer ~ maquette articles have a dedicated layout...
+- footWidget        ~ template to layout the links in the footer,  
+- keyWordsWidget    ~ some pages list keywords, this is added to support recruiters,
+- accordionWidget   ~ not used often, a CSS wrapper for DETAILS/ SUMMARY
+- logWidget         ~ a widget for holding on screen messages like a console.  This approach is good for phones
+- popOverWidget     ~ a display popup that overlays the rest of the page, includes X to close.  Used to make pages seem less long on first glance.
+- linksWidget       ~ the CSS for the default menu on the top right of desktop mode
+- headingsWidget    ~ the menu of internal headings in the current article 
+- mastodonWidget    ~ a feature with a DIALOG for choosing which [https://joinmastodon.org/servers Mastodon] server to send a SM link to.
+
+- broswerTest       ~ articles that includes technical features should include a test report on what browsers support the technology.  This renders it.
+- mobileBiblio      ~ CSS feature to style the list of external links at the end of the article, when using a phone.
+- adjacentGroup     ~ CSS container for the related content same-site links, appears at the end of the article. 
+
+- articleHeader     ~ CSS to build the document headers
+- allButtons        ~ a container for all the external links and the article meta data, 
+- bibbles           ~ TO_BE_RENAMED ~ the button-bar for social media,
+
+- sharemenu         ~ TO_BE_REFACTORED ~ for mobile only ~ the above SM links, but optimised for mobile,
+- mobilePopup       ~ the container for shareMenu  
+
+- lotsOfWords       ~ a full-width block
+- quiteWide         ~ a 70em / 1120px block 
+- halferWords       ~ a 48em / 680px block
+- fewWords          ~ a 30em / 480px block  
+
+Some pages have extra features eg [https://owenberesford.me.uk/resource/form-no-js-maquette], but this is rarer than adjustments.
+I am adding test pages to show the articles with with broad range of content, rather than the content when i made the feature. 
+When running locally the "debug-layout" test capacity is useful.  
+
 </details>
 <details>
 <summary> Lists of technical names </summary>
 
 #### Process to add a new webtest \#leSigh
-I ought to improve this process.
+I ought to improve this process.  These are the tests that build their own GUI/ browser.
 * make src/test/\*webtest.mjs not the vitest files which are automated
 * ensure execTest line is on the end of the new test
 * copy config and rename files inside vite.config.*.ts 
@@ -215,6 +259,7 @@ I ought to improve this process.
 - ''select'' - enable select and word count feature
 - ''dump-css'' number 1 or 2
 - ''aspect''   used with ''dump-css''
+- ''debug-layout'' in the HTML rendering engine
 
 #### Known CSS containers that this code processes
 

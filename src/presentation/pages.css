@@ -94,7 +94,7 @@
   .homeContainer  .after_menu.articleContent, .h4_page.wholeArticle { min-width: 100vw; }
    .homeContainer .halferWords {  width: 100vw; }
 	.homeContainer .home.column, .homeContainer .chunkArticles.column { flex: 1 100 0px; }
-	.homeContainer dialog#popup1 a.trimmed i { padding:0.3em; margin:0px; }
+	.homeContainer dialog#mastodonWidget a.trimmed i { padding:0.3em; margin:0px; }
 	.homeContainer div.fullWidth { width: 100vw; }
 	.homeContainer #siteChartLink { margin-left:0; }
     .homeContainer nav.row .shareMenuOpen a.button.masto { padding-left: 0.2em; padding-right: 0.2em; margin-left: 0; }
@@ -116,7 +116,7 @@
 	.IAmLibreWolf .bigScreenOnly { display:none; }
 	.IAmLibreWolf .smallScreenOnly { display:inline-block; }
  	.IAmLibreWolf .homeContainer .home.column { flex: 1 100 0px; }	
-    .IAmLibreWolf .popup1 input { width: 100vw; min-width: 10em; display: inline-block; }
+    .IAmLibreWolf .mastodonWidget input { width: 100vw; min-width: 10em; display: inline-block; }
 	
 }
 @media screen and (max-resolution: 199dpi) {
@@ -125,7 +125,7 @@
 
 	.IAmLibreWolf .smallScreenOnly { display:none; }
  	.IAmLibreWolf .homeContainer .home.column { flex: 2 1 0px; }
-    .IAmLibreWolf .popup1 input { width:15em; display:inline-block; font-size:100%; }
+    .IAmLibreWolf .mastodonWidget input { width:15em; display:inline-block; font-size:100%; }
 
     .IAmLibreWolf .h4_page p, .IAmLibreWolf .h4_page li, .IAmLibreWolf .h4_page span,  
 	.IAmLibreWolf .h4_page a, .IAmLibreWolf label {
@@ -134,13 +134,13 @@
 }
 
 @media screen and (max-resolution: 199dpi) and (min-aspect-ratio: 3 / 5) and (min-width: 800px) {
-	.IAmLibreWolf .popup1.bigScreenOnly { display: none; }
-	.IAmLibreWolf .popup1.bigScreenOnly[open] { display: block; }
+	.IAmLibreWolf .mastodonWidget.bigScreenOnly { display: none; }
+	.IAmLibreWolf .mastodonWidget.bigScreenOnly[open] { display: block; }
 }
 
 @media screen and (min-resolution: 200dpi) and (min-aspect-ratio: 3 / 5) and (min-width: 800px) {
-	.IAmLibreWolf .popup1.bigScreenOnly { display: none; }
-	.IAmLibreWolf .popup1.bigScreenOnly[open] { display: block; }
+	.IAmLibreWolf .mastodonWidget.bigScreenOnly { display: none; }
+	.IAmLibreWolf .mastodonWidget.bigScreenOnly[open] { display: block; }
 }
 
 .tabContainer { position: relative; top: -14em; }

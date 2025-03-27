@@ -29,7 +29,7 @@
 	.halferWords { width:100vw; align-self: stretch; margin: 1em 0em; }
 }
 @media screen and (max-width:600px ) {
-	.halferWords {  width: 100vw; } 
+	.halferWords { width: 100vw; } 
 }
 	
 .fewWords { width:480px; text-align:center; margin-left: auto; margin-right: auto ; }
@@ -95,7 +95,7 @@ i.fa-remove { padding:3px; padding-left:7px; padding-bottom:7px; z-index:2; bord
   */
 @media screen and ( max-resolution: 130dpi) and (min-aspect-ratio:3/5 ) and (min-width: 800px ) {
 	.bigScreenOnly { display:inline-block; }
-	.popup1.bigScreenOnly { display:none; }
+	.mastodonWidget.bigScreenOnly { display:none; }
 	.smallScreenOnly, .button.smallScreenOnly { display:none; } 
 	.allButtons a.smallScreenOnly { display:none; }
 }
@@ -113,7 +113,7 @@ This is big screen mac, should work with wide versions
   @supports (-webkit-appearance: none) {
 
 	.bigScreenOnly { display:inline-block; }
-	.popup1.bigScreenOnly { display:none; }
+	.mastodonWidget.bigScreenOnly { display:none; }
 	.smallScreenOnly { display:none; }
 	.allButtons a.smallScreenOnly { display:none; }
 }}
@@ -136,7 +136,7 @@ This is big screen mac, should work with wide versions
 
 .button.masto { border-width: 0px; padding: 0.6em; vertical-align: baseline; margin:0.65em; margin-bottom:0.1em; } 
 @media screen and (min-resolution: 150dpi) {
-	dialog.popup1 a.button.masto { margin-right:1em; padding:0.7em; margin-left:3em; }
+	dialog.mastodonWidget a.button.masto { margin-right:1em; padding:0.7em; margin-left:3em; }
 }
 
 .outerQuote { width:50%; margin-left:25%; }

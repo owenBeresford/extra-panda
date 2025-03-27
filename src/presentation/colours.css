@@ -103,8 +103,8 @@ form .error { font-weight:bold; --bgr:255; --bgg:171; --bgb:80; }
 .tabList li.tabActive { --bgr: 240; --bgg: 255; --bgb: 255; }
 .summaryActive { --bgr: 240; --bgg: 255; --bgb: 255; } 
 ol.Alist li a:hover, a:hover  { --bgr: 215; --bgg: 242; --bgb: 250; }
-dialog.popup1[open] { --bgr: 255; --bgg: 255; --bgb: 240; }  
-dialog.popup1 a.button.masto { --fgr: 0; --fgg: 82; --fgb: 137; }  
+dialog.mastodonWidget[open] { --bgr: 255; --bgg: 255; --bgb: 240; }  
+dialog.mastodonWidget a.button.masto { --fgr: 0; --fgg: 82; --fgb: 137; }  
 div.top-bar.fullWidth { --bgr: 240; --bgg: 255; --bgb: 255; }
 .button.addArrow { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; }
 .twitterLink { --bg: 215; --bgg: 242; --bgb: 250; }  
@@ -124,8 +124,8 @@ a:hover { --bgr: 240; --bgg: 255; --bgb: 255; }
 a.button.masto:hover  { --bgr: 240; --bgg: 255; --bgb: 255; }
 a:hover.button.masto { --bgr: 240; --bgg: 255; --bgb: 255; } 
 */
-a:hover.button, dialog.popup1 a:hover.button.masto { --bgr: 0; --bgg: 85;--bgb: 150; --bgcontrast:1.1; --fgr:255; --fgg:255; --fgb:255; }
-dialog.popup1 a.button.masto { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; }
+a:hover.button, dialog.mastodonWidget a:hover.button.masto { --bgr: 0; --bgg: 85;--bgb: 150; --bgcontrast:1.1; --fgr:255; --fgg:255; --fgb:255; }
+dialog.mastodonWidget a.button.masto { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; }
 i.fa-remove { --bgr: 240; --bgg: 255; --bgb: 255; --fgr: 37; --fgg: 37; --fgb: 37; border:var(--hardfg) solid 1px; } 
 /* 
 i.buttonWide { transition: background-color 0.25s ease-out, color 0.25s ease-out; --fgr: 245; --fgg: 245; --fgb: 245; } 
@@ -153,7 +153,7 @@ i.buttonWide { --fgr: 0; --fgg: 73; --fgb: 135; }
 .h4tooltip cite:hover { --bgr: 240; --bgg: 255; --bgb: 255; }
 .h4tooltip div { --bgr: 240; --bgg: 255; --bgb: 255; }
 .h4tooltip div:hover { --bgcontrast:1;  }
-.popup1 .button.trimmed { --bgr: 215; --bgg: 242; --bgb: 250; --fgr: 37; --fgg: 37; --fgb: 37;  }
+.mastodonWidget .button.trimmed { --bgr: 215; --bgg: 242; --bgb: 250; --fgr: 37; --fgg: 37; --fgb: 37;  }
 .svgNotesContainers span.button.disabled { --bgr: 215; --bgg: 242; --bgb: 250; --fgr: 0; --fgg: 82; --fgb: 137;  }
 input[type="button"].button { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; }
 .carbonContainer li.libasic a[target="_blank"]:hover { --fgcontrast:1; --fgr: 37; --fgg: 37; --fgb: 37; }

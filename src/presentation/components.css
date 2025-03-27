@@ -1,26 +1,26 @@
 
 /** FOOTER  RENAME h4_footer 
 	nearly every page, */
-.tmplFoot { margin:1.2em; text-align:center; font-size: 70%; max-width:100vw; }
-.tmplFoot .column { display:inline-block; height:3.1em;  }
-.tmplFoot .column:first-child { width:180px; vertical-align:top; text-align:right; flex: 1 4 0px; } 
-.tmplFoot .bigColumn { flex:4 4 0px; }
+.footWidget { margin:1.2em; text-align:center; font-size: 70%; max-width:100vw; }
+.footWidget .column { display:inline-block; height:3.1em;  }
+.footWidget .column:first-child { width:180px; vertical-align:top; text-align:right; flex: 1 4 0px; } 
+.footWidget .bigColumn { flex:4 4 0px; }
 
-.tmplFoot .leftFooter img { vertical-align:top; }
-.tmplFoot p { margin-bottom:0.2em; }
-.tmplFoot a { text-decoration:underline; }
+.footWidget .leftFooter img { vertical-align:top; }
+.footWidget p { margin-bottom:0.2em; }
+.footWidget a { text-decoration:underline; }
 
 @media screen and (min-resolution: 150dpi) {
-	.tmplFoot p { margin-bottom:1em; }
-	.tmplFoot { width:100%; margin:0.6em; }
+	.footWidget p { margin-bottom:1em; }
+	.footWidget { width:100%; margin:0.6em; }
 }
 @media screen and (max-width:1000px) {
 	/* as of 2020 this only applies to the home page */
-	.tmplFoot .leftFooter:nth-child(2) { width:120px; }
+	.footWidget .leftFooter:nth-child(2) { width:120px; }
 }
 @media screen and (max-width:700px) {
-    .tmplFoot .leftFooter { display:none; }
-    .tmplFoot { margin:0; margin-top:2em; font-size:100%; } 
+    .footWidget .leftFooter { display:none; }
+    .footWidget { margin:0; margin-top:2em; font-size:100%; } 
     .tmolFoot a { margin-left:1.5em; }
 }	
 
@@ -181,49 +181,49 @@ This is big screen mac, should work with wide versions
 	}	
 }
 
-/** popup1
+/** mastodonWidget
    every page */
-.popup1 { display:none; }
-dialog.popup1[open] { display:block; z-index:4; width:400px; position: absolute; padding: 0.5em; left: calc( 50% - 200px ); }
-.popup1 input { width:15em; display:inline-block; font-size:130%; }
-.popup1 .button { display:inline-block; margin-bottom:0; padding-bottom: 1em; padding-top: 1em; }
-.popup1 .button.trimmed { padding: 0.6em; margin-left: 4em; }
-dialog.popup1 a.button.masto { margin-right:1em; padding:0.7em; margin-left:3em; }
+.mastodonWidget { display:none; }
+dialog.mastodonWidget[open] { display:block; z-index:4; width:400px; position: absolute; padding: 0.5em; left: calc( 50% - 200px ); }
+.mastodonWidget input { width:15em; display:inline-block; font-size:130%; }
+.mastodonWidget .button { display:inline-block; margin-bottom:0; padding-bottom: 1em; padding-top: 1em; }
+.mastodonWidget .button.trimmed { padding: 0.6em; margin-left: 4em; }
+dialog.mastodonWidget a.button.masto { margin-right:1em; padding:0.7em; margin-left:3em; }
 .button.masto { border-width: 0px; padding: 0.6em; vertical-align: baseline; margin:0.65em; margin-bottom:0.1em; } 
 
 @media screen and (min-resolution: 150dpi) {
-	dialog.popup1[open] { width:95%; left:-2em; font-size:100%; position:absolute; }
-	.popup1 input { width:100vw; min-width:10em; display:inline-block; }
-	.popup1 .button { display:inline-block; margin-bottom:0; padding-bottom: 1em; padding-top: 1em; font-size:120%; margin-left:0.3em; }
-	.popup1 .button.trimmed { padding: 0.7em 0.5em; margin-left:0.2em; padding-left:0.2em; }
-	.popup1 span.button.masto  { margin-left:0.3em; margin-right:0.3em; margin-top:0.5em; }
-	.articleHeader .popup1 span.button.trimmed i { width:50px; margin:0.5em 0.3em; } 
-	.popup1 .fa-cancel { margin:0px; }
-	.popup1 a.button { margin-left: 0px; width:100vw; }
-	.popup1 a#hideMasto { padding: 0.45em 0.75em; }
+	dialog.mastodonWidget[open] { width:95%; left:-2em; font-size:100%; position:absolute; }
+	.mastodonWidget input { width:100vw; min-width:10em; display:inline-block; }
+	.mastodonWidget .button { display:inline-block; margin-bottom:0; padding-bottom: 1em; padding-top: 1em; font-size:120%; margin-left:0.3em; }
+	.mastodonWidget .button.trimmed { padding: 0.7em 0.5em; margin-left:0.2em; padding-left:0.2em; }
+	.mastodonWidget span.button.masto  { margin-left:0.3em; margin-right:0.3em; margin-top:0.5em; }
+	.articleHeader .mastodonWidget span.button.trimmed i { width:50px; margin:0.5em 0.3em; } 
+	.mastodonWidget .fa-cancel { margin:0px; }
+	.mastodonWidget a.button { margin-left: 0px; width:100vw; }
+	.mastodonWidget a#hideMasto { padding: 0.45em 0.75em; }
 
 }
 @media screen and ( max-resolution: 130dpi) and (min-aspect-ratio:3/5 ) and (min-width: 800px ) {
-	.popup1.bigScreenOnly { display:none; }
+	.mastodonWidget.bigScreenOnly { display:none; }
 }	
 /* re-apply everything for a mac 
 This is big screen mac, should work with wide versions
 */
 @media not all and (min-resolution:.001dpcm) { 
   @supports (-webkit-appearance: none) {
-	.popup1.bigScreenOnly { display:none; }	
+	.mastodonWidget.bigScreenOnly { display:none; }	
 }
 }
 
-/* default page menu 
+/** linksWidget default actions menu 
 	nearly every page */
- .defaultLinksMenu { text-align: right; margin-left: auto; white-space: nowrap; }
- .defaultLinksMenu.column { flex: 1 1 10em; }
+ .linksWidget { text-align: right; margin-left: auto; white-space: nowrap; }
+ .linksWidget.column { flex: 1 1 10em; }
  .defaultLinksTrigger:before { content:'\e805'; font-size:1.5em; padding:0.5em; }
  .defaultLinksTrigger::marker { content:""; }
- .defaultLinksMenu[open] .defaultLinksTrigger { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; }
- .defaultLinksMenu[open] .defaultLinksTrigger:before { content:'\e802'; }
- .defaultLinksMenu[open] { z-index:2; position:fixed; right:4%;  }
+ .linksWidget[open] .defaultLinksTrigger { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; }
+ .linksWidget[open] .defaultLinksTrigger:before { content:'\e802'; }
+ .linksWidget[open] { z-index:2; position:fixed; right:4%;  }
 
  .dfl { --bgr: 215; --bgg: 242; --bgb: 250; --fgr: 245; --fgg: 245; --fgb: 245; 
 		list-style: none; margin-top:2px; padding-left:0px; border: 1px solid var(--scroll1); }
@@ -232,17 +232,19 @@ This is big screen mac, should work with wide versions
  .dfl li:first-child { --bgr: 0; --bgg: 73; --bgb: 135; width: calc( 100% - 2em ); 
 					display: inline-block; padding: 0.3em 1em; }
 
- .titleHolder summary { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; 
+/** headingsWidget
+	nearly every page */
+ .headingsWidget summary { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; 
 					width: calc( 100% - 2em ); padding:0px 1em; min-width:9em; } 
- .titleHolder summary::marker { font-size:2em; text-align:left; }
- .titleHolder summary div { width: calc(100% - 2.4em); display: inline-block; padding-bottom: .80em; padding-right: 0.7em; }
- .titleHolder { z-index:1; position:fixed; right:4%; }
- .titleHolder:not( :has( .titleList> * ) ) { display:none; }
+ .headingsWidget summary::marker { font-size:2em; text-align:left; }
+ .headingsWidget summary div { width: calc(100% - 2.4em); display: inline-block; padding-bottom: .80em; padding-right: 0.7em; }
+ .headingsWidget { z-index:1; position:fixed; right:4%; }
+ .headingsWidget:not( :has( .titleList> * ) ) { display:none; }
  .titleList { list-style:none; padding-left: 0; margin:0; border: 1px solid var( --scroll1 );  }
- .titleHolder[open] summary div { padding-right:4px; transition:border-right 0.5s, width 2s; }
+ .headingsWidget[open] summary div { padding-right:4px; transition:border-right 0.5s, width 2s; }
  .titleList a { width: calc( 100% - 2em ); display: inline-block; padding:0.4em 1em; }
  .titleList li:nth-child(even) { --bgr: 240; --bgg: 255; --bgb: 255; }
- .defaultLinksMenu:has( .defaultLinksMenu[open] ) .titleList { margin-top:4em; }
+ .linksWidget:has( .linksWidget[open] ) .titleList { margin-top:4em; }
 
 /** broswerTest
 	about 15-20 pages
@@ -476,8 +478,8 @@ code[lang="html"].highlight::before, .highlight.wide::before { content:""; }
 
 	.articleHeader .row a i { margin:1em 0.7em; }
 	.articleHeader .row a svg { margin-left:0.4em; }
-  	.articleHeader .popup1 a.button { margin-left: 0px; width:100vw; }
-	.articleHeader .popup1 a#hideMasto { padding: 0.45em 0.75em; }
+  	.articleHeader .mastodonWidget a.button { margin-left: 0px; width:100vw; }
+	.articleHeader .mastodonWidget a#hideMasto { padding: 0.45em 0.75em; }
 	.articleHeader  a#rssLink i { margin:inherit; }
 
     .articleHeader div.fullWidth { width:calc( 100vw - 1.5em ); }
@@ -503,13 +505,13 @@ This is big screen mac, should work with wide versions
   @supports (-webkit-appearance: none) {
 	.articleHeader .fullWidth p:empty { display:none; }
 }}
-.articleHeader nav.row:not( :has(.titleHolder) ) .bibbles.row  { width: calc(100vw - 6%); max-width:100vw; }
+.articleHeader nav.row:not( :has(.headingsWidget) ) .bibbles.row  { width: calc(100vw - 6%); max-width:100vw; }
 
 @media screen and (max-width: 1080px) {
-	.articleHeader nav.row:not( :has(.titleHolder) ) .bibbles.row .allButtons  { width: 28.5em; }
+	.articleHeader nav.row:not( :has(.headingsWidget) ) .bibbles.row .allButtons  { width: 28.5em; }
 }
 @media screen and (min-resolution: 150dpi) {
-	.articleHeader nav.row:not( :has(.titleHolder) ) .bibbles.row .allButtons  { width: auto; }
+	.articleHeader nav.row:not( :has(.headingsWidget) ) .bibbles.row .allButtons  { width: auto; }
 
 }
 
@@ -524,8 +526,8 @@ This is big screen mac, should work with wide versions
    	.articleHeader nav.row .shareMenuOpen a i { margin: .3em; height: 1.5em; display: inline-block; }
    	.articleHeader nav.row .shareMenuOpen a i.fa-copy { margin: 3px 0px; padding: 0px; position: relative; left: 0.1em; }
     .articleHeader nav.row .shareMenuOpen a.button  { margin-left:0.40em; }
-	.articleHeader nav.row .popup1 a.button { margin-left: 0px; width:100vw; }
- 	.articleHeader nav.row .popup1 a#hideMasto { padding: 0.45em 0.75em; }
+	.articleHeader nav.row .mastodonWidget a.button { margin-left: 0px; width:100vw; }
+ 	.articleHeader nav.row .mastodonWidget a#hideMasto { padding: 0.45em 0.75em; }
   	.articleHeader nav.row .shareMenuOpen a { font-size:120%; }
 }
 /* hack for landscape large phones & weird screen magnification laptops: suppress mobile flexing */
