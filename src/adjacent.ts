@@ -357,9 +357,7 @@ function convert2IndexHTML(
       list[i].url +
       '" title="' +
       tt +
-      '">' +
-      list[i].title +
-      ' <span class="button">' +
+      '"> <span class="button">' +
       list[i].title +
       '</span><p id="adjacent' +
       nui +
