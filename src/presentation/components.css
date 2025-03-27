@@ -147,7 +147,8 @@ This is big screen mac, should work with wide versions
 .accordionWidget summary a[href^="#"] sup { pointer-events:auto; }
 .accordionWidget summary h4 { display:inline; }
 .accordionWidget details { overflow-y: scroll; }
-.accordionWidget details:not([open]) { overflow-y: hidden; }
+.accordionWidget details:not( [open] ) { overflow-y: hidden; }
+
 
 /** allButtons 
 	every page */
@@ -160,6 +161,7 @@ This is big screen mac, should work with wide versions
 	.allButtons a.bigScreenOnly { display:none; }
 	.allButtons a { width:inherit; }
 }
+
 @media screen and ( max-resolution: 130dpi) and (min-aspect-ratio:3/5 ) and (min-width: 800px ) {
 	.allButtons a.smallScreenOnly { display:none; }
 }
@@ -170,12 +172,13 @@ This is big screen mac, should work with wide versions
   @supports (-webkit-appearance: none) {
 	.allButtons a.smallScreenOnly { display:none; }
 }	}
+
 /* small screen mac, AKA iphone/ ipad */
 @media screen and (max-width:800px) and (min-resolution:120dpi) {
-	@supports (-webkit-touch-callout) {
+	@supports (-webkit-touch-callout:default) {
 	.allButtons a.bigScreenOnly { display:none; }
 	.allButtons a { width:inherit; }
-	}
+	}	
 }
 
 /** popup1
