@@ -352,7 +352,7 @@ describe("TEST mobile-biblio", () => {
 <head><title>test1</title></head>
 <body>
   <div class="addReading" id="shareGroup">
-    <div class="allButtons"> <span class="ultraSkinny"></span> </div>
+    <div class="SMshareWidget"> <span class="ultraSkinny"></span> </div>
   </div>
   <article>
     <div id="point1"></div>

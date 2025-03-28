@@ -70,11 +70,11 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
     "rssLink",
   ];
   const BUFFER: Array<HTMLAnchorElement> = Array.from(
-    dom.querySelectorAll(".allButtons a"),
+    dom.querySelectorAll(".SMshareWidget a"),
   );
 
   const ldebug: boolean = !isLocal(loc.host) && !debug(loc);
-  const PARENT: HTMLDivElement = dom.querySelector(".allButtons") as HTMLDivElement;
+  const PARENT: HTMLDivElement = dom.querySelector(".SMshareWidget") as HTMLDivElement;
   for (const i in BUFFER) {
     if (bigScreenElements.includes(BUFFER[i].id)) {
       continue;
@@ -96,9 +96,9 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
     }
   }
   html.unshift(
-    '<nav><div class="shareMenu" id="shareMenu"><menu id="mobileMenu" class="mobilePopup">',
+    '<nav class="mobilePopupWidget" id="mobileMenu"> <menu>',
   );
-  html.push("</menu></div></nav>");
+  html.push("</menu></nav>");
 
   appendIsland("#navBar", html.join("\n"), dom);
 }
@@ -189,7 +189,7 @@ export async function siteCore(
     readingDuration(
       {
         dataLocation: "#main",
-        target: ".addReading .allButtons",
+        target: ".addReading .SMshareWidget",
         debug: ldebug,
         refresh: true,
       },

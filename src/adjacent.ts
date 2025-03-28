@@ -396,7 +396,7 @@ function updateLabels(gname: string, dom: Document): void {
     dat[0].textContent = "Group " + gname;
   }
   const dit: Array<HTMLElement> = Array.from(
-    dom.querySelectorAll(".adjacentGroup p"),
+    dom.querySelectorAll(".adjacentWidget p"),
   ) as Array<HTMLElement>;
   if (dit.length && dit[0].textContent && dit[0].textContent.includes("XXX")) {
     dit[0].textContent = "Some similar articles in " + gname;
@@ -476,8 +476,8 @@ export async function createAdjacentChart(
   const GROUP: string = "group" + OPTS.group;
 
   if (isMobile(dom, loc, win) && !isGroupArticle) {
-    if (dom.querySelectorAll(".adjacentGroup .adjacentItem").length === 1) {
-      (dom.querySelector(".adjacentGroup p") as HTMLElement).style["display"] =
+    if (dom.querySelectorAll(".adjacentWidget .adjacentItem").length === 1) {
+      (dom.querySelector(".adjacentWidget p") as HTMLElement).style["display"] =
         "none";
     }
     appendIsland(

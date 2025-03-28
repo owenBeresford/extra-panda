@@ -111,11 +111,11 @@ div.top-bar.fullWidth { --bgr: 240; --bgg: 255; --bgb: 255; }
 .twitterLink:hover { --bgr: 255; --bgg: 255; --bgb: 240; --fgr: 245; --fgg: 245; --fgb: 245; }  
 #errorLog { --bgr:255; --bgg:171; --bgb:80; }
 .alert { --bgr:255; --bgg:171; --bgb:80; }  
-.adjacentGroup { --bgr: 240; --bgg: 255; --bgb: 255; } 
-.adjacentItem:hover p, .adjacentGroup a:hover p { --bgr: 244; --bgg: 255; --bgb: 255; }
-.adjacentItem:hover, .adjacentGroup a:hover { --bgcontrast:1; }
+.adjacentWidget { --bgr: 240; --bgg: 255; --bgb: 255; } 
+.adjacentItem:hover p, .adjacentWidget a:hover p { --bgr: 244; --bgg: 255; --bgb: 255; }
+.adjacentItem:hover, .adjacentWidget a:hover { --bgcontrast:1; }
 /* created by JS, only exists when mobile  */
-.shareMenuOpen { background-color: var(--starkfg); } 
+.mobilePopupWidgetOpen { background-color: var(--starkfg); } 
 a.button, span.button, input[type="submit"].button { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; }  
 a[href="#"].button { --fgr: 0; --fgg: 82; --fgb: 137; --bgr: 240; --bgg: 255; --bgb: 255; } 
 a.button.masto { --fgr: 0; --fgg: 82; --fgb: 137; }  
@@ -175,5 +175,5 @@ input[type="button"].button { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg
 details.logWidget ul li:nth-child(odd) { --bgr: 240; --bgg: 255; --bgb: 255; }
 details.logWidget summary:hover { --bgr: 215; --bgg: 242; --bgb: 250; } 
 
-a.adjacentItem:before, .adjacentGroup a:hover, .adjacentGroup a:hover:before, .references sup a:before { color:rgb( 0, 73, 135);  border-color:rgb( 0, 73, 135);  background-color:rgb(245, 245, 245); }
+a.adjacentItem:before, .adjacentWidget a:hover, .adjacentWidget a:hover:before, .references sup a:before { color:rgb( 0, 73, 135);  border-color:rgb( 0, 73, 135);  background-color:rgb(245, 245, 245); }
 

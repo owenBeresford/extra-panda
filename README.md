@@ -202,22 +202,20 @@ The articles with no extra/ dedicated CSS are composed of "standard components".
 - footWidget        ~ template to layout the links in the footer,  
 - keyWordsWidget    ~ some pages list keywords, this is added to support recruiters,
 - accordionWidget   ~ not used often, a CSS wrapper for DETAILS/ SUMMARY
-- logWidget         ~ a widget for holding on screen messages like a console.  This approach is good for phones
-- popOverWidget     ~ a display popup that overlays the rest of the page, includes X to close.  Used to make pages seem less long on first glance.
-- linksWidget       ~ the CSS for the default menu on the top right of desktop mode
+- logWidget         ~ A widget for holding on screen messages like a console.  This approach is good for phones
+- popOverWidget     ~ A display popup that overlays the rest of the page, includes X-to-close.  Used to make pages seem less long on first glance.
+- linksWidget       ~ Te CSS for the default menu on the top right of desktop mode
 - headingsWidget    ~ the menu of internal headings in the current article 
 - mastodonWidget    ~ a feature with a DIALOG for choosing which [https://joinmastodon.org/servers Mastodon] server to send a SM link to.
+- articleHeader     ~ CSS component to build the document headers
+- SMshareWidget     ~ A container/ list for all the external links and the article meta data, 
+- metaWidget        ~ A larger container for all the external links and the article meta data, contains previous element
+- adjacentWidget    ~ CSS container for the related content same-site links, appears at the end of the article.  Mostly big-screen only
+- mobilePopupWidget ~ for mobile only ~ the above SM links, but optimised for mobile,
 
-- broswerTest       ~ articles that includes technical features should include a test report on what browsers support the technology.  This renders it.
+- browserTest       ~ Articles that includes technical features should include a test report on what browsers support the technology.  This renders it.
 - mobileBiblio      ~ CSS feature to style the list of external links at the end of the article, when using a phone.
-- adjacentGroup     ~ CSS container for the related content same-site links, appears at the end of the article. 
 
-- articleHeader     ~ CSS to build the document headers
-- allButtons        ~ a container for all the external links and the article meta data, 
-- bibbles           ~ TO_BE_RENAMED ~ the button-bar for social media,
-
-- sharemenu         ~ TO_BE_REFACTORED ~ for mobile only ~ the above SM links, but optimised for mobile,
-- mobilePopup       ~ the container for shareMenu  
 
 - lotsOfWords       ~ a full-width block
 - quiteWide         ~ a 70em / 1120px block 
@@ -225,7 +223,7 @@ The articles with no extra/ dedicated CSS are composed of "standard components".
 - fewWords          ~ a 30em / 480px block  
 
 Some pages have extra features eg [https://owenberesford.me.uk/resource/form-no-js-maquette], but this is rarer than adjustments.
-I am adding test pages to show the articles with with broad range of content, rather than the content when i made the feature. 
+I am adding test pages to show the articles with with broad range of content, rather than just the content when I made the feature. 
 When running locally the "debug-layout" test capacity is useful.  
 
 </details>
@@ -269,7 +267,7 @@ I ought to improve this process.  These are the tests that build their own GUI/ 
 - .addReading
 - .addArrow
 - .addBashSamples
-- .adjacentGroup 
+- .adjacentWidget 
 - .addReferences
 - .showBiblioErrors - this turns the broken link alert ON, which is OFF before all the content is downloaded
 - .screenDocs - suppress DETAILS expansion on page load, as these are full width docs 

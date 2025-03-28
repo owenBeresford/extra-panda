@@ -29,8 +29,8 @@ function openShare(
   if (!isLocal(loc.host) && !isMobile(dom, loc, win)) return false;
 
   const t = dom.querySelector("#shareMenu");
-  if (t && !t.classList.replace("shareMenuOpen", "shareMenu")) {
-    t.classList.replace("shareMenu", "shareMenuOpen");
+  if (t && !t.classList.replace("mobilePopupWidgetOpen", "mobilePopupWidget")) {
+    t.classList.replace("mobilePopupWidget", "mobilePopupWidgetOpen");
   }
   return false;
 }
@@ -118,7 +118,7 @@ export function initMastodon(dom: Document, loc: Location, win: Window): void {
   }
   _map2(BUFFER, openMastodon, dom, win);
 
-  BUFFER = dom.querySelector("#shareGroup .allButtons #mastoTrigger");
+  BUFFER = dom.querySelector("#shareGroup .SMshareWidget #mastoTrigger");
   if (BUFFER) {
     const canSee: string = accessVisibility(BUFFER, "display", win);
     if (canSee && canSee !== "none") {

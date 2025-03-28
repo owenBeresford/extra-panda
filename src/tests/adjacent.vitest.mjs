@@ -329,10 +329,10 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       4,
     );
     let str = `<div class="top-bar fullwidth"><header><h1>i'm set</h1> </header> </div>  
-				<div id="thing1" class="adjacentGroup" data-group="engineering"><p>im set too</p> </div>
-				<div id="thing2" class="adjacentGroup" data-group="engineering   "><p>im set too</p> </div>
-				<div id="thing3" class="adjacentGroup" data-group="engineering,   "><p>im set too</p> </div>
-				<div id="thing4" class="adjacentGroup" data-group="engineering,uitools"><p>im set too</p> </div>
+				<div id="thing1" class="adjacentWidget" data-group="engineering"><p>im set too</p> </div>
+				<div id="thing2" class="adjacentWidget" data-group="engineering   "><p>im set too</p> </div>
+				<div id="thing3" class="adjacentWidget" data-group="engineering,   "><p>im set too</p> </div>
+				<div id="thing4" class="adjacentWidget" data-group="engineering,uitools"><p>im set too</p> </div>
  `;
     appendIsland("#point2", str, dom);
 
@@ -377,7 +377,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
   it("go 9: updatelabels", () => {
     const [dom, loc] = page("http://192.168.0.35/resource/code-metrics", 2);
     let str = `<div class="top-bar fullWidth"><header><h1>I'm set</h1> </header> </div>  
-				<div class="adjacentGroup"><p>Im set too</p> </div> `;
+				<div class="adjacentWidget"><p>Im set too</p> </div> `;
     appendIsland("#point2", str, dom);
     updateLabels("Engineering", dom);
     assert.deepEqual(
@@ -386,12 +386,12 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       "step #31",
     );
     assert.deepEqual(
-      dom.querySelector(".adjacentGroup p").textContent,
+      dom.querySelector(".adjacentWidget p").textContent,
       "Im set too",
       "step #32",
     );
     str = `<div class=" top-bar fullWidth"><header><h1>XXX</h1> </header> </div>
-				<div class="adjacentGroup"><p>XXX</p> </div> `;
+				<div class="adjacentWidget"><p>XXX</p> </div> `;
     setIsland("#point2", str, dom);
     updateLabels("Engineering", dom);
     assert.deepEqual(
@@ -400,7 +400,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       "step #33",
     );
     assert.deepEqual(
-      dom.querySelector(".adjacentGroup p").textContent,
+      dom.querySelector(".adjacentWidget p").textContent,
       "Some similar articles in Engineering",
       "step #34",
     );
@@ -412,7 +412,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       3,
     );
     let str = `
-<div class="adjacentGroup" id="groupengineering">
+<div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
@@ -430,7 +430,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       win,
     );
     assert.equal(
-      dom.querySelector(".adjacentGroup p").textContent,
+      dom.querySelector(".adjacentWidget p").textContent,
       "TEST",
       "step #35 [negative]",
     );
@@ -447,7 +447,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       3,
     );
     let str = `
-<div class="adjacentGroup" id="groupengineering">
+<div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
@@ -465,7 +465,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     );
 
     assert.equal(
-      dom.querySelector(".adjacentGroup p").textContent,
+      dom.querySelector(".adjacentWidget p").textContent,
       "TEST",
       "step #37 [positive]",
     );
@@ -503,7 +503,7 @@ Description: What concepts or areas of development are important.    This is a h
       3,
     );
     let str = `
-<div class="adjacentGroup" id="groupengineering">
+<div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
@@ -522,7 +522,7 @@ Description: What concepts or areas of development are important.    This is a h
     );
 
     assert.equal(
-      dom.querySelector(".adjacentGroup p").textContent,
+      dom.querySelector(".adjacentWidget p").textContent,
       "TEST",
       "step #40 ",
     );
@@ -563,7 +563,7 @@ Description: What concepts or areas of development are important.    This is a h
       3,
     );
     let str = `
-<div class="adjacentGroup" id="groupengineering">
+<div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
@@ -583,7 +583,7 @@ Description: What concepts or areas of development are important.    This is a h
     );
 
     assert.equal(
-      dom.querySelector(".adjacentGroup p").textContent,
+      dom.querySelector(".adjacentWidget p").textContent,
       "TEST",
       "step #46",
     );
@@ -658,7 +658,7 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
       3,
     );
     let str = `
-<div class="adjacentGroup" id="groupengineering">
+<div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
@@ -678,7 +678,7 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
     );
 
     assert.equal(
-      dom.querySelector(".adjacentGroup p").textContent,
+      dom.querySelector(".adjacentWidget p").textContent,
       "TEST",
       "step #50",
     );

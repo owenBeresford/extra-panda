@@ -108,11 +108,11 @@ i.fa-remove { padding:3px; padding-left:7px; padding-bottom:7px; z-index:2; bord
 	.bigScreenOnly { display:inline-block; }
 	.mastodonWidget.bigScreenOnly { display:none; }
 	.smallScreenOnly, .button.smallScreenOnly { display:none; } 
-	.allButtons a.smallScreenOnly { display:none; }
+	.SMshareWidget a.smallScreenOnly { display:none; }
 }
 
 @media screen and (min-resolution: 150dpi) {
-	.allButtons a.bigScreenOnly, .allButtons span.bigScreenOnly, .bigScreenOnly, .ultraSkinny.bigScreenOnly, .allButtons a.bigScreenOnly { display:none; }
+	.SMshareWidget a.bigScreenOnly, .SMshareWidget span.bigScreenOnly, .bigScreenOnly, .ultraSkinny.bigScreenOnly, .SMshareWidget a.bigScreenOnly { display:none; }
  	.smallScreenOnly { display:inline-block; }
     span.button.smallScreenOnly { font-size:120%; padding:0.5em 0.3em; }
 }
@@ -126,13 +126,13 @@ This is big screen mac, should work with wide versions
 	.bigScreenOnly { display:inline-block; }
 	.mastodonWidget.bigScreenOnly { display:none; }
 	.smallScreenOnly { display:none; }
-	.allButtons a.smallScreenOnly { display:none; }
+	.SMshareWidget a.smallScreenOnly { display:none; }
 }}
 
 /* small screen mac, AKA iphone/ ipad */
 @media screen and (max-width:800px) and (min-resolution:120dpi) {
 	@supports (-webkit-touch-callout)  {
-	.bigScreenOnly, .ultraSkinny.bigScreenOnly, .allButtons a.bigScreenOnly { display:none; }
+	.bigScreenOnly, .ultraSkinny.bigScreenOnly, .SMshareWidget a.bigScreenOnly { display:none; }
  	.smallScreenOnly { display:inline-block; }
 }}
 

@@ -74,7 +74,7 @@ describe("TEST core", () => {
       3,
     );
     let str = `<div id="navBar"> 
-<span class="allButtons"> 
+<span class="SMshareWidget"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
 						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
 						<span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
@@ -106,7 +106,7 @@ describe("TEST core", () => {
       3,
     );
     let str = `<div id="navBar">
-<span class="allButtons"> 
+<span class="SMshareWidget"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
 						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
 						<span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
@@ -134,7 +134,7 @@ describe("TEST core", () => {
   it("go 5.2: initPopupMobile", () => {
     const [dom, loc, win] = page("http://6.6.6.6/resource/home?mobile=1&debug=1", 3);
     let str = `<div id="navBar">
-				<span class="allButtons"> 
+				<span class="SMshareWidget"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
 						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
 						<span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
