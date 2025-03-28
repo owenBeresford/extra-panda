@@ -160,6 +160,10 @@ This is big screen mac, should work with wide versions
 	.allButtons a.bigScreenOnly, .allButtons span.bigScreenOnly, .bigScreenOnly, .ultraSkinny.bigScreenOnly,
 	.allButtons a.bigScreenOnly { display:none; }
 	.allButtons a { width:inherit; }
+	.IAmLibreWolf .allButtons a { width:initial; }
+}
+@media screen and (min-resolution: 200dpi) {
+	.IAmLibreWolf .allButtons a { width:inherit; }
 }
 
 @media screen and ( max-resolution: 130dpi) and (min-aspect-ratio:3/5 ) and (min-width: 800px ) {
@@ -180,6 +184,7 @@ This is big screen mac, should work with wide versions
 	.allButtons a { width:inherit; }
 	}	
 }
+
 
 /** mastodonWidget
    every page */
@@ -232,6 +237,10 @@ This is big screen mac, should work with wide versions
  .dfl li:first-child { --bgr: 0; --bgg: 73; --bgb: 135; width: calc( 100% - 2em ); 
 					display: inline-block; padding: 0.3em 1em; }
 
+@media screen and (max-resolution: 199dpi) {	
+	.dfl li:first-child { padding-left: 0; }
+}
+
 /** headingsWidget
 	nearly every page */
  .headingsWidget summary { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; 
@@ -268,8 +277,8 @@ This is big screen mac, should work with wide versions
 .adjacentGroup .buttonBar .button { min-width:15em; }
 .adjacentItem { margin-left:1em; height:2.7em; }
 .adjacentItem:nth-child(1) { height:4.5em; min-width: 7.5em; }
-
-.adjacentGroup a:before, a.adjacentItem:before { content: attr(aria-label); visibility: hidden; opacity: 0; 
+.adjacentList li  
+.adjacentGroup a:before, .adjacentList li a:before, a.adjacentItem:before { content: attr(aria-label); visibility: hidden; opacity: 0; 
 	text-align: left; white-space:pre-line; line-height:1.5; width:40em; padding: 1em 1em; transition: opacity 0.3s ease-in-out; 
 	z-index:2; position: absolute; left:calc( 50% - 20em ); border:solid 1px; overflow-wrap: break-word; 
 	margin-block-start:3.5em; contain: paint; pointer-events: none; }
@@ -282,14 +291,14 @@ This is big screen mac, should work with wide versions
 	.groupIndexContainer .adjacentItem,	.adjacentItem, .adjacentList >* { margin-left:0px; }
   	.adjacentList { text-wrap-mode:wrap; }
    .adjacentGroup { min-width:99vw; }
-	.adjacentList { height:auto; display:block;  width:98vw; }
+	.adjacentList { height:auto; display:block;  width:96vw; }
+	.IAmLibreWolf .adjacentList { display: flex; }
+	.IAmLibreWolf .adjacentList li { display:inline-block; }
+    .IAmLibreWolf a.adjacentItem:before  { display:block; width:fit-content; }
     span.adjacentItem, .adjacentItem { display:block; margin-left:0.5em; height:auto; margin-bottom:0.5em; width:calc( 100vw - 3em ); }
 	.adjacentItem .button { width:96vw; text-align:center; max-width:96vw; min-width:96vw; }
 	.adjacentItem a.button { margin-left:0em; } 
-	.adjacentItem:hover p { display:none; }
 	.groupIndexContainer .adjacentItem p { width:fit-content; }
-	.adjacentGroup a:before, a.adjacentItem:before { width:0; }
-	.adjacentList { width:96vw; }
 }
 @media screen and (max-width:500px) {
 	body.groupIndexContainer .adjacentItem { margin-left:0px; }
@@ -298,10 +307,13 @@ This is big screen mac, should work with wide versions
 	.adjacentGroup { min-width: 100vw; margin-top:1em; margin-left:0px;  }
 }
 .adjacentGroup a.lower:before, a.adjacentItem.lower:before { left:calc( 50% - 30em ); }
-.adjacentGroup a:hover:before, a.adjacentItem:hover:before { opacity: 1; visibility: visible; }
+.adjacentGroup a:hover:before, .adjacentList li a:hover:before, a.adjacentItem:hover:before { opacity: 1; visibility: visible; }
 @supports( -moz-transform:rotate(45deg) ) {
    a.adjacentItem:hover:before { top:inherit; }
    .adjacentGroup a:hover:before { top:inherit; }
+}
+@media screen and (min-resolution: 200dpi) {
+	.IAmLibreWolf .adjacentList,  .IAmLibreWolf .adjacentList li { display:block; }
 }
 
 /** outer_menu
@@ -475,6 +487,7 @@ code[lang="html"].highlight::before, .highlight.wide::before { content:""; }
 @media screen and (min-resolution: 150dpi) {
 	.articleHeader .row a { font-size:120%; }
 	.articleHeader nav.row { display:block; width:100vw; max-width:min-content; }
+    .IAmLibreWolf .articleHeader nav.row { display: flex; max-width: 94%; }
 
 	.articleHeader .row a i { margin:1em 0.7em; }
 	.articleHeader .row a svg { margin-left:0.4em; }
@@ -482,13 +495,17 @@ code[lang="html"].highlight::before, .highlight.wide::before { content:""; }
 	.articleHeader .mastodonWidget a#hideMasto { padding: 0.45em 0.75em; }
 	.articleHeader  a#rssLink i { margin:inherit; }
 
-    .articleHeader div.fullWidth { width:calc( 100vw - 1.5em ); }
-	.articleHeader div.fullWidth h1 { padding-top:0.1em; padding-left:0em; }	
+    .articleHeader .fullWidth { width:calc( 100vw - 1.5em ); }
+	.articleHeader .fullWidth h1 { padding-top:0.1em; padding-left:0em; font-size: 2em; }	
+	.IAmLibreWolf .linksWidget .dfl li a, .IAmLibreWolf .linksWidget .titleList li a { width: calc( 100% - 2em ); }
+	.IAmLibreWolf .linksWidget .dfl li, .IAmLibreWolf .linksWidget .titleList li { width: calc( 100% - 2em ); max-width:calc( 100% - 2em ); }
+
 }
 @media screen and (min-device-width: 600px) 
 				and ( min-resolution: 150dpi) {
-	.articleHeader .row  a:first-child, span.button.smallScreenOnly { font-size:120%; }
+	.articleHeader .row a:first-child, span.button.smallScreenOnly { font-size:120%; }
 	.articleHeader .row .h4_menu li a:first-child { font-size:inherit; }
+	.IAmLibreWolf .articleHeader .row a:first-child, .IAmLibreWolf span.button.smallScreenOnly { font-size:100%; } 
 }
 /* hack for landscape large phones & weird screen magnification laptops: suppress mobile flexing */
 @media only screen and (min-device-width: 800px) 
@@ -512,15 +529,17 @@ This is big screen mac, should work with wide versions
 }
 @media screen and (min-resolution: 150dpi) {
 	.articleHeader nav.row:not( :has(.headingsWidget) ) .bibbles.row .allButtons  { width: auto; }
+}
 
+@media screen and (min-resolution: 200dpi) {	
+    .IAmLibreWolf .articleHeader nav.row { display:block; width:100vw; max-width:min-content; } 
+	.IAmLibreWolf .linksWidget .dfl li a { width:100%; }
 }
 
 /** mixed navBar stuff
 	every page
 */
 @media screen and (min-resolution: 150dpi) {
-    .articleHeader nav.row { display:block; width:100vw; }
-    .articleHeader nav.row { max-width:min-content; }
     .articleHeader nav.row a i { margin:1em 0.7em; }
 	.articleHeader nav.row a svg { margin-left:0.4em; }
    	.articleHeader nav.row .shareMenuOpen a i { margin: .3em; height: 1.5em; display: inline-block; }
@@ -542,6 +561,8 @@ This is big screen mac, should work with wide versions
 }
 */
 
+
+
 /** tabs-content for TabsWidget 
 	inject root class to force work if needed
 	currently only home-test
@@ -560,7 +581,7 @@ This is big screen mac, should work with wide versions
 	about 70-80% of pages
 */
 .addReferences a { padding:0.3em; display:inline-block; }
-.addReferences a[aria-label]:before { columns:inherit; font-size:130%; content: attr(aria-label); 
+.addReferences a[aria-label]:before { columns:inherit; font-size:100%; content: attr(aria-label); 
 	display:none; width: max-content; text-align: left; white-space:pre; line-height:1.5; padding: 1em 1em; 
 	position: absolute; border:solid 1px; overflow-wrap: break-word; min-width:30em; pointer-events: none; 
 	contain:paint; background-color:var(--starkfg); top:0px; }
@@ -604,13 +625,12 @@ sup + sup>a { margin-left:1em; }
 p>a+ a { margin-left:0.5em; } 
 sup:nth-child(1) { margin-left:inherit; }
 sup a[aria-label], .reading, footer a { text-decoration:underline; }
+.IAmLibreWolf sub, .IAmLibreWolf sup { font-size:100%; } 
 @media screen and (min-resolution: 150dpi) {
 	a sup i.fa.invert { font-size:90%; }
 	a sup:has( i.invert ) { font-size:50%; }
 	sub, sup { font-size: 130%; }
-	sup a { line-height:1.5; }
-}
-@media screen and (max-width: 800px) {
-	sup a { line-height:2; }
+	sup a { line-height:1.2; }
+	.IAmLibreWolf sub, .IAmLibreWolf sup { font-size:100%; } 
 }
 
