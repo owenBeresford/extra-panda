@@ -180,11 +180,9 @@ export function isLibreWolf(dom: Document, nav: Navigator): boolean {
     !canTouch
   ) {
     console.warn("Is this librewolf?, could tell me if this is wrong.");
-    //    if(dom.querySelector('.fullWidth p[role="status"]')) {
-    (dom.querySelector('.fullWidth p[role="status"]') as HTMLElement).innerText += "  Is this librewolf?,  could you tell me if this is wrong.";
-    //    }
     if (!dom.body.classList.contains("IAmLibreWolf")) {
       dom.body.classList.add("IAmLibreWolf");
+    	(dom.querySelector('.fullWidth p[role="status"]') as HTMLElement).innerText += "  Is this librewolf?,  could you tell me if this is wrong.";
     }
     return true;
   }
