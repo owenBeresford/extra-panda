@@ -16,6 +16,7 @@
 - declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
 - Somehow properly test isLibreWolf
 - Maybe look at Qutebrowser for browser unit-tests, uses less RAM, and is //a recent version// of Chrome project https://qutebrowser.org/doc/install.html#tox
+- To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
 - Maybe poll for Chrome, and install Qutebrowser if absent. QQ how do I poll in the package.json?
 - Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
 https://lit.dev/
@@ -81,4 +82,9 @@ https://www.npmjs.com/package/eslint-plugin-n << yes ends in -n
 - DONE: Change implementation on reading word-count 
 - DONE: Extracted Tab feature to own TS module, as I'm not updating the tabs UI to pure HTML5 now.
 - DONE: trap out libreWolf, as the DPI calc in CSS is busted there
+- DONE: migrated tabs to HTML/CSS as its better archituire
+- DONE: migrate CSS into this project, simplifing my webhost project
+- DONE: tidyup English and old CSS in the CSS
+- DONE: improved readability and component-isation in the CSS
+- DONE: add 20% new CSS to support libreWolf  bah gumbah!
 

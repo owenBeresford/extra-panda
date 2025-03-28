@@ -1,7 +1,7 @@
 {
   "name": "Panda",
   "version": "1.0.0",
-  "description": "A rebuild on my site to newer versions of JS, code is shorter and easier to read.  The project name is just a random word-pair.  There is no execute script here as this code is integated into another project.   I wrote all the tests in src/tests before I executed this code.  ",
+  "description": "A rebuild on my site to newer versions of JS, code is shorter and easier to read.  The project name is just a random word-pair.  There is no execute script here as this code is integated into another project.   I wrote all the tests in src/tests before I executed this code.  I have imported the CSS to this project likewise. ",
   "main": "src/index.mjs",
   "private": true,
   "type": "module",
@@ -9,7 +9,8 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "./tools/build.bash",
+	"# comment line 1":"On every new machine, please run tools/checksum.bash first, this adds files that don't touch the repo.",
+    "build": "export NODE_ENV=production; ./tools/build-ts.bash",
     "test": "export NODE_ENV=development; node ./node_modules/.bin/vitest --typecheck run; if [ ! -d './dist/tests' ]; then echo 'Run build:test first'; else export NODE_ENV=development; node ./tools/tests-browser.mjs; fi ",
     "test:unit": "export NODE_ENV=development; node ./node_modules/.bin/vitest --typecheck run",
     "#ignore-lint-notes": "1 function is over complexity by 1 point. . .  && Its an arbitary limit",
@@ -20,10 +21,11 @@
     "docs": "if [ ! -d ./dist/docs ]; then echo 'Build docs first'; else; node ./tools/doc-server.mjs & fi",
     "build:tests": "./tools/build-tests.bash",
     "test:web": "if [ ! -d './dist/tests' ]; then echo 'Run build:test first'; else echo 'If running manually, use CLI flags'; export NODE_ENV=development; node ./tools/tests-browser.mjs; fi",
-    "build:css": "./tools/compile-css.bash",
+    "build:css": "./tools/build-css.bash",
+	"#ignore-this-line3":"the following CSS code is the older solution that doesn't give me what I wanted as the CSS units are evaulated ",
     "build:extract-css": "export NODE_ENV=production; node ./node_modules/.bin/vite --config ./vite.config.lib.ts build; node ./node_modules/.bin/vite --config ./vite.config.tests.ts build tools/test-browser.ts;",
-    "#comment": " # mv ./tools/test-browser.ts/dist/tests-browser.mjs dist/tests-browser.mjs; rmdir ./tools/test-browser.ts/dist/; rmdir ./tools/test-browser.ts/ ",
-    "css": "node dist/tests-browser.mjs --extract-css $1 "
+	"#ignore-this-line4":"if you use the previous commend, this is how to exec it",
+    "css": "export NODE_ENV=development; node dist/tests-browser.mjs --extract-css $1 "
   },
   "repository": {
     "type": "git",
