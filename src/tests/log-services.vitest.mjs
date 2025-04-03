@@ -1,4 +1,4 @@
-import { assert, describe, it, assertType } from "vitest";
+import { assert, describe, it } from "vitest";
 
 import { TEST_ONLY } from "../log-services";
 
@@ -18,7 +18,9 @@ describe("TEST networking", () => {
 	cnx.skip();
   });
 
-
+  it("go 4: domlog", (cnx) => {
+	cnx.skip();
+  });
 
   it("go 3: log", () => {
     log("log", "[LOG] Hello fromn a log test");

@@ -409,7 +409,7 @@ describe("TEST mobile-biblio", () => {
 
    * @param {string} url
    * @param {boolean} hasExcept
-   * @returns {SimpleResponse}
+   * @returns {Promise<SimpleResponse>}
    */
   function mockFetch1(url, hasExcept) {
     return new Promise((good, bad) => {

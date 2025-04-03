@@ -1,6 +1,5 @@
 import { isFullstack } from "../dom-base";
-import type { MiscEvent } from "../all-types";
-// this would be hard to make as a TS module
+// import type { MiscEvent } from "../all-types";
 
 // @see ["notes from TS angle" https://www.cgjennings.ca/articles/typescript-events/]
 // @see ["all types of JS events" https://developer.mozilla.org/en-US/docs/Web/API/Event#introduction]
@@ -32,13 +31,13 @@ export interface Keyable {
 	ctrlKey: boolean,
 };
 
-
+type Handler= (type:string|undefined)=> Array<EventLogEvent> 
 type TestingElement = Element & {
 		eventListenerList:EventStack,
 		_addEventListener:AdjustingHandlers, 
 		_removeEventListener:AdjustingHandlers,
-		getEventListeners: (type:string|undefined)=> Array<EventLogEvent> 
-							};
+		getEventListeners:Handler,
+			};
 // reference from types for Node
 //interface EventListener {
 //    (evt: Event): void;
