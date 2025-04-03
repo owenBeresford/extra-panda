@@ -27,19 +27,19 @@ describe("TEST mastodon", () => {
     let vnt = createEvent(dom.querySelector("#shareMenu"), dom, win);
     assert.equal(
       dom.querySelector("#shareMenu").getAttribute("class"),
-      "shareMenu",
+      "mobilePopupWidget",
       "assert #1",
     );
     assert.equal(openShare(vnt, dom, loc), false, "assert #2");
     assert.equal(
       dom.querySelector("#shareMenu").getAttribute("class"),
-      "shareMenuOpen",
+      "mobilePopupWidgetOpen",
       "assert #3",
     );
     assert.equal(openShare(vnt, dom, loc), false, "assert #4");
     assert.equal(
       dom.querySelector("#shareMenu").getAttribute("class"),
-      "shareMenu",
+      "mobilePopupWidget",
       "assert #5",
     );
   });
@@ -56,13 +56,13 @@ describe("TEST mastodon", () => {
 
     assert.equal(
       dom.querySelector("#shareMenu").getAttribute("class"),
-      "shareMenu",
+      "mobilePopupWidget",
       "assert #6",
     );
     assert.equal(openShare(vnt, dom, loc), false, "assert #2");
     assert.equal(
       dom.querySelector("#shareMenu").getAttribute("class"),
-      "shareMenuOpen",
+      "mobilePopupWidgetOpen",
       "assert #7",
     );
   });
