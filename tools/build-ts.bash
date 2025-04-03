@@ -25,5 +25,6 @@ if [ -f dist/magic-strin* ]; then
 	rm dist/magic-string*
 fi
 
-cp dist/*.mjs $PUBLICATION
+cp /tmp/ob1.min.mjs $PUBLICATION/ob1-202406.min.mjs 
+cp dist/ob1.mjs src/fixtures/ob1-202406.min.mjs 
 
