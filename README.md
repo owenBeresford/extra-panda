@@ -221,6 +221,7 @@ The articles with no extra/ dedicated CSS are composed of "standard components".
 - fewWords          ~ no-vis ~ a 30em / 480px block  
 
 Classes that start "add" normally just enable some feature, and have no CSS behaviour of their own.   There are some classes that are too simple and widely used to get a test.   
+**With the test script running the vis-tests are served as https://127.0.0.1:8081/vis/*   Unlike my site, they need a full file-name **
 
 I may refactor to eliminate the word Widget.   Some pages have extra features eg [https://owenberesford.me.uk/resource/form-no-js-maquette], but this is rarer than adjustments.
 I am adding test pages to show the articles with with broad range of content, rather than just the content when I made the feature. 

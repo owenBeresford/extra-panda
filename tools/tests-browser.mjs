@@ -87,6 +87,7 @@ const BROWSER = [
 
 const DIR_TESTS = path.join(__dirname, "..", "dist", "tests");
 const DIR_FIXTURES = path.join(__dirname, "..", "src", "fixtures");
+const DIR_FIXTURES2 = path.join(__dirname, "..", "src", "vis-tests");
 const CERT_NAME = DIR_FIXTURES + path.sep + "cert.pem";
 const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
 var dDelta = 0;
@@ -106,6 +107,7 @@ function spinup_server() {
 
   const app = express();
   const sock = https.createServer(credentials, app);
+	app.use('/vis', express.static( DIR_FIXTURES2 , {dotfiles:"ignore", immutable:false, }));
 
   app.get("/", function (req, res) {
     let tt = fs.readFileSync(path.join(DIR_FIXTURES, "index.html"));

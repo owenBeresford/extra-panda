@@ -112,6 +112,7 @@ type TestResult = Circus.RunResult & StatusBlock;
 
 const DIR_TESTS = path.join(__dirname, "..", "dist", "tests");
 const DIR_FIXTURES = path.join(__dirname, "..", "src", "fixtures");
+const DIR_FIXTURES2 = path.join(__dirname, "..", "src", "vis-tests");
 const CERT_NAME = DIR_FIXTURES + path.sep + "cert.pem";
 const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
 let dDelta = 0;
@@ -132,6 +133,7 @@ function spinup_server():Array<Triggerage> {
   const app:Express = express(); 
   const sock:Server<ERequest, EResponse> = https.createServer(credentials, app);
 
+  app.use('/vis', express.static( DIR_FIXTURES2 , {dotfiles:"ignore", immutable:false, }));
   app.get("/", function (req:ERequest, res:EResponse):void {
     const tt1 = fs.readFileSync(path.join(DIR_FIXTURES, "index.html"));
     let tt2:string = Buffer.from(tt1).toString();
