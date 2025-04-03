@@ -286,6 +286,7 @@ This is big screen mac, should work with wide versions
 .adjacentList { display:flex; white-space:nowrap; flex-flow:row nowrap; overflow-x:hidden; overflow-y:hidden; 
 		width:96vw; margin-left:2vw; height:5em; contain:style; list-style-type:none; }
 .adjacentList > * { margin:0.5em; }
+.adjacentWidget a.button { text-decoration:underline; font-weight:bold; }
 .adjacentWidget > p { margin-left:2em; }
 .adjacentWidget { z-index:1; } 
 .adjacentWidget .buttonBar .button { min-width:15em; }
