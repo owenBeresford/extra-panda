@@ -43,4 +43,10 @@ body, .annoyingBody { font-family: 'ubuntu', sans-serif;  }
 
 pre { text-align: left; }
 
+i.specialPointer { z-index:2; vertical-align: inherit; font-size:4em; position: relative; top: 0.17em; left:-36px; } 
+@media screen and (min-resolution: 150dpi) {
+	i.specialPointer { font-size:6em; left: -0.3em; top: 0.25em; }
+}
+
+
 

@@ -177,3 +177,18 @@ details.logWidget summary:hover { --bgr: 215; --bgg: 242; --bgb: 250; }
 
 a.adjacentItem:before, .adjacentWidget a:hover, .adjacentWidget a:hover:before, .references sup a:before { color:rgb( 0, 73, 135);  border-color:rgb( 0, 73, 135);  background-color:rgb(245, 245, 245); }
 
+.linksWidget[open] .defaultLinksTrigger { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; }
+.dfl { --bgr: 215; --bgg: 242; --bgb: 250; --fgr: 245; --fgg: 245; --fgb: 245; }
+.dfl li:nth-child(even) a, .dfl li:nth-child(even) { --bgr: 240; --bgg: 255; --bgb: 255; }
+.dfl li:first-child { --bgr: 0; --bgg: 73; --bgb: 135; }
+.headingsWidget summary { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; }
+.titleList li:nth-child(even) { --bgr: 240; --bgg: 255; --bgb: 255; }
+
+@media screen and (min-width:1040px ) {
+	.popOverWidget .maquetteContainer .docs summary { --bgr: 0; --bgg: 73; --bgb: 135; --fgr: 245; --fgg: 245; --fgb: 245; }
+	.popOverWidget .maquetteContainer .docs summary::marker { --fgr: 245; --fgg: 245; --fgb: 245; }
+	.popOverWidget .maquetteContainer details.docs[open] summary:hover { --bgr: 0; --bgg: 73; --bgb: 135; }
+}
+
+
+

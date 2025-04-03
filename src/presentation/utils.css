@@ -91,7 +91,8 @@ This is big screen mac, should work with wide versions
   @supports (-webkit-appearance: none) {
 	.articleHeader .fullWidth p:empty { display:none; }
 }}
-.articleHeader nav.row:not( :has(.headingsWidget) ) .metaWidget.row  { width: calc(100vw - 6%); max-width:calc(100vw - 6%); }
+.articleHeader nav.row:not( :has(.headingsWidget) ) .metaWidget.row  { 
+		width: calc(100vw - 6%); max-width:calc(100vw - 6%); }
 
 @media screen and (max-width: 1080px) {
 	.articleHeader nav.row:not( :has(.headingsWidget) ) .metaWidget.row .SMshareWidget  { width: 28.5em; }
@@ -112,7 +113,8 @@ This is big screen mac, should work with wide versions
     .articleHeader nav.row a i { margin:1em 0.7em; }
 	.articleHeader nav.row a svg { margin-left:0.4em; }
    	.articleHeader nav.row .mobilePopupWidgetOpen a i { margin: .3em; height: 1.5em; display: inline-block; }
-   	.articleHeader nav.row .mobilePopupWidgetOpen a i.fa-copy { margin: 3px 0px; padding: 0px; position: relative; left: 0.1em; }
+   	.articleHeader nav.row .mobilePopupWidgetOpen a i.fa-copy { 
+			margin: 3px 0px; padding: 0px; position: relative; left: 0.1em; }
     .articleHeader nav.row .mobilePopupWidgetOpen a.button  { margin-left:0.40em; }
 	.articleHeader nav.row .mastodonWidget a.button { margin-left: 0px; width:100vw; }
  	.articleHeader nav.row .mastodonWidget a#hideMasto { padding: 0.45em 0.75em; }
@@ -168,7 +170,7 @@ This is big screen mac, should work with wide versions
 	.fewWords { width:100vw; margin-left:0; margin-right:0;  }
 }
 @media screen and (max-width:600px ) {
-	.fewWords {  width: 100vw; } 
+	.fewWords { width: 100vw; } 
 }
 @media screen and ( min-resolution:150dpi ) {
     .fewWords { margin-left:0.5em; }
@@ -203,18 +205,17 @@ hr.blocker { width: 90%;}
 	.pullout.localPullout { width:calc( 100% - 400px ); display:inline-block; margin-top:1em; }
 }
 
-.addArrow { z-index:3; position: relative; border-bottom-right-radius:0px; border-top-right-radius:0px; padding-right:0.7em; min-width:10em; }
-
-i.specialPointer { z-index:2; vertical-align: inherit; font-size:4em; position: relative; top: 0.17em; left:-36px; } 
-@media screen and (min-resolution: 150dpi) {
-	i.specialPointer { font-size:6em; left: -0.3em; top: 0.25em; }
-}
+.addArrow { z-index:3; position: relative; border-bottom-right-radius:0px; border-top-right-radius:0px; 
+		padding-right:0.7em; min-width:10em; }
 
 /* A useful class that will slap a big warning on span containing images (various formats) 
    Adjust selector to suit needs.  The warning is about 150px on most peoples machines  */
-.deadImages span:has( svg, picture, img )::before { z-index:2; line-height:0.70; position:absolute; border:red 2px solid; content:" 🗙 "; font-size:8em; padding:0.1em; border-radius:40%; margin-top: 0.5em; margin-left: 0.15em; padding-bottom: 0.25em; pointer-events: none; }
+.deadImages span:has( svg, picture, img )::before { z-index:2; line-height:0.70; position:absolute;
+		 border:red 2px solid; content:" 🗙 "; font-size:8em; padding:0.1em; border-radius:40%; 
+		margin-top: 0.5em; margin-left: 0.15em; padding-bottom: 0.25em; pointer-events: none; }
 
-.alert { padding:7px; padding-left:20px; display:block; float:right; border-radius:4px; margin-top:15px; width:600px; text-align:right; }
+.alert { padding:7px; padding-left:20px; display:block; float:right; border-radius:4px; margin-top:15px; 
+		width:600px; text-align:right; }
 
 /** settings for the symbol font, may be moved to overrides */
 i.fa { font-size: 145%; vertical-align: middle; line-height: 1; }
@@ -224,7 +225,8 @@ i.fa-remove { padding:3px; padding-left:7px; padding-bottom:7px; z-index:2; bord
 /* https://fontawesome.com/v4/accessibility/
    https://webaim.org/techniques/css/invisiblecontent/ 
 */
-.sr-only { clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); height: 1px; width: 1px; left:-10000px; margin: -1px; overflow: hidden; padding: 0; position: absolute; }
+.sr-only { clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); height: 1px; width: 1px; left:-10000px;
+			 margin: -1px; overflow: hidden; padding: 0; position: absolute; }
 /* Backup definition
 .sr-only { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
 */
@@ -240,7 +242,8 @@ i.fa-remove { padding:3px; padding-left:7px; padding-bottom:7px; z-index:2; bord
 }
 
 @media screen and (min-resolution: 150dpi) {
-	.SMshareWidget a.bigScreenOnly, .SMshareWidget span.bigScreenOnly, .bigScreenOnly, .ultraSkinny.bigScreenOnly, .SMshareWidget a.bigScreenOnly { display:none; }
+	.SMshareWidget a.bigScreenOnly, .SMshareWidget span.bigScreenOnly, .bigScreenOnly, 
+	.ultraSkinny.bigScreenOnly, .SMshareWidget a.bigScreenOnly { display:none; }
  	.smallScreenOnly { display:inline-block; }
     span.button.smallScreenOnly { font-size:100%; padding:0.5em 0.3em; }
 }
@@ -273,7 +276,8 @@ This is big screen mac, should work with wide versions
 	h2.biblioSection { font-size:150%; }
 }
 
-.button.masto { border-width: 0px; padding: 0.6em; vertical-align: baseline; margin:0.65em; margin-bottom:0.1em; } 
+.button.masto { border-width: 0px; padding: 0.6em; vertical-align: baseline; margin:0.65em;
+			 margin-bottom:0.1em; } 
 @media screen and (min-resolution: 150dpi) {
 	dialog.mastodonWidget a.button.masto { margin-right:1em; padding:0.7em; margin-left:3em; }
 }
