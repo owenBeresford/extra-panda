@@ -69,12 +69,12 @@ describe("TEST core", () => {
   });
 
   it("go 5: initPopupMobile", () => {
-    const [dom, loc] = page(
+    const [dom, loc, win] = page(
       "http://192.168.0.35/resource/home?mobile=1&debug=1",
-      2,
+      3,
     );
     let str = `<div id="navBar"> 
-<span class="allButtons"> 
+<span class="SMshareWidget"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
 						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
 						<span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
@@ -94,19 +94,19 @@ describe("TEST core", () => {
 </div>`;
     appendIsland("#point2", str, dom);
     // mobile yes, local yes
-    initPopupMobile(dom, loc);
+    initPopupMobile(dom, loc, win);
     assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #23");
 
     assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #24");
   });
 
   it("go 5.1: initPopupMobile", () => {
-    const [dom, loc] = page(
+    const [dom, loc, win] = page(
       "http://192.168.0.35/resource/home?mobile=0&debug=1",
-      2,
+      3,
     );
     let str = `<div id="navBar">
-<span class="allButtons"> 
+<span class="SMshareWidget"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
 						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
 						<span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
@@ -126,15 +126,18 @@ describe("TEST core", () => {
  </div>`;
     appendIsland("#point2", str, dom);
     // mobile no, local yes
-    initPopupMobile(dom, loc);
+    initPopupMobile(dom, loc, win);
     assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #25");
     assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #26");
   });
 
   it("go 5.2: initPopupMobile", () => {
-    const [dom, loc] = page("http://6.6.6.6/resource/home?mobile=1&debug=1", 2);
+    const [dom, loc, win] = page(
+      "http://6.6.6.6/resource/home?mobile=1&debug=1",
+      3,
+    );
     let str = `<div id="navBar">
-				<span class="allButtons"> 
+				<span class="SMshareWidget"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
 						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
 						<span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
@@ -154,7 +157,7 @@ describe("TEST core", () => {
  </div>`;
     appendIsland("#point2", str, dom);
     // mobile no, local no
-    initPopupMobile(dom, loc);
+    initPopupMobile(dom, loc, win);
     assert.isTrue(dom.querySelector("#mobileMenu") !== undefined, "Assert #27");
     assert.equal(dom.querySelectorAll("#mobileMenu a").length, 7, "Assert #28");
   });

@@ -61,12 +61,12 @@ function normaliseData(
     "Resource doesn't set a description tag.",
     "[No date]",
   ];
-  const out = [];
+  const out: Array<NormalisedReference> = [];
 
   for (const i in data) {
     if (data[i] === null) {
       // With modern versions of the references builder shouldn't let this happen
-      out.push(empty(parseInt(i, 10)));
+      out.push(empty(parseInt(i, 10)) as NormalisedReference);
       continue;
     }
 
@@ -175,7 +175,9 @@ export async function createBiblio(
   if (tmp) {
     tmp.setAttribute("style", "");
   }
-  dom.querySelector(OPTS.gainingElement + " *").replaceChildren();
+  (
+    dom.querySelector(OPTS.gainingElement + " *") as HTMLElement
+  ).replaceChildren();
   appendIsland(
     OPTS.gainingElement,
     `<h2 class="biblioSection">References (for mobile UI)</h2> 
@@ -185,7 +187,7 @@ export async function createBiblio(
 
   const dat = await OPTS.runFetch(
     makeRefUrl(OPTS.referencesCache, loc),
-    false,
+    true,
     loc,
   );
   if (!dat.ok || !Array.isArray(dat.body)) {

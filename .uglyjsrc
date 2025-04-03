@@ -1,0 +1,16 @@
+{
+"mangle": true,
+"toplevel":false, 
+"validate":true, 
+"annotations":false,
+"compress": {
+"sequences": true,
+"dead_code": true,
+"conditionals": true,
+"booleans": true,
+"unused": true,
+"if_return": true,
+"join_vars": true,
+"drop_console": true
+}
+}

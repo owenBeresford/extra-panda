@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true, nomen: true, todo: true */
-import type { Fetchable, SimpleResponse, Cookieable } from "./all-types";
+import type { Fetchable, Fetch, SimpleResponse, Cookieable } from "./all-types";
 // this uses document as an in-code literal,
 // I have an alternative dynamic load if this static load breaks anything.
 import { QOOKIE } from "./cookies";
@@ -41,10 +41,12 @@ export async function runFetch(
   trap: boolean,
   loc: Location,
 ): Promise<SimpleResponse> {
-  const f = getFetch();
+  const f: Fetch = getFetch() as Fetch;
   const ldebug = debug(loc);
   try {
-    const trans: Response = await f(url, { credentials: "same-origin" });
+    const trans: Response = (await f(url, {
+      credentials: "same-origin",
+    })) as Response;
     if (!trans.ok) {
       if (ldebug) {
         log("warn", "Failed to communicate with " + url);
@@ -61,8 +63,7 @@ export async function runFetch(
 
     let payload = "";
     if (
-      trans.headers
-        .get("content-type")
+      ((trans.headers as Headers).get("content-type") as string)
         .toLowerCase()
         .startsWith("application/json")
     ) {

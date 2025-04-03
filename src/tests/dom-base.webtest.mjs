@@ -95,7 +95,7 @@ describe("TEST BROWSER dom-base", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
-        let str = `<div id="shareMenu" class="shareMenu"> </div> 
+        let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
   <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/home?" /> 
   </dialog>`;
@@ -118,7 +118,7 @@ describe("TEST BROWSER dom-base", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
-        let str = `<div id="shareMenu" class="shareMenu"> </div> 
+        let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
   <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/home?" /> 
   </dialog>`;
@@ -137,7 +137,7 @@ describe("TEST BROWSER dom-base", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html?width=150",
       async (dom, loc, win) => {
-        let str = `<div id="shareMenu" class="shareMenu"> </div> 
+        let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
   <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/home?" /> 
   </dialog>`;

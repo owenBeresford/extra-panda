@@ -49,15 +49,7 @@ if more are added see command-line-args
 */
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const __filename = basename(fileURLToPath(import.meta.url));
-const TESTS = [
-  "modal.webtest.mjs",
-  "tabs.webtest.mjs",
-  "cookie.webtest.mjs",
-  "desktop-biblio.webtest.mjs",
-  "dom-base.webtest.mjs",
-  "networking.webtest.mjs",
-  "index.webtest.mjs",
-];
+
 const PORT_DEBUG = 9222;
 const PORT_SERVER = 8081;
 const URL_SERVER = "127.0.0.1";
@@ -78,20 +70,41 @@ const BROWSER = [
   "--disable-popup-blocking",
   "--disable-login-animations",
   "--disable-default-apps",
+  "--allow-running-insecure-content",
   "--unsafely-disable-devtools-self-xss-warnings",
-  // lots of excited press about this 3 y ago,
-  // setting this stops the JS executing
-  //	"--auto-open-devtools-for-tabs",
+  // --bwsi
   // this fake flag is also being ignored
   "--ignore-this",
 ];
 
 const DIR_TESTS = path.join(__dirname, "..", "dist", "tests");
 const DIR_FIXTURES = path.join(__dirname, "..", "src", "fixtures");
+const DIR_FIXTURES2 = path.join(__dirname, "..", "src", "vis-tests");
 const CERT_NAME = DIR_FIXTURES + path.sep + "cert.pem";
 const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
-// cert.pem  csr.pem  index.html  ob1.min.css  private.key
 var dDelta = 0;
+
+const TESTS = listFiles(DIR_TESTS);
+if (TESTS.length === 0) {
+  console.error("Need to compile tests first");
+  process.exit(34);
+}
+
+function listFiles(dn) {
+  let ret = [];
+  for (let i of fs.readdirSync(dn)) {
+    let ss = fs.statSync(path.join(dn, i));
+    if (ss.isDirectory()) {
+      continue;
+    }
+
+    if (i.match(".webtest.mjs")) {
+      ret.push(i);
+    }
+  }
+
+  return ret;
+}
 
 /**
  * spinup_server
@@ -108,6 +121,10 @@ function spinup_server() {
 
   const app = express();
   const sock = https.createServer(credentials, app);
+  app.use(
+    "/vis",
+    express.static(DIR_FIXTURES2, { dotfiles: "ignore", immutable: false }),
+  );
 
   app.get("/", function (req, res) {
     let tt = fs.readFileSync(path.join(DIR_FIXTURES, "index.html"));
@@ -147,6 +164,13 @@ function spinup_server() {
 
   app.get("/domposition.html", function (req, res) {
     res.sendFile(path.join(DIR_FIXTURES, "domposition.html"), {
+      dotfiles: "deny",
+      headers: { "Content-Type": "text/html;charset=UTF-8" },
+    });
+  });
+
+  app.get("/route-plotting.html", function (req, res) {
+    res.sendFile(path.join(DIR_FIXTURES, "route-plotting.html"), {
       dotfiles: "deny",
       headers: { "Content-Type": "text/html;charset=UTF-8" },
     });
@@ -228,8 +252,6 @@ async function spinup_playwright(debug_url) {
 /**
  * spinup_browser
  * A //fairly// generic shell exec replacement, with a watch on stdout
-// sample:
-// DevTools listening on ws://127.0.0.1:9222/devtools/browser/59522268-ee60-43ba-b277-eab59f915f65
  
  * @param {Array<string>} cmd
  * @param {(str)=>void } onSocket
@@ -383,22 +405,15 @@ async function browser2json(page) {
       throw new Error("Result block not found");
     }
 
-    //    await page.bringToFront();
     console.log(
       "[INFO] Sleeping as DOM data extraction from test tab is laggy",
     );
-    // use this in next iteration
-    // let ignored = await tt1.all();
     await expect(tt1).toHaveAttribute("data-status", "done", {
       timeout: 30_000,
     });
     console.log("[INFO] wakeup (hopefully brower execution is done)");
 
     const json1 = await tt1.textContent();
-    //  const json1 = await page.innerText("pre");
-    //			testResults = await page.content();
-    //			let slice=testResults.match(new RegExp("<pre[^>]*>([^<]*)</pre>", 'mi'));
-    //console.log("SDFSDFSDF "+ new Date(),  slice);
 
     if (json1.length < 5) {
       throw new Error("EMPTY Result block found");
@@ -406,6 +421,107 @@ async function browser2json(page) {
     return json1;
   }
   throw new Error("Logic error, ask a dev");
+}
+
+/**
+ * runExtract
+ * A function to create tabs to launch a CSS extract script in the test browser
+ * VALUE: I can pick this up for RWD tests (the CLI args), so I'm not deleting it 
+
+ * @DEPRECATED
+// https://superuser.com/questions/1139259/how-to-adjust-ui-scaling-for-chrome
+// https://stackoverflow.com/questions/62001125/chrome-dev-tools-simulating-different-resolution-pc-screen
+ * @param {string} urn
+ * @public
+ * @returns {Promise<void>}
+ */
+async function runExtract(urn) {
+  console.log(
+    "[INFO] You need to catch the file savee-as dialogs,  Opens some tabs in Chrome",
+  );
+  const SCREENS = [
+    "(min-width:1024px)",
+    "(max-width:800px) and (min-resolution:150dpi)",
+  ];
+  let closing = [],
+    CHILD,
+    end0;
+
+  dDelta = 3000;
+  [CHILD, end0] = spinup_server();
+  closing.push(end0);
+  await delay(1000);
+  let LBROWSER = BROWSER;
+  LBROWSER[3] = "";
+  LBROWSER.push(
+    '--ash-host-window-bounds="1280x900*1"',
+    "--force-media-resolution-height",
+    "--force-media-resolution-width",
+    "--enable-ui-devtools",
+    "--alt-high-dpi-setting=96",
+    "--high-dpi-support=1",
+    "--force-device-scale-factor=1",
+    "https://" +
+      URL_SERVER +
+      ":" +
+      PORT_SERVER +
+      urn +
+      "?dump-css=2&aspect=" +
+      SCREENS[0],
+  );
+  [CHILD, end0] = await spinup_browser(LBROWSER, function (a) {});
+  closing.push(end0);
+
+  LBROWSER = BROWSER;
+  LBROWSER[3] = "";
+  LBROWSER.push(
+    '--ash-host-window-bounds="800x400*2"',
+    "--ash-no-nudges",
+    "--force-media-resolution-height",
+    "--force-media-resolution-width",
+    "--enable-ui-devtools",
+    "--enable-tablet-form-factor",
+    "--high-dpi-support=1",
+    "--force-device-scale-factor=2.71",
+    "https://" +
+      URL_SERVER +
+      ":" +
+      PORT_SERVER +
+      urn +
+      "?dump-css=2&aspect=" +
+      SCREENS[1],
+  );
+  [CHILD, end0] = await spinup_browser(LBROWSER, function (a) {});
+  closing.push(end0);
+
+  LBROWSER = BROWSER;
+  LBROWSER[3] = "";
+  LBROWSER.push(
+    '--ash-host-window-bounds="500x350*3.5"',
+    "--ash-no-nudges",
+    "--force-media-resolution-height",
+    "--force-media-resolution-width",
+    "--enable-ui-devtools",
+    "--enable-tablet-form-factor",
+    "--high-dpi-support=1",
+    "--force-device-scale-factor=3.5",
+    "https://" +
+      URL_SERVER +
+      ":" +
+      PORT_SERVER +
+      urn +
+      "?dump-css=2&aspect=" +
+      SCREENS[1],
+  );
+  [CHILD, end0] = await spinup_browser(LBROWSER, function (a) {});
+  closing.push(end0);
+
+  await delay(300_000);
+  console.log("[INFO] Closing tabs now");
+  for (let end of closing) {
+    end();
+  }
+  // should be able to exit here...
 }
 
 /**
@@ -514,17 +630,24 @@ The default behaviour is to close the tabs and browser, as most test execution i
 
 supports:
 	--help        ~ this text
-	--no-close    ~ do //not// close the tabs, or the browser. Use to see what happens.
+	--no-close    ~ do //not// close the tabs, or the browser.  Use to see what happens.
 	--close       ~ for automated use, free() resources after use,  This is the default behaviour.  
+    --extract-css ~ pass in an URN to use
 
 `;
   console.log(TEXT);
   process.exit(0);
 }
 
-// this code is a test runner,
-// but is too complex.  So I may need to put a test on it
-// so this is safe to import as it doesn't auto execute
 if (runDirectly(process)) {
-  await runTests(TESTS);
+  if (process.argv.includes("--extract-css")) {
+    // option to dump CSS
+    // needs to be done interactively, as a human needs to use the file-as dialog
+    runExtract(process.argv[process.argv.indexOf("--extract-css") + 1]);
+  } else {
+    // this code is a test runner,
+    // but is too complex.  So I may need to put a test on it
+    // so this is safe to import as it doesn't auto execute
+    await runTests(TESTS);
+  }
 }

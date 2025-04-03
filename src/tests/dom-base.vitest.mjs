@@ -61,7 +61,7 @@ describe("TEST dom-base", () => {
 
   it("go 5:  copyURL ", async (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    let str = `<div id="shareMenu" class="shareMenu"> </div> 
+    let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
   <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
   </dialog>`;
@@ -77,7 +77,7 @@ describe("TEST dom-base", () => {
 
   it("go 6: calcScreenDPI ", async (context) => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    let str = `<div id="shareMenu" class="shareMenu"> </div> 
+    let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
   <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
   </dialog>`;
@@ -94,7 +94,7 @@ describe("TEST dom-base", () => {
       "http://192.168.0.35/resource/home?width=150",
       3,
     );
-    let str = `<div id="shareMenu" class="shareMenu"> </div> 
+    let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
   <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
   </dialog>`;
@@ -117,7 +117,7 @@ describe("TEST dom-base", () => {
     tmp = tmp.replace(new RegExp(">[ \\t\\n]*<", "g"), "><");
     assert.equal(
       tmp,
-      `<body><div><h1>Page Title!! </h1><div class="addReading" id="shareGroup"><div class="allButtons"><span class="ultraSkinny"></span></div></div></div><div id="point1"><h2>WWWWW WWWWW</h2></div><div id="point2" class="blocker addReferences"></div></body>`,
+      `<body><div><h1>Page Title!! </h1><div class="addReading" id="shareGroup"><div class="SMshareWidget"><span class="ultraSkinny"></span></div></div></div><div id="point1"><h2>WWWWW WWWWW</h2></div><div id="point2" class="blocker addReferences"></div></body>`,
       "assert #2",
     );
     assert.equal(dom.getElementsByTagName("h2").length, 1, "assert #5");
@@ -136,7 +136,7 @@ describe("TEST dom-base", () => {
     tmp = tmp.replace(new RegExp(">[ \\t\\n]*<", "g"), "><");
     assert.equal(
       tmp,
-      `<body><div><h1>Page Title!! </h1><div class="addReading" id="shareGroup"><div class="allButtons"><span class="ultraSkinny"></span></div></div></div><div id="point1"><h2>WWWWW WWWWW</h2></div><div id="point2" class="blocker addReferences"></div></body>`,
+      `<body><div><h1>Page Title!! </h1><div class="addReading" id="shareGroup"><div class="SMshareWidget"><span class="ultraSkinny"></span></div></div></div><div id="point1"><h2>WWWWW WWWWW</h2></div><div id="point2" class="blocker addReferences"></div></body>`,
       "assert #2",
     );
     assert.equal(dom.getElementsByTagName("h2").length, 1, "assert #8");
@@ -679,7 +679,7 @@ d
    <div>
 	<h1>Page Title!! </h1>
 	<div class="addReading" id="shareGroup">
-		<div class="allButtons"> <span class="ultraSkinny"></span> </div>
+		<div class="SMshareWidget"> <span class="ultraSkinny"></span> </div>
 	</div>
    </div>
 	<div id="point1"></div>

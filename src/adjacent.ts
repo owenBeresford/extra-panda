@@ -32,17 +32,23 @@ let OPTS: AdjacentPropsDefinite = {
  * @param {string} article
  * @param {string} suffix
  * @param {Location =location} loc
+ * @param {boolean =true} search
  * @protected
  * @returns {string} - the desired full URL of this page
  */
-function mapURL(article: string, suffix: string, loc: Location): string {
+function mapURL(
+  article: string,
+  suffix: string,
+  loc: Location,
+  search: boolean = true,
+): string {
   //  let t = loc.protocol + "//" + loc.host,
   let t2 = loc.pathname.split("/"),
     t = "",
-    t3 = t2.pop();
+    t3 = t2.pop() as string;
   const tmp = new URLSearchParams(loc.search);
   if (t3 === "group-XXX" && tmp.has("first")) {
-    t3 = tmp.get("first");
+    t3 = tmp.get("first") ?? "logic-error";
   }
   if (suffix) {
     if (tmp.has("first")) {
@@ -53,7 +59,10 @@ function mapURL(article: string, suffix: string, loc: Location): string {
   } else {
     t += loc.pathname.replace(t3, article);
   }
-  t += loc.search + loc.hash;
+
+  if (search) {
+    t += loc.search + loc.hash;
+  }
   return t;
 }
 
@@ -99,7 +108,15 @@ function cleanTitle(id: string, group: string): string {
  * @returns {string}
  */
 function extractOABName(url: string): string {
-  return url.split("/").pop();
+  let TMP: string = url;
+  if (url.lastIndexOf("#") > 0) {
+    TMP = url.substring(0, url.lastIndexOf("#"));
+  }
+  if (url.lastIndexOf("?") > 0) {
+    TMP = url.substring(0, url.lastIndexOf("?"));
+  }
+  let TMP2 = TMP.split("/");
+  return TMP2.pop() ?? "";
 }
 
 /**
@@ -118,7 +135,7 @@ function generateGroup(loc: Location): string {
   if (OPTS.group === "XXX") {
     const tmp = new URLSearchParams(loc.search);
     if (tmp.has("first")) {
-      foreward = tmp.get("first");
+      foreward = tmp.get("first") as string;
     }
   }
   if (foreward === "XXX") {
@@ -307,7 +324,9 @@ function convert2HTML(list: Array<NormalisedReference>, gname: string): string {
     html +=
       '<li><a class="adjacentItem button" href="/resource/group-XXX?first=' +
       gname +
-      '" aria-label="This article lists all items in worklog group."> See full list </a></li></ul>';
+      '" aria-label="This article lists all items in ' +
+      gname +
+      ' group."> See full list </a></li></ul>';
   }
   return html;
 }
@@ -345,9 +364,7 @@ function convert2IndexHTML(
       list[i].url +
       '" title="' +
       tt +
-      '">' +
-      list[i].title +
-      ' <span class="button">' +
+      '"> <span class="button">' +
       list[i].title +
       '</span><p id="adjacent' +
       nui +
@@ -380,15 +397,16 @@ function updateLabels(gname: string, dom: Document): void {
 
   if (
     dat.length &&
+    dat[0].textContent &&
     (dat[0].textContent.includes("whatsmyname") ||
       dat[0].textContent.includes("XXX"))
   ) {
     dat[0].textContent = "Group " + gname;
   }
   const dit: Array<HTMLElement> = Array.from(
-    dom.querySelectorAll(".adjacentGroup p"),
+    dom.querySelectorAll(".adjacentWidget p"),
   ) as Array<HTMLElement>;
-  if (dit.length && dit[0].textContent.includes("XXX")) {
+  if (dit.length && dit[0].textContent && dit[0].textContent.includes("XXX")) {
     dit[0].textContent = "Some similar articles in " + gname;
   }
 }
@@ -411,12 +429,12 @@ export function extractGroup(ele: HTMLElement | null, loc: Location): string {
   }
   const tmp2: URLSearchParams = new URLSearchParams(loc.search);
   if (tmp2.has("first")) {
-    return tmp2.get("first");
+    return tmp2.get("first") ?? "";
   }
 
   // this third option is just a back stop;
   if (ele && ele.getAttribute("data-group")) {
-    let tmp = ele.getAttribute("data-group");
+    let tmp = ele.getAttribute("data-group") ?? "";
     tmp = tmp.trim();
     const tmp2 = tmp.split(",").map((a, b) => {
       return a.trim();
@@ -450,7 +468,7 @@ export async function createAdjacentChart(
     OPTS,
     {
       name: articleName(loc),
-      meta: mapURL(OPTS.group, ".json", loc),
+      meta: mapURL(OPTS.group, ".json", loc, false),
       debug: debug(loc),
       runFetch: runFetch,
     },
@@ -459,15 +477,15 @@ export async function createAdjacentChart(
   if (OPTS.group === "system") {
     throw new Error("Must set the article group, and not to 'system'.");
   }
-  OPTS.meta = mapURL(OPTS.group, ".json", loc);
+  OPTS.meta = mapURL(OPTS.group, ".json", loc, false);
 
   const isGroupArticle: boolean =
     OPTS.name === "group-XXX" || OPTS.name === "group-" + OPTS.group;
   const GROUP: string = "group" + OPTS.group;
 
   if (isMobile(dom, loc, win) && !isGroupArticle) {
-    if (dom.querySelectorAll(".adjacentGroup .adjacentItem").length === 1) {
-      (dom.querySelector(".adjacentGroup p") as HTMLElement).style["display"] =
+    if (dom.querySelectorAll(".adjacentWidget .adjacentItem").length === 1) {
+      (dom.querySelector(".adjacentWidget p") as HTMLElement).style["display"] =
         "none";
     }
     appendIsland(
@@ -476,8 +494,8 @@ export async function createAdjacentChart(
       dom,
     );
   } else {
-    const data: SimpleResponse = await OPTS.runFetch(OPTS.meta, false, loc);
-    if (!data.ok || !Array.isArray(data.body)) {
+    const data: SimpleResponse = await OPTS.runFetch(OPTS.meta, true, loc);
+    if (!("ok" in data) || !data.ok || !Array.isArray(data.body)) {
       log("info", "There doesn't seem to be a group meta data file.");
       appendIsland(
         "#" + GROUP,

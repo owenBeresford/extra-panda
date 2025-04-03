@@ -21,25 +21,25 @@ describe("TEST mastodon", () => {
       "http://192.168.0.35/resource/home?mobile=1",
       3,
     );
-    let str = `<div id="shareMenu" class="shareMenu"></div>`;
+    let str = `<div id="shareMenu" class="mobilePopupWidget"></div>`;
     appendIsland("#point2", str, dom);
 
     let vnt = createEvent(dom.querySelector("#shareMenu"), dom, win);
     assert.equal(
       dom.querySelector("#shareMenu").getAttribute("class"),
-      "shareMenu",
+      "mobilePopupWidget",
       "assert #1",
     );
     assert.equal(openShare(vnt, dom, loc), false, "assert #2");
     assert.equal(
       dom.querySelector("#shareMenu").getAttribute("class"),
-      "shareMenuOpen",
+      "mobilePopupWidgetOpen",
       "assert #3",
     );
     assert.equal(openShare(vnt, dom, loc), false, "assert #4");
     assert.equal(
       dom.querySelector("#shareMenu").getAttribute("class"),
-      "shareMenu",
+      "mobilePopupWidget",
       "assert #5",
     );
   });
@@ -49,27 +49,27 @@ describe("TEST mastodon", () => {
       "http://192.168.0.66/resource/home?mobile=1",
       3,
     );
-    let str = `<div id="shareMenu" class="shareMenu">
+    let str = `<div id="shareMenu" class="mobilePopupWidget">
 </div> `;
     appendIsland("#point2", str, dom);
     let vnt = createEvent(dom.querySelector("#shareMenu"), dom, win);
 
     assert.equal(
       dom.querySelector("#shareMenu").getAttribute("class"),
-      "shareMenu",
+      "mobilePopupWidget",
       "assert #6",
     );
     assert.equal(openShare(vnt, dom, loc), false, "assert #2");
     assert.equal(
       dom.querySelector("#shareMenu").getAttribute("class"),
-      "shareMenuOpen",
+      "mobilePopupWidgetOpen",
       "assert #7",
     );
   });
 
   it("go 2: shareMastodon", () => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    let str = `<div id="shareMenu" class="shareMenu"> </div> 
+    let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
 	<dialog id="popup">
 	<input id="id1" type="submit" value="Post now" />
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
@@ -90,7 +90,7 @@ describe("TEST mastodon", () => {
       "http://192.168.0.35/resource/home?mobile=1",
       3,
     );
-    let str = `<div id="shareMenu" class="shareMenu"> </div> 
+    let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
 	<dialog id="popup">
 	<input id="id1" type="submit" value="Post now" />
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?mobile=1" /> 
@@ -109,7 +109,7 @@ describe("TEST mastodon", () => {
 
   it("go 3: openMastodon", () => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    let str = `<div id="shareMenu" class="shareMenu"> </div> 
+    let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
 	<dialog id="popup">
 	<input id="id1" type="submit" value="Post now" />
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
@@ -128,7 +128,7 @@ describe("TEST mastodon", () => {
 
   it("go 4: closeMastodon", () => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    let str = `<div id="shareMenu" class="shareMenu"> </div> 
+    let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
 	<dialog id="popup" open>
 	<input id="id1" type="submit" value="Post now" />
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
@@ -150,7 +150,7 @@ describe("TEST mastodon", () => {
     if (!isFullstack(win)) {
       context.skip();
     }
-    let str = `<div id="shareMenu" class="shareMenu"> </div> 
+    let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
 	<dialog id="popup" open>
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
 	</dialog>`;
@@ -165,7 +165,7 @@ describe("TEST mastodon", () => {
       context.skip();
     }
 
-    let str = `<div id="shareMenu" class="shareMenu"> </div> 
+    let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
 	<dialog id="popup" >
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
 	</dialog>`;
@@ -176,7 +176,7 @@ describe("TEST mastodon", () => {
 
   it("go 7: _map4", () => {
     const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
-    let str = `<div id="shareMenu" class="shareMenu"> </div> 
+    let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
 	<dialog id="popup" >
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
 	</dialog>`;
@@ -216,7 +216,7 @@ describe("TEST mastodon", () => {
     );
     let str = `<nav id="navBar">
 	<div id="shareGroup"> 
-	<div id="shareMenu" class="shareMenu allButtons">
+	<div id="shareMenu" class="mobilePopupWidget SMshareWidget">
 		<span class="shareMenutrigger">BTN[1]</span>  
  		<span id="mastoTrigger">BTN[2]</span>  
 	</div> 

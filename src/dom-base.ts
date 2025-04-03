@@ -82,11 +82,13 @@ export function ready(callback: GenericEventHandler, dom: Document): void {
  */
 export function duplicateSelection(win: Window): string {
   try {
-    const tmp = win.getSelection().getRangeAt(0);
-    if (tmp.startOffset === tmp.endOffset) {
+    const tmp1 = win.getSelection();
+    if (tmp1 === null) return "";
+    const tmp2 = tmp1.getRangeAt(0);
+    if (tmp2.startOffset === tmp2.endOffset) {
       return "";
     }
-    return "" + tmp.cloneContents().textContent;
+    return "" + tmp2.cloneContents().textContent;
   } catch (e) {
     log("warn", "Unable to get data for selection", e.message);
     return "";
@@ -115,7 +117,7 @@ export function setIsland(
   base.innerHTML = html;
 
   if (typeof selector === "string") {
-    const tt = dom.querySelector(selector);
+    const tt: HTMLElement = dom.querySelector(selector) as HTMLElement;
     while (tt && tt.lastChild) {
       tt.removeChild(tt.lastChild);
     }
@@ -167,23 +169,28 @@ export function isFullstack(win: Window): boolean {
  * @public
  * @returns {boolean}
  */
-export function isLibreWolf(dom:Document, nav:Navigator):boolean {
-	var canTouch=false;
-	try { document.createEvent("TouchEvent"); canTouch=true; }
-	catch (e) { let noop=1; }
+export function isLibreWolf(dom: Document, nav: Navigator): boolean {
+  // eslint-disable-next-line no-var
+  var canTouch = false;
+  try {
+    document.createEvent("TouchEvent");
+    canTouch = true;
+  } catch (e) {
+    let noop = 1;
+  }
 
-	if( nav && 
-		nav.product==="Gecko" &&
-		nav.maxTouchPoints>0 &&
-		!canTouch
-	 ) {
-		console.warn("You seem to be using librewolf, could you report to me if this is wrong.");
-		if(! dom.body.classList.contains("IAmLibreWolf") ) {
-			dom.body.classList.add("IAmLibreWolf");
-		}
-		return true;
-	}
-	return false;
+  if (nav && nav.product === "Gecko" && nav.maxTouchPoints > 0 && !canTouch) {
+    console.warn("Is this librewolf?, could tell me if this is wrong.");
+    if (!dom.body.classList.contains("IAmLibreWolf")) {
+      dom.body.classList.add("IAmLibreWolf");
+      (
+        dom.querySelector('.fullWidth p[role="status"]') as HTMLElement
+      ).innerText +=
+        "  Is this librewolf?,  could you tell me if this is wrong.";
+    }
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -301,7 +308,10 @@ export async function copyURL(
  * @returns {void}
  */
 export function applyVolume(dom: Document, win: Window): void {
-  dom.querySelector("body").setAttribute("style", "--offset-height: 0;");
+  (dom.querySelector("body") as HTMLBodyElement).setAttribute(
+    "style",
+    "--offset-height: 0;",
+  );
   const tt: Array<HTMLElement> = Array.from(
     dom.querySelectorAll(".lotsOfWords, .halferWords, .fewWords"),
   );
@@ -365,7 +375,7 @@ export function expandDetails(
 function screenWidth(loc: Location, win: Window): number {
   const u: URLSearchParams = new URLSearchParams(loc.search);
   if (u.has("width")) {
-    return parseInt(u.get("width"), 10);
+    return parseInt(u.get("width") ?? "", 10);
   }
   return win.innerWidth;
 }
@@ -387,17 +397,22 @@ export function isMobile(dom: Document, loc: Location, win: Window): boolean {
     // if JSDom, can always make event,
     // but if we always pass what we want to say, that is fine
     if (u.has("mobile")) {
-      return booleanMap(u.get("mobile"));
+      return booleanMap(u.get("mobile") ?? "");
     }
 
-    if (calcScreenDPI(dom, win) > MOBILE_MIN_PPI) {
+    let PROBABLY_MOB = MOBILE_MIN_PPI;
+    // leSigh.
+    if (isLibreWolf(dom, win.navigator)) {
+      PROBABLY_MOB = MOBILE_MIN_PPI * 1.11;
+    }
+    if (calcScreenDPI(dom, win) > PROBABLY_MOB) {
       return true;
     } else {
       // laptops with a touch screen should be here
       return false;
     }
   } catch (e) {
-    if (u.has("mobile") && booleanMap(u.get("mobile"))) {
+    if (u.has("mobile") && booleanMap(u.get("mobile") ?? "")) {
       return true;
     }
     return false;

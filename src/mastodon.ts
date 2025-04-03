@@ -29,8 +29,8 @@ function openShare(
   if (!isLocal(loc.host) && !isMobile(dom, loc, win)) return false;
 
   const t = dom.querySelector("#shareMenu");
-  if (t && !t.classList.replace("shareMenuOpen", "shareMenu")) {
-    t.classList.replace("shareMenu", "shareMenuOpen");
+  if (t && !t.classList.replace("mobilePopupWidgetOpen", "mobilePopupWidget")) {
+    t.classList.replace("mobilePopupWidget", "mobilePopupWidgetOpen");
   }
   return false;
 }
@@ -51,7 +51,9 @@ function shareMastodon(
   loc: Location,
   win: Window,
 ): boolean {
-  const tmp: HTMLInputElement = dom.querySelector("#mastodonserver");
+  const tmp: HTMLInputElement = dom.querySelector(
+    "#mastodonserver",
+  ) as HTMLInputElement;
   let server = tmp.value;
   const url = tmp.getAttribute("data-url");
   if (server === "" || server === null) {
@@ -118,7 +120,7 @@ export function initMastodon(dom: Document, loc: Location, win: Window): void {
   }
   _map2(BUFFER, openMastodon, dom, win);
 
-  BUFFER = dom.querySelector("#shareGroup .allButtons #mastoTrigger");
+  BUFFER = dom.querySelector("#shareGroup .SMshareWidget #mastoTrigger");
   if (BUFFER) {
     const canSee: string = accessVisibility(BUFFER, "display", win);
     if (canSee && canSee !== "none") {
@@ -134,7 +136,13 @@ export function initMastodon(dom: Document, loc: Location, win: Window): void {
   if (BUFFER) {
     _map4(BUFFER, copyURL, dom, loc, win);
   }
-  _map5(dom.querySelector("#popup #sendMasto"), shareMastodon, dom, loc, win);
+  _map5(
+    dom.querySelector("#popup #sendMasto") as HTMLElement,
+    shareMastodon,
+    dom,
+    loc,
+    win,
+  );
   const BUFFER2: Array<HTMLElement> = Array.from(
     dom.querySelectorAll("#shareMenuTrigger, #shareClose"),
   ) as Array<HTMLElement>;
@@ -142,7 +150,12 @@ export function initMastodon(dom: Document, loc: Location, win: Window): void {
   for (const i in BUFFER2) {
     _map5(BUFFER2[i], openShare, dom, loc, win);
   }
-  _map2(dom.querySelector("#hideMasto"), closeMastodon, dom, win);
+  _map2(
+    dom.querySelector("#hideMasto") as HTMLElement,
+    closeMastodon,
+    dom,
+    win,
+  );
 }
 
 /**

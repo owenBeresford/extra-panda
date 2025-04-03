@@ -79,7 +79,7 @@ function page_fake(url: string = "", args: number = 1): Array<PageGeneration> {
    <div>
 	<h1>Page Title!! </h1>
 	<div class="addReading" id="shareGroup">
-		<div class="allButtons"> <span class="ultraSkinny"></span> </div>
+		<div class="SMshareWidget"> <span class="ultraSkinny"></span> </div>
 	</div>
    </div>
 	<div id="point1"></div>

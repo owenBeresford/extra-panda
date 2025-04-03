@@ -15,7 +15,7 @@ import type { ReadingProps } from "./all-types";
  */
 function extract(get: string, dom: Document): number {
   let ret = 0;
-  dom.querySelectorAll(get).forEach(function (a: HTMLElement) {
+  dom.querySelectorAll(get).forEach(function (a: Element) {
     ret += standardisedWordCount(pullout(a));
   });
   return ret;
@@ -37,17 +37,17 @@ export function readingDuration(
   dom: Document,
   loc: Location,
 ): void {
-  const options = Object.assign(
+  const options: ReadingProps = Object.assign(
     {},
     {
       timeFormat: "m",
       dataLocation: ".blocker",
-      target: "#shareGroup",
+      target: "#shareGroup .SMshareWidget",
       wordPerMin: 275,
       codeSelector: "code",
       refresh: false,
       debug: debug(loc),
-    },
+    } as ReadingProps,
     opts,
   ) as ReadingProps;
   // I would like to move this into the config
@@ -55,7 +55,7 @@ export function readingDuration(
     options.dataLocation +
     " img, " +
     options.dataLocation +
-    " picture, " +
+    " source, " +
     options.dataLocation +
     " object";
 
@@ -69,18 +69,21 @@ export function readingDuration(
     code += extract(options.codeSelector, dom);
   }
   let duration: number =
-    (plain - code) / options.wordPerMin +
-    dom.querySelectorAll(IMAGE_SEARCH).length * 5 +
-    (code * 2) / options.wordPerMin;
+    (plain - code) / options.wordPerMin + (code * 2) / options.wordPerMin;
+
+  const IMGS: Array<string> = Array.from(
+    new Set(Array.from(dom.querySelectorAll(IMAGE_SEARCH)).map(iter)),
+  );
+  duration += IMGS.length * 5;
   if (duration < 1) {
     log("info", "No reading time displayed for this article");
     return;
   }
 
   if (options.refresh) {
-    const tt = dom.querySelector(options.target + " a.reading");
+    const tt = dom.querySelector(options.target + " a.reading") as HTMLElement;
     if (tt) {
-      tt.parentNode.removeChild(tt);
+      (tt.parentNode as HTMLElement).removeChild(tt);
     }
   }
 
@@ -93,6 +96,29 @@ export function readingDuration(
     options.timeFormat +
     "</a>";
   appendIsland(options.target, h1, dom);
+}
+
+/**
+     * iter
+     * An internal function to get the URL attribute, used in Array.map
+ 
+     * @param {HTMLElement} ele
+     * @param {number} i
+     * @public
+     * @returns {string}
+     */
+function iter(ele: HTMLElement, i: number): string {
+  switch (ele.tagName) {
+    case "IMG":
+      return ele.getAttribute("src");
+      break;
+    case "OBJECT":
+      return ele.getAttribute("data");
+      break;
+    case "SOURCE":
+      return ele.getAttribute("srcset");
+      break;
+  }
 }
 
 /////////////////////////////////////////////// testing ////////////////////////////////////////////

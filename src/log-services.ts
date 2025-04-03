@@ -50,6 +50,52 @@ function enableLogCounter(cons: BetterConsole): VisabiltityToLogging {
   };
 }
 
+// eslint-disable-next-line no-var
+var refCount = -1;
+/**
+ * changeCount_simple
+ * Util to log changes in array sizes, 
+ *  uses a boolean/spinlock structure for mark and log with module variable refCount
+ 
+ * @param {Array<any>} ref
+ * @param {string} nom - name in the logging
+ * @public
+ * @returns {void}
+ */
+export function changeCount_simple(ref: Array<any>, nom: string): void {
+  /**
+     * toLen
+     * A function to map thing to is length.
+ 
+     * @param {Array<any>} ref
+     * @public
+     * @returns {number}
+     */
+  function toLen(ref: Array<any>): number {
+    if (Array.isArray(ref)) {
+      return ref.length;
+    } else {
+      return Object.keys(ref).length;
+    }
+  }
+
+  if (refCount === -1) {
+    refCount = toLen(ref);
+  } else {
+    // DO NOT WASTE TIME IMPROVING readability on this log message
+    log(
+      "debug",
+      "Change in " +
+        nom +
+        " was " +
+        (toLen(ref) - refCount) +
+        " to " +
+        toLen(ref),
+    );
+    refCount = -1;
+  }
+}
+
 /**
  * log
  * A simple console.log alias, to make a later extension easier
@@ -60,7 +106,9 @@ function enableLogCounter(cons: BetterConsole): VisabiltityToLogging {
  */
 export function log(typ: string, ...inputs: string[]): void {
   localConsole.LOG_USAGE++;
-  if (typ in console) {
+  if (typ === "assert") {
+    localConsole.assert(...inputs);
+  } else if (typ in console) {
     localConsole[typ](`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
   } else {
     localConsole.log(`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
@@ -112,5 +160,6 @@ export const TEST_ONLY = {
   log,
   debug,
   domLog,
+  changeCount_simple,
   enableLogCounter,
 };

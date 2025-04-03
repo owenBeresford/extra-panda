@@ -352,7 +352,7 @@ describe("TEST mobile-biblio", () => {
 <head><title>test1</title></head>
 <body>
   <div class="addReading" id="shareGroup">
-    <div class="allButtons"> <span class="ultraSkinny"></span> </div>
+    <div class="SMshareWidget"> <span class="ultraSkinny"></span> </div>
   </div>
   <article>
     <div id="point1"></div>
@@ -409,7 +409,7 @@ describe("TEST mobile-biblio", () => {
 
    * @param {string} url
    * @param {boolean} hasExcept
-   * @returns {SimpleResponse}
+   * @returns {Promise<SimpleResponse>}
    */
   function mockFetch1(url, hasExcept) {
     return new Promise((good, bad) => {

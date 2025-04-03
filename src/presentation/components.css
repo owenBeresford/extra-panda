@@ -1,0 +1,1428 @@
+/** FOOTER  RENAME h4_footer 
+	nearly every page, */
+.footWidget {
+  margin: 1.2em;
+  text-align: center;
+  font-size: 70%;
+  max-width: 100vw;
+}
+.footWidget .column {
+  display: inline-block;
+  height: 3.1em;
+}
+.footWidget .column:first-child {
+  width: 180px;
+  vertical-align: top;
+  text-align: right;
+  flex: 1 4 0px;
+}
+.footWidget .bigColumn {
+  flex: 4 4 0px;
+}
+
+.footWidget .leftFooter img {
+  vertical-align: top;
+}
+.footWidget p {
+  margin-bottom: 0.2em;
+}
+.footWidget a {
+  text-decoration: underline;
+}
+
+@media screen and (min-resolution: 150dpi) {
+  .footWidget p {
+    margin-bottom: 1em;
+  }
+  .footWidget {
+    width: 100%;
+    margin: 0.6em;
+  }
+}
+@media screen and (max-width: 1000px) {
+  /* as of 2020 this only applies to the home page */
+  .footWidget .leftFooter:nth-child(2) {
+    width: 120px;
+  }
+}
+@media screen and (max-width: 700px) {
+  .footWidget .leftFooter {
+    display: none;
+  }
+  .footWidget {
+    margin: 0;
+    margin-top: 2em;
+    font-size: 100%;
+  }
+  .tmolFoot a {
+    margin-left: 1.5em;
+  }
+}
+
+/** AccessSrc widget, right aligned container for source links, 
+	pages with source obs */
+.accessSrc {
+  display: block;
+  text-align: right;
+  margin-right: 18em;
+  margin-left: 1em;
+}
+.halferWords .accessSrc {
+  margin-right: 2em;
+  margin-left: 60%;
+}
+.fewWords .accessSrc {
+  margin-right: 2em;
+  margin-left: 40%;
+}
+@media screen and (max-width: 800px) {
+  .accessSrc {
+    margin-right: 1em;
+  }
+}
+
+/** shareGroup RENAME and rename metaWidget
+	every page */
+.metaWidget {
+  display: inline-block;
+  width: calc(100% - 2em);
+  min-height: 3.18em;
+}
+@media screen and (min-resolution: 150dpi) {
+  .metaWidget a.button:first-child {
+    margin-left: 0em;
+    width: 5em;
+  }
+  .metaWidget {
+    margin-left: 0em;
+    padding-left: 0em;
+  }
+}
+/* re-apply everything for a mac 
+This is big screen mac, should work with wide versions
+*/
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+    .metaWidget {
+      margin-left: 1em;
+    }
+  }
+}
+.metaWidget span.ultraSkinny {
+  margin: 0.5em;
+  padding: 0;
+  display: inline;
+  list-style: none;
+  list-style-type: none;
+  list-style-position: unset;
+  margin-bottom: 0px;
+  margin-top: 0;
+  vertical-align: top;
+  max-width: calc(100% - 27em);
+}
+.metaWidget span.ultraSkinny span {
+  margin: 0em 0.5em;
+  padding: 0;
+  line-height: 1.2;
+  display: inline-block;
+  margin-bottom: 0px;
+  white-space: nowrap;
+}
+@media screen and (min-width: 1000px) {
+  .metaWidget span.ultraSkinny span {
+    vertical-align: middle;
+  }
+  .metaWidget span.ultraSkinny {
+    display: inline-block;
+    margin-top: 0.5em;
+  }
+}
+@media screen and (max-resolution: 100dpi) and (max-width: 1000px) {
+  .metaWidget span.ultraSkinny {
+    width: 13em;
+    display: inline-block;
+  }
+}
+@media screen and (min-resolution: 150dpi) {
+  .metaWidget span.ultraSkinny span {
+    font-size: 100%;
+    margin-left: 0;
+  }
+  .metaWidget span.ultraSkinny {
+    max-width: 100vw;
+    margin-left: 1em;
+    padding-left: 0px;
+  }
+}
+
+/** sharemenu, for mobile
+    every page */
+.mobilePopupWidgetOpen {
+  width: fit-content;
+  z-index: 3;
+  position: absolute;
+  text-align: right;
+  left: calc(100% - 7em);
+  top: 5em;
+  border: 0.4em ridge var(--hardfg);
+}
+.mobilePopupWidgetOpen menu {
+  padding-inline-start: 0px;
+  padding: 0;
+}
+.mobilePopupWidgetOpen ul li:nth-child(1) {
+  padding-left: 2em;
+}
+.mobilePopupWidgetOpen ul {
+  width: fit-content;
+  margin-left: 0px;
+}
+.mobilePopupWidgetOpen ul li {
+  margin-bottom: 0.5em;
+}
+.mobilePopupWidgetOpen span.hunchUp {
+  text-align: left;
+  margin-left: -0.6em;
+  padding-left: 0;
+  font-size: 60%;
+}
+.mobilePopupWidgetOpen a.hunchUp {
+  text-align: left;
+  line-height: 0.5;
+  position: relative;
+  left: -1.5em;
+}
+.mobilePopupWidgetOpen menu {
+  margin-block-end: 0;
+  margin-block-start: 0;
+}
+.mobilePopupWidgetOpen ul li:nth-child(2) {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.mobilePopupWidget #copyURL {
+  background-color: rgba(
+    calc(var(--bgr) * var(--bgcontrast)),
+    calc(var(--bgg) * var(--bgcontrast)),
+    calc(var(--bgb) * var(--bgcontrast)),
+    1
+  );
+  transition: background-color 3s ease;
+}
+.mobilePopupWidgetOpen #copyURL:active,
+.mobilePopupWidgetOpen #copyURL:active * {
+  background-color: #00ff29;
+}
+.mobilePopupWidget #shareClose {
+  margin-left: 2em;
+}
+
+@media screen and (max-resolution: 100dpi) and (min-width: 500px) {
+  .mobilePopupWidgetOpen a.hunchUp {
+    left: 0em;
+  }
+}
+
+/* detect if prefix is necessary */
+@media screen and (min-resolution: 150dpi) {
+  .mobilePopupWidgetOpen a i {
+    margin: 0.3em;
+    height: 1.5em;
+    display: inline-block;
+  }
+  .mobilePopupWidgetOpen a i.fa-copy {
+    margin: 3px 0px;
+    padding: 0px;
+    position: relative;
+    left: 0.1em;
+  }
+  .mobilePopupWidgetOpen a.button {
+    margin-left: 0.4em;
+  }
+  .mobilePopupWidgetOpen span.hunchUp {
+    text-align: left;
+    padding-left: 0;
+    margin-left: 0px;
+    font-size: 100%;
+    line-height: 0.8;
+    vertical-align: text-top;
+  }
+  .mobilePopupWidgetOpen a {
+    font-size: 120%;
+  }
+  .mobilePopupWidgetOpen a i.fa {
+    font-size: 150%;
+  }
+}
+
+/** keyWordsWidget 
+	used on about 5 pages
+*/
+.keywordsWidget dl dd::-webkit-scrollbar {
+  width: 1em;
+}
+.keywordsWidget dl dd::-webkit-scrollbar-thumb {
+  background-color: var(--scroll1);
+  outline: 1px solid var(--scroll2);
+}
+/* branch for FF */
+.keywordsWidget dl dd {
+  scrollbar-width: auto;
+  scrollbar-color: var(--scroll1) transparent;
+}
+
+.keywordsWidget {
+  min-width: 800px;
+  max-width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.keywordsWidget::marker {
+  display: none;
+  content: "";
+}
+.keywordsWidget .focuss {
+  container: size;
+  font-size: 120%;
+}
+.keywordsWidget .focuss dt {
+  display: inline-block;
+  margin-right: 1em;
+  vertical-align: middle;
+  margin-bottom: 0;
+}
+.keywordsWidget .focuss dd {
+  display: inline-block;
+  white-space: nowrap;
+  overflow-x: scroll;
+  vertical-align: middle;
+  max-width: calc(100vw - 8em);
+}
+@media screen and (max-width: 800px) {
+  .keywordsWidget {
+    min-width: inherit;
+    max-width: inherit;
+  }
+  .keywordsWidget .focuss {
+    width: 100%;
+  }
+  .keywordsWidget .focuss dd {
+    width: calc(100vw - 3em);
+    min-width: inherit;
+  }
+}
+
+/** mobileBiblio
+	about 70-80% of pages, via mobile only */
+.mobileBiblio {
+  hyphenate-character: "↩";
+  -webkit-hyphenate-character: "↩";
+}
+.mobileBiblio span {
+  display: inline-block;
+}
+.mobileBiblio span:nth-of-type(1) {
+  min-width: 25em;
+}
+.mobileBiblio span:nth-of-type(2) {
+  white-space: nowrap;
+}
+.mobileBiblio h5 {
+  display: inline-block;
+}
+.mobileBiblio li:has(h5:empty)::before {
+  content: "X";
+  color: var(--errorbg);
+  font-size: 1.5em;
+}
+.mobileBiblio li:has(h5:empty),
+.mobileBiblio li:has(h5:empty) * {
+  pointer-events: none;
+}
+
+/* no motion, #leSigh */
+@media screen and (min-width: 900px) {
+  .mobileBiblio {
+    width: 38em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media screen and (min-resolution: 150dpi) {
+  .mobileBiblio {
+    margin: 0.1em;
+  }
+  .mobileBiblio span:nth-of-type(1) {
+    width: auto;
+    min-width: auto;
+  }
+}
+
+/** betterDL for defining terms
+	about 5 pages
+*/
+.betterDL dl dt {
+  display: inline-block;
+  width: 20%;
+  max-width: 5em;
+  text-align: center;
+  vertical-align: text-top;
+}
+.betterDL dl dd {
+  display: inline-block;
+  width: 80%;
+  text-align: left;
+  vertical-align: text-top;
+}
+@media screen and (min-width: 1280px) {
+  .betterDL dl dd {
+    white-space: normal;
+    overflow-x: scroll;
+  }
+}
+
+/** accordionWidget 
+    a few pages
+  */
+.accordionWidget summary {
+  text-align: left;
+}
+.accordionWidget summary a[href^="#"] {
+  pointer-events: none;
+}
+.accordionWidget summary a[href^="#"] sup {
+  pointer-events: auto;
+}
+.accordionWidget summary h4 {
+  display: inline;
+}
+.accordionWidget details {
+  overflow-y: scroll;
+}
+.accordionWidget details:not([open]) {
+  overflow-y: hidden;
+}
+.accordionWidget summary::marker {
+  color: var(--attentionbg);
+  font-size: 1.5em;
+}
+
+/** SMshareWidget 
+	every page */
+.SMshareWidget {
+  padding: 0;
+  vertical-align: super;
+  display: inline-block;
+  white-space: nowrap;
+  width: 31.5em;
+}
+.SMshareWidget a,
+.SMshareWidget span {
+  display: inline-block;
+  width: 3em;
+  text-align: center;
+  padding: 0.5em 0.3em;
+}
+.SMshareWidget a:first-child {
+  width: 5em;
+}
+.SMshareWidget a:last-child {
+  vertical-align: middle;
+}
+@media screen and (min-resolution: 150dpi) {
+  .SMshareWidget a.bigScreenOnly,
+  .SMshareWidget span.bigScreenOnly,
+  .bigScreenOnly,
+  .ultraSkinny.bigScreenOnly,
+  .SMshareWidget a.bigScreenOnly {
+    display: none;
+  }
+  .SMshareWidget a {
+    width: inherit;
+  }
+  .IAmLibreWolf .SMshareWidget a {
+    width: initial;
+  }
+}
+@media screen and (min-resolution: 200dpi) {
+  .IAmLibreWolf .SMshareWidget a {
+    width: inherit;
+  }
+}
+
+@media screen and (max-resolution: 130dpi) and (min-aspect-ratio: 3/5) and (min-width: 800px) {
+  .SMshareWidget a.smallScreenOnly {
+    display: none;
+  }
+}
+/* re-apply everything for a mac 
+This is big screen mac, should work with wide versions
+*/
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+    .SMshareWidget a.smallScreenOnly {
+      display: none;
+    }
+  }
+}
+
+/* small screen mac, AKA iphone/ ipad */
+@media screen and (max-width: 800px) and (min-resolution: 120dpi) {
+  @supports (-webkit-touch-callout: default) {
+    .SMshareWidget a.bigScreenOnly {
+      display: none;
+    }
+    .SMshareWidget a {
+      width: inherit;
+    }
+  }
+}
+
+/** mastodonWidget
+   every page */
+.mastodonWidget {
+  display: none;
+}
+dialog.mastodonWidget[open] {
+  display: block;
+  z-index: 4;
+  width: 400px;
+  position: absolute;
+  padding: 0.5em;
+}
+
+.mastodonWidget input {
+  width: 15em;
+  display: inline-block;
+  font-size: 130%;
+}
+.mastodonWidget .button {
+  display: inline-block;
+  margin-bottom: 0;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+.mastodonWidget .button.trimmed {
+  padding: 0.6em;
+  margin-left: 4em;
+}
+dialog.mastodonWidget a.button.masto {
+  margin-right: 1em;
+  padding: 0.7em;
+  margin-left: 3em;
+}
+.button.masto {
+  border-width: 0px;
+  padding: 0.6em;
+  vertical-align: baseline;
+  margin: 0.65em;
+  margin-bottom: 0.1em;
+}
+
+@media screen and (min-resolution: 150dpi) {
+  dialog.mastodonWidget[open] {
+    width: 95%;
+    left: -2em;
+    font-size: 100%;
+    position: absolute;
+  }
+  .mastodonWidget input {
+    width: 100vw;
+    min-width: 10em;
+    display: inline-block;
+  }
+  .mastodonWidget .button {
+    display: inline-block;
+    margin-bottom: 0;
+    padding-bottom: 1em;
+    padding-top: 1em;
+    font-size: 120%;
+    margin-left: 0.3em;
+  }
+  .mastodonWidget .button.trimmed {
+    padding: 0.7em 0.5em;
+    margin-left: 0.2em;
+    padding-left: 0.2em;
+  }
+  .mastodonWidget span.button.masto {
+    margin-left: 0.3em;
+    margin-right: 0.3em;
+    margin-top: 0.5em;
+  }
+  .articleHeader .mastodonWidget span.button.trimmed i {
+    width: 50px;
+    margin: 0.5em 0.3em;
+  }
+  .mastodonWidget .fa-cancel {
+    margin: 0px;
+  }
+  .mastodonWidget a.button {
+    margin-left: 0px;
+    width: 100vw;
+  }
+  .mastodonWidget a#hideMasto {
+    padding: 0.45em 0.75em;
+  }
+}
+@media screen and (max-resolution: 130dpi) and (min-aspect-ratio: 3/5) and (min-width: 800px) {
+  .mastodonWidget.bigScreenOnly {
+    display: none;
+  }
+}
+/* re-apply everything for a mac 
+This is big screen mac, should work with wide versions
+*/
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+    .mastodonWidget.bigScreenOnly {
+      display: none;
+    }
+  }
+}
+
+/** linksWidget default actions menu 
+	nearly every page */
+.linksWidget {
+  text-align: right;
+  margin-left: auto;
+  white-space: nowrap;
+}
+.linksWidget.column {
+  flex: 1 1 10em;
+}
+.defaultLinksTrigger:before {
+  content: "\e805";
+  font-size: 1.5em;
+  padding: 0.5em;
+}
+.defaultLinksTrigger::marker {
+  content: "";
+}
+.linksWidget[open] .defaultLinksTrigger:before {
+  content: "\e802";
+}
+.linksWidget[open] {
+  z-index: 2;
+  position: fixed;
+  right: 4%;
+}
+
+.dfl {
+  list-style: none;
+  margin-top: 2px;
+  padding-left: 0px;
+  border: 1px solid var(--scroll1);
+}
+.dfl li a {
+  width: calc(100% - 2em);
+  display: inline-block;
+  padding: 0.4em 1em;
+}
+.dfl li:first-child {
+  width: calc(100% - 2em);
+  display: inline-block;
+  padding: 0.3em 1em;
+}
+
+@media screen and (max-resolution: 199dpi) {
+  .IAmLibreWolf .dfl li:first-child {
+    padding-left: 0;
+  }
+}
+
+/** headingsWidget
+	nearly every page */
+.headingsWidget summary {
+  width: calc(100% - 2em);
+  padding: 0px 1em;
+  min-width: 9em;
+}
+.headingsWidget summary::marker {
+  font-size: 2em;
+  text-align: left;
+}
+.headingsWidget summary div {
+  width: calc(100% - 2.4em);
+  display: inline-block;
+  padding-bottom: 0.8em;
+  padding-right: 0.7em;
+}
+.headingsWidget {
+  z-index: 1;
+  position: fixed;
+  right: 4%;
+  container-name: titleMenu;
+  container-type: normal;
+}
+/* if i set  container-type: size; then the container layout wrap works correctly, 
+					but the computed positioning via the right edge does not
+					I can probably run without that, as there are no eXCEEDING long titles */
+.headingsWidget:not(:has(.titleList > *)) {
+  display: none;
+}
+.titleList {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  border: 1px solid var(--scroll1);
+}
+.headingsWidget[open] summary div {
+  padding-right: 4px;
+  transition:
+    border-right 0.5s,
+    width 2s;
+}
+.titleList a {
+  width: calc(100% - 2em);
+  display: inline-block;
+  padding: 0.4em 1em;
+}
+.linksWidget:has(.linksWidget[open]) .titleList {
+  margin-top: 4em;
+}
+
+@container titleMenu (min-width:1024px ) {
+  .headingsWidget {
+    container-type: size;
+  }
+  .headingsWidget[open] .titleList li {
+    max-width: 100vw;
+    white-space: normal;
+  }
+}
+
+/** broswerTest
+	about 15-20 pages
+ */
+.browserTestingContainer {
+  margin-top: 2em;
+  display: block;
+  width: 30em;
+  margin-left: auto;
+  margin-right: auto;
+}
+.browserTestingContainer legend {
+  font-size: 1.6em;
+}
+@media screen and (min-width: 1280px) {
+  .browserTestingContainer {
+    width: 40em;
+  }
+}
+@media screen and (min-resolution: 150dpi) {
+  .browserTestingContainer {
+    width: 100vw;
+  }
+}
+
+/** adjacent  group holds list * X holds item * X 
+	Every page */
+.adjacentList {
+  display: flex;
+  white-space: nowrap;
+  flex-flow: row nowrap;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  width: 96vw;
+  margin-left: 2vw;
+  height: 5em;
+  contain: style;
+  list-style-type: none;
+}
+.adjacentList > * {
+  margin: 0.5em;
+}
+.adjacentWidget a.button {
+  text-decoration: underline;
+  font-weight: bold;
+}
+.adjacentWidget > p {
+  margin-left: 2em;
+}
+.adjacentWidget {
+  z-index: 1;
+}
+.adjacentWidget .buttonBar .button {
+  min-width: 15em;
+}
+.adjacentItem {
+  margin-left: 1em;
+  height: 2.7em;
+}
+.adjacentItem:nth-child(1) {
+  height: 4.5em;
+  min-width: 7.5em;
+}
+.adjacentList li .adjacentWidget a:before,
+.adjacentList li a:before,
+a.adjacentItem:before {
+  content: attr(aria-label);
+  visibility: hidden;
+  opacity: 0;
+  text-align: left;
+  white-space: pre-line;
+  line-height: 1.5;
+  width: 40em;
+  padding: 1em 1em;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 2;
+  position: absolute;
+  left: calc(50% - 20em);
+  border: solid 1px;
+  overflow-wrap: break-word;
+  margin-block-start: 3.5em;
+  contain: paint;
+  pointer-events: none;
+}
+/* try contain:none; */
+
+.groupIndexContainer a.adjacentItem:before {
+  z-index: 0;
+}
+.groupIndexContainer a.adjacentItem:hover:before {
+  visibility: hidden;
+  opacity: 0;
+}
+@media screen and (min-resolution: 150dpi) {
+  .groupIndexContainer .adjacentList .button {
+    font-size: 100%;
+  }
+  .groupIndexContainer .adjacentItem,
+  .adjacentItem,
+  .adjacentList > * {
+    margin-left: 0px;
+  }
+  .adjacentList {
+    text-wrap-mode: wrap;
+  }
+  .adjacentWidget {
+    min-width: 99vw;
+  }
+  .adjacentList {
+    height: auto;
+    display: block;
+    width: 96vw;
+  }
+  .IAmLibreWolf .adjacentList {
+    display: flex;
+  }
+  .IAmLibreWolf .adjacentList li {
+    display: inline-block;
+  }
+  .IAmLibreWolf a.adjacentItem:before {
+    display: block;
+    width: fit-content;
+  }
+  span.adjacentItem,
+  .adjacentItem {
+    display: block;
+    margin-left: 0.5em;
+    height: auto;
+    margin-bottom: 0.5em;
+    width: calc(100vw - 3em);
+  }
+  .adjacentItem .button {
+    width: 96vw;
+    text-align: center;
+    max-width: 96vw;
+    min-width: 96vw;
+  }
+  .adjacentItem a.button {
+    margin-left: 0em;
+  }
+  .groupIndexContainer .adjacentItem p {
+    width: fit-content;
+  }
+}
+@media screen and (max-width: 500px) {
+  body.groupIndexContainer .adjacentItem {
+    margin-left: 0px;
+  }
+}
+@media screen and (max-width: 800px) {
+  .adjacentWidget {
+    min-width: 100vw;
+    margin-top: 1em;
+    margin-left: 0px;
+  }
+}
+.adjacentWidget a.lower:before,
+a.adjacentItem.lower:before {
+  left: calc(50% - 30em);
+}
+.adjacentWidget a:hover:before,
+.adjacentList li a:hover:before,
+a.adjacentItem:hover:before {
+  opacity: 1;
+  visibility: visible;
+}
+@supports (-moz-transform: rotate(45deg)) {
+  a.adjacentItem:hover:before {
+    top: inherit;
+  }
+  .adjacentWidget a:hover:before {
+    top: inherit;
+  }
+}
+@media screen and (min-resolution: 200dpi) {
+  .IAmLibreWolf .adjacentList,
+  .IAmLibreWolf .adjacentList li {
+    display: block;
+  }
+}
+
+/** buttonBar	
+	about 10 pages */
+.buttonBar {
+  text-align: center;
+  padding: 0em 2em;
+  width: 900px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.buttonBar a,
+.buttonBar span {
+  margin-left: 1em;
+  min-width: 7.5em;
+}
+p.buttonBar a:first-child {
+  margin-left: 0px;
+}
+@media screen and (max-width: 900px) {
+  .buttonBar {
+    width: 100vw;
+  } /* this will lead to wrapping on smaller screens */
+}
+@media screen and (min-resolution: 150dpi) {
+  .buttonBar {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/**  mobileMenu  RENAME
+ only rendered on mobile view
+*/
+.mobilePopupWidget {
+  list-style-type: none;
+  padding-left: 0.3em;
+  display: none;
+}
+.mobilePopupWidget li {
+  margin-bottom: 0.7em;
+}
+.mobilePopupWidget li::marker {
+  display: none;
+}
+
+@media screen and (min-resolution: 150dpi) {
+  .mobilePopupWidget li {
+    margin-bottom: 0.3em;
+  }
+}
+
+/** maquetteContainer
+    about 15 pages */
+.maquetteContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: space-around;
+}
+.maquetteContainer details summary h4,
+.maquetteContainer details summary h5 {
+  display: inline-block;
+}
+.maquetteContainer .browserTestingContainer summary {
+  margin-bottom: 1em;
+}
+.maquetteContainer .maquette {
+  width: 660px;
+}
+.maquetteContainer .docs {
+  min-width: 400px;
+  max-width: 800px;
+}
+.maquetteContainer .maquette figure {
+  min-width: 12em;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+@media screen and (max-width: 640px) {
+  .maquetteContainer .maquette:before {
+    display: block;
+    width: 100%;
+    background: var(--errorbg);
+    color: var(--starkfg);
+    font-size: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+    content: "ERROR: screen width small";
+  }
+}
+@media screen and (max-width: 1040px) {
+  .maquetteContainer .docs {
+    width: auto;
+    min-width: initial;
+    max-width: initial;
+  }
+  .maquetteContainer {
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/** quiteWide a 70em block for text etc
+	2 pages to date
+  */
+.quiteWide dl dt {
+  display: inline-block;
+  width: 20%;
+  min-width: 8em;
+  text-align: center;
+  vertical-align: text-top;
+}
+.quiteWide dl dd {
+  display: inline-block;
+  max-width: 79%;
+  text-align: left;
+  vertical-align: text-top;
+  min-width: 75%;
+}
+@media screen and (min-width: 1024px) {
+  .quiteWide {
+    width: 70em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media screen and (max-width: 1024px) and (min-width: 600px) {
+  .quiteWide {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+@media screen and (max-width: 600px) {
+  .quiteWide {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+  }
+  .quiteWide dl dt {
+    display: block;
+    max-width: 50%;
+    width: auto;
+  }
+  .quiteWide dl dd {
+    display: block;
+    min-width: 8em;
+    max-width: 100vw;
+  }
+  .halferWords {
+    width: 100vw;
+  }
+}
+
+/** popOverWidget 
+	about 10 pages
+*/
+.popOverWidget summary {
+  font-size: 130%;
+  margin: 1em;
+  margin-top: 0.1em;
+}
+.popOverWidget summary::marker {
+  font-size: 150%;
+}
+.popOverWidget details[open] {
+  width: 40em;
+  height: calc(100% - 8vh);
+  position: fixed;
+  z-index: 4;
+  top: 8vh;
+  left: calc(50% - 20em);
+  right: calc(50% - 20em);
+  background-color: var(--starkfg);
+  border: double 3px var(--hardfg);
+}
+.popOverWidget details[open] summary::after {
+  content: "X";
+  margin-left: 2em;
+  float: right;
+  font-weight: bold;
+  border: var(--hardfg) 1px solid;
+  padding: 0 1em;
+  margin-top: 0.3em;
+}
+.popOverWidget details li a:last-child::after {
+  content: "";
+}
+
+.popOverWidget details[open] p,
+.popOverWidget details[open] ul.ulbasic,
+.popOverWidget details[open] ul.ulbasic li {
+  margin: 1em;
+  margin-left: 2em;
+  background-color: var(--starkfg);
+}
+
+.popOverWidget details.withScroll[open] {
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+.popOverWidget details.withScroll[open]::-webkit-scrollbar {
+  width: 1em;
+}
+.popOverWidget details.withScroll[open]::-webkit-scrollbar-thumb {
+  background-color: var(--scroll1);
+  outline: 1px solid var(--scroll2);
+}
+/* branch for FF */
+.popOverWidget details.withScroll[open] {
+  scrollbar-width: auto;
+  scrollbar-color: var(--scroll1) transparent;
+}
+
+.popOverWidget:has(details[open]) {
+  --fgcontrast: 5;
+  --bgcontrast: 1;
+}
+.popOverWidget details.singlePopup {
+  --fgcontrast: 0.95;
+  --bgcontrast: 1;
+}
+
+@media screen and (min-width: 1200px) {
+  .popOverWidget details[open] {
+    width: 60em;
+    left: calc(50% - 30em);
+    right: calc(50% - 30em);
+  }
+}
+@media screen and (min-width: 1600px) {
+  .popOverWidget details[open] {
+    width: 80em;
+    left: calc(50% - 40em);
+    right: calc(50% - 40em);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .popOverWidget .centre {
+    width: 95%;
+    margin-left: 2.5%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  .popOverWidget details[open] {
+    width: 100%;
+    right: 0;
+    left: 0;
+  }
+  .popOverWidget details[open] p,
+  details[open] ul {
+    margin: 0.1em;
+    margin-left: 0.2em;
+  }
+}
+
+@media screen and (min-resolution: 150dpi) {
+  .popOverWidget details[open] {
+    width: 100vw;
+  }
+  .popOverWidget summary {
+    margin: initial;
+    margin-left: 2px;
+    margin-right: 2px;
+    font-size: 110%;
+    word-break: break-all;
+  }
+}
+
+@media screen and (min-width: 1040px) {
+  .popOverWidget .maquetteContainer details.docs[open] {
+    min-width: 400px;
+    max-width: 800px;
+    z-index: inherit;
+    position: inherit;
+    height: max-content;
+    width: calc(100% - 660px);
+    border: inherit;
+  }
+  .popOverWidget .maquetteContainer details.docs[open] summary::after {
+    content: "";
+    border: inherit;
+  }
+}
+.popOverWidget:has(.maquetteContainer > details.docs[open]) {
+  --fgcontrast: 0.95;
+  --bgcontrast: 1;
+}
+
+/** logWidget
+	use data-attrib data-closed-prefix and data-open-prefix
+	~5 pages
+*/
+.logWidget summary::before {
+  content: attr(data-closed-prefix) " ";
+}
+.logWidget[open] summary::before {
+  content: attr(data-open-prefix) " ";
+}
+
+.logWidget {
+  border: var(--hardfg) 1px solid;
+  max-height: 500px;
+  overflow-y: scroll;
+  scroll-snap-type: y proximity;
+  align-content: end;
+}
+.logWidget::after {
+  display: block;
+  content: "";
+  scroll-snap-align: end;
+}
+/* Thanks to  bramus@front-end.social for scroll snap setup */
+/* Bramus solution doesn't work for me
+https://stackoverflow.com/questions/18614301/keep-overflow-div-scrolled-to-bottom-unless-user-scrolls-up
+https://css-tricks.com/books/greatest-css-tricks/pin-scrolling-to-bottom/
+*/
+.logWidget summary {
+  font-size: 150%;
+  font-weight: bold;
+  padding: 0.5em;
+}
+.logWidget ul li {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.logWidget ul {
+  margin-left: 0px;
+}
+
+/* highlight widget 
+	note mostly uses external CSS 
+	~15 pages */
+.highlight li {
+  list-style: none;
+}
+.highlight li::before {
+  list-style: none;
+  content: "";
+  display: none;
+}
+.highlight {
+  white-space: pre;
+  padding: 0.3em;
+  text-align: left;
+  display: inline-block;
+  user-select: all;
+}
+.bashSample {
+  text-align: left;
+  padding: 0.3em;
+  user-select: all;
+  hyphenate-character: "↩";
+}
+.halferWords .highlight:not([lang]),
+.highlight.wide,
+.fewWords .highlight:not([lang]) {
+  display: block;
+  width: 100%;
+  margin: 0.5em 0px;
+  overflow-x: scroll;
+  scrollbar-width: auto;
+  scrollbar-color: var(--scroll1) transparent;
+}
+.shake,
+.highlight::before {
+  content: "$ ";
+}
+code,
+code.highlight {
+  border: none;
+}
+code[lang="html"].highlight {
+  line-height: 1;
+}
+code[lang="html"].highlight::before,
+.highlight.wide::before {
+  content: "";
+}
+
+/** tabs-content for TabsWidget 
+	inject root class to force work if needed
+	currently only home-test
+  */
+@media screen and (max-width: 700px) {
+  fieldset.tabs-content {
+    max-width: 98%;
+    width: 98%;
+  }
+}
+
+@media screen and (min-resolution: 150dpi) {
+  .tabs-content p,
+  .tabs-content li,
+  .tabs-content a {
+    font-size: 120%;
+  }
+  .tabs-content li a {
+    font-size: 100%;
+  }
+  .tabs-content {
+    width: 100%;
+    max-width: 100vw;
+  }
+}
+
+/** addReferences
+	about 70-80% of pages
+*/
+.addReferences a {
+  padding: 0.3em;
+  display: inline-block;
+}
+.addReferences a[aria-label]:before {
+  columns: inherit;
+  font-size: 100%;
+  content: attr(aria-label);
+  display: none;
+  width: max-content;
+  text-align: left;
+  white-space: pre;
+  line-height: 1.5;
+  padding: 1em 1em;
+  position: absolute;
+  border: solid 1px;
+  overflow-wrap: break-word;
+  min-width: 30em;
+  pointer-events: none;
+  contain: paint;
+  background-color: var(--starkfg);
+  top: 0px;
+}
+/* try contain:none */
+.addReferences h2 a[aria-label],
+.addReferences h3 a[aria-label] {
+  font-size: 50%;
+}
+.addReferences h4 a[aria-label],
+.addReferences h5 a[aria-label] {
+  font-size: 70%;
+}
+.addReferences a[aria-label]:hover:before {
+  z-index: 10;
+  display: inline-block; /* transform: translate3d(0,0,0); */
+}
+.addReferences.showBiblioErrors sup a:not([aria-label]),
+.addReferences.showBiblioErrors sup a[aria-label~="HTTP_ERROR,"] {
+  background-color: var(--errorbg);
+  padding: 0.7em 0.5em;
+  color: var(--starkfg);
+}
+.addReferences.showBiblioErrors sup a[aria-label~="HTTP_ERROR,"]::before {
+  color: var(--errorbg);
+  background-color: var(--starkfg);
+}
+/*  Dark-art attempting to map adjacent items.
+  not enough success rate, so removed
+.addReferences sup:has( + sup, + sup:last-of-type ), 
+.addReferences sup:has( + a + sup )  { background:green; }
+*/
+.IAmLibreWolf .addReferences.showBiblioErrors sup a:not([aria-label]),
+.IAmLibreWolf .addReferences.showBiblioErrors sup a[aria-label~="HTTP_ERROR,"] {
+  padding: 0.4em 0.5em;
+  line-height: 0.8;
+}
+
+/* this proved too fiddly, so removed
+div.addReferences a.leanIn:before { left: calc( 95% - 32em ); } 
+@supports( width:50cqw ) { 
+div.addReferences a.leanIn:before { left: calc( 100cqw - 32em ); } 
+div.addReferences sup a.leanIn:before { left: calc( 18cqw - 32em ); } 
+} 
+*/
+.addReferences a.leanLeft:before {
+  right: 99%;
+}
+.addReferences a.leanUp::before {
+  top: -12em;
+}
+.addReferences a.leanDown::before {
+  top: 1em;
+}
+.addReferences a:has(i.fa-github, i.fa-book-open):before {
+  font-size: 100%;
+  position: absolute;
+  left: inherit;
+  top: inherit;
+}
+.addReferences a:has(i.fa-github, i.fa-book-open).leanLeft:before {
+  left: auto;
+  right: 1em;
+}
+/*  .addReferences a:has( i.fa-github, i.fa-book-open ):hover:before { transform: unset; } */
+.addReferences sup a.leanCentre::before {
+  left: calc(50% - 16em);
+  right: calc(50% - 16em);
+}
+.addReferences sup a.leanRight::before {
+  left: 2px;
+  right: inherit;
+}
+.addReferences .buttonBar a {
+  padding: 0.85em 1em;
+}
+
+/** trimmings for links, not sure what file to put these in
+	SEE ALSO UTILS 
+	80% of files */
+a sup i.fa.invert {
+  transform: rotate(90deg);
+  font-size: 70%;
+}
+h2 sup {
+  font-size: 50%;
+}
+sup + sup > a {
+  margin-left: 1em;
+}
+p > a + a {
+  margin-left: 0.5em;
+}
+sup:nth-child(1) {
+  margin-left: inherit;
+}
+sup a[aria-label],
+.reading,
+footer a {
+  text-decoration: underline;
+}
+.IAmLibreWolf sub,
+.IAmLibreWolf sup {
+  font-size: 100%;
+}
+@media screen and (min-resolution: 150dpi) {
+  a sup i.fa.invert {
+    font-size: 90%;
+  }
+  a sup:has(i.invert) {
+    font-size: 50%;
+  }
+  sub,
+  sup {
+    font-size: 130%;
+  }
+  sup a {
+    line-height: 1.2;
+  }
+  .IAmLibreWolf sub,
+  .IAmLibreWolf sup {
+    font-size: 100%;
+  }
+}

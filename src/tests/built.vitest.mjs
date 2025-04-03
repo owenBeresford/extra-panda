@@ -25,8 +25,8 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       3,
     );
     let str = `<p role="status">PING</p> <div id="navBar"> 
-				<div id="shareGroup" class="bibbles row addReading">
-				<span class="allButtons"> 
+				<div id="shareGroup" class="metaWidget row addReading">
+				<span class="SMshareWidget"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
 						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
 						<span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
@@ -89,8 +89,8 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
 </div>
 </article>
 </main>
-<div id="contentGroup" class="adjacentGroup" data-group="engineering">
-<div class="adjacentGroup" id="groupengineering">
+<div id="contentGroup" class="adjacentWidget" data-group="engineering">
+<div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
 </div>
 </div>
@@ -408,8 +408,8 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
       3,
     );
     let str = `<p role="status">PING</p> <div id="navBar"> 
-		<div id="shareGroup" class="bibbles row addReading">
-        <span class="allButtons"> 
+		<div id="shareGroup" class="metaWidget row addReading">
+        <span class="SMshareWidget"> 
             <a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
             <a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
             <span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
@@ -472,8 +472,8 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
 </div>
 </article>
 </main>
-<div id="contentGroup" class="adjacentGroup" data-group="engineering">
-<div class="adjacentGroup " id="groupengineering">
+<div id="contentGroup" class="adjacentWidget" data-group="engineering">
+<div class="adjacentWidget " id="groupengineering">
 <p>TEST</p>
 </div>
 </div>

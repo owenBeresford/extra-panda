@@ -1,49 +1,50 @@
 import { isFullstack } from "../dom-base";
-import type { MiscEvent } from "../all-types";
-// this would be hard to make as a TS module
+// import type { MiscEvent } from "../all-types";
 
 // @see ["notes from TS angle" https://www.cgjennings.ca/articles/typescript-events/]
 // @see ["all types of JS events" https://developer.mozilla.org/en-US/docs/Web/API/Event#introduction]
 interface EventMap {
-	"mousedown": MouseEvent;
-	"keypressed":KeyboardEvent;
-	"click": MouseEvent;
-	"touch": TouchEvent;
-//	"touch": GestureEvent | TouchEvent;
-// 	InputEvent
-};
+  mousedown: MouseEvent;
+  keypressed: KeyboardEvent;
+  click: MouseEvent;
+  touch: TouchEvent;
+  //	"touch": GestureEvent | TouchEvent;
+  // 	InputEvent
+}
 
 type LocalEvent = (ev: EventMap[keyof EventMap]) => void;
-type AdjustingHandlers = (type: keyof EventMap, listener:EventListener ) => void; 
+type AdjustingHandlers = (
+  type: keyof EventMap,
+  listener: EventListener,
+) => void;
 
 interface EventLogEvent {
-      type:keyof EventMap;
-      listener:LocalEvent;
-      useCapture:boolean;
-      id: string;
+  type: keyof EventMap;
+  listener: LocalEvent;
+  useCapture: boolean;
+  id: string;
 }
 
 type EventStack = Record<keyof EventMap, Array<EventLogEvent>>;
 
 export interface Keyable {
-	code:	string,
-	altKey: boolean,
-	shiftKey: boolean,
-	ctrlKey: boolean,
-};
+  code: string;
+  altKey: boolean;
+  shiftKey: boolean;
+  ctrlKey: boolean;
+}
 
-
+type Handler = (type: string | undefined) => Array<EventLogEvent>;
 type TestingElement = Element & {
-		eventListenerList:EventStack,
-		_addEventListener:AdjustingHandlers, 
-		_removeEventListener:AdjustingHandlers,
-		getEventListeners: (type:string|undefined)=> Array<EventLogEvent> 
-							};
+  eventListenerList: EventStack;
+  _addEventListener: AdjustingHandlers;
+  _removeEventListener: AdjustingHandlers;
+  getEventListeners: Handler;
+};
 // reference from types for Node
 //interface EventListener {
 //    (evt: Event): void;
 //}
-
 
 /**
  * enableGetEventListeners
@@ -59,14 +60,14 @@ type TestingElement = Element & {
  * @public
  * @returns {void}
  */
-export function enableGetEventListeners(dom:Document):void {
-  const step1:HTMLBodyElement = dom.getElementsByTagName("body")[0];
-  let step2:HTMLElement;
+export function enableGetEventListeners(dom: Document): void {
+  const step1: HTMLBodyElement = dom.getElementsByTagName("body")[0];
+  let step2: HTMLElement;
   try {
     step2 = Object.getPrototypeOf(
       Object.getPrototypeOf(Object.getPrototypeOf(step1)),
     );
-  } catch (e:unknown) {
+  } catch (e: unknown) {
     throw new Error("KLAXON! KLAXON! [1] the sky is falling", e);
   }
 
@@ -74,7 +75,7 @@ export function enableGetEventListeners(dom:Document):void {
   if (step2.constructor.name !== "Element") {
     throw new Error("KLAXON! KLAXON! [2] the sky is falling");
   }
-  const step3:TestingElement = Object.getPrototypeOf(step2);
+  const step3: TestingElement = Object.getPrototypeOf(step2);
 
   // save the original methods before overwriting them
   step3._addEventListener = step2.addEventListener;
@@ -90,7 +91,11 @@ export function enableGetEventListeners(dom:Document):void {
    * @public
    * @returns {void}
    */
-  step3.addEventListener = function (type:keyof EventMap, listener:EventListener, useCapture:boolean = false):void {
+  step3.addEventListener = function (
+    type: keyof EventMap,
+    listener: EventListener,
+    useCapture: boolean = false,
+  ): void {
     this._addEventListener(type, listener, useCapture);
     if (!this.eventListenerList) {
       this.eventListenerList = {};
@@ -104,7 +109,7 @@ export function enableGetEventListeners(dom:Document):void {
       listener,
       useCapture,
       id: "" + this.id,
-    } as EventLogEvent );
+    } as EventLogEvent);
   };
 
   /**
@@ -117,7 +122,11 @@ export function enableGetEventListeners(dom:Document):void {
    * @public
    * @returns {void}
    */
-  step3.removeEventListener = function (type:keyof EventMap, listener:EventListener, useCapture:boolean = false):void {
+  step3.removeEventListener = function (
+    type: keyof EventMap,
+    listener: EventListener,
+    useCapture: boolean = false,
+  ): void {
     this._removeEventListener(type, listener, useCapture);
     if (!this.eventListenerList) {
       this.eventListenerList = {};
@@ -127,7 +136,7 @@ export function enableGetEventListeners(dom:Document):void {
       this.eventListenerList[type] = [];
     }
 
-    for (let i:number = 0; i < this.eventListenerList[type].length; i++) {
+    for (let i: number = 0; i < this.eventListenerList[type].length; i++) {
       if (
         this.eventListenerList[type][i].listener === listener &&
         this.eventListenerList[type][i].useCapture === useCapture
@@ -141,20 +150,22 @@ export function enableGetEventListeners(dom:Document):void {
     }
   };
 
-/**
+  /**
  * Return a copy of currently registered eventListeners
  
  * @param {string|undefined} type
  * @public
  * @returns {Array<EventLogEvent>} - 
  */
-  step3.getEventListeners = function (type:string|undefined):Array<EventLogEvent> {
+  step3.getEventListeners = function (
+    type: string | undefined,
+  ): Array<EventLogEvent> {
     if (!this.eventListenerList) {
       this.eventListenerList = {};
     }
 
     if (type === undefined) {
-      let ret:Array<EventLogEvent> = [];
+      let ret: Array<EventLogEvent> = [];
       for (let i in this.eventListenerList) {
         ret.push(...this.eventListenerList[i]);
       }
@@ -176,15 +187,19 @@ export function enableGetEventListeners(dom:Document):void {
  * @public
  * @returns {MouseEvent}
  */
-export function createEvent(tar:HTMLElement, dom:Document, win:Window):MouseEvent {
-  let vnt:MouseEvent;
+export function createEvent(
+  tar: HTMLElement,
+  dom: Document,
+  win: Window,
+): MouseEvent {
+  let vnt: MouseEvent;
   if (isFullstack(win)) {
     // I hope the target is still present after type washing
-    vnt = new MouseEvent("click", {    }) ;
+    vnt = new MouseEvent("click", {});
   } else {
-// for unit tests
+    // for unit tests
     vnt = dom.createEvent("MouseEvent");
-	vnt.initEvent("MouseEvent", false, true );
+    vnt.initEvent("MouseEvent", false, true);
     //		vnt.initTouchEvent('touchstart');  // from old docs, not supported
   }
 
@@ -208,7 +223,11 @@ export function createEvent(tar:HTMLElement, dom:Document, win:Window):MouseEven
  * @public
  * @returns {Keyboardevent }
  */
-export function createKeyEvent(keys:Keyable, ele:HTMLElement, win:Window):KeyboardEvent {
+export function createKeyEvent(
+  keys: Keyable,
+  ele: HTMLElement,
+  win: Window,
+): KeyboardEvent {
   // I hope the target is still present after type washing
   let vnt = new KeyboardEvent("keydown", {
     altKey: keys.altKey ?? false,
@@ -222,7 +241,6 @@ export function createKeyEvent(keys:Keyable, ele:HTMLElement, win:Window):Keyboa
   return vnt;
 }
 
-
 /**
  * getCSSAttr
  * A util to see CSS values, should be using PresentationAsserts
@@ -235,17 +253,21 @@ export function createKeyEvent(keys:Keyable, ele:HTMLElement, win:Window):Keyboa
  * @public
  * @returns {string} - I have picked up error states to return ""
  */
- export function getCSSAttr(htmlid:string, cssid:string, dom:Document, win:Window):string {
-	try {
-		const CANSEE=dom.querySelector(htmlid);
-		if(!CANSEE) { return ""; }
+export function getCSSAttr(
+  htmlid: string,
+  cssid: string,
+  dom: Document,
+  win: Window,
+): string {
+  try {
+    const CANSEE = dom.querySelector(htmlid);
+    if (!CANSEE) {
+      return "";
+    }
 
-		const STYLE=win.getComputedStyle(CANSEE, null);
-		return STYLE.getPropertyValue(cssid);
-
-	} catch(e) {
-		return "";
-	}
+    const STYLE = win.getComputedStyle(CANSEE, null);
+    return STYLE.getPropertyValue(cssid);
+  } catch (e) {
+    return "";
+  }
 }
-
-

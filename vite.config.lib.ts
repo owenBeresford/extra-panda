@@ -18,7 +18,7 @@ export default defineConfig({
   },
   build: {
     minify: "terser",
-    target: "es2020",
+    target: "es2022",
     lib: {
       entry: [path.resolve(__dirname, "src/index.mjs")],
     },

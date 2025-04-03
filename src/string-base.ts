@@ -13,9 +13,9 @@ export function pullout(a: HTMLElement): string {
     // type checking isn't strong at runtime
     throw new Error("No element for text found");
   } else if ("textContent" in a) {
-    return a.textContent;
+    return a.textContent as string;
   } else if ("innerText" in a) {
-    return a.innerText;
+    return a.innerText as string;
   } else {
     throw new Error("No text found");
   }
@@ -49,7 +49,7 @@ export function makeRefUrl(template: string, loc: Location): string {
   if (!tmp2 || tmp2.length < 2) {
     tmp2 = ["resource", "home"];
   }
-  return template.replace(/XXX/, tmp2.pop());
+  return template.replace(/XXX/, tmp2.pop() as string);
 }
 
 /**

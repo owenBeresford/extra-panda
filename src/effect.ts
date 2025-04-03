@@ -66,7 +66,10 @@ export function addOctoCats(refs: boolean, dom: Document, win: Window): void {
         dom,
       );
       if (refs) {
-        a.setAttribute("aria-label", link2Txt(a.getAttribute("href")));
+        a.setAttribute(
+          "aria-label",
+          link2Txt(a.getAttribute("href") as string),
+        );
         applyDOMpositions(a, win);
       } else {
         a.setAttribute("title", "Link to a github project.");
@@ -149,7 +152,7 @@ export function addFancyButtonArrow(dom: Document): void {
   ) as Array<HTMLElement>;
   for (let i = 0; i < aa.length; i++) {
     appendIsland(
-      aa[i].parentElement,
+      aa[i].parentElement as HTMLElement,
       '<i class="fa fa-play specialPointer" aria-hidden="true"></i>',
       dom,
     );

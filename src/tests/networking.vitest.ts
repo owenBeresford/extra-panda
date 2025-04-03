@@ -2,7 +2,6 @@ import { assert, describe, it, assertType } from "vitest";
 
 import type { Cookieable, Fetchable } from "../all-types";
 import { TEST_ONLY } from "../networking";
-import { log } from "../log-services";
 
 const { getFetch, accessCookie, delay } = TEST_ONLY;
 
@@ -30,14 +29,5 @@ describe("TEST networking", () => {
     const d2 = new Date();
 
     assert.isBelow(d1.getTime() + 1000 - d2.getTime(), 10, "assert #3");
-  });
-
-  it("go 4: log", () => {
-    log("info", "Hello fromn a log test");
-    assert.equal(
-      1,
-      1,
-      "Fake test, as I think that console.log executes.   This code is present, so I could swap to a centralised log platform",
-    );
   });
 });

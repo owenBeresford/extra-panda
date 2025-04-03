@@ -270,7 +270,7 @@ Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf 
 <li> <a id="linkengineering2" class="button lower" href="http://www.thirddata.com/" aria-label="Title: DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...
 Author: gdgdg &nbsp; &nbsp; Last edit:  04-March-2024 
 Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg..." >DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg...</a> </li>
-<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in worklog group."> See full list </a></li></ul>`;
+<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in engineering group."> See full list </a></li></ul>`;
     assert.deepEqual(convert2HTML(d1, "engineering"), d2, "step #22");
   });
 
@@ -307,9 +307,9 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       },
     ];
 
-    let d2 = `<a class="adjacentItem" href="http://www.firstdata.com/" title="sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf">DDDSFDSDF ddd 1234 <span class="button">DDDSFDSDF ddd 1234</span><p id="adjacentengineering0" >Author: racheal &nbsp; &nbsp; &nbsp;  Last edit:  02-March-2024  <br />Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf </p></a>
-<a class="adjacentItem" href="http://www.seconddata.com/" title="sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf">DDDSFDSDF ddd 45646 <span class="button">DDDSFDSDF ddd 45646</span><p id="adjacentengineering1" >Author:  &nbsp; &nbsp; &nbsp;  Last edit:  03-March-2024  <br />Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf </p></a>
-<a class="adjacentItem" href="http://www.thirddata.com/" title="sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg...">DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg <span class="button">DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg</span><p id="adjacentengineering2" >Author: gdgdg &nbsp; &nbsp; &nbsp;  Last edit:  04-March-2024  <br />Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg... </p></a>
+    let d2 = `<a class="adjacentItem" href="http://www.firstdata.com/" title="sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf"> <span class="button">DDDSFDSDF ddd 1234</span><p id="adjacentengineering0" >Author: racheal &nbsp; &nbsp; &nbsp;  Last edit:  02-March-2024  <br />Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf </p></a>
+<a class="adjacentItem" href="http://www.seconddata.com/" title="sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf"> <span class="button">DDDSFDSDF ddd 45646</span><p id="adjacentengineering1" >Author:  &nbsp; &nbsp; &nbsp;  Last edit:  03-March-2024  <br />Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf </p></a>
+<a class="adjacentItem" href="http://www.thirddata.com/" title="sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg..."> <span class="button">DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg</span><p id="adjacentengineering2" >Author: gdgdg &nbsp; &nbsp; &nbsp;  Last edit:  04-March-2024  <br />Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg... </p></a>
 `;
     const [dom, loc, win] = page(
       "http://192.168.0.35/resource/code-metrics",
@@ -329,10 +329,10 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       4,
     );
     let str = `<div class="top-bar fullwidth"><header><h1>i'm set</h1> </header> </div>  
-				<div id="thing1" class="adjacentGroup" data-group="engineering"><p>im set too</p> </div>
-				<div id="thing2" class="adjacentGroup" data-group="engineering   "><p>im set too</p> </div>
-				<div id="thing3" class="adjacentGroup" data-group="engineering,   "><p>im set too</p> </div>
-				<div id="thing4" class="adjacentGroup" data-group="engineering,uitools"><p>im set too</p> </div>
+				<div id="thing1" class="adjacentWidget" data-group="engineering"><p>im set too</p> </div>
+				<div id="thing2" class="adjacentWidget" data-group="engineering   "><p>im set too</p> </div>
+				<div id="thing3" class="adjacentWidget" data-group="engineering,   "><p>im set too</p> </div>
+				<div id="thing4" class="adjacentWidget" data-group="engineering,uitools"><p>im set too</p> </div>
  `;
     appendIsland("#point2", str, dom);
 
@@ -377,7 +377,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
   it("go 9: updatelabels", () => {
     const [dom, loc] = page("http://192.168.0.35/resource/code-metrics", 2);
     let str = `<div class="top-bar fullWidth"><header><h1>I'm set</h1> </header> </div>  
-				<div class="adjacentGroup"><p>Im set too</p> </div> `;
+				<div class="adjacentWidget"><p>Im set too</p> </div> `;
     appendIsland("#point2", str, dom);
     updateLabels("Engineering", dom);
     assert.deepEqual(
@@ -386,12 +386,12 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       "step #31",
     );
     assert.deepEqual(
-      dom.querySelector(".adjacentGroup p").textContent,
+      dom.querySelector(".adjacentWidget p").textContent,
       "Im set too",
       "step #32",
     );
     str = `<div class=" top-bar fullWidth"><header><h1>XXX</h1> </header> </div>
-				<div class="adjacentGroup"><p>XXX</p> </div> `;
+				<div class="adjacentWidget"><p>XXX</p> </div> `;
     setIsland("#point2", str, dom);
     updateLabels("Engineering", dom);
     assert.deepEqual(
@@ -400,7 +400,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       "step #33",
     );
     assert.deepEqual(
-      dom.querySelector(".adjacentGroup p").textContent,
+      dom.querySelector(".adjacentWidget p").textContent,
       "Some similar articles in Engineering",
       "step #34",
     );
@@ -412,7 +412,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       3,
     );
     let str = `
-<div class="adjacentGroup" id="groupengineering">
+<div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
@@ -430,7 +430,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       win,
     );
     assert.equal(
-      dom.querySelector(".adjacentGroup p").textContent,
+      dom.querySelector(".adjacentWidget p").textContent,
       "TEST",
       "step #35 [negative]",
     );
@@ -447,7 +447,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       3,
     );
     let str = `
-<div class="adjacentGroup" id="groupengineering">
+<div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
@@ -465,7 +465,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     );
 
     assert.equal(
-      dom.querySelector(".adjacentGroup p").textContent,
+      dom.querySelector(".adjacentWidget p").textContent,
       "TEST",
       "step #37 [positive]",
     );
@@ -489,7 +489,7 @@ Description: 16 Considerations for REST API, construction and why REST API are u
 <li> <a id="linkengineering3" class="button" href="https://owenberesford.me.uk/resource/goals" aria-label="Title: “Zones of development”
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
 Description: What concepts or areas of development are important.    This is a higher level chart..">“Zones of development”</a> </li>
-<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in worklog group."> See full list </a></li>`;
+<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in engineering group."> See full list </a></li>`;
     assert.equal(
       dom.querySelector("#groupengineering .adjacentList").innerHTML,
       sample1,
@@ -503,7 +503,7 @@ Description: What concepts or areas of development are important.    This is a h
       3,
     );
     let str = `
-<div class="adjacentGroup" id="groupengineering">
+<div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
@@ -522,7 +522,7 @@ Description: What concepts or areas of development are important.    This is a h
     );
 
     assert.equal(
-      dom.querySelector(".adjacentGroup p").textContent,
+      dom.querySelector(".adjacentWidget p").textContent,
       "TEST",
       "step #40 ",
     );
@@ -563,7 +563,7 @@ Description: What concepts or areas of development are important.    This is a h
       3,
     );
     let str = `
-<div class="adjacentGroup" id="groupengineering">
+<div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
@@ -583,7 +583,7 @@ Description: What concepts or areas of development are important.    This is a h
     );
 
     assert.equal(
-      dom.querySelector(".adjacentGroup p").textContent,
+      dom.querySelector(".adjacentWidget p").textContent,
       "TEST",
       "step #46",
     );
@@ -644,7 +644,7 @@ Description: Short article for how to control APC.">Opcache notes</a> </li>
 <li> <a id="linkengineering14" class="button" href="https://owenberesford.me.uk/resource/php-benchmark-2017" aria-label="Title: PHP benchmark 2017
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
 Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> </li>
-<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in worklog group."> See full list </a></li>`;
+<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in engineering group."> See full list </a></li>`;
     assert.equal(
       dom.querySelector("#groupengineering .adjacentList").innerHTML,
       sample1,
@@ -658,7 +658,7 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
       3,
     );
     let str = `
-<div class="adjacentGroup" id="groupengineering">
+<div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
 </div>`;
     appendIsland("#point2", str, dom);
@@ -678,7 +678,7 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
     );
 
     assert.equal(
-      dom.querySelector(".adjacentGroup p").textContent,
+      dom.querySelector(".adjacentWidget p").textContent,
       "TEST",
       "step #50",
     );
@@ -739,7 +739,7 @@ Description: Short article for how to control APC.">Opcache notes</a> </li>
 <li> <a id="linkengineering14" class="button" href="https://owenberesford.me.uk/resource/php-benchmark-2017" aria-label="Title: PHP benchmark 2017
 Author: Owen Beresford &nbsp; &nbsp; Last edit:  26-March-2024 
 Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> </li>
-<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in worklog group."> See full list </a></li>`;
+<li><a class="adjacentItem button" href="/resource/group-XXX?first=engineering" aria-label="This article lists all items in engineering group."> See full list </a></li>`;
     assert.equal(
       dom.querySelector("#groupengineering .adjacentList").innerHTML,
       sample1,
