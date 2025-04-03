@@ -132,7 +132,10 @@ describe("TEST core", () => {
   });
 
   it("go 5.2: initPopupMobile", () => {
-    const [dom, loc, win] = page("http://6.6.6.6/resource/home?mobile=1&debug=1", 3);
+    const [dom, loc, win] = page(
+      "http://6.6.6.6/resource/home?mobile=1&debug=1",
+      3,
+    );
     let str = `<div id="navBar">
 				<span class="SMshareWidget"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>

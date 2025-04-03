@@ -72,7 +72,7 @@ const BROWSER = [
   "--disable-default-apps",
   "--allow-running-insecure-content",
   "--unsafely-disable-devtools-self-xss-warnings",
-  // --bwsi 
+  // --bwsi
   // this fake flag is also being ignored
   "--ignore-this",
 ];
@@ -84,24 +84,26 @@ const CERT_NAME = DIR_FIXTURES + path.sep + "cert.pem";
 const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
 var dDelta = 0;
 
-const TESTS = listFiles( DIR_TESTS );
-if(TESTS.length ===0) {
-	console.error("Need to compile tests first");
-	process.exit(34);
+const TESTS = listFiles(DIR_TESTS);
+if (TESTS.length === 0) {
+  console.error("Need to compile tests first");
+  process.exit(34);
 }
 
 function listFiles(dn) {
-	let ret=[];
-	for (let i of fs.readdirSync( dn )) {
-		let ss=fs.statSync( path.join(dn, i ) ); 
-		if( ss.isDirectory()) { continue; }
+  let ret = [];
+  for (let i of fs.readdirSync(dn)) {
+    let ss = fs.statSync(path.join(dn, i));
+    if (ss.isDirectory()) {
+      continue;
+    }
 
-		if( i.match(".webtest.mjs")) {	
-			ret.push( i );
-		}
-	}
+    if (i.match(".webtest.mjs")) {
+      ret.push(i);
+    }
+  }
 
-	return ret;
+  return ret;
 }
 
 /**
@@ -119,7 +121,10 @@ function spinup_server() {
 
   const app = express();
   const sock = https.createServer(credentials, app);
-	app.use('/vis', express.static( DIR_FIXTURES2 , {dotfiles:"ignore", immutable:false, }));
+  app.use(
+    "/vis",
+    express.static(DIR_FIXTURES2, { dotfiles: "ignore", immutable: false }),
+  );
 
   app.get("/", function (req, res) {
     let tt = fs.readFileSync(path.join(DIR_FIXTURES, "index.html"));
@@ -418,8 +423,6 @@ async function browser2json(page) {
   throw new Error("Logic error, ask a dev");
 }
 
-
-
 /**
  * runExtract
  * A function to create tabs to launch a CSS extract script in the test browser
@@ -436,69 +439,89 @@ async function runExtract(urn) {
   console.log(
     "[INFO] You need to catch the file savee-as dialogs,  Opens some tabs in Chrome",
   );
-	const SCREENS=[
-			'(min-width:1024px)',
-			'(max-width:800px) and (min-resolution:150dpi)', 
-				];
-	let closing=[], CHILD, end0;
+  const SCREENS = [
+    "(min-width:1024px)",
+    "(max-width:800px) and (min-resolution:150dpi)",
+  ];
+  let closing = [],
+    CHILD,
+    end0;
 
-    dDelta = 3000;
-    [CHILD, end0] = spinup_server();
-	closing.push(end0);
-	await delay(1000);
-	let LBROWSER=BROWSER;
-	LBROWSER[3]="";
-	LBROWSER.push( 
-			"--ash-host-window-bounds=\"1280x900*1\"", 
-			"--force-media-resolution-height",
-			"--force-media-resolution-width",
-			"--enable-ui-devtools" ,
-			"--alt-high-dpi-setting=96",
-			"--high-dpi-support=1",
-			"--force-device-scale-factor=1",
-			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[0] ,
-				);
-	[CHILD, end0] = await spinup_browser(LBROWSER, function(a) {});
-	closing.push( end0);
+  dDelta = 3000;
+  [CHILD, end0] = spinup_server();
+  closing.push(end0);
+  await delay(1000);
+  let LBROWSER = BROWSER;
+  LBROWSER[3] = "";
+  LBROWSER.push(
+    '--ash-host-window-bounds="1280x900*1"',
+    "--force-media-resolution-height",
+    "--force-media-resolution-width",
+    "--enable-ui-devtools",
+    "--alt-high-dpi-setting=96",
+    "--high-dpi-support=1",
+    "--force-device-scale-factor=1",
+    "https://" +
+      URL_SERVER +
+      ":" +
+      PORT_SERVER +
+      urn +
+      "?dump-css=2&aspect=" +
+      SCREENS[0],
+  );
+  [CHILD, end0] = await spinup_browser(LBROWSER, function (a) {});
+  closing.push(end0);
 
-	LBROWSER=BROWSER;
-	LBROWSER[3]="";
-	LBROWSER.push( 
-			"--ash-host-window-bounds=\"800x400*2\"", 
-			"--ash-no-nudges",
-			"--force-media-resolution-height",
-			"--force-media-resolution-width",
-			"--enable-ui-devtools" ,
-			"--enable-tablet-form-factor",
-			"--high-dpi-support=1",
-			"--force-device-scale-factor=2.71",
-			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[1] ,
-				);
-	[CHILD, end0] = await spinup_browser(LBROWSER, function(a) {});
-	closing.push( end0);
+  LBROWSER = BROWSER;
+  LBROWSER[3] = "";
+  LBROWSER.push(
+    '--ash-host-window-bounds="800x400*2"',
+    "--ash-no-nudges",
+    "--force-media-resolution-height",
+    "--force-media-resolution-width",
+    "--enable-ui-devtools",
+    "--enable-tablet-form-factor",
+    "--high-dpi-support=1",
+    "--force-device-scale-factor=2.71",
+    "https://" +
+      URL_SERVER +
+      ":" +
+      PORT_SERVER +
+      urn +
+      "?dump-css=2&aspect=" +
+      SCREENS[1],
+  );
+  [CHILD, end0] = await spinup_browser(LBROWSER, function (a) {});
+  closing.push(end0);
 
-	LBROWSER=BROWSER;
-	LBROWSER[3]="";
-	LBROWSER.push( 
-			"--ash-host-window-bounds=\"500x350*3.5\"", 
-			"--ash-no-nudges",
-			"--force-media-resolution-height",
-			"--force-media-resolution-width",
-			"--enable-ui-devtools" ,
-			"--enable-tablet-form-factor",
-			"--high-dpi-support=1",
-			"--force-device-scale-factor=3.5",
-			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[1] ,
-				);
-	[CHILD, end0] = await spinup_browser(LBROWSER, function(a) {});
-	closing.push( end0);
+  LBROWSER = BROWSER;
+  LBROWSER[3] = "";
+  LBROWSER.push(
+    '--ash-host-window-bounds="500x350*3.5"',
+    "--ash-no-nudges",
+    "--force-media-resolution-height",
+    "--force-media-resolution-width",
+    "--enable-ui-devtools",
+    "--enable-tablet-form-factor",
+    "--high-dpi-support=1",
+    "--force-device-scale-factor=3.5",
+    "https://" +
+      URL_SERVER +
+      ":" +
+      PORT_SERVER +
+      urn +
+      "?dump-css=2&aspect=" +
+      SCREENS[1],
+  );
+  [CHILD, end0] = await spinup_browser(LBROWSER, function (a) {});
+  closing.push(end0);
 
-	await delay(300_000);
-	console.log( "[INFO] Closing tabs now" );
-	for(let end of closing) {
-		end();
-	}
-	// should be able to exit here...
+  await delay(300_000);
+  console.log("[INFO] Closing tabs now");
+  for (let end of closing) {
+    end();
+  }
+  // should be able to exit here...
 }
 
 /**
@@ -617,18 +640,14 @@ supports:
 }
 
 if (runDirectly(process)) {
-	if(process.argv.includes('--extract-css')) {
-// option to dump CSS
-// needs to be done interactively, as a human needs to use the file-as dialog
-		runExtract( 
-			process.argv[
-				process.argv.indexOf('--extract-css')+1
-						]);
-
-	} else {
-// this code is a test runner,
-// but is too complex.  So I may need to put a test on it
-// so this is safe to import as it doesn't auto execute
-		await runTests(TESTS);
-	}
+  if (process.argv.includes("--extract-css")) {
+    // option to dump CSS
+    // needs to be done interactively, as a human needs to use the file-as dialog
+    runExtract(process.argv[process.argv.indexOf("--extract-css") + 1]);
+  } else {
+    // this code is a test runner,
+    // but is too complex.  So I may need to put a test on it
+    // so this is safe to import as it doesn't auto execute
+    await runTests(TESTS);
+  }
 }

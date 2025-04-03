@@ -32,13 +32,17 @@ Some extra tests that do not run in Node
 // node_modules/playwright/types/*
 */
 import type { ServerOptions, Server } from "https";
-import type { Express, Request as ERequest, Response as EResponse } from 'express';
-import type { Page } from 'playwright';
-import type { NodeJS } from '@types/node';
-import type { Circus, Global } from '@jest/types';
+import type {
+  Express,
+  Request as ERequest,
+  Response as EResponse,
+} from "express";
+import type { Page } from "playwright";
+import type { NodeJS } from "@types/node";
+import type { Circus, Global } from "@jest/types";
 
-const path = await import( "node:path");
-const URL = await import ("node:url");
+const path = await import("node:path");
+const URL = await import("node:url");
 const __dirname = path.dirname(URL.fileURLToPath(import.meta.url));
 const __filename = path.basename(URL.fileURLToPath(import.meta.url));
 
@@ -48,9 +52,14 @@ const https = await import("https");
 const express = await import("express");
 
 const { chromium } = await import("playwright");
-const { expect } = await import( "@playwright/test");
+const { expect } = await import("@playwright/test");
 
-console.log("looking for __dirname", process.version, import.meta, process.env.PWD );
+console.log(
+  "looking for __dirname",
+  process.version,
+  import.meta,
+  process.env.PWD,
+);
 /**
 There is only 1 cmd arg to this script at present.
   --no-close or --close
@@ -59,11 +68,11 @@ There is only 1 cmd arg to this script at present.
 If more are added, see command-line-args
 @see [https://www.npmjs.com/package/command-line-args]
 */
- 
+
 const PORT_DEBUG = 9222;
 const PORT_SERVER = 8081;
 const URL_SERVER = "127.0.0.1";
-const BROWSER:Readonly<Array<string>> = [
+const BROWSER: Readonly<Array<string>> = [
   // https://peter.sh/experiments/chromium-command-line-switches/
   // The above list is assembled from source code analysis, an is updated automatically frequently
   "/snap/bin/chromium",
@@ -82,14 +91,14 @@ const BROWSER:Readonly<Array<string>> = [
   "--disable-default-apps",
   "--allow-running-insecure-content",
   "--unsafely-disable-devtools-self-xss-warnings",
-  // --bwsi 
+  // --bwsi
   // this fake flag is also being ignored
   "--ignore-this",
 ] as Readonly<Array<string>>;
 
-type END_CB=()=>void;
-type DEBUG_CHANNEL_CB=(s:string)=>void;
-type Triggerage=any|END_CB;
+type END_CB = () => void;
+type DEBUG_CHANNEL_CB = (s: string) => void;
+type Triggerage = any | END_CB;
 
 /*
 export type RunResult = {
@@ -97,7 +106,7 @@ export type RunResult = {
   testResults: TestResults;
 };
 */
-type StatusBlock = [{ name:string, last:boolean }]; 
+type StatusBlock = [{ name: string; last: boolean }];
 type TestResult = Circus.RunResult & StatusBlock;
 
 const DIR_TESTS = path.join(__dirname, "..", "dist", "tests");
@@ -107,10 +116,10 @@ const CERT_NAME = DIR_FIXTURES + path.sep + "cert.pem";
 const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
 let dDelta = 0;
 
-const TESTS:Readonly<Array<string>>  = listFiles( DIR_TESTS );
-if(TESTS.length ===0) {
-       console.error("Need to compile tests first");
-       process.exit(34);
+const TESTS: Readonly<Array<string>> = listFiles(DIR_TESTS);
+if (TESTS.length === 0) {
+  console.error("Need to compile tests first");
+  process.exit(34);
 }
 
 /**
@@ -121,20 +130,22 @@ if(TESTS.length ===0) {
  * @public
  * @returns {Array<string>}
  */
-function listFiles(dn:string):Array<string> {
-         let ret:Array<string>=[];
-         for (let i of fs.readdirSync( dn )) {
-                 let ss=fs.statSync( path.join(dn, i ) ); 
-                 if( ss.isDirectory()) { continue; }
-  
-                 if( i.match(".webtest.mjs")) {  
-                         ret.push( i );
-                 }
-         }
-  
-         return ret;
+function listFiles(dn: string): Array<string> {
+  let ret: Array<string> = [];
+  for (let i of fs.readdirSync(dn)) {
+    let ss = fs.statSync(path.join(dn, i));
+    if (ss.isDirectory()) {
+      continue;
+    }
+
+    if (i.match(".webtest.mjs")) {
+      ret.push(i);
+    }
   }
-  
+
+  return ret;
+}
+
 /**
  * spinup_server
  * A function to start a Node/Express process to host test files
@@ -142,19 +153,25 @@ function listFiles(dn:string):Array<string> {
  * @protected
  * @returns {Array} - [null, ()=>void ]
  */
-function spinup_server():Array<Triggerage> {
-  const credentials:ServerOptions = {
+function spinup_server(): Array<Triggerage> {
+  const credentials: ServerOptions = {
     key: fs.readFileSync(CERT_KEY),
     cert: fs.readFileSync(CERT_NAME),
-  } as Readonly<ServerOptions>; 
+  } as Readonly<ServerOptions>;
 
-  const app:Express = express(); 
-  const sock:Server<ERequest, EResponse> = https.createServer(credentials, app);
+  const app: Express = express();
+  const sock: Server<ERequest, EResponse> = https.createServer(
+    credentials,
+    app,
+  );
 
-  app.use('/vis', express.static( DIR_FIXTURES2 , {dotfiles:"ignore", immutable:false, }));
-  app.get("/", function (req:ERequest, res:EResponse):void {
+  app.use(
+    "/vis",
+    express.static(DIR_FIXTURES2, { dotfiles: "ignore", immutable: false }),
+  );
+  app.get("/", function (req: ERequest, res: EResponse): void {
     const tt1 = fs.readFileSync(path.join(DIR_FIXTURES, "index.html"));
-    let tt2:string = Buffer.from(tt1).toString();
+    let tt2: string = Buffer.from(tt1).toString();
     if (!("test" in req.query)) {
       res
         .status(404)
@@ -175,49 +192,55 @@ function spinup_server():Array<Triggerage> {
     res.send(tt2);
   });
 
-  app.get("/home.html", function (req:ERequest, res:EResponse):void {
+  app.get("/home.html", function (req: ERequest, res: EResponse): void {
     res.sendFile(path.join(DIR_FIXTURES, "home.html"), {
       dotfiles: "deny",
       headers: { "Content-Type": "text/html;charset=UTF-8" },
     });
   });
 
-  app.get("/home2.html", function (req:ERequest, res:EResponse):void {
+  app.get("/home2.html", function (req: ERequest, res: EResponse): void {
     res.sendFile(path.join(DIR_FIXTURES, "home2.html"), {
       dotfiles: "deny",
       headers: { "Content-Type": "text/html;charset=UTF-8" },
     });
   });
 
-  app.get("/domposition.html", function (req:ERequest, res:EResponse):void {
+  app.get("/domposition.html", function (req: ERequest, res: EResponse): void {
     res.sendFile(path.join(DIR_FIXTURES, "domposition.html"), {
       dotfiles: "deny",
       headers: { "Content-Type": "text/html;charset=UTF-8" },
     });
   });
 
-  app.get("/route-plotting.html", function (req:ERequest, res:EResponse):void {
-    res.sendFile(path.join(DIR_FIXTURES, "route-plotting.html"), {
-      dotfiles: "deny",
-      headers: { "Content-Type": "text/html;charset=UTF-8" },
-    });
-  });
+  app.get(
+    "/route-plotting.html",
+    function (req: ERequest, res: EResponse): void {
+      res.sendFile(path.join(DIR_FIXTURES, "route-plotting.html"), {
+        dotfiles: "deny",
+        headers: { "Content-Type": "text/html;charset=UTF-8" },
+      });
+    },
+  );
 
-  app.get("/asset/ob1-202406.min.mjs", function (req:ERequest, res:EResponse):void {
-    res.sendFile(path.join(DIR_FIXTURES, "ob1-202406.min.mjs"), {
-      dotfiles: "deny",
-      headers: { "Content-Type": "text/javascript;charset=UTF-8" },
-    });
-  });
+  app.get(
+    "/asset/ob1-202406.min.mjs",
+    function (req: ERequest, res: EResponse): void {
+      res.sendFile(path.join(DIR_FIXTURES, "ob1-202406.min.mjs"), {
+        dotfiles: "deny",
+        headers: { "Content-Type": "text/javascript;charset=UTF-8" },
+      });
+    },
+  );
 
-  app.get("/asset/ob1.min.css", function (req:ERequest, res:EResponse):void {
+  app.get("/asset/ob1.min.css", function (req: ERequest, res: EResponse): void {
     res.sendFile(path.join(DIR_FIXTURES, "ob1.min.css"), {
       dotfiles: "deny",
       headers: { "Content-Type": "text/css;charset=UTF-8" },
     });
   });
 
-  app.get("/scripts/:nom", function (req:ERequest, res:EResponse):void { 
+  app.get("/scripts/:nom", function (req: ERequest, res: EResponse): void {
     const detect = fs.statSync(path.join(DIR_TESTS, req.params.nom), {
       throwIfNoEntry: false,
     });
@@ -230,7 +253,7 @@ function spinup_server():Array<Triggerage> {
     });
   });
 
-  sock.listen(PORT_SERVER, URL_SERVER, ():void => {
+  sock.listen(PORT_SERVER, URL_SERVER, (): void => {
     console.log(
       "[INFO] Fixture server  https://" +
         URL_SERVER +
@@ -240,7 +263,7 @@ function spinup_server():Array<Triggerage> {
         process.pid,
     );
   });
-  const closeServer:END_CB = ():void => {
+  const closeServer: END_CB = (): void => {
     sock.close();
   };
   // Could return the socket, but not sure this would help anything
@@ -256,7 +279,9 @@ function spinup_server():Array<Triggerage> {
  * @returns {Promise<Array<Triggerage>>} - 
  *
  */
-async function spinup_playwright(debug_url:string):Promise<Array<Triggerage>> {
+async function spinup_playwright(
+  debug_url: string,
+): Promise<Array<Triggerage>> {
   // debug channel, not test node web service
   const DBG = await chromium.connectOverCDP(debug_url);
   if (!DBG.isConnected()) {
@@ -266,10 +291,12 @@ async function spinup_playwright(debug_url:string):Promise<Array<Triggerage>> {
   if (CTX.length < 1) {
     throw new Error("Can't connect to captive browser (contexts)");
   }
-  console.log(    `[INFO] In process ${process.pid}, Playwright admin via ` + debug_url);
+  console.log(
+    `[INFO] In process ${process.pid}, Playwright admin via ` + debug_url,
+  );
 
   const ctx = CTX[0];
-  const closure:END_CB = async ():Promise<void> => {
+  const closure: END_CB = async (): Promise<void> => {
     await ctx.close();
     await DBG.close();
   };
@@ -282,17 +309,20 @@ async function spinup_playwright(debug_url:string):Promise<Array<Triggerage>> {
  *     IMPURE as makes the process, and stays resident
  * @param {Array<string>} cmd
  * @param {(str)=>void } onSocket
- * @protected 
+ * @protected
  * @returns {Array} - [PID of child, ()=>void]
  */
-async function spinup_browser(cmd:Readonly<Array<string>>, onSocket:DEBUG_CHANNEL_CB):Promise<Array<Triggerage>>  {
-  let buf:string = "",
-      found:boolean = false;
+async function spinup_browser(
+  cmd: Readonly<Array<string>>,
+  onSocket: DEBUG_CHANNEL_CB,
+): Promise<Array<Triggerage>> {
+  let buf: string = "",
+    found: boolean = false;
 
-  const READ = (data:string):void => {
+  const READ = (data: string): void => {
     // being cautious on line buffering:
     buf += data;
-    const tmp:Array<string> = buf.split("\n");
+    const tmp: Array<string> = buf.split("\n");
     for (let i = 0; i < tmp.length; i++) {
       if (!found && tmp[i].match(/^DevTools listening on /)) {
         onSocket(tmp[i].match(/^DevTools listening on ([^ ]+)$/)[1]);
@@ -300,25 +330,29 @@ async function spinup_browser(cmd:Readonly<Array<string>>, onSocket:DEBUG_CHANNE
       }
     }
   };
-  const READ_ERR = (data:string):void => {
+  const READ_ERR = (data: string): void => {
     console.log("[PASS-BACK] Child process said: " + data);
     console.log("outer running process has got the debug socket? " + found);
   };
 
-  const CHILD = await PROC.spawn(BROWSER[0], BROWSER.slice(1, BROWSER.length - 1), {
-    detached: true,
-    shell: false,
-  });
+  const CHILD = await PROC.spawn(
+    BROWSER[0],
+    BROWSER.slice(1, BROWSER.length - 1),
+    {
+      detached: true,
+      shell: false,
+    },
+  );
   const PID = CHILD.pid;
   CHILD.stdout.setEncoding("utf8");
   CHILD.stderr.setEncoding("utf8");
   CHILD.stdout.on("data", READ_ERR);
   CHILD.stderr.on("data", READ);
-  CHILD.on("error", (err:Error):void => {
+  CHILD.on("error", (err: Error): void => {
     console.log(`[PASS-BACK] CHILD ${PID} errored with ` + err.message);
     throw err;
   });
-  CHILD.on("close", (code:number):void => {
+  CHILD.on("close", (code: number): void => {
     if (code !== 0) {
       console.log(`[PASS-BACK] CHILD ${PID} exited with code ${code}`);
       // maybe make an exception
@@ -343,7 +377,7 @@ async function spinup_browser(cmd:Readonly<Array<string>>, onSocket:DEBUG_CHANNE
  * @param {number} ms
  * @returns {Promise<void>}
  */
-function delay(ms:number):Promise<void> {
+function delay(ms: number): Promise<void> {
   return new Promise((good) => setTimeout(good, ms));
 }
 
@@ -356,8 +390,8 @@ function delay(ms:number):Promise<void> {
  * @protected
  * @returns {number} - return 1 or 0
  */
-function should_close_tabs(args:Array<string>):number {
-  let close:number = 1;
+function should_close_tabs(args: Array<string>): number {
+  let close: number = 1;
   if (args.includes("--close")) {
     close = 1;
   }
@@ -376,7 +410,7 @@ function should_close_tabs(args:Array<string>):number {
  * @protected
  * @returns {Array<strings>}
  */
-function getMethods(o:any):Array<string> {
+function getMethods(o: any): Array<string> {
   return Object.getOwnPropertyNames(Object.getPrototypeOf(o)).filter(
     (m) => "function" === typeof o[m],
   );
@@ -393,11 +427,11 @@ function getMethods(o:any):Array<string> {
  * @protected
  * @returns {void} 
  */
-function JSON2logging(json1:string):void {
+function JSON2logging(json1: string): void {
   let tmp = JSON.parse(json1.trim()) as Array<Object>;
-  let tmp2:Array<TestResult> = Array.from(tmp) as Array<TestResult>;
-  const LEN:number = tmp2.length - 1;
-  let title:TestResult = tmp2[LEN];
+  let tmp2: Array<TestResult> = Array.from(tmp) as Array<TestResult>;
+  const LEN: number = tmp2.length - 1;
+  let title: TestResult = tmp2[LEN];
   console.log("   ✓ " + title.name);
 
   for (let i = 0; i < LEN; i++) {
@@ -425,7 +459,7 @@ function JSON2logging(json1:string):void {
  * @protected
  * @returns {Promise<string>}
  */
-async function browser2json(page:Page):Promise<string> {
+async function browser2json(page: Page): Promise<string> {
   const tt1 = await page.getByTestId("status");
   const sz = await tt1.count();
 
@@ -455,7 +489,6 @@ async function browser2json(page:Page):Promise<string> {
 // https://superuser.com/questions/1139259/how-to-adjust-ui-scaling-for-chrome
 // https://stackoverflow.com/questions/62001125/chrome-dev-tools-simulating-different-resolution-pc-screen
 
-
 /**
  * runExtract
  * Extract CSS from the created browser tabs, against the specified URN.
@@ -464,92 +497,115 @@ async function browser2json(page:Page):Promise<string> {
  * @public
  * @returns {Promise<void>}
  */
-async function runExtract(urn:string):Promise<void> {
+async function runExtract(urn: string): Promise<void> {
   console.log(
     "[INFO] You need to catch the file savee-as dialogs,  Opens some tabs in Chrome",
   );
-	const SCREENS:Array<string>=[
-			'(min-width:1024px)',
-			'(max-width:800px) and (min-resolution:150dpi)', 
-				];
-	let closing:Array<END_CB>=[], CHILD, end0:END_CB;
+  const SCREENS: Array<string> = [
+    "(min-width:1024px)",
+    "(max-width:800px) and (min-resolution:150dpi)",
+  ];
+  let closing: Array<END_CB> = [],
+    CHILD,
+    end0: END_CB;
 
-    dDelta = 3000;
-    [CHILD, end0]  = spinup_server();
-	closing.push(end0);
-	await delay(1000);
-	let LBROWSER=[...BROWSER];
-	LBROWSER[3]="";
-	LBROWSER.push( 
-// https://developer.chrome.com/docs/devtools/device-mode/
-// try CTRL+SHIFT+M. to load the  "toggle device toolbar"
-// https://github.com/GoogleChrome/lighthouse/blob/ff41f6a289a3171ed0ec70c389de0181d8e59ca2/lighthouse-core/lib/emulation.js#L76-L80
+  dDelta = 3000;
+  [CHILD, end0] = spinup_server();
+  closing.push(end0);
+  await delay(1000);
+  let LBROWSER = [...BROWSER];
+  LBROWSER[3] = "";
+  LBROWSER.push(
+    // https://developer.chrome.com/docs/devtools/device-mode/
+    // try CTRL+SHIFT+M. to load the  "toggle device toolbar"
+    // https://github.com/GoogleChrome/lighthouse/blob/ff41f6a289a3171ed0ec70c389de0181d8e59ca2/lighthouse-core/lib/emulation.js#L76-L80
 
-           "--auto-open-devtools-for-tabs",
-			"--force-media-resolution-height",
-			"--force-media-resolution-width",
-			"--enable-ui-devtools" ,
-			"--alt-high-dpi-setting=96",
-			"--high-dpi-support=1",
-			"--force-device-scale-factor=1",
-			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[0]+"&force-mobile=1" ,
-				);
-	[CHILD, end0] = await spinup_browser(LBROWSER, function(a:any):void {});
-	closing.push( end0);
+    "--auto-open-devtools-for-tabs",
+    "--force-media-resolution-height",
+    "--force-media-resolution-width",
+    "--enable-ui-devtools",
+    "--alt-high-dpi-setting=96",
+    "--high-dpi-support=1",
+    "--force-device-scale-factor=1",
+    "https://" +
+      URL_SERVER +
+      ":" +
+      PORT_SERVER +
+      urn +
+      "?dump-css=2&aspect=" +
+      SCREENS[0] +
+      "&force-mobile=1",
+  );
+  [CHILD, end0] = await spinup_browser(LBROWSER, function (a: any): void {});
+  closing.push(end0);
 
-	LBROWSER=[...BROWSER];
-	LBROWSER[3]="";
-	LBROWSER.push( 
-// https://developer.chrome.com/docs/devtools/device-mode/
-// try CTRL+SHIFT+M. to load the  "toggle device toolbar"
-// https://github.com/GoogleChrome/lighthouse/blob/ff41f6a289a3171ed0ec70c389de0181d8e59ca2/lighthouse-core/lib/emulation.js#L76-L80
+  LBROWSER = [...BROWSER];
+  LBROWSER[3] = "";
+  LBROWSER.push(
+    // https://developer.chrome.com/docs/devtools/device-mode/
+    // try CTRL+SHIFT+M. to load the  "toggle device toolbar"
+    // https://github.com/GoogleChrome/lighthouse/blob/ff41f6a289a3171ed0ec70c389de0181d8e59ca2/lighthouse-core/lib/emulation.js#L76-L80
 
-           "--auto-open-devtools-for-tabs",
-			"--ash-no-nudges",
-			"--force-media-resolution-height",
-			"--force-media-resolution-width",
-			"--enable-ui-devtools" ,
-			"--alt-high-dpi-setting=151",
-			"--high-dpi-support=1",
-			"--force-device-scale-factor=1.71",
-			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[1]+"&force-mobile=1",
-				);
-	[CHILD, end0] = await spinup_browser(LBROWSER, function(a:any):void {});
-	closing.push( end0);
+    "--auto-open-devtools-for-tabs",
+    "--ash-no-nudges",
+    "--force-media-resolution-height",
+    "--force-media-resolution-width",
+    "--enable-ui-devtools",
+    "--alt-high-dpi-setting=151",
+    "--high-dpi-support=1",
+    "--force-device-scale-factor=1.71",
+    "https://" +
+      URL_SERVER +
+      ":" +
+      PORT_SERVER +
+      urn +
+      "?dump-css=2&aspect=" +
+      SCREENS[1] +
+      "&force-mobile=1",
+  );
+  [CHILD, end0] = await spinup_browser(LBROWSER, function (a: any): void {});
+  closing.push(end0);
 
-	LBROWSER=[...BROWSER];
-	LBROWSER[3]="";
-  LBROWSER.push( 
-           "--auto-open-devtools-for-tabs",
-			"--ash-no-nudges",
-			"--force-media-resolution-height",
-			"--force-media-resolution-width",
-			"--enable-ui-devtools" ,
-			"--high-dpi-support=1",
-			"--alt-high-dpi-setting=171",
-			"--force-device-scale-factor=2.01",
-			"https://"+URL_SERVER+":"+PORT_SERVER+urn+'?dump-css=2&aspect='+SCREENS[1]+"&force-mobile=1",
-				);
+  LBROWSER = [...BROWSER];
+  LBROWSER[3] = "";
+  LBROWSER.push(
+    "--auto-open-devtools-for-tabs",
+    "--ash-no-nudges",
+    "--force-media-resolution-height",
+    "--force-media-resolution-width",
+    "--enable-ui-devtools",
+    "--high-dpi-support=1",
+    "--alt-high-dpi-setting=171",
+    "--force-device-scale-factor=2.01",
+    "https://" +
+      URL_SERVER +
+      ":" +
+      PORT_SERVER +
+      urn +
+      "?dump-css=2&aspect=" +
+      SCREENS[1] +
+      "&force-mobile=1",
+  );
 
-// first ED
-// /snap/bin/chromium --user-data-dir=/tmp/js-test2 --profile-create-if-missing --ignore-certificate-errors --test-type=webdriver --allow-insecure-localhost --mute-audio --disable-popup-blocking --disable-login-animations --disable-default-apps --allow-running-insecure-content --unsafely-disable-devtools-self-xss-warnings --auto-open-devtools-for-tabs --ash-host-window-bounds="500x350*3.5" --ash-no-nudges --force-media-resolution-height --force-media-resolution-width --enable-ui-devtools --enable-tablet-form-factor --high-dpi-support=1 --force-device-scale-factor=3.5 "https://127.0.0.1:8081/route-plotting.html?dump-css=2&aspect=ATEST&force-mobile=1" 
-// after testing a few times, rationalise
-// /snap/bin/chromium --user-data-dir=/tmp/js-test2 --profile-create-if-missing --ignore-certificate-errors --test-type=webdriver --allow-insecure-localhost --mute-audio --disable-popup-blocking --disable-login-animations --disable-default-apps --allow-running-insecure-content --unsafely-disable-devtools-self-xss-warnings --auto-open-devtools-for-tabs  --ash-no-nudges --force-media-resolution-height --force-media-resolution-width --enable-ui-devtools --high-dpi-support=1 --force-device-scale-factor=2.0 "https://127.0.0.1:8081/route-plotting.html?dump-css=2&aspect=ATEST&force-mobile=1"
-// set mobile emulation ON
-// set "browser" to be my phone
-// set console log display to be ALL
-// practical hack, setup profile in manual interaction before launching the export script
-// /snap/bin/chromium --user-data-dir=/tmp/js-test3 --profile-create-if-missing --ignore-certificate-errors --test-type=webdriver --allow-insecure-localhost --mute-audio --disable-popup-blocking --disable-login-animations --disable-default-apps --allow-running-insecure-content --unsafely-disable-devtools-self-xss-warnings --auto-open-devtools-for-tabs --ash-no-nudges --force-media-resolution-height --force-media-resolution-width --enable-ui-devtools --force-device-scale-factor=1.7 "https://127.0.0.1:8081/route-plotting.html?dump-css=2&aspect=ATEST&force-mobile=1"  
+  // first ED
+  // /snap/bin/chromium --user-data-dir=/tmp/js-test2 --profile-create-if-missing --ignore-certificate-errors --test-type=webdriver --allow-insecure-localhost --mute-audio --disable-popup-blocking --disable-login-animations --disable-default-apps --allow-running-insecure-content --unsafely-disable-devtools-self-xss-warnings --auto-open-devtools-for-tabs --ash-host-window-bounds="500x350*3.5" --ash-no-nudges --force-media-resolution-height --force-media-resolution-width --enable-ui-devtools --enable-tablet-form-factor --high-dpi-support=1 --force-device-scale-factor=3.5 "https://127.0.0.1:8081/route-plotting.html?dump-css=2&aspect=ATEST&force-mobile=1"
+  // after testing a few times, rationalise
+  // /snap/bin/chromium --user-data-dir=/tmp/js-test2 --profile-create-if-missing --ignore-certificate-errors --test-type=webdriver --allow-insecure-localhost --mute-audio --disable-popup-blocking --disable-login-animations --disable-default-apps --allow-running-insecure-content --unsafely-disable-devtools-self-xss-warnings --auto-open-devtools-for-tabs  --ash-no-nudges --force-media-resolution-height --force-media-resolution-width --enable-ui-devtools --high-dpi-support=1 --force-device-scale-factor=2.0 "https://127.0.0.1:8081/route-plotting.html?dump-css=2&aspect=ATEST&force-mobile=1"
+  // set mobile emulation ON
+  // set "browser" to be my phone
+  // set console log display to be ALL
+  // practical hack, setup profile in manual interaction before launching the export script
+  // /snap/bin/chromium --user-data-dir=/tmp/js-test3 --profile-create-if-missing --ignore-certificate-errors --test-type=webdriver --allow-insecure-localhost --mute-audio --disable-popup-blocking --disable-login-animations --disable-default-apps --allow-running-insecure-content --unsafely-disable-devtools-self-xss-warnings --auto-open-devtools-for-tabs --ash-no-nudges --force-media-resolution-height --force-media-resolution-width --enable-ui-devtools --force-device-scale-factor=1.7 "https://127.0.0.1:8081/route-plotting.html?dump-css=2&aspect=ATEST&force-mobile=1"
 
-	[CHILD, end0] = await spinup_browser(LBROWSER, function(a:any):void {});
-	closing.push( end0);
+  [CHILD, end0] = await spinup_browser(LBROWSER, function (a: any): void {});
+  closing.push(end0);
 
-	await delay(300_000);
-	console.log("[INFO] Closing tabs now" );
-	for(const end of closing) {
-		end();
-	}
-	// should be able to exit here...
+  await delay(300_000);
+  console.log("[INFO] Closing tabs now");
+  for (const end of closing) {
+    end();
+  }
+  // should be able to exit here...
 }
 
 /**
@@ -559,13 +615,13 @@ async function runExtract(urn:string):Promise<void> {
  * @protected
  * @returns {Promise<void>}
  */
-export async function runTests(tests:Readonly<Array<string>>):Promise<void> {
+export async function runTests(tests: Readonly<Array<string>>): Promise<void> {
   console.log(
     "[INFO] This suite takes about 1m to exec on a normal PC.  Opens many tabs in Chrome",
   );
   try {
-    let dburl:string = "";
-    const grab = (data:string):void => {
+    let dburl: string = "";
+    const grab = (data: string): void => {
       dburl = data;
     };
 
@@ -611,7 +667,7 @@ export async function runTests(tests:Readonly<Array<string>>):Promise<void> {
       await page.goto(URL);
       let d1 = new Date();
       await delay(3000);
-      const json1:string = await browser2json(page);
+      const json1: string = await browser2json(page);
       JSON2logging(json1);
 
       let d2 = new Date();
@@ -625,9 +681,11 @@ export async function runTests(tests:Readonly<Array<string>>):Promise<void> {
       end2();
     }
   } catch (e) {
-    const CATCHES_ARE_VERY_ANNOYING_IN_TYPESCRIPT=e as Error; // worse than Java
+    const CATCHES_ARE_VERY_ANNOYING_IN_TYPESCRIPT = e as Error; // worse than Java
 
-    console.log(  "\n\n[ERROR] browser tests ABORTED with " + CATCHES_ARE_VERY_ANNOYING_IN_TYPESCRIPT.message,
+    console.log(
+      "\n\n[ERROR] browser tests ABORTED with " +
+        CATCHES_ARE_VERY_ANNOYING_IN_TYPESCRIPT.message,
       CATCHES_ARE_VERY_ANNOYING_IN_TYPESCRIPT.stack,
       "\n\n",
     );
@@ -642,7 +700,7 @@ export async function runTests(tests:Readonly<Array<string>>):Promise<void> {
  * @public
  * @returns {boolean}
  */
-function runDirectly(p: NodeJS.Process ):boolean {
+function runDirectly(p: NodeJS.Process): boolean {
   // document.currentScript
   // meta.url
   // !("parent" in module)
@@ -668,18 +726,14 @@ supports:
   process.exit(0);
 }
 if (runDirectly(process)) {
-	if(process.argv.includes('--extract-css')) {
-// option to dump CSS
-// needs to be done interactively, as a human needs to use the file-as dialog
-		runExtract( 
-			process.argv[
-				process.argv.indexOf('--extract-css')+1
-						]);
-
-	} else {
-// this code is a test runner,
-// but is too complex.  So I may need to put a test on it
-// so this is safe to import as it doesn't auto execute
-		await runTests(TESTS);
-	}
+  if (process.argv.includes("--extract-css")) {
+    // option to dump CSS
+    // needs to be done interactively, as a human needs to use the file-as dialog
+    runExtract(process.argv[process.argv.indexOf("--extract-css") + 1]);
+  } else {
+    // this code is a test runner,
+    // but is too complex.  So I may need to put a test on it
+    // so this is safe to import as it doesn't auto execute
+    await runTests(TESTS);
+  }
 }

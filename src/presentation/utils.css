@@ -1,129 +1,264 @@
 /** basic containers */
 /** wholeArticle 
 	every page */
-.wholeArticle { display: flex; flex-direction:column-reverse; align-items: stretch; width:99vw;
-		min-height:calc( 100vh - 5em ); 	 /* whole screen minus height of footer */
-		height:auto;
-		max-height:max( 100%, 90vh );    /* avoid clipping */
-	    flex-wrap: unset; align-content: start; container-name: wholeArticle; container-type: inline-size;
-  }
+.wholeArticle {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: stretch;
+  width: 99vw;
+  min-height: calc(100vh - 5em); /* whole screen minus height of footer */
+  height: auto;
+  max-height: max(100%, 90vh); /* avoid clipping */
+  flex-wrap: unset;
+  align-content: start;
+  container-name: wholeArticle;
+  container-type: inline-size;
+}
 @container wholeArticle and (max-height: 55em) {
-	.wholeArticle { /* note values are swapped, 'cus browsers. */
-		height:calc( 100vh - 5em );   
-		max-height: auto;       
-	}
+  .wholeArticle {
+    /* note values are swapped, 'cus browsers. */
+    height: calc(100vh - 5em);
+    max-height: auto;
+  }
 }
 @media screen and (min-resolution: 150dpi) {
-	.wholeArticle { /* note values are swapped, 'cus browsers. */
-		height:max-content;
-		max-height:max( 100%, 90vh );    /* avoid clipping */
-	}
+  .wholeArticle {
+    /* note values are swapped, 'cus browsers. */
+    height: max-content;
+    max-height: max(100%, 90vh); /* avoid clipping */
+  }
 }
-.wholeArticle h2 sup, .wholeArticle h3 sup, .wholeArticle h4 sup, .wholeArticle h5 sup { font-size:50%; }
-.wholeArticle a sup i.fa.invert { transform: rotate(90deg); font-size:70%; }
+.wholeArticle h2 sup,
+.wholeArticle h3 sup,
+.wholeArticle h4 sup,
+.wholeArticle h5 sup {
+  font-size: 50%;
+}
+.wholeArticle a sup i.fa.invert {
+  transform: rotate(90deg);
+  font-size: 70%;
+}
 
 @media screen and (min-resolution: 150dpi) {
-	.wholeArticle a sup i.fa.invert { font-size:90%; }
-	.wholeArticle a sup:has( i.invert ) { font-size:50%; }
+  .wholeArticle a sup i.fa.invert {
+    font-size: 90%;
+  }
+  .wholeArticle a sup:has(i.invert) {
+    font-size: 50%;
+  }
 }
 
 /** articleContent 
 	every page */
-.articleContent { align-self: stretch;  
-		min-height: calc( 100vh - 18em ); /* 18em == 14 for header and 4 for footer */
-		max-height: max-content;          /* avoid clipping if possible */
-} 
+.articleContent {
+  align-self: stretch;
+  min-height: calc(100vh - 18em); /* 18em == 14 for header and 4 for footer */
+  max-height: max-content; /* avoid clipping if possible */
+}
 
 /** articleHeader 
 	every page -1 */
-.articleHeader { align-self: stretch; }
-.articleHeader header h1 { min-height:2em; }
-.articleHeader>legend { display:none; }
-.articleHeader .row { display:flex; max-width:94%; }
-.articleHeader div.metaWidget.row {  max-width:94%; }
-.articleHeader .row .column:first-child { flex: 10 1 0px; }
-.articleHeader .fullWidth { max-width:100vw; display:block; }
-.articleHeader .fullWidth h1 { padding-top:0.4em; padding-left:0.4em; margin-bottom:0; }
+.articleHeader {
+  align-self: stretch;
+}
+.articleHeader header h1 {
+  min-height: 2em;
+}
+.articleHeader > legend {
+  display: none;
+}
+.articleHeader .row {
+  display: flex;
+  max-width: 94%;
+}
+.articleHeader div.metaWidget.row {
+  max-width: 94%;
+}
+.articleHeader .row .column:first-child {
+  flex: 10 1 0px;
+}
+.articleHeader .fullWidth {
+  max-width: 100vw;
+  display: block;
+}
+.articleHeader .fullWidth h1 {
+  padding-top: 0.4em;
+  padding-left: 0.4em;
+  margin-bottom: 0;
+}
 
-.articleHeader .top-bar.fullWidth h1:first-letter { text-transform: uppercase; } /* hack to capitalise title, if I havent */
+.articleHeader .top-bar.fullWidth h1:first-letter {
+  text-transform: uppercase;
+} /* hack to capitalise title, if I havent */
 
 @media screen and (max-resolution: 140dpi) {
-	.articleHeader {  max-width: 98vw;  }
+  .articleHeader {
+    max-width: 98vw;
+  }
 }
 @media screen and (min-resolution: 150dpi) {
-	.articleHeader { width:calc( 100vw - 0.5em ); /* flex:1 1 100vw; */ }
-	.articleHeader .row a { font-size:120%; }
-	.articleHeader nav.row { display:block; width:100vw; max-width:min-content; }
-    .IAmLibreWolf .articleHeader nav.row { display: flex; max-width: 94%; }
+  .articleHeader {
+    width: calc(100vw - 0.5em); /* flex:1 1 100vw; */
+  }
+  .articleHeader .row a {
+    font-size: 120%;
+  }
+  .articleHeader nav.row {
+    display: block;
+    width: 100vw;
+    max-width: min-content;
+  }
+  .IAmLibreWolf .articleHeader nav.row {
+    display: flex;
+    max-width: 94%;
+  }
 
-	.articleHeader .row a i { margin:1em 0.7em; }
-	.articleHeader .row a svg { margin-left:0.4em; }
-  	.articleHeader .mastodonWidget a.button { margin-left: 0px; width:100vw; }
-	.articleHeader .mastodonWidget a#hideMasto { padding: 0.45em 0.75em; }
-	.articleHeader  a#rssLink i { margin:inherit; }
+  .articleHeader .row a i {
+    margin: 1em 0.7em;
+  }
+  .articleHeader .row a svg {
+    margin-left: 0.4em;
+  }
+  .articleHeader .mastodonWidget a.button {
+    margin-left: 0px;
+    width: 100vw;
+  }
+  .articleHeader .mastodonWidget a#hideMasto {
+    padding: 0.45em 0.75em;
+  }
+  .articleHeader a#rssLink i {
+    margin: inherit;
+  }
 
-    .articleHeader .fullWidth { width:calc( 100vw - 1.5em ); }
-	.articleHeader .fullWidth h1 { padding-top:0.1em; padding-left:0em; font-size: 2em; }	
-	.IAmLibreWolf .linksWidget .dfl li a, .IAmLibreWolf .linksWidget .titleList li a { width: calc( 100% - 2em ); }
-	.IAmLibreWolf .linksWidget .dfl li, .IAmLibreWolf .linksWidget .titleList li { 
-		width: calc( 100% - 2em ); max-width:calc( 100% - 2em ); }
-
+  .articleHeader .fullWidth {
+    width: calc(100vw - 1.5em);
+  }
+  .articleHeader .fullWidth h1 {
+    padding-top: 0.1em;
+    padding-left: 0em;
+    font-size: 2em;
+  }
+  .IAmLibreWolf .linksWidget .dfl li a,
+  .IAmLibreWolf .linksWidget .titleList li a {
+    width: calc(100% - 2em);
+  }
+  .IAmLibreWolf .linksWidget .dfl li,
+  .IAmLibreWolf .linksWidget .titleList li {
+    width: calc(100% - 2em);
+    max-width: calc(100% - 2em);
+  }
 }
-@media screen and (min-device-width: 600px) 
-				and ( min-resolution: 150dpi) {
-	.articleHeader .row a:first-child, span.button.smallScreenOnly { font-size:120%; }
-	.articleHeader .row .h4_menu li a:first-child { font-size:inherit; }
-	.IAmLibreWolf .articleHeader .row a:first-child, .IAmLibreWolf span.button.smallScreenOnly { font-size:100%; } 
+@media screen and (min-device-width: 600px) and (min-resolution: 150dpi) {
+  .articleHeader .row a:first-child,
+  span.button.smallScreenOnly {
+    font-size: 120%;
+  }
+  .articleHeader .row .h4_menu li a:first-child {
+    font-size: inherit;
+  }
+  .IAmLibreWolf .articleHeader .row a:first-child,
+  .IAmLibreWolf span.button.smallScreenOnly {
+    font-size: 100%;
+  }
 }
 /* hack for landscape large phones & weird screen magnification laptops: suppress mobile flexing */
-@media only screen and (min-device-width: 800px) 
-                   and (orientation: landscape ) {
-	.articleHeader { height:14em; flex:inherit; }
-	.articleHeader .row  h1 { height:2em; } 
+@media only screen and (min-device-width: 800px) and (orientation: landscape) {
+  .articleHeader {
+    height: 14em;
+    flex: inherit;
+  }
+  .articleHeader .row h1 {
+    height: 2em;
+  }
 }
-@media screen and ( max-resolution: 130dpi) and (min-aspect-ratio:3/5 ) and (min-width: 800px ) {
-	.articleHeader .fullWidth p:empty { display:none; }
+@media screen and (max-resolution: 130dpi) and (min-aspect-ratio: 3/5) and (min-width: 800px) {
+  .articleHeader .fullWidth p:empty {
+    display: none;
+  }
 }
 /* re-apply everything for a mac 
 This is big screen mac, should work with wide versions
 */
-@media not all and (min-resolution:.001dpcm) { 
+@media not all and (min-resolution: 0.001dpcm) {
   @supports (-webkit-appearance: none) {
-	.articleHeader .fullWidth p:empty { display:none; }
-}}
-.articleHeader nav.row:not( :has(.headingsWidget) ) .metaWidget.row  { 
-		width: calc(100vw - 6%); max-width:calc(100vw - 6%); }
+    .articleHeader .fullWidth p:empty {
+      display: none;
+    }
+  }
+}
+.articleHeader nav.row:not(:has(.headingsWidget)) .metaWidget.row {
+  width: calc(100vw - 6%);
+  max-width: calc(100vw - 6%);
+}
 
 @media screen and (max-width: 1080px) {
-	.articleHeader nav.row:not( :has(.headingsWidget) ) .metaWidget.row .SMshareWidget  { width: 28.5em; }
+  .articleHeader
+    nav.row:not(:has(.headingsWidget))
+    .metaWidget.row
+    .SMshareWidget {
+    width: 28.5em;
+  }
 }
 @media screen and (min-resolution: 150dpi) {
-	.articleHeader nav.row:not( :has(.headingsWidget) ) .metaWidget.row .SMshareWidget  { width: auto; }
+  .articleHeader
+    nav.row:not(:has(.headingsWidget))
+    .metaWidget.row
+    .SMshareWidget {
+    width: auto;
+  }
 }
 
-@media screen and (min-resolution: 200dpi) {	
-    .IAmLibreWolf .articleHeader nav.row { display:block; width:100vw; max-width:min-content; } 
-	.IAmLibreWolf .linksWidget .dfl li a { width:100%; }
+@media screen and (min-resolution: 200dpi) {
+  .IAmLibreWolf .articleHeader nav.row {
+    display: block;
+    width: 100vw;
+    max-width: min-content;
+  }
+  .IAmLibreWolf .linksWidget .dfl li a {
+    width: 100%;
+  }
 }
 
 /** mixed navBar stuff
 	every page
 */
 @media screen and (min-resolution: 150dpi) {
-    .articleHeader nav.row a i { margin:1em 0.7em; }
-	.articleHeader nav.row a svg { margin-left:0.4em; }
-   	.articleHeader nav.row .mobilePopupWidgetOpen a i { margin: .3em; height: 1.5em; display: inline-block; }
-   	.articleHeader nav.row .mobilePopupWidgetOpen a i.fa-copy { 
-			margin: 3px 0px; padding: 0px; position: relative; left: 0.1em; }
-    .articleHeader nav.row .mobilePopupWidgetOpen a.button  { margin-left:0.40em; }
-	.articleHeader nav.row .mastodonWidget a.button { margin-left: 0px; width:100vw; }
- 	.articleHeader nav.row .mastodonWidget a#hideMasto { padding: 0.45em 0.75em; }
-  	.articleHeader nav.row .mobilePopupWidgetOpen a { font-size:120%; }
+  .articleHeader nav.row a i {
+    margin: 1em 0.7em;
+  }
+  .articleHeader nav.row a svg {
+    margin-left: 0.4em;
+  }
+  .articleHeader nav.row .mobilePopupWidgetOpen a i {
+    margin: 0.3em;
+    height: 1.5em;
+    display: inline-block;
+  }
+  .articleHeader nav.row .mobilePopupWidgetOpen a i.fa-copy {
+    margin: 3px 0px;
+    padding: 0px;
+    position: relative;
+    left: 0.1em;
+  }
+  .articleHeader nav.row .mobilePopupWidgetOpen a.button {
+    margin-left: 0.4em;
+  }
+  .articleHeader nav.row .mastodonWidget a.button {
+    margin-left: 0px;
+    width: 100vw;
+  }
+  .articleHeader nav.row .mastodonWidget a#hideMasto {
+    padding: 0.45em 0.75em;
+  }
+  .articleHeader nav.row .mobilePopupWidgetOpen a {
+    font-size: 120%;
+  }
 }
 /* hack for landscape large phones & weird screen magnification laptops: suppress mobile flexing */
-@media only screen and (min-device-width: 800px) 
-                   and (orientation: landscape ) {
-	.articleHeader nav.row  h1 { height:2em; } 
+@media only screen and (min-device-width: 800px) and (orientation: landscape) {
+  .articleHeader nav.row h1 {
+    height: 2em;
+  }
 }
 /*
 @media screen and (min-device-width: 600px) 
@@ -132,101 +267,266 @@ This is big screen mac, should work with wide versions
 }
 */
 
-
-.annoyingBody { direction:ltr; }
+.annoyingBody {
+  direction: ltr;
+}
 @media screen and (min-resolution: 150dpi) {
-	.annoyingBody p, .annoyingBody li, .annoyingBody span, .annoyingBody a, label 
-	.annoyingBody li li, .annoyingBody li span, .annoyingBody li a, .annoyingBody p span,
-	.annoyingBody p sup a, .annoyingBody p a  { font-size:100%; width:fit-content; max-width:100vw; }
-	.annoyingBody .tabs-content p, .annoyingBody .tabs-content li, .annoyingBody .tabs-content a { font-size:100%; }
- 	.annoyingBody .wholeArticle { width:fit-content; }	 
-	.annoyingBody p sup a, .annoyingBody p a { font-size:100%; width:fit-content; max-width:100vw; }	
-}
-
-.lotsOfWords { column-gap:1em; column-count:7; columns: 7 25em; }
-.lotsOfWords:has( code.highlight ) { column-width:28em; }
-@media screen and ( min-width:1000px ) {
-    .lotsOfWords { column-gap:2em; margin-bottom:2em; }
-}
-@media screen and ( min-resolution:150dpi ) {
-    .lotsOfWords { margin-left:0.5em; }
-}
-	
-.halferWords { width:680px; text-align:center; margin-left: auto; margin-right: auto; }
-.halferWords ul, .halferWords ol, .halferWords p { text-align:left; }
-@media screen and (min-resolution: 150dpi) {
-	.halferWords { width:100vw; align-self: stretch; margin: 1em 0em; }
-}
-@media screen and (max-width:600px ) {
-	.halferWords { width: 100vw; } 
-}
-@media screen and ( min-resolution:150dpi ) {
-    .halferWords { margin-left:0.5em; }
-}
-	
-.fewWords { width:480px; text-align:center; margin-left: auto; margin-right: auto ; }
-.fewWords ul, .fewWords ol, .fewWords p { text-align:left; }
-@media screen and (min-resolution: 150dpi) {
-	.fewWords { width:100vw; margin-left:0; margin-right:0;  }
-}
-@media screen and (max-width:600px ) {
-	.fewWords { width: 100vw; } 
-}
-@media screen and ( min-resolution:150dpi ) {
-    .fewWords { margin-left:0.5em; }
+  .annoyingBody p,
+  .annoyingBody li,
+  .annoyingBody span,
+  .annoyingBody a,
+  label .annoyingBody li li,
+  .annoyingBody li span,
+  .annoyingBody li a,
+  .annoyingBody p span,
+  .annoyingBody p sup a,
+  .annoyingBody p a {
+    font-size: 100%;
+    width: fit-content;
+    max-width: 100vw;
+  }
+  .annoyingBody .tabs-content p,
+  .annoyingBody .tabs-content li,
+  .annoyingBody .tabs-content a {
+    font-size: 100%;
+  }
+  .annoyingBody .wholeArticle {
+    width: fit-content;
+  }
+  .annoyingBody p sup a,
+  .annoyingBody p a {
+    font-size: 100%;
+    width: fit-content;
+    max-width: 100vw;
+  }
 }
 
-	
+.lotsOfWords {
+  column-gap: 1em;
+  column-count: 7;
+  columns: 7 25em;
+}
+.lotsOfWords:has(code.highlight) {
+  column-width: 28em;
+}
+@media screen and (min-width: 1000px) {
+  .lotsOfWords {
+    column-gap: 2em;
+    margin-bottom: 2em;
+  }
+}
+@media screen and (min-resolution: 150dpi) {
+  .lotsOfWords {
+    margin-left: 0.5em;
+  }
+}
+
+.halferWords {
+  width: 680px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.halferWords ul,
+.halferWords ol,
+.halferWords p {
+  text-align: left;
+}
+@media screen and (min-resolution: 150dpi) {
+  .halferWords {
+    width: 100vw;
+    align-self: stretch;
+    margin: 1em 0em;
+  }
+}
+@media screen and (max-width: 600px) {
+  .halferWords {
+    width: 100vw;
+  }
+}
+@media screen and (min-resolution: 150dpi) {
+  .halferWords {
+    margin-left: 0.5em;
+  }
+}
+
+.fewWords {
+  width: 480px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.fewWords ul,
+.fewWords ol,
+.fewWords p {
+  text-align: left;
+}
+@media screen and (min-resolution: 150dpi) {
+  .fewWords {
+    width: 100vw;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+@media screen and (max-width: 600px) {
+  .fewWords {
+    width: 100vw;
+  }
+}
+@media screen and (min-resolution: 150dpi) {
+  .fewWords {
+    margin-left: 0.5em;
+  }
+}
+
 /* IOIO RENAME */
-.blocker { clear:both;  }
-hr.blocker { width: 90%;}
+.blocker {
+  clear: both;
+}
+hr.blocker {
+  width: 90%;
+}
 @media screen and (min-width: 900px) {
-	.blocker { margin:1em; }
-}	
+  .blocker {
+    margin: 1em;
+  }
+}
 
 /* used here as the wiki-engine proffers it, without the Wiki, this is unneeded  
    used in every page with a list... nearly 90%? */
-.ulbasic, ol, ul { list-style-type:none; }
-.ulbasic li::before, ol li::before { content: "✨"; display: inline-block; width: 1.5em; }
-
-.ul2 li::before { content: attr( data-symbol string, "✨" ); display: inline-block; width: 1.5em; }
-.ul3 { list-style-type: attr( data-symbol string ); }
-.ul3 li::marker { display: inline-block; width:1.5em; font-weight:bold; font-size: 1.7em; line-height: 0.6; }
-.ul2 li, .ul3 li { margin-left:2em; }
-@media screen and (max-width:700px) {
-	.ulbasic, .ul2, .ul3 { margin-left:0; }
+.ulbasic,
+ol,
+ul {
+  list-style-type: none;
 }
-	
-.pullout { padding-top: 0.5em; padding-right: 1em; padding-left: 1em; padding-bottom: 0.3em; }
-.pullout2 { padding-top: 0.5em; padding-right: 1em; padding-left: 1em; padding-bottom: 0.3em; }
-.pullout i, .pullout2 i { font-style:normal; }
+.ulbasic li::before,
+ol li::before {
+  content: "✨";
+  display: inline-block;
+  width: 1.5em;
+}
+
+.ul2 li::before {
+  content: attr(data-symbol string, "✨");
+  display: inline-block;
+  width: 1.5em;
+}
+.ul3 {
+  list-style-type: attr(data-symbol string);
+}
+.ul3 li::marker {
+  display: inline-block;
+  width: 1.5em;
+  font-weight: bold;
+  font-size: 1.7em;
+  line-height: 0.6;
+}
+.ul2 li,
+.ul3 li {
+  margin-left: 2em;
+}
+@media screen and (max-width: 700px) {
+  .ulbasic,
+  .ul2,
+  .ul3 {
+    margin-left: 0;
+  }
+}
+
+.pullout {
+  padding-top: 0.5em;
+  padding-right: 1em;
+  padding-left: 1em;
+  padding-bottom: 0.3em;
+}
+.pullout2 {
+  padding-top: 0.5em;
+  padding-right: 1em;
+  padding-left: 1em;
+  padding-bottom: 0.3em;
+}
+.pullout i,
+.pullout2 i {
+  font-style: normal;
+}
 /* CSS imported from testing-epic */
-@media screen and (min-width:900px) {
-	.pullout.localPullout { width:calc( 100% - 400px ); display:inline-block; margin-top:1em; }
+@media screen and (min-width: 900px) {
+  .pullout.localPullout {
+    width: calc(100% - 400px);
+    display: inline-block;
+    margin-top: 1em;
+  }
 }
 
-.addArrow { z-index:3; position: relative; border-bottom-right-radius:0px; border-top-right-radius:0px; 
-		padding-right:0.7em; min-width:10em; }
+.addArrow {
+  z-index: 3;
+  position: relative;
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+  padding-right: 0.7em;
+  min-width: 10em;
+}
 
 /* A useful class that will slap a big warning on span containing images (various formats) 
    Adjust selector to suit needs.  The warning is about 150px on most peoples machines  */
-.deadImages span:has( svg, picture, img )::before { z-index:2; line-height:0.70; position:absolute;
-		 border:red 2px solid; content:" 🗙 "; font-size:8em; padding:0.1em; border-radius:40%; 
-		margin-top: 0.5em; margin-left: 0.15em; padding-bottom: 0.25em; pointer-events: none; }
+.deadImages span:has(svg, picture, img)::before {
+  z-index: 2;
+  line-height: 0.7;
+  position: absolute;
+  border: red 2px solid;
+  content: " 🗙 ";
+  font-size: 8em;
+  padding: 0.1em;
+  border-radius: 40%;
+  margin-top: 0.5em;
+  margin-left: 0.15em;
+  padding-bottom: 0.25em;
+  pointer-events: none;
+}
 
-.alert { padding:7px; padding-left:20px; display:block; float:right; border-radius:4px; margin-top:15px; 
-		width:600px; text-align:right; }
+.alert {
+  padding: 7px;
+  padding-left: 20px;
+  display: block;
+  float: right;
+  border-radius: 4px;
+  margin-top: 15px;
+  width: 600px;
+  text-align: right;
+}
 
 /** settings for the symbol font, may be moved to overrides */
-i.fa { font-size: 145%; vertical-align: middle; line-height: 1; }
-a svg { vertical-align:middle; }
-i.fa-remove { padding:3px; padding-left:7px; padding-bottom:7px; z-index:2; border-bottom:0px; border-left:0px; }
+i.fa {
+  font-size: 145%;
+  vertical-align: middle;
+  line-height: 1;
+}
+a svg {
+  vertical-align: middle;
+}
+i.fa-remove {
+  padding: 3px;
+  padding-left: 7px;
+  padding-bottom: 7px;
+  z-index: 2;
+  border-bottom: 0px;
+  border-left: 0px;
+}
 
 /* https://fontawesome.com/v4/accessibility/
    https://webaim.org/techniques/css/invisiblecontent/ 
 */
-.sr-only { clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); height: 1px; width: 1px; left:-10000px;
-			 margin: -1px; overflow: hidden; padding: 0; position: absolute; }
+.sr-only {
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  left: -10000px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+}
 /* Backup definition
 .sr-only { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
 */
@@ -234,53 +534,102 @@ i.fa-remove { padding:3px; padding-left:7px; padding-bottom:7px; z-index:2; bord
 /** bigScreen / smallScreen
    every page
   */
-@media screen and ( max-resolution: 130dpi) and (min-aspect-ratio:3/5 ) and (min-width: 800px ) {
-	.bigScreenOnly { display:inline-block; }
-	.mastodonWidget.bigScreenOnly { display:none; }
-	.smallScreenOnly, .button.smallScreenOnly { display:none; } 
-	.SMshareWidget a.smallScreenOnly { display:none; }
+@media screen and (max-resolution: 130dpi) and (min-aspect-ratio: 3/5) and (min-width: 800px) {
+  .bigScreenOnly {
+    display: inline-block;
+  }
+  .mastodonWidget.bigScreenOnly {
+    display: none;
+  }
+  .smallScreenOnly,
+  .button.smallScreenOnly {
+    display: none;
+  }
+  .SMshareWidget a.smallScreenOnly {
+    display: none;
+  }
 }
 
 @media screen and (min-resolution: 150dpi) {
-	.SMshareWidget a.bigScreenOnly, .SMshareWidget span.bigScreenOnly, .bigScreenOnly, 
-	.ultraSkinny.bigScreenOnly, .SMshareWidget a.bigScreenOnly { display:none; }
- 	.smallScreenOnly { display:inline-block; }
-    span.button.smallScreenOnly { font-size:100%; padding:0.5em 0.3em; }
+  .SMshareWidget a.bigScreenOnly,
+  .SMshareWidget span.bigScreenOnly,
+  .bigScreenOnly,
+  .ultraSkinny.bigScreenOnly,
+  .SMshareWidget a.bigScreenOnly {
+    display: none;
+  }
+  .smallScreenOnly {
+    display: inline-block;
+  }
+  span.button.smallScreenOnly {
+    font-size: 100%;
+    padding: 0.5em 0.3em;
+  }
 }
 
 /* re-apply everything for a mac 
 This is big screen mac, should work with wide versions
 */
-@media not all and (min-resolution:.001dpcm) { 
+@media not all and (min-resolution: 0.001dpcm) {
   @supports (-webkit-appearance: none) {
-
-	.bigScreenOnly { display:inline-block; }
-	.mastodonWidget.bigScreenOnly { display:none; }
-	.smallScreenOnly { display:none; }
-	.SMshareWidget a.smallScreenOnly { display:none; }
-}}
+    .bigScreenOnly {
+      display: inline-block;
+    }
+    .mastodonWidget.bigScreenOnly {
+      display: none;
+    }
+    .smallScreenOnly {
+      display: none;
+    }
+    .SMshareWidget a.smallScreenOnly {
+      display: none;
+    }
+  }
+}
 
 /* small screen mac, AKA iphone/ ipad */
-@media screen and (max-width:800px) and (min-resolution:120dpi) {
-	@supports (-webkit-touch-callout)  {
-	.bigScreenOnly, .ultraSkinny.bigScreenOnly, .SMshareWidget a.bigScreenOnly { display:none; }
- 	.smallScreenOnly { display:inline-block; }
-}}
+@media screen and (max-width: 800px) and (min-resolution: 120dpi) {
+  @supports (-webkit-touch-callout) {
+    .bigScreenOnly,
+    .ultraSkinny.bigScreenOnly,
+    .SMshareWidget a.bigScreenOnly {
+      display: none;
+    }
+    .smallScreenOnly {
+      display: inline-block;
+    }
+  }
+}
 
-@media screen and (min-device-width: 600px) 
-				and ( min-resolution: 150dpi) {
-    span.button.smallScreenOnly { font-size:100%; padding:0.45em 0.65em; }
+@media screen and (min-device-width: 600px) and (min-resolution: 150dpi) {
+  span.button.smallScreenOnly {
+    font-size: 100%;
+    padding: 0.45em 0.65em;
+  }
 }
 
 @media screen and (min-resolution: 150dpi) {
-	h2.biblioSection { font-size:150%; }
+  h2.biblioSection {
+    font-size: 150%;
+  }
 }
 
-.button.masto { border-width: 0px; padding: 0.6em; vertical-align: baseline; margin:0.65em;
-			 margin-bottom:0.1em; } 
+.button.masto {
+  border-width: 0px;
+  padding: 0.6em;
+  vertical-align: baseline;
+  margin: 0.65em;
+  margin-bottom: 0.1em;
+}
 @media screen and (min-resolution: 150dpi) {
-	dialog.mastodonWidget a.button.masto { margin-right:1em; padding:0.7em; margin-left:3em; }
+  dialog.mastodonWidget a.button.masto {
+    margin-right: 1em;
+    padding: 0.7em;
+    margin-left: 3em;
+  }
 }
 
-.outerQuote { width:50%; margin-left:25%; }
-
+.outerQuote {
+  width: 50%;
+  margin-left: 25%;
+}

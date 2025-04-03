@@ -175,7 +175,9 @@ export async function createBiblio(
   if (tmp) {
     tmp.setAttribute("style", "");
   }
-  (dom.querySelector(OPTS.gainingElement + " *") as HTMLElement).replaceChildren();
+  (
+    dom.querySelector(OPTS.gainingElement + " *") as HTMLElement
+  ).replaceChildren();
   appendIsland(
     OPTS.gainingElement,
     `<h2 class="biblioSection">References (for mobile UI)</h2> 

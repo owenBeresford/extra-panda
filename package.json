@@ -9,12 +9,12 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-	"# comment line 1":"On every new machine, please run tools/checksum.bash first, this adds files that don't touch the repo.",
+    "# comment line 1": "On every new machine, please run tools/checksum.bash first, this adds files that don't touch the repo.",
     "build": "export NODE_ENV=production; ./tools/build-ts.bash; ./tools/build-css.bash ",
     "test": "export NODE_ENV=development; node ./node_modules/.bin/vitest --typecheck run; if [ ! -d './dist/tests' ]; then echo 'Run build:test first'; else export NODE_ENV=development; node ./tools/tests-browser.mjs; fi ",
     "test:unit": "export NODE_ENV=development; node ./node_modules/.bin/vitest --typecheck run",
     "#ignore-lint-notes": "1 function is over complexity by 1 point. . .  && Its an arbitary limit",
-    "lint": "node ./node_modules/.bin/eslint --exit-on-fatal-error --fix --no-cache ./src/*ts;  node ./node_modules/.bin/eslint --exit-on-fatal-error --fix --no-cache src/tests/*; node ./node_modules/.bin/eslint --exit-on-fatal-error --fix --no-cache tools/*; node ./node_modules/.bin/prettier --write ./src; node ./node_modules/.bin/prettier --write ./tools/; git checkout src/fixtures/*mjs; ",
+    "lint": "node ./node_modules/.bin/eslint --exit-on-fatal-error --no-cache ./src/*ts;  node ./node_modules/.bin/eslint --exit-on-fatal-error --no-cache src/tests/*; node ./node_modules/.bin/eslint --exit-on-fatal-error --no-cache tools/*; node ./node_modules/.bin/prettier --write ./src; node ./node_modules/.bin/prettier --write ./tools/; git checkout src/fixtures/*mjs; ",
     "build:docs": "if [ ! -d './dist/docs' ]; then mkdir -p ./dist/docs; fi; node ./node_modules/.bin/typedoc --options ./typedoc.json --emit both --logLevel 3",
     "#ignore-this-line": "Edit values in this simple script if you have local security policy",
     "#ignore-this-line2": "NOTE: 'build:docs' after 'build' and 'test:web', as they purge the dist directory",
@@ -22,9 +22,9 @@
     "build:tests": "./tools/build-tests.bash",
     "test:web": "if [ ! -d './dist/tests' ]; then echo 'Run build:test first'; else echo 'If running manually, use CLI flags'; export NODE_ENV=development; node ./tools/tests-browser.mjs; fi",
     "build:css": "./tools/build-css.bash",
-	"#ignore-this-line3":"the following CSS code is the older solution that doesn't give me what I wanted as the CSS units are evaulated ",
+    "#ignore-this-line3": "the following CSS code is the older solution that doesn't give me what I wanted as the CSS units are evaulated ",
     "build:extract-css": "export NODE_ENV=production; node ./node_modules/.bin/vite --config ./vite.config.lib.ts build; node ./node_modules/.bin/vite --config ./vite.config.tests.ts build tools/test-browser.ts;",
-	"#ignore-this-line4":"if you use the previous commend, this is how to exec it",
+    "#ignore-this-line4": "if you use the previous commend, this is how to exec it",
     "css": "export NODE_ENV=development; node dist/tests-browser.mjs --extract-css $1 "
   },
   "repository": {
@@ -51,6 +51,7 @@
     "eslint-plugin-jest": "^28.10.0",
     "eslint-plugin-jsdoc": "^48.10.1",
     "eslint-plugin-no-floating-promise": "^2.0.0",
+    "eslint-plugin-no-only-tests": "^3.3.0",
     "eslint-plugin-vitest": "^0.5.4",
     "express": "^4.19.2",
     "html-validator": "^6.0.1",

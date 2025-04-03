@@ -51,7 +51,7 @@ function enableLogCounter(cons: BetterConsole): VisabiltityToLogging {
 }
 
 // eslint-disable-next-line no-var
-var refCount=-1;
+var refCount = -1;
 /**
  * changeCount_simple
  * Util to log changes in array sizes, 
@@ -62,9 +62,8 @@ var refCount=-1;
  * @public
  * @returns {void}
  */
-export function changeCount_simple(ref:Array<any>, nom:string):void {
-
-    /**
+export function changeCount_simple(ref: Array<any>, nom: string): void {
+  /**
      * toLen
      * A function to map thing to is length.
  
@@ -72,21 +71,29 @@ export function changeCount_simple(ref:Array<any>, nom:string):void {
      * @public
      * @returns {number}
      */
-	function toLen(ref:Array<any>):number {
-		if(Array.isArray(ref)) {	
-			return ref.length;
-		} else {
-			return Object.keys(ref).length;
-		}
-	}
+  function toLen(ref: Array<any>): number {
+    if (Array.isArray(ref)) {
+      return ref.length;
+    } else {
+      return Object.keys(ref).length;
+    }
+  }
 
-	if(refCount===-1) {
-		refCount= toLen(ref);
-	} else {
-// DO NOT WASTE TIME IMPROVING readability on this log message
-		log("debug", "Change in "+nom+" was "+(toLen(ref) - refCount)+" to "+toLen(ref) );
-		refCount=-1;
-	}
+  if (refCount === -1) {
+    refCount = toLen(ref);
+  } else {
+    // DO NOT WASTE TIME IMPROVING readability on this log message
+    log(
+      "debug",
+      "Change in " +
+        nom +
+        " was " +
+        (toLen(ref) - refCount) +
+        " to " +
+        toLen(ref),
+    );
+    refCount = -1;
+  }
 }
 
 /**
@@ -99,8 +106,8 @@ export function changeCount_simple(ref:Array<any>, nom:string):void {
  */
 export function log(typ: string, ...inputs: string[]): void {
   localConsole.LOG_USAGE++;
-  if( typ === "assert") {
-	localConsole.assert(...inputs);
+  if (typ === "assert") {
+    localConsole.assert(...inputs);
   } else if (typ in console) {
     localConsole[typ](`[${typ.toUpperCase()}] ${inputs.join(", ")}`);
   } else {

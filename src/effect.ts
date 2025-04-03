@@ -66,7 +66,10 @@ export function addOctoCats(refs: boolean, dom: Document, win: Window): void {
         dom,
       );
       if (refs) {
-        a.setAttribute("aria-label", link2Txt(a.getAttribute("href") as string));
+        a.setAttribute(
+          "aria-label",
+          link2Txt(a.getAttribute("href") as string),
+        );
         applyDOMpositions(a, win);
       } else {
         a.setAttribute("title", "Link to a github project.");

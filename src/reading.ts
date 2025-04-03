@@ -69,17 +69,12 @@ export function readingDuration(
     code += extract(options.codeSelector, dom);
   }
   let duration: number =
-    (plain - code) / options.wordPerMin +
-    (code * 2) / options.wordPerMin;
+    (plain - code) / options.wordPerMin + (code * 2) / options.wordPerMin;
 
-	const IMGS:Array<string>= Array.from(
-								new Set(
-								Array.from(
-								dom.querySelectorAll(IMAGE_SEARCH))
-								.map(iter)
-									)
-									);
-	duration += IMGS.length * 5;
+  const IMGS: Array<string> = Array.from(
+    new Set(Array.from(dom.querySelectorAll(IMAGE_SEARCH)).map(iter)),
+  );
+  duration += IMGS.length * 5;
   if (duration < 1) {
     log("info", "No reading time displayed for this article");
     return;
@@ -103,7 +98,7 @@ export function readingDuration(
   appendIsland(options.target, h1, dom);
 }
 
-    /**
+/**
      * iter
      * An internal function to get the URL attribute, used in Array.map
  
@@ -112,13 +107,19 @@ export function readingDuration(
      * @public
      * @returns {string}
      */
-	function iter(ele:HTMLElement, i:number):string {
-		switch(ele.tagName) {
-		case 'IMG': return ele.getAttribute('src'); break;
-		case 'OBJECT': return ele.getAttribute('data'); break;
-		case 'SOURCE': return ele.getAttribute('srcset'); break;
-		}
-	} 
+function iter(ele: HTMLElement, i: number): string {
+  switch (ele.tagName) {
+    case "IMG":
+      return ele.getAttribute("src");
+      break;
+    case "OBJECT":
+      return ele.getAttribute("data");
+      break;
+    case "SOURCE":
+      return ele.getAttribute("srcset");
+      break;
+  }
+}
 
 /////////////////////////////////////////////// testing ////////////////////////////////////////////
 // injectOpts not needed, only 1 function

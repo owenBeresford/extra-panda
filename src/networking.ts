@@ -44,7 +44,9 @@ export async function runFetch(
   const f: Fetch = getFetch() as Fetch;
   const ldebug = debug(loc);
   try {
-    const trans: Response = await f(url, { credentials: "same-origin" }) as Response;
+    const trans: Response = (await f(url, {
+      credentials: "same-origin",
+    })) as Response;
     if (!trans.ok) {
       if (ldebug) {
         log("warn", "Failed to communicate with " + url);
@@ -61,8 +63,7 @@ export async function runFetch(
 
     let payload = "";
     if (
-      ((trans.headers as Headers)
-        .get("content-type") as string)
+      ((trans.headers as Headers).get("content-type") as string)
         .toLowerCase()
         .startsWith("application/json")
     ) {
@@ -128,7 +129,7 @@ export function accessCookie(): Cookieable {
     // cookie behaviour is more complex than in the 90s.
     return {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      set(cName: string, cValue: string, expDays: number): void { },
+      set(cName: string, cValue: string, expDays: number): void {},
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       get(cName: string): string {
         return "";

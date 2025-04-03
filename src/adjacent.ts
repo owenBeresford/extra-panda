@@ -36,7 +36,12 @@ let OPTS: AdjacentPropsDefinite = {
  * @protected
  * @returns {string} - the desired full URL of this page
  */
-function mapURL(article: string, suffix: string, loc: Location, search:boolean =true): string {
+function mapURL(
+  article: string,
+  suffix: string,
+  loc: Location,
+  search: boolean = true,
+): string {
   //  let t = loc.protocol + "//" + loc.host,
   let t2 = loc.pathname.split("/"),
     t = "",
@@ -55,9 +60,9 @@ function mapURL(article: string, suffix: string, loc: Location, search:boolean =
     t += loc.pathname.replace(t3, article);
   }
 
-	if(search) {
-		t += loc.search + loc.hash;
-	}
+  if (search) {
+    t += loc.search + loc.hash;
+  }
   return t;
 }
 
@@ -103,13 +108,13 @@ function cleanTitle(id: string, group: string): string {
  * @returns {string}
  */
 function extractOABName(url: string): string {
-  let TMP:string=url;
-	if(url.lastIndexOf('#')>0) {
-		TMP=url.substring(0, url.lastIndexOf('#'));
-	}
-	if(url.lastIndexOf('?')>0) {
-		TMP=url.substring(0, url.lastIndexOf('?'));
-	}
+  let TMP: string = url;
+  if (url.lastIndexOf("#") > 0) {
+    TMP = url.substring(0, url.lastIndexOf("#"));
+  }
+  if (url.lastIndexOf("?") > 0) {
+    TMP = url.substring(0, url.lastIndexOf("?"));
+  }
   let TMP2 = TMP.split("/");
   return TMP2.pop() ?? "";
 }
@@ -319,7 +324,9 @@ function convert2HTML(list: Array<NormalisedReference>, gname: string): string {
     html +=
       '<li><a class="adjacentItem button" href="/resource/group-XXX?first=' +
       gname +
-      '" aria-label="This article lists all items in '+gname+' group."> See full list </a></li></ul>';
+      '" aria-label="This article lists all items in ' +
+      gname +
+      ' group."> See full list </a></li></ul>';
   }
   return html;
 }
@@ -389,7 +396,8 @@ function updateLabels(gname: string, dom: Document): void {
   ) as Array<HTMLElement>;
 
   if (
-    dat.length && dat[0].textContent &&
+    dat.length &&
+    dat[0].textContent &&
     (dat[0].textContent.includes("whatsmyname") ||
       dat[0].textContent.includes("XXX"))
   ) {
@@ -435,7 +443,7 @@ export function extractGroup(ele: HTMLElement | null, loc: Location): string {
   }
   throw new Error(
     "KLAXON, KLAXON, I do not know how to build an adjacent list for " +
-    loc.href,
+      loc.href,
   );
 }
 
@@ -487,7 +495,7 @@ export async function createAdjacentChart(
     );
   } else {
     const data: SimpleResponse = await OPTS.runFetch(OPTS.meta, true, loc);
-    if (!('ok' in data) || !data.ok || !Array.isArray(data.body)) {
+    if (!("ok" in data) || !data.ok || !Array.isArray(data.body)) {
       log("info", "There doesn't seem to be a group meta data file.");
       appendIsland(
         "#" + GROUP,

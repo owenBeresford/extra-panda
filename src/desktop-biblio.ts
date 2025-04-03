@@ -126,15 +126,15 @@ function normaliseData(data: Array<ReferenceType | null>): Array<string> {
 
     out.push(
       "Reference popup for link [" +
-      (i + 1) +
-      "]\n\n" +
-      title +
-      "\n" +
-      auth +
-      " " +
-      date +
-      "\n\n" +
-      desc,
+        (i + 1) +
+        "]\n\n" +
+        title +
+        "\n" +
+        auth +
+        " " +
+        date +
+        "\n\n" +
+        desc,
     );
   }
   return out;
@@ -232,7 +232,8 @@ function mapPositions(data: Array<string>, dom: Document, win: Window): void {
   );
   if (data.length > REFS.length) {
     (dom.querySelector(ALL_REFERENCE) as HTMLElement).classList.add(SHOW_ERROR);
-    (dom.querySelector("p[role=status]") as HTMLElement).textContent += " Recompile meta data. ";
+    (dom.querySelector("p[role=status]") as HTMLElement).textContent +=
+      " Recompile meta data. ";
     throw new Error(
       "Too many references in meta-data for this article, pls recompile.",
     );
@@ -247,7 +248,8 @@ function mapPositions(data: Array<string>, dom: Document, win: Window): void {
     j++;
   }
   if (REFS.length > data.length) {
-    (dom.querySelector("p[role=status]") as HTMLElement).textContent += "Recompile meta data";
+    (dom.querySelector("p[role=status]") as HTMLElement).textContent +=
+      "Recompile meta data";
 
     let i = data.length;
     while (i < REFS.length) {
@@ -289,12 +291,12 @@ function addMetaAge(xhr: SimpleResponse, dom: Document): void {
     const str: string =
       '<span>Links <time datetime="' +
       updated +
-      '" title="When this was last recompiled'+
-		  new Date(updated).toLocaleDateString("en-GB", {
-	        hour12: false,
-	        dateStyle: "medium",
-	      })
-		+'">' +
+      '" title="When this was last recompiled' +
+      new Date(updated).toLocaleDateString("en-GB", {
+        hour12: false,
+        dateStyle: "medium",
+      }) +
+      '">' +
       new Date(updated).toLocaleDateString("en-GB", {
         hour12: false,
         dateStyle: "medium",
@@ -333,8 +335,8 @@ export async function createBiblio(
     log(
       "info",
       "This URL '" +
-      loc.pathname +
-      "' isn't marked-up for references, so skipped",
+        loc.pathname +
+        "' isn't marked-up for references, so skipped",
     );
     return;
   }

@@ -59,7 +59,8 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
   }
 
   if (MOBILE) {
-    (dom.querySelector("#sendMasto") as HTMLElement).textContent = "Share article";
+    (dom.querySelector("#sendMasto") as HTMLElement).textContent =
+      "Share article";
   }
   const html: Array<string> = [
     `<li id="shareClose"> <i class="fa fa-cancel" aria-hidden="true"></i> </li>	<li> <a class="hunchUp" id="copyURL"><i class="fa fa-copy" aria-hidden="true"></i><span class="hunchUp"> copy<br /> URL</span> </a> </li>`,
@@ -74,7 +75,9 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
   );
 
   const ldebug: boolean = !isLocal(loc.host) && !debug(loc);
-  const PARENT: HTMLDivElement = dom.querySelector(".SMshareWidget") as HTMLDivElement;
+  const PARENT: HTMLDivElement = dom.querySelector(
+    ".SMshareWidget",
+  ) as HTMLDivElement;
   for (const i in BUFFER) {
     if (bigScreenElements.includes(BUFFER[i].id)) {
       continue;
@@ -95,9 +98,7 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
       BUFFER[i].setAttribute("id", "old" + BUFFER[i].getAttribute("id"));
     }
   }
-  html.unshift(
-    '<nav class="mobilePopupWidget" id="mobileMenu"> <menu>',
-  );
+  html.unshift('<nav class="mobilePopupWidget" id="mobileMenu"> <menu>');
   html.push("</menu></nav>");
 
   appendIsland("#navBar", html.join("\n"), dom);
@@ -277,7 +278,7 @@ export async function siteCore(
         log(
           "info",
           "Word count of selection: " +
-          standardisedWordCount(duplicateSelection(win)),
+            standardisedWordCount(duplicateSelection(win)),
         );
       }
     });

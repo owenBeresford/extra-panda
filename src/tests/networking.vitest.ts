@@ -30,5 +30,4 @@ describe("TEST networking", () => {
 
     assert.isBelow(d1.getTime() + 1000 - d2.getTime(), 10, "assert #3");
   });
-
 });

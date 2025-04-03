@@ -1,52 +1,121 @@
+.button {
+  padding: 0.65em 1em;
+}
 
-.button { padding:0.65em 1em; }
+cite {
+  display: inline-block;
+}
 
-cite { display:inline-block; }
-
-h2 a, h3 a, h4 a, h5 a { background-color: inherit; color: inherit; } 
+h2 a,
+h3 a,
+h4 a,
+h5 a {
+  background-color: inherit;
+  color: inherit;
+}
 
 /** only used for the reading time link */
-.reading { vertical-align:super; white-space:nowrap; padding:0.3em 0em; display: inline-block; 
-		width: 8em; text-decoration:underline; }
+.reading {
+  vertical-align: super;
+  white-space: nowrap;
+  padding: 0.3em 0em;
+  display: inline-block;
+  width: 8em;
+  text-decoration: underline;
+}
 @media screen and (min-resolution: 150dpi) {
-	.reading { width: auto; }
+  .reading {
+    width: auto;
+  }
 }
 
-.wideLink ul li>a:first-of-type { display:inline-block; width:12em; text-align:center; 
-		margin-right: 0.3em; }
-.wideLink ul li sup a { width:auto; }
+.wideLink ul li > a:first-of-type {
+  display: inline-block;
+  width: 12em;
+  text-align: center;
+  margin-right: 0.3em;
+}
+.wideLink ul li sup a {
+  width: auto;
+}
 
 /** if a list item is splitted due to page wrapping, maybe unused now  */
-li.split:before { content:"…"; }
+li.split:before {
+  content: "…";
+}
 @media screen and (min-resolution: 150dpi) {
-	li { margin:2px 10px; }
+  li {
+    margin: 2px 10px;
+  }
 }
 
 @media screen and (min-resolution: 150dpi) {
-	input[type='text'], #fSearch .button { font-size:130%; }
+  input[type="text"],
+  #fSearch .button {
+    font-size: 130%;
+  }
 }
 
 @media screen and (min-resolution: 150dpi) {
-	#rssLink { width: 2.3em; }
-	#navBar a#rssLink i { margin:inherit; }
+  #rssLink {
+    width: 2.3em;
+  }
+  #navBar a#rssLink i {
+    margin: inherit;
+  }
 }
 
 @media screen and (min-resolution: 150dpi) {
-	.column { padding-left:0px; padding-right:0px; }
+  .column {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 }
 
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 { font-family: inherit; }
-body, .annoyingBody { font-family: 'ubuntu', sans-serif;  }
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  font-family: inherit;
+}
+body,
+.annoyingBody {
+  font-family: "ubuntu", sans-serif;
+}
 
-.fixLinkedSq { font-size:200%; margin-bottom:0px; }
-#linkedinpix { width:20px; height:20px; }
+.fixLinkedSq {
+  font-size: 200%;
+  margin-bottom: 0px;
+}
+#linkedinpix {
+  width: 20px;
+  height: 20px;
+}
 
-pre { text-align: left; }
+pre {
+  text-align: left;
+}
 
-i.specialPointer { z-index:2; vertical-align: inherit; font-size:4em; position: relative; top: 0.17em; left:-36px; } 
+i.specialPointer {
+  z-index: 2;
+  vertical-align: inherit;
+  font-size: 4em;
+  position: relative;
+  top: 0.17em;
+  left: -36px;
+}
 @media screen and (min-resolution: 150dpi) {
-	i.specialPointer { font-size:6em; left: -0.3em; top: 0.25em; }
+  i.specialPointer {
+    font-size: 6em;
+    left: -0.3em;
+    top: 0.25em;
+  }
 }
-
-
-

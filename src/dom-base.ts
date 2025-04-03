@@ -172,18 +172,21 @@ export function isFullstack(win: Window): boolean {
 export function isLibreWolf(dom: Document, nav: Navigator): boolean {
   // eslint-disable-next-line no-var
   var canTouch = false;
-  try { document.createEvent("TouchEvent"); canTouch = true; }
-  catch (e) { let noop = 1; }
+  try {
+    document.createEvent("TouchEvent");
+    canTouch = true;
+  } catch (e) {
+    let noop = 1;
+  }
 
-  if (nav &&
-    nav.product === "Gecko" &&
-    nav.maxTouchPoints > 0 &&
-    !canTouch
-  ) {
+  if (nav && nav.product === "Gecko" && nav.maxTouchPoints > 0 && !canTouch) {
     console.warn("Is this librewolf?, could tell me if this is wrong.");
     if (!dom.body.classList.contains("IAmLibreWolf")) {
       dom.body.classList.add("IAmLibreWolf");
-    	(dom.querySelector('.fullWidth p[role="status"]') as HTMLElement).innerText += "  Is this librewolf?,  could you tell me if this is wrong.";
+      (
+        dom.querySelector('.fullWidth p[role="status"]') as HTMLElement
+      ).innerText +=
+        "  Is this librewolf?,  could you tell me if this is wrong.";
     }
     return true;
   }
@@ -289,8 +292,8 @@ export async function copyURL(
     log(
       "error",
       "FAILED: copy URL feature borked " +
-      e1.message +
-      "\nIt will fail on a HTTP site.",
+        e1.message +
+        "\nIt will fail on a HTTP site.",
     );
   }
 }
@@ -305,7 +308,10 @@ export async function copyURL(
  * @returns {void}
  */
 export function applyVolume(dom: Document, win: Window): void {
-  (dom.querySelector("body") as HTMLBodyElement).setAttribute("style", "--offset-height: 0;");
+  (dom.querySelector("body") as HTMLBodyElement).setAttribute(
+    "style",
+    "--offset-height: 0;",
+  );
   const tt: Array<HTMLElement> = Array.from(
     dom.querySelectorAll(".lotsOfWords, .halferWords, .fewWords"),
   );
@@ -405,7 +411,6 @@ export function isMobile(dom: Document, loc: Location, win: Window): boolean {
       // laptops with a touch screen should be here
       return false;
     }
-
   } catch (e) {
     if (u.has("mobile") && booleanMap(u.get("mobile") ?? "")) {
       return true;
