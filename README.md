@@ -176,7 +176,7 @@ Notes:
 - TODO: Want to add some CSS tests for crucial UI processes, like z-index.
 - TODO: Make support for win32.
 - TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
-- Am I aware that Vitest supports a GUI mode? [✔].   It was doing that when I first started using this tool, see [https://vitest.dev/guide/ui.html].   Unless I read this wrongly, this is just an output driver, not running the modules in the browser.     
+- Am I aware that Vitest supports a GUI mode? [✔].   It was doing that when I first started using this tool, see [https://vitest.dev/guide/ui.html].   Unless I read this feature wrongly, this is just an output driver, not running the modules in the browser.     
 
 </details>
 <details>
@@ -191,38 +191,38 @@ This project now holds the CSS used to style the site.   There is a slow moving 
 - I have removed various old commented CSS, and also aggregated all my ideas notes into a single ideas file that I might read [ever].
 - In 2022, I pulled any CSS blobs from the articles into the single CSS sheet, as I was hoping this would mean I could factor common sections and have less code.  This has worked somewhat.
 - I discarded SOME older work when I imported Foundation [https://get.foundation/sites/docs/installation.html installation] [https://get.foundation/sites/docs/ docs] in 2017.   Most of the current CSS volume is Foundation
-The articles with no extra/ dedicated CSS are composed of "standard components".  This is 26 features ~ all with enough RWD support:
+The articles with no extra/ dedicated CSS are composed of "standard components".  This is 25 features ~ all with enough RWD support:
 
-- accessSrc         ~ right aligned container for source repo links, 
-- betterDL          ~ where I define a list of terms, they are rendered via this,
-- buttonBar	        ~ some longer articles are chopped up, the button bar holds links to each sub article,
-- addReferences     ~ a marker to enable references extra UI features
-- tabs-content      ~ CSS for a tabsWidget, some code is Foundation, so different naming scheme 
-- maquetteContainer ~ maquette articles have a dedicated layout...
-- footWidget        ~ template to layout the links in the footer,  
-- keyWordsWidget    ~ some pages list keywords, this is added to support recruiters,
-- accordionWidget   ~ not used often, a CSS wrapper for DETAILS/ SUMMARY
-- logWidget         ~ A widget for holding on screen messages like a console.  This approach is good for phones
-- popOverWidget     ~ A display popup that overlays the rest of the page, includes X-to-close.  Used to make pages seem less long on first glance.
-- linksWidget       ~ Te CSS for the default menu on the top right of desktop mode
-- headingsWidget    ~ the menu of internal headings in the current article 
-- mastodonWidget    ~ a feature with a DIALOG for choosing which [https://joinmastodon.org/servers Mastodon] server to send a SM link to.
-- articleHeader     ~ CSS component to build the document headers
-- SMshareWidget     ~ A container/ list for all the external links and the article meta data, 
-- metaWidget        ~ A larger container for all the external links and the article meta data, contains previous element
-- adjacentWidget    ~ CSS container for the related content same-site links, appears at the end of the article.  Mostly big-screen only
-- mobilePopupWidget ~ for mobile only ~ the above SM links, but optimised for mobile,
+- accessSrc         ~ vis ~ right aligned container for source repo links. 
+- betterDL          ~ vis ~ where I define a list of terms, they are rendered via this.
+- buttonBar	        ~ vis ~ some longer articles are chopped up, the button bar holds links to each sub article.
+- addReferences     ~ a marker to enable references extra UI features.
+- mobileBiblio      ~ vis ~ CSS feature to style the list of external links at the end of the article, when using a phone.
+- tabs-content      ~ CSS for a tabsWidget, some code is Foundation, so different naming scheme.
+- maquetteContainer ~ no-vis ~ maquette articles have a dedicated layout...
+- footWidget        ~ vis ~ template to layout the links in the footer.  
+- keyWordsWidget    ~ vis ~ some pages list keywords, this is added to support recruiters.
+- accordionWidget   ~ vis ~ not used often, a CSS wrapper for DETAILS/ SUMMARY.
+- logWidget         ~ vis ~ A widget for holding on screen messages like a console.  This approach is good for phones.
+- popOverWidget     ~ vis ~ A display popup that overlays the rest of the page, includes X-to-close.   Used to make pages seem less long on first glance.
+- linksWidget       ~ via heading ~ The CSS for the default menu on the top right of desktop mode.
+- headingsWidget    ~ vis ~ The menu of internal headings in the current article .
+- mastodonWidget    ~ vis ~ A feature with a DIALOG for choosing which [https://joinmastodon.org/servers Mastodon] server to send a SM link to.
+- SMshareWidget     ~ via meta ~ A container/ list for all the external links and the article meta data. 
+- metaWidget        ~ vis ~ A larger container for all the external links and the article meta data, contains previous element.
+- adjacentWidget    ~ vis ~ CSS container for the related content same-site links, appears at the end of the article.  Mostly big-screen only.
+- mobilePopupWidget ~ vis ~ for mobile only ~ the above SM links, but optimised for mobile.
 
-- browserTest       ~ Articles that includes technical features should include a test report on what browsers support the technology.  This renders it.
-- mobileBiblio      ~ CSS feature to style the list of external links at the end of the article, when using a phone.
+- articleHeader     ~ via wholeArticle ~ CSS component to build the document headers.
+- browserTest       ~ ?? ~ Articles that includes technical features should include a test report on what browsers support the technology.  This renders it.
+- lotsOfWords       ~ no-vis ~ a full-width block
+- quiteWide         ~ no-vis ~ a 70em / 1120px block 
+- halferWords       ~ no-vis ~ a 48em / 680px block
+- fewWords          ~ no-vis ~ a 30em / 480px block  
 
+Classes that start "add" normally just enable some feature, and have no CSS behaviour of their own.   There are some classes that are too simple and widely used to get a test.   
 
-- lotsOfWords       ~ a full-width block
-- quiteWide         ~ a 70em / 1120px block 
-- halferWords       ~ a 48em / 680px block
-- fewWords          ~ a 30em / 480px block  
-
-Some pages have extra features eg [https://owenberesford.me.uk/resource/form-no-js-maquette], but this is rarer than adjustments.
+I may refactor to eliminate the word Widget.   Some pages have extra features eg [https://owenberesford.me.uk/resource/form-no-js-maquette], but this is rarer than adjustments.
 I am adding test pages to show the articles with with broad range of content, rather than just the content when I made the feature. 
 When running locally the "debug-layout" test capacity is useful.  
 

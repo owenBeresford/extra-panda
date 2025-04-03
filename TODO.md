@@ -1,6 +1,5 @@
 ### TODO
 - Add type washing to JSON ingestion used in multiple places https://github.com/samchon/typia https://medium.com/@jkc5186/understanding-typescript-types-with-prisma-e0e41a7d98f3 
-- Add config for minifier via terser to build step.  Out of time.  IMPORTANT
 - Add multilingual support
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom   to TESTS
 - Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages. 
@@ -11,13 +10,14 @@
 - Add feature dump (ie download as attachment) in-HTML file JS assets, or SVG assets, or CSS assets.  Need to think about UI for this feature.
 - Make RAM usage and execution-cost tests-and-monitoring more mature
 - Implement Networking browser test script
-- QUESTION: how to KB only people use DETAILS elements
 - Port remaining non-production files to TS.  
 - declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
 - Somehow properly test isLibreWolf
 - Maybe look at Qutebrowser for browser unit-tests, uses less RAM, and is //a recent version// of Chrome project https://qutebrowser.org/doc/install.html#tox
 - To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
 - Maybe poll for Chrome, and install Qutebrowser if absent. QQ how do I poll in the package.json?
+- Rebuild snap to end (unused but included), as dis-functional in Chrome  
+- XXXXXXXXXXXXXXXXXX screen size for content is broken again.  xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 - Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
 https://lit.dev/
 https://www.npmjs.com/package/eslint-plugin-no-only-tests
@@ -29,6 +29,7 @@ https://www.npmjs.com/package/eslint-plugin-n << yes ends in -n
 - Discuss: Perl-style encapsulation by culture rather than armed enforcers.
 - Discuss: Every time I am setting CSS vis JS, this is code smell & I need more information.
 - Discuss: Whilst checking old security failures, note that JS modules segregates the '90s and '00s from my website JS.  It implies "use strict" flag as a further layer of less-stupid.
+- DONE: Last month I learned the terser doesn't strip all line breaks, as that stops the map files working.  My initial terser setup is running as expected.   Terser reduces volume ~50KB -> 30KB.  I can over apply uglify to prod builds, which strips a further ~7KB of line breaks
 - DONE remove local scope use of global vars
 - DONE reduce use a lambda functions
 - DONE check accessibility of currentSize
@@ -82,9 +83,9 @@ https://www.npmjs.com/package/eslint-plugin-n << yes ends in -n
 - DONE: Change implementation on reading word-count 
 - DONE: Extracted Tab feature to own TS module, as I'm not updating the tabs UI to pure HTML5 now.
 - DONE: trap out libreWolf, as the DPI calc in CSS is busted there
-- DONE: migrated tabs to HTML/CSS as its better archituire
-- DONE: migrate CSS into this project, simplifing my webhost project
+- DONE: migrated tabs to HTML/CSS as its better architecture
+- DONE: migrate CSS into this project, simplifying my webhost project
 - DONE: tidyup English and old CSS in the CSS
-- DONE: improved readability and component-isation in the CSS
-- DONE: add 20% new CSS to support libreWolf  bah gumbah!
+- DONE: improved readability and component-isation in the CSS.  Added per component tests, to increase code longevity
+- DONE: Add 20% new CSS to support libreWolf bah gumbah! ~ looking at Vivaldi
 
