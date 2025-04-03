@@ -10,7 +10,7 @@
   },
   "scripts": {
 	"# comment line 1":"On every new machine, please run tools/checksum.bash first, this adds files that don't touch the repo.",
-    "build": "export NODE_ENV=production; ./tools/build-ts.bash",
+    "build": "export NODE_ENV=production; ./tools/build-ts.bash; ./tools/build-css.bash ",
     "test": "export NODE_ENV=development; node ./node_modules/.bin/vitest --typecheck run; if [ ! -d './dist/tests' ]; then echo 'Run build:test first'; else export NODE_ENV=development; node ./tools/tests-browser.mjs; fi ",
     "test:unit": "export NODE_ENV=development; node ./node_modules/.bin/vitest --typecheck run",
     "#ignore-lint-notes": "1 function is over complexity by 1 point. . .  && Its an arbitary limit",
