@@ -30,8 +30,7 @@
  font-display: swap;
 }
 
-
-.annoyingBody { font-family: 'ubuntu', sans-serif;  }
+.annoyingBody, .h4_page { font-family: 'ubuntu', sans-serif;  }
 .highlight { font-family:monospace; }
 .bashSample { font-family:monospace; }
 
