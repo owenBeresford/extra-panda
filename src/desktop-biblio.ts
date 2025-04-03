@@ -5,7 +5,6 @@ import type {
   DesktopBiblioPropsDefinite,
   SimpleResponse,
   ReferenceType,
-  NormalisedReference,
 } from "./all-types";
 import { appendIsland, mapAttribute } from "./dom-base";
 import {

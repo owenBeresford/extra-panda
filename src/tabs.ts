@@ -37,7 +37,7 @@ function hasTabs(dom: Document): boolean {
  * @param {Document} dom
  * @param {Location} loc
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function newInitState(dom:Document, loc:Location):void {
 	if(!loc.hash) { return; }

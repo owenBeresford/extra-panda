@@ -103,6 +103,15 @@ export function readingDuration(
   appendIsland(options.target, h1, dom);
 }
 
+    /**
+     * iter
+     * An internal function to get the URL attribute, used in Array.map
+ 
+     * @param {HTMLElement} ele
+     * @param {number} i
+     * @public
+     * @returns {string}
+     */
 	function iter(ele:HTMLElement, i:number):string {
 		switch(ele.tagName) {
 		case 'IMG': return ele.getAttribute('src'); break;

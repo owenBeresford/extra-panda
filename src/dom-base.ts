@@ -170,6 +170,7 @@ export function isFullstack(win: Window): boolean {
  * @returns {boolean}
  */
 export function isLibreWolf(dom: Document, nav: Navigator): boolean {
+  // eslint-disable-next-line no-var
   var canTouch = false;
   try { document.createEvent("TouchEvent"); canTouch = true; }
   catch (e) { let noop = 1; }

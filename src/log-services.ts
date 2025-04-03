@@ -50,7 +50,7 @@ function enableLogCounter(cons: BetterConsole): VisabiltityToLogging {
   };
 }
 
-
+// eslint-disable-next-line no-var
 var refCount=-1;
 /**
  * changeCount_simple
@@ -60,9 +60,18 @@ var refCount=-1;
  * @param {Array<any>} ref
  * @param {string} nom - name in the logging
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function changeCount_simple(ref:Array<any>, nom:string):void {
+
+    /**
+     * toLen
+     * A function to map thing to is length.
+ 
+     * @param {Array<any>} ref
+     * @public
+     * @returns {number}
+     */
 	function toLen(ref:Array<any>):number {
 		if(Array.isArray(ref)) {	
 			return ref.length;
