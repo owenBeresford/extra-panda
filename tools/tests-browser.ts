@@ -59,17 +59,7 @@ There is only 1 cmd arg to this script at present.
 If more are added, see command-line-args
 @see [https://www.npmjs.com/package/command-line-args]
 */
-
-const TESTS:Readonly<Array<string>> = [
-  "modal.webtest.mjs", // extend...
-  "tabs.webtest.mjs",
-  "cookie.webtest.mjs",	
-	"desktop-biblio.webtest.mjs",
-	"dom-base.webtest.mjs",
-	"networking.webtest.mjs",
-  "index.webtest.mjs",
-
-] as Readonly<Array<string>>;
+ 
 const PORT_DEBUG = 9222;
 const PORT_SERVER = 8081;
 const URL_SERVER = "127.0.0.1";
@@ -117,6 +107,26 @@ const CERT_NAME = DIR_FIXTURES + path.sep + "cert.pem";
 const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
 let dDelta = 0;
 
+const TESTS:Readonly<Array<string>>  = listFiles( DIR_TESTS );
+if(TESTS.length ===0) {
+       console.error("Need to compile tests first");
+       process.exit(34);
+}
+
+function listFiles(dn:string):Array<string> {
+         let ret:Array<string>=[];
+         for (let i of fs.readdirSync( dn )) {
+                 let ss=fs.statSync( path.join(dn, i ) ); 
+                 if( ss.isDirectory()) { continue; }
+  
+                 if( i.match(".webtest.mjs")) {  
+                         ret.push( i );
+                 }
+         }
+  
+         return ret;
+  }
+  
 /**
  * spinup_server
  * A function to start a Node/Express process to host test files
