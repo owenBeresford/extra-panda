@@ -17,7 +17,6 @@
 - To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
 - Maybe poll for Chrome, and install Qutebrowser if absent. QQ how do I poll in the package.json?
 - Rebuild snap to end (unused but included), as dis-functional in Chrome  
-- XXXXXXXXXXXXXXXXXX screen size for content is broken again.  xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 - Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
 https://lit.dev/
 https://www.npmjs.com/package/eslint-plugin-no-only-tests
@@ -88,4 +87,5 @@ https://www.npmjs.com/package/eslint-plugin-n << yes ends in -n
 - DONE: tidyup English and old CSS in the CSS
 - DONE: improved readability and component-isation in the CSS.  Added per component tests, to increase code longevity
 - DONE: Add 20% new CSS to support libreWolf bah gumbah! ~ looking at Vivaldi
+- DONE: unbreak [minor] things for Vivaldi
 

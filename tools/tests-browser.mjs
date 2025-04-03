@@ -49,15 +49,7 @@ if more are added see command-line-args
 */
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const __filename = basename(fileURLToPath(import.meta.url));
-const TESTS = [
-  "modal.webtest.mjs",
-  "tabs.webtest.mjs",
-  "cookie.webtest.mjs",
-  "desktop-biblio.webtest.mjs",
-  "dom-base.webtest.mjs",
-  "networking.webtest.mjs",
-  "index.webtest.mjs",
-];
+
 const PORT_DEBUG = 9222;
 const PORT_SERVER = 8081;
 const URL_SERVER = "127.0.0.1";
@@ -91,6 +83,26 @@ const DIR_FIXTURES2 = path.join(__dirname, "..", "src", "vis-tests");
 const CERT_NAME = DIR_FIXTURES + path.sep + "cert.pem";
 const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
 var dDelta = 0;
+
+const TESTS = listFiles( DIR_TESTS );
+if(TESTS.length ===0) {
+	console.error("Need to compile tests first");
+	process.exit(34);
+}
+
+function listFiles(dn) {
+	let ret=[];
+	for (let i of fs.readdirSync( dn )) {
+		let ss=fs.statSync( path.join(dn, i ) ); 
+		if( ss.isDirectory()) { continue; }
+
+		if( i.match(".webtest.mjs")) {	
+			ret.push( i );
+		}
+	}
+
+	return ret;
+}
 
 /**
  * spinup_server

@@ -148,8 +148,7 @@ Notes:
     - UPDATE: due to further features, I have crept over the 10k boundary &lt;Meme: "so it begins"&gt;
   - I think I have perfect feature match, and new solution is 4% of volume of previous solution. UPDATE 6% in 2025
 
-- OLD TECH for CSS
-  - #TODO
+I have replaced the local CSS with better organised CSS to make it more readable.  I have updated to add more recent phones every few years.   I am adding more features using CSS.   I could reduce CSS volume if I had a tool to remove unneeded code from foundation imnport.   Recently, I have removed some old CSS from my style-sheet, but not much volume of change.   
 
 </details>
 <details open>
@@ -214,14 +213,14 @@ The articles with no extra/ dedicated CSS are composed of "standard components".
 - mobilePopupWidget ~ vis ~ for mobile only ~ the above SM links, but optimised for mobile.
 
 - articleHeader     ~ via wholeArticle ~ CSS component to build the document headers.
-- browserTest       ~ ?? ~ Articles that includes technical features should include a test report on what browsers support the technology.  This renders it.
+- browserTest       ~ no-vis ~ Articles that includes technical features should include a test report on what browsers support the technology.  This renders it.
 - lotsOfWords       ~ no-vis ~ a full-width block
 - quiteWide         ~ no-vis ~ a 70em / 1120px block 
 - halferWords       ~ no-vis ~ a 48em / 680px block
 - fewWords          ~ no-vis ~ a 30em / 480px block  
 
 Classes that start "add" normally just enable some feature, and have no CSS behaviour of their own.   There are some classes that are too simple and widely used to get a test.   
-**With the test script running the vis-tests are served as https://127.0.0.1:8081/vis/*   Unlike my site, they need a full file-name **
+**With the test script running the vis-tests are served as https://127.0.0.1:8081/vis/*   Unlike my site, they need a full file-name**  Looking from multiple devices and screen sizes is advised
 
 I may refactor to eliminate the word Widget.   Some pages have extra features eg [https://owenberesford.me.uk/resource/form-no-js-maquette], but this is rarer than adjustments.
 I am adding test pages to show the articles with with broad range of content, rather than just the content when I made the feature. 
@@ -236,10 +235,10 @@ I ought to improve this process.  These are the tests that build their own GUI/ 
 * make src/test/\*webtest.mjs not the vitest files which are automated
 * ensure execTest line is on the end of the new test
 * copy config and rename files inside vite.config.*.ts 
-* update build script (the bash file) to include new artefact
-* update file list in the test runner
+* AUTOMATED update build script (the bash file) to include new artefact
+* AUTOMATED update file list in the test runner
 * run npm run build
-* copy compiled code to the fixtures dir (ts->min.mjs, css->min.css)
+* AUTOMATED copy compiled code to the fixtures dir (ts->min.mjs, css->min.css)
 * if the test refers to any HTML, the HTML will need to be added as a fixture, or CORs will shut you down. 
 * run npm run build:test
 * run npm run test:web
@@ -256,7 +255,7 @@ I ought to improve this process.  These are the tests that build their own GUI/ 
 - ''width'' number - adds a fake width to the browser
 - ''mobile'' boolean - force interpretation of current machine as a mobile device. Boolean value. In unit tests this MUST BE SET, as JSdom isn't a phone
 - ''select'' - enable select and word count feature
-- ''dump-css'' number 1 or 2
+- ''dump-css'' number 1 or 2               Currently disabled in the codebase
 - ''aspect''   used with ''dump-css''
 - ''debug-layout'' in the HTML rendering engine
 
