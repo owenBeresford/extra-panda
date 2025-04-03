@@ -113,6 +113,14 @@ if(TESTS.length ===0) {
        process.exit(34);
 }
 
+/**
+ * listFiles
+ * List the test files in a directory
+ 
+ * @param {string} dn
+ * @public
+ * @returns {Array<string>}
+ */
 function listFiles(dn:string):Array<string> {
          let ret:Array<string>=[];
          for (let i of fs.readdirSync( dn )) {
@@ -279,7 +287,7 @@ async function spinup_playwright(debug_url:string):Promise<Array<Triggerage>> {
  */
 async function spinup_browser(cmd:Readonly<Array<string>>, onSocket:DEBUG_CHANNEL_CB):Promise<Array<Triggerage>>  {
   let buf:string = "",
-      found = false;
+      found:boolean = false;
 
   const READ = (data:string):void => {
     // being cautious on line buffering:
@@ -446,6 +454,16 @@ async function browser2json(page:Page):Promise<string> {
 
 // https://superuser.com/questions/1139259/how-to-adjust-ui-scaling-for-chrome
 // https://stackoverflow.com/questions/62001125/chrome-dev-tools-simulating-different-resolution-pc-screen
+
+
+/**
+ * runExtract
+ * Extract CSS from the created browser tabs, against the specified URN.
+ 
+ * @param {string} urn
+ * @public
+ * @returns {Promise<void>}
+ */
 async function runExtract(urn:string):Promise<void> {
   console.log(
     "[INFO] You need to catch the file savee-as dialogs,  Opens some tabs in Chrome",
@@ -581,7 +599,7 @@ export async function runTests(tests:Readonly<Array<string>>):Promise<void> {
       }
       // using **https** localhost,
       // test server is to server a HTML file in 'GET /'
-      let URL =
+      const URL =
         "https://" +
         URL_SERVER +
         ":" +
@@ -593,7 +611,7 @@ export async function runTests(tests:Readonly<Array<string>>):Promise<void> {
       await page.goto(URL);
       let d1 = new Date();
       await delay(3000);
-      let json1:string = await browser2json(page);
+      const json1:string = await browser2json(page);
       JSON2logging(json1);
 
       let d2 = new Date();

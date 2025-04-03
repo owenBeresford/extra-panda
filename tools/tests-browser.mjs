@@ -430,7 +430,7 @@ async function browser2json(page) {
 // https://stackoverflow.com/questions/62001125/chrome-dev-tools-simulating-different-resolution-pc-screen
  * @param {string} urn
  * @public
- * @returns {void}
+ * @returns {Promise<void>}
  */
 async function runExtract(urn) {
   console.log(
