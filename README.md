@@ -230,7 +230,7 @@ When running locally the "debug-layout" test capacity is useful.
 <details>
 <summary> Lists of technical names </summary>
 
-#### Browsers I have run my site against
+#### Browsers I manually test the boring site against
 
 I initially just had the most common three, were I only adding Firefox as it is "not Chrome".   I am being vague about device here, as everything locally is a linux.  Modern linuxen will work on whatever screen you plugin.   I have run interactions on:
 - Node/ Vitest   for tests
