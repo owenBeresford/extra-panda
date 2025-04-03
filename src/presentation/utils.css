@@ -3,14 +3,14 @@
 	every page */
 .wholeArticle { display: flex; flex-direction:column-reverse; align-items: stretch; width:99vw;
 		min-height:calc( 100vh - 5em ); 	 /* whole screen minus height of footer */
-		height:max-content;
+		height:auto;
 		max-height:max( 100%, 90vh );    /* avoid clipping */
-	    flex-wrap: unset; align-content: start; 
+	    flex-wrap: unset; align-content: start; container-name: wholeArticle; container-type: inline-size;
   }
-@media screen and (max-height: 55em) {
+@container wholeArticle and (max-height: 55em) {
 	.wholeArticle { /* note values are swapped, 'cus browsers. */
 		height:calc( 100vh - 5em );   
-		max-height: max-content;       
+		max-height: auto;       
 	}
 }
 @media screen and (min-resolution: 150dpi) {

@@ -512,6 +512,9 @@ code[lang="html"].highlight::before, .highlight.wide::before { content:""; }
 .addReferences sup:has( + sup, + sup:last-of-type ), 
 .addReferences sup:has( + a + sup )  { background:green; }
 */
+.IAmLibreWolf .addReferences.showBiblioErrors sup a:not( [aria-label] ), 
+	.IAmLibreWolf .addReferences.showBiblioErrors sup a[aria-label~="HTTP_ERROR,"] 
+	{ padding:0.4em 0.5em; line-height:0.8; }
 
 /* this proved too fiddly, so removed
 div.addReferences a.leanIn:before { left: calc( 95% - 32em ); } 
