@@ -230,6 +230,20 @@ When running locally the "debug-layout" test capacity is useful.
 <details>
 <summary> Lists of technical names </summary>
 
+#### Browsers I have run my site against
+
+I initially just had the most common three, were I only adding Firefox as it is "not Chrome".   I am being vague about device here, as everything locally is a linux.  Modern linuxen will work on whatever screen you plugin.   I have run interactions on:
+- Node/ Vitest   for tests
+- recent Chrome / big-screen (BS)
+- recent firefox / BS
+- recent microsoft Edge / BS 
+- recent Vivaldi / BS                 \ due to shenanigans on FF funding, I added these.
+- recent libreWolf / BS               /
+- recent duckduck / BS               I think this is Chrome with a hat on
+- recent chrome / small-screen (SS)
+- recent "android browser" / SS      I think this is Chrome with a hat on
+- recent firefox / SS
+
 #### Process to add a new webtest \#leSigh
 I ought to improve this process.  These are the tests that build their own GUI/ browser.
 * make src/test/\*webtest.mjs not the vitest files which are automated
