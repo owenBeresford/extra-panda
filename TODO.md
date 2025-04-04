@@ -86,6 +86,6 @@ https://www.npmjs.com/package/eslint-plugin-n << yes ends in -n
 - DONE: migrate CSS into this project, simplifying my webhost project
 - DONE: tidyup English and old CSS in the CSS
 - DONE: improved readability and component-isation in the CSS.  Added per component tests, to increase code longevity
-- DONE: Add 20% new CSS to support libreWolf bah gumbah! ~ looking at Vivaldi
+- DONE: Add 20% new CSS to support libreWolf bah gumbah! 
 - DONE: unbreak [minor] things for Vivaldi
 
