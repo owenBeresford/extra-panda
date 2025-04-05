@@ -52,7 +52,7 @@ export async function runFetch(
         log("warn", "Failed to communicate with " + url);
       }
       if (trap) {
-        return { body: "nothing", headers: {} as Headers, ok: false };
+        return { body: "nothing", headers: {} as Headers, ok: false } as SimpleResponse;
       } else {
         throw new Error("ERROR getting asset " + url);
       }
@@ -85,7 +85,7 @@ export async function runFetch(
       log("error", "KLAXON, KLAXON failed: " + url + " " + e.toString());
     }
     if (trap) {
-      return { body: "nothing", headers: {} as Headers, ok: false };
+      return { body: "nothing", headers: {} as Headers, ok: false } as SimpleResponse;
     } else {
       throw new Error("ERROR getting asset " + url + " " + e.toString());
     }

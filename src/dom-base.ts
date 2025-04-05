@@ -11,6 +11,9 @@ import { log } from "./log-services";
 import { MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./immutables";
 import { booleanMap } from "./string-base";
 
+if(typeof window === "object" && !'noop' in window) {
+	window.noop=0 as number;
+}
 /**
  * appendIsland
  * An important util function, which removes the need for jQuery, ShadowDOM AND other innerHTML hacks.
@@ -47,6 +50,7 @@ export function appendIsland(
     }
   } catch (e) {
     log("error", e.toString());
+	window.noop++;
   }
 }
 
@@ -83,7 +87,7 @@ export function ready(callback: GenericEventHandler, dom: Document): void {
 export function duplicateSelection(win: Window): string {
   try {
     const tmp1 = win.getSelection();
-    if (tmp1 === null) return "";
+    if (tmp1 === null) { return ""; }
     const tmp2 = tmp1.getRangeAt(0);
     if (tmp2.startOffset === tmp2.endOffset) {
       return "";
@@ -176,7 +180,7 @@ export function isLibreWolf(dom: Document, nav: Navigator): boolean {
     document.createEvent("TouchEvent");
     canTouch = true;
   } catch (e) {
-    let noop = 1;
+    window.noop++;
   }
 
   if (nav && nav.product === "Gecko" && nav.maxTouchPoints > 0 && !canTouch) {
