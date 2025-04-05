@@ -119,3 +119,8 @@ i.specialPointer {
     top: 0.25em;
   }
 }
+
+/* Amit Merchant https://www.amitmerchant.com/bare-minimum-view-transitions/ */
+@view-transition {
+  navigation: auto;
+}
