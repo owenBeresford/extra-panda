@@ -19,18 +19,16 @@
 - Rebuild snap to end (unused but included), as dis-functional in Chrome  
 - Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
 https://lit.dev/
-https://www.npmjs.com/package/eslint-plugin-no-only-tests
-https://www.npmjs.com/package/eslint-plugin-promise
-https://www.npmjs.com/package/eslint-plugin-n << yes ends in -n
+- Splash this into every test process https://stackoverflow.com/a/74565753 , maybe I will get error reporting back
 
 ### Previous Updates
 
 - Discuss: Perl-style encapsulation by culture rather than armed enforcers.
 - Discuss: Every time I am setting CSS vis JS, this is code smell & I need more information.
 - Discuss: Whilst checking old security failures, note that JS modules segregates the '90s and '00s from my website JS.  It implies "use strict" flag as a further layer of less-stupid.
-- Discuss: As JS makes no separation between "system" libraries and "user" libraries (and prototypal inheritance), securing the JS eco-system is a broken effort, and fundamentally unsolvable.   This repo is dirty for security problems caused in code I have no write access to, and I have no way to fix this.  
+- Discuss: As JS makes no separation between "system" libraries and "user" libraries (and prototypal inheritance), securing the JS eco-system is fundamentally unsolvable.   This repo is dirty for security problems caused in code I have no write access to, and I have no way to fix this.  
   - NOTE unless the security problems are in the highlight code, it only occurs in test libraries, so its annoying but ignorable.
-  - Build tools being installed for every project, in a writable fashion is not good practice.
+  - Build tools being installed for every project, in a writable fashion is not good practice.   Any other software could edit these tools these installation.  
   - Note there is a worm running since 1970 something, that patches C compilers, when they are being compiled.  For Unix/ POSIX computers when there is a login call, a login attempt with the worm-authors user name will always succeed.  This worm is not present in the C compiler source code, the worm is injected by the worm at compile time as assembly.  Do you have a clean-room C compiler?  How do you check?  Does your local microsoft office have this?
 - Discuss: having `npm audit` make changes that cannot be seen with git is awkward.   Did anything actually change?  At the start of April I reduced 28 security issues to 18, but with no visible changes.   All tests pass afterwards.
 - DONE: Last month I learned the terser doesn't strip all line breaks, as that stops the map files working.  My initial terser setup is running as expected.   Terser reduces volume ~50KB -> 30KB.  I can over apply uglify to prod builds, which strips a further ~7KB of line breaks
@@ -92,4 +90,5 @@ https://www.npmjs.com/package/eslint-plugin-n << yes ends in -n
 - DONE: improved readability and component-isation in the CSS.  Added per component tests, to increase code longevity
 - DONE: Add 20% new CSS to support libreWolf bah gumbah! 
 - DONE: unbreak [minor] things for Vivaldi
+- DONE: eslint, I have turned prefer-const OFF, as it doesn't report arrays sensibly.  See inline note
 
