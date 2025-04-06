@@ -39,7 +39,7 @@ import type {
 } from "express";
 import type { Page } from "playwright";
 import type { NodeJS } from "@types/node";
-import type { Circus, Global } from "@jest/types";
+import type { Circus } from "@jest/types";
 
 const path = await import("node:path");
 const URL = await import("node:url");
@@ -364,7 +364,7 @@ async function spinup_browser(
     }
   });
   console.log("[INFO] Created a browser instance with " + CHILD.pid);
-  const closure = () => {
+  const closure = ():void => {
     if (!CHILD.killed) {
       CHILD.kill();
     }
@@ -406,11 +406,11 @@ function should_close_tabs(args: Array<string>): number {
  * Return the methods that are in the current object, and not inherited
  
  * @see [https://stackoverflow.com/questions/2257993/how-to-display-all-methods-of-an-object]
- * @param {Object} o - this is whatever type it is.  BUT MUST BE AN OBJECT
+ * @param {object} o - this is whatever type it is.  BUT MUST BE AN OBJECT
  * @protected
  * @returns {Array<strings>}
  */
-function getMethods(o: any): Array<string> {
+function getMethods(o: object): Array<string> {
   return Object.getOwnPropertyNames(Object.getPrototypeOf(o)).filter(
     (m) => "function" === typeof o[m],
   );
@@ -428,7 +428,7 @@ function getMethods(o: any): Array<string> {
  * @returns {void} 
  */
 function JSON2logging(json1: string): void {
-  let tmp = JSON.parse(json1.trim()) as Array<Object>;
+  let tmp = JSON.parse(json1.trim()) as Array<object>;
   let tmp2: Array<TestResult> = Array.from(tmp) as Array<TestResult>;
   const LEN: number = tmp2.length - 1;
   let title: TestResult = tmp2[LEN];
@@ -454,7 +454,6 @@ function JSON2logging(json1: string): void {
  * This throws in quite a few places
  
  * @param {Page} page
- * @param {number} weight - REMOVED how many test tabs do you have?
  * @throws if data isn't in correct shape
  * @protected
  * @returns {Promise<string>}
@@ -640,10 +639,8 @@ export async function runTests(tests: Readonly<Array<string>>): Promise<void> {
         path.join(__dirname, "..", "dist", "tests", tests[i]),
       );
       if (!tExist.isFile()) {
-        throw (
-          new Error("Compile tests before trying to run " + tests[i]) +
-          ".\nThis is 'npm run build:tests'."
-        );
+        throw new Error("Compile tests before trying to run " + tests[i] +
+          ".\nThis is 'npm run build:tests'."  );
       }
 
       let page;
@@ -696,7 +693,7 @@ export async function runTests(tests: Readonly<Array<string>>): Promise<void> {
  * runDirectly
  * util function to make code more readable
  
- * @param {Object} p - alias for process
+ * @param {object} p - alias for process
  * @public
  * @returns {boolean}
  */
