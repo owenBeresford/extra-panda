@@ -54,7 +54,7 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
   if (!isLocal(loc.host) && !MOBILE) {
     return;
   }
-  if (isLibreWolf(dom, win.navigator) && !MOBILE) {
+  if (isLibreWolf(dom, win.navigator, win) && !MOBILE) {
     return;
   }
 
@@ -180,7 +180,7 @@ export async function siteCore(
   applyAppearance(dom);
   modalInit(dom);
   expandDetails(1040, dom, loc, win);
-  isLibreWolf(dom, win.navigator);
+  isLibreWolf(dom, win.navigator, win);
 
   if (
     !isMobile(dom, loc, win) &&

@@ -11,7 +11,7 @@ import { log } from "./log-services";
 import { MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./immutables";
 import { booleanMap } from "./string-base";
 
-if(typeof window === "object" && !'noop' in window) {
+if(typeof window === "object" && !('noop' in window)) {
 	window.noop=0 as number;
 }
 /**
@@ -173,11 +173,11 @@ export function isFullstack(win: Window): boolean {
  * @public
  * @returns {boolean}
  */
-export function isLibreWolf(dom: Document, nav: Navigator): boolean {
+export function isLibreWolf(dom: Document, nav: Navigator, win:Window): boolean {
   // eslint-disable-next-line no-var
   var canTouch = false;
   try {
-    document.createEvent("TouchEvent");
+    dom.createEvent("TouchEvent");
     canTouch = true;
   } catch (e) {
     window.noop++;
@@ -406,7 +406,7 @@ export function isMobile(dom: Document, loc: Location, win: Window): boolean {
 
     let PROBABLY_MOB = MOBILE_MIN_PPI;
     // leSigh.
-    if (isLibreWolf(dom, win.navigator)) {
+    if (isLibreWolf(dom, win.navigator, win)) {
       PROBABLY_MOB = MOBILE_MIN_PPI * 1.11;
     }
     if (calcScreenDPI(dom, win) > PROBABLY_MOB) {

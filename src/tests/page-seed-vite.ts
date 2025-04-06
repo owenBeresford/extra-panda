@@ -123,6 +123,10 @@ export async function validateHTML(html: string): Array<string> {
       "<dialog> is not a valid element name",
       "Heading level can only increase by one, expected <h2> but got <h3>",
       "Heading level can only increase by one, expected <h3> but got <h5>",
+      'Heading level can only increase by one, expected h2',
+      'Heading level can only increase by one, expected h3',
+      'Unknown element <menu>',
+      '<menu> is not a valid element name',
     ],
   } as HtmlValidator.OptionsForHtmlFileAsValidationTarget);
 
