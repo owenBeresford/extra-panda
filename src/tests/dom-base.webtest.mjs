@@ -34,9 +34,9 @@ describe("TEST BROWSER dom-base", async () => {
       async (dom, loc, win) => {
         expect(Array.isArray(currentSize(dom, win))).toBe(true); // "got an array back, assert #2")
         await delay(100);
-      },
+      });
+		await delay(100);
       expect(win.noop).toBe(0); 
-    );
   });
 
   it("go 2: isFullStack", async () => {
