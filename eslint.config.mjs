@@ -35,41 +35,45 @@ export default [
     plugins: { tseslint, jsdoc, vitest, jest, ANNOY1 },
 
 	"rules": { 
-	"complexity": ["error", 10],	
-	"linebreak-style": ['error', 'unix'],
+	"complexity": ["warn", 10],	
+	"linebreak-style": ['warn', 'unix'],
     semi: ['warn', 'always'],
-	"no-alert"  : "error",
-	"no-throw-literal": "error",
+	"no-alert"  : "warn",
+	"no-throw-literal": "warn",
 	"no-sparse-arrays": "warn",
 	"no-proto": "warn",
-	"no-script-url": "error",
+	"no-script-url": "warn",
 	"no-var":"off",
+	"require-await":"warn",
+	"unicode-bom": ["warn", "never"],
+	"no-unreachable": "warn",
 /* 
 	I have turned prefer-const  OFF, as it doesn't report arrays sensibly.
-	writing to a readOnly<Array<any>> is how I populate arrays in most cases, 
+	writing to a <Array<any> is how I populate arrays in most cases, 
 	but
-	what does readonly mean then? it means const POINTER to array, in a language with no pointers
+	what does Readonly mean then? It means const POINTER, in a language with no pointers
 	keeping-things-simple for da newbs here needs more discretion than shouting messages 
-	I use many arrays
+	I use many arrays.  
+	If there was enforce-const on strings, but not arrays, then it would help more.
 */
 	"prefer-const":"off",
-	"no-labels": "error",
+	"no-labels": "warn",
 // no-underscore-dangle:"error",
-	"no-nonoctal-decimal-escape":"error",
+	"no-nonoctal-decimal-escape":"warn",
 // lint/prettier should be doing this step already
 //	"no-tabs": 0,
 //	"no-floating-promise/no-floating-promise": 2,
-	"@typescript-eslint/no-duplicate-type-constituents": [ "error", { ignoreIntersections: false, ignoreUnions: false } ],
+	"@typescript-eslint/no-duplicate-type-constituents": [ "warn", { ignoreIntersections: false, ignoreUnions: false } ],
 // Rate of wrong reports on the following is too high
 //	"@typescript-eslint/no-redundant-type-constituents": "error",
-	"@typescript-eslint/explicit-module-boundary-types": "error",
+	"@typescript-eslint/explicit-module-boundary-types": "warn",
  	"@typescript-eslint/await-thenable": "warn",
 	"@typescript-eslint/consistent-generic-constructors": "warn",
 	"@typescript-eslint/consistent-generic-constructors": "warn",
 	"@typescript-eslint/consistent-type-imports": "error",
-	"@typescript-eslint/explicit-function-return-type": "error",
- 	"@typescript-eslint/explicit-member-accessibility": "error",
-	"@typescript-eslint/method-signature-style": [ "error", 'method' ],
+	"@typescript-eslint/explicit-function-return-type": "warn",
+ 	"@typescript-eslint/explicit-member-accessibility": "warn",
+	"@typescript-eslint/method-signature-style": [ "warn", 'method' ],
 
     "jsdoc/check-tag-names": 1,
     "jsdoc/require-jsdoc": 1,
