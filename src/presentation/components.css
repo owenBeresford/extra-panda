@@ -1049,6 +1049,8 @@ p.buttonBar a:first-child {
   background-color: var(--starkfg);
   border: double 3px var(--hardfg);
 }
+
+/* I could swap this float right for an extra span and compute the width on that, but this is shorter  */
 .popOverWidget details[open] summary::after {
   content: "X";
   margin-left: 2em;
