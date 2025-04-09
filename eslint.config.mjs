@@ -47,6 +47,10 @@ export default [
 	"require-await":"warn",
 	"unicode-bom": ["warn", "never"],
 	"no-unreachable": "warn",
+	"no-template-curly-in-string": "warn",
+    "use-isnan":"warn",
+	"no-eval":"warn",
+	"no-negated-condition":"off",
 /* 
 	I have turned prefer-const  OFF, as it doesn't report arrays sensibly.
 	writing to a <Array<any> is how I populate arrays in most cases, 
