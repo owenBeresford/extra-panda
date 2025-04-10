@@ -45,12 +45,16 @@ let OPTS: DesktopBiblioPropsDefinite = {
  */
 function markAllLinksUnknown(dom: Document, loc: Location): void {
   const naam: string = articleName(loc);
+	const MSG:HTMLElement=dom.querySelector('p[role=status]') as HTMLElement;
+	if(!MSG.innerText.match(/ERROR: No valid references file found/)) {
+		MSG.innerText+="ERROR: No valid references file found.";
+	}
   const WASSUP: Array<HTMLAnchorElement> = Array.from(
     dom.querySelectorAll(ALL_REFERENCE_LINKS),
   ) as Array<HTMLAnchorElement>;
 
   for (let i = 0; i < WASSUP.length; i++) {
-    const txt: string = `Reference popup for link [${1 + i}]\nERROR: No valid biblio file found.\nsite admin, today\nHTTP_ERROR, no valid file called ${naam}-references.json found.\n`;
+    const txt: string = `Reference popup for link [${1 + i}]\nERROR: No valid references file found.\nsite admin, today\nHTTP_ERROR, no valid file called ${naam}-references.json found.\n`;
     WASSUP[i].setAttribute("aria-label", "" + txt);
   }
   (dom.querySelector(ALL_REFERENCE) as HTMLElement).classList.add(SHOW_ERROR);
@@ -361,7 +365,6 @@ export async function createBiblio(
     if (REFS.length < data.body.length) {
       // situation only likely to occur in test data
       throw new Error("Recompile the meta data for  " + loc.pathname);
-      return;
     }
 
     const tmp = dom.querySelector("#biblio");
