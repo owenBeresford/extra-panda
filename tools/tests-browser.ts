@@ -364,7 +364,7 @@ async function spinup_browser(
     }
   });
   console.log("[INFO] Created a browser instance with " + CHILD.pid);
-  const closure = ():void => {
+  const closure = (): void => {
     if (!CHILD.killed) {
       CHILD.kill();
     }
@@ -639,8 +639,11 @@ export async function runTests(tests: Readonly<Array<string>>): Promise<void> {
         path.join(__dirname, "..", "dist", "tests", tests[i]),
       );
       if (!tExist.isFile()) {
-        throw new Error("Compile tests before trying to run " + tests[i] +
-          ".\nThis is 'npm run build:tests'."  );
+        throw new Error(
+          "Compile tests before trying to run " +
+            tests[i] +
+            ".\nThis is 'npm run build:tests'.",
+        );
       }
 
       let page;
