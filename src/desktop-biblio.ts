@@ -46,7 +46,7 @@ let OPTS: DesktopBiblioPropsDefinite = {
 function markAllLinksUnknown(dom: Document, loc: Location): void {
   const naam: string = articleName(loc);
   const MSG: HTMLElement = dom.querySelector("p[role=status]") as HTMLElement;
-  if (!MSG.innerText.match(/ERROR: No valid references file found/)) {
+  if (MSG && !MSG.innerText.match(/ERROR: No valid references file found/)) {
     MSG.innerText += "ERROR: No valid references file found.";
   }
   const WASSUP: Array<HTMLAnchorElement> = Array.from(
