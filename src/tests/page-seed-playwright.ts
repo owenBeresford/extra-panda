@@ -9,7 +9,7 @@ type Actionable = (dom: Document, loc: Location, win: Window) => Promise<void>;
 // this is jest-circus run method,. but I can't find an exported typedef.
 type RunType = () => Promise<Array<object>>;
 
-type TestWindow = Window & { TEST_TAB_NAME: string | undefined };
+export type TestWindow = Window & { TEST_TAB_NAME: string | undefined };
 
 let SHOULD_CLOSE: number = 1;
 
@@ -74,7 +74,7 @@ export async function wrap(
   url: string,
   action: Actionable,
 ): Promise<void> {
-  let dom: Document, loc: Location, win: Window;
+  let dom: Document, loc: Location, win: TestWindow;
   try {
     const LOG_PADDING: string =
       "**********************************************";
