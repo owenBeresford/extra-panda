@@ -492,7 +492,7 @@ ol li::before {
   margin-top: 15px;
   width: 600px;
   text-align: right;
-  margin:0.5em auto;
+  margin: 0.5em auto;
 }
 
 /** settings for the symbol font, may be moved to overrides */

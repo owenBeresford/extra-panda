@@ -598,7 +598,6 @@
   font-weight: normal;
 }
 
-
 .html5tagsContainer .below {
   float: none;
   width: 100%;
@@ -626,9 +625,11 @@
   }
 }
 
-.html5tagsContainer .highlight { margin-left: calc(50% - 340px); max-width: 680px; overflow-x: scroll; }
-
-
+.html5tagsContainer .highlight {
+  margin-left: calc(50% - 340px);
+  max-width: 680px;
+  overflow-x: scroll;
+}
 
 .linguisticsDemoContainer table tbody tr td:nth-child(2) {
   text-align: left;
