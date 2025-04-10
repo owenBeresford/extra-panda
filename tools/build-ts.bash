@@ -3,7 +3,6 @@ if [ -z "$PUBLICATION" ]; then
 	echo "ERROR: Defining variable PUBLICATION is required for where to put compiled code. ABORTING"
 	exit 1
 fi
-# strip the generate-css libraries to reduce volume
 
 node ./node_modules/.bin/vite --config ./vite.config.lib.ts build 
 node ./node_modules/.bin/uglifyjs ./dist/ob1.mjs -o /tmp/ob1.min.mjs 

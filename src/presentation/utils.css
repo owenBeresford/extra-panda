@@ -14,7 +14,7 @@
   container-name: wholeArticle;
   container-type: inline-size;
 }
-@container wholeArticle and (max-height: 55em) {
+@container wholeArticle (max-height: 55em) {
   .wholeArticle {
     /* note values are swapped, 'cus browsers. */
     height: calc(100vh - 5em);
@@ -407,12 +407,14 @@ ol li::before {
 }
 
 .ul2 li::before {
-  content: attr(data-symbol string, "✨");
+  content: attr(data-symbol, "✨");
   display: inline-block;
   width: 1.5em;
 }
 .ul3 {
-  list-style-type: attr(data-symbol string);
+  list-style-type: "[✨]";
+/* the next is supported in Chrome, but not FF todate #leSigh */
+  list-style-type: attr(data-symbol);
 }
 .ul3 li::marker {
   display: inline-block;
