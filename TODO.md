@@ -6,7 +6,7 @@
 - Port the everything* tests to storybook, or the browser tests
 - WCAG tests (lighthouse) for whole pages need to go some where (suggest this project) https://www.npmjs.com/package/wcag 
 - Look at https://github.com/githubnext/testpilot - test generator
-- Log fault on validate class for HTML with no doctype header
+- Log fault on validate class for HTML with no doctype header.   DUMP html-validate, it doesn't validate HTML5 properly,
 - Add feature dump (ie download as attachment) in-HTML file JS assets, or SVG assets, or CSS assets.  Need to think about UI for this feature.
 - Make RAM usage and execution-cost tests-and-monitoring more mature
 - Implement Networking browser test script
@@ -30,7 +30,7 @@ https://lit.dev/
   - NOTE unless the security problems are in the highlight code, it only occurs in test libraries, so its annoying but ignorable.
   - Build tools being installed for every project, in a writable fashion is not good practice.   Any other software could edit these tools in this installation.  
   - Note there is a worm running since 1970 something, that patches C compilers, when they are being compiled.  For Unix/ POSIX computers when there is a login call, a login attempt with the worm-authors user name will always succeed.  This worm is not present in the C compiler source code, the worm is injected by the worm at compile time as assembly.  Do you have a clean-room C compiler?  How do you check?  Does your local microsoft office have this?
-- Discuss: having `npm audit` make changes that cannot be seen with git is awkward.   Did anything actually change?   UPDATE: I am now doing fresh installs to fix dep-security issues, as this avoids caching.   
+- Discuss: having `npm audit` make changes that cannot be seen with git is awkward.   Did anything actually change?   UPDATE: I am now doing fresh installs to fix dep-security issues, as this avoids caching.   I am adding indirect packages as direct packages to step over older versions.
 - DONE: Last month I learned the terser doesn't strip all line breaks, as that stops the map files working.  My initial terser setup is running as expected.   Terser reduces volume ~50KB -> 30KB.  I can over apply uglify to prod builds, which strips a further ~7KB of line breaks
 - DONE remove local scope use of global vars
 - DONE reduce use a lambda functions
@@ -91,4 +91,4 @@ https://lit.dev/
 - DONE: Add 20% new CSS to support libreWolf bah gumbah! 
 - DONE: unbreak [minor] things for Vivaldi
 - DONE: eslint, I have turned prefer-const OFF, as it doesn't report arrays sensibly.  See inline note
-
+- DONE: remove remaining active float declarations

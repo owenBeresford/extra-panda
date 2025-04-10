@@ -484,15 +484,15 @@ ol li::before {
   pointer-events: none;
 }
 
-.alert {
+.majorAlert {
   padding: 7px;
   padding-left: 20px;
   display: block;
-  float: right;
   border-radius: 4px;
   margin-top: 15px;
   width: 600px;
   text-align: right;
+  margin: 0.5em auto;
 }
 
 /** settings for the symbol font, may be moved to overrides */

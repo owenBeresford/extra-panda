@@ -11,8 +11,8 @@ import { log } from "./log-services";
 import { MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./immutables";
 import { booleanMap } from "./string-base";
 
-if(typeof window === "object" && !('noop' in window)) {
-	window.noop=0 as number;
+if (typeof window === "object" && !("noop" in window)) {
+  window.noop = 0 as number;
 }
 /**
  * appendIsland
@@ -50,7 +50,7 @@ export function appendIsland(
     }
   } catch (e) {
     log("error", e.toString());
-	window.noop++;
+    window.noop++;
   }
 }
 
@@ -87,7 +87,9 @@ export function ready(callback: GenericEventHandler, dom: Document): void {
 export function duplicateSelection(win: Window): string {
   try {
     const tmp1 = win.getSelection();
-    if (tmp1 === null) { return ""; }
+    if (tmp1 === null) {
+      return "";
+    }
     const tmp2 = tmp1.getRangeAt(0);
     if (tmp2.startOffset === tmp2.endOffset) {
       return "";
@@ -170,17 +172,22 @@ export function isFullstack(win: Window): boolean {
  * @see [https://www.infobyip.com/detectmonitordpi.php]
  * @param {Document} dom
  * @param {Navigator} nav
+ * @param {Window} win
  * @public
  * @returns {boolean}
  */
-export function isLibreWolf(dom: Document, nav: Navigator, win:Window): boolean {
+export function isLibreWolf(
+  dom: Document,
+  nav: Navigator,
+  win: Window,
+): boolean {
   // eslint-disable-next-line no-var
   var canTouch = false;
   try {
     dom.createEvent("TouchEvent");
     canTouch = true;
   } catch (e) {
-    window.noop++;
+    win.noop++;
   }
 
   if (nav && nav.product === "Gecko" && nav.maxTouchPoints > 0 && !canTouch) {

@@ -7,7 +7,6 @@ import { appendIsland, isMobile, currentSize, calcScreenDPI } from "./dom-base";
 import { storeAppearance } from "./cookies";
 import { SELF_VERSION } from "./immutables";
 
-
 // this file is only used in the web-build
 await siteCore({}, document, location, window);
 
@@ -26,7 +25,7 @@ if( PARAMS.has('dump-css') ) {
 export {
   runFetch,
   log,
-	domLog,
+  domLog,
   hasBeenRun,
   appendIsland,
   isMobile,

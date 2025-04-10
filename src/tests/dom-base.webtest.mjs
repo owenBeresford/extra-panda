@@ -34,9 +34,9 @@ describe("TEST BROWSER dom-base", async () => {
       async (dom, loc, win) => {
         expect(Array.isArray(currentSize(dom, win))).toBe(true); // "got an array back, assert #2")
         await delay(100);
-      });
-		await delay(100);
-      expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
+      },
+    );
   });
 
   it("go 2: isFullStack", async () => {
@@ -49,7 +49,7 @@ describe("TEST BROWSER dom-base", async () => {
         win.history.pushState({ mobile: 1 }, "", "/home.html?mobile=1");
         expect(isFullstack(win)).toBe(true);
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -64,7 +64,7 @@ describe("TEST BROWSER dom-base", async () => {
         win.history.pushState({ mobile: 1 }, "", "/home.html?mobile=1");
         expect(isMobile(dom, loc, win)).toBe(true);
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -88,7 +88,7 @@ describe("TEST BROWSER dom-base", async () => {
         ).toBeGreaterThan(50);
 
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -112,7 +112,7 @@ describe("TEST BROWSER dom-base", async () => {
         let tt = await win.navigator.clipboard.readText();
         expect(tt).toBe(loc.href); // "assert #15");
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -132,7 +132,7 @@ describe("TEST BROWSER dom-base", async () => {
         // IOIO this test may break on a different screen
         expect(calcScreenDPI(dom, win)).toBe(91.5); //  "Assert #x, the screen DPI");
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -152,7 +152,7 @@ describe("TEST BROWSER dom-base", async () => {
         win.history.pushState({ width: 1800 }, "", "/home.html?width=1800");
         expect(screenWidth(loc, win)).toBe(1800); // "Assert #x, ");
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -176,7 +176,7 @@ describe("TEST BROWSER dom-base", async () => {
         appendIsland(".home.icerow", str, dom);
         expect(dom.getElementsByTagName("h2").length).toBe(4); // , "assert #7");
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -194,7 +194,7 @@ describe("TEST BROWSER dom-base", async () => {
         setIsland(".home.icerow", str, dom);
         expect(dom.querySelector(".home.icerow").innerHTML).toBe(str); // "assert #8");
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -260,7 +260,7 @@ describe("TEST BROWSER dom-base", async () => {
           Array.isArray(docOffsets(ELE, { scrollY: 900, scrollX: 0 })),
         ).toBe(true); // "assert #13",
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -303,7 +303,7 @@ d
         expandDetails(1040, dom, loc);
         expect(dom.querySelector("details").open).toBe(true); // "asset #15");
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -345,7 +345,7 @@ d
         expandDetails(1040, dom, loc);
         expect(dom.querySelector("details").open).toBe(false); // "asset #16");
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -387,7 +387,7 @@ d
         expandDetails(1040, dom, loc);
         expect(dom.querySelector("details").open).toBe(false); // "asset #15");
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -448,7 +448,7 @@ d
             .includes("--offset-height:"),
         ).toBe(true); //      "asset #18",
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -509,7 +509,7 @@ d
             .includes("--offset-height"),
         ).toBe(true); //  "asset #20",
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -597,7 +597,7 @@ d
             .includes("--offset-height"),
         ).toBe(true); //  "asset #23",
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -659,7 +659,7 @@ d
           ); //  "asset #25",
         }
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -713,8 +713,10 @@ d
           // note missing last arg
           let ret = getArticleWidth(true, ".lotsOfWords", dom);
           expect(ret).toBe(-513); // "asset #26");
-        } catch (e) { win.noop++; }
-        expect(win.noop).toBe(0); 
+        } catch (e) {
+          win.noop++;
+        }
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -767,7 +769,7 @@ d
         expect(ret).toBeGreaterThan(200); // "asset #27");
 
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -821,7 +823,7 @@ d
         let ret = getArticleWidth(true, ".lotsOfWords", dom, win);
         expect(ret).toBeGreaterThan(200); // "asset #28";
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
@@ -858,7 +860,7 @@ The s`;
 
         expect(isMobile(dom, loc, win)).toBe(true);
         await delay(100);
-        expect(win.noop).toBe(0); 
+        expect(win.noop).toBe(0);
       },
     );
   });
