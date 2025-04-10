@@ -111,15 +111,15 @@ function iter(ele: HTMLElement, i: number): string {
   switch (ele.tagName) {
     case "IMG":
       return ele.getAttribute("src");
-//      break;
+    //      break;
     case "OBJECT":
       return ele.getAttribute("data");
-//      break;
+    //      break;
     case "SOURCE":
       return ele.getAttribute("srcset");
-//      break;
-	default:
-		throw new Error("Unknown element, "+ele.tagName);
+    //      break;
+    default:
+      throw new Error("Unknown element, " + ele.tagName);
   }
 }
 
