@@ -170,6 +170,7 @@ export function isFullstack(win: Window): boolean {
  * @see [https://www.infobyip.com/detectmonitordpi.php]
  * @param {Document} dom
  * @param {Navigator} nav
+ * @param {Window} win
  * @public
  * @returns {boolean}
  */
@@ -180,7 +181,7 @@ export function isLibreWolf(dom: Document, nav: Navigator, win:Window): boolean 
     dom.createEvent("TouchEvent");
     canTouch = true;
   } catch (e) {
-    window.noop++;
+    win.noop++;
   }
 
   if (nav && nav.product === "Gecko" && nav.maxTouchPoints > 0 && !canTouch) {

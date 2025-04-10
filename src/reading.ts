@@ -103,7 +103,7 @@ export function readingDuration(
      * An internal function to get the URL attribute, used in Array.map
  
      * @param {HTMLElement} ele
-     * @param {number} i
+     * @param {number} i - needed for callback contract, unused
      * @public
      * @returns {string}
      */
@@ -111,13 +111,15 @@ function iter(ele: HTMLElement, i: number): string {
   switch (ele.tagName) {
     case "IMG":
       return ele.getAttribute("src");
-      break;
+//      break;
     case "OBJECT":
       return ele.getAttribute("data");
-      break;
+//      break;
     case "SOURCE":
       return ele.getAttribute("srcset");
-      break;
+//      break;
+	default:
+		throw new Error("Unknown element, "+ele.tagName);
   }
 }
 

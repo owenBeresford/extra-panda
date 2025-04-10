@@ -20,7 +20,6 @@ export function getFetch(): Fetchable {
   } else {
     log("error", "Please stop using old versions of node.");
     throw new Error("Please stop using old versions of Node");
-    return null;
   }
 }
 
