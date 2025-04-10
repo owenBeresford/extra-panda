@@ -10,8 +10,7 @@ function r(e2, t2 = false, n2 = false) {
   if (a2.dateTime = i2.toString(), a2.textContent = i2.getUTCHours() + ":" + i2.getUTCMinutes() + ":" + i2.getUTCSeconds(), o2.appendChild(a2), n2) {
     const t3 = document.createElement("template");
     t3.innerHTML = e2, o2.appendChild(t3.content);
-  } else
-    o2.appendChild(document.createTextNode(" => " + e2));
+  } else o2.appendChild(document.createTextNode(" => " + e2));
   t2 && o2.setAttribute("style", "font-weight:115%; font-size:115%; "), r2.append(o2);
 }
 const o = "1.0.4", i = "https://owenberesford.me.uk/", a = ".addReferences", s = a + " sup a", l = "appearance", c = 16, u = "showBiblioErrors", d = 180;
@@ -46,26 +45,21 @@ function h(e2, t2, n2, r2) {
 }
 async function p(t2, r2, o2) {
   const i2 = function() {
-    if ("undefined" != typeof window)
-      return window.fetch;
-    if ("function" == typeof fetch)
-      return fetch;
+    if ("undefined" != typeof window) return window.fetch;
+    if ("function" == typeof fetch) return fetch;
     throw n("error", "Please stop using old versions of node."), new Error("Please stop using old versions of Node");
   }(), a2 = e(o2);
   try {
     const e2 = await i2(t2, { credentials: "same-origin" });
     if (!e2.ok) {
-      if (a2 && n("warn", "Failed to communicate with " + t2), r2)
-        return { body: "nothing", headers: {}, ok: false };
+      if (a2 && n("warn", "Failed to communicate with " + t2), r2) return { body: "nothing", headers: {}, ok: false };
       throw new Error("ERROR getting asset " + t2);
     }
-    if (404 === e2.status)
-      throw new Error("got HTTP 404");
+    if (404 === e2.status) throw new Error("got HTTP 404");
     let o3 = "";
     return o3 = e2.headers.get("content-type").toLowerCase().startsWith("application/json") ? await e2.json() : await e2.text(), a2 && n("info", "Successful JSON transaction " + t2), { body: o3, headers: e2.headers, ok: true };
   } catch (e2) {
-    if (a2 && n("error", "KLAXON, KLAXON failed: " + t2 + " " + e2.toString()), r2)
-      return { body: "nothing", headers: {}, ok: false };
+    if (a2 && n("error", "KLAXON, KLAXON failed: " + t2 + " " + e2.toString()), r2) return { body: "nothing", headers: {}, ok: false };
     throw new Error("ERROR getting asset " + t2 + " " + e2.toString());
   }
 }
@@ -75,10 +69,8 @@ function g() {
 }
 function m(e2) {
   if (e2) {
-    if ("textContent" in e2)
-      return e2.textContent;
-    if ("innerText" in e2)
-      return e2.innerText;
+    if ("textContent" in e2) return e2.textContent;
+    if ("innerText" in e2) return e2.innerText;
     throw new Error("No text found");
   }
   throw new Error("No element for text found");
@@ -94,11 +86,9 @@ function w(e2) {
   return !(!e2.startsWith("192.168.") && "127.0.0.1" !== e2 && "::1" !== e2 && "0:0:0:0:0:0:0:1" !== e2 && "localhost" !== e2);
 }
 function S(e2, t2 = 80, n2 = "↩") {
-  if (!e2 || e2.length < t2)
-    return "" + e2;
+  if (!e2 || e2.length < t2) return "" + e2;
   let r2 = 0, o2 = [];
-  for (; r2 <= e2.length; )
-    r2 + t2 > e2.length ? o2.push(e2.substring(r2, r2 + t2)) : o2.push(e2.substring(r2, r2 + t2) + n2), r2 += t2;
+  for (; r2 <= e2.length; ) r2 + t2 > e2.length ? o2.push(e2.substring(r2, r2 + t2)) : o2.push(e2.substring(r2, r2 + t2) + n2), r2 += t2;
   return o2.join("\n");
 }
 function A(e2) {
@@ -107,15 +97,12 @@ function A(e2) {
 }
 function L(e2) {
   let t2 = String(e2);
-  if (0 === e2 || e2 < 1)
-    throw new Error("Value passed must be a counting number above 0");
+  if (0 === e2 || e2 < 1) throw new Error("Value passed must be a counting number above 0");
   return 1 === t2.length && (t2 = "0" + t2), t2;
 }
 function E(e2) {
-  if (["1", 1, "true", "TRUE", "on", "ON", "yes", "YES", "✔", "✓"].includes(e2))
-    return true;
-  if (["0", 0, "false", "FALSE", "off", "OFF", "no", "NO", "🗙", "✕", "✖", "✖", "✗", "✘"].includes(e2))
-    return false;
+  if (["1", 1, "true", "TRUE", "on", "ON", "yes", "YES", "✔", "✓"].includes(e2)) return true;
+  if (["0", 0, "false", "FALSE", "off", "OFF", "no", "NO", "🗙", "✕", "✖", "✖", "✗", "✘"].includes(e2)) return false;
   throw new Error("Unknown data " + e2);
 }
 function R(e2, t2, n2 = true) {
@@ -129,38 +116,35 @@ function R(e2, t2, n2 = true) {
 }
 function T(e2, t2, r2) {
   try {
-    if (null === r2)
-      throw new Error("Oh no! No DOM object!!");
+    if (null === r2) throw new Error("Oh no! No DOM object!!");
     const n2 = r2.createElement("template");
     if (n2.innerHTML = t2, "string" == typeof e2) {
       const t3 = r2.querySelector(e2);
-      if (null === t3)
-        throw new Error("Oh no! DOM element not found: " + e2);
+      if (null === t3) throw new Error("Oh no! DOM element not found: " + e2);
       return t3.append(n2.content);
     }
     return e2.append(n2.content);
   } catch (e3) {
-    n("error", e3.toString());
+    n("error", e3.toString()), window.noop++;
   }
 }
 function k(e2) {
-  if (void 0 === e2)
-    return false;
+  if (void 0 === e2) return false;
   const t2 = e2.getComputedStyle.toString().includes("[native code]");
   return !("boolean" != typeof t2 || !t2);
 }
-function v(e2, t2) {
-  var n2 = false;
+function v(e2, t2, n2) {
+  var r2 = false;
   try {
-    document.createEvent("TouchEvent"), n2 = true;
+    e2.createEvent("TouchEvent"), r2 = true;
   } catch (e3) {
+    window.noop++;
   }
-  return !(!(t2 && "Gecko" === t2.product && t2.maxTouchPoints > 0) || n2) && (console.warn("Is this librewolf?, could tell me if this is wrong."), e2.body.classList.contains("IAmLibreWolf") || (e2.body.classList.add("IAmLibreWolf"), e2.querySelector('.fullWidth p[role="status"]').innerText += "  Is this librewolf?,  could you tell me if this is wrong."), true);
+  return !(!(t2 && "Gecko" === t2.product && t2.maxTouchPoints > 0) || r2) && (console.warn("Is this librewolf?, could tell me if this is wrong."), e2.body.classList.contains("IAmLibreWolf") || (e2.body.classList.add("IAmLibreWolf"), e2.querySelector('.fullWidth p[role="status"]').innerText += "  Is this librewolf?,  could you tell me if this is wrong."), true);
 }
 function x(e2, t2, r2) {
   try {
-    if (!k(r2))
-      return -1;
+    if (!k(r2)) return -1;
     return e2.getBoundingClientRect()[t2];
   } catch (e3) {
     return n("error", "Missing data:" + e3.message), -1;
@@ -172,8 +156,7 @@ function q(e2, t2) {
 }
 async function C(e2, t2, r2) {
   try {
-    if (!r2.navigator.clipboard)
-      throw new Error("No clipboard available");
+    if (!r2.navigator.clipboard) throw new Error("No clipboard available");
     await r2.navigator.clipboard.writeText(t2.href);
   } catch (e3) {
     n("error", "FAILED: copy URL feature borked " + e3.message + "\nIt will fail on a HTTP site.");
@@ -182,28 +165,25 @@ async function C(e2, t2, r2) {
 function O(e2 = 1040, t2, n2, r2) {
   if (t2.querySelector(".maquetteContainer") && function(e3, t3) {
     const n3 = new URLSearchParams(e3.search);
-    if (n3.has("width"))
-      return parseInt(n3.get("width") ?? "", 10);
+    if (n3.has("width")) return parseInt(n3.get("width") ?? "", 10);
     return t3.innerWidth;
   }(n2, r2) > e2) {
     const e3 = Array.from(t2.querySelectorAll(".maquetteContainer details"));
-    for (let t3 = 0; t3 < e3.length; t3++)
-      e3[t3].classList.contains("singlePopup") || e3[t3].classList.contains("screenDocs") || (e3[t3].open = true);
+    for (let t3 = 0; t3 < e3.length; t3++) e3[t3].classList.contains("singlePopup") || e3[t3].classList.contains("screenDocs") || (e3[t3].open = true);
   }
 }
-function X(e2, t2, n2) {
+function N(e2, t2, n2) {
   const r2 = new URLSearchParams(t2.search);
   try {
     e2.createEvent("TouchEvent");
-    if (r2.has("mobile"))
-      return E(r2.get("mobile") ?? "");
+    if (r2.has("mobile")) return E(r2.get("mobile") ?? "");
     let t3 = d;
-    return v(e2, n2.navigator) && (t3 = 1.11 * d), N(e2, n2) > t3;
+    return v(e2, n2.navigator) && (t3 = 1.11 * d), X(e2, n2) > t3;
   } catch (e3) {
     return !(!r2.has("mobile") || !E(r2.get("mobile") ?? ""));
   }
 }
-function N(e2, t2) {
+function X(e2, t2) {
   try {
     const n2 = e2.createElement("div");
     n2.setAttribute("style", "width:1in;"), e2.body.appendChild(n2);
@@ -218,6 +198,7 @@ function U(e2, t2) {
   let a2 = 0, s2 = 0;
   return s2 = "string" == typeof i2 ? parseInt(i2, 10) : i2, a2 = "string" == typeof o2 ? parseInt(o2, 10) : o2, [a2, s2];
 }
+"object" != typeof window || "noop" in window || (window.noop = 0);
 let M = { name: "", meta: "", perRow: 10, titleLimit: 40, rendered: false, iteration: 0, group: "system", count: 1, debug: true, runFetch: p };
 function j(e2, t2, n2, r2 = true) {
   let o2 = "", i2 = n2.pathname.split("/").pop();
@@ -241,29 +222,25 @@ function D(e2) {
     const n2 = new URLSearchParams(e2.search);
     n2.has("first") && (t2 = n2.get("first"));
   }
-  if ("XXX" === t2)
-    throw new Error("Thou shalt supply the group somewhere");
+  if ("XXX" === t2) throw new Error("Thou shalt supply the group somewhere");
   return t2;
 }
 function F(e2, t2, n2, r2, o2) {
   return M.name === "group-" + M.group || (t2 === e2 && (o2 = r2), r2 > 0 && o2 > 0 && n2 > 0 && r2 >= n2 - 1 && (r2 = 0)), [o2, n2, r2];
 }
 async function H(t2, r2, o2, i2) {
-  if (M = Object.assign(M, { name: y(o2), meta: j(M.group, ".json", o2, false), debug: e(o2), runFetch: p }, t2), "system" === M.group)
-    throw new Error("Must set the article group, and not to 'system'.");
+  if (M = Object.assign(M, { name: y(o2), meta: j(M.group, ".json", o2, false), debug: e(o2), runFetch: p }, t2), "system" === M.group) throw new Error("Must set the article group, and not to 'system'.");
   M.meta = j(M.group, ".json", o2, false);
   const a2 = "group-XXX" === M.name || M.name === "group-" + M.group, s2 = "group" + M.group;
-  if (X(r2, o2, i2) && !a2)
-    1 === r2.querySelectorAll(".adjacentWidget .adjacentItem").length && (r2.querySelector(".adjacentWidget p").style.display = "none"), T("#" + s2, "<p>As mobile View, use the full page link to the left</p>", r2);
+  if (N(r2, o2, i2) && !a2) 1 === r2.querySelectorAll(".adjacentWidget .adjacentItem").length && (r2.querySelector(".adjacentWidget p").style.display = "none"), T("#" + s2, "<p>As mobile View, use the full page link to the left</p>", r2);
   else {
     const e2 = await M.runFetch(M.meta, true, o2);
-    if (!("ok" in e2) || !e2.ok || !Array.isArray(e2.body))
-      return n("info", "There doesn't seem to be a group meta data file."), void T("#" + s2, "<p>Internal error. Hopefully this will be fixed shortly. </p>", r2);
+    if (!("ok" in e2) || !e2.ok || !Array.isArray(e2.body)) return n("info", "There doesn't seem to be a group meta data file."), void T("#" + s2, "<p>Internal error. Hopefully this will be fixed shortly. </p>", r2);
     if (a2) {
       const t3 = function(e3, t4, n2, r3, o3) {
         let i3 = "";
         for (const a3 in e3) {
-          const s3 = I(a3, t4), l2 = X(n2, r3, o3) ? "<br />" : "";
+          const s3 = I(a3, t4), l2 = N(n2, r3, o3) ? "<br />" : "";
           let c2 = e3[a3].desc;
           c2.length > 235 && (c2 = c2.substr(0, 235) + "..."), i3 += '<a class="adjacentItem" href="' + e3[a3].url + '" title="' + c2 + '"> <span class="button">' + e3[a3].title + '</span><p id="adjacent' + s3 + '" >Author: ' + e3[a3].auth + " &nbsp; &nbsp; &nbsp;" + l2 + "  Last edit: " + R(e3[a3].date, "Unknown time", true) + " <br />Description: " + c2 + " </p></a>\n";
         }
@@ -285,10 +262,8 @@ async function H(t2, r2, o2, i2) {
             const t5 = e3[o3].desc;
             t5.length > 235 && (r3[i3].desc = t5.substr(0, 235) + "..."), n2--, i3++;
           }
-          if ([t4, n2, o3] = F(W(e3[o3].url), M.name, n2, o3, t4), r3.length === e3.length)
-            break;
-          if (r3.length >= M.perRow)
-            break;
+          if ([t4, n2, o3] = F(W(e3[o3].url), M.name, n2, o3, t4), r3.length === e3.length) break;
+          if (r3.length >= M.perRow) break;
         }
         return r3;
       }(e2.body);
@@ -304,8 +279,7 @@ async function H(t2, r2, o2, i2) {
   }
 }
 function B(e2, t2, n2, r2) {
-  if (!w(n2.host) && !X(t2, n2, r2))
-    return false;
+  if (!w(n2.host) && !N(t2, n2, r2)) return false;
   const o2 = t2.querySelector("#shareMenu");
   return o2 && !o2.classList.replace("mobilePopupWidgetOpen", "mobilePopupWidget") && o2.classList.replace("mobilePopupWidget", "mobilePopupWidgetOpen"), false;
 }
@@ -313,16 +287,13 @@ function $(e2, t2, r2, o2) {
   const i2 = t2.querySelector("#mastodonserver");
   let a2 = i2.value;
   const s2 = i2.getAttribute("data-url");
-  if ("" === a2 || null === a2)
-    return false;
-  if (a2 = "https://" + a2 + "/share?text=I+think+this+is+important+" + s2, n("info", "Trying to open mastodon server, " + a2), !k(o2))
-    throw Error("Test passed, for " + a2);
-  return t2.querySelector("#popup").close(), o2.open(a2, "_blank"), X(t2, r2, o2) && B(0, t2, r2, o2), false;
+  if ("" === a2 || null === a2) return false;
+  if (a2 = "https://" + a2 + "/share?text=I+think+this+is+important+" + s2, n("info", "Trying to open mastodon server, " + a2), !k(o2)) throw Error("Test passed, for " + a2);
+  return t2.querySelector("#popup").close(), o2.open(a2, "_blank"), N(t2, r2, o2) && B(0, t2, r2, o2), false;
 }
 function J(e2, t2, n2) {
   let r2 = e2.querySelector("#navBar #mastoTrigger");
-  if (!r2)
-    return;
+  if (!r2) return;
   if (K(r2, G, e2, n2), r2 = e2.querySelector("#shareGroup .SMshareWidget #mastoTrigger"), r2) {
     const t3 = function(e3, t4 = "display", n3 = window) {
       let r3 = "";
@@ -335,8 +306,7 @@ function J(e2, t2, n2) {
     e3.addEventListener("click", async (e4) => (await t3(n3, r3, o3), false)), e3.addEventListener("touch", async (e4) => (await t3(n3, r3, o3), false)), e3.addEventListener("keypress", async (e4) => (await t3(n3, r3, o3), false));
   }(r2, C, e2, t2, n2), Y(e2.querySelector("#popup #sendMasto"), $, e2, t2, n2);
   const o2 = Array.from(e2.querySelectorAll("#shareMenuTrigger, #shareClose"));
-  for (const r3 in o2)
-    Y(o2[r3], B, e2, t2, n2);
+  for (const r3 in o2) Y(o2[r3], B, e2, t2, n2);
   K(e2.querySelector("#hideMasto"), _, e2, n2);
 }
 function G(e2, t2, n2) {
@@ -353,16 +323,14 @@ function Y(e2, t2, n2, r2, o2) {
 }
 let z = { referencesCache: "/resource/XXX-references", gainingElement: "#biblio", losingElement: ".addReferences", renumber: 1, forceToEnd: 1, maxDescripLen: 230, maxAuthLen: 65, debug: true, runFetch: p };
 async function V(t2, r2, o2) {
-  if (z = Object.assign(z, { debug: e(o2) }, t2), 0 === r2.querySelectorAll(a).length)
-    return void n("info", "URL '" + o2.pathname + "' isn't marked-up for references, so skipped");
+  if (z = Object.assign(z, { debug: e(o2) }, t2), 0 === r2.querySelectorAll(a).length) return void n("info", "URL '" + o2.pathname + "' isn't marked-up for references, so skipped");
   const s2 = r2.querySelector("#biblio");
   s2 && s2.setAttribute("style", ""), r2.querySelector(z.gainingElement + " *").replaceChildren(), T(z.gainingElement, '<h2 class="biblioSection">References (for mobile UI)</h2> \n<p>The references embedded in the text are displayed here. </p>', r2);
   const l2 = await z.runFetch(b(z.referencesCache, o2), true, o2);
   if (l2.ok && Array.isArray(l2.body)) {
     const e2 = function(e3) {
       let t3 = '<aside role="footnote"><ol class="mobileBiblio">';
-      for (const n2 in e3)
-        t3 += `<li>
+      for (const n2 in e3) t3 += `<li>
 <a href="${e3[n2].url}"> 
 <h5>${e3[n2].title}</h5>
 <span>${e3[n2].desc}</span>
@@ -389,11 +357,9 @@ async function V(t2, r2, o2) {
       return n2;
     }(l2.body));
     !function(e3, t3) {
-      if (!z.renumber)
-        return;
+      if (!z.renumber) return;
       const n2 = Array.from(t3.querySelectorAll(z.losingElement + " sup a"));
-      for (let e4 = 0; e4 < n2.length; e4++)
-        n2[e4].textContent = "" + (e4 + 1), z.forceToEnd && (n2[e4].href = "#biblio");
+      for (let e4 = 0; e4 < n2.length; e4++) n2[e4].textContent = "" + (e4 + 1), z.forceToEnd && (n2[e4].href = "#biblio");
     }(l2.body, r2), T(z.gainingElement, e2, r2);
   } else {
     const e2 = '<p class="error">Unable to get bibliographic data for this article.</p>';
@@ -406,31 +372,25 @@ function Z(e2) {
   return "Reference popup for link [" + (e2 + 1) + "]\n\nHTTP_ERROR, Site admin: recompile this meta file, as this is a new link.\n " + R(+/* @__PURE__ */ new Date("07-June-2024"), "not used", true) + "\n\n" + t2;
 }
 function ee(e2, t2) {
-  if (null === e2)
-    return;
+  if (null === e2) return;
   const n2 = x(e2, "left", t2), r2 = x(e2, "top", t2);
-  if (-1 === n2 && -1 === r2)
-    return;
+  if (-1 === n2 && -1 === r2) return;
   let o2 = e2.parentNode;
   const i2 = ["LI", "SUP", "UL", "OL", "SPAN", "P"];
-  for (; i2.includes(o2.tagName); )
-    o2 = o2.parentNode;
+  for (; i2.includes(o2.tagName); ) o2 = o2.parentNode;
   const a2 = Math.round(x(o2, "left", t2)), s2 = Math.round(x(o2, "top", t2)), l2 = Math.round(x(o2, "width", t2)), u2 = 30 * c, d2 = 5 * c;
   l2 < 650 ? e2.classList.add("leanCentre") : (n2 > a2 + l2 - u2 && e2.classList.add("leanLeft"), n2 < a2 + u2 && e2.classList.add("leanRight"), e2.classList.contains("leanRight") && e2.classList.contains("leanLeft") && (e2.classList.remove("leanRight"), e2.classList.remove("leanLeft"), e2.classList.add("leanCentre")));
   r2 < s2 - d2 && e2.classList.add("leanDown"), r2 > s2 + Math.round(x(o2, "height", t2)) && e2.classList.add("leanUp");
 }
 async function te(t2, r2, o2, i2) {
-  if (Q = Object.assign(Q, { debug: e(o2) }, t2), 0 === r2.querySelectorAll(a).length)
-    return void n("info", "This URL '" + o2.pathname + "' isn't marked-up for references, so skipped");
+  if (Q = Object.assign(Q, { debug: e(o2) }, t2), 0 === r2.querySelectorAll(a).length) return void n("info", "This URL '" + o2.pathname + "' isn't marked-up for references, so skipped");
   const l2 = await Q.runFetch(b(Q.referencesCache, o2), true, o2);
   if (l2.ok && Array.isArray(l2.body)) {
-    if (r2.querySelectorAll(s).length < l2.body.length)
-      throw new Error("Recompile the meta data for  " + o2.pathname);
+    if (r2.querySelectorAll(s).length < l2.body.length) throw new Error("Recompile the meta data for  " + o2.pathname);
     const e2 = r2.querySelector("#biblio");
     e2 && e2.setAttribute("style", ""), function(e3, t4) {
       let n2 = e3.headers.get("last-modified");
-      if (!n2)
-        return;
+      if (!n2) return;
       n2.indexOf("BST") > 0 && (n2 = n2.substring(0, n2.length - 4));
       const r3 = new Date(n2).getTime();
       r3 > 0 && T(".addReading .ultraSkinny", '<span>Links <time datetime="' + r3 + '" title="When this was last recompiled' + new Date(r3).toLocaleDateString("en-GB", { hour12: false, dateStyle: "medium" }) + '">' + new Date(r3).toLocaleDateString("en-GB", { hour12: false, dateStyle: "medium" }) + "</time> </span>", t4);
@@ -453,10 +413,8 @@ async function te(t2, r2, o2, i2) {
     !function(e3, t4, n2) {
       let r3 = 1;
       const o3 = Array.from(t4.querySelectorAll(s));
-      if (e3.length > o3.length)
-        throw t4.querySelector(a).classList.add(u), t4.querySelector("p[role=status]").textContent += " Recompile meta data. ", new Error("Too many references in meta-data for this article, pls recompile.");
-      for (let t5 = 0; t5 < e3.length; t5++)
-        o3[t5].setAttribute("aria-label", "" + e3[t5]), ee(o3[t5], n2), Q.renumber && (o3[t5].textContent = "" + r3), r3++;
+      if (e3.length > o3.length) throw t4.querySelector(a).classList.add(u), t4.querySelector("p[role=status]").textContent += " Recompile meta data. ", new Error("Too many references in meta-data for this article, pls recompile.");
+      for (let t5 = 0; t5 < e3.length; t5++) o3[t5].setAttribute("aria-label", "" + e3[t5]), ee(o3[t5], n2), Q.renumber && (o3[t5].textContent = "" + r3), r3++;
       if (o3.length > e3.length) {
         t4.querySelector("p[role=status]").textContent += "Recompile meta data";
         let r4 = e3.length;
@@ -468,14 +426,16 @@ async function te(t2, r2, o2, i2) {
     }(t3, r2, i2), r2.querySelector(a).classList.add(u);
   } else {
     !function(e3, t3) {
-      const n2 = y(t3), r3 = Array.from(e3.querySelectorAll(s));
-      for (let e4 = 0; e4 < r3.length; e4++) {
+      const n2 = y(t3), r3 = e3.querySelector("p[role=status]");
+      r3.innerText.match(/ERROR: No valid references file found/) || (r3.innerText += "ERROR: No valid references file found.");
+      const o3 = Array.from(e3.querySelectorAll(s));
+      for (let e4 = 0; e4 < o3.length; e4++) {
         const t4 = `Reference popup for link [${1 + e4}]
-ERROR: No valid biblio file found.
+ERROR: No valid references file found.
 site admin, today
 HTTP_ERROR, no valid file called ${n2}-references.json found.
 `;
-        r3[e4].setAttribute("aria-label", "" + t4);
+        o3[e4].setAttribute("aria-label", "" + t4);
       }
       e3.querySelector(a).classList.add(u);
     }(r2, o2);
@@ -517,33 +477,25 @@ function oe(e2, t2) {
 }
 function ie(e2, t2) {
   const n2 = e2.target, r2 = function(e3, t3) {
-    if (e3.tagName === t3)
-      return e3;
+    if (e3.tagName === t3) return e3;
     for (; e3.tagName !== t3; ) {
-      if ("A" === e3.tagName)
-        return e3;
-      if ("BODY" === e3.tagName)
-        return;
-      if (e3.classList.contains("maquette"))
-        return;
+      if ("A" === e3.tagName) return e3;
+      if ("BODY" === e3.tagName) return;
+      if (e3.classList.contains("maquette")) return;
       e3 = e3.parentElement;
     }
     return e3;
   }(n2, "DETAILS");
-  if (r2 && "A" === r2.tagName)
-    return true;
+  if (r2 && "A" === r2.tagName) return true;
   if (r2) {
     const t3 = r2;
     if (e2.preventDefault(), e2.stopPropagation(), t3 && t3.open) {
-      if ("SUMMARY" !== n2.tagName && null !== t3.querySelector("code"))
-        return false;
+      if ("SUMMARY" !== n2.tagName && null !== t3.querySelector("code")) return false;
       t3.open = false;
-    } else
-      t3.open = true;
+    } else t3.open = true;
   } else {
     const n3 = t2.querySelector("details[open]");
-    if (!n3)
-      return true;
+    if (!n3) return true;
     e2.preventDefault(), e2.stopPropagation(), n3.open = false;
   }
   return false;
@@ -560,9 +512,7 @@ function ae(e2) {
     return function(e3, t4) {
       if ("Escape" === e3.code || "Escape" === e3.key) {
         const n2 = Array.from(t4.querySelectorAll("details[open]"));
-        if (n2.length)
-          for (let e4 = 0; e4 < n2.length; e4++)
-            n2[e4].open = false;
+        if (n2.length) for (let e4 = 0; e4 < n2.length; e4++) n2[e4].open = false;
         return e3.preventDefault(), false;
       }
       return true;
@@ -576,28 +526,22 @@ function le() {
 await async function(t2, r2, o2, i2) {
   se = Object.assign(se, {}, t2);
   const a2 = e(o2);
-  if (se.pageInitRun)
-    return void n("warn", "Extra panda should not be run more than once per page");
+  if (se.pageInitRun) return void n("warn", "Extra panda should not be run more than once per page");
   se.pageInitRun = 1;
   const s2 = Array.from(r2.querySelectorAll(".noJS"));
-  for (let e2 = 0; e2 < s2.length; e2++)
-    s2[e2].classList.remove("noJS");
+  for (let e2 = 0; e2 < s2.length; e2++) s2[e2].classList.remove("noJS");
   !function(e2, t3) {
     e2.querySelector("body").setAttribute("style", "--offset-height: 0;");
     const n2 = Array.from(e2.querySelectorAll(".lotsOfWords, .halferWords, .fewWords"));
-    for (let e3 = 0; e3 < n2.length; e3++)
-      n2[e3].setAttribute("style", "--offset-height: " + q(n2[e3], t3)[0] + "px;");
+    for (let e3 = 0; e3 < n2.length; e3++) n2[e3].setAttribute("style", "--offset-height: " + q(n2[e3], t3)[0] + "px;");
   }(r2, i2), function(t3, n2, r3) {
-    const o3 = X(t3, n2, r3);
-    if (!w(n2.host) && !o3)
-      return;
-    if (v(t3, r3.navigator) && !o3)
-      return;
+    const o3 = N(t3, n2, r3);
+    if (!w(n2.host) && !o3) return;
+    if (v(t3, r3.navigator) && !o3) return;
     o3 && (t3.querySelector("#sendMasto").textContent = "Share article");
     const i3 = ['<li id="shareClose"> <i class="fa fa-cancel" aria-hidden="true"></i> </li>	<li> <a class="hunchUp" id="copyURL"><i class="fa fa-copy" aria-hidden="true"></i><span class="hunchUp"> copy<br /> URL</span> </a> </li>'], a3 = ["shareMenuTrigger", "siteChartLink", "rssLink"], s3 = Array.from(t3.querySelectorAll(".SMshareWidget a")), l2 = !w(n2.host) && !e(n2), c3 = t3.querySelector(".SMshareWidget");
     for (const e2 in s3) {
-      if (a3.includes(s3[e2].id))
-        continue;
+      if (a3.includes(s3[e2].id)) continue;
       const t4 = s3[e2].cloneNode(true);
       l2 && c3.removeChild(s3[e2]), t4.classList.remove("bigScreenOnly"), i3.push("<li>"), i3.push(t4.outerHTML), i3.push("</li>"), s3[e2].getAttribute("id") && s3[e2].setAttribute("id", "old" + s3[e2].getAttribute("id"));
     }
@@ -610,31 +554,24 @@ await async function(t2, r2, o2, i2) {
     });
   }(c2, r2, i2), function(e2) {
     const t3 = Array.from(e2.querySelectorAll(".addArrow"));
-    for (let n2 = 0; n2 < t3.length; n2++)
-      T(t3[n2].parentElement, '<i class="fa fa-play specialPointer" aria-hidden="true"></i>', e2);
+    for (let n2 = 0; n2 < t3.length; n2++) T(t3[n2].parentElement, '<i class="fa fa-play specialPointer" aria-hidden="true"></i>', e2);
   }(r2), function(e2) {
     const t3 = new RegExp("`([^`]+)`", "g"), n2 = new RegExp("/ /", "g"), r3 = Array.from(e2.querySelectorAll(".addBashSamples"));
-    if (r3.length > 0)
-      for (let e3 = 0; e3 < r3.length; e3++)
-        r3[e3].innerHTML = r3[e3].innerHTML.replaceAll(t3, '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>').replaceAll(n2, "//");
+    if (r3.length > 0) for (let e3 = 0; e3 < r3.length; e3++) r3[e3].innerHTML = r3[e3].innerHTML.replaceAll(t3, '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>').replaceAll(n2, "//");
   }(r2), function(e2) {
     const t3 = g().get(l);
-    if (!t3)
-      return;
+    if (!t3) return;
     const n2 = JSON.parse(t3);
-    if (n2.ft = n2.ft.replaceAll("%38", ";"), n2.cr = n2.cr.replaceAll("%38", ";"), n2.dn = n2.dn.replaceAll("%38", ";"), n2.fs = n2.fs.replaceAll("%38", ";"), !n2.ft || !n2.fs)
-      return;
+    if (n2.ft = n2.ft.replaceAll("%38", ";"), n2.cr = n2.cr.replaceAll("%38", ";"), n2.dn = n2.dn.replaceAll("%38", ";"), n2.fs = n2.fs.replaceAll("%38", ";"), !n2.ft || !n2.fs) return;
     const r3 = "body, .annoyingBody { font-family: " + n2.ft + "; font-size: " + n2.fs + "; direction:" + n2.dn + "; }", o3 = e2.createElement("style");
     o3.setAttribute("id", "client-set-css"), o3.innerText = r3, e2.getElementsByTagName("head")[0].append(o3);
-  }(r2), ae(r2), O(1040, r2, o2, i2), v(r2, i2.navigator), !X(r2, o2, i2) && "/resource/home" !== o2.pathname && r2.querySelectorAll(".reading").length < 2 && function(t3, r3, o3) {
+  }(r2), ae(r2), O(1040, r2, o2, i2), v(r2, i2.navigator), !N(r2, o2, i2) && "/resource/home" !== o2.pathname && r2.querySelectorAll(".reading").length < 2 && function(t3, r3, o3) {
     const i3 = Object.assign({}, { timeFormat: "m", dataLocation: ".blocker", target: "#shareGroup .SMshareWidget", wordPerMin: 275, codeSelector: "code", refresh: false, debug: e(o3) }, t3), a3 = i3.dataLocation + " img, " + i3.dataLocation + " source, " + i3.dataLocation + " object", s3 = re(i3.dataLocation, r3);
-    if (!s3)
-      return;
+    if (!s3) return;
     let l2 = 0;
     i3.codeSelector && (l2 += re(i3.codeSelector, r3));
     let c3 = (s3 - l2) / i3.wordPerMin + 2 * l2 / i3.wordPerMin;
-    if (c3 += 5 * Array.from(new Set(Array.from(r3.querySelectorAll(a3)).map(oe))).length, c3 < 1)
-      return void n("info", "No reading time displayed for this article");
+    if (c3 += 5 * Array.from(new Set(Array.from(r3.querySelectorAll(a3)).map(oe))).length, c3 < 1) return void n("info", "No reading time displayed for this article");
     if (i3.refresh) {
       const e2 = r3.querySelector(i3.target + " a.reading");
       e2 && e2.parentNode.removeChild(e2);
@@ -643,18 +580,15 @@ await async function(t2, r2, o2, i2) {
     const u2 = '<a class="reading" title="The text is ' + (l2 + s3) + ' normalised words long.  Link is a longer version of this reading guide guesstimate." href="/resource/jQuery-reading-duration">To read: ' + c3 + i3.timeFormat + "</a>";
     T(i3.target, u2, r3);
   }({ dataLocation: "#main", target: ".addReading .SMshareWidget", debug: a2, refresh: true }, r2, o2), function(e2, t3) {
-    if (!t3.hash)
-      return;
+    if (!t3.hash) return;
     const r3 = e2.querySelector(t3.hash);
     r3 && "INPUT" === r3.tagName ? r3.checked = true : n("error", "failed to find " + t3.hash + " element");
   }(r2, o2), o2.pathname.match("group-")) {
     const e2 = function(e3, t3) {
       const n2 = t3.pathname.split("/group-");
-      if (Array.isArray(n2) && n2.length > 1 && "XXX" !== n2[1])
-        return n2[1];
+      if (Array.isArray(n2) && n2.length > 1 && "XXX" !== n2[1]) return n2[1];
       const r3 = new URLSearchParams(t3.search);
-      if (r3.has("first"))
-        return r3.get("first") ?? "";
+      if (r3.has("first")) return r3.get("first") ?? "";
       if (e3 && e3.getAttribute("data-group")) {
         let t4 = e3.getAttribute("data-group") ?? "";
         return t4 = t4.trim(), t4.split(",").map((e4, t5) => e4.trim())[0];
@@ -663,29 +597,23 @@ await async function(t2, r2, o2, i2) {
     }(null, o2);
     e2 && await H({ group: e2, debug: a2, runFetch: "adjacentRunFetch" in se ? se.adjacentRunFetch : p }, r2, o2, i2);
   } else {
-    X(r2, o2, i2) ? await V({ debug: a2, renumber: 1, runFetch: "mobileRunFetch" in se ? se.mobileRunFetch : p }, r2, o2) : await te({ debug: a2, renumber: 1, runFetch: "desktopRunFetch" in se ? se.desktopRunFetch : p }, r2, o2, i2);
+    N(r2, o2, i2) ? await V({ debug: a2, renumber: 1, runFetch: "mobileRunFetch" in se ? se.mobileRunFetch : p }, r2, o2) : await te({ debug: a2, renumber: 1, runFetch: "desktopRunFetch" in se ? se.desktopRunFetch : p }, r2, o2, i2);
     const e2 = function(e3, t3 = document) {
       const n2 = t3.querySelector(e3);
-      if (!n2)
-        return [];
+      if (!n2) return [];
       const r3 = n2.getAttribute("data-group");
-      if (!r3)
-        return [];
+      if (!r3) return [];
       let o3 = r3.split(",");
       return o3 = o3.map((e4, t4) => e4.trim()), "XXX" === o3[0] && o3.shift(), [...o3];
     }("div#contentGroup", r2);
-    if (0 === e2.length)
-      n("info", "This URL '" + o2.pathname + "' has no Adjacent groups defined.");
-    else
-      for (let t3 = 0; t3 < e2.length; t3++)
-        await H({ group: e2[t3], debug: a2, iteration: t3, count: e2.length, runFetch: "adjacentRunFetch" in se ? se.adjacentRunFetch : p }, r2, o2, i2);
+    if (0 === e2.length) n("info", "This URL '" + o2.pathname + "' has no Adjacent groups defined.");
+    else for (let t3 = 0; t3 < e2.length; t3++) await H({ group: e2[t3], debug: a2, iteration: t3, count: e2.length, runFetch: "adjacentRunFetch" in se ? se.adjacentRunFetch : p }, r2, o2, i2);
   }
   e(o2, "select") && (n("info", "select and word count feature is ENABLED.  Access= <alt> + w"), r2.body.addEventListener("keydown", (e2) => {
     "w" === e2.key && e2.altKey && n("info", "Word count of selection: " + A(function(e3) {
       try {
         const t3 = e3.getSelection();
-        if (null === t3)
-          return "";
+        if (null === t3) return "";
         const n2 = t3.getRangeAt(0);
         return n2.startOffset === n2.endOffset ? "" : "" + n2.cloneContents().textContent;
       } catch (e4) {
@@ -697,11 +625,11 @@ await async function(t2, r2, o2, i2) {
 export {
   o as SELF_VERSION,
   T as appendIsland,
-  N as calcScreenDPI,
+  X as calcScreenDPI,
   U as currentSize,
   r as domLog,
   le as hasBeenRun,
-  X as isMobile,
+  N as isMobile,
   n as log,
   p as runFetch,
   h as storeAppearance
