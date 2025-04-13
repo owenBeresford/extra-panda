@@ -32,6 +32,7 @@ function hasTabs(dom: Document): boolean {
 
 /**
  * newInitState
+ * this is tabInit v4
  * Force a tab name in the location.hash to be honored.
  
  * @param {Document} dom
@@ -50,7 +51,7 @@ export function newInitState(dom: Document, loc: Location): void {
   if (JUMP && JUMP.tagName === "INPUT") {
     JUMP.checked = true;
   } else {
-    log("error", "failed to find " + loc.hash + " element");
+    log("error", "tabInit v4: failed to find " + loc.hash + " element");
   }
 }
 
