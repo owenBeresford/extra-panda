@@ -1382,8 +1382,11 @@ div.addReferences sup a.leanIn:before { left: calc( 18cqw - 32em ); }
 }
 /* These links should NEVER get to production, so I am adding a warning for local editing 
 	They are added by wiki software if I make an oversight */
-.addReferences a[class=""] { background:magenta; padding:0.5em; color:white; }
-
+.addReferences a[class=""] {
+  background: magenta;
+  padding: 0.5em;
+  color: white;
+}
 
 /** trimmings for links, not sure what file to put these in
 	SEE ALSO UTILS 
