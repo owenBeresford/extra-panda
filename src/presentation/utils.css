@@ -413,7 +413,7 @@ ol li::before {
 }
 .ul3 {
   list-style-type: "[✨]";
-/* the next is supported in Chrome, but not FF todate #leSigh */
+  /* the next is supported in Chrome, but not FF todate #leSigh */
   list-style-type: attr(data-symbol);
 }
 .ul3 li::marker {

@@ -68,13 +68,14 @@ export function readingDuration(
   if (options.codeSelector) {
     code += extract(options.codeSelector, dom);
   }
-  let duration: number =
-    (plain - code) / options.wordPerMin + (code * 2) / options.wordPerMin;
+  let duration: number = plain - code + code * 2;
 
   const IMGS: Array<string> = Array.from(
     new Set(Array.from(dom.querySelectorAll(IMAGE_SEARCH)).map(iter)),
   );
   duration += IMGS.length * 5;
+  duration = Math.ceil(duration / options.wordPerMin);
+
   if (duration < 1) {
     log("info", "No reading time displayed for this article");
     return;
