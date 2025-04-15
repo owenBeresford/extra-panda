@@ -18,7 +18,7 @@
   .wholeArticle {
     /* note values are swapped, 'cus browsers. */
     height: calc(100vh - 5em);
-    max-height: auto;
+    max-height: none;
   }
 }
 @media screen and (min-resolution: 150dpi) {
