@@ -138,7 +138,7 @@ function v(e2, t2, n2) {
   try {
     e2.createEvent("TouchEvent"), r2 = true;
   } catch (e3) {
-    window.noop++;
+    n2.noop++;
   }
   return !(!(t2 && "Gecko" === t2.product && t2.maxTouchPoints > 0) || r2) && (console.warn("Is this librewolf?, could tell me if this is wrong."), e2.body.classList.contains("IAmLibreWolf") || (e2.body.classList.add("IAmLibreWolf"), e2.querySelector('.fullWidth p[role="status"]').innerText += "  Is this librewolf?,  could you tell me if this is wrong."), true);
 }
@@ -178,7 +178,7 @@ function N(e2, t2, n2) {
     e2.createEvent("TouchEvent");
     if (r2.has("mobile")) return E(r2.get("mobile") ?? "");
     let t3 = d;
-    return v(e2, n2.navigator) && (t3 = 1.11 * d), X(e2, n2) > t3;
+    return v(e2, n2.navigator, n2) && (t3 = 1.11 * d), X(e2, n2) > t3;
   } catch (e3) {
     return !(!r2.has("mobile") || !E(r2.get("mobile") ?? ""));
   }
@@ -205,11 +205,11 @@ function j(e2, t2, n2, r2 = true) {
   const a2 = new URLSearchParams(n2.search);
   return "group-XXX" === i2 && a2.has("first") && (i2 = a2.get("first") ?? "logic-error"), t2 ? a2.has("first") ? o2 += n2.pathname.replace("group-XXX", i2 + "-meta") : o2 += n2.pathname.replace(i2, e2 + "-meta") : o2 += n2.pathname.replace(i2, e2), r2 && (o2 += n2.search + n2.hash), o2;
 }
-function P(e2, t2) {
+function I(e2, t2) {
   let n2 = "button";
   return e2 && (n2 += " lower"), n2;
 }
-function I(e2, t2) {
+function P(e2, t2) {
   return t2 + "" + e2.replace(/[^a-zA-Z0-9_]/g, "_");
 }
 function W(e2) {
@@ -240,7 +240,7 @@ async function H(t2, r2, o2, i2) {
       const t3 = function(e3, t4, n2, r3, o3) {
         let i3 = "";
         for (const a3 in e3) {
-          const s3 = I(a3, t4), l2 = N(n2, r3, o3) ? "<br />" : "";
+          const s3 = P(a3, t4), l2 = N(n2, r3, o3) ? "<br />" : "";
           let c2 = e3[a3].desc;
           c2.length > 235 && (c2 = c2.substr(0, 235) + "..."), i3 += '<a class="adjacentItem" href="' + e3[a3].url + '" title="' + c2 + '"> <span class="button">' + e3[a3].title + '</span><p id="adjacent' + s3 + '" >Author: ' + e3[a3].auth + " &nbsp; &nbsp; &nbsp;" + l2 + "  Last edit: " + R(e3[a3].date, "Unknown time", true) + " <br />Description: " + c2 + " </p></a>\n";
         }
@@ -270,7 +270,7 @@ async function H(t2, r2, o2, i2) {
       T("#" + s2, function(e3, t4) {
         let n2 = '<ul class="adjacentList">\n';
         for (const r3 in e3) {
-          const o3 = I(r3, t4), i3 = P(e3[r3].desc.length > 110), a3 = "Title: " + e3[r3].title + "\nAuthor: " + e3[r3].auth + " &nbsp; &nbsp; Last edit: " + e3[r3].date + "\nDescription: " + e3[r3].desc;
+          const o3 = P(r3, t4), i3 = I(e3[r3].desc.length > 110), a3 = "Title: " + e3[r3].title + "\nAuthor: " + e3[r3].auth + " &nbsp; &nbsp; Last edit: " + e3[r3].date + "\nDescription: " + e3[r3].desc;
           n2 += '<li> <a id="link' + o3 + '" class="' + i3 + '" href="' + e3[r3].url + '" aria-label="' + a3 + '" >' + e3[r3].title + "</a> </li>\n";
         }
         return 0 === e3.length ? n2 += "<li> Article doesn't seem setup correctly.</li></ul>" : n2 += '<li><a class="adjacentItem button" href="/resource/group-XXX?first=' + t4 + '" aria-label="This article lists all items in ' + t4 + ' group."> See full list </a></li></ul>', n2;
@@ -427,7 +427,7 @@ async function te(t2, r2, o2, i2) {
   } else {
     !function(e3, t3) {
       const n2 = y(t3), r3 = e3.querySelector("p[role=status]");
-      r3.innerText.match(/ERROR: No valid references file found/) || (r3.innerText += "ERROR: No valid references file found.");
+      r3 && !r3.innerText.match(/ERROR: No valid references file found/) && (r3.innerText += "ERROR: No valid references file found.");
       const o3 = Array.from(e3.querySelectorAll(s));
       for (let e4 = 0; e4 < o3.length; e4++) {
         const t4 = `Reference popup for link [${1 + e4}]
@@ -473,6 +473,8 @@ function oe(e2, t2) {
       return e2.getAttribute("data");
     case "SOURCE":
       return e2.getAttribute("srcset");
+    default:
+      throw new Error("Unknown element, " + e2.tagName);
   }
 }
 function ie(e2, t2) {
@@ -537,7 +539,7 @@ await async function(t2, r2, o2, i2) {
   }(r2, i2), function(t3, n2, r3) {
     const o3 = N(t3, n2, r3);
     if (!w(n2.host) && !o3) return;
-    if (v(t3, r3.navigator) && !o3) return;
+    if (v(t3, r3.navigator, r3) && !o3) return;
     o3 && (t3.querySelector("#sendMasto").textContent = "Share article");
     const i3 = ['<li id="shareClose"> <i class="fa fa-cancel" aria-hidden="true"></i> </li>	<li> <a class="hunchUp" id="copyURL"><i class="fa fa-copy" aria-hidden="true"></i><span class="hunchUp"> copy<br /> URL</span> </a> </li>'], a3 = ["shareMenuTrigger", "siteChartLink", "rssLink"], s3 = Array.from(t3.querySelectorAll(".SMshareWidget a")), l2 = !w(n2.host) && !e(n2), c3 = t3.querySelector(".SMshareWidget");
     for (const e2 in s3) {
@@ -565,13 +567,13 @@ await async function(t2, r2, o2, i2) {
     if (n2.ft = n2.ft.replaceAll("%38", ";"), n2.cr = n2.cr.replaceAll("%38", ";"), n2.dn = n2.dn.replaceAll("%38", ";"), n2.fs = n2.fs.replaceAll("%38", ";"), !n2.ft || !n2.fs) return;
     const r3 = "body, .annoyingBody { font-family: " + n2.ft + "; font-size: " + n2.fs + "; direction:" + n2.dn + "; }", o3 = e2.createElement("style");
     o3.setAttribute("id", "client-set-css"), o3.innerText = r3, e2.getElementsByTagName("head")[0].append(o3);
-  }(r2), ae(r2), O(1040, r2, o2, i2), v(r2, i2.navigator), !N(r2, o2, i2) && "/resource/home" !== o2.pathname && r2.querySelectorAll(".reading").length < 2 && function(t3, r3, o3) {
+  }(r2), ae(r2), O(1040, r2, o2, i2), v(r2, i2.navigator, i2), !N(r2, o2, i2) && "/resource/home" !== o2.pathname && r2.querySelectorAll(".reading").length < 2 && function(t3, r3, o3) {
     const i3 = Object.assign({}, { timeFormat: "m", dataLocation: ".blocker", target: "#shareGroup .SMshareWidget", wordPerMin: 275, codeSelector: "code", refresh: false, debug: e(o3) }, t3), a3 = i3.dataLocation + " img, " + i3.dataLocation + " source, " + i3.dataLocation + " object", s3 = re(i3.dataLocation, r3);
     if (!s3) return;
     let l2 = 0;
     i3.codeSelector && (l2 += re(i3.codeSelector, r3));
-    let c3 = (s3 - l2) / i3.wordPerMin + 2 * l2 / i3.wordPerMin;
-    if (c3 += 5 * Array.from(new Set(Array.from(r3.querySelectorAll(a3)).map(oe))).length, c3 < 1) return void n("info", "No reading time displayed for this article");
+    let c3 = s3 - l2 + 2 * l2;
+    if (c3 += 5 * Array.from(new Set(Array.from(r3.querySelectorAll(a3)).map(oe))).length, c3 = Math.ceil(c3 / i3.wordPerMin), c3 < 1) return void n("info", "No reading time displayed for this article");
     if (i3.refresh) {
       const e2 = r3.querySelector(i3.target + " a.reading");
       e2 && e2.parentNode.removeChild(e2);
@@ -582,7 +584,7 @@ await async function(t2, r2, o2, i2) {
   }({ dataLocation: "#main", target: ".addReading .SMshareWidget", debug: a2, refresh: true }, r2, o2), function(e2, t3) {
     if (!t3.hash) return;
     const r3 = e2.querySelector(t3.hash);
-    r3 && "INPUT" === r3.tagName ? r3.checked = true : n("error", "failed to find " + t3.hash + " element");
+    r3 && "INPUT" === r3.tagName ? r3.checked = true : n("error", "tabInit v4: failed to find " + t3.hash + " element");
   }(r2, o2), o2.pathname.match("group-")) {
     const e2 = function(e3, t3) {
       const n2 = t3.pathname.split("/group-");
