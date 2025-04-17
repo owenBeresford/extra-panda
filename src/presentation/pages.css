@@ -249,7 +249,7 @@
 
 .homeContainer .home.icerow {
   margin: 0px;
-  max-width: 100%;
+  max-width: calc(100% - 2em);
   display: flex;
   flex-direction: row;
 }
@@ -283,10 +283,10 @@
 @media screen and (min-resolution: 150dpi) {
   .homeContainer .after_menu.articleContent,
   .h4_page.wholeArticle {
-    min-width: 100vw;
+    min-width: calc( 100vw - 2em );
   }
   .homeContainer .halferWords {
-    width: 100vw;
+    width: calc( 100vw - 2em );
   }
   .homeContainer .home.column,
   .homeContainer .chunkArticles.column {
@@ -334,6 +334,11 @@
     width: 100%;
     max-width: 100%;
   }
+  
+  .IAmLibreWolf .homeContainer fieldset.tabs-content {
+    max-width: 38%;
+	}
+
   .homeContainer nav.row a {
     font-size: 120%;
     padding: 0.3em 0.3em;
@@ -486,6 +491,7 @@
 }
 .column.tabContainer {
   min-width: 400px;
+  max-width: 40%;
   flex: inherit;
 }
 .homeContainer .SMshareWidget {

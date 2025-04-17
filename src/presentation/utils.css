@@ -98,8 +98,11 @@
 }
 @media screen and (min-resolution: 150dpi) {
   .articleHeader {
-    width: calc(100vw - 0.5em); /* flex:1 1 100vw; */
+    width: calc(100vw - 2em); /* flex:1 1 100vw; */
+    min-width: calc(100vw - 4em);
+    max-width: calc(100vw - 2em); 
   }
+
   .articleHeader .row a {
     font-size: 120%;
   }
@@ -133,6 +136,10 @@
   .articleHeader .fullWidth {
     width: calc(100vw - 1.5em);
   }
+ .IAmLibreWolf .articleHeader .fullWidth {
+	width:auto;
+  }
+
   .articleHeader .fullWidth h1 {
     padding-top: 0.1em;
     padding-left: 0em;
