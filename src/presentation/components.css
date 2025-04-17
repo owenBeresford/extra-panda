@@ -1089,12 +1089,13 @@ p.buttonBar a:first-child {
   scrollbar-color: var(--scroll1) transparent;
 }
 
-.popOverWidget:has(details[open]) {
-  --fgcontrast: 5;
-  --bgcontrast: 1;
-}
 .popOverWidget details.singlePopup {
   --fgcontrast: 0.95;
+  --bgcontrast: 1;
+}
+.popOverWidget:has( .singlePopup[open] ) details.singlePopup:not([open]),
+.popOverWidget:has( details[open] )  {
+  --fgcontrast: 5;
   --bgcontrast: 1;
 }
 
@@ -1136,6 +1137,10 @@ p.buttonBar a:first-child {
   .popOverWidget details[open] {
     width: 100vw;
   }
+
+  .IAmLibreWolf .popOverWidget details[open] {
+    width: 60%;
+  }
   .popOverWidget summary {
     margin: initial;
     margin-left: 2px;
@@ -1143,6 +1148,12 @@ p.buttonBar a:first-child {
     font-size: 110%;
     word-break: break-all;
   }
+}
+@media screen and (min-resolution: 199dpi) {	
+  .IAmLibreWolf .popOverWidget details[open] {
+	width:100%;
+	margin-left:0;
+	}
 }
 
 @media screen and (min-width: 1040px) {
