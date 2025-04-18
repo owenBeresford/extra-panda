@@ -85,6 +85,8 @@ const CERT_KEY = DIR_FIXTURES + path.sep + "private.key";
 var dDelta = 0;
 
 const TESTS = listFiles(DIR_TESTS);
+// const TESTS = [ "dom-base.webtest.mjs" ];
+
 if (TESTS.length === 0) {
   console.error("Need to compile tests first");
   process.exit(34);
