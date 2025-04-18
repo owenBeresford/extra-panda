@@ -28,7 +28,7 @@ import {
   addFancyButtonArrow,
   addBashSamples,
 } from "./effect";
-import { SELF_VERSION, ENABLE_SELECT } from "./immutables";
+import { SELF_VERSION, ENABLE_SELECT,  matchVersion } from "./immutables";
 import { readingDuration } from "./reading";
 import { modalInit } from "./modal";
 import { applyAppearance } from "./cookies";
@@ -198,12 +198,16 @@ export async function siteCore(
       loc,
     );
   }
-  if (SELF_VERSION < "1.0.4") {
+
+	if( matchVersion("1.0.4" ) ) {
+	// if you search for unique symbols in the compile source, 
+	// the initTabs code isn't present
+	    newInitState(dom, loc);
+	} else {
     // disabled in that version, as I ported to HTML/CSS
-    initTabs(dom, loc);
-  } else {
-    newInitState(dom, loc);
-  }
+
+   		initTabs(dom, loc);
+	}
 
   if (loc.pathname.match("group-")) {
     const tt = extractGroup(null, loc);
