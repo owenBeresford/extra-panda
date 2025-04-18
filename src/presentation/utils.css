@@ -97,10 +97,11 @@
   }
 }
 @media screen and (min-resolution: 150dpi) {
+  /* to work practically in libreWolf, I need to set all three width settings #leSigh */
   .articleHeader {
     width: calc(100vw - 2em); /* flex:1 1 100vw; */
     min-width: calc(100vw - 4em);
-    max-width: calc(100vw - 2em); 
+    max-width: calc(100vw - 2em);
   }
 
   .articleHeader .row a {
@@ -136,8 +137,8 @@
   .articleHeader .fullWidth {
     width: calc(100vw - 1.5em);
   }
- .IAmLibreWolf .articleHeader .fullWidth {
-	width:auto;
+  .IAmLibreWolf .articleHeader .fullWidth {
+    width: auto;
   }
 
   .articleHeader .fullWidth h1 {
