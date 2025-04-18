@@ -16,25 +16,26 @@ import { runFetch, delay } from "./networking";
 import { log, domLog } from "./log-services";
 import { appendIsland, isMobile, currentSize, calcScreenDPI } from "./dom-base";
 import { storeAppearance } from "./cookies";
-import { SELF_VERSION,  matchVersion } from "./immutables";
+import { SELF_VERSION, matchVersion } from "./immutables";
 
 // this file is only used in the web-build
 await siteCore({}, document, location, window);
 
-if( matchVersion("1.test-only") ) {
-// External module, this code should be masked out in production builds
-	const { generate_CSS_file, dump_it } = await import( "./extractor");
-	let PARAMS=new URLSearchParams(location.search);
-	if( PARAMS.has('dump-css') ) {
-		console.log("Open tools now");
-		await delay(5000);
-		dump_it( await generate_CSS_file(document, window),  
-						parseInt(PARAMS.get('dump-css'), 10), 
-						PARAMS.get('aspect')??"(width:100%)" 
-				);
-	}
+if (matchVersion("1.test-only")) {
+  // External module, this code should be masked out in production builds
+  const { generate_CSS_file, dump_it } = await import("./extractor");
+  let PARAMS = new URLSearchParams(location.search);
+  if (PARAMS.has("dump-css")) {
+    console.log("Open tools now");
+    await delay(5000);
+    dump_it(
+      await generate_CSS_file(document, window),
+      parseInt(PARAMS.get("dump-css"), 10),
+      PARAMS.get("aspect") ?? "(width:100%)",
+    );
+  }
 }
- 
+
 export {
   runFetch,
   log,
@@ -47,4 +48,3 @@ export {
   calcScreenDPI,
   SELF_VERSION,
 };
-

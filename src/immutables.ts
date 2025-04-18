@@ -28,9 +28,9 @@ false
  * @public
  * @return {boolean}
  */
-export function matchVersion(target:string):boolean {
-	// see samples, needs replacing before 1.0.10 is hit, 
-	return SELF_VERSION >= target; 
+export function matchVersion(target: string): boolean {
+  // see samples, needs replacing before 1.0.10 is hit,
+  return SELF_VERSION >= target;
 }
 
 // used in some client side created A.href
