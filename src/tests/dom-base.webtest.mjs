@@ -32,6 +32,7 @@ describe("TEST BROWSER dom-base", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         expect(Array.isArray(currentSize(dom, win))).toBe(true); // "got an array back, assert #2")
         await delay(100);
         expect(win.noop).toBe(0);
@@ -45,6 +46,7 @@ describe("TEST BROWSER dom-base", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         expect(isFullstack(win)).toBe(true);
         win.history.pushState({ mobile: 1 }, "", "/home.html?mobile=1");
         expect(isFullstack(win)).toBe(true);
@@ -60,6 +62,7 @@ describe("TEST BROWSER dom-base", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         expect(isMobile(dom, loc, win)).toBe(false);
         win.history.pushState({ mobile: 1 }, "", "/home.html?mobile=1");
         expect(isMobile(dom, loc, win)).toBe(true);
@@ -75,6 +78,7 @@ describe("TEST BROWSER dom-base", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = `<h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>`;
         appendIsland(".home.icerow", str, dom);
@@ -99,6 +103,7 @@ describe("TEST BROWSER dom-base", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
   <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/home?" /> 
@@ -123,6 +128,7 @@ describe("TEST BROWSER dom-base", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
   <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/home?" /> 
@@ -143,6 +149,7 @@ describe("TEST BROWSER dom-base", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html?width=150",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
   <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/home?" /> 
@@ -163,6 +170,7 @@ describe("TEST BROWSER dom-base", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = '<h2 id="SPAGHETTI01">WWWWW WWWWW</h2>';
         appendIsland(".home.icerow", str, dom);
         expect(dom.querySelector("#SPAGHETTI01")).not.toBe(null);
@@ -187,6 +195,7 @@ describe("TEST BROWSER dom-base", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = '<h2 id="SPAGHETTI04">WWWWW WWWWW</h2>';
         setIsland(".home.icerow", str, dom);
         expect(dom.querySelector(".home.icerow").innerHTML).toBe(str); // "assert #8");
@@ -205,6 +214,7 @@ describe("TEST BROWSER dom-base", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -271,6 +281,7 @@ describe("TEST BROWSER dom-base", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html?width=1100",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = `<div class="maquetteContainer">
 <details >
 <summary>A title</summary>
@@ -314,6 +325,7 @@ d
       TEST_NAME,
       "https://127.0.0.1:8081/home.html?width=600",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = `<div class="maquetteContainer">
 <details >
 <summary>A title</summary>
@@ -356,6 +368,7 @@ d
       TEST_NAME,
       "https://127.0.0.1:8081/home.html?width=1100",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = `<div class="maquetteContainer">
 <details class="singlePopup">
 <summary>A title</summary>
@@ -393,11 +406,12 @@ d
   });
 
   it("go 8: applyVolume", async () => {
-    const TEST_NAME = "BROWSER TEST func[14] expndDetails";
+    const TEST_NAME = "BROWSER TEST func[14] applyVolume";
     return await wrap(
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -454,11 +468,12 @@ d
   });
 
   it("go 8.1: applyVolume", async () => {
-    const TEST_NAME = "BROWSER TEST func[15] expndDetails";
+    const TEST_NAME = "BROWSER TEST func[15] applyVolume ";
     await wrap(
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = `<div class="halferWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -515,11 +530,12 @@ d
   });
 
   it("go 8.2: applyVolume", async () => {
-    const TEST_NAME = "BROWSER TEST func[16] expndDetails";
+    const TEST_NAME = "BROWSER TEST func[16] applyVolume";
     await wrap(
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = `<div class="halferWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -603,11 +619,12 @@ d
   });
 
   it("go 8.3: applyVolume", async () => {
-    const TEST_NAME = "BROWSER TEST func[17] expndDetails";
+    const TEST_NAME = "BROWSER TEST func[17] applyVolume";
     await wrap(
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = `<div class="some words">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -650,11 +667,13 @@ d
         expect(dom.querySelector("body").getAttribute("style")).toBe(
           "--offset-height: 0;",
         ); //  "asset #24",
-        expect(dom.querySelectorAll("[style]").length).toBe(1); //  "asset #18");
+
+		// fakeTab also has some 'style' set ...:-(
+        expect(dom.querySelectorAll("[style]").length).toBe(2); //  "asset #18");
 
         let tmp = Array.from(dom.querySelectorAll("[style]"));
         for (let i = 0; i < tmp.length; i++) {
-          expect(["div", "body"].includes(tmp[i].tagName.toLowerCase())).toBe(
+          expect(["div", "body", "span"].includes( tmp[i].tagName.toLowerCase() )).toBe(
             true,
           ); //  "asset #25",
         }
@@ -670,6 +689,7 @@ d
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -727,6 +747,7 @@ d
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -780,6 +801,7 @@ d
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
+		win.noop=0;
         //        const URL = "http://192.168.0.35/resource/home";
         // NOTE no addReferences block
         let str = `<div class="lotsOfWords">
@@ -834,11 +856,19 @@ d
       TEST_NAME,
       "https://127.0.0.1:8081/home.html?select=1",
       async (dom, loc, win) => {
+		win.noop=0;
         // https://javascript.info/selection-range
         let range1 = new Range();
-        range1.setStart(dom.querySelector("article p:first-child"), 5);
+		if(!dom.querySelector("article p:first-child")) {
+			win.noop++;
+			let ANNOYING_VAR__ELEMENT_SHOULD_BE_FOUND=1;
+			expect( 0).toBe( ANNOYING_VAR__ELEMENT_SHOULD_BE_FOUND); 
+			return;
+		}
+
+        range1.setStart(dom.querySelector("article p:first-child"), 0);
         range1.setEnd(dom.querySelector("article p:nth-child(4)"), 5);
-        const sample1 = ` is a simple wordy site. My objective is communication.
+        const sample1 = `This is a simple wordy site. My objective is communication.
 When I don't have large current projects, I am adding more content, and when I do, I am scribbling notes to publish later.
 
 The purpose of my site is to discuss and describe software architecture and systems, along with practical usage from my hands-on experience of various tools and systems. The emphasis with this space is on engineering content presented with engineering English. Every article on my website has been thoroughly researched. All longer articles contain from 70 to 150 references, I read over 500 specific SERPs, and the longer texts take a month each to write.
