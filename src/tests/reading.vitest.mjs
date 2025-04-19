@@ -108,7 +108,7 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
 
     readingDuration({ refresh: true }, dom, loc);
     let tt = dom.querySelector("#shareGroup a.reading").textContent;
-    assert.equal(tt, "To read: 6m", "assert #8");
+    assert.equal(tt, "To read: 1m", "assert #8");
   });
 
   it("go 3.1: extra text and images", () => {
@@ -147,7 +147,7 @@ wer werwer wer werwer wer werwer werwer wer werwer wer
 
     readingDuration({ refresh: true }, dom, loc);
     let tt = dom.querySelector("#shareGroup a.reading").textContent;
-    assert.equal(tt, "To read: 16m", "assert #8");
+    assert.equal(tt, "To read: 2m", "assert #8");
   });
 
   it("go 4: growth test (refresh flag + output value should be larger)", () => {

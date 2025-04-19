@@ -3,7 +3,37 @@
 export const SELF_VERSION = "1.0.4";
 export const SELF_VERSION_SECTIONS = [1, 0, 4];
 
-// used in some clent side created A.href
+/**
+ * matchVersion
+ * fake SemVer
+
+> "1.0.2" < "1.0.3"
+true
+> "1.0.2" < "1.0.1"
+false
+> "1.0.2" < "1.0.10"
+false
+> "1.0.2" <= "1.0.10"
+false
+> "1.0.2" <= "1.0.8"
+true
+> "1.0.2" <= "1.0.b"
+true
+> "1.0.2" < "1.0.2"
+false
+> "1.0.2" > "1.0.2"
+false
+ 
+ * @param {string} target
+ * @public
+ * @return {boolean}
+ */
+export function matchVersion(target: string): boolean {
+  // see samples, needs replacing before 1.0.10 is hit,
+  return SELF_VERSION >= target;
+}
+
+// used in some client side created A.href
 export const URL_PLACEHOLDER = "https://owenberesford.me.uk/";
 
 // useful strings

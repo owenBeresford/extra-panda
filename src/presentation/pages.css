@@ -283,10 +283,10 @@
 @media screen and (min-resolution: 150dpi) {
   .homeContainer .after_menu.articleContent,
   .h4_page.wholeArticle {
-    min-width: calc( 100vw - 2em );
+    min-width: calc(100vw - 2em);
   }
   .homeContainer .halferWords {
-    width: calc( 100vw - 2em );
+    width: calc(100vw - 2em);
   }
   .homeContainer .home.column,
   .homeContainer .chunkArticles.column {
@@ -334,10 +334,10 @@
     width: 100%;
     max-width: 100%;
   }
-  
+
   .IAmLibreWolf .homeContainer fieldset.tabs-content {
     max-width: 38%;
-	}
+  }
 
   .homeContainer nav.row a {
     font-size: 120%;
