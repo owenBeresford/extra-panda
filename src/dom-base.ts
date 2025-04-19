@@ -79,7 +79,7 @@ export function ready(callback: GenericEventHandler, dom: Document): void {
  * duplicateSelection
  * Copy the text of the highlighted DOM nodes
  *
- * NOTEST: this function cannot be unit tested, as the following code may not read a selection made by JS 
+ * NOTEST: this function cannot be unit tested, as the following code may not read a selection made by JS
  *         unit-test is running inside a browser, so its not a limitation of JSDOM.
  * Function can be manually tested, #leSigh
  * @param {Window} win
@@ -89,13 +89,13 @@ export function ready(callback: GenericEventHandler, dom: Document): void {
 export function duplicateSelection(win: Window): string {
   try {
     const tmp1 = win.getSelection();
-    if (tmp1 === null || tmp1.rangeCount===0) {
-		log("warn", "no selection object found ");
+    if (tmp1 === null || tmp1.rangeCount === 0) {
+      log("warn", "no selection object found ");
       return "";
     }
     const tmp2 = tmp1.getRangeAt(0);
     if (tmp2.startOffset === tmp2.endOffset) {
-		log("warn", "no selection volume found ");
+      log("warn", "no selection volume found ");
       return "";
     }
 
