@@ -17,7 +17,7 @@ I'm dragging this group of features kicking and screaming into the century of th
 - This is an outsize, painful, death march of a rewrite for hygiene and flow improvements.  Every PM would say 'this is Bad Planning', and I agree.  I cannot see any means to split this change into smaller releases.
 - PMs would also be happy that I kept 2010 era code this long, as good return on investment.
 - I wrote the first edition of these features as I was unable to find anything that existed previously (aside from syntax highlighting).  
-- This has a fairly high test coverage, as the early dev time was after I had done a long run, and was then sat on a train ~ sometimes with the sun in my eyes.   Multiple train trips.  I am testing-in to get improved confidence and adding types as a further safety.   Factoid: today, 73% of the code volume is tests. 
+- This has a fairly high test coverage, as the early dev time was after I had done a long run, and was then sat on a train ~ sometimes with the sun in my eyes.   Multiple train trips.  I am testing-in to get improved confidence and adding types as a further safety.   Factoid: today, 73% of the code volume is tests.^H^H^H^H^H There is now extra layers of testing, the project is about 85% test data, but twice the volume of data (some tests are in TS).
 - Some previous feedback: "your history/commits are messy".  True, its messier than I would like.  I can delete my Git history from any work I do for you if you wish ~ but my Dyslexia is permanent.  This project is building towards good Software engineering code from a lower jQuery baseline.  As the only version that a third party would use is the **complete copy** I lean towards a complete audit.   
 
 <details>
