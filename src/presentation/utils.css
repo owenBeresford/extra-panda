@@ -442,6 +442,7 @@ ol li::before {
     margin-left: 0;
   }
 }
+.popOverWidget details[open] ul.ulbasic li .ulbasic { margin:0; }
 
 .pullout {
   padding-top: 0.5em;
