@@ -111,7 +111,7 @@ function page_fake(url: string = "", args: number = 1): Array<PageGeneration> {
  * @public
  * @returns {Array<string>}
  */
-export async function validateHTML(html: string): Array<string> {
+export async function validateHTML(html: string): Promise<Array<string>> {
   // I do no know why WhatWG doesn't know Dialog tag
   // I have persistent disagreement on heading levels
   const lint: HtmlValidator.ParsedJsonAsValidationResults = await validator({

@@ -82,6 +82,7 @@ export function ready(callback: GenericEventHandler, dom: Document): void {
  * NOTEST: this function cannot be unit tested, as the following code may not read a selection made by JS
  *         unit-test is running inside a browser, so its not a limitation of JSDOM.
  * Function can be manually tested, #leSigh
+ * @see [A walkthru for this code https://scribe.rip/@alexandrawilll/window-getselection-and-range-in-javascript-5a13453d22]
  * @param {Window} win
  * @public
  * @returns {string}
@@ -172,7 +173,7 @@ export function isFullstack(win: Window): boolean {
  * Bug not found in recent editions of FF.
  * For a single hardware, run the attached link in FF, Chrome and Librewolf to see issue outside of my code
  *  NOT PURE, and I have no non-manual way to show this works. 
- *  THIS IS EXPECTED TO NEED TO CHANGE ON LATER VERSIONS OF LIBREWOLF, #leSIGH
+ * WARNING: THIS IS EXPECTED TO NEED TO CHANGE ON LATER VERSIONS OF LIBREWOLF, #leSIGH
 
  * @see [https://www.infobyip.com/detectmonitordpi.php]
  * @param {Document} dom

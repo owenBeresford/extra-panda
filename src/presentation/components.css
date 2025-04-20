@@ -37,6 +37,8 @@
   .footWidget {
     width: 100%;
     margin: 0.6em;
+    text-align: left;
+    margin-left: 0.5em;
   }
 }
 @media screen and (max-width: 1000px) {
@@ -96,6 +98,9 @@
   .metaWidget {
     margin-left: 0em;
     padding-left: 0em;
+  }
+  .metaWidget.row {
+    margin-left: 0.3em;
   }
 }
 /* re-apply everything for a mac 
