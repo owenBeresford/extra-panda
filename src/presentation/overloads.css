@@ -104,6 +104,8 @@ pre {
   text-align: left;
 }
 
+del, .ulbasic del { --fgcontrast:0.5; color: rgba(calc(var(--fgr) * var(--fgcontrast)), calc(var(--fgg) * var(--fgcontrast)), calc(var(--fgb) * var(--fgcontrast)), var(--fgcontrast) ); }
+
 i.specialPointer {
   z-index: 2;
   vertical-align: inherit;
