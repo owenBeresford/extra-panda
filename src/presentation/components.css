@@ -20,6 +20,7 @@
   flex: 4 4 0px;
 }
 
+
 .footWidget .leftFooter img {
   vertical-align: top;
 }
@@ -40,6 +41,12 @@
     text-align: left;
     margin-left: 0.5em;
   }
+
+.footWidget .bigColumn {
+	max-width:95vw; 
+ 	flex:none;
+	height:auto;
+	}
 }
 @media screen and (max-width: 1000px) {
   /* as of 2020 this only applies to the home page */
@@ -1094,16 +1101,6 @@ p.buttonBar a:first-child {
   scrollbar-color: var(--scroll1) transparent;
 }
 
-.popOverWidget details.singlePopup {
-  --fgcontrast: 0.95;
-  --bgcontrast: 1;
-}
-.popOverWidget:has(.singlePopup[open]) details.singlePopup:not([open]),
-.popOverWidget:has(details[open]) {
-  --fgcontrast: 5;
-  --bgcontrast: 1;
-}
-
 @media screen and (min-width: 1200px) {
   .popOverWidget details[open] {
     width: 60em;
@@ -1176,11 +1173,6 @@ p.buttonBar a:first-child {
     border: inherit;
   }
 }
-.popOverWidget:has(.maquetteContainer > details.docs[open]) {
-  --fgcontrast: 0.95;
-  --bgcontrast: 1;
-}
-
 /** logWidget
 	use data-attrib data-closed-prefix and data-open-prefix
 	~5 pages
