@@ -590,6 +590,25 @@ a.adjacentItem:before,
   background-color: rgb(245, 245, 245);
 }
 
+.tabContainer legend label {
+  --bgr: 0;
+  --bgg: 73;
+  --bgb: 135;
+  --fgr: 245;
+  --fgg: 245;
+  --fgb: 245;
+}
+.tabContainer
+  .tabs-content:has(legend > label > input[type="radio"]:checked)
+  label {
+  --bgr: 215;
+  --bgg: 242;
+  --bgb: 250;
+  --fgr: 37;
+  --fgg: 37;
+  --fgb: 37;
+}
+
 .linksWidget[open] .defaultLinksTrigger {
   --bgr: 0;
   --bgg: 73;
@@ -650,4 +669,19 @@ a.adjacentItem:before,
     --bgg: 73;
     --bgb: 135;
   }
+}
+
+.popOverWidget details.singlePopup {
+  --fgcontrast: 0.95;
+  --bgcontrast: 1;
+}
+.popOverWidget:has(.singlePopup[open]) details.singlePopup:not([open]),
+.popOverWidget:has(details[open]) {
+  --fgcontrast: 5;
+  --bgcontrast: 1;
+}
+
+.popOverWidget:has(.maquetteContainer > details.docs[open]) {
+  --fgcontrast: 0.95;
+  --bgcontrast: 1;
 }

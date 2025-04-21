@@ -131,6 +131,88 @@ i.specialPointer {
   }
 }
 
+/** bigScreen / smallScreen
+   every page
+  */
+@media screen and (max-resolution: 130dpi) and (min-aspect-ratio: 3/5) and (min-width: 800px) {
+  .bigScreenOnly {
+    display: inline-block;
+  }
+  .mastodonWidget.bigScreenOnly {
+    display: none;
+  }
+  .smallScreenOnly,
+  .button.smallScreenOnly {
+    display: none;
+  }
+  .SMshareWidget a.smallScreenOnly {
+    display: none;
+  }
+}
+
+@media screen and (min-resolution: 150dpi) {
+  .SMshareWidget a.bigScreenOnly,
+  .SMshareWidget span.bigScreenOnly,
+  .bigScreenOnly,
+  .ultraSkinny.bigScreenOnly,
+  .SMshareWidget a.bigScreenOnly {
+    display: none;
+  }
+  .smallScreenOnly {
+    display: inline-block;
+  }
+  span.button.smallScreenOnly {
+    font-size: 100%;
+    padding: 0.5em 0.3em;
+  }
+}
+
+/* re-apply everything for a mac 
+This is big screen mac, should work with wide versions
+*/
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+    .bigScreenOnly {
+      display: inline-block;
+    }
+    .mastodonWidget.bigScreenOnly {
+      display: none;
+    }
+    .smallScreenOnly {
+      display: none;
+    }
+    .SMshareWidget a.smallScreenOnly {
+      display: none;
+    }
+  }
+}
+
+/* small screen mac, AKA iphone/ ipad */
+@media screen and (max-width: 800px) and (min-resolution: 120dpi) {
+  @supports (-webkit-touch-callout) {
+    .bigScreenOnly,
+    .ultraSkinny.bigScreenOnly,
+    .SMshareWidget a.bigScreenOnly {
+      display: none;
+    }
+    .smallScreenOnly {
+      display: inline-block;
+    }
+  }
+}
+
+@media screen and (min-resolution: 150dpi) {
+  .articleHeader
+    nav.row:not(:has(.headingsWidget))
+    .metaWidget.row
+    .SMshareWidget {
+    width: auto;
+  }
+  .articleHeader nav.row:not(:has(.headingsWidget)) .metaWidget.row {
+    width: 100vw - 2em;
+  }
+}
+
 /* Amit Merchant https://www.amitmerchant.com/bare-minimum-view-transitions/ */
 @view-transition {
   navigation: auto;
