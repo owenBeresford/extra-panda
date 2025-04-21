@@ -487,10 +487,11 @@
   margin-bottom: 0;
   padding-bottom: 0;
 }
+/* test on more phones, I need to use this value, that doesn't work in the fake phone in chrome */
 @media screen and (min-resolution: 150dpi) {
   .tabContainer legend,
   .tabContainer .fakeTab {
-    top: 12em;
+    top: 0em;
   }
 }
 
