@@ -78,7 +78,9 @@
   flex: 10 1 0px;
 }
 @media screen and (min-resolution: 150dpi) {
-	.articleHeader .row .column:first-child { flex:auto;  }
+  .articleHeader .row .column:first-child {
+    flex: auto;
+  }
 }
 
 .articleHeader .fullWidth {

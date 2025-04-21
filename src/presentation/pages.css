@@ -284,14 +284,14 @@
   .homeContainer .after_menu.articleContent,
   .h4_page.wholeArticle {
     min-width: calc(100vw - 24px);
-	margin:3px
+    margin: 3px;
   }
   .homeContainer .halferWords {
     width: calc(100vw - 2em);
   }
   .homeContainer .home.column,
   .homeContainer .chunkArticles.column {
-	display:none;
+    display: none;
   }
   .homeContainer dialog#mastodonWidget a.trimmed i {
     padding: 0.3em;
@@ -418,19 +418,19 @@
 }
 
 .tabContainer {
-
   position: relative;
   top: -14em;
 }
 
 @media screen and (min-resolution: 150dpi) {
-.tabContainer {
-  top: auto;
+  .tabContainer {
+    top: auto;
+  }
+  .homeContainer .home.icerow {
+    height: fit-content;
+    background: green;
+  }
 }
-.homeContainer .home.icerow {
-	height:fit-content; background:green;
-}
-} 
 
 .tabContainer .tabs-content {
   border-top: 1px solid #e6e6e6;
@@ -457,11 +457,11 @@
 }
 
 @media screen and (min-resolution: 150dpi) {
-.tabContainer
-  .tabs-content:has(legend > label > input[type="radio"]:checked)
-  ul {
-  min-width: 90vw;
-}
+  .tabContainer
+    .tabs-content:has(legend > label > input[type="radio"]:checked)
+    ul {
+    min-width: 90vw;
+  }
 }
 
 .tabContainer legend label {
@@ -487,11 +487,11 @@
   margin-bottom: 0;
   padding-bottom: 0;
 }
-@media screen and ( min-resolution: 150dpi ) {
-.tabContainer legend,
-.tabContainer .fakeTab {	
-  top: 12em;
-} 
+@media screen and (min-resolution: 150dpi) {
+  .tabContainer legend,
+  .tabContainer .fakeTab {
+    top: 12em;
+  }
 }
 
 .tabContainer .tabs-content:nth-child(2) legend {
@@ -501,7 +501,7 @@
   left: 18em;
 }
 .column.tabContainer {
-  min-width: min( 100%, 400px );
+  min-width: min(100%, 400px);
   max-width: 40%;
   flex: inherit;
 }
@@ -523,8 +523,10 @@
   }
 }
 
-@media screen and ( min-resolution: 150dpi ) {
-	.homeContainer .metaWidget span.ultraSkinny { width: auto; }
+@media screen and (min-resolution: 150dpi) {
+  .homeContainer .metaWidget span.ultraSkinny {
+    width: auto;
+  }
 }
 
 .imgPictureContainer .references {
