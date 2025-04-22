@@ -487,20 +487,13 @@
   margin-bottom: 0;
   padding-bottom: 0;
 }
-/* test on more phones, I need to use this value, that doesn't work in the fake phone in chrome */
-@media screen and (min-resolution: 150dpi) {
-  .tabContainer legend,
-  .tabContainer .fakeTab {
-    top: 0em;
-  }
-}
-
 .tabContainer .tabs-content:nth-child(2) legend {
   left: 9em;
 }
 .tabContainer .tabs-content:nth-child(3) legend {
-  left: 18em;
+  left: 16em;
 }
+
 .column.tabContainer {
   min-width: min(100%, 400px);
   max-width: 40%;
@@ -523,10 +516,32 @@
     left: 16em;
   }
 }
-
+/* test on more phones, I need to use this value, that doesn't work in the fake phone in chrome */
 @media screen and (min-resolution: 150dpi) {
+  .tabContainer legend,
+  .tabContainer .fakeTab {
+    top: 0em;
+  }
+  .tabContainer span[rel="me"].fakeTab {
+    margin-left: 0em;
+    padding-left: 0em;
+  }
+  .homeContainer .myUglyFace {
+    margin-left: 0em;
+  }
+  .tabContainer .tabs-content:nth-child(3) legend {
+    left: 15em;
+  }
+
   .homeContainer .metaWidget span.ultraSkinny {
     width: auto;
+  }
+
+  .tabContainer .tabs-content:nth-child(2) legend {
+    left: 6em;
+  }
+  .tabContainer .tabs-content:nth-child(3) legend {
+    left: 13em;
   }
 }
 
