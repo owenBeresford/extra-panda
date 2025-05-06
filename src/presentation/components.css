@@ -16,7 +16,6 @@
   text-align: right;
   flex: 1 4 0px;
 }
-/* this decl doesn't work in libreWolf */
 .footWidget .bigColumn {
   flex: 4 4 0px;
 }
@@ -26,6 +25,7 @@
 }
 .footWidget p {
   margin-bottom: 0.2em;
+    margin-left: 1em;
 }
 .footWidget a {
   text-decoration: underline;
@@ -34,6 +34,7 @@
 @media screen and (min-resolution: 150dpi) {
   .footWidget p {
     margin-bottom: 1em;
+    margin-left: 0.2em;
   }
   .footWidget {
     width: 100%;
@@ -47,7 +48,32 @@
     flex: none;
     height: auto;
   }
+
+   .IAmLibreWolf .footWidget {
+    text-align: center;
+	} 
+
+  .IAmLibreWolf	.footWidget .bigColumn {
+  flex: 4 4 0px;
+	} 
+   .IAmLibreWolf .footWidget p {
+    margin-bottom: 1em;
+    margin-left: 2em;
+  }
+  .annoyingBody.IAmLibreWolf .footWidget p { width: auto;  }	 
 }
+@media screen and (min-resolution: 200dpi) {
+    .IAmLibreWolf .footWidget .bigColumn {
+    max-width: 95vw;
+    flex: none;
+    height: auto;
+  }
+   .IAmLibreWolf .footWidget {
+    text-align: left;
+	} 
+  .annoyingBody.IAmLibreWolf .footWidget p { width: fit-content;  }	 
+}
+
 @media screen and (max-width: 1000px) {
   /* as of 2020 this only applies to the home page */
   .footWidget .leftFooter:nth-child(2) {
