@@ -16,6 +16,7 @@
   text-align: right;
   flex: 1 4 0px;
 }
+/* this decl doesn't work in libreWolf */
 .footWidget .bigColumn {
   flex: 4 4 0px;
 }
@@ -1392,9 +1393,9 @@ div.addReferences sup a.leanIn:before { left: calc( 18cqw - 32em ); }
 .addReferences .buttonBar a {
   padding: 0.85em 1em;
 }
-/* These links should NEVER get to production, so I am adding a warning for local editing 
+/* These empty links should NEVER get to production, so I am adding a warning for local editing 
 	They are added by wiki software if I make an oversight */
-.addReferences a[class=""] {
+.linkTest a[class=""],  .addReferences a[class=""] {
   background: magenta;
   padding: 0.5em;
   color: white;

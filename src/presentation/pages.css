@@ -336,7 +336,7 @@
     max-width: 100%;
   }
 
-  .IAmLibreWolf .homeContainer fieldset.tabs-content {
+  .IAmLibreWolf.homeContainer fieldset.tabs-content {
     max-width: 38%;
   }
 
@@ -430,7 +430,42 @@
     height: fit-content;
     background: green;
   }
+	
+  .homeContainer .home.icerow .column.tabContainer {
+    max-width: fit-content;	
+	}
+ .IAmLibreWolf.homeContainer .home.icerow .column {
+	display:block;	
+	}
+
+ .IAmLibreWolf.homeContainer .home.icerow fieldset.tabs-content {
+	width: 25em;
+    max-width: fit-content;	
+	}
+
+  .IAmLibreWolf.homeContainer .tabContainer .tabs-content:has(legend > label > input[type="radio"]:checked) ul {	
+	width: 25em;
+    max-width: auto;	
+	min-width:auto;
+	}
+
+ .IAmLibreWolf.homeContainer .column.tabContainer {
+  min-width: min(100%, 550px);
+ 	}
 }
+@media screen and (min-resolution: 200dpi) {
+ .IAmLibreWolf.homeContainer .home.icerow {
+	width: 100%;
+    max-width: fit-content;	
+  }
+ .IAmLibreWolf.homeContainer .tabContainer .tabs-content:has(legend > label > input[type="radio"]:checked) ul {	
+	width: 90vw;
+    max-width: auto;	
+	min-width:auto;
+	}
+
+}
+
 
 .tabContainer .tabs-content {
   border-top: 1px solid #e6e6e6;
