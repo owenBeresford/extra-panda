@@ -1395,7 +1395,8 @@ div.addReferences sup a.leanIn:before { left: calc( 18cqw - 32em ); }
 }
 /* These empty links should NEVER get to production, so I am adding a warning for local editing 
 	They are added by wiki software if I make an oversight */
-.linkTest a[class=""],  .addReferences a[class=""] {
+.linkTest a[class=""],
+.addReferences a[class=""] {
   background: magenta;
   padding: 0.5em;
   color: white;
