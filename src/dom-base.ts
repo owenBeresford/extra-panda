@@ -203,7 +203,7 @@ export function isLibreWolf(
       (
         dom.querySelector('.fullWidth p[role="status"]') as HTMLElement
       ).innerText +=
-        "  Is this librewolf?,  could you tell me if this is wrong.";
+        " &nssp; Is this librewolf?  Could you tell me if this is wrong.";
     }
     return true;
   }
