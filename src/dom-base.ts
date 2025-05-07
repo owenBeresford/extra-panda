@@ -202,8 +202,8 @@ export function isLibreWolf(
       dom.body.classList.add("IAmLibreWolf");
       (
         dom.querySelector('.fullWidth p[role="status"]') as HTMLElement
-      ).innerText +=
-        " &nssp; Is this librewolf?  Could you tell me if this is wrong.";
+      ).innerHTML +=
+        " &nbsp; Is this librewolf?  Could you tell me if this is wrong.";
     }
     return true;
   }
