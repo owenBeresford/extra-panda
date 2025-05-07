@@ -25,7 +25,7 @@
 }
 .footWidget p {
   margin-bottom: 0.2em;
-    margin-left: 1em;
+  margin-left: 1em;
 }
 .footWidget a {
   text-decoration: underline;
@@ -49,29 +49,33 @@
     height: auto;
   }
 
-   .IAmLibreWolf .footWidget {
+  .IAmLibreWolf .footWidget {
     text-align: center;
-	} 
+  }
 
-  .IAmLibreWolf	.footWidget .bigColumn {
-  flex: 4 4 0px;
-	} 
-   .IAmLibreWolf .footWidget p {
+  .IAmLibreWolf .footWidget .bigColumn {
+    flex: 4 4 0px;
+  }
+  .IAmLibreWolf .footWidget p {
     margin-bottom: 1em;
     margin-left: 2em;
   }
-  .annoyingBody.IAmLibreWolf .footWidget p { width: auto;  }	 
+  .annoyingBody.IAmLibreWolf .footWidget p {
+    width: auto;
+  }
 }
 @media screen and (min-resolution: 200dpi) {
-    .IAmLibreWolf .footWidget .bigColumn {
+  .IAmLibreWolf .footWidget .bigColumn {
     max-width: 95vw;
     flex: none;
     height: auto;
   }
-   .IAmLibreWolf .footWidget {
+  .IAmLibreWolf .footWidget {
     text-align: left;
-	} 
-  .annoyingBody.IAmLibreWolf .footWidget p { width: fit-content;  }	 
+  }
+  .annoyingBody.IAmLibreWolf .footWidget p {
+    width: fit-content;
+  }
 }
 
 @media screen and (max-width: 1000px) {
