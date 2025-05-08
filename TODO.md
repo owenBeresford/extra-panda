@@ -1,4 +1,5 @@
 ### TODO
+
 - Add type washing to JSON ingestion used in multiple places https://github.com/samchon/typia https://medium.com/@jkc5186/understanding-typescript-types-with-prisma-e0e41a7d98f3 
 - Add multilingual support
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom   to TESTS
@@ -12,14 +13,15 @@
 - Implement Networking browser test script
 - Port remaining non-production files to TS.  
 - declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
-- Somehow properly test isLibreWolf
+- Somehow properly test isLibreWolf, can extend the test-browser to take a browser choice 
 - Maybe look at Qutebrowser for browser unit-tests, uses less RAM, and is //a recent version// of Chrome project https://qutebrowser.org/doc/install.html#tox
 - To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
 - Maybe poll for Chrome, and install Qutebrowser if absent. QQ how do I poll in the package.json?
 - Rebuild snap to end (unused but included), as dis-functional in Chrome  
 - Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
-https://lit.dev/
 - Splash this into every test process https://stackoverflow.com/a/74565753 , maybe I will get error reporting back
+- Factor out IAmLibreWolf CSS into isolated file, ~99% of the internet doesn't need these decl's 
+
 
 ### Previous Updates
 
