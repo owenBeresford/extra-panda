@@ -351,6 +351,15 @@ This is big screen mac, should work with wide versions
     align-self: stretch;
     margin: 1em 0em;
   }
+ .IAmLibreWolf .halferWords {
+    width: 60em;
+	max-width: 50%;
+    align-self: stretch;
+    margin: 1em 0em;
+	margin-left:auto;
+	margin-right:auto;
+  }
+
 }
 @media screen and (max-width: 600px) {
   .halferWords {
