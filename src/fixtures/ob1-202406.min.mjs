@@ -140,7 +140,7 @@ function v(e2, t2, n2) {
   } catch (e3) {
     n2.noop++;
   }
-  return !(!(t2 && "Gecko" === t2.product && t2.maxTouchPoints > 0) || r2) && (console.warn("Is this librewolf?, could tell me if this is wrong."), e2.body.classList.contains("IAmLibreWolf") || (e2.body.classList.add("IAmLibreWolf"), e2.querySelector('.fullWidth p[role="status"]').innerText += "  Is this librewolf?,  could you tell me if this is wrong."), true);
+  return !(!(t2 && "Gecko" === t2.product && t2.maxTouchPoints > 0) || r2) && (console.warn("Is this librewolf?, could tell me if this is wrong."), e2.body.classList.contains("IAmLibreWolf") || (e2.body.classList.add("IAmLibreWolf"), e2.querySelector('.fullWidth p[role="status"]').innerHTML += " &nbsp; Is this librewolf?  Could you tell me if this is wrong."), true);
 }
 function x(e2, t2, r2) {
   try {
@@ -150,11 +150,11 @@ function x(e2, t2, r2) {
     return n("error", "Missing data:" + e3.message), -1;
   }
 }
-function q(e2, t2) {
+function C(e2, t2) {
   const n2 = e2.getBoundingClientRect();
   return [Math.round(t2.scrollY + n2.top), Math.round(t2.scrollX + n2.left)];
 }
-async function C(e2, t2, r2) {
+async function q(e2, t2, r2) {
   try {
     if (!r2.navigator.clipboard) throw new Error("No clipboard available");
     await r2.navigator.clipboard.writeText(t2.href);
@@ -304,7 +304,7 @@ function J(e2, t2, n2) {
   }
   r2 = e2.querySelector("#copyURL"), r2 && function(e3, t3, n3, r3, o3) {
     e3.addEventListener("click", async (e4) => (await t3(n3, r3, o3), false)), e3.addEventListener("touch", async (e4) => (await t3(n3, r3, o3), false)), e3.addEventListener("keypress", async (e4) => (await t3(n3, r3, o3), false));
-  }(r2, C, e2, t2, n2), Y(e2.querySelector("#popup #sendMasto"), $, e2, t2, n2);
+  }(r2, q, e2, t2, n2), Y(e2.querySelector("#popup #sendMasto"), $, e2, t2, n2);
   const o2 = Array.from(e2.querySelectorAll("#shareMenuTrigger, #shareClose"));
   for (const r3 in o2) Y(o2[r3], B, e2, t2, n2);
   K(e2.querySelector("#hideMasto"), _, e2, n2);
@@ -535,7 +535,7 @@ await async function(t2, r2, o2, i2) {
   !function(e2, t3) {
     e2.querySelector("body").setAttribute("style", "--offset-height: 0;");
     const n2 = Array.from(e2.querySelectorAll(".lotsOfWords, .halferWords, .fewWords"));
-    for (let e3 = 0; e3 < n2.length; e3++) n2[e3].setAttribute("style", "--offset-height: " + q(n2[e3], t3)[0] + "px;");
+    for (let e3 = 0; e3 < n2.length; e3++) n2[e3].setAttribute("style", "--offset-height: " + C(n2[e3], t3)[0] + "px;");
   }(r2, i2), function(t3, n2, r3) {
     const o3 = N(t3, n2, r3);
     if (!w(n2.host) && !o3) return;
