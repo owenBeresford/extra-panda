@@ -4,7 +4,7 @@ import { execTest, wrap } from "./page-seed-playwright";
 import { createKeyEvent } from "./vitest-addons";
 import { TEST_ONLY } from "../log-services";
 
-const { getLogCounter } = TEST_ONLY;
+const { enableLogCounter } = TEST_ONLY;
 
 describe("BROWSER TEST index ", async () => {
   if (typeof process !== "undefined") {
@@ -40,7 +40,7 @@ describe("BROWSER TEST index ", async () => {
         let range1 = new Range();
         range1.setStart(dom.querySelector("article p:first-child"), 0);
         range1.setEnd(dom.querySelector("article p:nth-child(4)"), 0);
-        let step1 = getLogCounter();
+        let step1 = enableLogCounter(console);
         // this should emit 241
         dom.body.addEventListener("keydown", (e) => {
           win.console.log("[TEST SCRIPT] Have keyb ", e);
@@ -56,11 +56,11 @@ describe("BROWSER TEST index ", async () => {
           dom.body,
           win,
         );
-        expect(win.fireKeybEvent(tmp)).toBe(true);
+        expect( win.dispatchEvent(tmp) ).toBe(true);
         /// will return false if cancellable, and has been,  otherwise true
         //		expect( dom.body.dispatchEvent(tmp) ).toBe(true);
         //		win.dispatchEvent(tmp);
-        let step2 = getLogCounter();
+        let step2 = enableLogCounter(console);
         win.console.log(
           "TEST MESSAGE (test script to child PID code-under-test)",
         );
