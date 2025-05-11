@@ -590,17 +590,20 @@ a.adjacentItem:before,
   background-color: rgb(245, 245, 245);
 }
 
-.tabContainer legend label {
+.tabContainer label {
   --bgr: 0;
   --bgg: 73;
   --bgb: 135;
   --fgr: 245;
   --fgg: 245;
   --fgb: 245;
+  --fgcontrast: 0.95;
+  --bgcontrast: 1;
 }
-.tabContainer
-  .tabs-content:has(legend > label > input[type="radio"]:checked)
-  label {
+
+.tabContainer .tabHeader:has( #articles:checked ) label#tabArticles,
+.tabContainer .tabHeader:has( #projects:checked ) label#tabProjects
+ {
   --bgr: 215;
   --bgg: 242;
   --bgb: 250;

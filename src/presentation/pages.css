@@ -331,12 +331,12 @@
     padding-left: 0px;
     padding-right: 0px;
   }
-  .homeContainer fieldset.tabs-content {
+  .homeContainer .tabContent {
     width: 100%;
     max-width: 100%;
   }
 
-  .IAmLibreWolf.homeContainer fieldset.tabs-content {
+  .IAmLibreWolf.homeContainer .tabContent {
     max-width: 38%;
   }
 
@@ -438,15 +438,14 @@
     display: block;
   }
 
-  .IAmLibreWolf.homeContainer .home.icerow fieldset.tabs-content {
+  .IAmLibreWolf.homeContainer .home.icerow .tabContent {
     width: 25em;
     max-width: fit-content;
   }
 
   .IAmLibreWolf.homeContainer
     .tabContainer
-    .tabs-content:has(legend > label > input[type="radio"]:checked)
-    ul {
+    .tabsHeader:has( label > input[type="radio"]:checked ) .tabContent ul {
     width: 25em;
     max-width: auto;
     min-width: auto;
@@ -454,69 +453,91 @@
 
   .IAmLibreWolf.homeContainer .column.tabContainer {
     min-width: min(100%, 550px);
+	top: -13em;
   }
 }
+
 @media screen and (min-resolution: 200dpi) {
   .IAmLibreWolf.homeContainer .home.icerow {
     width: 100%;
     max-width: fit-content;
   }
+
   .IAmLibreWolf.homeContainer
     .tabContainer
-    .tabs-content:has(legend > label > input[type="radio"]:checked)
-    ul {
+    .tabsHeader:has( label > input[type="radio"]:checked)
+    .tabContent ul {
     width: 90vw;
     max-width: auto;
     min-width: auto;
   }
 }
 
-.tabContainer .tabs-content {
+.tabContainer .tabContent {
   border-top: 1px solid #e6e6e6;
   max-width: 25em;
   width: fit-content;
   display: inline-block;
   background: inherit;
 }
-.tabContainer .tabs-content ul {
+.tabContainer .tabContent ul {
   display: none;
-  margin-top: 10em;
-}
-.tabContainer legend {
-  white-space: nowrap;
-  z-index: 0;
   margin-top: 2em;
 }
-.tabContainer
-  .tabs-content:has(legend > label > input[type="radio"]:checked)
-  ul {
+.tabContainer label {
+  white-space: nowrap;
+  margin-top: 2em;
+}
+.tabContainer .tabHeader { display:flex; flex-direction:row; justify-content: space-evenly; }
+.tabContainer .tabHeader label {
+  background-color: rgba(
+    calc(var(--bgr) * var(--bgcontrast)),
+    calc(var(--bgg) * var(--bgcontrast)),
+    calc(var(--bgb) * var(--bgcontrast)),
+    1
+  );
+}
+
+/* I first made a nice properly nested structure, with no HTML IDs in the CSS, and automatic scaling if you added new tabs
+	Google is complaining, so here is an alternative with HTML IDs everywhere, 
+		and the CSS will need to be patched if you add another tab
+
+   WARN, WARN: if you copy and paste, check the commas at EOL
+ */
+.tabContainer:has( #tabArticles>input[type="radio"]:checked ) #panelArticles ul,
+.tabContainer:has( #tabProjects>input[type="radio"]:checked ) #panelProjects ul
+  {
   display: inline-block;
   transition: all 0.5s ease;
-  min-width: 25em;
+  min-width: 90%;
+	max-width:100%;
 }
 
 @media screen and (min-resolution: 150dpi) {
-  .tabContainer
-    .tabs-content:has(legend > label > input[type="radio"]:checked)
+	.tabContainer .tabContent {
+	  max-width: 100%;
+	  min-width: 90%;
+ 	}
+  
+/* vague to set both tabs */
+.tabContainer
+    .tabContent:has( label > input[type="radio"]:checked)
     ul {
     min-width: 90vw;
   }
 }
 
-.tabContainer legend label {
+.tabContainer label {
   padding: 1em;
   min-width: 8em;
   text-align: center;
-  z-index: 2;
 }
 
-.tabContainer legend,
+.tabContainer label,
 .tabContainer .fakeTab {
   display: inline-block;
   width: fit-content;
   height: fit-content;
-  position: absolute;
-  top: 0em;
   margin-left: 1em;
   background: transparent;
 }
@@ -525,12 +546,6 @@
   display: none;
   margin-bottom: 0;
   padding-bottom: 0;
-}
-.tabContainer .tabs-content:nth-child(2) legend {
-  left: 9em;
-}
-.tabContainer .tabs-content:nth-child(3) legend {
-  left: 16em;
 }
 
 .column.tabContainer {
@@ -547,17 +562,9 @@
     width: 160px;
   }
 }
-@media screen and (max-width: 1280px) {
-  .tabContainer .tabs-content:nth-child(2) legend {
-    left: 7em;
-  }
-  .tabContainer .tabs-content:nth-child(3) legend {
-    left: 16em;
-  }
-}
 /* test on more phones, I need to use this value, that doesn't work in the fake phone in chrome */
 @media screen and (min-resolution: 150dpi) {
-  .tabContainer legend,
+  .tabContainer label,
   .tabContainer .fakeTab {
     top: 0em;
   }
@@ -567,21 +574,13 @@
   }
   .homeContainer .myUglyFace {
     margin-left: 0em;
+	width: 80px;
+	height: 80px;
   }
-  .tabContainer .tabs-content:nth-child(3) legend {
-    left: 15em;
-  }
-
   .homeContainer .metaWidget span.ultraSkinny {
     width: auto;
   }
 
-  .tabContainer .tabs-content:nth-child(2) legend {
-    left: 6em;
-  }
-  .tabContainer .tabs-content:nth-child(3) legend {
-    left: 13em;
-  }
 }
 
 .imgPictureContainer .references {

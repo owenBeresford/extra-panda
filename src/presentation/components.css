@@ -1299,32 +1299,6 @@ code[lang="html"].highlight::before,
   content: "";
 }
 
-/** tabs-content for TabsWidget 
-	inject root class to force work if needed
-	currently only home-test
-  */
-@media screen and (max-width: 700px) {
-  fieldset.tabs-content {
-    max-width: 98%;
-    width: 98%;
-  }
-}
-
-@media screen and (min-resolution: 150dpi) {
-  .tabs-content p,
-  .tabs-content li,
-  .tabs-content a {
-    font-size: 120%;
-  }
-  .tabs-content li a {
-    font-size: 100%;
-  }
-  .tabs-content {
-    width: 100%;
-    max-width: 100vw;
-  }
-}
-
 /** addReferences
 	about 70-80% of pages
 */
