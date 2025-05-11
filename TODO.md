@@ -14,6 +14,7 @@
 - Port remaining non-production files to TS.  
 - declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
 - Somehow properly test isLibreWolf, can extend the test-browser to take a browser choice 
+  - ERROR: dead stick with current editions.  Could fix by reverting libreWolf or waiting till update in Playwright
 - Maybe look at Qutebrowser for browser unit-tests, uses less RAM, and is //a recent version// of Chrome project https://qutebrowser.org/doc/install.html#tox
 - To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
 - Maybe poll for Chrome, and install Qutebrowser if absent. QQ how do I poll in the package.json?
