@@ -102,7 +102,7 @@ var dDelta = 0;
 
 const TESTS = listFiles(DIR_TESTS);
 // how to limit to a single test, as you are adjusting it
-// const TESTS = [ "dom-base.webtest.mjs" ];
+// const TESTS = [ "index.webtest.mjs", ];
 
 if (TESTS.length === 0) {
   console.error("Need to compile tests first");

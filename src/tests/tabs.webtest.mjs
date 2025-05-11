@@ -18,18 +18,18 @@ describe("TEST BROWSER CSS based tabs", async () => {
     const TEST_NAME = "BROWSER TEST func[1] default first state ";
     return await wrap(
       TEST_NAME,
-      "/home2.html?debug=1",
+      "/home.html?debug=1",
       async (dom, loc, win) => {
         expect(
-          getCSSAttr("fieldset:has( #articles ) ul", "display", dom, win),
+          getCSSAttr(".tabContainer:has( #articles ) .tabContent#panelArticles> ul", "display", dom, win),
         ).toBe("inline-block");
         expect(
-          getCSSAttr("fieldset:has( #projects ) ul", "display", dom, win),
+          getCSSAttr(".tabContainer:has( #projects ) .tabContent#panelProjects> ul", "display", dom, win),
         ).toBe("none");
         // this line is a poor test, but I don't have the colour libs imported here
         expect(
           getCSSAttr(
-            "fieldset:has( #articles ) label",
+            ".tabContainer:has( #articles ) .tabHeader label#tabArticles",
             "background-color",
             dom,
             win,
@@ -37,7 +37,7 @@ describe("TEST BROWSER CSS based tabs", async () => {
         ).toBe("rgb(215, 242, 250)");
         expect(
           getCSSAttr(
-            "fieldset:has( #projects ) label",
+            ".tabContainer:has( #projects ) .tabHeader label#tabProjects",
             "background-color",
             dom,
             win,
@@ -52,16 +52,17 @@ describe("TEST BROWSER CSS based tabs", async () => {
         // this handler is supposed to be sync
         expect(dom.querySelector("#projects").dispatchEvent(EVT1)).toBe(true);
 
+            ".tabContainer:has( #articles ) .tabHeader label#tabArticles",
         expect(
-          getCSSAttr("fieldset:has( #projects ) ul", "display", dom, win),
+          getCSSAttr(".tabContainer:has( #projects ) .tabContent#panelProjects>ul", "display", dom, win),
         ).toBe("inline-block");
         expect(
-          getCSSAttr("fieldset:has( #articles ) ul", "display", dom, win),
+          getCSSAttr(".tabContainer:has( #articles ) .tabContent#panelArticles>ul", "display", dom, win),
         ).toBe("none");
         // this line is a poor test, but I don't have the colour libs imported here
         expect(
           getCSSAttr(
-            "fieldset:has( #projects ) label",
+            ".tabContainer:has( #projects ) .tabHeader label#tabProjects",
             "background-color",
             dom,
             win,
@@ -69,7 +70,7 @@ describe("TEST BROWSER CSS based tabs", async () => {
         ).toBe("rgb(215, 242, 250)");
         expect(
           getCSSAttr(
-            "fieldset:has( #articles ) label",
+            ".tabContainer:has( #articles ) .tabHeader label#tabArticles",
             "background-color",
             dom,
             win,
@@ -85,21 +86,23 @@ describe("TEST BROWSER CSS based tabs", async () => {
     const TEST_NAME = "BROWSER TEST func[1] setInitState ";
     return await wrap(
       TEST_NAME,
-      "/home2.html?debug=1#projects",
+      "/home.html?debug=1#projects",
       async (dom, loc, win) => {
         // in this file pay attention to HTML ids
         const [BTN2, BTN1] = dom.querySelectorAll("#btn2, #btn1");
 
         expect(
-          getCSSAttr("fieldset:has( #projects ) ul", "display", dom, win),
+          getCSSAttr(".tabContainer:has( #projects:checked ) .tabContent#panelProjects>ul", "display", dom, win),
         ).toBe("inline-block");
+		// thorough people would add a :not selector for checked, but this is a radio group so i'll skip. 
         expect(
-          getCSSAttr("fieldset:has( #articles ) ul", "display", dom, win),
+          getCSSAttr(".tabContainer:has( #articles ) .tabContent#panelArticles>ul", "display", dom, win),
         ).toBe("none");
+
         // this line is a poor test, but I don't have the colour libs imported here
         expect(
           getCSSAttr(
-            "fieldset:has( #projects ) label",
+            ".tabContainer:has( #projects:checked ) label#tabProjects",
             "background-color",
             dom,
             win,
@@ -107,7 +110,7 @@ describe("TEST BROWSER CSS based tabs", async () => {
         ).toBe("rgb(215, 242, 250)");
         expect(
           getCSSAttr(
-            "fieldset:has( #articles ) label",
+            ".tabContainer:has( #articles ) label#tabArticles",
             "background-color",
             dom,
             win,
@@ -123,14 +126,14 @@ describe("TEST BROWSER CSS based tabs", async () => {
         expect(dom.querySelector("#articles").dispatchEvent(EVT1)).toBe(true);
 
         expect(
-          getCSSAttr("fieldset:has( #articles ) ul", "display", dom, win),
+          getCSSAttr(".tabContainer:has( #articles ) .tabContent#panelArticles>ul", "display", dom, win),
         ).toBe("inline-block");
         expect(
-          getCSSAttr("fieldset:has( #projects ) ul", "display", dom, win),
+          getCSSAttr(".tabContainer:has( #projects ) .tabContent#panelProjects>ul", "display", dom, win),
         ).toBe("none");
         expect(
           getCSSAttr(
-            "fieldset:has( #articles ) label",
+            ".tabContainer:has( #articles ) .tabHeader label#tabArticles ",
             "background-color",
             dom,
             win,
@@ -138,7 +141,7 @@ describe("TEST BROWSER CSS based tabs", async () => {
         ).toBe("rgb(215, 242, 250)");
         expect(
           getCSSAttr(
-            "fieldset:has( #projects ) label",
+            ".tabContainer:has( #projects ) .tabHeader label#tabProjects ",
             "background-color",
             dom,
             win,
