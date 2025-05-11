@@ -41,7 +41,7 @@ describe("BROWSER TEST index ", async () => {
         range1.setStart(dom.querySelector("article p:first-child"), 0);
         range1.setEnd(dom.querySelector("article p:nth-child(4)"), 0);
         const WATCH = enableLogCounter(win.console);
-		let step1= WATCH();
+        let step1 = WATCH();
         // this should emit 241
         dom.body.addEventListener("keydown", (e) => {
           win.console.log("[TEST SCRIPT] Have keyb ", e);
@@ -57,14 +57,17 @@ describe("BROWSER TEST index ", async () => {
           dom.body,
           win,
         );
-        expect( win.dispatchEvent(tmp) ).toBe(true);
+        expect(win.dispatchEvent(tmp)).toBe(true);
         /// will return false if cancellable, and has been,  otherwise true
         //		expect( dom.body.dispatchEvent(tmp) ).toBe(true);
         //		win.dispatchEvent(tmp);
-		let step2= WATCH();
+        let step2 = WATCH();
         win.console.log(
-          "TEST MESSAGE (test script to child PID code-under-test)", 
-			step1, step2, LOG_USAGE in win.console, win.console.LOG_USAGE 
+          "TEST MESSAGE (test script to child PID code-under-test)",
+          step1,
+          step2,
+          'LOG_USAGE' in win.console,
+          win.console.LOG_USAGE,
         );
 
         expect(step2 - step1).toBe(1);

@@ -2,14 +2,11 @@ import { assert, describe, it, expect } from "vitest";
 
 import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../extractor/output-formats";
-import { appendIsland } from "../dom-base";
 
 const { hash2CSSblock, hash2CSS, hash2json, output } = TEST_ONLY;
 
 describe("TEST generate CSS ", () => {
   it("go 1: hash2CSS", () => {
-    //		const [dom, loc, win] = page("http://192.168.0.35/", 3);
-
     // im not validating the data in, as its come from a live webpage
     let SRC = { font: '"jibber, jabber"', "font-size": "0.8em" };
     //  ".test1 { font: "jibber, jabber"; font-size: 0.8em; }"
@@ -40,8 +37,6 @@ describe("TEST generate CSS ", () => {
   });
 
   it("go 2: hash2json", () => {
-    //		const [dom, loc, win] = page("http://192.168.0.35/", 3);
-
     let SRC = { font: '"jibber, jabber"', "font-size": "0.8em" };
     let DST = `{"font":"\\"jibber, jabber\\"","font-size":"0.8em"}`;
     assert.equal(hash2json(SRC), DST, "bullet #5");
@@ -65,8 +60,6 @@ describe("TEST generate CSS ", () => {
   });
 
   it("go 3: hash2CSSblock ", () => {
-    //		const [dom, loc, win] = page("http://192.168.0.35/", 3);
-
     const SRC = {
       ".first": { font: '"jibber, jabber"', "font-size": "0.8em" },
       ".second": {
@@ -86,7 +79,6 @@ describe("TEST generate CSS ", () => {
   });
 
   it("go 4: output ", (cnxt) => {
-    //		const [dom, loc, win] = page("http://192.168.0.35/", 3);
     cnxt.skip();
   });
 });

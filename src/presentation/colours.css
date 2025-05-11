@@ -601,9 +601,8 @@ a.adjacentItem:before,
   --bgcontrast: 1;
 }
 
-.tabContainer .tabHeader:has( #articles:checked ) label#tabArticles,
-.tabContainer .tabHeader:has( #projects:checked ) label#tabProjects
- {
+.tabContainer .tabHeader:has(#articles:checked) label#tabArticles,
+.tabContainer .tabHeader:has(#projects:checked) label#tabProjects {
   --bgr: 215;
   --bgg: 242;
   --bgb: 250;

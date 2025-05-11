@@ -445,7 +445,9 @@
 
   .IAmLibreWolf.homeContainer
     .tabContainer
-    .tabsHeader:has( label > input[type="radio"]:checked ) .tabContent ul {
+    .tabsHeader:has(label > input[type="radio"]:checked)
+    .tabContent
+    ul {
     width: 25em;
     max-width: auto;
     min-width: auto;
@@ -453,7 +455,7 @@
 
   .IAmLibreWolf.homeContainer .column.tabContainer {
     min-width: min(100%, 550px);
-	top: -13em;
+    top: -13em;
   }
 }
 
@@ -465,8 +467,9 @@
 
   .IAmLibreWolf.homeContainer
     .tabContainer
-    .tabsHeader:has( label > input[type="radio"]:checked)
-    .tabContent ul {
+    .tabsHeader:has(label > input[type="radio"]:checked)
+    .tabContent
+    ul {
     width: 90vw;
     max-width: auto;
     min-width: auto;
@@ -488,7 +491,11 @@
   white-space: nowrap;
   margin-top: 2em;
 }
-.tabContainer .tabHeader { display:flex; flex-direction:row; justify-content: space-evenly; }
+.tabContainer .tabHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
 .tabContainer .tabHeader label {
   background-color: rgba(
     calc(var(--bgr) * var(--bgcontrast)),
@@ -504,25 +511,24 @@
 
    WARN, WARN: if you copy and paste, check the commas at EOL
  */
-.tabContainer:has( #tabArticles>input[type="radio"]:checked ) #panelArticles ul,
-.tabContainer:has( #tabProjects>input[type="radio"]:checked ) #panelProjects ul
-  {
+.tabContainer:has(#tabArticles > input[type="radio"]:checked) #panelArticles ul,
+.tabContainer:has(#tabProjects > input[type="radio"]:checked)
+  #panelProjects
+  ul {
   display: inline-block;
   transition: all 0.5s ease;
   min-width: 90%;
-	max-width:100%;
+  max-width: 100%;
 }
 
 @media screen and (min-resolution: 150dpi) {
-	.tabContainer .tabContent {
-	  max-width: 100%;
-	  min-width: 90%;
- 	}
-  
-/* vague to set both tabs */
-.tabContainer
-    .tabContent:has( label > input[type="radio"]:checked)
-    ul {
+  .tabContainer .tabContent {
+    max-width: 100%;
+    min-width: 90%;
+  }
+
+  /* vague to set both tabs */
+  .tabContainer .tabContent:has(label > input[type="radio"]:checked) ul {
     min-width: 90vw;
   }
 }
@@ -574,13 +580,12 @@
   }
   .homeContainer .myUglyFace {
     margin-left: 0em;
-	width: 80px;
-	height: 80px;
+    width: 80px;
+    height: 80px;
   }
   .homeContainer .metaWidget span.ultraSkinny {
     width: auto;
   }
-
 }
 
 .imgPictureContainer .references {

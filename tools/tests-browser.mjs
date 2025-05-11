@@ -54,43 +54,43 @@ const PORT_DEBUG = 9222;
 const PORT_SERVER = 8081;
 const URL_SERVER = "127.0.0.1";
 const BROWSER_HSH = {
-	"chrome":[
-  // https://peter.sh/experiments/chromium-command-line-switches/
-  // The above list is assembled from source code analysis, an is updated automatically frequently
-  "/snap/bin/chromium",
-  // This flag is being ignored
-  "--user-data-dir=/tmp/js-test",
-  "--profile-create-if-missing",
-  "--remote-debugging-port=" + PORT_DEBUG,
-  // add no empty window
-  // these two flags have been removed
-  "--ignore-certificate-errors",
-  "--test-type=webdriver",
-  "--allow-insecure-localhost",
-  "--mute-audio",
-  "--disable-popup-blocking",
-  "--disable-login-animations",
-  "--disable-default-apps",
-  "--allow-running-insecure-content",
-  "--unsafely-disable-devtools-self-xss-warnings",
-  // --bwsi
-  // this fake flag is also being ignored
-  "--ignore-this",
-],
-// see playwright manual if it supports libreWolf
-	"librewolf":[
-'/usr/bin/librewolf',
-// may need to recreate after a reboot
-'--profile=tmp/js-test2' ,
-'--new-instance',
-'--disable-pinch',
-//    run once with this enabled to create profile
-//     '--ProfileManager',
-// enable this for the RWD tests
-// --window-size width[,height]
-'--remote-debugging-port='+PORT_DEBUG, 
-'--new-tab'
-]
+  chrome: [
+    // https://peter.sh/experiments/chromium-command-line-switches/
+    // The above list is assembled from source code analysis, an is updated automatically frequently
+    "/snap/bin/chromium",
+    // This flag is being ignored
+    "--user-data-dir=/tmp/js-test",
+    "--profile-create-if-missing",
+    "--remote-debugging-port=" + PORT_DEBUG,
+    // add no empty window
+    // these two flags have been removed
+    "--ignore-certificate-errors",
+    "--test-type=webdriver",
+    "--allow-insecure-localhost",
+    "--mute-audio",
+    "--disable-popup-blocking",
+    "--disable-login-animations",
+    "--disable-default-apps",
+    "--allow-running-insecure-content",
+    "--unsafely-disable-devtools-self-xss-warnings",
+    // --bwsi
+    // this fake flag is also being ignored
+    "--ignore-this",
+  ],
+  // see playwright manual if it supports libreWolf
+  librewolf: [
+    "/usr/bin/librewolf",
+    // may need to recreate after a reboot
+    "--profile=tmp/js-test2",
+    "--new-instance",
+    "--disable-pinch",
+    //    run once with this enabled to create profile
+    //     '--ProfileManager',
+    // enable this for the RWD tests
+    // --window-size width[,height]
+    "--remote-debugging-port=" + PORT_DEBUG,
+    "--new-tab",
+  ],
 };
 
 const DIR_TESTS = path.join(__dirname, "..", "dist", "tests");
@@ -108,8 +108,7 @@ if (TESTS.length === 0) {
   console.error("Need to compile tests first");
   process.exit(34);
 }
-const BROWSER=choose_browser(process.argv, BROWSER_HSH);
-
+const BROWSER = choose_browser(process.argv, BROWSER_HSH);
 
 /**
  * listFiles
@@ -291,16 +290,14 @@ async function spinup_browser(cmd, onSocket) {
   let buf = "",
     found = false;
 
-	process.argv.includes('librewolf') && console.log("WWWWW", cmd);
+  process.argv.includes("librewolf") && console.log("WWWWW", cmd);
   const READ = (data) => {
-  
-  
     // being cautious on line buffering:
     buf += data;
-   	process.argv.includes('librewolf') && console.log("WWWWW", buf);
+    process.argv.includes("librewolf") && console.log("WWWWW", buf);
     let tmp = buf.split("\n");
     for (let i = 0; i < tmp.length; i++) {
-//WebDriver BiDi listening on ws://127.0.0.1:9222
+      //WebDriver BiDi listening on ws://127.0.0.1:9222
       if (!found && tmp[i].match(/^WebDriver BiDi listening on /)) {
         onSocket(tmp[i].match(/^WebDriver BiDi listening on ([^ ]+)$/)[1]);
         found = true;
@@ -390,12 +387,12 @@ function should_close_tabs(args) {
  * @return {Array<string>}
  */
 function choose_browser(args, browsers) {
-	let ret= browsers["chrome"];
-	let offset=args.indexOf("--browser");
-  if (offset >0 && (offset+1 <args.length) && (args[offset +1] in browsers) ) {
-    ret = browsers[ args[offset +1] ];
+  let ret = browsers["chrome"];
+  let offset = args.indexOf("--browser");
+  if (offset > 0 && offset + 1 < args.length && args[offset + 1] in browsers) {
+    ret = browsers[args[offset + 1]];
   }
-	return ret;
+  return ret;
 }
 
 /**

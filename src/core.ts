@@ -28,7 +28,7 @@ import {
   addFancyButtonArrow,
   addBashSamples,
 } from "./effect";
-import { SELF_VERSION, ENABLE_SELECT, matchVersion } from "./immutables";
+import { ENABLE_SELECT, matchVersion } from "./immutables";
 import { readingDuration } from "./reading";
 import { modalInit } from "./modal";
 import { applyAppearance } from "./cookies";
@@ -130,7 +130,7 @@ function burgerMenu(id: string = ".burgerMenu", dom: Document): void {
   }
 }
 
-/*eslint complexity: ["error", 30]*/
+/* eslint complexity: ["error", 30] */
 /**
  * siteCore
  * Applies all the functions in this project to the DOM

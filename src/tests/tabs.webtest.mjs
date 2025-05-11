@@ -2,12 +2,9 @@ import { expect, describe, it, run } from "jest-lite";
 
 import { execTest, wrap } from "./page-seed-playwright";
 import { delay } from "../networking";
-import { appendIsland } from "../dom-base";
-import { log, domLog } from "../log-services";
-import { createEvent, getCSSAttr } from "./vitest-addons";
+// import { log, domLog } from "../log-services";
+import { getCSSAttr } from "./vitest-addons";
 import { TEST_ONLY } from "../tabs";
-
-const { tabChange, initTabs, newInitState } = TEST_ONLY;
 
 describe("TEST BROWSER CSS based tabs", async () => {
   if (typeof process !== "undefined") {
@@ -21,10 +18,20 @@ describe("TEST BROWSER CSS based tabs", async () => {
       "/home.html?debug=1",
       async (dom, loc, win) => {
         expect(
-          getCSSAttr(".tabContainer:has( #articles ) .tabContent#panelArticles> ul", "display", dom, win),
+          getCSSAttr(
+            ".tabContainer:has( #articles ) .tabContent#panelArticles> ul",
+            "display",
+            dom,
+            win,
+          ),
         ).toBe("inline-block");
         expect(
-          getCSSAttr(".tabContainer:has( #projects ) .tabContent#panelProjects> ul", "display", dom, win),
+          getCSSAttr(
+            ".tabContainer:has( #projects ) .tabContent#panelProjects> ul",
+            "display",
+            dom,
+            win,
+          ),
         ).toBe("none");
         // this line is a poor test, but I don't have the colour libs imported here
         expect(
@@ -51,13 +58,21 @@ describe("TEST BROWSER CSS based tabs", async () => {
         });
         // this handler is supposed to be sync
         expect(dom.querySelector("#projects").dispatchEvent(EVT1)).toBe(true);
-
-            ".tabContainer:has( #articles ) .tabHeader label#tabArticles",
         expect(
-          getCSSAttr(".tabContainer:has( #projects ) .tabContent#panelProjects>ul", "display", dom, win),
-        ).toBe("inline-block");
+            getCSSAttr(
+              ".tabContainer:has( #projects ) .tabContent#panelProjects>ul",
+              "display",
+              dom,
+              win,
+            ),
+          ).toBe("inline-block");
         expect(
-          getCSSAttr(".tabContainer:has( #articles ) .tabContent#panelArticles>ul", "display", dom, win),
+          getCSSAttr(
+            ".tabContainer:has( #articles ) .tabContent#panelArticles>ul",
+            "display",
+            dom,
+            win,
+          ),
         ).toBe("none");
         // this line is a poor test, but I don't have the colour libs imported here
         expect(
@@ -88,15 +103,22 @@ describe("TEST BROWSER CSS based tabs", async () => {
       TEST_NAME,
       "/home.html?debug=1#projects",
       async (dom, loc, win) => {
-        // in this file pay attention to HTML ids
-        const [BTN2, BTN1] = dom.querySelectorAll("#btn2, #btn1");
-
         expect(
-          getCSSAttr(".tabContainer:has( #projects:checked ) .tabContent#panelProjects>ul", "display", dom, win),
+          getCSSAttr(
+            ".tabContainer:has( #projects:checked ) .tabContent#panelProjects>ul",
+            "display",
+            dom,
+            win,
+          ),
         ).toBe("inline-block");
-		// thorough people would add a :not selector for checked, but this is a radio group so i'll skip. 
+        // thorough people would add a :not selector for checked, but this is a radio group so i'll skip.
         expect(
-          getCSSAttr(".tabContainer:has( #articles ) .tabContent#panelArticles>ul", "display", dom, win),
+          getCSSAttr(
+            ".tabContainer:has( #articles ) .tabContent#panelArticles>ul",
+            "display",
+            dom,
+            win,
+          ),
         ).toBe("none");
 
         // this line is a poor test, but I don't have the colour libs imported here
@@ -126,10 +148,20 @@ describe("TEST BROWSER CSS based tabs", async () => {
         expect(dom.querySelector("#articles").dispatchEvent(EVT1)).toBe(true);
 
         expect(
-          getCSSAttr(".tabContainer:has( #articles ) .tabContent#panelArticles>ul", "display", dom, win),
+          getCSSAttr(
+            ".tabContainer:has( #articles ) .tabContent#panelArticles>ul",
+            "display",
+            dom,
+            win,
+          ),
         ).toBe("inline-block");
         expect(
-          getCSSAttr(".tabContainer:has( #projects ) .tabContent#panelProjects>ul", "display", dom, win),
+          getCSSAttr(
+            ".tabContainer:has( #projects ) .tabContent#panelProjects>ul",
+            "display",
+            dom,
+            win,
+          ),
         ).toBe("none");
         expect(
           getCSSAttr(
