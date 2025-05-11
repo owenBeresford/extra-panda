@@ -21,7 +21,7 @@
 - Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
 - Splash this into every test process https://stackoverflow.com/a/74565753 , maybe I will get error reporting back
 - Factor out IAmLibreWolf CSS into isolated file, ~99% of the internet doesn't need these decl's 
-
+- For the other CSS features, add a visual test browserTest etc
 
 ### Previous Updates
 
