@@ -3,7 +3,6 @@ import { assert, describe, it } from "vitest";
 import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../core";
 import { appendIsland } from "../dom-base";
-import { createEvent } from "./vitest-addons";
 
 const { burgerMenu, initPopupMobile } = TEST_ONLY;
 

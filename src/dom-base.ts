@@ -202,8 +202,8 @@ export function isLibreWolf(
       dom.body.classList.add("IAmLibreWolf");
       (
         dom.querySelector('.fullWidth p[role="status"]') as HTMLElement
-      ).innerText +=
-        "  Is this librewolf?,  could you tell me if this is wrong.";
+      ).innerHTML +=
+        " &nbsp; Is this librewolf?  Could you tell me if this is wrong.";
     }
     return true;
   }
@@ -460,6 +460,23 @@ export function calcScreenDPI(dom: Document, win: Window): number {
   }
 }
 
+/**
+ * appendCSSFile
+ * A wrapper to inject a CSS LINK element
+ * ie   <link rel="stylesheet" href="/asset/ob1.min.css">
+ 
+ * @param {string} fn 
+ * @param {Document} dom
+ * @public
+ * @return {void}
+ */
+export function appendCSSFile(fn: string, dom: Document): void {
+  let nu = dom.createElement("link");
+  nu.setAttribute("rel", "stylesheet");
+  nu.setAttribute("href", fn);
+  dom.head.appendChild(nu);
+}
+
 //////////////////////////////////////////////// testing /////////////////////////////////////////////////////////////
 // no injectOpts as it wouldn't make sense
 
@@ -509,4 +526,5 @@ export const TEST_ONLY = {
   ready,
   calcScreenDPI,
   currentSize,
+  appendCSSFile,
 };

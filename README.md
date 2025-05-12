@@ -129,7 +129,7 @@ Notes:
 - I am adding search params for testing, rather than a Mock, as I may want to use them during QA
 - It is expensive [in devtime] to create keyboard events in a different tab/ window.
 - Why do I not tidy-up unused vars in this code base?  Most are in unit tests, its better readability if *standard* args are present, IMO (Promises, forEach or map etc)
-- I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together with `rebase`, it's a nul-point difference.  UPDATE: the expanded eslint config does make garbage changes on some files, I do not know why.
+- I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together with `rebase`, it's a nul-point difference.  UPDATE: the expanded eslint config does make garbage changes on some files, I do not know why.  UPDATE2: I binary deleted until the issue went away.
 - More recently, I made the eslint config more complex, and this reports extra details.
 - I am also moving the MJS files in tests to TS.
 
@@ -148,7 +148,7 @@ Notes:
     - UPDATE: due to further features, I have crept over the 10k boundary &lt;Meme: "so it begins"&gt;
   - I think I have perfect feature match, and new solution is 4% of volume of previous solution. UPDATE 6% in 2025
 
-I have replaced the local CSS with better organised CSS to make it more readable.  I have updated to add more recent phones every few years.   I am adding more features using CSS.   I could reduce CSS volume if I had a tool to remove unneeded code from foundation imnport.   Recently, I have removed some old CSS from my style-sheet, but not much volume of change.   
+I have replaced the local CSS with better organised CSS to make it more readable.  I have updated to add more recent phones every few years.   I am adding more features using CSS.   I could reduce CSS volume if I had a tool to remove unneeded code from foundation import.   Recently, I have removed some old CSS from my style-sheet, but not much volume of change.   
 
 </details>
 <details open>
@@ -184,9 +184,9 @@ This project now holds the CSS used to style the site.   There is a slow moving 
 
 - I moved the CSS into this project, and rationalised it.
 - The standards and browsers have moved since my first edition, and using newer CSS features works better.
-- I have refactored the CSS to make it more readable, rather than minimum-spend "append abit more to the end".  My investment was all on English texts.   
+- I have refactored the CSS to make it more readable, rather than minimum-spend "append abit more to the end".  Across this project, my investment was all on English texts.   
 - For browsers in 2005-8, I thought that CSS via HTML IDs worked better.   This may have been true for MSIE 5-6, but is false today.   I have reduced the number of HTML IDs used as CSS selectors.   
-- I restructured the CSS into "features", rather than cloud of unique IDs/ class names.   I think I have improved the names used so it will be more clear to any readers.
+- I restructured the CSS into "features", rather than cloud of unique IDs/ class names.   I think I have improved the names used so it will be more clear to any readers.   As the size increases, the flat-namespace cloud was getting harder and harder to read.
 - I have removed various old commented CSS, and also aggregated all my ideas notes into a single ideas file that I might read [ever].
 - In 2022, I pulled any CSS blobs from the articles into the single CSS sheet, as I was hoping this would mean I could factor common sections and have less code.  This has worked somewhat.
 - I discarded SOME older work when I imported Foundation [https://get.foundation/sites/docs/installation.html installation] [https://get.foundation/sites/docs/ docs] in 2017.   Most of the current CSS volume is Foundation
@@ -220,11 +220,17 @@ The articles with no extra/ dedicated CSS are composed of "standard components".
 - fewWords          ~ no-vis ~ a 30em / 480px block  
 
 Classes that start "add" normally just enable some feature, and have no CSS behaviour of their own.   There are some classes that are too simple and widely used to get a test.   
-**With the test script running the vis-tests are served as https://127.0.0.1:8081/vis/*   Unlike my site, they need a full file-name**  Looking from multiple devices and screen sizes is advised
+**With the test script running the vis-tests are served as https://127.0.0.1:8081/vis/*   Unlike my site, they need a full file-name**.   Manual review from multiple devices and screen sizes is advised
 
 I may refactor to eliminate the word Widget.   Some pages have extra features eg [https://owenberesford.me.uk/resource/form-no-js-maquette], but this is rarer than adjustments.
 I am adding test pages to show the articles with with broad range of content, rather than just the content when I made the feature. 
 When running locally the "debug-layout" test capacity is useful.  
+
+I am integrity-testing CSS for
+- chrome
+- ff
+- edge (periodically)
+- librewolf - this is the most popular FOS user-centric browser, AFAIK (i.e. not widely-used Chrome ad-ware, or new FF LLM-adware) 
 
 </details>
 <details>

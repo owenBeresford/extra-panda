@@ -1,0 +1,20 @@
+The following URL should be looked at for manual tests.
+I could automatically open the tabs, but think that would be annoying if you only want to look at 1 file
+
+https://127.0.0.1:8081/vis/access-src-test.html
+https://127.0.0.1:8081/vis/button-bar-test.html
+https://127.0.0.1:8081/vis/list-test.html
+https://127.0.0.1:8081/vis/meta-widget-test.html
+https://127.0.0.1:8081/vis/accordion-widget-test.html
+https://127.0.0.1:8081/vis/foot-widget-test.html
+https://127.0.0.1:8081/vis/log-widget-test.html
+https://127.0.0.1:8081/vis/mobile-biblio-test.html
+https://127.0.0.1:8081/vis/adjacent-widget-test.html
+https://127.0.0.1:8081/vis/home-test.html
+https://127.0.0.1:8081/vis/mastodon-widget-test.html
+https://127.0.0.1:8081/vis/mobile-menu-test.html
+https://127.0.0.1:8081/vis/better-dl-test.html
+https://127.0.0.1:8081/vis/keywords-widget-test.html
+https://127.0.0.1:8081/vis/menu-test.html
+https://127.0.0.1:8081/vis/pop-over-widget-test.html
+

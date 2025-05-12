@@ -26,7 +26,7 @@ false
  
  * @param {string} target
  * @public
- * @return {boolean}
+ * @returns {boolean}
  */
 export function matchVersion(target: string): boolean {
   // see samples, needs replacing before 1.0.10 is hit,

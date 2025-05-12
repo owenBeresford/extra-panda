@@ -331,13 +331,9 @@
     padding-left: 0px;
     padding-right: 0px;
   }
-  .homeContainer fieldset.tabs-content {
+  .homeContainer .tabContent {
     width: 100%;
     max-width: 100%;
-  }
-
-  .IAmLibreWolf .homeContainer fieldset.tabs-content {
-    max-width: 38%;
   }
 
   .homeContainer nav.row a {
@@ -355,68 +351,6 @@
   }
 }
 
-@media screen and (min-resolution: 200dpi) {
-  .IAmLibreWolf .bigScreenOnly {
-    display: none;
-  }
-  .IAmLibreWolf .smallScreenOnly {
-    display: inline-block;
-  }
-  .IAmLibreWolf .homeContainer .home.column {
-    flex: 1 100 0px;
-  }
-  .IAmLibreWolf .mastodonWidget input {
-    width: 100vw;
-    min-width: 10em;
-    display: inline-block;
-  }
-}
-@media screen and (max-resolution: 199dpi) {
-  .IAmLibreWolf .SMshareWidget span.bigScreenOnly,
-  .IAmLibreWolf .SMshareWidget span.bigScreenOnly,
-  .IAmLibreWolf .bigScreenOnly,
-  .IAmLibreWolf .SMshareWidget a.bigScreenOnly {
-    display: inline-block;
-  }
-
-  .IAmLibreWolf .smallScreenOnly {
-    display: none;
-  }
-  .IAmLibreWolf .homeContainer .home.column {
-    flex: 2 1 0px;
-  }
-  .IAmLibreWolf .mastodonWidget input {
-    width: 15em;
-    display: inline-block;
-    font-size: 100%;
-  }
-
-  /*
-    .IAmLibreWolf .h4_page p, .IAmLibreWolf .h4_page li, .IAmLibreWolf .h4_page span,  
-	.IAmLibreWolf .h4_page a, .IAmLibreWolf label {
-		font-size: 100%; width: fit-content; max-width: 15em;
-    }
-*/
-}
-
-@media screen and (max-resolution: 199dpi) and (min-aspect-ratio: 3 / 5) and (min-width: 800px) {
-  .IAmLibreWolf .mastodonWidget.bigScreenOnly {
-    display: none;
-  }
-  .IAmLibreWolf .mastodonWidget.bigScreenOnly[open] {
-    display: block;
-  }
-}
-
-@media screen and (min-resolution: 200dpi) and (min-aspect-ratio: 3 / 5) and (min-width: 800px) {
-  .IAmLibreWolf .mastodonWidget.bigScreenOnly {
-    display: none;
-  }
-  .IAmLibreWolf .mastodonWidget.bigScreenOnly[open] {
-    display: block;
-  }
-}
-
 .tabContainer {
   position: relative;
   top: -14em;
@@ -430,54 +364,80 @@
     height: fit-content;
     background: green;
   }
+
+  .homeContainer .home.icerow .column.tabContainer {
+    max-width: fit-content;
+  }
 }
 
-.tabContainer .tabs-content {
+.tabContainer .tabContent {
   border-top: 1px solid #e6e6e6;
   max-width: 25em;
   width: fit-content;
   display: inline-block;
   background: inherit;
 }
-.tabContainer .tabs-content ul {
+.tabContainer .tabContent ul {
   display: none;
-  margin-top: 10em;
-}
-.tabContainer legend {
-  white-space: nowrap;
-  z-index: 0;
   margin-top: 2em;
 }
-.tabContainer
-  .tabs-content:has(legend > label > input[type="radio"]:checked)
+.tabContainer label {
+  white-space: nowrap;
+  margin-top: 2em;
+}
+.tabContainer .tabHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.tabContainer .tabHeader label {
+  background-color: rgba(
+    calc(var(--bgr) * var(--bgcontrast)),
+    calc(var(--bgg) * var(--bgcontrast)),
+    calc(var(--bgb) * var(--bgcontrast)),
+    1
+  );
+}
+
+/* I first made a nice properly nested structure, with no HTML IDs in the CSS, and automatic scaling if you added new tabs
+	Google is complaining, so here is an alternative with HTML IDs everywhere, 
+		and the CSS will need to be patched if you add another tab
+
+   WARN, WARN: if you copy and paste, check the commas at EOL
+ */
+.tabContainer:has(#tabArticles > input[type="radio"]:checked) #panelArticles ul,
+.tabContainer:has(#tabProjects > input[type="radio"]:checked)
+  #panelProjects
   ul {
   display: inline-block;
   transition: all 0.5s ease;
-  min-width: 25em;
+  min-width: 90%;
+  max-width: 100%;
 }
 
 @media screen and (min-resolution: 150dpi) {
-  .tabContainer
-    .tabs-content:has(legend > label > input[type="radio"]:checked)
-    ul {
+  .tabContainer .tabContent {
+    max-width: 100%;
+    min-width: 90%;
+  }
+
+  /* vague to set both tabs */
+  .tabContainer .tabContent:has(label > input[type="radio"]:checked) ul {
     min-width: 90vw;
   }
 }
 
-.tabContainer legend label {
+.tabContainer label {
   padding: 1em;
   min-width: 8em;
   text-align: center;
-  z-index: 2;
 }
 
-.tabContainer legend,
+.tabContainer label,
 .tabContainer .fakeTab {
   display: inline-block;
   width: fit-content;
   height: fit-content;
-  position: absolute;
-  top: 0em;
   margin-left: 1em;
   background: transparent;
 }
@@ -487,20 +447,7 @@
   margin-bottom: 0;
   padding-bottom: 0;
 }
-/* test on more phones, I need to use this value, that doesn't work in the fake phone in chrome */
-@media screen and (min-resolution: 150dpi) {
-  .tabContainer legend,
-  .tabContainer .fakeTab {
-    top: 0em;
-  }
-}
 
-.tabContainer .tabs-content:nth-child(2) legend {
-  left: 9em;
-}
-.tabContainer .tabs-content:nth-child(3) legend {
-  left: 18em;
-}
 .column.tabContainer {
   min-width: min(100%, 400px);
   max-width: 40%;
@@ -515,16 +462,21 @@
     width: 160px;
   }
 }
-@media screen and (max-width: 1280px) {
-  .tabContainer .tabs-content:nth-child(2) legend {
-    left: 7em;
-  }
-  .tabContainer .tabs-content:nth-child(3) legend {
-    left: 16em;
-  }
-}
-
+/* test on more phones, I need to use this value, that doesn't work in the fake phone in chrome */
 @media screen and (min-resolution: 150dpi) {
+  .tabContainer label,
+  .tabContainer .fakeTab {
+    top: 0em;
+  }
+  .tabContainer span[rel="me"].fakeTab {
+    margin-left: 0em;
+    padding-left: 0em;
+  }
+  .homeContainer .myUglyFace {
+    margin-left: 0em;
+    width: 80px;
+    height: 80px;
+  }
   .homeContainer .metaWidget span.ultraSkinny {
     width: auto;
   }

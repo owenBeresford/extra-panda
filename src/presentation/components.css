@@ -25,6 +25,7 @@
 }
 .footWidget p {
   margin-bottom: 0.2em;
+  margin-left: 1em;
 }
 .footWidget a {
   text-decoration: underline;
@@ -33,6 +34,7 @@
 @media screen and (min-resolution: 150dpi) {
   .footWidget p {
     margin-bottom: 1em;
+    margin-left: 0.2em;
   }
   .footWidget {
     width: 100%;
@@ -451,14 +453,6 @@ This is big screen mac, should work with wide versions
   .SMshareWidget a {
     width: inherit;
   }
-  .IAmLibreWolf .SMshareWidget a {
-    width: initial;
-  }
-}
-@media screen and (min-resolution: 200dpi) {
-  .IAmLibreWolf .SMshareWidget a {
-    width: inherit;
-  }
 }
 
 @media screen and (max-resolution: 130dpi) and (min-aspect-ratio: 3/5) and (min-width: 800px) {
@@ -635,12 +629,6 @@ This is big screen mac, should work with wide versions
   padding: 0.3em 1em;
 }
 
-@media screen and (max-resolution: 199dpi) {
-  .IAmLibreWolf .dfl li:first-child {
-    padding-left: 0;
-  }
-}
-
 /** headingsWidget
 	nearly every page */
 .headingsWidget summary {
@@ -814,16 +802,6 @@ a.adjacentItem:before {
     display: block;
     width: 96vw;
   }
-  .IAmLibreWolf .adjacentList {
-    display: flex;
-  }
-  .IAmLibreWolf .adjacentList li {
-    display: inline-block;
-  }
-  .IAmLibreWolf a.adjacentItem:before {
-    display: block;
-    width: fit-content;
-  }
   span.adjacentItem,
   .adjacentItem {
     display: block;
@@ -873,12 +851,6 @@ a.adjacentItem:hover:before {
   }
   .adjacentWidget a:hover:before {
     top: inherit;
-  }
-}
-@media screen and (min-resolution: 200dpi) {
-  .IAmLibreWolf .adjacentList,
-  .IAmLibreWolf .adjacentList li {
-    display: block;
   }
 }
 
@@ -1083,6 +1055,11 @@ p.buttonBar a:first-child {
   background-color: var(--starkfg);
 }
 
+/* I dithered on whether this is best as :
+   * addScroll
+   * withScroll 
+but this is a permanent effect, so with is better choice in this library
+*/
 .popOverWidget details.withScroll[open] {
   overflow-y: scroll;
   overflow-x: scroll;
@@ -1139,21 +1116,12 @@ p.buttonBar a:first-child {
     width: 100vw;
   }
 
-  .IAmLibreWolf .popOverWidget details[open] {
-    width: 60%;
-  }
   .popOverWidget summary {
     margin: initial;
     margin-left: 2px;
     margin-right: 2px;
     font-size: 110%;
     word-break: break-all;
-  }
-}
-@media screen and (min-resolution: 199dpi) {
-  .IAmLibreWolf .popOverWidget details[open] {
-    width: 100%;
-    margin-left: 0;
   }
 }
 
@@ -1263,32 +1231,6 @@ code[lang="html"].highlight::before,
   content: "";
 }
 
-/** tabs-content for TabsWidget 
-	inject root class to force work if needed
-	currently only home-test
-  */
-@media screen and (max-width: 700px) {
-  fieldset.tabs-content {
-    max-width: 98%;
-    width: 98%;
-  }
-}
-
-@media screen and (min-resolution: 150dpi) {
-  .tabs-content p,
-  .tabs-content li,
-  .tabs-content a {
-    font-size: 120%;
-  }
-  .tabs-content li a {
-    font-size: 100%;
-  }
-  .tabs-content {
-    width: 100%;
-    max-width: 100vw;
-  }
-}
-
 /** addReferences
 	about 70-80% of pages
 */
@@ -1338,16 +1280,6 @@ code[lang="html"].highlight::before,
   color: var(--errorbg);
   background-color: var(--starkfg);
 }
-/*  Dark-art attempting to map adjacent items.
-  not enough success rate, so removed
-.addReferences sup:has( + sup, + sup:last-of-type ), 
-.addReferences sup:has( + a + sup )  { background:green; }
-*/
-.IAmLibreWolf .addReferences.showBiblioErrors sup a:not([aria-label]),
-.IAmLibreWolf .addReferences.showBiblioErrors sup a[aria-label~="HTTP_ERROR,"] {
-  padding: 0.4em 0.5em;
-  line-height: 0.8;
-}
 
 /* this proved too fiddly, so removed
 div.addReferences a.leanIn:before { left: calc( 95% - 32em ); } 
@@ -1387,8 +1319,9 @@ div.addReferences sup a.leanIn:before { left: calc( 18cqw - 32em ); }
 .addReferences .buttonBar a {
   padding: 0.85em 1em;
 }
-/* These links should NEVER get to production, so I am adding a warning for local editing 
+/* These empty links should NEVER get to production, so I am adding a warning for local editing 
 	They are added by wiki software if I make an oversight */
+.linkTest a[class=""],
 .addReferences a[class=""] {
   background: magenta;
   padding: 0.5em;
@@ -1419,10 +1352,6 @@ sup a[aria-label],
 footer a {
   text-decoration: underline;
 }
-.IAmLibreWolf sub,
-.IAmLibreWolf sup {
-  font-size: 100%;
-}
 @media screen and (min-resolution: 150dpi) {
   a sup i.fa.invert {
     font-size: 90%;
@@ -1436,9 +1365,5 @@ footer a {
   }
   sup a {
     line-height: 1.2;
-  }
-  .IAmLibreWolf sub,
-  .IAmLibreWolf sup {
-    font-size: 100%;
   }
 }

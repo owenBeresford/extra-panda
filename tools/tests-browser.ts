@@ -505,7 +505,7 @@ async function runExtract(urn: string): Promise<void> {
     "(max-width:800px) and (min-resolution:150dpi)",
   ];
   let closing: Array<END_CB> = [],
-    CHILD,
+    CHILD, // this varies, but should be some resource or socket
     end0: END_CB;
 
   dDelta = 3000;

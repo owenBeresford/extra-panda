@@ -140,7 +140,7 @@ function v(e2, t2, n2) {
   } catch (e3) {
     n2.noop++;
   }
-  return !(!(t2 && "Gecko" === t2.product && t2.maxTouchPoints > 0) || r2) && (console.warn("Is this librewolf?, could tell me if this is wrong."), e2.body.classList.contains("IAmLibreWolf") || (e2.body.classList.add("IAmLibreWolf"), e2.querySelector('.fullWidth p[role="status"]').innerText += "  Is this librewolf?,  could you tell me if this is wrong."), true);
+  return !(!(t2 && "Gecko" === t2.product && t2.maxTouchPoints > 0) || r2) && (console.warn("Is this librewolf?, could tell me if this is wrong."), e2.body.classList.contains("IAmLibreWolf") || (e2.body.classList.add("IAmLibreWolf"), e2.querySelector('.fullWidth p[role="status"]').innerHTML += " &nbsp; Is this librewolf?  Could you tell me if this is wrong."), true);
 }
 function x(e2, t2, r2) {
   try {
@@ -150,11 +150,11 @@ function x(e2, t2, r2) {
     return n("error", "Missing data:" + e3.message), -1;
   }
 }
-function q(e2, t2) {
+function C(e2, t2) {
   const n2 = e2.getBoundingClientRect();
   return [Math.round(t2.scrollY + n2.top), Math.round(t2.scrollX + n2.left)];
 }
-async function C(e2, t2, r2) {
+async function q(e2, t2, r2) {
   try {
     if (!r2.navigator.clipboard) throw new Error("No clipboard available");
     await r2.navigator.clipboard.writeText(t2.href);
@@ -304,7 +304,7 @@ function J(e2, t2, n2) {
   }
   r2 = e2.querySelector("#copyURL"), r2 && function(e3, t3, n3, r3, o3) {
     e3.addEventListener("click", async (e4) => (await t3(n3, r3, o3), false)), e3.addEventListener("touch", async (e4) => (await t3(n3, r3, o3), false)), e3.addEventListener("keypress", async (e4) => (await t3(n3, r3, o3), false));
-  }(r2, C, e2, t2, n2), Y(e2.querySelector("#popup #sendMasto"), $, e2, t2, n2);
+  }(r2, q, e2, t2, n2), Y(e2.querySelector("#popup #sendMasto"), $, e2, t2, n2);
   const o2 = Array.from(e2.querySelectorAll("#shareMenuTrigger, #shareClose"));
   for (const r3 in o2) Y(o2[r3], B, e2, t2, n2);
   K(e2.querySelector("#hideMasto"), _, e2, n2);
@@ -535,7 +535,7 @@ await async function(t2, r2, o2, i2) {
   !function(e2, t3) {
     e2.querySelector("body").setAttribute("style", "--offset-height: 0;");
     const n2 = Array.from(e2.querySelectorAll(".lotsOfWords, .halferWords, .fewWords"));
-    for (let e3 = 0; e3 < n2.length; e3++) n2[e3].setAttribute("style", "--offset-height: " + q(n2[e3], t3)[0] + "px;");
+    for (let e3 = 0; e3 < n2.length; e3++) n2[e3].setAttribute("style", "--offset-height: " + C(n2[e3], t3)[0] + "px;");
   }(r2, i2), function(t3, n2, r3) {
     const o3 = N(t3, n2, r3);
     if (!w(n2.host) && !o3) return;
@@ -567,7 +567,10 @@ await async function(t2, r2, o2, i2) {
     if (n2.ft = n2.ft.replaceAll("%38", ";"), n2.cr = n2.cr.replaceAll("%38", ";"), n2.dn = n2.dn.replaceAll("%38", ";"), n2.fs = n2.fs.replaceAll("%38", ";"), !n2.ft || !n2.fs) return;
     const r3 = "body, .annoyingBody { font-family: " + n2.ft + "; font-size: " + n2.fs + "; direction:" + n2.dn + "; }", o3 = e2.createElement("style");
     o3.setAttribute("id", "client-set-css"), o3.innerText = r3, e2.getElementsByTagName("head")[0].append(o3);
-  }(r2), ae(r2), O(1040, r2, o2, i2), v(r2, i2.navigator, i2), !N(r2, o2, i2) && "/resource/home" !== o2.pathname && r2.querySelectorAll(".reading").length < 2 && function(t3, r3, o3) {
+  }(r2), ae(r2), O(1040, r2, o2, i2), v(r2, i2.navigator, i2) && (console.log("we are libreWolf (yje test)"), function(e2, t3) {
+    let n2 = t3.createElement("link");
+    n2.setAttribute("rel", "stylesheet"), n2.setAttribute("href", e2), t3.head.appendChild(n2);
+  }("/asset/librewolf.min.css", r2)), !N(r2, o2, i2) && "/resource/home" !== o2.pathname && r2.querySelectorAll(".reading").length < 2 && function(t3, r3, o3) {
     const i3 = Object.assign({}, { timeFormat: "m", dataLocation: ".blocker", target: "#shareGroup .SMshareWidget", wordPerMin: 275, codeSelector: "code", refresh: false, debug: e(o3) }, t3), a3 = i3.dataLocation + " img, " + i3.dataLocation + " source, " + i3.dataLocation + " object", s3 = re(i3.dataLocation, r3);
     if (!s3) return;
     let l2 = 0;

@@ -17,6 +17,7 @@ import {
   appendIsland,
   applyVolume,
   isLibreWolf,
+  appendCSSFile,
   expandDetails,
   duplicateSelection,
 } from "./dom-base";
@@ -28,7 +29,7 @@ import {
   addFancyButtonArrow,
   addBashSamples,
 } from "./effect";
-import { SELF_VERSION, ENABLE_SELECT, matchVersion } from "./immutables";
+import { ENABLE_SELECT, matchVersion } from "./immutables";
 import { readingDuration } from "./reading";
 import { modalInit } from "./modal";
 import { applyAppearance } from "./cookies";
@@ -54,6 +55,7 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
   if (!isLocal(loc.host) && !MOBILE) {
     return;
   }
+  // #leSigh, eroneus DPI on libreWolf
   if (isLibreWolf(dom, win.navigator, win) && !MOBILE) {
     return;
   }
@@ -130,7 +132,7 @@ function burgerMenu(id: string = ".burgerMenu", dom: Document): void {
   }
 }
 
-/*eslint complexity: ["error", 30]*/
+/* eslint complexity: ["error", 30] */
 /**
  * siteCore
  * Applies all the functions in this project to the DOM
@@ -180,7 +182,9 @@ export async function siteCore(
   applyAppearance(dom);
   modalInit(dom);
   expandDetails(1040, dom, loc, win);
-  isLibreWolf(dom, win.navigator, win);
+  if (isLibreWolf(dom, win.navigator, win)) {
+    appendCSSFile("/asset/librewolf.min.css", dom);
+  }
 
   if (
     !isMobile(dom, loc, win) &&

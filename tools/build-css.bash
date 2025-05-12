@@ -14,4 +14,7 @@ cat $PUBLICATION/fontello.css src/presentation/fonts.css $PUBLICATION/foundation
 node ./node_modules/.bin/uglifycss --max-line-len 1000 --debug /tmp/ob1.css --output /tmp/ob1.min.css
 cp /tmp/ob1.min.css $PUBLICATION
 cp /tmp/ob1.min.css ./src/fixtures/
- 
+
+node ./node_modules/.bin/uglifycss --max-line-len 1000 --debug src/presentation/librewolf.css --output /tmp/librewolf.min.css
+cp /tmp/librewolf.min.css $PUBLICATION
+cp /tmp/librewolf.min.css ./src/fixtures/

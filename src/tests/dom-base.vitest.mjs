@@ -17,6 +17,7 @@ const {
   screenWidth,
   isFullstack,
   copyURL,
+  appendCSSFile,
 } = TEST_ONLY;
 
 describe("TEST dom-base", () => {
@@ -146,6 +147,19 @@ describe("TEST dom-base", () => {
     assert.equal(dom.getElementsByTagName("h2").length, 2, "assert #10");
     setIsland("#point1", "", dom);
     assert.equal(dom.getElementsByTagName("h2").length, 0, "assert #11");
+  });
+
+  it("go 11: appendCSSFile ", () => {
+    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
+
+    let str = "<h2>WWWWW WWWWW</h2>";
+    appendIsland("#point1", str, dom);
+    const LIST1 = [...dom.getElementsByTagName("link")];
+    appendCSSFile("/asset/unit-test.css", dom);
+    const LIST2 = [...dom.getElementsByTagName("link")];
+    console.log("this should be complete treee", dom.head.outerHTML, LIST1);
+
+    assert.equal(LIST1.length + 1, LIST2.length, "assert #1");
   });
 
   it("go 7:  docOffsets ", () => {
