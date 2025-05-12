@@ -460,7 +460,6 @@ export function calcScreenDPI(dom: Document, win: Window): number {
   }
 }
 
-
 /**
  * appendCSSFile
  * A wrapper to inject a CSS LINK element
@@ -471,11 +470,11 @@ export function calcScreenDPI(dom: Document, win: Window): number {
  * @public
  * @return {void}
  */
-export function appendCSSFile(fn:string, dom:Document):void {
-	let nu=dom.createElement('link');
-	nu.setAttribute('rel', "stylesheet");
-	nu.setAttribute('href', fn);	
-    dom.head.appendChild( nu);
+export function appendCSSFile(fn: string, dom: Document): void {
+  let nu = dom.createElement("link");
+  nu.setAttribute("rel", "stylesheet");
+  nu.setAttribute("href", fn);
+  dom.head.appendChild(nu);
 }
 
 //////////////////////////////////////////////// testing /////////////////////////////////////////////////////////////

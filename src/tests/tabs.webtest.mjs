@@ -59,13 +59,13 @@ describe("TEST BROWSER CSS based tabs", async () => {
         // this handler is supposed to be sync
         expect(dom.querySelector("#projects").dispatchEvent(EVT1)).toBe(true);
         expect(
-            getCSSAttr(
-              ".tabContainer:has( #projects ) .tabContent#panelProjects>ul",
-              "display",
-              dom,
-              win,
-            ),
-          ).toBe("inline-block");
+          getCSSAttr(
+            ".tabContainer:has( #projects ) .tabContent#panelProjects>ul",
+            "display",
+            dom,
+            win,
+          ),
+        ).toBe("inline-block");
         expect(
           getCSSAttr(
             ".tabContainer:has( #articles ) .tabContent#panelArticles>ul",

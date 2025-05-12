@@ -121,11 +121,6 @@
     min-width: min(100%, 550px);
     top: -13em;
   }
-
-
-
-
-
 }
 
 @media screen and (min-resolution: 200dpi) {
@@ -185,7 +180,6 @@
     max-width: auto;
     min-width: auto;
   }
-
 }
 
 @media screen and (max-resolution: 199dpi) {
@@ -249,7 +243,3 @@
     display: block;
   }
 }
-
-
-
-

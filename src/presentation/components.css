@@ -48,7 +48,6 @@
     flex: none;
     height: auto;
   }
-
 }
 @media screen and (max-width: 1000px) {
   /* as of 2020 this only applies to the home page */
@@ -1368,4 +1367,3 @@ footer a {
     line-height: 1.2;
   }
 }
-

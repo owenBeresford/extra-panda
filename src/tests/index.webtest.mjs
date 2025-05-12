@@ -66,7 +66,7 @@ describe("BROWSER TEST index ", async () => {
           "TEST MESSAGE (test script to child PID code-under-test)",
           step1,
           step2,
-          'LOG_USAGE' in win.console,
+          "LOG_USAGE" in win.console,
           win.console.LOG_USAGE,
         );
 

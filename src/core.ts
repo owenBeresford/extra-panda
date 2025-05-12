@@ -55,7 +55,7 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
   if (!isLocal(loc.host) && !MOBILE) {
     return;
   }
-	// #leSigh, eroneus DPI on libreWolf
+  // #leSigh, eroneus DPI on libreWolf
   if (isLibreWolf(dom, win.navigator, win) && !MOBILE) {
     return;
   }
@@ -182,9 +182,9 @@ export async function siteCore(
   applyAppearance(dom);
   modalInit(dom);
   expandDetails(1040, dom, loc, win);
-  if(isLibreWolf(dom, win.navigator, win)) {
-	appendCSSFile("/asset/librewolf.min.css", dom );
-	}
+  if (isLibreWolf(dom, win.navigator, win)) {
+    appendCSSFile("/asset/librewolf.min.css", dom);
+  }
 
   if (
     !isMobile(dom, loc, win) &&
