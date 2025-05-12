@@ -460,6 +460,24 @@ export function calcScreenDPI(dom: Document, win: Window): number {
   }
 }
 
+
+/**
+ * appendCSSFile
+ * A wrapper to inject a CSS LINK element
+ * ie   <link rel="stylesheet" href="/asset/ob1.min.css">
+ 
+ * @param {string} fn 
+ * @param {Document} dom
+ * @public
+ * @return {void}
+ */
+export function appendCSSFile(fn:string, dom:Document):void {
+	let nu=dom.createElement('link');
+	nu.setAttribute('rel', "stylesheet");
+	nu.setAttribute('href', fn);	
+    dom.head.appendChild( nu);
+}
+
 //////////////////////////////////////////////// testing /////////////////////////////////////////////////////////////
 // no injectOpts as it wouldn't make sense
 
@@ -509,4 +527,5 @@ export const TEST_ONLY = {
   ready,
   calcScreenDPI,
   currentSize,
+  appendCSSFile,
 };
