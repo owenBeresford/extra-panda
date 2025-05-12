@@ -49,35 +49,7 @@
     height: auto;
   }
 
-  .IAmLibreWolf .footWidget {
-    text-align: center;
-  }
-
-  .IAmLibreWolf .footWidget .bigColumn {
-    flex: 4 4 0px;
-  }
-  .IAmLibreWolf .footWidget p {
-    margin-bottom: 1em;
-    margin-left: 2em;
-  }
-  .annoyingBody.IAmLibreWolf .footWidget p {
-    width: auto;
-  }
 }
-@media screen and (min-resolution: 200dpi) {
-  .IAmLibreWolf .footWidget .bigColumn {
-    max-width: 95vw;
-    flex: none;
-    height: auto;
-  }
-  .IAmLibreWolf .footWidget {
-    text-align: left;
-  }
-  .annoyingBody.IAmLibreWolf .footWidget p {
-    width: fit-content;
-  }
-}
-
 @media screen and (max-width: 1000px) {
   /* as of 2020 this only applies to the home page */
   .footWidget .leftFooter:nth-child(2) {
@@ -482,14 +454,6 @@ This is big screen mac, should work with wide versions
   .SMshareWidget a {
     width: inherit;
   }
-  .IAmLibreWolf .SMshareWidget a {
-    width: initial;
-  }
-}
-@media screen and (min-resolution: 200dpi) {
-  .IAmLibreWolf .SMshareWidget a {
-    width: inherit;
-  }
 }
 
 @media screen and (max-resolution: 130dpi) and (min-aspect-ratio: 3/5) and (min-width: 800px) {
@@ -666,12 +630,6 @@ This is big screen mac, should work with wide versions
   padding: 0.3em 1em;
 }
 
-@media screen and (max-resolution: 199dpi) {
-  .IAmLibreWolf .dfl li:first-child {
-    padding-left: 0;
-  }
-}
-
 /** headingsWidget
 	nearly every page */
 .headingsWidget summary {
@@ -845,16 +803,6 @@ a.adjacentItem:before {
     display: block;
     width: 96vw;
   }
-  .IAmLibreWolf .adjacentList {
-    display: flex;
-  }
-  .IAmLibreWolf .adjacentList li {
-    display: inline-block;
-  }
-  .IAmLibreWolf a.adjacentItem:before {
-    display: block;
-    width: fit-content;
-  }
   span.adjacentItem,
   .adjacentItem {
     display: block;
@@ -904,12 +852,6 @@ a.adjacentItem:hover:before {
   }
   .adjacentWidget a:hover:before {
     top: inherit;
-  }
-}
-@media screen and (min-resolution: 200dpi) {
-  .IAmLibreWolf .adjacentList,
-  .IAmLibreWolf .adjacentList li {
-    display: block;
   }
 }
 
@@ -1175,21 +1117,12 @@ but this is a permanent effect, so with is better choice in this library
     width: 100vw;
   }
 
-  .IAmLibreWolf .popOverWidget details[open] {
-    width: 60%;
-  }
   .popOverWidget summary {
     margin: initial;
     margin-left: 2px;
     margin-right: 2px;
     font-size: 110%;
     word-break: break-all;
-  }
-}
-@media screen and (min-resolution: 199dpi) {
-  .IAmLibreWolf .popOverWidget details[open] {
-    width: 100%;
-    margin-left: 0;
   }
 }
 
@@ -1348,16 +1281,6 @@ code[lang="html"].highlight::before,
   color: var(--errorbg);
   background-color: var(--starkfg);
 }
-/*  Dark-art attempting to map adjacent items.
-  not enough success rate, so removed
-.addReferences sup:has( + sup, + sup:last-of-type ), 
-.addReferences sup:has( + a + sup )  { background:green; }
-*/
-.IAmLibreWolf .addReferences.showBiblioErrors sup a:not([aria-label]),
-.IAmLibreWolf .addReferences.showBiblioErrors sup a[aria-label~="HTTP_ERROR,"] {
-  padding: 0.4em 0.5em;
-  line-height: 0.8;
-}
 
 /* this proved too fiddly, so removed
 div.addReferences a.leanIn:before { left: calc( 95% - 32em ); } 
@@ -1430,10 +1353,6 @@ sup a[aria-label],
 footer a {
   text-decoration: underline;
 }
-.IAmLibreWolf sub,
-.IAmLibreWolf sup {
-  font-size: 100%;
-}
 @media screen and (min-resolution: 150dpi) {
   a sup i.fa.invert {
     font-size: 90%;
@@ -1448,8 +1367,5 @@ footer a {
   sup a {
     line-height: 1.2;
   }
-  .IAmLibreWolf sub,
-  .IAmLibreWolf sup {
-    font-size: 100%;
-  }
 }
+

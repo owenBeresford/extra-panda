@@ -336,10 +336,6 @@
     max-width: 100%;
   }
 
-  .IAmLibreWolf.homeContainer .tabContent {
-    max-width: 38%;
-  }
-
   .homeContainer nav.row a {
     font-size: 120%;
     padding: 0.3em 0.3em;
@@ -352,68 +348,6 @@
   .homeContainer div.chunkArticles {
     min-width: 15em;
     flex: 2 1 0px;
-  }
-}
-
-@media screen and (min-resolution: 200dpi) {
-  .IAmLibreWolf .bigScreenOnly {
-    display: none;
-  }
-  .IAmLibreWolf .smallScreenOnly {
-    display: inline-block;
-  }
-  .IAmLibreWolf .homeContainer .home.column {
-    flex: 1 100 0px;
-  }
-  .IAmLibreWolf .mastodonWidget input {
-    width: 100vw;
-    min-width: 10em;
-    display: inline-block;
-  }
-}
-@media screen and (max-resolution: 199dpi) {
-  .IAmLibreWolf .SMshareWidget span.bigScreenOnly,
-  .IAmLibreWolf .SMshareWidget span.bigScreenOnly,
-  .IAmLibreWolf .bigScreenOnly,
-  .IAmLibreWolf .SMshareWidget a.bigScreenOnly {
-    display: inline-block;
-  }
-
-  .IAmLibreWolf .smallScreenOnly {
-    display: none;
-  }
-  .IAmLibreWolf .homeContainer .home.column {
-    flex: 2 1 0px;
-  }
-  .IAmLibreWolf .mastodonWidget input {
-    width: 15em;
-    display: inline-block;
-    font-size: 100%;
-  }
-
-  /*
-    .IAmLibreWolf .h4_page p, .IAmLibreWolf .h4_page li, .IAmLibreWolf .h4_page span,  
-	.IAmLibreWolf .h4_page a, .IAmLibreWolf label {
-		font-size: 100%; width: fit-content; max-width: 15em;
-    }
-*/
-}
-
-@media screen and (max-resolution: 199dpi) and (min-aspect-ratio: 3 / 5) and (min-width: 800px) {
-  .IAmLibreWolf .mastodonWidget.bigScreenOnly {
-    display: none;
-  }
-  .IAmLibreWolf .mastodonWidget.bigScreenOnly[open] {
-    display: block;
-  }
-}
-
-@media screen and (min-resolution: 200dpi) and (min-aspect-ratio: 3 / 5) and (min-width: 800px) {
-  .IAmLibreWolf .mastodonWidget.bigScreenOnly {
-    display: none;
-  }
-  .IAmLibreWolf .mastodonWidget.bigScreenOnly[open] {
-    display: block;
   }
 }
 
@@ -433,46 +367,6 @@
 
   .homeContainer .home.icerow .column.tabContainer {
     max-width: fit-content;
-  }
-  .IAmLibreWolf.homeContainer .home.icerow .column {
-    display: block;
-  }
-
-  .IAmLibreWolf.homeContainer .home.icerow .tabContent {
-    width: 25em;
-    max-width: fit-content;
-  }
-
-  .IAmLibreWolf.homeContainer
-    .tabContainer
-    .tabsHeader:has(label > input[type="radio"]:checked)
-    .tabContent
-    ul {
-    width: 25em;
-    max-width: auto;
-    min-width: auto;
-  }
-
-  .IAmLibreWolf.homeContainer .column.tabContainer {
-    min-width: min(100%, 550px);
-    top: -13em;
-  }
-}
-
-@media screen and (min-resolution: 200dpi) {
-  .IAmLibreWolf.homeContainer .home.icerow {
-    width: 100%;
-    max-width: fit-content;
-  }
-
-  .IAmLibreWolf.homeContainer
-    .tabContainer
-    .tabsHeader:has(label > input[type="radio"]:checked)
-    .tabContent
-    ul {
-    width: 90vw;
-    max-width: auto;
-    min-width: auto;
   }
 }
 
