@@ -31,9 +31,9 @@ export class ExtractReduce {
      * For CSS attributes present on the body element, don't repeat.  Edits param
  
      * @param {HashHashtable} buf
-	 * @param {string} root - selector for the component root element
+     * @param {string} root - selector for the component root element
      * @public
-     * @return {HashHashtable}
+     * @returns {HashHashtable}
      */
   filterCommonTags(
     buf: HashHashtable,
@@ -77,7 +77,7 @@ export class ExtractReduce {
  
  * @param {HashHashtable} buf
  * @public
- * @return {HashHashtable}
+ * @returns {HashHashtable}
  */
   filterEmpty(buf: HashHashtable): HashHashtable {
     changeCount_simple(buf, "");
