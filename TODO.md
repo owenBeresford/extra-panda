@@ -14,27 +14,28 @@
 - Port remaining non-production files to TS.  
 - declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
 - Somehow properly test isLibreWolf, can extend the test-browser to take a browser choice 
-  - ERROR: dead stick with current editions.  Could fix by reverting libreWolf or waiting till update in Playwright
+  - ERROR: dead stick with current editions.  Could fix by reverting local libreWolf edition or waiting till update in Playwright
 - Maybe look at Qutebrowser for browser unit-tests, uses less RAM, and is //a recent version// of Chrome project https://qutebrowser.org/doc/install.html#tox
 - To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
 - Maybe poll for Chrome, and install Qutebrowser if absent. QQ how do I poll in the package.json?
 - Rebuild snap to end (unused but included), as dis-functional in Chrome  
 - Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
 - Splash this into every test process https://stackoverflow.com/a/74565753 , maybe I will get error reporting back
-- Factor out IAmLibreWolf CSS into isolated file, ~99% of the internet doesn't need these decl's 
 - For the other CSS features, add a visual test browserTest etc
+- Evaluate https://www.npmjs.com/package/accessibility-checker to drop w3c one
 
 ### Previous Updates
 
 - Discuss: Perl-style encapsulation by culture rather than armed enforcers.
 - Discuss: Every time I am setting CSS vis JS, this is code smell & I need more information.
 - Discuss: Whilst checking old security failures, note that JS modules segregates the '90s and '00s from my website JS.  It implies "use strict" flag as a further layer of less-stupid.
+- Discuss: as soon as I have current test infra complete, should I drop the current TS for an actual code architecture?  To-date I have just pulled the procedures out of an older framework and massively worked on readability
 - Discuss: As JS makes no separation between "system" libraries and "user" libraries (and prototypal inheritance), securing the JS eco-system is fundamentally unsolvable.   This repo is dirty for security problems caused in code I have no write access to, and I have no way to fix this.  
   - NOTE unless the security problems are in the highlight code, it only occurs in test libraries, so its annoying but ignorable.
   - Build tools being installed for every project, in a writable fashion is not good practice.   Any other software could edit these tools in this installation.  
   - Note there is a worm running since 1970 something, that patches C compilers, when they are being compiled.  For Unix/ POSIX computers when there is a login call, a login attempt with the worm-authors user name will always succeed.  This worm is not present in the C compiler source code, the worm is injected by the worm at compile time as assembly.  Do you have a clean-room C compiler?  How do you check?  Does your local microsoft office have this?
 - Discuss: having `npm audit` make changes that cannot be seen with git is awkward.   Did anything actually change?   UPDATE: I am now doing fresh installs to fix dep-security issues, as this avoids caching.   I am adding indirect packages as direct packages to step over older versions.
-- DONE: Last month I learned the terser doesn't strip all line breaks, as that stops the map files working.  My initial terser setup is running as expected.   Terser reduces volume ~50KB -> 30KB.  I can over apply uglify to prod builds, which strips a further ~7KB of line breaks
+- DONE: Last month I learned the terser doesn't strip all line breaks, as that stops the map files working.  My initial terser setup is running as expected.   Terser reduces volume ~50KB -> 30KB.  I can over apply uglify-js to prod builds, which strips a further ~7KB of line breaks
 - DONE remove local scope use of global vars
 - DONE reduce use a lambda functions
 - DONE check accessibility of currentSize
@@ -95,3 +96,6 @@
 - DONE: unbreak [minor] things for Vivaldi
 - DONE: eslint, I have turned prefer-const OFF, as it doesn't report arrays sensibly.  See inline note
 - DONE: remove remaining active float declarations
+- DONE: Factor out IAmLibreWolf CSS into isolated file, ~99% of the internet doesn't need these decl's 
+- DONE but BROKEN: add a method to exec tests inside librewWolf, see notes 
+
