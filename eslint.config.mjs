@@ -33,7 +33,7 @@ export default [
       },
     },
     //    plugins: { jsdoc, "no-floating-promise":NoFakePromises, vitest, jest },
-    plugins: { tseslint, jsdoc, vitest, jest, ANNOY1  },
+    plugins: { tseslint, jsdoc, vitest, jest, ANNOY1 },
 
     rules: {
       complexity: ["warn", 10],
@@ -42,10 +42,10 @@ export default [
       "no-alert": "warn",
       "no-throw-literal": "warn",
       "no-sparse-arrays": "warn",
-	  "no-useless-escape": "warn",
+      "no-useless-escape": "warn",
       "no-proto": "warn",
-		"max-depth": ["error", 4],
-		 "max-nested-callbacks": ["warn", 3],
+      "max-depth": ["error", 4],
+      "max-nested-callbacks": ["warn", 3],
       "no-script-url": "warn",
       "no-var": "off",
       "require-await": "warn",
@@ -55,9 +55,9 @@ export default [
       "use-isnan": "warn",
       "no-eval": "warn",
       "no-negated-condition": "off",
-// legacy only.
-//		"eslint-plugin-no-http-protocol/no-http-protocol": ["warn"],
-    /* 
+      // legacy only.
+      //		"eslint-plugin-no-http-protocol/no-http-protocol": ["warn"],
+      /* 
 	I have turned prefer-const  OFF, as it doesn't report arrays sensibly.
 	writing to a Array<X> is how I populate arrays in most cases, ie push()
 	but
