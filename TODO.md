@@ -23,6 +23,9 @@
 - Splash this into every test process https://stackoverflow.com/a/74565753 , maybe I will get error reporting back
 - For the other CSS features, add a visual test browserTest etc
 - Evaluate https://www.npmjs.com/package/accessibility-checker to drop w3c one
+- Design 1 cycle animation on title popout IF OPEN 
+- For long content with many page sections, setup component for each page in a tidy fashion && tell later sections to load lower prio as they are likely to be off screen
+- least stupid way to tell user users not to make chrome window smaller, or the test will fail next test run
 
 ### Previous Updates
 
@@ -87,6 +90,7 @@
 - DOME: Add feature "take user selection of text, and return standardised word count of it"
 - DONE: Change implementation on reading word-count 
 - DONE: Extracted Tab feature to own TS module, as I'm not updating the tabs UI to pure HTML5 now.
+  - DONE its only used in the index/ home, I have migrated it to HTML5 / CSS  
 - DONE: trap out libreWolf, as the DPI calc in CSS is busted there
 - DONE: migrated tabs to HTML/CSS as its better architecture
 - DONE: migrate CSS into this project, simplifying my webhost project
@@ -98,4 +102,5 @@
 - DONE: remove remaining active float declarations
 - DONE: Factor out IAmLibreWolf CSS into isolated file, ~99% of the internet doesn't need these decl's 
 - DONE but BROKEN: add a method to exec tests inside librewWolf, see notes 
+- DONE: Adjust symbols used in the chapters menu
 
