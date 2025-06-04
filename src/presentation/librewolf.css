@@ -190,7 +190,7 @@
   .IAmLibreWolf .popOverWidget details[open] {
     width: 60em;
     margin-left: 0;
-    left: calc( 50% - 30em );
+    left: calc(50% - 30em);
   }
   .IAmLibreWolf .SMshareWidget span.bigScreenOnly,
   .IAmLibreWolf .SMshareWidget span.bigScreenOnly,
