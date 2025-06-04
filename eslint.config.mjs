@@ -5,6 +5,7 @@ import jsdoc from "eslint-plugin-jsdoc";
 import vitest from "eslint-plugin-vitest";
 import jest from "eslint-plugin-jest";
 import pluginPromise from "eslint-plugin-promise";
+//import * as ANNOY2 from "eslint-plugin-no-http-protocol";
 import * as ANNOY1 from "eslint-plugin-no-only-tests";
 import * as parser from "@typescript-eslint/parser";
 // If appropriate eslint-plugin-cypress
@@ -41,7 +42,10 @@ export default [
       "no-alert": "warn",
       "no-throw-literal": "warn",
       "no-sparse-arrays": "warn",
+      "no-useless-escape": "warn",
       "no-proto": "warn",
+      "max-depth": ["error", 4],
+      "max-nested-callbacks": ["warn", 3],
       "no-script-url": "warn",
       "no-var": "off",
       "require-await": "warn",
@@ -51,6 +55,8 @@ export default [
       "use-isnan": "warn",
       "no-eval": "warn",
       "no-negated-condition": "off",
+      // legacy only.
+      //		"eslint-plugin-no-http-protocol/no-http-protocol": ["warn"],
       /* 
 	I have turned prefer-const  OFF, as it doesn't report arrays sensibly.
 	writing to a Array<X> is how I populate arrays in most cases, ie push()
@@ -59,7 +65,7 @@ export default [
 	keeping-things-simple for da newbs here needs more discretion than shouting messages 
 	I use many arrays.  
 	If there was enforce-const on strings, but not arrays, then it would help more.
-*/
+	*/
       "prefer-const": "off",
       "no-labels": "warn",
       // no-underscore-dangle:"error",

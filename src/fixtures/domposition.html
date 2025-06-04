@@ -1,7 +1,7 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-GB" class="noJS" itemscope itemtype="http://schema.org/Article">
   <head>
-    <!-- This website is written by a guy who claims to have lots of specialised technical skills, but this website only partially demonstrates them.  This website is a vehicle for about 200,000 words, please read some of them. -->
+    <!-- This website is written by a guy who claims to have lots of specialised technical skills, but this website only partially demonstrates them.  This website is a vehicle for about 240,000 words, please read some of them. -->
     <title>Highcharts graphing library demo</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -339,7 +339,7 @@
           id="contentGroup"
           class="adjacentGroup"
           title="Use the first link to get the complete range of the group."
-        >
+        ></div>
       </div>
       <fieldset class="outer_menu articleHeader">
         <legend></legend>
@@ -350,8 +350,8 @@
                 <header><h1>Highcharts graphing library demo</h1></header>
                 <p role="status" class="bigScreenOnly"></p>
               </div>
-              <div id="shareGroup" class="bibbles row addReading">
-                <span class="allButtons">
+              <div id="shareGroup" class="metaWidget row addReading">
+                <span class="SMshareWidget">
                   <a
                     id="siteChartLink"
                     class="button smallScreenOnly"
@@ -475,10 +475,10 @@
                 </span>
               </div>
             </div>
-            <dialog id="popup" class="popup1 bigScreenOnly">
+            <dialog id="popup" class="mastodonWidget bigScreenOnly">
               <form
                 method="dialog"
-                encoding="multipart/form-data"
+                enctype="multipart/form-data"
                 action="."
                 name="mastoSelection"
               >
@@ -486,7 +486,7 @@
                   >your server:
                   <input
                     id="mastodonserver"
-                    max-length="50"
+                    maxlength="50"
                     data-url="https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fhighcharts-demo"
                     type="text"
                     value=""
@@ -505,43 +505,40 @@
               </form>
             </dialog>
 
-            <fieldset class="h4_menu column bigScreenOnly">
-              <legend>
-                <span id="pageMenu" aria-haspopup="menu"
-                  ><i class="fa fa-ob1burger" aria-hidden="true"></i
-                  ><span class="sr-only">Menu</span>
-                </span>
-              </legend>
-              <menu class="h4_lean">
-                <li class="h4_odd"><a href="#toc0">Technical Notes</a></li>
-              </menu>
-              <br />
-            </fieldset>
-          </div>
-          <menu class="burgerMenu">
-            <li class="h4_odd">Additional features</li>
-            <li class="">
+            <div class="linksWidget column bigScreenOnly">
+                <details id="pageMenu" aria-haspopup="menu" class="linksWidget">
+			<summary class="defaultLinksTrigger fa-" aria-haspopup="menu"> <span class="sr-only">Menu</span> </summary>
+          <menu class="dfl">
+            <li >Additional features</li>
+            <li >
               <a href="/resource/home"
                 ><i class="fa fa-angle-left" aria-hidden="true"></i> Home</a
               >
             </li>
-            <li class="h4_odd">
+            <li >
               <a href="/resource/search"
                 >Search <i class="fa fa-angle-right" aria-hidden="true"></i
               ></a>
             </li>
-            <li class="">
+            <li >
               <a href="/resource/appearance"
                 >Appearance <i class="fa fa-angle-right" aria-hidden="true"></i
               ></a>
             </li>
-            <li class="h4_odd">
+            <li >
               <a href="/resource/contact-me"
                 >Contact me <i class="fa fa-angle-right" aria-hidden="true"></i
               ></a>
             </li>
-            <li class=""><a href="#contentGroup">Similar articles</a></li>
+            <li ><a href="#contentGroup">Similar articles</a></li>
           </menu>
+			</details>
+	<details open class="headingsWidget"><summary class="fa-"><div>Chapters</div></summary><menu class="titleList">
+                <li><a href="#toc0">Technical Notes</a></li>
+              </menu>
+			</details>
+			</div>
+			</div>
         </nav>
       </fieldset>
     </div>
@@ -549,9 +546,8 @@
     <div id="biblio" style="display: none">
       <br class="blocker" />
     </div>
-    <footer>
-      <div class="h4_footer">
-        <div class="leftFooter">
+    <footer class="row footWidget">
+        <div class="column leftFooter">
           <a
             href="https://www.plainenglish.co.uk/services.html"
             target="_blank"
@@ -577,6 +573,7 @@
             >Young tech</abbr
           >
         </div>
+		<div class="column bigColumn">
         <p>
           Page rendered
           <time datetime="2024-11-06T22:14:22">6th of Nov 2024, 22:14:22</time>,

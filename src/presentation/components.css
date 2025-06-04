@@ -634,16 +634,32 @@ This is big screen mac, should work with wide versions
 .headingsWidget summary {
   width: calc(100% - 2em);
   padding: 0px 1em;
-  min-width: 9em;
+  min-width: 7em;
 }
 .headingsWidget summary::marker {
-  font-size: 2em;
-  text-align: left;
+  content: "";
 }
+
+/* better symbols IMO...
+	at the penalty of being non-standard
+ this matches the burger menu, where I use the standard one.  */
+.headingsWidget summary::before {
+  content: "▼";
+  font-size: 1.7em;
+  width: 1.3em;
+  text-align: left;
+  vertical-align: sub;
+}
+
+.headingsWidget[open] summary::before {
+  content: "\e802";
+}
+
 .headingsWidget summary div {
   width: calc(100% - 2.4em);
   display: inline-block;
-  padding-bottom: 0.8em;
+  padding: 0.6em;
+  padding-left: 0;
   padding-right: 0.7em;
 }
 .headingsWidget {
@@ -659,17 +675,19 @@ This is big screen mac, should work with wide versions
 .headingsWidget:not(:has(.titleList > *)) {
   display: none;
 }
+.headingsWidget[open] summary div {
+  padding-right: 4px;
+  width: calc(100% - 2.3em);
+  transition:
+    padding-right 0.5s ease-out,
+    width 2s ease-out;
+}
+
 .titleList {
   list-style: none;
   padding-left: 0;
   margin: 0;
   border: 1px solid var(--scroll1);
-}
-.headingsWidget[open] summary div {
-  padding-right: 4px;
-  transition:
-    border-right 0.5s,
-    width 2s;
 }
 .titleList a {
   width: calc(100% - 2em);
@@ -741,6 +759,7 @@ This is big screen mac, should work with wide versions
 .adjacentWidget {
   z-index: 1;
 }
+
 .adjacentWidget .buttonBar .button {
   min-width: 15em;
 }
@@ -1013,6 +1032,13 @@ p.buttonBar a:first-child {
 /** popOverWidget 
 	about 10 pages
 */
+/* according to https://web.dev/blog/css-content-visibility-baseline
+   the following allows the rendering to make choices better,
+	As this content becomes visible after page load, I don't know if this helps... */
+.popOverWidget details {
+  content-visibility: auto;
+}
+
 .popOverWidget summary {
   font-size: 130%;
   margin: 1em;

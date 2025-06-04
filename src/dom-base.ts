@@ -468,7 +468,7 @@ export function calcScreenDPI(dom: Document, win: Window): number {
  * @param {string} fn 
  * @param {Document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function appendCSSFile(fn: string, dom: Document): void {
   let nu = dom.createElement("link");

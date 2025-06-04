@@ -716,11 +716,11 @@ Script to be able to manage browser tests from bash.  I wanted to use vitest eve
 The default behaviour is to close the tabs and browser, as most test execution is automated.
 
 supports:
-	--help        ~ this text
-	--no-close    ~ do //not// close the tabs, or the browser. Use to see what happens
-	--close       ~ for automated use, free() resources after use,  This is the default behaviour.  
-    --extract-css ~ pass in an URN to use
-
+	--help              ~ this text
+	--no-close          ~ do //not// close the tabs, or the browser. Use to see what happens
+	--close             ~ for automated use, free() resources after use,  This is the default behaviour.  
+    --extract-css       ~ pass in an URN to use
+    --visual-tests-only ~ Just start the vis tests, implies no-close
 `;
   console.log(TEXT);
   process.exit(0);
@@ -730,6 +730,10 @@ if (runDirectly(process)) {
     // option to dump CSS
     // needs to be done interactively, as a human needs to use the file-as dialog
     runExtract(process.argv[process.argv.indexOf("--extract-css") + 1]);
+  } else if (process.argv.includes("--visual-tests-only") ) {
+		const [ignored, end1] = spinup_server();
+		console.log("Running the visualisation test on \n\t\thttps://127.0.0.1:8081/vis/\nRead src/vis-test/README.1st for filenames");
+       // end1() func not called
   } else {
     // this code is a test runner,
     // but is too complex.  So I may need to put a test on it

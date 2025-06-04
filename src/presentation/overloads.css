@@ -39,6 +39,11 @@ h5 a {
   width: auto;
 }
 
+details summary h3,
+details summary h4 {
+  display: inline-block;
+}
+
 /** if a list item is splitted due to page wrapping, maybe unused now  */
 li.split:before {
   content: "…";
@@ -209,11 +214,13 @@ This is big screen mac, should work with wide versions
     width: auto;
   }
   .articleHeader nav.row:not(:has(.headingsWidget)) .metaWidget.row {
-    width: 100vw - 2em;
+    width: calc(100vw - 2em);
   }
 }
 
-/* Amit Merchant https://www.amitmerchant.com/bare-minimum-view-transitions/ */
+/* Amit Merchant https://www.amitmerchant.com/bare-minimum-view-transitions/ 
+	Note doesn't work in FF 
+*/
 @view-transition {
   navigation: auto;
 }
