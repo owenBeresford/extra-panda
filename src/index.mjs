@@ -14,7 +14,7 @@ which has been removed from production as it didn't deliver what I needed.
 import { siteCore, hasBeenRun } from "./core";
 import { runFetch, delay } from "./networking";
 import { log, domLog } from "./log-services";
-import { appendIsland, isMobile, currentSize, calcScreenDPI } from "./dom-base";
+import { appendIsland, isMobile, currentSize, calcScreenDPI, isLibreWolf } from "./dom-base";
 import { storeAppearance } from "./cookies";
 import { SELF_VERSION, matchVersion } from "./immutables";
 
@@ -47,5 +47,6 @@ export {
   storeAppearance,
   currentSize,
   calcScreenDPI,
+	isLibreWolf,
   SELF_VERSION,
 };
