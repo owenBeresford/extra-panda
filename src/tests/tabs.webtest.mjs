@@ -4,9 +4,9 @@ import { execTest, wrap } from "./page-seed-playwright";
 import { delay } from "../networking";
 // import { log, domLog } from "../log-services";
 import { getCSSAttr } from "./vitest-addons";
-import { TEST_ONLY } from "../tabs";
+// import { TEST_ONLY } from "../tabs";
 
-describe("TEST BROWSER CSS based tabs", async () => {
+describe("TEST BROWSER CSS based tabs", () => {
   if (typeof process !== "undefined") {
     throw new Error("This is a browser only test");
   }
@@ -33,6 +33,7 @@ describe("TEST BROWSER CSS based tabs", async () => {
             win,
           ),
         ).toBe("none");
+
         // this line is a poor test, but I don't have the colour libs imported here
         expect(
           getCSSAttr(
