@@ -102,7 +102,7 @@ var dDelta = 0;
 
 const TESTS = listFiles(DIR_TESTS);
 // how to limit to a single test, as you are adjusting it
-// const TESTS = [ "index.webtest.mjs", ];
+// const TESTS = [ "tabs.webtest.mjs", ];
 
 if (TESTS.length === 0) {
   console.error("Need to compile tests first");
@@ -699,10 +699,12 @@ if (runDirectly(process)) {
     // option to dump CSS
     // needs to be done interactively, as a human needs to use the file-as dialog
     runExtract(process.argv[process.argv.indexOf("--extract-css") + 1]);
-  } else if (process.argv.includes("--visual-tests-only") ) {
+  } else if (process.argv.includes("--visual-tests-only")) {
     const [ignored, end1] = spinup_server();
-	console.log("Running the visualisation test on \n\t\thttps://127.0.0.1:8081/vis/\nRead src/vis-test/README.1st for filenames");
-	// end1() func not called
+    console.log(
+      "Running the visualisation test on \n\t\thttps://127.0.0.1:8081/vis/\nRead src/vis-test/README.1st for filenames",
+    );
+    // end1() func not called
   } else {
     // this code is a test runner,
     // but is too complex.  So I may need to put a test on it
