@@ -567,10 +567,10 @@ await async function(t2, r2, o2, i2) {
     if (n2.ft = n2.ft.replaceAll("%38", ";"), n2.cr = n2.cr.replaceAll("%38", ";"), n2.dn = n2.dn.replaceAll("%38", ";"), n2.fs = n2.fs.replaceAll("%38", ";"), !n2.ft || !n2.fs) return;
     const r3 = "body, .annoyingBody { font-family: " + n2.ft + "; font-size: " + n2.fs + "; direction:" + n2.dn + "; }", o3 = e2.createElement("style");
     o3.setAttribute("id", "client-set-css"), o3.innerText = r3, e2.getElementsByTagName("head")[0].append(o3);
-  }(r2), ae(r2), O(1040, r2, o2, i2), v(r2, i2.navigator, i2) && (console.log("we are libreWolf (yje test)"), function(e2, t3) {
+  }(r2), ae(r2), O(1040, r2, o2, i2), v(r2, i2.navigator, i2) && function(e2, t3) {
     let n2 = t3.createElement("link");
     n2.setAttribute("rel", "stylesheet"), n2.setAttribute("href", e2), t3.head.appendChild(n2);
-  }("/asset/librewolf.min.css", r2)), !N(r2, o2, i2) && "/resource/home" !== o2.pathname && r2.querySelectorAll(".reading").length < 2 && function(t3, r3, o3) {
+  }("/asset/librewolf.min.css", r2), !N(r2, o2, i2) && "/resource/home" !== o2.pathname && r2.querySelectorAll(".reading").length < 2 && function(t3, r3, o3) {
     const i3 = Object.assign({}, { timeFormat: "m", dataLocation: ".blocker", target: "#shareGroup .SMshareWidget", wordPerMin: 275, codeSelector: "code", refresh: false, debug: e(o3) }, t3), a3 = i3.dataLocation + " img, " + i3.dataLocation + " source, " + i3.dataLocation + " object", s3 = re(i3.dataLocation, r3);
     if (!s3) return;
     let l2 = 0;
@@ -634,6 +634,7 @@ export {
   U as currentSize,
   r as domLog,
   le as hasBeenRun,
+  v as isLibreWolf,
   N as isMobile,
   n as log,
   p as runFetch,
