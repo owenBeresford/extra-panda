@@ -1,0 +1,72 @@
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname, basename } from "path";
+import fs from "node:fs";
+import { readFileSync } from 'node:fs';
+import { spawn } from "node:child_process";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const __filename = basename(fileURLToPath(import.meta.url));
+
+let crypto;
+try {
+        crypto = await import('node:crypto');
+} catch (err) {
+        console.error('FAIL, crypto module is disabled!');
+        process.exit(254);
+} 
+
+if(! crypto || ! crypto.randomInt) {
+        console.error("FAIL, crypto module doesnt have expected features.\n");
+        process.exit(254);
+}
+
+
+// https://chipsenkbeil.com/notes/qutebrowser-cheatsheet/
+// https://qutebrowser.org/doc/help/commands.html#download
+// export QUTE_USER_AGENT="CABBAGE"; ~/.venvs/test1/bin/qutebrowser ":open https://stackoverflow.com/questions/79658850/rabbitmq-consumer-bean-not-initialized-in-eks-pre-prod-environment-despite-suc" ":download --dest /tmp/f1.html"; cat  /tmp/f1.html
+
+let LOG_OBJ={}
+function browser_read(data) {
+console.log("got data !!", data);
+	LOG_OBJ=data;
+}
+
+export async function delay(ms) {
+  return new Promise((good, bad) => setTimeout(good, ms));
+}
+
+async function wave2(url) {
+ 	 let fn = "/tmp/"+crypto.randomInt(32, 64)+".html";
+	
+	const CHILD = await spawn(
+		"~/.venvs/test1/bin/qutebrowser" , 
+//		[ "--debug", "--json-logging", ":debug-cache-stats" ":open "+url, 
+		["--debug", "--json-logging", ":open https://stackoverflow.com/questions/", 
+		":download https://stackoverflow.com/questions/ --dest "+fn, 
+//		`:download ${url} --dest ${fn}`, 
+//		":tab-close"   // unneeded auto-closes by default
+			],
+		 {
+    detached: true,
+    shell: false,
+	env: { ...process.env, QUTE_USER_AGENT:"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
+ 		 });
+	CHILD.stdout.setEncoding("utf8");
+	CHILD.stdout.on('data', browser_read);
+	CHILD.on('close', (code) => {
+		  console.log(`child process exited with code ${code}`);
+	});
+	// get http code from log data
+	await delay(3000);
+console.log("html file", fn);
+	let html=readFileSync( fn, {encoding:"utf8", flag:'r' });
+//    CHILD.kill();
+// delete results file
+// move parsing "in house", when have observed steps happening 
+	return [ LOG_OBJ, html, ];
+}
+
+console.log( await wave2("" ) ) ;
+
+
