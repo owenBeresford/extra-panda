@@ -257,9 +257,22 @@ function spinup_server() {
  */
 async function spinup_playwright(debug_url, browsr) {
   // debug channel, not test node web service
+	let DBG=null;
+	try {
+		if(browsr.name()=== "chromium" ) {
+			DBG = await browsr.connectOverCDP(debug_url);
+		} else {
+console.log("BEFORE HALT", browsr.connectAsync, browsr.connect);
+			DBG = await browsr.connect(debug_url );
+console.log("AFTER HALT");
+		}	
+	} catch(ee) {
+		console.log("TEST FAILED ", ee.message, "TEST FAILED");
+  		process.exit(1);
+//		return [null, ()=>{} ];
+	}
 
-  const DBG = await browsr.connectOverCDP(debug_url);
-  if (!DBG.isConnected()) {
+  if (!BDG || !DBG.isConnected()) {
     throw new Error("Can't connect to captive browser");
   }
   const CTX = DBG.contexts();
@@ -604,11 +617,13 @@ export async function runTests(tests, args) {
     if (dburl === "") {
       throw new Error("IO tangled, URL not found.  Pls fix " + CHILD);
     }
+
 // ugly...
 	let target=chromium;
 	if(  args.indexOf("--browser") && args[ args.indexOf("--browser")+1 ]== "librewolf") {
 		target=firefox;
 	}
+
     const [ctx, end2] = await spinup_playwright(dburl, target);
     for (let i in tests) {
       dDelta = 0;
