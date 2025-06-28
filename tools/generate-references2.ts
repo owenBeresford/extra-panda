@@ -11,8 +11,17 @@ const COOKIE_JAR ='/var/www/oab1/cookies.txt';
 const TIMEOUT=3; // seconds
 const [FN, URL1]=process_args(process.argv);
 
+/*
+	basic imported code.
+	plan:
+	* do something to list URLs	across an article (probably filter on current references file)
+	* compile golang tool
+	* extract cookies from chromium with tool
+	* compile cookies into cookie-jar format
+	* rerun reference generation
 
-
+	Occurrence of missing cookies will tail off after first 50 articles.
+*/
 
 /**
 // types urm?
@@ -33,7 +42,7 @@ async function loadCrypto():Crypto {
 }
 */
 
-function process_args(args:Array<string>):Array<string|URL> {
+function process_args(args:Array<string>):Array<string> {
 	if( args.length <4 || args[2]!=='--url') {	
 		console.warn("Pass URL as --url <blah> --out <blah>", args);
 		process.exit(1);
@@ -195,73 +204,79 @@ function mod_medium(item:Reference, body:string):Reference {
 	return item;
 }
 
-function mod_github(item:Reference ):Reference {
+function mod_github(item:Reference, body?:string ):Reference {
 	//	https://github.com/node-ffi-napi/node-ffi-napi
 	let tt1=item.url.split('/');
 	item.auth=tt1[3];	
 	return item;	
 }
 
-function mod_stackoverflow(item:Reference ):Reference {
+function mod_stackoverflow(item:Reference, body?:string):Reference {
 	item.auth='No author for Q&A sites';
 	return item;	
 } 
 
-function mod_MDN(item:Reference):Reference {
+function mod_MDN(item:Reference, body?:string):Reference {
 	item.auth='MDN contribuitors';
 	return item;	
 } 
 
-function mod_GDN(item:Reference):Reference {
+function mod_GDN(item:Reference, body?:string):Reference {
 	item.auth='Google inc';
 	return item;	
 }
 
-function mod_react(item:Reference):Reference {
+function mod_react(item:Reference, body?:string):Reference {
 	item.auth='Meta platforms inc';
 	return item;	
 }
 
-function mod_graphQL(item:Reference):Reference {
+function mod_graphQL(item:Reference, body?:string):Reference {
 	item.auth='The GraphQL Foundation';
 	return item;	
 }
 
-function mod_caniuse(item:Reference):Reference {
+function mod_caniuse(item:Reference, body?:string):Reference {
 	item.auth='Alexis Deveria @Fyrd';
 	return item;	
 }
 
-function mod_mongodb(item:Reference):Reference {
+function mod_mongodb(item:Reference, body?:string):Reference {
 	item.auth='MongoDB inc';
 	return item;
 }
 
-function mod_wikipedia(item:Reference):Reference {
+function mod_wikipedia(item:Reference, body?:string):Reference {
 	item.auth='Wikipedia contributors';
 	return item;	
 }
 
-function mod_codepen(item:Reference):Reference {
+function mod_codepen(item:Reference, body?:string):Reference {
 	let tt1=item.url.split('/');
 // https://codepen.io/nobitagit/pen/AJXmgz
 	item.auth=tt1[3];
 	return item;	
 } 
 
-function mod_parli(item:Reference):Reference {
+function mod_parli(item:Reference, body?:string):Reference {
 	item.auth="part of the UKG";
 	item.desc="I am prohibited from checking URLs on this website";
 	item.title="I am prohibited from checking URLs on this website";
 	return item;	
 }
 
-type VendorModCB= (a:Reference)=>Reference;
+type VendorModCB= (a:Reference, body:string)=>Reference;
+interface VendorRecord {
+	name:string;
+	target:string;
+	callback:VendorModCB;
+}
+
 // function to apply the specific website hacks
 function apply_vendors(item:Reference, body:string):Reference {
-	const f1 =function(name:string, target:string, CB: VendorModCB ):Record<string,string,VendorModCB> { return {name, target, callback:CB }; };
-	const VENDORS:Array<Record<string,string,VendorModCB>> = [
-		f1('npmjs', false, mod_npmjs ),
+	const f1 =function(name:string, target:string, CB: VendorModCB ):VendorRecord { return {name, target, callback:CB }; };
+	const VENDORS:Array<VendorRecord> = [
+		f1('npmjs', 'title', mod_npmjs ),
 		f1('medium', 'auth', mod_medium),
 		f1('scribe.rip', 'auth', mod_scribe),
 		f1('github', 'auth', mod_github),
@@ -279,15 +294,15 @@ function apply_vendors(item:Reference, body:string):Reference {
 	const VENDORS_LENGTH=VENDORS.length; 
 
 	for(let i=0; i< VENDORS_LENGTH; i++) {
-		if(item.url.includes(VENDORS[i].name) && (!item[VENDORS[i].target] ||
-			(VENDORS[i].target && item[VENDORS[i].target] ==='unknown')) ) {
+		if(item.url.includes( VENDORS[i].name ) && ( item[ VENDORS[i].target ] ||
+				(VENDORS[i].target && item[ VENDORS[i].target ] ==='unknown')) ) {
 			item=VENDORS[i].callback(item, body);
 		}
 	}
 	return item;
 }
 
-async function dump_to_disk(data:Array<Reference>, FN:string):void {
+async function dump_to_disk(data:Readonly<Array<Reference|boolean>>, FN:string):Promise<void> {
 	console.log("DEBUG: X X X X X X X X X X X X X X end event (write to disk) ");
 
 	let template=`
@@ -310,7 +325,7 @@ async function dump_to_disk(data:Array<Reference>, FN:string):void {
 `;
 	if(data.includes(undefined) || data.includes(false) ) {
 		console.warn("Write ERROR "+ process.cwd()+'/'+FN +" May not have a undef in a references list");
-		return false;
+		return;
 	}
 	template= template.trim()+ "\n"+JSON.stringify( data, null, 2)+ "\n}}\n";
 
@@ -319,16 +334,17 @@ async function dump_to_disk(data:Array<Reference>, FN:string):void {
 	} );
 }
 
-type successType=(statusCode:string, data:string, headers:Headers)=>void;
-type failureType=()=>void;
+type successType=(statusCode:string, data:string, headers:Record<string, string>)=>void;
+type failureType=(msg:any)=>void;
 type closeType =(cb:CBtype )=>void;
 
 // a boring net-work function, that supports cookie populations
 // If curl has cookie problems https://www.npmjs.com/package/http-cookie-agent
-function fetch2(url:string|URL, good1:successType, bad1:failureType, close:closeType  ):void {
+function fetch2(url:string, good1:successType, bad1:failureType, close:closeType  ):void {
 	const curl = new Curl();
-	const CB=():void =>{ curl.close(); };
-	close( CB.bind(this) );
+	let CB=():void =>{ curl.close(); };
+	CB=CB.bind(this);
+	close(CB  );
 
 	curl.setOpt('HTTPHEADER', [ 'upgrade-insecure-requests: 1', "accept-language: en-GB,en;q=0.5", 
 					'user-agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0'  ]);
@@ -367,15 +383,15 @@ interface Reference {
 	desc:string;
 	title:string;
 	auth:string;
-	date:number;
+	date:number|string;
 }
 	
  
 // this Interface may exist else where
 interface HTMLTransformable {
-	success(statusCode:string, data:string, headers:Headers):void;
+	success(statusCode:string, data:string, headers:Record<string,string>):void;
 
-	failure():void;
+	failure(msg:any):void;
 
 	promiseExits(good:PromiseCB, bad:PromiseCB, offset:number):void; 
 	
@@ -390,13 +406,13 @@ class FirstPage implements HTMLTransformable {
 
 	public success(statusCode:string, data:string):void {
 		// also param headers:Headers
-		if( parseInt(statusCode /100) !==2) {
+		if( Math.floor(parseInt(statusCode, 10)/100) !==2) {
 			return this.bad( new Error("Recieved "+statusCode) );
 		}
 		
 		let root=parse(data );
 		let nn=root.querySelectorAll('sup a');
-		let list=[];
+		let list:Array<string>=[];
 		nn.forEach( function(val) {
 			list.push( val.getAttribute('href') );
 				} );
@@ -432,8 +448,8 @@ class MorePages implements HTMLTransformable {
 	protected offset:number;
 	protected CB:CBtype; 
 	protected src:Array<string>;
-	protected dst:Array<Reference>;
-	protected shorts:Record<string,Reference>;
+	protected dst:Array<Reference|boolean>;
+	protected shorts:Record<string,number>;
 
 	public constructor(src:Array<string>) {
 		this.src=src;
@@ -444,7 +460,7 @@ class MorePages implements HTMLTransformable {
 		this.shorts={};
 	}
 
-	public success(statusCode:string, data:string, headers:Headers|Array<Headers>):void {
+	public success(statusCode:string, body:string, headers:Record<string,string> |Array<Record<string,string>> ):void {
 		let item:Reference ={
 					'url':publicise_IP( this.src[this.offset]),
 					'desc':'',
@@ -480,7 +496,7 @@ class MorePages implements HTMLTransformable {
 		item.auth= normaliseString(this.#_extractAuthor(body)); 
 		item.title=this.#_extractTitle(body );
 
-		hit=body.match(new RegExp('<meta[ \\t]+name=["\']description["\'][ \\t]+content="([^"]+)"', 'i'));
+		let hit=body.match(new RegExp('<meta[ \\t]+name=["\']description["\'][ \\t]+content="([^"]+)"', 'i'));
 		if(hit && hit.length) {
 			item.desc=normaliseString(hit[1]);
 		
@@ -497,8 +513,12 @@ class MorePages implements HTMLTransformable {
 
 	public failure(msg:any):void {
 		console.warn("[url"+this.offset+"] X X X X X X X X X x X X X X X X ", msg );
+		let tmp="";
+		if( this.dst[this.offset] ) {
+			tmp=(this.dst[this.offset] as Reference).url;
+		}
 		let item={
-					'url': publicise_IP( this.dst[this.offset]),
+					'url': publicise_IP( tmp),
 					'desc':'HTTP_ERROR, '+msg,
 					'title':'HTTP_ERROR, '+msg,
 					'auth':'unknown',
@@ -520,7 +540,7 @@ class MorePages implements HTMLTransformable {
 		this.CB=cb;
 	}
 
-	public mapRepeatDomain(url:string|URL, cur:number ):boolean {
+	public mapRepeatDomain(url:string, cur:number ):boolean {
 		const HASH=	 shorten( url );
 		if( HASH in this.shorts) {
 			this.dst[ cur]=Object.assign({}, this.dst[ this.shorts[ HASH] ], {url:url }) as Reference;
@@ -529,7 +549,7 @@ class MorePages implements HTMLTransformable {
 		return false;
 	}
 
-	public get resultsArray():Readonly<Array<Reference|false>> { 
+	public get resultsArray():Readonly<Array<Reference|boolean>> { 
 		return this.dst;
 	}	
   
@@ -583,9 +603,9 @@ class MorePages implements HTMLTransformable {
 	}
 
 	/* eslint complexity: ["error", 30] */
-	#_extractDate(headers:Headers, body:string):Date {
-		if('Last-Modified' in headers) {
-			let tmp=headers['Last-Modified'];
+	#_extractDate(headers:Record<string,string>, body:string):Date {
+		if('Last-Modified' in Array<string>) {
+			let tmp:string=headers['Last-Modified'] as string;
 			tmp=tmp.replace(" BST", ""); 
 			// yes I loose an hour here, but month/year is the valuable data
 			return new Date( tmp);
@@ -596,12 +616,12 @@ class MorePages implements HTMLTransformable {
 			return new Date(hit[1]);
 		} 
 
-		let hit= body.match(new RegExp('last updated.*?<time datetime="([^"]*)', 'im') );
+		hit= body.match(new RegExp('last updated.*?<time datetime="([^"]*)', 'im') );
 		if(hit && hit.length) {
 			return new Date(hit[1]);
 		} 
 
-		let hit= body.match(new RegExp('class="pw-published-date[^>]*><span>([^<]*)</span>', 'im') );
+		hit= body.match(new RegExp('class="pw-published-date[^>]*><span>([^<]*)</span>', 'im') );
 		if(hit && hit.length) {
 			return new Date(hit[1]);
 		}
@@ -611,7 +631,7 @@ class MorePages implements HTMLTransformable {
 	}
 
 	#_extractAuthor(body:string):string {
-		hit=body.match(new RegExp('<meta[ \\t]+name=["\']author["\'][ \\t]+content="([^"]+)"', 'i') );
+		let hit=body.match(new RegExp('<meta[ \\t]+name=["\']author["\'][ \\t]+content="([^"]+)"', 'i') );
 		if(hit && hit.length) {
 			return hit[1];
 		}
@@ -673,14 +693,14 @@ new Promise(function(good, bad) {
 	let p1=new FirstPage(); 
 	p1.promiseExits(good, bad, -1);
 	try {
-		console.log("DEBUG: [-1] "+url );
+		console.log("DEBUG: [-1] "+URL1 );
 		fetch2(URL1, p1.success, p1.failure, p1.assignClose );
 	} catch(e) {
 		console.warn("W W W W W W W W W W W W W W W W W W W [-1] Network error with "+URL1 +" :: "+ e);	
 		bad(e);
 	}
 
-}).then( async function(list:Array<string>):ReadOnly<Array<Reference>> {
+}).then( async function(list:Array<string>):Promise<Readonly<Array<Reference>>> {
 	const p2=new MorePages(list);
 	const BATCH_SZ=7;
 	const BATCH_NO= Math.ceil(list.length/BATCH_SZ);
@@ -692,7 +712,7 @@ new Promise(function(good, bad) {
 
 			// the logic test has side-effects
 			if(!p2.mapRepeatDomain( list[offset], offset)) {
-				stack.push( exec_reference_url(offset, list[offset], p2.success, p2.failure) );
+				stack.push( exec_reference_url(offset, list[offset], p2) );
 			}
 		}
 		await Promise.all(stack);
@@ -712,7 +732,7 @@ new Promise(function(good, bad) {
 	} , 5000);
 	console.log("W W W W W W W W W W W W W   Pretend to write here");
 //	dump_to_disk( p2.resultsArray, FN );
-	return  p2.resultsArray;
+	return  p2.resultsArray as Readonly<Array<Reference>>;
 	
 }).catch(function(e) { console.warn("Y Y Y y Y Y Y Y Y Y Y Y Y Y Y Y THIS SHOULDNT BE CALLED ", e); });
 
