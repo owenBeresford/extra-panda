@@ -4,19 +4,19 @@ import {  Curl } from 'node-libcurl';
 import { parse } from 'node-html-parser';
 import decoder from 'html-entity-decoder';
 import fs from 'fs';
-import type { Crypto } from 'node:crypto';
-const crypto = await loadCrypto();
+//import type { Crypto } from 'node:crypto';
+//const crypto = await loadCrypto();
 
 const COOKIE_JAR ='/var/www/oab1/cookies.txt';
 const TIMEOUT=3; // seconds
-const [URL2, FN, URL1]=process_args(process.argv);
+const [FN, URL1]=process_args(process.argv);
 
 
 
 
-
+/**
 // types urm?
-function async loadCrypto():Crypto {
+async function loadCrypto():Crypto {
 	let crypto;
 	try {
 		crypto = await import('node:crypto');
@@ -31,6 +31,7 @@ function async loadCrypto():Crypto {
 	}
 	return crypto;
 }
+*/
 
 function process_args(args:Array<string>):Array<string|URL> {
 	if( args.length <4 || args[2]!=='--url') {	
@@ -42,17 +43,16 @@ function process_args(args:Array<string>):Array<string|URL> {
 		process.exit(1);	
 	}
 
-	let URL1=''; let URL2=''; let FN='';
+	let URL1=''; let FN='';
 	try {
 		URL1= args[3];
 		FN  = args[5];
-		URL2=new URL( URL1);
 
 	} catch(e) {
 		console.warn("Pass valid URL as --url <blah>", args, e);
 		process.exit(1);	
 	} 
-	return [URL2, FN, URL1 ];
+	return [ FN, URL1 ];
 }
 
 function exec_reference_url(offset:number, url:string, handler:HTMLTransformable ):Promise<any> {
@@ -63,7 +63,7 @@ function exec_reference_url(offset:number, url:string, handler:HTMLTransformable
 		await setTimeout(function() {}, TIMEOUT*1200 );
 
 		console.log("DEBUG: ["+offset+"] "+url );
-		await fetch2(url, handler.success, handler.failure, handler.assignClose );
+		fetch2(url, handler.success, handler.failure, handler.assignClose );
 	} catch(e) {
 		console.warn("W W W W W W W W W W W W W W W W W W W ["+offset+"] Network error with "+url +" :: "+ e);	
 		bad(e);
@@ -109,6 +109,7 @@ function normaliseString(raw:string):string {
 	return raw;
 }
 
+/* eslint complexity: ["error", 30] */
 function valueOfUrl(raw:string):string {
 	let sect=raw.split('/'), last=sect[sect.length-1];
 	
@@ -146,12 +147,12 @@ function publicise_IP(src:string):string {
 
 /////////////////////////////////////////////////////////////////////////
 // specific website hacks
-function mod_npmjs(item, body) {
+function mod_npmjs(item:Reference, body:string):Reference {
 	let tt=item.url.substr( item.url.lastIndexOf('/')+1 );
 	item.desc="Package to install "+tt;
 	item.title="Package to install "+tt;
 
-	let hit=body.match(new RegExp('aria-labelledby="collaborators".*<a href="\/~([^"]+)', 'im') );
+	let hit=body.match(new RegExp('aria-labelledby="collaborators".*<a href="/~([^"]+)', 'im') );
 	if(hit && hit.length) {
 		item.auth=normaliseString(hit[1]);
 	} else {
@@ -160,15 +161,15 @@ function mod_npmjs(item, body) {
 	return item;
 }
 
-function mod_scribe(item, body) {
-	let hit=body.match( new RegExp('<p class="meta">[ \t\n]*<a[^>]*>([A-Za-z 0-9\']+)<\/a>', 'im') ); 
+function mod_scribe(item:Reference, body:string):Reference {
+	let hit=body.match( new RegExp('<p class="meta">[ \\t\\n]*<a[^>]*>([A-Za-z 0-9\']+)</a>', 'im') ); 
 	if(hit && hit.length) {
 		item.auth=normaliseString(hit[1]);
 	} else {
 		item.auth='cant extract from medium';
 	}
 
-	hit=body.match( new RegExp('<p class="meta">.*([\-0-9]+).*<\/p>', 'im') ); 
+	hit=body.match( new RegExp('<p class="meta">.*([-0-9]+).*</p>', 'im') ); 
 	if(hit && hit.length) {
 		item.date=(new Date(hit[1])).getTime()/1000;
 	} else {
@@ -177,15 +178,15 @@ function mod_scribe(item, body) {
 	return item;
 }
 
-function mod_medium(item, body) {
-	let hit=body.match( new RegExp('<h2 class="pw-author-name[^>]*>[ \t\n]*<span[^>]*>([A-Za-z 0-9\']+)<\/span>', 'im') ); 
+function mod_medium(item:Reference, body:string):Reference {
+	let hit=body.match( new RegExp('<h2 class="pw-author-name[^>]*>[ \\t\\n]*<span[^>]*>([A-Za-z 0-9\']+)</span>', 'im') ); 
 	if(hit && hit.length) {
 		item.auth=normaliseString(hit[1]);
 	} else {
 		item.auth='cant extract from medium';
 	}
 
-	hit=body.match( new RegExp('<p class="pw-published-date[^>]*>[ \t\n]*<span[^>]*>([A-Za-z 0-9,]+)<\/span>', 'im') ); 
+	hit=body.match( new RegExp('<p class="pw-published-date[^>]*>[ \\t\\n]*<span[^>]*>([A-Za-z 0-9,]+)</span>', 'im') ); 
 	if(hit && hit.length) {
 		item.date=(new Date(hit[1])).getTime()/1000;
 	} else {
@@ -194,71 +195,72 @@ function mod_medium(item, body) {
 	return item;
 }
 
-function mod_github(item, body ) {
+function mod_github(item:Reference ):Reference {
 	//	https://github.com/node-ffi-napi/node-ffi-napi
 	let tt1=item.url.split('/');
 	item.auth=tt1[3];	
 	return item;	
 }
 
-function mod_stackoverflow(item, body) {
+function mod_stackoverflow(item:Reference ):Reference {
 	item.auth='No author for Q&A sites';
 	return item;	
 } 
 
-function mod_MDN(item, body) {
+function mod_MDN(item:Reference):Reference {
 	item.auth='MDN contribuitors';
 	return item;	
 } 
 
-function mod_GDN(item, body) {
+function mod_GDN(item:Reference):Reference {
 	item.auth='Google inc';
 	return item;	
 }
 
-function mod_react(item, body) {
+function mod_react(item:Reference):Reference {
 	item.auth='Meta platforms inc';
 	return item;	
 }
 
-function mod_graphQL(item, body) {
+function mod_graphQL(item:Reference):Reference {
 	item.auth='The GraphQL Foundation';
 	return item;	
 }
 
-function mod_caniuse(item, body) {
+function mod_caniuse(item:Reference):Reference {
 	item.auth='Alexis Deveria @Fyrd';
 	return item;	
 }
 
-function mod_mongodb(item, body) {
+function mod_mongodb(item:Reference):Reference {
 	item.auth='MongoDB inc';
-	return item;	
+	return item;
 }
 
-function mod_wikipedia(item, body) {
+function mod_wikipedia(item:Reference):Reference {
 	item.auth='Wikipedia contributors';
 	return item;	
 }
 
-function mod_codepen(item, body) {
+function mod_codepen(item:Reference):Reference {
 	let tt1=item.url.split('/');
 // https://codepen.io/nobitagit/pen/AJXmgz
 	item.auth=tt1[3];
 	return item;	
 } 
 
-function mod_parli(item, body) {
-	item.auth="part of the UKG"
+function mod_parli(item:Reference):Reference {
+	item.auth="part of the UKG";
 	item.desc="I am prohibited from checking URLs on this website";
 	item.title="I am prohibited from checking URLs on this website";
 	return item;	
 }
 
+type VendorModCB= (a:Reference)=>Reference;
 // function to apply the specific website hacks
-function apply_vendors(item, body) {
-	const f1 =function(name, target, CB) { return {name, target, callback:CB }; }
-	const VENDORS= [
+function apply_vendors(item:Reference, body:string):Reference {
+	const f1 =function(name:string, target:string, CB: VendorModCB ):Record<string,string,VendorModCB> { return {name, target, callback:CB }; };
+	const VENDORS:Array<Record<string,string,VendorModCB>> = [
 		f1('npmjs', false, mod_npmjs ),
 		f1('medium', 'auth', mod_medium),
 		f1('scribe.rip', 'auth', mod_scribe),
@@ -285,8 +287,7 @@ function apply_vendors(item, body) {
 	return item;
 }
 
-
-async function dump_to_disk(data, FN) {
+async function dump_to_disk(data:Array<Reference>, FN:string):void {
 	console.log("DEBUG: X X X X X X X X X X X X X X end event (write to disk) ");
 
 	let template=`
@@ -313,16 +314,21 @@ async function dump_to_disk(data, FN) {
 	}
 	template= template.trim()+ "\n"+JSON.stringify( data, null, 2)+ "\n}}\n";
 
-	await fs.writeFile( process.cwd()+'/'+FN, template, 'utf8', (err)=> { 
+	await fs.writeFile( process.cwd()+'/'+FN, template, 'utf8', (err:any ):void => { 
 		if(err) { console.warn("Write ERROR "+ process.cwd()+'/'+FN ,err); }
 	} );
 }
 
+type successType=(statusCode:string, data:string, headers:Headers)=>void;
+type failureType=()=>void;
+type closeType =(cb:CBtype )=>void;
+
 // a boring net-work function, that supports cookie populations
 // If curl has cookie problems https://www.npmjs.com/package/http-cookie-agent
-async function fetch2(url:string|URL, good1:Function, bad1:Function, close:Function ):Promise<void> {
+function fetch2(url:string|URL, good1:successType, bad1:failureType, close:closeType  ):void {
 	const curl = new Curl();
-	close( ()=>{ curl.close(); }.bind(this) );
+	const CB=():void =>{ curl.close(); };
+	close( CB.bind(this) );
 
 	curl.setOpt('HTTPHEADER', [ 'upgrade-insecure-requests: 1', "accept-language: en-GB,en;q=0.5", 
 					'user-agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0'  ]);
@@ -377,12 +383,13 @@ interface HTMLTransformable {
 }
 
 class FirstPage implements HTMLTransformable { 
-	good:PromiseCB;
-	bad:PromiseCB;
-	offset:number;
-	CB:CBtype; 
+	protected good:PromiseCB;
+	protected bad:PromiseCB;
+	protected offset:number;
+	protected CB:CBtype; 
 
-	success(statusCode:string, data:string, headers:Headers):void {
+	public success(statusCode:string, data:string):void {
+		// also param headers:Headers
 		if( parseInt(statusCode /100) !==2) {
 			return this.bad( new Error("Recieved "+statusCode) );
 		}
@@ -390,7 +397,7 @@ class FirstPage implements HTMLTransformable {
 		let root=parse(data );
 		let nn=root.querySelectorAll('sup a');
 		let list=[];
-		nn.forEach( function(val, i) {
+		nn.forEach( function(val) {
 			list.push( val.getAttribute('href') );
 				} );
 		this.CB();
@@ -401,34 +408,34 @@ class FirstPage implements HTMLTransformable {
 		this.good(list);
 	}
 
-	failure(msg:any ):void {
-		console.log(msg, arguments[0], arguments[1]);
+	public failure(msg:any ):void {
+		console.log(msg);
 		this.CB(); 
 		this.bad("Error "+ msg );
 	}
 
-	promiseExits(good:PromiseCB, bad:PromiseCB, offset:number):void {
+	public promiseExits(good:PromiseCB, bad:PromiseCB, offset:number):void {
 		this.good=good;
 		this.bad=bad;
 		this.offset=offset;
 	}
 
-	assignClose(cb:CBtype ):void {
+	public assignClose(cb:CBtype ):void {
 		this.CB=cb;
 	}
 	
 }
 
 class MorePages implements HTMLTransformable { 
-	good:PromiseCB;
-	bad:PromiseCB;
-	offset:number;
-	CB:CBtype; 
-	src:Array<string>;
-	dst:Array<Reference>;
-	shorts:Record<string,Reference>;
+	protected good:PromiseCB;
+	protected bad:PromiseCB;
+	protected offset:number;
+	protected CB:CBtype; 
+	protected src:Array<string>;
+	protected dst:Array<Reference>;
+	protected shorts:Record<string,Reference>;
 
-	constructor(src:Array<string>) {
+	public constructor(src:Array<string>) {
 		this.src=src;
 		this.dst=Array(src.length);
 		// I have to allocate an array before I fill() it with initial values.
@@ -437,7 +444,7 @@ class MorePages implements HTMLTransformable {
 		this.shorts={};
 	}
 
-	async success(statusCode:string, data:string, headers:Headers|Array<Headers>):void {
+	public success(statusCode:string, data:string, headers:Headers|Array<Headers>):void {
 		let item:Reference ={
 					'url':publicise_IP( this.src[this.offset]),
 					'desc':'',
@@ -464,14 +471,14 @@ class MorePages implements HTMLTransformable {
 		}
 		
 		let loop=0;
-		let redir=this._extractRedirect(body, this.offset, this.src[this.offset], loop );
+		let redir=this.#_extractRedirect(body, this.offset, this.src[this.offset], loop );
 		if(typeof redir !== 'boolean') {
 			loop++;
 			this.bad(redir);
 		}
-		item.date= this._extractDate(headers, body).getTime()/1000;
-		item.auth= normaliseString(this._extractAuthor(body)); 
-		item.title=this._extractTitle(body );
+		item.date= this.#_extractDate(headers, body).getTime()/1000;
+		item.auth= normaliseString(this.#_extractAuthor(body)); 
+		item.title=this.#_extractTitle(body );
 
 		hit=body.match(new RegExp('<meta[ \\t]+name=["\']description["\'][ \\t]+content="([^"]+)"', 'i'));
 		if(hit && hit.length) {
@@ -488,8 +495,8 @@ class MorePages implements HTMLTransformable {
 		this.good( item);
 	}
 
-	failure(msg:any):void {
-		console.warn("[url"+this.offset+"] X X X X X X X X X x X X X X X X ", msg, arguments[0], arguments[1]);
+	public failure(msg:any):void {
+		console.warn("[url"+this.offset+"] X X X X X X X X X x X X X X X X ", msg );
 		let item={
 					'url': publicise_IP( this.dst[this.offset]),
 					'desc':'HTTP_ERROR, '+msg,
@@ -503,17 +510,17 @@ class MorePages implements HTMLTransformable {
 		this.good( item);
 	}
 
-	promiseExits(good:PromiseCB, bad:PromiseCB, offset:number):void {
+	public promiseExits(good:PromiseCB, bad:PromiseCB, offset:number):void {
 		this.good=good;
 		this.bad=bad;
 		this.offset=offset;
 	}
 
-	assignClose(cb:CBtype ):void {
+	public assignClose(cb:CBtype ):void {
 		this.CB=cb;
 	}
 
-	mapRepeatDomain(url:string|URL, cur:number ):boolean {
+	public mapRepeatDomain(url:string|URL, cur:number ):boolean {
 		const HASH=	 shorten( url );
 		if( HASH in this.shorts) {
 			this.dst[ cur]=Object.assign({}, this.dst[ this.shorts[ HASH] ], {url:url }) as Reference;
@@ -522,12 +529,13 @@ class MorePages implements HTMLTransformable {
 		return false;
 	}
 
-	get resultsArray():Readonly<Array<Reference|false>> { 
+	public get resultsArray():Readonly<Array<Reference|false>> { 
 		return this.dst;
 	}	
   
 	// from sept 2024, deal with fake redirects
-	_extractRedirect(body:string, offset:number, current:string|URL, loop:number):Error|false {
+	/* eslint complexity: ["error", 30] */
+	#_extractRedirect(body:string, offset:number, current:string|URL, loop:number):Error|false {
 
 	// <script>location="https://www.metabase.com/learn/metabase-basics/querying-and-dashboards/visualization/bar-charts"<
 		let hit=body.match(new RegExp('<script>[ \\t\\n]*location=["\']([^\'"]+)[\'"]', 'i'));
@@ -550,7 +558,7 @@ class MorePages implements HTMLTransformable {
 		}
 
 		// location.replaceState   replaceState(state, unused, url)
-		hit=body.match(new RegExp('<script>[ \\t\\n]*location\\.replaceState\\(null,[ ]*[\'"]{2},[ ]*([\'"](.*)[\'"]\\)', 'i'));
+		hit=body.match(new RegExp('<script>[ \\t\\n]*location\\.replaceState\\(null,[ ]*[\'"]{2},[ ]*([\'"](.*)[\'"])\\)', 'i'));
 		if(hit && hit.length && hit[1]!= current ) {
 			if(loop<3) {
 				return new Error( hit[1] );
@@ -574,12 +582,13 @@ class MorePages implements HTMLTransformable {
 		return false;
 	}
 
-	_extractDate(headers:Headers, body:string):Date {
+	/* eslint complexity: ["error", 30] */
+	#_extractDate(headers:Headers, body:string):Date {
 		if('Last-Modified' in headers) {
 			let tmp=headers['Last-Modified'];
 			tmp=tmp.replace(" BST", ""); 
 			// yes I loose an hour here, but month/year is the valuable data
-			return new Date( headers['Last-Modified']);
+			return new Date( tmp);
 		} 
 
 		let hit= body.match(new RegExp('posted.{1,5}<time datetime="([^"]*)', 'im') );
@@ -601,7 +610,7 @@ class MorePages implements HTMLTransformable {
 		return new Date(0);
 	}
 
-	_extractAuthor(body:string):string {
+	#_extractAuthor(body:string):string {
 		hit=body.match(new RegExp('<meta[ \\t]+name=["\']author["\'][ \\t]+content="([^"]+)"', 'i') );
 		if(hit && hit.length) {
 			return hit[1];
@@ -618,12 +627,12 @@ class MorePages implements HTMLTransformable {
 			return hit[1];
 		} 
 
-		hit=body.match(new RegExp('\&copy; [0-9,]* ([^<\n])|[Ⓒ ©] [0-9,]* ([^<\n])|&#169; [0-9,]* ([^<\n])|&#xA9; [0-9,]* ([^<\n])', 'i') );
+		hit=body.match(new RegExp('&copy; [0-9,]* ([^<\\n])|[Ⓒ ©] [0-9,]* ([^<\\n])|&#169; [0-9,]* ([^<\\n])|&#xA9; [0-9,]* ([^<\\n])', 'i') );
 		if(hit && hit.length) {
 			return hit[1];
 		}
 
-		hit=body.match(new RegExp('Ⓒ [0-9,]* ([^<\n])|&#9400; [0-9,]* ([^<\n])|&#x24B8; [0-9,]* ([^<\n])', 'i') );
+		hit=body.match(new RegExp('Ⓒ [0-9,]* ([^<\\n])|&#9400; [0-9,]* ([^<\\n])|&#x24B8; [0-9,]* ([^<\\n])', 'i') );
 		if(hit && hit.length) {
 			return hit[1];
 		}
@@ -634,7 +643,7 @@ class MorePages implements HTMLTransformable {
 		return 'unknown';
 	}
 
-	_extractTitle(body:string):string {
+	#_extractTitle(body:string):string {
 		// https://gist.github.com/lancejpollard/1978404
 		let hit= body.match(new RegExp('<title>([^<]+)<\\/title>', 'i') );
 		if(hit && hit.length) {
@@ -660,18 +669,18 @@ class MorePages implements HTMLTransformable {
 
 
 
-const P1 = new Promise(async function(good, bad) {  
+new Promise(function(good, bad) {  
 	let p1=new FirstPage(); 
 	p1.promiseExits(good, bad, -1);
 	try {
 		console.log("DEBUG: [-1] "+url );
-		await fetch2(URL1, p1.success, p1.failure, p1.assignClose );
+		fetch2(URL1, p1.success, p1.failure, p1.assignClose );
 	} catch(e) {
 		console.warn("W W W W W W W W W W W W W W W W W W W [-1] Network error with "+URL1 +" :: "+ e);	
 		bad(e);
 	}
 
-}).then( async function(list) {
+}).then( async function(list:Array<string>):ReadOnly<Array<Reference>> {
 	const p2=new MorePages(list);
 	const BATCH_SZ=7;
 	const BATCH_NO= Math.ceil(list.length/BATCH_SZ);
@@ -689,7 +698,6 @@ const P1 = new Promise(async function(good, bad) {
 		await Promise.all(stack);
 	}
 
-
 	let tmp= p2.resultsArray.filter( (a) => !!a );
 	console.log("BEFORE got "+tmp.length+" input "+list.length );
 	const TRAP =setInterval(function() { 
@@ -698,13 +706,14 @@ const P1 = new Promise(async function(good, bad) {
 		if( p2.resultsArray.length === list.length && !p2.resultsArray.includes(false)) { 
 			console.log(new Date(), " INTEVAL TICK, CLOSING SCRIPT, seem to have data" ); 
 
-			dump_to_disk( p2.resultsArray); 
+			dump_to_disk( p2.resultsArray, FN); 
 			clearInterval(TRAP);
 		}   
 	} , 5000);
 	console.log("W W W W W W W W W W W W W   Pretend to write here");
-//	dump_to_disk( p2.resultsArray );
-
-}).catch(function(e) { console.warn("Y Y Y y Y Y Y Y Y Y Y Y Y Y Y Y THIS SHOULDNT BE CALLED ", e, arguments); })
+//	dump_to_disk( p2.resultsArray, FN );
+	return  p2.resultsArray;
+	
+}).catch(function(e) { console.warn("Y Y Y y Y Y Y Y Y Y Y Y Y Y Y Y THIS SHOULDNT BE CALLED ", e); });
 
 
