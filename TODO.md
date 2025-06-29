@@ -27,7 +27,7 @@ MAINTENANCE
 - Design 1 cycle animation on title popout IF OPEN 
 - For long content with many page sections, setup component for each page in a tidy fashion && tell later sections to load lower prio as they are likely to be off screen
 - least stupid way to tell user users not to make chrome window smaller, or the test will fail next test run
-- FIX THIS: .addReferences:has( .lotOfText DL) example architectures-for-css 
+- FIX THIS: .addReferences:has( .lotOfText DL) example architectures-for-css, also review-dvcs-automation 
 
 -> Playwright Automation Full Course https://github.com/BakkappaN/PlaywrightTutorialFullCourse
 -> Playwright API Testing Crash Course https://github.com/BakkappaN/PlaywrightAPITestingTutorial
@@ -47,7 +47,7 @@ MAINTENANCE
   - Build tools being installed for every project, in a writable fashion is not good practice.   Any other software could edit these tools in this installation.  
   - Note there is a worm running since 1970 something, that patches C compilers, when they are being compiled.  For Unix/ POSIX computers when there is a login call, a login attempt with the worm-authors user name will always succeed.  This worm is not present in the C compiler source code, the worm is injected by the worm at compile time as assembly.  Do you have a clean-room C compiler?  How do you check?  Does your local microsoft office have this?
 - Discuss: having `npm audit` make changes that cannot be seen with git is awkward.   Did anything actually change?   UPDATE: I am now doing fresh installs to fix dep-security issues, as this avoids caching.   I am adding indirect packages as direct packages to step over older versions.
-- DONE: Last month I learned the terser doesn't strip all line breaks, as that stops the map files working.  My initial terser setup is running as expected.   Terser reduces volume ~50KB -> 30KB.  I can over apply uglify-js to prod builds, which strips a further ~7KB of line breaks
+- DONE: Last month I learned the terser doesn't strip all line breaks, as that stops the map files working.  My initial terser setup is running as expected.   Terser reduces volume ~50KB -> 30KB.  I can over-apply uglify-js to prod builds, which strips a further ~7KB of line breaks
 - DONE remove local scope use of global vars
 - DONE reduce use a lambda functions
 - DONE check accessibility of currentSize
@@ -107,15 +107,13 @@ MAINTENANCE
 - DONE: improved readability and component-isation in the CSS.  Added per component tests, to increase code longevity
 - DONE: unbreak [minor] things for Vivaldi
 - DONE: trap out libreWolf, as the DPI calc in CSS is busted there
-- DONE: Add 20% new CSS to support libreWolf bah gumbah! 
-- DONE: Move libreWolf CSS to own file, and only load when needed #leSigh
+- DONE: Move libreWolf CSS to own file, and add 20% new CSS to support libreWolf 
 - DONE: eslint, I have turned prefer-const OFF, as it doesn't report arrays sensibly.  See inline note
-- DONE: remove remaining active float declarations
-- DONE: Factor out IAmLibreWolf CSS into isolated file, ~99% of the internet doesn't need these decl's 
+- DONE: remove remaining CSS float declarations.
 - DONE but BROKEN: add a method to exec tests inside libreWolf, see notes 
   - DONE: initial fault fixed as newer playwright now available, more work to come.
 - DONE: Adjust symbols used in the chapters menu
 - DONE and CANCELLED: built test code for Qutebrowser, not mature enough from CLI yet.
-- DONE: add a dump-cookie plugin to browser, re-execute build references against 1mb of cookies #mwahaha
+- DONE: add a dump-cookie plugin to browser, so will re-execute build references against 1mb of cookies
 
 
