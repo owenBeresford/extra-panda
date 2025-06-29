@@ -13,31 +13,6 @@ const COOKIE_JAR ='/var/www/oab1/cookies.txt';
 const TIMEOUT=3; // seconds
 const [FN, URL1]=process_args(process.argv);
 
-/*
-	basic imported code.
-	plan:
-	* do something to list URLs	across an article (probably filter on current references file)
-	* compile golang tool
-	* extract cookies from chromium with tool
-	* compile cookies into cookie-jar format
-	* rerun reference generation
-
-	Occurrence of missing cookies will tail off after first 50 articles.
-
-function filterURLs(fn:string) {
-	let buf=[];
-	let dat=await fetch("http://127.0.0.1/resource/"+fn, {content-type:"application/json; encoding=utf8"});
-	for (let i in dat) {
-		let tmp= shorten(dat[i].url);
-		if(! tmp in buf) {
-			buf.push( tmp);
-		}
-	}
-	return buf;
-}
-
-*/
-
 /**
 // types urm?
 async function loadCrypto():Crypto {
@@ -102,7 +77,9 @@ function exec_reference_url(offset:number, url:string, handler:HTMLTransformable
 // sept 2024, this is preferred catch point
 	.catch( function(ee) { 
 		console.warn("REDIRECT ["+offset+"] of "+url +" to "+ ee.message);
-		exec_reference_url(offset, ee.message, handler );
+		if( url!== ee.message) {
+			exec_reference_url(offset, ee.message, handler );
+		}
 	});
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 }
@@ -348,8 +325,14 @@ async function dump_to_disk(data:Readonly<Array<Reference|boolean>>, FN:string):
 		return;
 	}
 	template= template.trim()+ "\n"+JSON.stringify( data, null, 2)+ "\n}}\n";
+	
+	let outpath=FN;
+	if(FN[0]!=="/") {
+		outpath= process.cwd()+'/'+FN;
+	}
+	
 
-	await fs.writeFile( process.cwd()+'/'+FN, template, 'utf8', (err:any ):void => { 
+	await fs.writeFile( outpath, template, 'utf8', (err:any ):void => { 
 		if(err) { console.warn("Write ERROR "+ process.cwd()+'/'+FN ,err); }
 	} );
 }
@@ -364,7 +347,7 @@ function fetch2(url:string, good1:successType, bad1:failureType, close:closeType
 	const curl = new Curl();
 	let CB=():void =>{ curl.close(); };
 	CB=CB.bind(this);
-	close(CB  );
+	close( CB );
 
 	curl.setOpt('HTTPHEADER', [ 'upgrade-insecure-requests: 1', "accept-language: en-GB,en;q=0.5", 
 					'user-agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0'  ]);
@@ -387,8 +370,6 @@ function fetch2(url:string, good1:successType, bad1:failureType, close:closeType
 
 	curl.on('end', good1);
 	curl.on('error', bad1);
-//	curl.on('end', good1.bind(curl));
-//	curl.on('error', bad1.bind(curl));
 	curl.perform();
 }
 
@@ -424,6 +405,12 @@ class FirstPage implements HTMLTransformable {
 	protected offset:number;
 	protected CB:CBtype; 
 
+	public constructor() {
+		this.assignClose=this.assignClose.bind(this);
+		this.success=this.success.bind(this);
+		this.failure=this.failure.bind(this);
+	}
+
 	public success(statusCode:string, data:string):void {
 		// also param headers:Headers
 		if( Math.floor(parseInt(statusCode, 10)/100) !==2) {
@@ -436,7 +423,10 @@ class FirstPage implements HTMLTransformable {
 		nn.forEach( function(val) {
 			list.push( val.getAttribute('href') );
 				} );
-		this.CB();
+		if( this.CB) {
+console.log("Running cURL close");
+			this.CB();
+		}
 		if( list.length <2 ) {	
 			console.warn("Didn't find many/ any URLs in page/ Is this not on my site, or is it not an article?" );
 			process.exit(0);
@@ -478,6 +468,11 @@ class MorePages implements HTMLTransformable {
 		// I have declared it above.   Is this Clang?
 		this.dst.fill(false, 0, src.length);
 		this.shorts={};
+
+		this.assignClose=this.assignClose.bind(this);
+		this.success=this.success.bind(this);
+		this.failure=this.failure.bind(this);
+		console.log("Start to annotate "+src.length+" references in this article");
 	}
 
 	public success(statusCode:string, body:string, headers:Record<string,string> |Array<Record<string,string>> ):void {
@@ -500,11 +495,20 @@ class MorePages implements HTMLTransformable {
 			item=apply_vendors(item, "");
 			this.dst[this.offset]= item;
 			this.good( item);
+			if( this.CB) {
+console.log("Running cURL close in ERROR by statusCode");
+				this.CB();
+			}	
 			return;
 		}
 		if(Array.isArray(headers)) {
 			headers=headers[0];
 		}
+		if( this.CB) {
+console.log("Running cURL close");
+			this.CB();
+		}
+
 		
 		let loop=0;
 		let redir=this.#_extractRedirect(body, this.offset, this.src[this.offset], loop );
@@ -709,7 +713,7 @@ class MorePages implements HTMLTransformable {
 
 
 
-new Promise(function(good, bad) {  
+new Promise( async function(good, bad) {  
 	let p1=new FirstPage(); 
 	p1.promiseExits(good, bad, -1);
 	try {
@@ -718,24 +722,25 @@ new Promise(function(good, bad) {
 	} catch(e) {
 		console.warn("W W W W W W W W W W W W W W W W W W W [-1] Network error with "+URL1 +" :: "+ e);	
 		bad(e);
+	} finally {
+		await delay( TIMEOUT*1200 );
 	}
 
 }).then( async function(list:Array<string>):Promise<Readonly<Array<Reference>>> {
 	const p2=new MorePages(list);
 	const BATCH_SZ=7;
 	const BATCH_NO= Math.ceil(list.length/BATCH_SZ);
+console.log("There are "+list.length+"/"+BATCH_NO+" links in  "+process.argv[3]);
 	for(let k=0; k<BATCH_NO; k++ ) {
-		let stack=[];
 		for(let j =0 ; j< BATCH_SZ; j++) {
 			let offset=k*BATCH_SZ +j;
 			if(offset >= list.length) { break; } // used in last batch, which isn't likely to be full.
 
 			// the logic test has side-effects
 			if(!p2.mapRepeatDomain( list[offset], offset)) {
-				stack.push( exec_reference_url(offset, list[offset], p2) );
+				await exec_reference_url(offset, list[offset], p2);
 			}
 		}
-		await Promise.all(stack);
 	}
 
 	let tmp= p2.resultsArray.filter( (a) => !!a );
