@@ -27,7 +27,6 @@ MAINTENANCE
 - Design 1 cycle animation on title popout IF OPEN 
 - For long content with many page sections, setup component for each page in a tidy fashion && tell later sections to load lower prio as they are likely to be off screen
 - least stupid way to tell user users not to make chrome window smaller, or the test will fail next test run
-- INTEGRATE https://github.com/barnardb/cookies 
 - FIX THIS: .addReferences:has( .lotOfText DL) example architectures-for-css 
 
 -> Playwright Automation Full Course https://github.com/BakkappaN/PlaywrightTutorialFullCourse
@@ -117,4 +116,6 @@ MAINTENANCE
   - DONE: initial fault fixed as newer playwright now available, more work to come.
 - DONE: Adjust symbols used in the chapters menu
 - DONE and CANCELLED: built test code for Qutebrowser, not mature enough from CLI yet.
+- DONE: add a dump-cookie plugin to browser, re-execute build references against 1mb of cookies #mwahaha
+
 

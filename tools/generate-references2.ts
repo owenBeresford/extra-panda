@@ -4,6 +4,8 @@ import {  Curl } from 'node-libcurl';
 import { parse } from 'node-html-parser';
 import decoder from 'html-entity-decoder';
 import fs from 'fs';
+// "cycle timing"/ url shuffle code is disabled in this version
+// hopefully unneeded
 //import type { Crypto } from 'node:crypto';
 //const crypto = await loadCrypto();
 
@@ -21,6 +23,19 @@ const [FN, URL1]=process_args(process.argv);
 	* rerun reference generation
 
 	Occurrence of missing cookies will tail off after first 50 articles.
+
+function filterURLs(fn:string) {
+	let buf=[];
+	let dat=await fetch("http://127.0.0.1/resource/"+fn, {content-type:"application/json; encoding=utf8"});
+	for (let i in dat) {
+		let tmp= shorten(dat[i].url);
+		if(! tmp in buf) {
+			buf.push( tmp);
+		}
+	}
+	return buf;
+}
+
 */
 
 /**
@@ -64,15 +79,20 @@ function process_args(args:Array<string>):Array<string> {
 	return [ FN, URL1 ];
 }
 
+async function delay(ms: number): Promise<void> {
+  return new Promise((good, bad) => setTimeout(good, ms));
+}
+
 function exec_reference_url(offset:number, url:string, handler:HTMLTransformable ):Promise<any> {
-  return new Promise(function (good, bad) {	
+  return new Promise(async function (good, bad) {	
 	handler.promiseExits(good, bad, offset);
 	try {
 		// I sleep here
-		await setTimeout(function() {}, TIMEOUT*1200 );
+		await delay( TIMEOUT*1200 );
 
 		console.log("DEBUG: ["+offset+"] "+url );
 		fetch2(url, handler.success, handler.failure, handler.assignClose );
+
 	} catch(e) {
 		console.warn("W W W W W W W W W W W W W W W W W W W ["+offset+"] Network error with "+url +" :: "+ e);	
 		bad(e);
