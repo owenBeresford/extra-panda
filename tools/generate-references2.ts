@@ -1,19 +1,27 @@
+/*
+	This script generate *-reference.wiki files, that execute to create *-reference.json files.
+	This version takes 30s to execute, as I removed concurrency. 
+	Build your cookies.txt by running "get cookies.txt LOCALLY" plugin in Chrome, or similar plugin in other tools
+	Update the COOKIE_JAR variable as needed,   do not store this file in /tmp/  ;-p
+*/
+
 // https://stackoverflow.com/questions/17276206/list-all-js-global-variables-used-by-site-not-all-defined
 'use strict';
 import {  Curl } from 'node-libcurl';
 import { parse } from 'node-html-parser';
 import decoder from 'html-entity-decoder';
 import fs from 'fs';
-// "cycle timing"/ url shuffle code is disabled in this version
-// hopefully unneeded
-//import type { Crypto } from 'node:crypto';
-//const crypto = await loadCrypto();
 
 const COOKIE_JAR ='/var/www/oab1/cookies.txt';
 const TIMEOUT=3; // seconds
 const [FN, URL1]=process_args(process.argv);
 
 /**
+// "cycle timing"/ url shuffle code is disabled in this version
+// hopefully unneeded
+//import type { Crypto } from 'node:crypto';
+//const crypto = await loadCrypto();
+
 // types urm?
 async function loadCrypto():Crypto {
 	let crypto;
@@ -96,7 +104,7 @@ function shorten(url:string):string {
 	if(ss >0) {
 		url= url.substr(0, ss);
 	}
-
+	
 	return url;
 }
 
@@ -330,8 +338,6 @@ async function dump_to_disk(data:Readonly<Array<Reference|boolean>>, FN:string):
 	if(FN[0]!=="/") {
 		outpath= process.cwd()+'/'+FN;
 	}
-	
-
 	await fs.writeFile( outpath, template, 'utf8', (err:any ):void => { 
 		if(err) { console.warn("Write ERROR "+ process.cwd()+'/'+FN ,err); }
 	} );
@@ -345,7 +351,8 @@ type closeType =(cb:CBtype )=>void;
 // If curl has cookie problems https://www.npmjs.com/package/http-cookie-agent
 function fetch2(url:string, good1:successType, bad1:failureType, close:closeType  ):void {
 	const curl = new Curl();
-	let CB=():void =>{ curl.close(); };
+	curl.isClose=false;
+	let CB=():void =>{ if(! curl.isClose) { curl.close(); curl.isClose=true; } };
 	CB=CB.bind(this);
 	close( CB );
 
@@ -370,7 +377,9 @@ function fetch2(url:string, good1:successType, bad1:failureType, close:closeType
 
 	curl.on('end', good1);
 	curl.on('error', bad1);
-	curl.perform();
+	if(! curl.isClose) {
+		curl.perform();
+	}
 }
 
 
@@ -496,7 +505,6 @@ class MorePages implements HTMLTransformable {
 			this.dst[this.offset]= item;
 			this.good( item);
 			if( this.CB) {
-console.log("Running cURL close in ERROR by statusCode");
 				this.CB();
 			}	
 			return;
@@ -508,7 +516,6 @@ console.log("Running cURL close in ERROR by statusCode");
 console.log("Running cURL close");
 			this.CB();
 		}
-
 		
 		let loop=0;
 		let redir=this.#_extractRedirect(body, this.offset, this.src[this.offset], loop );
@@ -567,6 +574,7 @@ console.log("Running cURL close");
 	public mapRepeatDomain(url:string, cur:number ):boolean {
 		const HASH=	 shorten( url );
 		if( HASH in this.shorts) {
+			console.log("Hit URL cache");
 			this.dst[ cur]=Object.assign({}, this.dst[ this.shorts[ HASH] ], {url:url }) as Reference;
 			return true;
 		}
@@ -745,19 +753,23 @@ console.log("There are "+list.length+"/"+BATCH_NO+" links in  "+process.argv[3])
 
 	let tmp= p2.resultsArray.filter( (a) => !!a );
 	console.log("BEFORE got "+tmp.length+" input "+list.length );
-	const TRAP =setInterval(function() { 
-		let tmp= p2.resultsArray.filter( (a) => !!a );
-		console.log(new Date(), " INTEVAL TICK, got "+tmp.length+" done items, input "+list.length+" items" ); 
-		if( p2.resultsArray.length === list.length && !p2.resultsArray.includes(false)) { 
-			console.log(new Date(), " INTEVAL TICK, CLOSING SCRIPT, seem to have data" ); 
+	if(tmp !== list.length) {
+		const TRAP =await setInterval(function() { 
+			let tmp= p2.resultsArray.filter( (a) => !!a );
+			console.log(new Date(), " INTEVAL TICK, got "+tmp.length+" done items, input "+list.length+" items" ); 
+			if( p2.resultsArray.length === list.length && !p2.resultsArray.includes(false)) { 
+				console.log(new Date(), " INTEVAL TICK, CLOSING SCRIPT, seem to have data" ); 
 
-			dump_to_disk( p2.resultsArray, FN); 
-			clearInterval(TRAP);
-		}   
-	} , 5000);
-	console.log("W W W W W W W W W W W W W   Pretend to write here");
-//	dump_to_disk( p2.resultsArray, FN );
-	return  p2.resultsArray as Readonly<Array<Reference>>;
+				dump_to_disk( p2.resultsArray, FN); 
+				clearInterval(TRAP);
+			}   
+		} , 5000);
+		return  p2.resultsArray as Readonly<Array<Reference>>;
+
+	} else {
+		dump_to_disk( p2.resultsArray, FN );
+		return  p2.resultsArray as Readonly<Array<Reference>>;
+	}
 	
 }).catch(function(e) { console.warn("Y Y Y y Y Y Y Y Y Y Y Y Y Y Y Y THIS SHOULDNT BE CALLED ", e); });
 
