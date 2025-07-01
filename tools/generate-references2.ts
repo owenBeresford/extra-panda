@@ -1,8 +1,12 @@
 /*
 	This script generate *-reference.wiki files, that execute to create *-reference.json files.
-	This version takes 30s to execute, as I removed concurrency. 
-	Build your cookies.txt by running "get cookies.txt LOCALLY" plugin in Chrome, or similar plugin in other tools
+	This version takes 30-60s to execute, as I removed concurrency. 
+	Build your cookies.txt by running "get cookies.txt LOCALLY" plugin in Chrome, or similar plugin in other browsers
 	Update the COOKIE_JAR variable as needed,   do not store this file in /tmp/  ;-p
+
+* check URL each time its loaded
+* the log files in /tmp show trash sequencing
+* leSigh JS pointers
 */
 
 // https://stackoverflow.com/questions/17276206/list-all-js-global-variables-used-by-site-not-all-defined
@@ -84,6 +88,7 @@ function exec_reference_url(offset:number, url:string, handler:HTMLTransformable
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // sept 2024, this is preferred catch point
 	.catch( function(ee) { 
+console.warn(ee);
 		console.warn("REDIRECT ["+offset+"] of "+url +" to "+ ee.message);
 		if( url!== ee.message) {
 			exec_reference_url(offset, ee.message, handler );
@@ -364,6 +369,7 @@ function fetch2(url:string, good1:successType, bad1:failureType, close:closeType
 // sept 2024: Note official redirect tech, added in first version 
 	curl.setOpt('FOLLOWLOCATION', true);
 	curl.setOpt('TIMEOUT', TIMEOUT);
+	curl.setOpt('VERBOSE', 1);
 	curl.setOpt('CONNECTTIMEOUT', TIMEOUT);
 
 // scale out to other domains as needed
@@ -444,7 +450,7 @@ console.log("Running cURL close");
 	}
 
 	public failure(msg:any ):void {
-		console.log(msg);
+		console.warn(msg);
 		this.CB(); 
 		this.bad("Error "+ msg );
 	}
@@ -469,6 +475,7 @@ class MorePages implements HTMLTransformable {
 	protected src:Array<string>;
 	protected dst:Array<Reference|boolean>;
 	protected shorts:Record<string,number>;
+	protected loop:number; // a counter to limit badly setup JS forwarding, so it will break
 
 	public constructor(src:Array<string>) {
 		this.src=src;
@@ -477,6 +484,7 @@ class MorePages implements HTMLTransformable {
 		// I have declared it above.   Is this Clang?
 		this.dst.fill(false, 0, src.length);
 		this.shorts={};
+		this.loop=0;
 
 		this.assignClose=this.assignClose.bind(this);
 		this.success=this.success.bind(this);
@@ -517,10 +525,9 @@ console.log("Running cURL close");
 			this.CB();
 		}
 		
-		let loop=0;
-		let redir=this.#_extractRedirect(body, this.offset, this.src[this.offset], loop );
+		let redir= this.#_extractRedirect(body, this.offset, this.src[this.offset], this.loop );
 		if(typeof redir !== 'boolean') {
-			loop++;
+			this.loop++;
 			this.bad(redir);
 		}
 		item.date= this.#_extractDate(headers, body).getTime()/1000;
@@ -539,15 +546,19 @@ console.log("Running cURL close");
 
 		this.shorts[ shorten( this.src[this.offset]) ]=this.offset;
 		this.dst[this.offset]= item;
+console.log("EXTRACTED {{", item, body, "}}");
 		this.good( item);
 	}
 
 	public failure(msg:any):void {
 		console.warn("[url"+this.offset+"] X X X X X X X X X x X X X X X X ", msg );
 		let tmp="";
-		if( this.dst[this.offset] ) {
-			tmp=(this.dst[this.offset] as Reference).url;
+		if(this.offset in this.src ) {
+			tmp=this.src[this.offset];
 		}
+		// plan B
+		//		tmp=(this.dst[this.offset] as Reference).url;
+
 		let item={
 					'url': publicise_IP( tmp),
 					'desc':'HTTP_ERROR, '+msg,
@@ -574,11 +585,15 @@ console.log("Running cURL close");
 	public mapRepeatDomain(url:string, cur:number ):boolean {
 		const HASH=	 shorten( url );
 		if( HASH in this.shorts) {
-			console.log("Hit URL cache");
+console.log("Hit URL cache");
 			this.dst[ cur]=Object.assign({}, this.dst[ this.shorts[ HASH] ], {url:url }) as Reference;
 			return true;
 		}
 		return false;
+	}
+
+	public zeroLimitor() {
+		this.loop=0;
 	}
 
 	public get resultsArray():Readonly<Array<Reference|boolean>> { 
@@ -587,7 +602,7 @@ console.log("Running cURL close");
   
 	// from sept 2024, deal with fake redirects
 	/* eslint complexity: ["error", 30] */
-	#_extractRedirect(body:string, offset:number, current:string|URL, loop:number):Error|false {
+	#_extractRedirect(body:string, offset:Readonly<number>, current:string|URL, loop:Readonly<number>):Error|false {
 
 	// <script>location="https://www.metabase.com/learn/metabase-basics/querying-and-dashboards/visualization/bar-charts"<
 		let hit=body.match(new RegExp('<script>[ \\t\\n]*location=["\']([^\'"]+)[\'"]', 'i'));
@@ -740,12 +755,15 @@ new Promise( async function(good, bad) {
 	const BATCH_NO= Math.ceil(list.length/BATCH_SZ);
 console.log("There are "+list.length+"/"+BATCH_NO+" links in  "+process.argv[3]);
 	for(let k=0; k<BATCH_NO; k++ ) {
-		for(let j =0 ; j< BATCH_SZ; j++) {
+		for(let j =0; j< BATCH_SZ; j++) {
 			let offset=k*BATCH_SZ +j;
 			if(offset >= list.length) { break; } // used in last batch, which isn't likely to be full.
+console.log("Running ["+offset+"] "+list[offset] );
 
 			// the logic test has side-effects
 			if(!p2.mapRepeatDomain( list[offset], offset)) {
+				p2.zeroLimitor();
+				// I removed the call stack
 				await exec_reference_url(offset, list[offset], p2);
 			}
 		}
@@ -764,6 +782,7 @@ console.log("There are "+list.length+"/"+BATCH_NO+" links in  "+process.argv[3])
 				clearInterval(TRAP);
 			}   
 		} , 5000);
+		// return statement as the wrapper asks for it
 		return  p2.resultsArray as Readonly<Array<Reference>>;
 
 	} else {
