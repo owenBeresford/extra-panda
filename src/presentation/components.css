@@ -671,7 +671,7 @@ This is big screen mac, should work with wide versions
 }
 /* if i set  container-type: size; then the container layout wrap works correctly, 
 					but the computed positioning via the right edge does not
-					I can probably run without that, as there are no eXCEEDING long titles */
+					I can probably run without that, as there are no EXCEEDINGLY long titles */
 .headingsWidget:not(:has(.titleList > *)) {
   display: none;
 }
