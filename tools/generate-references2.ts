@@ -10,54 +10,51 @@
 */
 
 // https://stackoverflow.com/questions/17276206/list-all-js-global-variables-used-by-site-not-all-defined
-'use strict';
-import {  Curl } from 'node-libcurl';
-import { parse } from 'node-html-parser';
-import decoder from 'html-entity-decoder';
-import fs from 'fs';
+"use strict";
+import fs from "fs";
 
-import { FirstPage } from '../src/references/first-page';
-import { MorePages } from '../src/references/more-pages';
-import { exec_reference_url, fetch2 } from '../src/references/networking';
-import { PageCollection } from  '../src/references/page-collection';
+import { FirstPage } from "../src/references/first-page";
+import { MorePages } from "../src/references/more-pages";
+import { exec_reference_url, fetch2 } from "../src/references/networking";
+import { PageCollection } from "../src/references/page-collection";
 
+const BATCH_SZ = 7;
+const [FN, URL1] = process_args(process.argv);
 
-const COOKIE_JAR ='/var/www/oab1/cookies.txt';
-const TIMEOUT=3; // seconds
-const BATCH_SZ==7;
-const [FN, URL1]=process_args(process.argv);
-
-if(!process || !process.argv) {
-	console.error("This references tool is for the CLI/Node, not a browser");
-	throw new Error();
+if (!process || !process.argv) {
+  console.error("This references tool is for the CLI/Node, not a browser");
+  throw new Error();
 }
 
-function process_args(args:Array<string>):Array<string> {
-	if( args.length <4 || args[2]!=='--url') {	
-		console.warn("Pass URL as --url <blah> --out <blah>", args);
-		process.exit(1);
-	}
-	if( args.length < 6 || args[4]!== '--out' ) {
-		console.warn("Pass URL as --url <blah> --out <blah>", args);
-		process.exit(1);	
-	}
+function process_args(args: Array<string>): Array<string> {
+  if (args.length < 4 || args[2] !== "--url") {
+    console.warn("Pass URL as --url <blah> --out <blah>", args);
+    process.exit(1);
+  }
+  if (args.length < 6 || args[4] !== "--out") {
+    console.warn("Pass URL as --url <blah> --out <blah>", args);
+    process.exit(1);
+  }
 
-	let URL1=''; let FN='';
-	try {
-		URL1= args[3];
-		FN  = args[5];
-
-	} catch(e) {
-		console.warn("Pass valid URL as --url <blah>", args, e);
-		process.exit(1);	
-	} 
-	return [ FN, URL1 ];
+  let URL1 = "";
+  let FN = "";
+  try {
+    URL1 = args[3];
+    FN = args[5];
+  } catch (e) {
+    console.warn("Pass valid URL as --url <blah>", args, e);
+    process.exit(1);
+  }
+  return [FN, URL1];
 }
 
-async function dump_to_disk(data:Readonly<Array<Reference|boolean>>, FN:string):Promise<void> {
-	console.log("DEBUG: X X X X X X X X X X X X X X end event (write to disk) ");
+function dump_to_disk(
+  data: Readonly<Array<Reference | boolean>>,
+  FN: string,
+): Promise<void> {
+  console.log("DEBUG: X X X X X X X X X X X X X X end event (write to disk) ");
 
-	let template=`
+  let template = `
 {{pagemeta
 |Name                = Should NOT be visible ~ JSON output.
 |Title               = Should NOT be visible ~ JSON output.
@@ -75,74 +72,106 @@ async function dump_to_disk(data:Readonly<Array<Reference|boolean>>, FN:string):
 }}
 {{plain root
 `;
-	if(data.includes(undefined) || data.includes(false) ) {
-		console.warn("Write ERROR "+ process.cwd()+'/'+FN +" May not have a undef in a references list");
-		return;
-	}
-	template= template.trim()+ "\n"+JSON.stringify( data, null, 2)+ "\n}}\n";
-	
-	let outpath=FN;
-	if(FN[0]!=="/") {
-		outpath= process.cwd()+'/'+FN;
-	}
-	await fs.writeFile( outpath, template, 'utf8', (err:any ):void => { 
-		if(err) { console.warn("Write ERROR "+ process.cwd()+'/'+FN ,err); }
-	} );
+  if (data.includes(undefined) || data.includes(false)) {
+    console.warn(
+      "Write ERROR " +
+        process.cwd() +
+        "/" +
+        FN +
+        " May not have a undef in a references list",
+    );
+    return;
+  }
+  template = template.trim() + "\n" + JSON.stringify(data, null, 2) + "\n}}\n";
+
+  let outpath = FN;
+  if (FN[0] !== "/") {
+    outpath = process.cwd() + "/" + FN;
+  }
+  fs.writeFile(outpath, template, "utf8", (err: any): void => {
+    if (err) {
+      console.warn("Write ERROR " + process.cwd() + "/" + FN, err);
+    }
+  });
 }
 
-new Promise( async function(good, bad) {  
-	let p1=new FirstPage(); 
-	p1.promiseExits(good, bad, -1);
-	try {
-		console.log("DEBUG: [-1] "+URL1 );
-		await fetch2(URL1, p1.success, p1.failure, p1.assignClose );
-	} catch(e) {
-		console.warn("W W W W W W W W W W W W W W W W W W W [-1] Network error with "+URL1 +" :: "+ e);	
-		bad(e);
-	}
+new Promise(function (good, bad) {
+  let p1 = new FirstPage();
+  p1.promiseExits(good, bad, -1);
+  try {
+    console.log("DEBUG: [-1] " + URL1);
+    await fetch2(URL1, p1.success, p1.failure, p1.assignClose);
+  } catch (e) {
+    console.warn(
+      "W W W W W W W W W W W W W W W W W W W [-1] Network error with " +
+        URL1 +
+        " :: " +
+        e,
+    );
+    bad(e);
+  }
+})
+  .then(async function (
+    list: Array<string>,
+  ): Promise<Readonly<Array<Reference>>> {
+    const p3 = new PageCollection(list, BATCH_SZ);
+    const p2 = new MorePages(p3, 3);
+    console.log(
+      "There are " +
+        list.length +
+        "/" +
+        BATCH_NO +
+        " links in  " +
+        process.argv[3],
+    );
 
-}).then( async function(list:Array<string>):Promise<Readonly<Array<Reference>>> {
+    let cur = p3.offset(0);
+    while (p3.morePages(cur)) {
+      let batch = p3.currentbBatch(cur);
+      for (let k = 0; k < BATCH_NO; k++) {
+        // the logic test has side-effects
+        if (!p3.mapRepeatDomain(batch[k], p3.offset(k))) {
+          p3.zeroLoop();
+          // I removed the call stack
+          await exec_reference_url(p3.offset(k), batch[p3.offset(k)], p2);
+        }
+      }
+      cur = p3.offset(0);
+    }
 
-	const p3=new PageCollection(list, BATCH_SZ);
-	const p2=new MorePages(p3, 3);
-console.log("There are "+list.length+"/"+BATCH_NO+" links in  "+process.argv[3]);
+    let hasData = p2.resultsArray.filter((a) => !!a);
+    console.log("BEFORE got " + hasData.length + " input " + list.length);
+    if (hasData.length !== list.length) {
+      const TRAP = await setInterval(function () {
+        let tmp = p2.resultsArray.filter((a) => !!a);
+        console.log(
+          new Date(),
+          " INTEVAL TICK, got " +
+            tmp.length +
+            " done items, input " +
+            list.length +
+            " items",
+        );
+        if (
+          p2.resultsArray.length === list.length &&
+          !p2.resultsArray.includes(false)
+        ) {
+          console.log(
+            new Date(),
+            " INTEVAL TICK, CLOSING SCRIPT, seem to have data",
+          );
 
-	let cur=p3.offset(0);
-	while( p3.morePages(cur) ) {
-		let batch=p3.currentbBatch(cur);
-		for(let k=0; k<BATCH_NO; k++) {	
-			// the logic test has side-effects
-			if(!p3.mapRepeatDomain( batch[k], p3.offset(k))) {
-				p3.zeroLoop();
-				// I removed the call stack
-				await exec_reference_url( p3.offset(k), batch[ p3.offset(k) ], p2);
-			}
-		}
-		cur=p3.offset(0);
-	}
-
-
-	let hasData= p2.resultsArray.filter( (a) => !!a );
-	console.log("BEFORE got "+hasData.length+" input "+list.length );
-	if(hasData.length !== list.length) {
-		const TRAP =await setInterval(function() { 
-			let tmp= p2.resultsArray.filter( (a) => !!a );
-			console.log(new Date(), " INTEVAL TICK, got "+tmp.length+" done items, input "+list.length+" items" ); 
-			if( p2.resultsArray.length === list.length && !p2.resultsArray.includes(false)) { 
-				console.log(new Date(), " INTEVAL TICK, CLOSING SCRIPT, seem to have data" ); 
-
-				dump_to_disk( p2.resultsArray, FN); 
-				clearInterval(TRAP);
-			}   
-		} , 5000);
-		// return statement as the wrapper asks for it
-		return  p2.resultsArray as Readonly<Array<Reference>>;
-
-	} else {
-		dump_to_disk( p2.resultsArray, FN );
-		return  p2.resultsArray as Readonly<Array<Reference>>;
-	}
-	
-}).catch(function(e) { console.warn("Y Y Y y Y Y Y Y Y Y Y Y Y Y Y Y THIS SHOULDNT BE CALLED ", e); });
-
-
+          dump_to_disk(p2.resultsArray, FN);
+          clearInterval(TRAP);
+        }
+      }, 5000);
+      // return statement as the wrapper asks for it
+      return p2.resultsArray as Readonly<Array<Reference>>;
+    } else {
+      dump_to_disk(p2.resultsArray, FN);
+      return p2.resultsArray as Readonly<Array<Reference>>;
+    }
+  })
+  .catch(function (e) {
+    console.warn("Y Y Y y Y Y Y Y Y Y Y Y Y Y Y Y THIS SHOULDNT BE CALLED ", e);
+  });
