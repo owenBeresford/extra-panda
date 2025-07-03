@@ -7,6 +7,7 @@ FEATURES
 - Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages. 
 - POSSIBLE: Add feature dump (ie download as attachment) in-HTML file JS assets, or SVG assets, or CSS assets.  Need to think about UI for this feature.
 - improve test process for mobile screen size design
+- dark mode CSS
 
 MAINTENANCE
 - Port the everything* tests to storybook, or the browser tests
@@ -26,7 +27,7 @@ MAINTENANCE
 - Evaluate https://www.npmjs.com/package/accessibility-checker to drop w3c one
 - Design 1 cycle animation on title popout IF OPEN 
 - For long content with many page sections, setup component for each page in a tidy fashion && tell later sections to load lower prio as they are likely to be off screen
-- least stupid way to tell user users not to make chrome window smaller, or the test will fail next test run
+- least stupid way to tell users not to make unit-test chrome window smaller, or the tests in the runner will fail next test execution
 - FIX THIS: .addReferences:has( .lotOfText DL) example architectures-for-css, also review-dvcs-automation 
 
 -> Playwright Automation Full Course https://github.com/BakkappaN/PlaywrightTutorialFullCourse
