@@ -1,6 +1,6 @@
 import { Curl } from "node-libcurl";
 
-import { log } from "../logging-services";
+import { log } from "../log-services";
 import { COOKIE_JAR, TIMEOUT } from './constants';
 import type {
   successType,
@@ -27,6 +27,7 @@ export function fetch2(
     }
   };
   CB = CB.bind(this);
+// this is confusing to read, this registers the curl->close CB for later on
   close(CB);
 
   curl.setOpt("HTTPHEADER", [
@@ -95,7 +96,7 @@ export function exec_reference_url(
           "REDIRECT [" + offset + "] of " + url + " to " + ee.message,
         );
         if (url !== ee.message) {
-          exec_reference_url(offset, ee.message, handler);
+          await exec_reference_url(offset, ee.message, handler);
         }
       })
   );

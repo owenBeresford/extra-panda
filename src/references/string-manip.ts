@@ -1,4 +1,5 @@
-import { log } from "../logging-services";
+import decoder from 'html-entity-decoder';
+import { log } from "../log-services";
 
 // string utils to make code more readable
 export function shorten(url: string): string {

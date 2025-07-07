@@ -1,9 +1,9 @@
 import { shorten } from "./string-manip";
-import { log } from "../logging-services";
+import { log } from "../log-services";
 import type { Reference } from "./types";
 
 export class PageCollection {
-  protected offset: number;
+  protected _offset: number;
   protected batchSz: number;
   protected batchNum: number;
   protected src: Array<string>;
@@ -21,7 +21,7 @@ export class PageCollection {
     this.loop = 0;
     this.batchSz = batch;
     this.batchNum = 0;
-    this.offset = 0;
+    this._offset = 0;
     log(
       "debug",
       "Start to annotate " + src.length + " references in this article",
@@ -30,10 +30,14 @@ export class PageCollection {
 
   public save(item: Reference, offset: number): void {
     if (typeof this.dst[offset] !== "boolean") {
+console.log("SFSFSDF", offset, this.dst[offset], item );
       throw new Error("Why overwrite slor " + offset);
     }
+	if( item.url === '') {	
+      throw new Error("Why does the incomming data have no URL? " + offset);
+	}
 
-    this.shorts[shorten(this.src[this.offset])] = offset;
+    this.shorts[ shorten(this.src[offset]) ] = offset;
     this.dst[offset] = item;
   }
 
@@ -49,12 +53,12 @@ export class PageCollection {
     let ret: Array<string> = [];
 
     for (let j = 0; j < this.batchSz; j++) {
-      let offset = this.batchNum * BATCH_SZ + j;
-      if (offset >= this.src.length) {
+      let _offset = this.batchNum * this.batchSz + j;
+      if (_offset >= this.src.length) {
         break;
       } // used in last batch, which isn't likely to be full.
 
-      ret.push(this.src[offset]);
+      ret.push(""+this.src[_offset]);
     }
     this.batchNum++;
     return ret;
@@ -72,10 +76,11 @@ export class PageCollection {
   public mapRepeatDomain(url: string, cur: number): boolean {
     const HASH = shorten(url);
     if (HASH in this.shorts) {
-      console.log("Hit URL cache");
+      console.log("Hit URL cache [target slot=]", this.dst[cur] );
       this.dst[cur] = Object.assign({}, this.dst[this.shorts[HASH]], {
         url: url,
       }) as Reference;
+console.log(" mapRepeatDomain "+cur,  this.dst[cur], this.dst[ this.shorts[HASH] ]);
       return true;
     }
     return false;
@@ -89,7 +94,7 @@ export class PageCollection {
     return this.loop;
   }
 
-  public set incLoop():void {
+  public incLoop():void {
     this.loop++;
     // max value test somewhere
   }

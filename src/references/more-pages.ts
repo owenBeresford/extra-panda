@@ -5,8 +5,9 @@ import {
   normaliseString,
   publicise_IP,
   valueOfUrl,
+	shorten
 } from "./string-manip";
-import { log } from "../logging-services";
+import { log } from "../log-services";
 import type { HTMLTransformable, PromiseCB, CBtype, Reference } from "./types";
 
 export class MorePages implements HTMLTransformable {
@@ -17,18 +18,18 @@ export class MorePages implements HTMLTransformable {
   protected data: PageCollection;
   protected redirect_limit: number;
   protected loop: number; // a counter to limit badly setup JS forwarding, so it will break
+  protected url:string;
+  protected offset:number;
 
   public constructor(d: PageCollection, redirect_limit: number = 3) {
     this.data = d;
+    this.offset = -1;
+    this.url = "";
 
     this.assignClose = this.assignClose.bind(this);
     this.success = this.success.bind(this);
     this.failure = this.failure.bind(this);
 	this.redirect_limit= redirect_limit; 
-    log(
-      "debug",
-      "Start to annotate " + src.length + " references in this article",
-    );
   }
 
   public setOffset(i: number, url: string): void {
@@ -42,7 +43,7 @@ export class MorePages implements HTMLTransformable {
     headers: Record<string, string> | Array<Record<string, string>>,
   ): void {
     let item: Reference = {
-      url: publicise_IP(this.src[this.offset]),
+      url: publicise_IP(this.url),
       desc: "",
       title: "",
       auth: "",
@@ -52,9 +53,7 @@ export class MorePages implements HTMLTransformable {
     // I set curl follow-header
     if (parseInt(statusCode, 10) / 100 !== 2) {
       console.log(
-        "ERROR: " +
-          URL1 +
-          "[" +
+        "ERROR: "+tthis.url+" [" +
           this.offset +
           "] URL was dead " +
           this.url +
@@ -87,7 +86,7 @@ export class MorePages implements HTMLTransformable {
       body,
       this.offset,
       this.url,
-      this.data.loop,
+      this.data.loop
     );
     if (typeof redir !== "boolean") {
       this.data.incLoop();
@@ -123,7 +122,7 @@ export class MorePages implements HTMLTransformable {
     // plan B
     //		tmp=(this.dst[this.offset] as Reference).url;
 
-    let item = {
+    let item:Reference = {
       url: publicise_IP(this.url),
       desc: "HTTP_ERROR, " + msg,
       title: "HTTP_ERROR, " + msg,
@@ -131,7 +130,7 @@ export class MorePages implements HTMLTransformable {
       date: 0,
     } as Reference;
     item = apply_vendors(item, "");
-    this.dst[this.offset] = item;
+	this.data.save( item, this.offset);
     this.CB();
     this.good(item);
   }
@@ -215,10 +214,11 @@ export class MorePages implements HTMLTransformable {
         "i",
       ),
     );
+console.log("WWWWWW redirect mapper  "+current,  hit );
     if (
       hit &&
       hit.length &&
-      hit[1] != current &&
+      hit[1] != decodeURI(shorten(current)) &&
       hit[1].indexOf("https://") > -1
     ) {
       if (loop < this.redirect_limit) {
@@ -343,6 +343,6 @@ export class MorePages implements HTMLTransformable {
       return normaliseString(hit[1]);
     }
 
-    return valueOfUrl(this.src[this.offset]);
+    return valueOfUrl(this.url);
   }
 }

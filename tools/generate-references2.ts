@@ -100,7 +100,7 @@ new Promise(function (good, bad) {
   p1.promiseExits(good, bad, -1);
   try {
     console.log("DEBUG: [-1] " + URL1);
-    await fetch2(URL1, p1.success, p1.failure, p1.assignClose);
+    fetch2(URL1, p1.success, p1.failure, p1.assignClose);
   } catch (e) {
     console.warn(
       "W W W W W W W W W W W W W W W W W W W [-1] Network error with " +
@@ -120,30 +120,32 @@ new Promise(function (good, bad) {
       "There are " +
         list.length +
         "/" +
-        BATCH_NO +
+        BATCH_SZ +
         " links in  " +
         process.argv[3],
     );
 
     let cur = p3.offset(0);
     while (p3.morePages(cur)) {
-      let batch = p3.currentbBatch(cur);
-      for (let k = 0; k < BATCH_NO; k++) {
+      let batch = p3.currentBatch;
+console.log("should be a slice", batch);
+      for (let k = 0; k < BATCH_SZ; k++) {
+		p2.setOffset(p3.offset(k), batch[k] );
         // the logic test has side-effects
         if (!p3.mapRepeatDomain(batch[k], p3.offset(k))) {
           p3.zeroLoop();
           // I removed the call stack
-          await exec_reference_url(p3.offset(k), batch[p3.offset(k)], p2);
+          await exec_reference_url(p3.offset(k), batch[k], p2);
         }
       }
-      cur = p3.offset(0);
+      cur = p3.offset(BATCH_SZ-1);
     }
 
-    let hasData = p2.resultsArray.filter((a) => !!a);
+    let hasData = p3.resultsArray.filter((a) => !!a);
     console.log("BEFORE got " + hasData.length + " input " + list.length);
     if (hasData.length !== list.length) {
       const TRAP = await setInterval(function () {
-        let tmp = p2.resultsArray.filter((a) => !!a);
+        let tmp = p3.resultsArray.filter((a) => !!a);
         console.log(
           new Date(),
           " INTEVAL TICK, got " +
@@ -153,8 +155,8 @@ new Promise(function (good, bad) {
             " items",
         );
         if (
-          p2.resultsArray.length === list.length &&
-          !p2.resultsArray.includes(false)
+          p3.resultsArray.length === list.length &&
+          !p3.resultsArray.includes(false)
         ) {
           console.log(
             new Date(),

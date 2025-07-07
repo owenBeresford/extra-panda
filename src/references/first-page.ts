@@ -1,5 +1,5 @@
 import { parse } from "node-html-parser";
-import { log } from "../logging-services";
+import { log } from "../log-services";
 import type { HTMLTransformable, PromiseCB } from "./types";
 
 export class FirstPage implements HTMLTransformable {
@@ -27,7 +27,7 @@ export class FirstPage implements HTMLTransformable {
       list.push(val.getAttribute("href"));
     });
     if (this.CB) {
-      console.log("Running cURL close");
+      console.log("Running 1st cURL close");
       this.CB();
     }
     if (list.length < 2) {
