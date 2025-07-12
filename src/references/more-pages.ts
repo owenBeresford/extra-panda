@@ -8,7 +8,8 @@ import {
 	shorten
 } from "./string-manip";
 import { log } from "../log-services";
-import type { HTMLTransformable, PromiseCB, CBtype, Reference } from "./types";
+import { PageCollection } from './page-collection';
+import type { HTMLTransformable, PromiseCB, CBtype, Reference, CurlHeadersBlob } from "./types";
 
 export class MorePages implements HTMLTransformable {
   protected good: PromiseCB;
@@ -19,8 +20,7 @@ export class MorePages implements HTMLTransformable {
   protected redirect_limit: number;
   protected loop: number; // a counter to limit badly setup JS forwarding, so it will break
   protected url:string;
-  protected offset:number;
-
+ 
   public constructor(d: PageCollection, redirect_limit: number = 3) {
     this.data = d;
     this.offset = -1;
@@ -29,7 +29,7 @@ export class MorePages implements HTMLTransformable {
     this.assignClose = this.assignClose.bind(this);
     this.success = this.success.bind(this);
     this.failure = this.failure.bind(this);
-	this.redirect_limit= redirect_limit; 
+	  this.redirect_limit= redirect_limit; 
   }
 
   public setOffset(i: number, url: string): void {
@@ -40,7 +40,7 @@ export class MorePages implements HTMLTransformable {
   public success(
     statusCode: string,
     body: string,
-    headers: Record<string, string> | Array<Record<string, string>>,
+    headers: CurlHeadersBlob,
   ): void {
     let item: Reference = {
       url: publicise_IP(this.url),
@@ -49,17 +49,18 @@ export class MorePages implements HTMLTransformable {
       auth: "",
       date: 0,
     } as Reference;
-    log("debug", "response [" + this.offset + "] HTTP" + statusCode);
+    log("debug", "[" + this.offset + "] response HTTP" + statusCode);
     // I set curl follow-header
     if (parseInt(statusCode, 10) / 100 !== 2) {
-      console.log(
-        "ERROR: "+tthis.url+" [" +
+      log("warn",
+        "ERROR: "+process.argv[3]+" [" +
           this.offset +
           "] URL was dead " +
           this.url +
           " ",
-        statusCode + " " + headers.result,
+        statusCode + " " + headers['result'],
       );
+      // I scooped the result flag from a debug window, it exists
       if (headers.result && headers.result.reason) {
         item.desc = "HTTP_ERROR, " + headers.result.reason;
       } else {
@@ -77,10 +78,8 @@ export class MorePages implements HTMLTransformable {
       headers = headers[0];
     }
     if (this.CB) {
-      console.log("Running cURL close");
       this.CB();
     }
-//	let body= parse(html);
 
     let redir = this.#_extractRedirect(
       body,
@@ -90,7 +89,9 @@ export class MorePages implements HTMLTransformable {
     );
     if (typeof redir !== "boolean") {
       this.data.incLoop();
+      this.url=redir.message;
       this.bad(redir);
+		  return;
     }
     item.date = this.#_extractDate(headers, body).getTime() / 1000;
     item.auth = normaliseString(this.#_extractAuthor(body));
@@ -107,10 +108,9 @@ export class MorePages implements HTMLTransformable {
     } else {
       item.desc = item.title;
     }
-
     item = apply_vendors(item, body);
     this.data.save(item, this.offset);
-    console.log("EXTRACTED {{", item, body, "}}");
+  //  console.log("EXTRACTED {{", item, body, "}}");
     this.good(item);
   }
 
@@ -150,7 +150,7 @@ export class MorePages implements HTMLTransformable {
   #_extractRedirect(
     body: string,
     offset: Readonly<number>,
-    current: string | URL,
+    current: string ,
     loop: Readonly<number>,
   ): Error | boolean {
     // <script>location="https://www.metabase.com/learn/metabase-basics/querying-and-dashboards/visualization/bar-charts"<
@@ -161,6 +161,7 @@ export class MorePages implements HTMLTransformable {
       if (loop < this.redirect_limit) {
         return new Error(hit[1]);
       }
+      return false;
     }
     hit = body.match(
       new RegExp("<script>[ \\t\\n]*location\\.href=[\"']([^'\"]+)['\"]", "i"),
@@ -169,6 +170,7 @@ export class MorePages implements HTMLTransformable {
       if (loop < this.redirect_limit) {
         return new Error(hit[1]);
       }
+      return false;
     }
     hit = body.match(
       new RegExp(
@@ -180,6 +182,7 @@ export class MorePages implements HTMLTransformable {
       if (loop < this.redirect_limit) {
         return new Error(hit[1]);
       }
+      return false;
     }
 
     // location.replaceState   replaceState(state, unused, url)
@@ -193,6 +196,7 @@ export class MorePages implements HTMLTransformable {
       if (loop < this.redirect_limit) {
         return new Error(hit[1]);
       }
+      return false;
     }
     hit = body.match(
       new RegExp(
@@ -204,6 +208,7 @@ export class MorePages implements HTMLTransformable {
       if (loop < this.redirect_limit) {
         return new Error(hit[1]);
       }
+      return false;
     }
 
     // SKIP pushState ...
@@ -214,7 +219,7 @@ export class MorePages implements HTMLTransformable {
         "i",
       ),
     );
-console.log("WWWWWW redirect mapper  "+current,  hit );
+// console.log("WWWWWW redirect mapper  "+current, hit ? hit[1]: "", this.redirect_limit  );
     if (
       hit &&
       hit.length &&
@@ -224,13 +229,14 @@ console.log("WWWWWW redirect mapper  "+current,  hit );
       if (loop < this.redirect_limit) {
         return new Error(hit[1]);
       }
+      return false;
     }
     return false;
   }
 
   /* eslint complexity: ["error", 30] */
   #_extractDate(headers: Record<string, string>, body: string): Date {
-    if ("Last-Modified" in Array<string>) {
+    if ("Last-Modified" in headers) {
       let tmp: string = headers["Last-Modified"] as string;
       tmp = tmp.replace(" BST", "");
       // yes I loose an hour here, but month/year is the valuable data
@@ -258,7 +264,7 @@ console.log("WWWWWW redirect mapper  "+current,  hit );
       return new Date(hit[1]);
     }
 
-    console.log("DEBUG: Need more date code...");
+    log("debug",  "["+this.offset+"] Need more date code here...");
     return new Date(0);
   }
 

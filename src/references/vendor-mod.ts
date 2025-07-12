@@ -1,4 +1,4 @@
-import type { Reference, VendorRecord, VendorModCB } from "./types";
+import type { Reference, VendorRecord, VendorModCB, ModSymbol } from "./types";
 import { normaliseString } from "./string-manip";
 
 function mod_npmjs(item: Reference, body: string): Reference {
@@ -126,15 +126,15 @@ function mod_parli(item: Reference, body?: string): Reference {
 
 const _f1 = function (
   name: string,
-  target: string,
+  target: ModSymbol,
   CB: VendorModCB,
 ): VendorRecord {
-  return { name, target, callback: CB };
+  return { name, target, callback: CB } as VendorRecord;
 };
 
 // function to apply the specific website hacks
 export function apply_vendors(item: Reference, body: string): Reference {
-  const VENDORS: Array<VendorRecord> = [
+  const VENDORS: Readonly<Array<VendorRecord>> = [
     _f1("npmjs", "title", mod_npmjs),
     _f1("medium", "auth", mod_medium),
     _f1("scribe.rip", "auth", mod_scribe),
@@ -149,17 +149,24 @@ export function apply_vendors(item: Reference, body: string): Reference {
     _f1("mongodb.com", "auth", mod_mongodb),
     _f1("codepen.io", "auth", mod_codepen),
     _f1("parliament.uk", "auth", mod_parli),
-  ];
+  ] as const;
   const VENDORS_LENGTH = VENDORS.length;
 
   for (let i = 0; i < VENDORS_LENGTH; i++) {
     if (
       item.url.includes(VENDORS[i].name) &&
-      (item[VENDORS[i].target] ||
+      (item[ VENDORS[i].target ] ||
         (VENDORS[i].target && item[VENDORS[i].target] === "unknown"))
     ) {
       item = VENDORS[i].callback(item, body);
+console.log("mod "+VENDORS[i].name+" "+i+" ", item );      
+
     }
   }
   return item;
 }
+
+export const TEST_ONLY ={ apply_vendors, mod_parli, mod_codepen, mod_wikipedia,
+     mod_mongodb, mod_caniuse, mod_graphQL, mod_react, mod_GDN, mod_stackoverflow,
+     mod_github, mod_medium, mod_scribe, mod_npmjs }; 
+     

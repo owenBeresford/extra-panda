@@ -1,25 +1,24 @@
 import { shorten } from "./string-manip";
 import { log } from "../log-services";
 import type { Reference } from "./types";
+import { BATCH_SZ } from './constants';
 
 export class PageCollection {
   protected _offset: number;
-  protected batchSz: number;
   protected batchNum: number;
   protected src: Array<string>;
   protected dst: Array<Reference | boolean>;
   protected shorts: Record<string, number>;
-  protected loop: number; // a counter to limit badly setup JS forwarding, so it will break
+  protected _loop: number; // a counter to limit badly setup JS forwarding, so it will break
 
-  public constructor(src: Array<string>, batch: number) {
+  public constructor(src: Array<string>) {
     this.src = src;
     this.dst = Array(src.length);
     // I have to allocate an array before I fill() it with initial values.
     // I have declared it above.   Is this Clang?
     this.dst.fill(false, 0, src.length);
     this.shorts = {};
-    this.loop = 0;
-    this.batchSz = batch;
+    this._loop = 0;
     this.batchNum = 0;
     this._offset = 0;
     log(
@@ -29,10 +28,12 @@ export class PageCollection {
   }
 
   public save(item: Reference, offset: number): void {
+	  console.assert(offset < this.dst.length, "save(): Invalid reference offset "+offset);
     if (typeof this.dst[offset] !== "boolean") {
-console.log("SFSFSDF", offset, this.dst[offset], item );
+//console.log("SFSFSDF save item", offset, this.dst.length, this.dst[offset], item );
       throw new Error("Why overwrite slor " + offset);
     }
+//console.log("SFSFSDF save item "+ offset);
 	if( item.url === '') {	
       throw new Error("Why does the incomming data have no URL? " + offset);
 	}
@@ -42,31 +43,24 @@ console.log("SFSFSDF", offset, this.dst[offset], item );
   }
 
   public get currentBatch(): Array<string> {
-    console.log(
-      "There are " +
-        this.src.length +
-        "/" +
-        this.batchSz +
-        " links in  " +
-        process.argv[3],
-    );
     let ret: Array<string> = [];
 
-    for (let j = 0; j < this.batchSz; j++) {
-      let _offset = this.batchNum * this.batchSz + j;
+    for (let j = 0; j < BATCH_SZ; j++) {
+      let _offset = this.batchNum * BATCH_SZ + j;
       if (_offset >= this.src.length) {
         break;
       } // used in last batch, which isn't likely to be full.
 
       ret.push(""+this.src[_offset]);
     }
-    this.batchNum++;
     return ret;
   }
 
   // i as in imaginary number
   public offset(i: number): number {
-    return this.batchNum * this.batchSz + i;
+    let ret:number= this.batchNum * BATCH_SZ + i;
+	if(i>= BATCH_SZ-1) { this.batchNum++; }
+	return ret;
   }
 
   public morePages(cur: number): boolean {
@@ -76,30 +70,33 @@ console.log("SFSFSDF", offset, this.dst[offset], item );
   public mapRepeatDomain(url: string, cur: number): boolean {
     const HASH = shorten(url);
     if (HASH in this.shorts) {
-      console.log("Hit URL cache [target slot=]", this.dst[cur] );
+//      console.log("Hit URL cache [target slot=]", this.dst[cur] );
       this.dst[cur] = Object.assign({}, this.dst[this.shorts[HASH]], {
         url: url,
       }) as Reference;
-console.log(" mapRepeatDomain "+cur,  this.dst[cur], this.dst[ this.shorts[HASH] ]);
+// console.log(" mapRepeatDomain "+cur,  this.dst[cur], this.dst[ this.shorts[HASH] ]);
       return true;
     }
     return false;
   }
 
-  public zeroLoop():void {
-    this.loop = 0;
-  }
-
-  public get loop():number {
-    return this.loop;
-  }
-
-  public incLoop():void {
-    this.loop++;
-    // max value test somewhere
-  }
-
   public get resultsArray(): Readonly<Array<Reference | boolean>> {
     return this.dst;
   }
+
+
+
+  public zeroLoop():void {
+    this._loop = 0;
+  }
+
+  public get loop():number {
+    return this._loop;
+  }
+
+  public incLoop():void {
+    this._loop++;
+    // max value test somewhere
+  }
+
 }

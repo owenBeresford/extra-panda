@@ -1,24 +1,24 @@
 import { Curl } from "node-libcurl";
 
 import { log } from "../log-services";
-import { COOKIE_JAR, TIMEOUT } from './constants';
+import { COOKIE_JAR, TIMEOUT, CURL_VERBOSE } from './constants';
 import type {
   successType,
   failureType,
   closeType,
   HTMLTransformable,
+  TaggedCurl,
 } from "./types";
 
-
+// This is a dup-file name, but different technology.  Built for different purposes
 // a boring net-work function, that supports cookie populations
-// If curl has cookie problems https://www.npmjs.com/package/http-cookie-agent
 export function fetch2(
   url: string,
   good1: successType,
   bad1: failureType,
   close: closeType,
 ): void {
-  const curl = new Curl();
+  const curl:TaggedCurl = new Curl();
   curl.isClose = false;
   let CB = (): void => {
     if (!curl.isClose) {
@@ -26,7 +26,7 @@ export function fetch2(
       curl.isClose = true;
     }
   };
-  CB = CB.bind(this);
+  CB = CB.bind(this as Function);
 // this is confusing to read, this registers the curl->close CB for later on
   close(CB);
 
@@ -41,7 +41,7 @@ export function fetch2(
   // sept 2024: Note official redirect tech, added in first version
   curl.setOpt("FOLLOWLOCATION", true);
   curl.setOpt("TIMEOUT", TIMEOUT);
-  curl.setOpt("VERBOSE", 1);
+  curl.setOpt("VERBOSE", CURL_VERBOSE );
   curl.setOpt("CONNECTTIMEOUT", TIMEOUT);
 
   // scale out to other domains as needed
@@ -64,7 +64,7 @@ export function exec_reference_url(
   offset: number,
   url: string,
   handler: HTMLTransformable,
-): Promise<any> {
+ ): Promise<any> {
   return (
     new Promise(async function (good, bad) {
       handler.promiseExits(good, bad, offset);
@@ -89,14 +89,15 @@ export function exec_reference_url(
     })
       ///////////////////////////////////////////////////////////////////////////////////////////////////////
       // sept 2024, this is preferred catch point
-      .catch(function (ee) {
-        console.warn(ee);
+      .catch(async function (ee) {
         log(
           "warn",
           "REDIRECT [" + offset + "] of " + url + " to " + ee.message,
         );
         if (url !== ee.message) {
-          await exec_reference_url(offset, ee.message, handler);
+           await exec_reference_url(offset, ee.message, handler );
+        } else {
+          throw new Error("impossible situation, 4523586423424 (so I'm bailing)");
         }
       })
   );
