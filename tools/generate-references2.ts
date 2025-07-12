@@ -13,26 +13,28 @@
 "use strict";
 import fs from "fs";
 
+import { BATCH_SZ } from "../src/references/constants";
 import { FirstPage } from "../src/references/first-page";
 import { MorePages } from "../src/references/more-pages";
 import { exec_reference_url, fetch2 } from "../src/references/networking";
 import { PageCollection } from "../src/references/page-collection";
+import type { Reference } from '../src/references/types';
+import { log } from '../src/log-services';
 
-const BATCH_SZ = 7;
 const [FN, URL1] = process_args(process.argv);
 
 if (!process || !process.argv) {
-  console.error("This references tool is for the CLI/Node, not a browser");
+  log("error", "This references tool is for the CLI/Node, not a browser");
   throw new Error();
 }
 
 function process_args(args: Array<string>): Array<string> {
   if (args.length < 4 || args[2] !== "--url") {
-    console.warn("Pass URL as --url <blah> --out <blah>", args);
+    log( "warn", "Pass URL as --url <blah> --out <blah>" + args.join(", ")+"   ");
     process.exit(1);
   }
   if (args.length < 6 || args[4] !== "--out") {
-    console.warn("Pass URL as --url <blah> --out <blah>", args);
+    log( "warn", "Pass URL as --url <blah> --out <blah>" + args.join(", ")+"   ");
     process.exit(1);
   }
 
@@ -42,7 +44,7 @@ function process_args(args: Array<string>): Array<string> {
     URL1 = args[3];
     FN = args[5];
   } catch (e) {
-    console.warn("Pass valid URL as --url <blah>", args, e);
+    log("warn", "Pass valid URL as --url <blah> "+ args.join(", ")+"   " +e);
     process.exit(1);
   }
   return [FN, URL1];
@@ -52,8 +54,6 @@ function dump_to_disk(
   data: Readonly<Array<Reference | boolean>>,
   FN: string,
 ): Promise<void> {
-  console.log("DEBUG: X X X X X X X X X X X X X X end event (write to disk) ");
-
   let template = `
 {{pagemeta
 |Name                = Should NOT be visible ~ JSON output.
@@ -73,7 +73,7 @@ function dump_to_disk(
 {{plain root
 `;
   if (data.includes(undefined) || data.includes(false)) {
-    console.warn(
+    log("warn",
       "Write ERROR " +
         process.cwd() +
         "/" +
@@ -90,20 +90,19 @@ function dump_to_disk(
   }
   fs.writeFile(outpath, template, "utf8", (err: any): void => {
     if (err) {
-      console.warn("Write ERROR " + process.cwd() + "/" + FN, err);
+      log("warn", "Write ERROR " + process.cwd() + "/" + FN +" "+ err);
     }
   });
 }
 
-new Promise(function (good, bad) {
+new Promise(function (good, bad):void {
   let p1 = new FirstPage();
   p1.promiseExits(good, bad, -1);
   try {
-    console.log("DEBUG: [-1] " + URL1);
+    log("debug", "DEBUG: [-1] " + URL1);
     fetch2(URL1, p1.success, p1.failure, p1.assignClose);
   } catch (e) {
-    console.warn(
-      "W W W W W W W W W W W W W W W W W W W [-1] Network error with " +
+    log('warn', "ERROR, ABORTING [-1] Network error with " +
         URL1 +
         " :: " +
         e,
@@ -113,10 +112,10 @@ new Promise(function (good, bad) {
 })
   .then(async function (
     list: Array<string>,
-  ): Promise<Readonly<Array<Reference>>> {
-    const p3 = new PageCollection(list, BATCH_SZ);
+  ): Promise<void> {
+    const p3 = new PageCollection(list);
     const p2 = new MorePages(p3, 3);
-    console.log(
+    log("debug",
       "There are " +
         list.length +
         "/" +
@@ -128,27 +127,35 @@ new Promise(function (good, bad) {
     let cur = p3.offset(0);
     while (p3.morePages(cur)) {
       let batch = p3.currentBatch;
-console.log("should be a slice", batch);
+// console.log("should be a slice", batch);
       for (let k = 0; k < BATCH_SZ; k++) {
-		p2.setOffset(p3.offset(k), batch[k] );
-        // the logic test has side-effects
-        if (!p3.mapRepeatDomain(batch[k], p3.offset(k))) {
+		cur=p3.offset(k);
+		// this if trap will exec in the last batch
+		if(k>=batch.length) { break; }
+
+		p2.setOffset(cur, batch[k] );
+         // the logic test has side-effects
+        if (!p3.mapRepeatDomain(batch[k], cur)) {
           p3.zeroLoop();
           // I removed the call stack
-          await exec_reference_url(p3.offset(k), batch[k], p2);
+          await exec_reference_url(cur, batch[k], p2);
         }
       }
-      cur = p3.offset(BATCH_SZ-1);
+	
+		// second safety against awkward last batches
+	  if(cur > list.length ) { break; }
     }
 
     let hasData = p3.resultsArray.filter((a) => !!a);
-    console.log("BEFORE got " + hasData.length + " input " + list.length);
+    log( "debug", "BEFORE got " + hasData.length + " input " + list.length);
+  //  console.log( "Find weird value:",  p3.resultsArray.map( (a, b)=>{ return b+"# "+typeof a+", "; }  ));
+
     if (hasData.length !== list.length) {
       const TRAP = await setInterval(function () {
         let tmp = p3.resultsArray.filter((a) => !!a);
-        console.log(
-          new Date(),
-          " INTEVAL TICK, got " +
+        log("debug",
+          (new Date()).getUTCSeconds()+
+          " INTERVAL TICK, got " +
             tmp.length +
             " done items, input " +
             list.length +
@@ -158,22 +165,20 @@ console.log("should be a slice", batch);
           p3.resultsArray.length === list.length &&
           !p3.resultsArray.includes(false)
         ) {
-          console.log(
-            new Date(),
-            " INTEVAL TICK, CLOSING SCRIPT, seem to have data",
+          log("debug",
+            (new Date()).getUTCSeconds()+
+            " INTERVAL TICK, CLOSING SCRIPT, seem to have data",
           );
 
-          dump_to_disk(p2.resultsArray, FN);
+          dump_to_disk(p3.resultsArray, FN);
           clearInterval(TRAP);
         }
       }, 5000);
       // return statement as the wrapper asks for it
-      return p2.resultsArray as Readonly<Array<Reference>>;
     } else {
-      dump_to_disk(p2.resultsArray, FN);
-      return p2.resultsArray as Readonly<Array<Reference>>;
+      dump_to_disk(p3.resultsArray, FN);
     }
   })
   .catch(function (e) {
-    console.warn("Y Y Y y Y Y Y Y Y Y Y Y Y Y Y Y THIS SHOULDNT BE CALLED ", e);
+    log("warn", "Root error handler caught: "+ e.message);
   });
