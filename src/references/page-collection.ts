@@ -1,4 +1,4 @@
-import { shorten } from "./string-manip";
+import { baseURL } from "./string-manip";
 import { log } from "../log-services";
 import type { Reference } from "./types";
 import { BATCH_SZ } from './constants';
@@ -38,7 +38,7 @@ export class PageCollection {
       throw new Error("Why does the incomming data have no URL? " + offset);
 	}
 
-    this.shorts[ shorten(this.src[offset]) ] = offset;
+    this.shorts[ baseURL(this.src[offset]) ] = offset;
     this.dst[offset] = item;
   }
 
@@ -68,7 +68,7 @@ export class PageCollection {
   }
 
   public mapRepeatDomain(url: string, cur: number): boolean {
-    const HASH = shorten(url);
+    const HASH = baseURL(url);
     if (HASH in this.shorts) {
 //      console.log("Hit URL cache [target slot=]", this.dst[cur] );
       this.dst[cur] = Object.assign({}, this.dst[this.shorts[HASH]], {

@@ -9,7 +9,8 @@ export type successType = (
   headers: Record<string, string>,
 ) => void;
 export type failureType = (msg: any) => void;
-export type closeType = (cb: CBtype) => void;
+export type closeType = (cb: CBtype) => void ;
+export type wrappedCloseType = CBtype | boolean;
 
 export interface Reference {
   url: string;

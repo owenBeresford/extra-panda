@@ -1,35 +1,40 @@
 import { parse } from "node-html-parser";
 import { log } from "../log-services";
-import type { HTMLTransformable, PromiseCB, CBtype } from "./types";
+import { LINK_MIN_No, HTTP_ACCEPT } from "./constants";
+import { cleanHTTPstatus } from './string-manip';
+import type { HTMLTransformable, PromiseCB, CBtype, wrappedCloseType, CurlHeadersBlob } from "./types";
 
 export class FirstPage implements HTMLTransformable {
   protected good: PromiseCB;
   protected bad: PromiseCB;
   protected offset: number;
-  protected CB: CBtype;
+  protected CB: wrappedCloseType;
 
   public constructor() {
+    this.CB = false;
+
     this.assignClose = this.assignClose.bind(this);
     this.success = this.success.bind(this);
     this.failure = this.failure.bind(this);
   }
 
-  public success(statusCode: string, data: string): void {
+  public success(statusCode: string, data: string, headers: CurlHeadersBlob, ): void {
     // also param headers:Headers
-    if (Math.floor(parseInt(statusCode, 10) / 100) !== 2) {
+    if (cleanHTTPstatus(statusCode) !== HTTP_ACCEPT) {
       return this.bad(new Error("Recieved " + statusCode));
     }
 
     let root = parse(data);
-    let nn = root.querySelectorAll("sup a");
     let list: Array<string> = [];
+    let nn = root.querySelectorAll("sup a");
+
     nn.forEach(function (val) {
       list.push(val.getAttribute("href"));
     });
-    if (this.CB) {
+    if(typeof this.CB =='function') {
       this.CB();
     }
-    if (list.length < 2) {
+    if (list.length < LINK_MIN_No) {
       log(
         "warn",
         "Didn't find many/ any URLs in page/ Is this not on my site, or is it not an article?",
@@ -41,7 +46,9 @@ export class FirstPage implements HTMLTransformable {
 
   public failure(msg: Error|string): void {
     log('warn', ""+msg);
-    this.CB();
+    if(typeof this.CB =='function') {
+      this.CB();
+    }
     this.bad("Error " + msg);
   }
 
@@ -51,7 +58,7 @@ export class FirstPage implements HTMLTransformable {
     this.offset = offset;
   }
 
-  public assignClose(cb: CBtype): void {
+  public assignClose(cb: wrappedCloseType): void {
     this.CB = cb;
   }
 }

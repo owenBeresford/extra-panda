@@ -5,16 +5,16 @@ import {
   normaliseString,
   publicise_IP,
   valueOfUrl,
-	shorten
+	baseURL
 } from "./string-manip";
 import { log } from "../log-services";
 import { PageCollection } from './page-collection';
-import type { HTMLTransformable, PromiseCB, CBtype, Reference, CurlHeadersBlob } from "./types";
+import type { HTMLTransformable, PromiseCB, CBtype, Reference, CurlHeadersBlob, wrappedCloseType } from "./types";
 
 export class MorePages implements HTMLTransformable {
   protected good: PromiseCB;
   protected bad: PromiseCB;
-  protected CB: CBtype;
+  protected CB: wrappedCloseType;
   protected offset: number;
   protected data: PageCollection;
   protected redirect_limit: number;
@@ -25,6 +25,7 @@ export class MorePages implements HTMLTransformable {
     this.data = d;
     this.offset = -1;
     this.url = "";
+    this.CB=false;
 
     this.assignClose = this.assignClose.bind(this);
     this.success = this.success.bind(this);
@@ -50,6 +51,9 @@ export class MorePages implements HTMLTransformable {
       date: 0,
     } as Reference;
     log("debug", "[" + this.offset + "] response HTTP" + statusCode);
+    if(typeof this.CB ==='function') {
+      this.CB();
+    }
     // I set curl follow-header
     if (parseInt(statusCode, 10) / 100 !== 2) {
       log("warn",
@@ -69,17 +73,13 @@ export class MorePages implements HTMLTransformable {
       item = apply_vendors(item, "");
       this.data.save(item, this.offset);
       this.good(item);
-      if (this.CB) {
-        this.CB();
-      }
       return;
     }
+    /*
     if (Array.isArray(headers)) {
       headers = headers[0];
     }
-    if (this.CB) {
-      this.CB();
-    }
+    */  
 
     let redir = this.#_extractRedirect(
       body,
@@ -131,7 +131,9 @@ export class MorePages implements HTMLTransformable {
     } as Reference;
     item = apply_vendors(item, "");
 	this.data.save( item, this.offset);
+  if(typeof this.CB =='function') {
     this.CB();
+  }
     this.good(item);
   }
 
@@ -141,7 +143,7 @@ export class MorePages implements HTMLTransformable {
     this.offset = offset;
   }
 
-  public assignClose(cb: CBtype): void {
+  public assignClose(cb: wrappedCloseType): void {
     this.CB = cb;
   }
 
@@ -223,7 +225,7 @@ export class MorePages implements HTMLTransformable {
     if (
       hit &&
       hit.length &&
-      hit[1] != decodeURI(shorten(current)) &&
+      hit[1] != decodeURI(baseURL(current)) &&
       hit[1].indexOf("https://") > -1
     ) {
       if (loop < this.redirect_limit) {
@@ -235,7 +237,7 @@ export class MorePages implements HTMLTransformable {
   }
 
   /* eslint complexity: ["error", 30] */
-  #_extractDate(headers: Record<string, string>, body: string): Date {
+  #_extractDate(headers: CurlHeadersBlob, body: string): Date {
     if ("Last-Modified" in headers) {
       let tmp: string = headers["Last-Modified"] as string;
       tmp = tmp.replace(" BST", "");
