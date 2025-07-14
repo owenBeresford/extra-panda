@@ -1,28 +1,30 @@
-// import { parse } from "node-html-parser";
-// import decoder from "html-entity-decoder";
 import { apply_vendors } from "./vendor-mod";
 import {
   normaliseString,
   publicise_IP,
   valueOfUrl,
+  cleanHTTPstatus,
 	baseURL
 } from "./string-manip";
 import { log } from "../log-services";
 import { PageCollection } from './page-collection';
-import type { HTMLTransformable, PromiseCB, CBtype, Reference, CurlHeadersBlob, wrappedCloseType } from "./types";
+import type { HTMLTransformable, PromiseCB, CBtype, Reference, CurlHeadersBlob, wrappedCloseType, VendorModPassthru } from "./types";
 
 export class MorePages implements HTMLTransformable {
   protected good: PromiseCB;
   protected bad: PromiseCB;
   protected CB: wrappedCloseType;
-  protected offset: number;
   protected data: PageCollection;
+  protected vendors: VendorModPassthru;
+
+  protected offset: number;
   protected redirect_limit: number;
   protected loop: number; // a counter to limit badly setup JS forwarding, so it will break
   protected url:string;
  
-  public constructor(d: PageCollection, redirect_limit: number = 3) {
+  public constructor(d: PageCollection, av:VendorModPassthru, redirect_limit: number = 3) {
     this.data = d;
+    this.vendors= av;
     this.offset = -1;
     this.url = "";
     this.CB=false;
@@ -50,12 +52,12 @@ export class MorePages implements HTMLTransformable {
       auth: "",
       date: 0,
     } as Reference;
-    log("debug", "[" + this.offset + "] response HTTP" + statusCode);
+    log("debug", "[" + this.offset + "] response HTTP " + statusCode);
     if(typeof this.CB ==='function') {
       this.CB();
     }
     // I set curl follow-header
-    if (parseInt(statusCode, 10) / 100 !== 2) {
+    if ( cleanHTTPstatus(statusCode) !== 2) {
       log("warn",
         "ERROR: "+process.argv[3]+" [" +
           this.offset +
@@ -70,7 +72,7 @@ export class MorePages implements HTMLTransformable {
       } else {
         item.desc = "HTTP_ERROR, Received code " + statusCode + " code.";
       }
-      item = apply_vendors(item, "");
+      item = this.vendors(item, "");
       this.data.save(item, this.offset);
       this.good(item);
       return;
@@ -83,7 +85,7 @@ export class MorePages implements HTMLTransformable {
 
     let redir = this.#_extractRedirect(
       body,
-      this.offset,
+      this.redirect_limit,
       this.url,
       this.data.loop
     );
@@ -95,20 +97,10 @@ export class MorePages implements HTMLTransformable {
     }
     item.date = this.#_extractDate(headers, body).getTime() / 1000;
     item.auth = normaliseString(this.#_extractAuthor(body));
-    item.title = this.#_extractTitle(body);
+    item.title = normaliseString(this.#_extractTitle(body, this.url));
+    item.desc = normaliseString(this.#_extractDescription(body));
 
-    let hit = body.match(
-      new RegExp(
-        '<meta[ \\t]+name=["\']description["\'][ \\t]+content="([^"]+)"',
-        "i",
-      ),
-    );
-    if (hit && hit.length) {
-      item.desc = normaliseString(hit[1]);
-    } else {
-      item.desc = item.title;
-    }
-    item = apply_vendors(item, body);
+    item = this.vendors(item, body);
     this.data.save(item, this.offset);
   //  console.log("EXTRACTED {{", item, body, "}}");
     this.good(item);
@@ -129,7 +121,7 @@ export class MorePages implements HTMLTransformable {
       auth: "unknown",
       date: 0,
     } as Reference;
-    item = apply_vendors(item, "");
+    item = this.vendors(item, "");
 	this.data.save( item, this.offset);
   if(typeof this.CB =='function') {
     this.CB();
@@ -147,93 +139,60 @@ export class MorePages implements HTMLTransformable {
     this.CB = cb;
   }
 
+  #_mapper(list:Array<string>, body:string, deft:string):string {
+    for(let i=0; i<list.length; i++ ) {
+      let hit = body.match( new RegExp( list[i], "im" ) );
+      if (hit && hit.length) {
+        return hit[1];
+      }
+    }
+    return deft;
+  }
+
   // from sept 2024, deal with fake redirects
+  // my call to baseURL may cause issues in some old-school apps, but we'll see if this has effect in the real world.
   /* eslint complexity: ["error", 30] */
   #_extractRedirect(
     body: string,
-    offset: Readonly<number>,
+    redirect_limit: Readonly<number>,
     current: string ,
     loop: Readonly<number>,
   ): Error | boolean {
     // <script>location="https://www.metabase.com/learn/metabase-basics/querying-and-dashboards/visualization/bar-charts"<
-    let hit = body.match(
-      new RegExp("<script>[ \\t\\n]*location=[\"']([^'\"]+)['\"]", "i"),
-    );
-    if (hit && hit.length && hit[1] != current) {
-      if (loop < this.redirect_limit) {
-        return new Error(hit[1]);
-      }
-      return false;
-    }
-    hit = body.match(
-      new RegExp("<script>[ \\t\\n]*location\\.href=[\"']([^'\"]+)['\"]", "i"),
-    );
-    if (hit && hit.length && hit[1] != current) {
-      if (loop < this.redirect_limit) {
-        return new Error(hit[1]);
-      }
-      return false;
-    }
-    hit = body.match(
-      new RegExp(
-        "<script>[ \\t\\n]*location\\.replace\\([\"']([^'\"]+)['\"]\\)",
-        "i",
-      ),
-    );
-    if (hit && hit.length && hit[1] != current) {
-      if (loop < this.redirect_limit) {
-        return new Error(hit[1]);
-      }
-      return false;
-    }
-
     // location.replaceState   replaceState(state, unused, url)
-    hit = body.match(
-      new RegExp(
-        "<script>[ \\t\\n]*location\\.replaceState\\(null,[ ]*['\"]{2},[ ]*(['\"](.*)['\"])\\)",
-        "i",
-      ),
-    );
-    if (hit && hit.length && hit[1] != current) {
-      if (loop < this.redirect_limit) {
-        return new Error(hit[1]);
-      }
-      return false;
-    }
-    hit = body.match(
-      new RegExp(
-        "<script>[ \\t\\n]*location\\.replaceState\\({[^}]*},[ ]*['\"]{2},[ ]*['\"](.*)['\"]\\)",
-        "i",
-      ),
-    );
-    if (hit && hit.length && hit[1] != current) {
-      if (loop < this.redirect_limit) {
-        return new Error(hit[1]);
-      }
-      return false;
-    }
-
     // SKIP pushState ...
     //  <link rel="canonical" href="https://www.metabase.com/learn/metabase-basics/querying-and-dashboards/visualization/bar-charts
-    hit = body.match(
-      new RegExp(
+    let list = [
+        "<script>[ \\t\\n]*location=[\"']([^'\"]+)['\"]",
+        "<script>[ \\t\\n]*location\\.href=[\"']([^'\"]+)['\"]",
+        "<script>[ \\t\\n]*location\\.replace\\([\"']([^'\"]+)['\"]\\)",
+        "<script>[ \\t\\n]*location\\.replaceState\\(null,[ ]*['\"]{2},[ ]*(['\"](.*)['\"])\\)",
+        "<script>[ \\t\\n]*location\\.replaceState\\({[^}]*},[ ]*['\"]{2},[ ]*['\"](.*)['\"]\\)",
         '<link[ \\t]+rel=["\']canonical["\'][ \\t]+href="([^"]+)"',
-        "i",
-      ),
-    );
-// console.log("WWWWWW redirect mapper  "+current, hit ? hit[1]: "", this.redirect_limit  );
-    if (
-      hit &&
-      hit.length &&
-      hit[1] != decodeURI(baseURL(current)) &&
-      hit[1].indexOf("https://") > -1
-    ) {
-      if (loop < this.redirect_limit) {
-        return new Error(hit[1]);
+    ];
+
+    for(let i=0; i<list.length; i++ ) {
+      let hit = body.match( new RegExp( list[i], "im" ) );
+      if (hit && hit.length  && hit[1] != decodeURI(baseURL(current))) {
+        if (loop < redirect_limit) {
+          // console.log("WWWWWW redirect mapper  "+current, hit ? hit[1]: "", this.redirect_limit  );
+          return new Error(hit[1]);
+        }
+        return false;
       }
-      return false;
     }
     return false;
+  }
+
+  #_extractDescription(body:string):string {
+    let list=[
+      '<meta[ \\t\\n]+name=["\']description["\'][ \\t]+content="([^"]+)">',
+      '<meta[ \\t\\n]+name=["\']twitter:description["\'][ \\t]+content="([^"]+)">',
+      '<meta[ \\t\\n]+itemprop=["\']description["\'][ \\t\\n]+content="([^"]+)">',
+      '<meta[ \\t\\n]+property=["\']og:description["\'][ \\t]+content="([^"]+)">',
+    ];
+
+    return this.#_mapper(list, body, '');
   }
 
   /* eslint complexity: ["error", 30] */
@@ -244,113 +203,54 @@ export class MorePages implements HTMLTransformable {
       // yes I loose an hour here, but month/year is the valuable data
       return new Date(tmp);
     }
-
-    let hit = body.match(
-      new RegExp('posted.{1,5}<time datetime="([^"]*)', "im"),
-    );
-    if (hit && hit.length) {
-      return new Date(hit[1]);
-    }
-
-    hit = body.match(
-      new RegExp('last updated.*?<time datetime="([^"]*)', "im"),
-    );
-    if (hit && hit.length) {
-      return new Date(hit[1]);
-    }
-
-    hit = body.match(
-      new RegExp('class="pw-published-date[^>]*><span>([^<]*)</span>', "im"),
-    );
-    if (hit && hit.length) {
-      return new Date(hit[1]);
-    }
-
-    log("debug",  "["+this.offset+"] Need more date code here...");
-    return new Date(0);
+    let list=[
+          'posted.{1,5}<time datetime="([^"]*)',
+          'last updated.*?<time datetime="([^"]*)',
+          'class="pw-published-date[^>]*><span>([^<]*)</span>',
+    ];
+    return new Date( this.#_mapper(list, body, "0" ) );
   }
 
   #_extractAuthor(body: string): string {
-    let hit = body.match(
-      new RegExp(
-        '<meta[ \\t]+name=["\']author["\'][ \\t]+content="([^"]+)"',
-        "i",
-      ),
-    );
-    if (hit && hit.length) {
-      return hit[1];
-    }
-
-    hit = body.match(
-      new RegExp(
-        '<meta[ \\t]+name=["\']copyright["\'][ \\t]+content="([^"]+)"',
-        "i",
-      ),
-    );
-    if (hit && hit.length) {
-      return hit[1];
-    }
-
-    // <meta name="twitter:creator" content="@channelOwen">
-    hit = body.match(
-      new RegExp(
-        '<meta[ \\t]+name=["\']twitter:creator["\'][ \\t]+content="([^"]+)"',
-        "i",
-      ),
-    );
-    if (hit && hit.length) {
-      return hit[1];
-    }
-
-    hit = body.match(
-      new RegExp(
-        "&copy; [0-9,]* ([^<\\n])|[Ⓒ ©] [0-9,]* ([^<\\n])|&#169; [0-9,]* ([^<\\n])|&#xA9; [0-9,]* ([^<\\n])",
-        "i",
-      ),
-    );
-    if (hit && hit.length) {
-      return hit[1];
-    }
-
-    hit = body.match(
-      new RegExp(
-        "Ⓒ [0-9,]* ([^<\\n])|&#9400; [0-9,]* ([^<\\n])|&#x24B8; [0-9,]* ([^<\\n])",
-        "i",
-      ),
-    );
-    if (hit && hit.length) {
-      return hit[1];
-    }
-
+    let list = [
+      '<meta[ \\t]+name=["\']author["\'][ \\t]+content="([^"]+)"',
+      '<meta[ \\t]+name=["\']copyright["\'][ \\t]+content="([^"]+)"',
+      '<meta[ \\t]+name=["\']twitter:creator["\'][ \\t]+content="([^"]+)"',
+      "&copy; [0-9,]* ([^<\\n])|[Ⓒ ©] [0-9,]* ([^<\\n])|&#169; [0-9,]* ([^<\\n])|&#xA9; [0-9,]* ([^<\\n])",
+      "Ⓒ [0-9,]* ([^<\\n])|&#9400; [0-9,]* ([^<\\n])|&#x24B8; [0-9,]* ([^<\\n])",
+    ];
+    return this.#_mapper(list, body, "unknown");
     // https://love2dev.com/blog/html-website-copyright/
     // look at cc statement in footer next
     //  <footer> <small>&copy; Copyright 2018, Example Corporation</small> </footer>
-    return "unknown";
   }
 
-  #_extractTitle(body: string): string {
+  #_extractTitle(body: string, url:string): string {
     // https://gist.github.com/lancejpollard/1978404
-    let hit = body.match(new RegExp("<title>([^<]+)<\\/title>", "i"));
-    if (hit && hit.length) {
-      return normaliseString(hit[1]);
-    }
-
-    hit = body.match(new RegExp("<h1[^>]*>([^<]+)</h1>", "i"));
-    if (hit && hit.length) {
-      return normaliseString(hit[1]);
-    }
-
     // <meta name="og:title" content="The Rock"/>
-    hit = body.match(
-      new RegExp(
+    let list = [
+        "<title>([^<]+)<\\/title>",
+        "<h1[^>]*>([^<]+)</h1>",
         '<meta[ \\t]+name=["\']og:title["\'][ \\t]+content="([^"]+)"',
-        "i",
-      ),
-    );
-    if (hit && hit.length) {
-      return normaliseString(hit[1]);
-    }
+    ];
+    return this.#_mapper(list, body, valueOfUrl(url) );
+  }
 
-    return valueOfUrl(this.url);
+  // this idea is too much manual work.   DO NOT REPEAT IT 
+  public static TEST_ONLY():Record<string,Function> { 
+    // this is only used in tests, the extracted methods are stateless, 
+    //  except for calls to mapper.  boo!
+    let tmp=new MorePages(new PageCollection([]), apply_vendors, 666);
+    let tmp2= { 
+        extractTitle:tmp.#_extractTitle.bind(tmp), 
+        extractAuthor:tmp.#_extractAuthor.bind(tmp), 
+        extractDate:tmp.#_extractDate.bind(tmp), 
+        extractDecrip:tmp.#_extractDescription.bind(tmp), 
+        extractRedirect: tmp.#_extractRedirect.bind(tmp), 
+        mapper: tmp.#_mapper.bind(tmp),  
+      };
+    return tmp2;
   }
 }
+
+export const TEST_ONLY= { MorePages, ...MorePages.TEST_ONLY() };
