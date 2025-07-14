@@ -2,41 +2,43 @@ import type { Reference, VendorRecord, VendorModCB, ModSymbol } from "./types";
 import { normaliseString } from "./string-manip";
 
 function mod_npmjs(item: Reference, body: string): Reference {
+  let item2=Object.assign({}, item );
+
   let tt = item.url.substr(item.url.lastIndexOf("/") + 1);
-  item.desc = "Package to install " + tt;
-  item.title = "Package to install " + tt;
+  item2.desc = "Package to install " + tt;
+  item2.title = "Package to install " + tt;
 
   let hit = body.match(
     new RegExp('aria-labelledby="collaborators".*<a href="/~([^"]+)', "im"),
   );
   if (hit && hit.length) {
-    item.auth = normaliseString(hit[1]);
+    item2.auth = normaliseString(hit[1]);
   } else {
-    item.auth = "cant extract from NPMjs";
+    item2.auth = "no author listed in NPMjs";
   }
-  return item;
+  return item2;
 }
 
 function mod_scribe(item: Reference, body: string): Reference {
+  let item2=Object.assign({}, item );
   let hit = body.match(
     new RegExp('<p class="meta">[ \\t\\n]*<a[^>]*>([A-Za-z 0-9\']+)</a>', "im"),
   );
   if (hit && hit.length) {
-    item.auth = normaliseString(hit[1]);
+    item2.auth = normaliseString(hit[1]);
   } else {
-    item.auth = "cant extract from medium";
+    item2.auth = "cant extract from medium";
   }
 
   hit = body.match(new RegExp('<p class="meta">.*([-0-9]+).*</p>', "im"));
   if (hit && hit.length) {
-    item.date = new Date(hit[1]).getTime() / 1000;
-  } else {
-    item.auth = "cant extract from medium";
+    item2.date = new Date(hit[1]).getTime() / 1000;
   }
-  return item;
+  return item2;
 }
 
 function mod_medium(item: Reference, body: string): Reference {
+  let item2=Object.assign({}, item );
   let hit = body.match(
     new RegExp(
       "<h2 class=\"pw-author-name[^>]*>[ \\t\\n]*<span[^>]*>([A-Za-z 0-9']+)</span>",
@@ -44,9 +46,9 @@ function mod_medium(item: Reference, body: string): Reference {
     ),
   );
   if (hit && hit.length) {
-    item.auth = normaliseString(hit[1]);
+    item2.auth = normaliseString(hit[1]);
   } else {
-    item.auth = "cant extract from medium";
+    item2.auth = "cant extract from medium";
   }
 
   hit = body.match(
@@ -56,9 +58,7 @@ function mod_medium(item: Reference, body: string): Reference {
     ),
   );
   if (hit && hit.length) {
-    item.date = new Date(hit[1]).getTime() / 1000;
-  } else {
-    item.auth = "cant extract from medium";
+    item2.date = new Date(hit[1]).getTime() / 1000;
   }
   return item;
 }
@@ -66,62 +66,112 @@ function mod_medium(item: Reference, body: string): Reference {
 function mod_github(item: Reference, body?: string): Reference {
   //	https://github.com/node-ffi-napi/node-ffi-napi
   let tt1 = item.url.split("/");
-  item.auth = tt1[3];
-  return item;
+  return Object.assign({}, item, {auth: tt1[3]});
 }
 
 function mod_stackoverflow(item: Reference, body?: string): Reference {
-  item.auth = "No author for Q&A sites";
-  return item;
+  let item2={
+    url: item.url, 
+    desc:  item.desc ,
+    title: item.title,
+    auth:  "No author for Q&A sites",
+    date: item.date,
+  };
+  return item2;
 }
 
 function mod_MDN(item: Reference, body?: string): Reference {
-  item.auth = "MDN contribuitors";
-  return item;
+  let item2={
+    url: item.url, 
+    desc:  item.desc ,
+    title: item.title,
+    auth:  "MDN contribuitors",
+    date: item.date,
+  };
+  return item2;
 }
 
 function mod_GDN(item: Reference, body?: string): Reference {
-  item.auth = "Google inc";
-  return item;
+  let item2={
+    url: item.url, 
+    desc:  item.desc ,
+    title: item.title,
+    auth:  "Google inc",
+    date: item.date,
+  };
+  return item2;
 }
 
 function mod_react(item: Reference, body?: string): Reference {
-  item.auth = "Meta platforms inc";
-  return item;
+  let item2={
+    url: item.url, 
+    desc:  item.desc ,
+    title: item.title,
+    auth: "Meta platforms inc",
+    date: item.date,
+  };
+  return item2;
 }
 
 function mod_graphQL(item: Reference, body?: string): Reference {
-  item.auth = "The GraphQL Foundation";
-  return item;
+  let item2={
+    url: item.url, 
+    desc:  item.desc ,
+    title: item.title,
+    auth: "The GraphQL Foundation",
+    date: item.date,
+  };
+  return item2;
 }
 
 function mod_caniuse(item: Reference, body?: string): Reference {
-  item.auth = "Alexis Deveria @Fyrd";
-  return item;
+  let item2={
+    url: item.url, 
+    desc:  item.desc ,
+    title: item.title,
+    auth:  "Alexis Deveria @Fyrd",
+    date: item.date,
+  };
+  return item2;
 }
 
 function mod_mongodb(item: Reference, body?: string): Reference {
-  item.auth = "MongoDB inc";
-  return item;
+  let item2={
+    url: item.url, 
+    desc:  item.desc ,
+    title: item.title,
+    auth:  "MongoDB inc",
+    date: item.date,
+  };
+  return item2;
 }
 
 function mod_wikipedia(item: Reference, body?: string): Reference {
-  item.auth = "Wikipedia contributors";
-  return item;
+  let item2={
+    url: item.url, 
+    desc:  item.desc ,
+    title: item.title,
+    auth: "Wikipedia contributors",
+    date: item.date,
+  };
+  return item2;
 }
 
 function mod_codepen(item: Reference, body?: string): Reference {
   let tt1 = item.url.split("/");
   // https://codepen.io/nobitagit/pen/AJXmgz
-  item.auth = tt1[3];
-  return item;
+  return Object.assign({}, item, {auth: tt1[3]});
 }
 
 function mod_parli(item: Reference, body?: string): Reference {
-  item.auth = "part of the UKG";
-  item.desc = "I am prohibited from checking URLs on this website";
-  item.title = "I am prohibited from checking URLs on this website";
-  return item;
+  let item2={
+    url: item.url, 
+    desc:  "I am prohibited from checking URLs on this website",
+    title: "I am prohibited from checking URLs on this website",
+    auth:  "part of the UKG",
+    date: item.date,
+  };
+  return item2;
 }
 
 const _f1 = function (
@@ -153,13 +203,13 @@ export function apply_vendors(item: Reference, body: string): Reference {
   const VENDORS_LENGTH = VENDORS.length;
 
   for (let i = 0; i < VENDORS_LENGTH; i++) {
-    if (
+     if (
       item.url.includes(VENDORS[i].name) &&
       (item[ VENDORS[i].target ] ||
         (VENDORS[i].target && item[VENDORS[i].target] === "unknown"))
     ) {
       item = VENDORS[i].callback(item, body);
-console.log("mod "+VENDORS[i].name+" "+i+" ", item );      
+console.log("mod "+VENDORS[i].name+" "+i+" ", item, "WWW" );      
 
     }
   }
