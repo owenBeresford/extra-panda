@@ -1,6 +1,6 @@
 import { parse } from "node-html-parser";
 import { log } from "../log-services";
-import { LINK_MIN_No, HTTP_ACCEPT } from "./constants";
+import { LINK_MIN_NO, HTTP_ACCEPT } from "./constants";
 import { cleanHTTPstatus } from './string-manip';
 import type { HTMLTransformable, PromiseCB, CBtype, wrappedCloseType, CurlHeadersBlob } from "./types";
 
@@ -8,10 +8,12 @@ export class FirstPage implements HTMLTransformable {
   protected good: PromiseCB;
   protected bad: PromiseCB;
   protected offset: number;
+  protected canExit:boolean;
   protected CB: wrappedCloseType;
 
-  public constructor() {
+  public constructor(canExit:boolean) {
     this.CB = false;
+    this.canExit=canExit;
 
     this.assignClose = this.assignClose.bind(this);
     this.success = this.success.bind(this);
@@ -21,7 +23,8 @@ export class FirstPage implements HTMLTransformable {
   public success(statusCode: string, data: string, headers: CurlHeadersBlob, ): void {
     // also param headers:Headers
     if (cleanHTTPstatus(statusCode) !== HTTP_ACCEPT) {
-      return this.bad(new Error("Recieved " + statusCode));
+       this.bad(new Error("Recieved " + statusCode));
+      return;
     }
 
     let root = parse(data);
@@ -34,12 +37,17 @@ export class FirstPage implements HTMLTransformable {
     if(typeof this.CB =='function') {
       this.CB();
     }
-    if (list.length < LINK_MIN_No) {
+    if (list.length < LINK_MIN_NO) {
       log(
         "warn",
         "Didn't find many/ any URLs in page/ Is this not on my site, or is it not an article?",
       );
-      process.exit(0);
+      if(this.canExit) {
+        process.exit(0);
+      } else {
+        this.bad(new Error("Didn't find many/ any URLs in page/ Is this not on my site, or is it not an article?"));
+        return;
+      }  
     }
     this.good(list);
   }
