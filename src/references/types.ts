@@ -6,7 +6,7 @@ export type CBtype = () => void;
 export type successType = (
   statusCode: string,
   data: string,
-  headers: Record<string, string>,
+  headers: CurlHeadersBlob,
 ) => void;
 export type failureType = (msg: any) => void;
 export type closeType = (cb: CBtype) => void ;
@@ -27,7 +27,7 @@ export interface HTMLTransformable {
   success(
     statusCode: string,
     data: string,
-    headers: Record<string, string>,
+    headers: CurlHeadersBlob,
   ): void;
 
   failure(msg: any): void;
@@ -53,3 +53,5 @@ export type TaggedCurl = Curl & { isClose?:boolean; };
 // As the headers have - in them, you are likjely to access the values as a hash key
 // so alarge amount of effort to add a type adds nothing
 export type CurlHeadersBlob = Record<string, string> & { result: { version: string, code: number, reason: string } };
+
+export type VendorModPassthru = (item: Reference, body: string)=> Reference;

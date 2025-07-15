@@ -27,11 +27,12 @@ export class PageCollection {
     );
   }
 
+  // side effects
   public save(item: Reference, offset: number): void {
 	  console.assert(offset < this.dst.length, "save(): Invalid reference offset "+offset);
     if (typeof this.dst[offset] !== "boolean") {
 //console.log("SFSFSDF save item", offset, this.dst.length, this.dst[offset], item );
-      throw new Error("Why overwrite slor " + offset);
+      throw new Error("Why overwrite slot " + offset);
     }
 //console.log("SFSFSDF save item "+ offset);
 	if( item.url === '') {	
@@ -56,10 +57,11 @@ export class PageCollection {
     return ret;
   }
 
+  // side effects
   // i as in imaginary number
   public offset(i: number): number {
-    let ret:number= this.batchNum * BATCH_SZ + i;
-	if(i>= BATCH_SZ-1) { this.batchNum++; }
+    let ret:number= this.batchNum * BATCH_SZ +i;
+	if(i>= BATCH_SZ-1) {  this.batchNum++; }
 	return ret;
   }
 
@@ -67,6 +69,7 @@ export class PageCollection {
     return cur < this.src.length;
   }
 
+  // side effects
   public mapRepeatDomain(url: string, cur: number): boolean {
     const HASH = baseURL(url);
     if (HASH in this.shorts) {

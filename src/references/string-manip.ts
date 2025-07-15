@@ -19,20 +19,23 @@ export function baseURL(url: string): string {
 export function valueOfUrl(raw: string): string {
   let sect = raw.split("/"),
     last = sect[sect.length - 1];
+  if(last==="") { last = sect[sect.length - 2]; }  
 
-  if (sect.length > 4 && last && !last.match(new RegExp("\\.htm", "i"))) {
-    return last;
-  }
-  if (sect.length === 4 && last && !last.match(new RegExp("\\.htm", "i"))) {
+  if (sect.length > 3 && last && !last.match(new RegExp("\\.htm", "i"))) {
     // Two are used for 'https://'
     return last;
   }
-  if (sect.length === 4 && last === "") {
-    return sect[2];
-  } else if (sect.length > 4 && last === "") {
+  if (sect.length > 3 && last && last.match(new RegExp("\\.htm", "i"))) {
+    return sect[ sect.length - 2 ];
+  }
+  
+  if (sect.length == 4 && last === "") {
     return sect[2];
   }
-
+  if (sect.length == 3 && last === "") {
+    return sect[2];
+  }
+  
   log("info", "Last gasp, url parsing failed. " + raw);
   return raw;
 }
@@ -73,7 +76,7 @@ export function publicise_IP(src: string): string {
   }
 
   let dst: string = src;
-  if (src.match(/102\.168\./)) {
+  if (src.match(/192\.168\./)) {
     dst = src.replace(
       /http:\/\/192\.168\.[0-9]{1,3}\.[0-9]{1,3}/,
       "https://owenberesford.me.uk",

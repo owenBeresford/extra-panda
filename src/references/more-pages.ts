@@ -208,7 +208,12 @@ export class MorePages implements HTMLTransformable {
           'last updated.*?<time datetime="([^"]*)',
           'class="pw-published-date[^>]*><span>([^<]*)</span>',
     ];
-    return new Date( this.#_mapper(list, body, "0" ) );
+    let val=this.#_mapper(list, body, "0" );
+    if( val.match(/^[0-9]*$/) ) {
+      return new Date( parseInt(val, 10) );  
+    } else {
+      return new Date( val );
+    }
   }
 
   #_extractAuthor(body: string): string {
@@ -245,7 +250,7 @@ export class MorePages implements HTMLTransformable {
         extractTitle:tmp.#_extractTitle.bind(tmp), 
         extractAuthor:tmp.#_extractAuthor.bind(tmp), 
         extractDate:tmp.#_extractDate.bind(tmp), 
-        extractDecrip:tmp.#_extractDescription.bind(tmp), 
+        extractDescrip:tmp.#_extractDescription.bind(tmp), 
         extractRedirect: tmp.#_extractRedirect.bind(tmp), 
         mapper: tmp.#_mapper.bind(tmp),  
       };

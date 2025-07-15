@@ -8,6 +8,7 @@ import type {
   closeType,
   HTMLTransformable,
   TaggedCurl,
+  CurlHeadersBlob
 } from "./types";
 
 // This is a dup-file name, but different technology.  Built for different purposes
@@ -26,7 +27,7 @@ export function fetch2(
       curl.isClose = true;
     }
   };
-  CB = CB.bind(this as Function);
+  CB = CB.bind(this);
 // this is confusing to read, this registers the curl->close CB for later on
   close(CB);
 
