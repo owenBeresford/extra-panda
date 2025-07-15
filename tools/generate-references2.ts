@@ -19,6 +19,8 @@ import { MorePages } from "../src/references/more-pages";
 import { exec_reference_url, fetch2 } from "../src/references/networking";
 import { PageCollection } from "../src/references/page-collection";
 import type { Reference } from '../src/references/types';
+import { apply_vendors } from '../src/references/vendor-mod';
+import { HTTP_REDIRECT_LIMIT } from '../src/references/constants';
 import { log } from '../src/log-services';
 
 const [FN, URL1] = process_args(process.argv);
@@ -96,7 +98,7 @@ function dump_to_disk(
 }
 
 new Promise(function (good, bad):void {
-  let p1 = new FirstPage();
+  let p1 = new FirstPage(true);
   p1.promiseExits(good, bad, -1);
   try {
     log("debug", "DEBUG: [-1] " + URL1);
@@ -114,7 +116,7 @@ new Promise(function (good, bad):void {
     list: Array<string>,
   ): Promise<void> {
     const p3 = new PageCollection(list);
-    const p2 = new MorePages(p3, 3);
+    const p2 = new MorePages(p3, apply_vendors, HTTP_REDIRECT_LIMIT);
     log("debug",
       "There are " +
         list.length +
@@ -178,7 +180,6 @@ new Promise(function (good, bad):void {
     } else {
       dump_to_disk(p3.resultsArray, FN);
     }
-  })
-  .catch(function (e) {
+  }, function (e) {
     log("warn", "Root error handler caught: "+ e.message);
   });
