@@ -1,14 +1,14 @@
 import { Curl } from "node-libcurl";
 
 import { log } from "../log-services";
-import { COOKIE_JAR, TIMEOUT, CURL_VERBOSE } from './constants';
+import { COOKIE_JAR, TIMEOUT, CURL_VERBOSE } from "./constants";
 import type {
   successType,
   failureType,
   closeType,
   HTMLTransformable,
   TaggedCurl,
-  CurlHeadersBlob
+  CurlHeadersBlob,
 } from "./types";
 
 // This is a dup-file name, but different technology.  Built for different purposes
@@ -19,7 +19,7 @@ export function fetch2(
   bad1: failureType,
   close: closeType,
 ): void {
-  const curl:TaggedCurl = new Curl();
+  const curl: TaggedCurl = new Curl();
   curl.isClose = false;
   let CB = (): void => {
     if (!curl.isClose) {
@@ -28,7 +28,7 @@ export function fetch2(
     }
   };
   CB = CB.bind(this);
-// this is confusing to read, this registers the curl->close CB for later on
+  // this is confusing to read, this registers the curl->close CB for later on
   close(CB);
 
   curl.setOpt("HTTPHEADER", [
@@ -42,7 +42,7 @@ export function fetch2(
   // sept 2024: Note official redirect tech, added in first version
   curl.setOpt("FOLLOWLOCATION", true);
   curl.setOpt("TIMEOUT", TIMEOUT);
-  curl.setOpt("VERBOSE", CURL_VERBOSE );
+  curl.setOpt("VERBOSE", CURL_VERBOSE);
   curl.setOpt("CONNECTTIMEOUT", TIMEOUT);
 
   // scale out to other domains as needed
@@ -65,7 +65,7 @@ export function exec_reference_url(
   offset: number,
   url: string,
   handler: HTMLTransformable,
- ): Promise<any> {
+): Promise<any> {
   return (
     new Promise(async function (good, bad) {
       handler.promiseExits(good, bad, offset);
@@ -96,9 +96,11 @@ export function exec_reference_url(
           "REDIRECT [" + offset + "] of " + url + " to " + ee.message,
         );
         if (url !== ee.message) {
-           await exec_reference_url(offset, ee.message, handler );
+          await exec_reference_url(offset, ee.message, handler);
         } else {
-          throw new Error("impossible situation, 4523586423424 (so I'm bailing)");
+          throw new Error(
+            "impossible situation, 4523586423424 (so I'm bailing)",
+          );
         }
       })
   );

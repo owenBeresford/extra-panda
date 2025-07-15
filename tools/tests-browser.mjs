@@ -36,7 +36,7 @@ import { dirname, basename } from "path";
 import fs from "node:fs";
 import https from "https";
 
-import { chromium , firefox } from "playwright";
+import { chromium, firefox } from "playwright";
 import { expect } from "@playwright/test";
 import express from "express";
 
@@ -81,14 +81,16 @@ const BROWSER_HSH = {
   librewolf: [
     "/usr/bin/librewolf",
     // may need to recreate after a reboot
-    "--profile", "/tmp/js-test2",
- //   "--new-instance",
+    "--profile",
+    "/tmp/js-test2",
+    //   "--new-instance",
     "--disable-pinch",
     //    run once with this enabled to create profile
     //     '--ProfileManager',
     // enable this for the RWD tests
     // --window-size width[,height]
-    "--remote-debugging-port", PORT_DEBUG,
+    "--remote-debugging-port",
+    PORT_DEBUG,
   ],
 };
 
@@ -257,20 +259,20 @@ function spinup_server() {
  */
 async function spinup_playwright(debug_url, browsr) {
   // debug channel, not test node web service
-	let DBG=null;
-	try {
-		if(browsr.name()=== "chromium" ) {
-			DBG = await browsr.connectOverCDP(debug_url);
-		} else {
-console.log("BEFORE HALT", browsr.connectAsync, browsr.connect);
-			DBG = await browsr.connect(debug_url );
-console.log("AFTER HALT");
-		}	
-	} catch(ee) {
-		console.log("TEST FAILED ", ee.message, "TEST FAILED");
-  		process.exit(1);
-//		return [null, ()=>{} ];
-	}
+  let DBG = null;
+  try {
+    if (browsr.name() === "chromium") {
+      DBG = await browsr.connectOverCDP(debug_url);
+    } else {
+      console.log("BEFORE HALT", browsr.connectAsync, browsr.connect);
+      DBG = await browsr.connect(debug_url);
+      console.log("AFTER HALT");
+    }
+  } catch (ee) {
+    console.log("TEST FAILED ", ee.message, "TEST FAILED");
+    process.exit(1);
+    //		return [null, ()=>{} ];
+  }
 
   if (!BDG || !DBG.isConnected()) {
     throw new Error("Can't connect to captive browser");
@@ -313,13 +315,13 @@ async function spinup_browser(cmd, onSocket) {
       if (!found && tmp[i].match(/^WebDriver BiDi listening on /)) {
         onSocket(tmp[i].match(/^WebDriver BiDi listening on ([^ ]+)$/)[1]);
         found = true;
-		buf=""; // empty buffer after goal found
+        buf = ""; // empty buffer after goal found
       }
 
       if (!found && tmp[i].match(/^DevTools listening on /)) {
         onSocket(tmp[i].match(/^DevTools listening on ([^ ]+)$/)[1]);
         found = true;
-		buf="";
+        buf = "";
       }
     }
   };
@@ -618,11 +620,14 @@ export async function runTests(tests, args) {
       throw new Error("IO tangled, URL not found.  Pls fix " + CHILD);
     }
 
-// ugly...
-	let target=chromium;
-	if(  args.indexOf("--browser") && args[ args.indexOf("--browser")+1 ]== "librewolf") {
-		target=firefox;
-	}
+    // ugly...
+    let target = chromium;
+    if (
+      args.indexOf("--browser") &&
+      args[args.indexOf("--browser") + 1] == "librewolf"
+    ) {
+      target = firefox;
+    }
 
     const [ctx, end2] = await spinup_playwright(dburl, target);
     for (let i in tests) {

@@ -1,4 +1,4 @@
-import decoder from 'html-entity-decoder';
+import decoder from "html-entity-decoder";
 import { log } from "../log-services";
 
 // string utils, isolated to make code more readable
@@ -19,23 +19,25 @@ export function baseURL(url: string): string {
 export function valueOfUrl(raw: string): string {
   let sect = raw.split("/"),
     last = sect[sect.length - 1];
-  if(last==="") { last = sect[sect.length - 2]; }  
+  if (last === "") {
+    last = sect[sect.length - 2];
+  }
 
   if (sect.length > 3 && last && !last.match(new RegExp("\\.htm", "i"))) {
     // Two are used for 'https://'
     return last;
   }
   if (sect.length > 3 && last && last.match(new RegExp("\\.htm", "i"))) {
-    return sect[ sect.length - 2 ];
+    return sect[sect.length - 2];
   }
-  
+
   if (sect.length == 4 && last === "") {
     return sect[2];
   }
   if (sect.length == 3 && last === "") {
     return sect[2];
   }
-  
+
   log("info", "Last gasp, url parsing failed. " + raw);
   return raw;
 }
@@ -85,8 +87,14 @@ export function publicise_IP(src: string): string {
   return dst;
 }
 
-export function cleanHTTPstatus(dat:string):number {
+export function cleanHTTPstatus(dat: string): number {
   return Math.floor(parseInt(dat, 10) / 100);
 }
 
-export const TEST_ONLY= { publicise_IP, valueOfUrl, normaliseString, baseURL, cleanHTTPstatus };
+export const TEST_ONLY = {
+  publicise_IP,
+  valueOfUrl,
+  normaliseString,
+  baseURL,
+  cleanHTTPstatus,
+};

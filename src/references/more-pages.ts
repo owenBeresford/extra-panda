@@ -4,11 +4,20 @@ import {
   publicise_IP,
   valueOfUrl,
   cleanHTTPstatus,
-	baseURL
+  baseURL,
 } from "./string-manip";
 import { log } from "../log-services";
-import { PageCollection } from './page-collection';
-import type { HTMLTransformable, PromiseCB, CBtype, Reference, CurlHeadersBlob, wrappedCloseType, VendorModPassthru } from "./types";
+import { PageCollection } from "./page-collection";
+import type {
+  HTMLTransformable,
+  PromiseCB,
+  CBtype,
+  Reference,
+  CurlHeadersBlob,
+  wrappedCloseType,
+  VendorModPassthru,
+} from "./types";
+import { HTTP_ACCEPT } from "./constants";
 
 export class MorePages implements HTMLTransformable {
   protected good: PromiseCB;
@@ -20,19 +29,23 @@ export class MorePages implements HTMLTransformable {
   protected offset: number;
   protected redirect_limit: number;
   protected loop: number; // a counter to limit badly setup JS forwarding, so it will break
-  protected url:string;
- 
-  public constructor(d: PageCollection, av:VendorModPassthru, redirect_limit: number = 3) {
+  protected url: string;
+
+  public constructor(
+    d: PageCollection,
+    av: VendorModPassthru,
+    redirect_limit: number = 3,
+  ) {
     this.data = d;
-    this.vendors= av;
+    this.vendors = av;
     this.offset = -1;
     this.url = "";
-    this.CB=false;
+    this.CB = false;
+    this.redirect_limit = redirect_limit;
 
     this.assignClose = this.assignClose.bind(this);
     this.success = this.success.bind(this);
     this.failure = this.failure.bind(this);
-	  this.redirect_limit= redirect_limit; 
   }
 
   public setOffset(i: number, url: string): void {
@@ -53,18 +66,20 @@ export class MorePages implements HTMLTransformable {
       date: 0,
     } as Reference;
     log("debug", "[" + this.offset + "] response HTTP " + statusCode);
-    if(typeof this.CB ==='function') {
+    if (typeof this.CB === "function") {
       this.CB();
     }
-    // I set curl follow-header
-    if ( cleanHTTPstatus(statusCode) !== 2) {
-      log("warn",
-        "ERROR: "+process.argv[3]+" [" +
+    if (cleanHTTPstatus(statusCode) !== HTTP_ACCEPT) {
+      log(
+        "warn",
+        "ERROR: " +
+          process.argv[3] +
+          " [" +
           this.offset +
           "] URL was dead " +
           this.url +
           " ",
-        statusCode + " " + headers['result'],
+        statusCode + " " + headers["result"],
       );
       // I scooped the result flag from a debug window, it exists
       if (headers.result && headers.result.reason) {
@@ -77,23 +92,17 @@ export class MorePages implements HTMLTransformable {
       this.good(item);
       return;
     }
-    /*
-    if (Array.isArray(headers)) {
-      headers = headers[0];
-    }
-    */  
-
     let redir = this.#_extractRedirect(
       body,
       this.redirect_limit,
       this.url,
-      this.data.loop
+      this.data.loop,
     );
     if (typeof redir !== "boolean") {
       this.data.incLoop();
-      this.url=redir.message;
+      this.url = redir.message;
       this.bad(redir);
-		  return;
+      return;
     }
     item.date = this.#_extractDate(headers, body).getTime() / 1000;
     item.auth = normaliseString(this.#_extractAuthor(body));
@@ -102,7 +111,6 @@ export class MorePages implements HTMLTransformable {
 
     item = this.vendors(item, body);
     this.data.save(item, this.offset);
-  //  console.log("EXTRACTED {{", item, body, "}}");
     this.good(item);
   }
 
@@ -114,7 +122,7 @@ export class MorePages implements HTMLTransformable {
     // plan B
     //		tmp=(this.dst[this.offset] as Reference).url;
 
-    let item:Reference = {
+    let item: Reference = {
       url: publicise_IP(this.url),
       desc: "HTTP_ERROR, " + msg,
       title: "HTTP_ERROR, " + msg,
@@ -122,10 +130,10 @@ export class MorePages implements HTMLTransformable {
       date: 0,
     } as Reference;
     item = this.vendors(item, "");
-	this.data.save( item, this.offset);
-  if(typeof this.CB =='function') {
-    this.CB();
-  }
+    this.data.save(item, this.offset);
+    if (typeof this.CB == "function") {
+      this.CB();
+    }
     this.good(item);
   }
 
@@ -139,9 +147,9 @@ export class MorePages implements HTMLTransformable {
     this.CB = cb;
   }
 
-  #_mapper(list:Array<string>, body:string, deft:string):string {
-    for(let i=0; i<list.length; i++ ) {
-      let hit = body.match( new RegExp( list[i], "im" ) );
+  #_mapper(list: Array<string>, body: string, deft: string): string {
+    for (let i = 0; i < list.length; i++) {
+      let hit = body.match(new RegExp(list[i], "im"));
       if (hit && hit.length) {
         return hit[1];
       }
@@ -155,7 +163,7 @@ export class MorePages implements HTMLTransformable {
   #_extractRedirect(
     body: string,
     redirect_limit: Readonly<number>,
-    current: string ,
+    current: string,
     loop: Readonly<number>,
   ): Error | boolean {
     // <script>location="https://www.metabase.com/learn/metabase-basics/querying-and-dashboards/visualization/bar-charts"<
@@ -163,19 +171,18 @@ export class MorePages implements HTMLTransformable {
     // SKIP pushState ...
     //  <link rel="canonical" href="https://www.metabase.com/learn/metabase-basics/querying-and-dashboards/visualization/bar-charts
     let list = [
-        "<script>[ \\t\\n]*location=[\"']([^'\"]+)['\"]",
-        "<script>[ \\t\\n]*location\\.href=[\"']([^'\"]+)['\"]",
-        "<script>[ \\t\\n]*location\\.replace\\([\"']([^'\"]+)['\"]\\)",
-        "<script>[ \\t\\n]*location\\.replaceState\\(null,[ ]*['\"]{2},[ ]*(['\"](.*)['\"])\\)",
-        "<script>[ \\t\\n]*location\\.replaceState\\({[^}]*},[ ]*['\"]{2},[ ]*['\"](.*)['\"]\\)",
-        '<link[ \\t]+rel=["\']canonical["\'][ \\t]+href="([^"]+)"',
+      "<script>[ \\t\\n]*location=[\"']([^'\"]+)['\"]",
+      "<script>[ \\t\\n]*location\\.href=[\"']([^'\"]+)['\"]",
+      "<script>[ \\t\\n]*location\\.replace\\([\"']([^'\"]+)['\"]\\)",
+      "<script>[ \\t\\n]*location\\.replaceState\\(null,[ ]*['\"]{2},[ ]*(['\"](.*)['\"])\\)",
+      "<script>[ \\t\\n]*location\\.replaceState\\({[^}]*},[ ]*['\"]{2},[ ]*['\"](.*)['\"]\\)",
+      '<link[ \\t]+rel=["\']canonical["\'][ \\t]+href="([^"]+)"',
     ];
 
-    for(let i=0; i<list.length; i++ ) {
-      let hit = body.match( new RegExp( list[i], "im" ) );
-      if (hit && hit.length  && hit[1] != decodeURI(baseURL(current))) {
+    for (let i = 0; i < list.length; i++) {
+      let hit = body.match(new RegExp(list[i], "im"));
+      if (hit && hit.length && hit[1] != decodeURI(baseURL(current))) {
         if (loop < redirect_limit) {
-          // console.log("WWWWWW redirect mapper  "+current, hit ? hit[1]: "", this.redirect_limit  );
           return new Error(hit[1]);
         }
         return false;
@@ -184,15 +191,15 @@ export class MorePages implements HTMLTransformable {
     return false;
   }
 
-  #_extractDescription(body:string):string {
-    let list=[
+  #_extractDescription(body: string): string {
+    let list = [
       '<meta[ \\t\\n]+name=["\']description["\'][ \\t]+content="([^"]+)">',
       '<meta[ \\t\\n]+name=["\']twitter:description["\'][ \\t]+content="([^"]+)">',
       '<meta[ \\t\\n]+itemprop=["\']description["\'][ \\t\\n]+content="([^"]+)">',
       '<meta[ \\t\\n]+property=["\']og:description["\'][ \\t]+content="([^"]+)">',
     ];
 
-    return this.#_mapper(list, body, '');
+    return this.#_mapper(list, body, "");
   }
 
   /* eslint complexity: ["error", 30] */
@@ -203,16 +210,16 @@ export class MorePages implements HTMLTransformable {
       // yes I loose an hour here, but month/year is the valuable data
       return new Date(tmp);
     }
-    let list=[
-          'posted.{1,5}<time datetime="([^"]*)',
-          'last updated.*?<time datetime="([^"]*)',
-          'class="pw-published-date[^>]*><span>([^<]*)</span>',
+    let list = [
+      'posted.{1,5}<time datetime="([^"]*)',
+      'last updated.*?<time datetime="([^"]*)',
+      'class="pw-published-date[^>]*><span>([^<]*)</span>',
     ];
-    let val=this.#_mapper(list, body, "0" );
-    if( val.match(/^[0-9]*$/) ) {
-      return new Date( parseInt(val, 10) );  
+    let val = this.#_mapper(list, body, "0");
+    if (val.match(/^[0-9]*$/)) {
+      return new Date(parseInt(val, 10));
     } else {
-      return new Date( val );
+      return new Date(val);
     }
   }
 
@@ -230,32 +237,32 @@ export class MorePages implements HTMLTransformable {
     //  <footer> <small>&copy; Copyright 2018, Example Corporation</small> </footer>
   }
 
-  #_extractTitle(body: string, url:string): string {
+  #_extractTitle(body: string, url: string): string {
     // https://gist.github.com/lancejpollard/1978404
     // <meta name="og:title" content="The Rock"/>
     let list = [
-        "<title>([^<]+)<\\/title>",
-        "<h1[^>]*>([^<]+)</h1>",
-        '<meta[ \\t]+name=["\']og:title["\'][ \\t]+content="([^"]+)"',
+      "<title>([^<]+)<\\/title>",
+      "<h1[^>]*>([^<]+)</h1>",
+      '<meta[ \\t]+name=["\']og:title["\'][ \\t]+content="([^"]+)"',
     ];
-    return this.#_mapper(list, body, valueOfUrl(url) );
+    return this.#_mapper(list, body, valueOfUrl(url));
   }
 
-  // this idea is too much manual work.   DO NOT REPEAT IT 
-  public static TEST_ONLY():Record<string,Function> { 
-    // this is only used in tests, the extracted methods are stateless, 
+  // this idea is too much manual work.   DO NOT REPEAT IT
+  public static TEST_ONLY(): Record<string, Function> {
+    // this is only used in tests, the extracted methods are stateless,
     //  except for calls to mapper.  boo!
-    let tmp=new MorePages(new PageCollection([]), apply_vendors, 666);
-    let tmp2= { 
-        extractTitle:tmp.#_extractTitle.bind(tmp), 
-        extractAuthor:tmp.#_extractAuthor.bind(tmp), 
-        extractDate:tmp.#_extractDate.bind(tmp), 
-        extractDescrip:tmp.#_extractDescription.bind(tmp), 
-        extractRedirect: tmp.#_extractRedirect.bind(tmp), 
-        mapper: tmp.#_mapper.bind(tmp),  
-      };
+    let tmp = new MorePages(new PageCollection([]), apply_vendors, 666);
+    let tmp2 = {
+      extractTitle: tmp.#_extractTitle.bind(tmp),
+      extractAuthor: tmp.#_extractAuthor.bind(tmp),
+      extractDate: tmp.#_extractDate.bind(tmp),
+      extractDescrip: tmp.#_extractDescription.bind(tmp),
+      extractRedirect: tmp.#_extractRedirect.bind(tmp),
+      mapper: tmp.#_mapper.bind(tmp),
+    };
     return tmp2;
   }
 }
 
-export const TEST_ONLY= { MorePages, ...MorePages.TEST_ONLY() };
+export const TEST_ONLY = { MorePages, ...MorePages.TEST_ONLY() };

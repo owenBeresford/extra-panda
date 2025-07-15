@@ -54,6 +54,7 @@ export default [
       "no-template-curly-in-string": "warn",
       "use-isnan": "warn",
       "no-eval": "warn",
+		"class-methods-use-this":"warn",
       "no-negated-condition": "off",
       // legacy only.
       //		"eslint-plugin-no-http-protocol/no-http-protocol": ["warn"],

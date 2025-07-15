@@ -9,7 +9,7 @@ export type successType = (
   headers: CurlHeadersBlob,
 ) => void;
 export type failureType = (msg: any) => void;
-export type closeType = (cb: CBtype) => void ;
+export type closeType = (cb: CBtype) => void;
 export type wrappedCloseType = CBtype | boolean;
 
 export interface Reference {
@@ -20,15 +20,11 @@ export interface Reference {
   date: number | string;
 }
 
-export type ModSymbol=keyof Reference;
+export type ModSymbol = keyof Reference;
 
 // this Interface may exist else where
 export interface HTMLTransformable {
-  success(
-    statusCode: string,
-    data: string,
-    headers: CurlHeadersBlob,
-  ): void;
+  success(statusCode: string, data: string, headers: CurlHeadersBlob): void;
 
   failure(msg: any): void;
 
@@ -44,14 +40,16 @@ export interface VendorRecord {
   callback: VendorModCB;
 }
 
-export type TaggedCurl = Curl & { isClose?:boolean; };
+export type TaggedCurl = Curl & { isClose?: boolean };
 
-// The Record is HTTP headers with strtolower on the name, 
-// As there is a self expanding list, I am cautious about adding a strict type 
-// Also the type wont have effect at runtime   , and it runtime created data 
+// The Record is HTTP headers with strtolower on the name,
+// As there is a self expanding list, I am cautious about adding a strict type
+// Also the type wont have effect at runtime   , and it runtime created data
 //
 // As the headers have - in them, you are likjely to access the values as a hash key
 // so alarge amount of effort to add a type adds nothing
-export type CurlHeadersBlob = Record<string, string> & { result: { version: string, code: number, reason: string } };
+export type CurlHeadersBlob = Record<string, string> & {
+  result: { version: string; code: number; reason: string };
+};
 
-export type VendorModPassthru = (item: Reference, body: string)=> Reference;
+export type VendorModPassthru = (item: Reference, body: string) => Reference;

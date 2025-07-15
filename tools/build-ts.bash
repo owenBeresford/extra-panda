@@ -4,6 +4,7 @@ if [ -z "$PUBLICATION" ]; then
 	exit 1
 fi
 
+# node ./node_modules/.bin/vite --config ./vite.config.reference.ts build 
 node ./node_modules/.bin/vite --config ./vite.config.lib.ts build 
 node ./node_modules/.bin/uglifyjs ./dist/ob1.mjs -o /tmp/ob1.min.mjs 
 # only needed in old copy of uglyfy

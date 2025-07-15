@@ -1,7 +1,7 @@
 import { baseURL } from "./string-manip";
 import { log } from "../log-services";
 import type { Reference } from "./types";
-import { BATCH_SZ } from './constants';
+import { BATCH_SZ } from "./constants";
 
 export class PageCollection {
   protected _offset: number;
@@ -29,17 +29,18 @@ export class PageCollection {
 
   // side effects
   public save(item: Reference, offset: number): void {
-	  console.assert(offset < this.dst.length, "save(): Invalid reference offset "+offset);
+    console.assert(
+      offset < this.dst.length,
+      "save(): Invalid reference offset " + offset,
+    );
     if (typeof this.dst[offset] !== "boolean") {
-//console.log("SFSFSDF save item", offset, this.dst.length, this.dst[offset], item );
       throw new Error("Why overwrite slot " + offset);
     }
-//console.log("SFSFSDF save item "+ offset);
-	if( item.url === '') {	
+    if (item.url === "") {
       throw new Error("Why does the incomming data have no URL? " + offset);
-	}
+    }
 
-    this.shorts[ baseURL(this.src[offset]) ] = offset;
+    this.shorts[baseURL(this.src[offset])] = offset;
     this.dst[offset] = item;
   }
 
@@ -52,7 +53,7 @@ export class PageCollection {
         break;
       } // used in last batch, which isn't likely to be full.
 
-      ret.push(""+this.src[_offset]);
+      ret.push("" + this.src[_offset]);
     }
     return ret;
   }
@@ -60,9 +61,11 @@ export class PageCollection {
   // side effects
   // i as in imaginary number
   public offset(i: number): number {
-    let ret:number= this.batchNum * BATCH_SZ +i;
-	if(i>= BATCH_SZ-1) {  this.batchNum++; }
-	return ret;
+    let ret: number = this.batchNum * BATCH_SZ + i;
+    if (i >= BATCH_SZ - 1) {
+      this.batchNum++;
+    }
+    return ret;
   }
 
   public morePages(cur: number): boolean {
@@ -73,11 +76,9 @@ export class PageCollection {
   public mapRepeatDomain(url: string, cur: number): boolean {
     const HASH = baseURL(url);
     if (HASH in this.shorts) {
-//      console.log("Hit URL cache [target slot=]", this.dst[cur] );
       this.dst[cur] = Object.assign({}, this.dst[this.shorts[HASH]], {
         url: url,
       }) as Reference;
-// console.log(" mapRepeatDomain "+cur,  this.dst[cur], this.dst[ this.shorts[HASH] ]);
       return true;
     }
     return false;
@@ -87,19 +88,16 @@ export class PageCollection {
     return this.dst;
   }
 
-
-
-  public zeroLoop():void {
+  public zeroLoop(): void {
     this._loop = 0;
   }
 
-  public get loop():number {
+  public get loop(): number {
     return this._loop;
   }
 
-  public incLoop():void {
+  public incLoop(): void {
     this._loop++;
     // max value test somewhere
   }
-
 }
