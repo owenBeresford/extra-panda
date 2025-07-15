@@ -45,11 +45,14 @@ describe("TEST references string-manip", () => {
 		assert.equal( 5, cleanHTTPstatus("512"), 'step 5');
 	});
 
-/**
 	it("go 1.1: publicise_IP ", ()=> {	
 //		expect( ()=> publicise_IP("http://192.168.0.0/") ).toThrow(new Error(''))
 		const spy = vi.spyOn(console, 'log').mockImplementation(() => {})
 		publicise_IP("http://192.168.0.0/");
+//
+//   ACTUNG: this below line will fail, as I am using a wrapper for console.log
+//    to make this test pass add a console.log at string-manip.ts+75
+//
 		expect(spy).toHaveBeenCalled();
 		spy.mockRestore();
 	});
@@ -61,7 +64,7 @@ describe("TEST references string-manip", () => {
 		expect(spy).not.toHaveBeenCalled();
 		spy.mockRestore();
 	});
-*/
+
 });
 
 
