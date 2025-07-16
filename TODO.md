@@ -29,13 +29,6 @@ MAINTENANCE
 - least stupid way to tell users not to make unit-test chrome window smaller, or the tests in the runner will fail next test execution
 - Add References re-try logic on Network Timeout, second hit seems to succede more often 
 
-Extract possible playwright + librefox fix from:
--> Playwright Automation Full Course https://github.com/BakkappaN/PlaywrightTutorialFullCourse
--> Playwright API Testing Crash Course https://github.com/BakkappaN/PlaywrightAPITestingTutorial
--> Playwright with Azure DevOps Pipeline https://github.com/BakkappaN/PlaywrightAzureDevopsPipeline
--> Playwright with CRM Application Testing https://github.com/BakkappaN/MicrosoftD365CRMPlaywrightFramework
--> Playwright with JavaScript Framework [UI + API] https://github.com/BakkappaN/PlaywrightBaseAutomationFramework
--> Playwright with TypeScript Framework [UI + API] https://github.com/BakkappaN/Playwright-TypeScript-Framework
 
 ### Previous Updates
 
