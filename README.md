@@ -107,31 +107,25 @@ Notes:
 - Functions tagged "PURE" do not effect the DOM, and tend to test quickly.
 - **_NOTE_** Commits at the start of this project are completely meaningless, as it's just when I moved the code back to my dev machine. They are meaningless duration markers, rather than feature markers.
 - Proper TDD units, as I have better tools now (JS modules + a fake DOM), make code better ~ separately to, and above every other bullet point.
-- Vastly improve English / readability of the code. Gain is separate to all other points.
+- Vastly improve English / readability of the code.  Gain is separate to all other points.
 - Some of these unit tests are less meaningful than others, regrettably (running from Node).   It would be nice to setup test from a browser **UPDATE** I did, see `npm run web:test` .  Initially, to *look* at the UX (as in, I am being the success / fail criterion), I did some manual testing
 - Use new language features (ADD a few KB of source) without jQuery (DROP >300KB of source). Dropping jQuery, as "select downloaded features" feature has been removed from https://jquery.com
 - Use TEST_ONLY symbols that expose entire module to unit tests.   Tree-shaking means these do not show in release builds and is a free feature of most build tools.   I didn't invent this structure, but I have used it ever since I started with JS modules, rather than plain JS.
-- As all this code is made after a minimiser script is adopted, faction code more finely into logical modules. So it's more readable.
-- As a very non-funny joke: the first two versions of the SM sharebar are legacy HTML, but very easy to unit-test. Now I have much better test tech and libraries and less good tests on this feature.
+- As all this code is made after a minimiser script is adopted, faction code more finely into logical modules, so it's more readable.
 - Assuming this project is frozen on feature completion, I do not need an installer.   I will manually copy 1 compiled file to the static-host local-image.   This project may not have any rollbacks/ reverts, tests are mandated.   
-- I have used a short term solution to minification, as I need to move forward.  XXX #FIXME
 - As far as Vite is a _code bundler_, I need to make all these separate outcome files as separate configs.  I probably can reduce the amount of configs duplication at a later date.   To repeat for clarity, each generated file is a separate file to syntax high-lighting for other languages.  Again via this library, CSS syntax highlighting isn't perfect. 
-- There are some demo pages that I will need to retire or use CDN to host needed libraries.
+- There are some 3rd party demo pages that I will need to retire or use CDN to host needed libraries.
 - There isn't much logging, but logging is held to a wrapper, so I could jump to a centralised log (such as ELK) if I need to in future.
 - My code has complex / unexpected behaviour if you change the DOM / document object without changing state.  This shouldn't be an issue outside tests, as this code doesn't support SSR presently.
-- I want to reduce the amount of manually made snap-shot tests, as again it's a code smell (test and measure outcomes, not the recipe to achieve them, or the recipe is forced to be immutable).
 - Minor gain for Google, I made the sliding window feature in Adjacent module this time, as I have more articles in each group.  This means unnecessary (not-rendered) nodes are not added to the HTML.  My rebuild of the Adjacent HTML is also smaller.  
 - As this lump of JS is a single project rather than 6, there are less control flags needed.  This makes the code a bit simpler.
 - This has a function equivalent to `int main(int argc, char * argv[])`, called _core_.  This is allowed to have a high volume and complexity as it wraps *all the other* methods.  As an architecture detail, this isn't avoidable.
-- The highlight source is now in TS, as I found the type definitions.
-- The process of expanding the number of tools in this project is adding features, but also acting as a lint as it shows small oversights.
 - I added a UI feature that added extra HTML, but this didn't invalidate any of the unit-tests ~ they are not snapshot tests.
 - I am adding search params for testing, rather than a Mock, as I may want to use them during QA
 - It is expensive [in devtime] to create keyboard events in a different tab/ window.
-- Why do I not tidy-up unused vars in this code base?  Most are in unit tests, its better readability if *standard* args are present, IMO (Promises, forEach or map etc)
-- I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together with `rebase`, it's a nul-point difference.  UPDATE: the expanded eslint config does make garbage changes on some files, I do not know why.  UPDATE2: I binary deleted until the issue went away.
-- More recently, I made the eslint config more complex, and this reports extra details.
-- I am also moving the MJS files in tests to TS.
+- [ESLINT] Why do I not tidy-up unused vars in this code base?  Most are in unit tests, its better readability if *standard* args are present, IMO (Promises, forEach or map etc)
+- I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together with `rebase`, it's a nul-point difference.  UPDATE: the expanded eslint config does make garbage changes on some files, I do not know why.  UPDATE2: I binary partition deleted to isolate  until the issue went away.
+- More recently, I made the eslint config more complex, and this reports extra details (see Github issue).
 
 #### Metrics that are important to goals
 
@@ -142,13 +136,13 @@ Notes:
   - above but with dead code removal: 250KB
 - initial NEW TECH (ignoring unit tests)::
   - complete build: 75KB flat files             >50% volume is comment headers
-  - above with with minification: 23KB
+  - above with minification: 23KB
   - Dead code removal didn't make any impact here, as tree shaking works properly now
   - above with gzip: 9KB   
     - UPDATE: due to further features, I have crept over the 10k boundary &lt;Meme: "so it begins"&gt;
-  - I think I have perfect feature match, and new solution is 4% of volume of previous solution. UPDATE 6% in 2025
+  - I think I have perfect feature match to previous, and new solution is 4% of volume of previous solution. UPDATE 6% in 2025
 
-I have replaced the local CSS with better organised CSS to make it more readable.  I have updated to add more recent phones every few years.   I am adding more features using CSS.   I could reduce CSS volume if I had a tool to remove unneeded code from foundation import.   Recently, I have removed some old CSS from my style-sheet, but not much volume of change.   
+I have replaced the local CSS with better organised CSS to make it more readable.  I have updated to add more recent phones every few years.   I am adding more features using CSS.   I could reduce CSS volume if I had a tool to remove unneeded code from Foundation.css import.   Recently, I have removed some old CSS from my style-sheet, but not much volume of change.   
 
 </details>
 <details open>
@@ -176,6 +170,14 @@ I have replaced the local CSS with better organised CSS to make it more readable
 - TODO: Make support for win32.
 - TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
 - Am I aware that Vitest supports a GUI mode? [✔].   It was doing that when I first started using this tool, see [https://vitest.dev/guide/ui.html].   Unless I read this feature wrongly, this is just an output driver, not running the modules in the browser.     
+
+</details>
+<details>
+<summary> Engineering details (return of..) </summary>
+I imported another feature from into this repo, made it more readable and added better tests.
+Note when using node-libCurl, there is something not lined-up with standard Vite.   Vite cannot load / handle the library files.
+If I run the TS files via node-vite, there is no visible compiler step, and it links the Clang lib correctly.  To run new tool, please use handling added to package.json  
+
 
 </details>
 <details>
@@ -220,11 +222,9 @@ The articles with no extra/ dedicated CSS are composed of "standard components".
 - fewWords          ~ no-vis ~ a 30em / 480px block  
 
 Classes that start "add" normally just enable some feature, and have no CSS behaviour of their own.   There are some classes that are too simple and widely used to get a test.   
-**With the test script running the vis-tests are served as https://127.0.0.1:8081/vis/*   Unlike my site, they need a full file-name**.   Manual review from multiple devices and screen sizes is advised
+**With the test script running the vis-tests are served as https://127.0.0.1:8081/vis/*   Unlike my site, they need a full file-name**.   Manual review from multiple devices and screen sizes is advised.    When running locally the "debug-layout" test capacity is useful.  
 
 I may refactor to eliminate the word Widget.   Some pages have extra features eg [https://owenberesford.me.uk/resource/form-no-js-maquette], but this is rarer than adjustments.
-I am adding test pages to show the articles with with broad range of content, rather than just the content when I made the feature. 
-When running locally the "debug-layout" test capacity is useful.  
 
 I am integrity-testing CSS for
 - chrome
@@ -250,7 +250,7 @@ I initially just had the most common three, were I only adding Firefox as it is 
 - recent "android browser" / SS      I think this is Chrome with a hat on
 - recent firefox / SS
 
-#### Process to add a new webtest \#leSigh
+#### Process to add a new webtest   big \#leSigh
 I ought to improve this process.  These are the tests that build their own GUI/ browser.
 * make src/test/\*webtest.mjs not the vitest files which are automated
 * ensure execTest line is on the end of the new test

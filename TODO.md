@@ -18,18 +18,18 @@ MAINTENANCE
 - Implement Networking browser test script
 - Port remaining non-production files to TS.  
 - declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
-- Somehow properly test isLibreWolf, can extend the test-browser to take a browser choice 
 - To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
-- Rebuild snap to end (unused but included), as dis-functional in Chrome  
+- Rebuild snap to end CSS (unused but included), as dis-functional in Chrome  
 - Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
 - Splash this into every test process https://stackoverflow.com/a/74565753 , maybe I will get error reporting back
-- For the other CSS features, add a extra visual test browserTest etc
+- For the other CSS features, add a extra visual test browserTest etc (see text file in vis-test dir)
 - Evaluate https://www.npmjs.com/package/accessibility-checker to drop w3c one
 - Design 1 cycle animation on title popout IF OPEN 
 - For long content with many page sections, setup component for each page in a tidy fashion && tell later sections to load lower prio as they are likely to be off screen
 - least stupid way to tell users not to make unit-test chrome window smaller, or the tests in the runner will fail next test execution
-- FIX THIS: .addReferences:has( .lotOfText DL) example architectures-for-css, also review-dvcs-automation 
+- Add References re-try logic on Network Timeout, second hit seems to succede more often 
 
+Extract possible playwright + librefox fix from:
 -> Playwright Automation Full Course https://github.com/BakkappaN/PlaywrightTutorialFullCourse
 -> Playwright API Testing Crash Course https://github.com/BakkappaN/PlaywrightAPITestingTutorial
 -> Playwright with Azure DevOps Pipeline https://github.com/BakkappaN/PlaywrightAzureDevopsPipeline
@@ -100,7 +100,6 @@ MAINTENANCE
 - DOME: Add feature "take user selection of text, and return standardised word count of it"
 - DONE: Change implementation on reading word-count 
 - DONE: Extracted Tab feature to own TS module, as I'm not updating the tabs UI to pure HTML5 now.
-  - DONE its only used in the index/ home, I have migrated it to HTML5 / CSS 
   - DONE: I now have migrated to pure CSS  
 - DONE: migrated tabs to HTML/CSS as its better architecture
 - DONE: migrate CSS into this project, simplifying my webhost project
@@ -116,5 +115,6 @@ MAINTENANCE
 - DONE: Adjust symbols used in the chapters menu
 - DONE and CANCELLED: built test code for Qutebrowser, not mature enough from CLI yet.
 - DONE: add a dump-cookie plugin to browser, so will re-execute build references against 1mb of cookies
+- DONE: Check reference tooltips in DL lists, example: architectures-for-css, review-dvcs-automation 
 
 
