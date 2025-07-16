@@ -22,14 +22,14 @@ export class FakePage implements HTMLTransformable {
     this._state = 0;
   }
 
-	// the "100 category" for HTTP codes, i.e. 2, 4, 5
+  // the "100 category" for HTTP codes, i.e. 2, 4, 5
   public set state(no: number) {
     this._state = no;
   }
 
   public success(statusCode: string, data: string): void {
     // also param headers:Headers
-console.log("WWWW ", statusCode, data );
+    console.log("WWWW ", statusCode, data);
     assert.equal(
       this.state,
       cleanHTTPstatus(statusCode),

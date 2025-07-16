@@ -77,27 +77,26 @@ describe("TEST references vendor-mod", () => {
 
     item2 = apply_vendors(item1, body1);
     assert.equal(item1, item2, "step 4");
-	
-	const item3 = {
+
+    const item3 = {
       url: "https://scribe.rip/@jonnyeberhardt7/understanding-mix-exs-the-heart-of-your-elixir-project-0bdc80a3f434",
       desc: "",
       title: "",
       auth: "",
       date: 0,
     };
-	item2={ 
+    item2 = {
       url: "",
       desc: "",
       title: "",
       auth: "",
       date: 0,
-		};
+    };
     const body2 = `
 <body><h1>Understanding mix.exs: The Heart of Your Elixir Project</h1>
 <p class="meta"><a href="https://medium.com/u/200a8333555e">Jonny Eberhardt</a> on 2024-09-20</p>
 `;
     item2 = apply_vendors(item3, body2);
     assert.notEqual(item3, item2, "step 5");
-
   });
 });

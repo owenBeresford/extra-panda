@@ -672,11 +672,10 @@
   margin-top: 2em;
 }
 
-/* I think I should replace this with a container CSS block */ 
+/* I think I should replace this with a container CSS block */
 @media screen and (min-width: 1280px) {
   .DCVSautoContainer .betterDL dl dd,
-	  .archi4CSSContainer .betterDL dl dd { 
-		overflow-x: unset;
-	}
+  .archi4CSSContainer .betterDL dl dd {
+    overflow-x: unset;
+  }
 }
-

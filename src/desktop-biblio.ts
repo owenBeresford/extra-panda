@@ -56,7 +56,11 @@ function markAllLinksUnknown(dom: Document, loc: Location): void {
   (dom.querySelector(ALL_REFERENCE) as HTMLElement).classList.add(SHOW_ERROR);
 
   const MSG: HTMLElement = dom.querySelector("p[role=status]") as HTMLElement;
-  if (MSG && MSG.innerText && !MSG.innerText.match(/ERROR: No valid references file found/)) {
+  if (
+    MSG &&
+    MSG.innerText &&
+    !MSG.innerText.match(/ERROR: No valid references file found/)
+  ) {
     MSG.innerText += "ERROR: No valid references file found.";
   }
 }
@@ -292,9 +296,9 @@ function addMetaAge(xhr: SimpleResponse, dom: Document): void {
     tstr = tstr.substring(0, tstr.length - 4);
   }
   const updated: number = new Date(tstr).getTime();
-	let dd=new Date(updated);
-	let year=(dd.getFullYear()+"").substr(2);
-	let month=  UI_TEXT_MONTHS[dd.getUTCMonth()];
+  let dd = new Date(updated);
+  let year = (dd.getFullYear() + "").substr(2);
+  let month = UI_TEXT_MONTHS[dd.getUTCMonth()];
 
   if (updated > 0) {
     const str: string =
@@ -305,25 +309,28 @@ function addMetaAge(xhr: SimpleResponse, dom: Document): void {
         hour12: false,
         dateStyle: "medium",
       }) +
-      '">' + month + " '"+ year + 
+      '">' +
+      month +
+      " '" +
+      year +
       "</time> </span>";
     appendIsland(".addReading .ultraSkinny", str, dom);
   }
 }
 
-const UI_TEXT_MONTHS:Readonly<Array<string>>=[
-	"Jan",
-	"Feb",
-	"Mar",
-	"Apr",
-	"May",
-	"Jun",
-	"Jul",
-	"Aug",
-	"Sept",
-	"Oct",
-	"Nov",
-	"Dec",
+const UI_TEXT_MONTHS: Readonly<Array<string>> = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 /**

@@ -9,7 +9,7 @@ function mod_npmjs(item: Reference, body: string): Reference {
   item2.title = "Package to install " + tt;
 
   let hit = body.match(
-    new RegExp('aria-labelledby="collaborators".*\<a href="/~([^"]+)', "im"),
+    new RegExp('aria-labelledby="collaborators".*<a href="/~([^"]+)', "im"),
   );
   if (hit && hit.length) {
     item2.auth = normaliseString(hit[1]);
@@ -22,7 +22,7 @@ function mod_npmjs(item: Reference, body: string): Reference {
 function mod_scribe(item: Reference, body: string): Reference {
   let item2 = Object.assign({}, item);
   let hit = body.match(
-    new RegExp('\<p class="meta"\>[ \\t\\n]*\<a[^>]*>([A-Za-z 0-9\']+)\</a\>', "im"),
+    new RegExp('<p class="meta">[ \\t\\n]*<a[^>]*>([A-Za-z 0-9\']+)</a>', "im"),
   );
   if (hit && hit.length) {
     item2.auth = normaliseString(hit[1]);
@@ -30,7 +30,7 @@ function mod_scribe(item: Reference, body: string): Reference {
     item2.auth = "cant extract from medium";
   }
 
-  hit = body.match(new RegExp('\<p class="meta"\>.*([-0-9]+).*\</p\>', "im"));
+  hit = body.match(new RegExp('<p class="meta">.*([-0-9]+).*</p>', "im"));
   if (hit && hit.length) {
     item2.date = new Date(hit[1]).getTime() / 1000;
   }
@@ -41,7 +41,7 @@ function mod_medium(item: Reference, body: string): Reference {
   let item2 = Object.assign({}, item);
   let hit = body.match(
     new RegExp(
-      "\<h2 class=\"pw-author-name[^>]*\>[ \\t\\n]*\<span[^>]*\>([A-Za-z 0-9']+)\</span\>",
+      "<h2 class=\"pw-author-name[^>]*>[ \\t\\n]*<span[^>]*>([A-Za-z 0-9']+)</span>",
       "im",
     ),
   );
@@ -53,7 +53,7 @@ function mod_medium(item: Reference, body: string): Reference {
 
   hit = body.match(
     new RegExp(
-      '\<p class="pw-published-date[^>]*>[ \\t\\n]*\<span[^>]*>([A-Za-z 0-9,]+)\</span\>',
+      '<p class="pw-published-date[^>]*>[ \\t\\n]*<span[^>]*>([A-Za-z 0-9,]+)</span>',
       "im",
     ),
   );

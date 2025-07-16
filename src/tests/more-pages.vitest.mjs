@@ -200,9 +200,13 @@ describe("TEST references MorePages ", () => {
     html = '<meta property="og:description" content="description 4.">';
     assert.equal("description 4.", extractDescrip(html, "TEST TITLE"), "step4");
 
-    assert.equal("TEST TITLE", extractDescrip("<p> dfgdfg gad gdfg dgdfgad g</p>", "TEST TITLE"), "step5");
+    assert.equal(
+      "TEST TITLE",
+      extractDescrip("<p> dfgdfg gad gdfg dgdfgad g</p>", "TEST TITLE"),
+      "step5",
+    );
 
-	html=`<meta name="twitter:site" content="@code" />
+    html = `<meta name="twitter:site" content="@code" />
 <meta name="description" content="Learn about Visual Studio Code editor features (code completion, debugging, snippets, linting) for Go." />
 <meta name="keywords" content="" />
 <meta name="ms.prod" content="vs-code" />
@@ -217,8 +221,11 @@ describe("TEST references MorePages ", () => {
 <meta property="og:title" content="Go in Visual Studio Code" />
 <meta property="og:description" content="Learn about Visual Studio Code editor features (code completion, debugging, snippets, linting) for Go." />
 <meta property="og:image" content="https://code.visualstudio.com/opengraphimg/opengraph-docs.png" />`;
-    assert.equal("Learn about Visual Studio Code editor features (code completion, debugging, snippets, linting) for Go.", extractDescrip(html, "TEST TITLE"), "step6");
-
+    assert.equal(
+      "Learn about Visual Studio Code editor features (code completion, debugging, snippets, linting) for Go.",
+      extractDescrip(html, "TEST TITLE"),
+      "step6",
+    );
   });
 
   // TODO check loop limiting in other regexp branches
