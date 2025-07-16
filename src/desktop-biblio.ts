@@ -45,10 +45,6 @@ let OPTS: DesktopBiblioPropsDefinite = {
  */
 function markAllLinksUnknown(dom: Document, loc: Location): void {
   const naam: string = articleName(loc);
-  const MSG: HTMLElement = dom.querySelector("p[role=status]") as HTMLElement;
-  if (MSG && !MSG.innerText.match(/ERROR: No valid references file found/)) {
-    MSG.innerText += "ERROR: No valid references file found.";
-  }
   const WASSUP: Array<HTMLAnchorElement> = Array.from(
     dom.querySelectorAll(ALL_REFERENCE_LINKS),
   ) as Array<HTMLAnchorElement>;
@@ -58,6 +54,11 @@ function markAllLinksUnknown(dom: Document, loc: Location): void {
     WASSUP[i].setAttribute("aria-label", "" + txt);
   }
   (dom.querySelector(ALL_REFERENCE) as HTMLElement).classList.add(SHOW_ERROR);
+
+  const MSG: HTMLElement = dom.querySelector("p[role=status]") as HTMLElement;
+  if (MSG && MSG.innerText && !MSG.innerText.match(/ERROR: No valid references file found/)) {
+    MSG.innerText += "ERROR: No valid references file found.";
+  }
 }
 
 /**
