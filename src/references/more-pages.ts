@@ -107,7 +107,7 @@ export class MorePages implements HTMLTransformable {
     item.date = this.#_extractDate(headers, body).getTime() / 1000;
     item.auth = normaliseString(this.#_extractAuthor(body));
     item.title = normaliseString(this.#_extractTitle(body, this.url));
-    item.desc = normaliseString(this.#_extractDescription(body));
+    item.desc = normaliseString(this.#_extractDescription(body, item.title));
 
     item = this.vendors(item, body);
     this.data.save(item, this.offset);
@@ -150,8 +150,12 @@ export class MorePages implements HTMLTransformable {
   #_mapper(list: Array<string>, body: string, deft: string): string {
     for (let i = 0; i < list.length; i++) {
       let hit = body.match(new RegExp(list[i], "im"));
-      if (hit && hit.length) {
-        return hit[1];
+      if (hit && hit.length>1 ) {
+		if( hit[1]) {	
+	        return hit[1];
+		} else {
+			return deft;
+		}
       }
     }
     return deft;
@@ -171,17 +175,21 @@ export class MorePages implements HTMLTransformable {
     // SKIP pushState ...
     //  <link rel="canonical" href="https://www.metabase.com/learn/metabase-basics/querying-and-dashboards/visualization/bar-charts
     let list = [
-      "\<script\>[ \\t\\n]*location=[\"']([^'\"]+)['\"]",
-      "\<script\>[ \\t\\n]*location\\.href=[\"']([^'\"]+)['\"]",
-      "\<script\>[ \\t\\n]*location\\.replace\\([\"']([^'\"]+)['\"]\\)",
-      "\<script\>[ \\t\\n]*location\\.replaceState\\(null,[ ]*['\"]{2},[ ]*(['\"](.*)['\"])\\)",
-      "\<script\>[ \\t\\n]*location\\.replaceState\\({[^}]*},[ ]*['\"]{2},[ ]*['\"](.*)['\"]\\)",
-      '\<link[ \\t]+rel=["\']canonical["\'][ \\t]+href="([^"]+)"',
+      "\<script\>\\s*location=[\"']([^'\"]+)['\"]",
+      "\<script\>\\s*location\\.href=[\"']([^'\"]+)['\"]",
+      "\<script\>\\s*location\\.replace\\([\"']([^'\"]+)['\"]\\)",
+      "\<script\>\\s*location\\.replaceState\\(null,[ ]*['\"]{2},[ ]*(['\"](.*)['\"])\\)",
+      "\<script\>\\s*location\\.replaceState\\({[^}]*},[ ]*['\"]{2},[ ]*['\"](.*)['\"]\\)",
+      '\<link\\s+rel=["\']canonical["\']\\s+href="([^"]+)"',
     ];
 
     for (let i = 0; i < list.length; i++) {
       let hit = body.match(new RegExp(list[i], "im"));
       if (hit && hit.length && hit[1] != decodeURI(baseURL(current))) {
+		if(current.match('wikipedia') && current === hit[1]) {
+			// wiki often have escaped letters in URLs, #leSigh interwibbles
+			return false;
+		}
         if (loop < redirect_limit) {
           return new Error(hit[1]);
         }
@@ -191,15 +199,19 @@ export class MorePages implements HTMLTransformable {
     return false;
   }
 
-  #_extractDescription(body: string): string {
+  #_extractDescription(body: string, def:string): string {
     let list = [
-      '\<meta[ \\t\\n]+name=["\']description["\'][ \\t]+content="([^"]+)"\>',
-      '\<meta[ \\t\\n]+name=["\']twitter:description["\'][ \\t]+content="([^"]+)"\>',
-      '\<meta[ \\t\\n]+itemprop=["\']description["\'][ \\t\\n]+content="([^"]+)"\>',
-      '\<meta[ \\t\\n]+property=["\']og:description["\'][ \\t]+content="([^"]+)"\>',
+      '\<meta\\s+name=["\']description["\']\\s+content=["\']([^"]+)["\']\\s*[/]*\>',
+      '\<meta\\s+name=["\']twitter:description["\']\\s+content=["\']([^"]+)["\']\\s*[/]*\>',
+      '\<meta\\s+itemprop=["\']description["\']\\s+content=["\']([^"]+)["\']\\s*[/]*\>',
+      '\<meta\\s+property=["\']og:description["\']\\s+content=["\']([^"]+)["\']\\s*[/]*\>',
     ];
 
-    return this.#_mapper(list, body, "");
+	let ret= this.#_mapper(list, body, "");
+	if(!ret || ret.length===0 ) {
+		return def;
+	}
+	return ret;
   }
 
   /* eslint complexity: ["error", 30] */
@@ -213,7 +225,7 @@ export class MorePages implements HTMLTransformable {
     let list = [
       'posted.{1,5}\<time datetime="([^"]*)',
       'last updated.*?\<time datetime="([^"]*)',
-      'class="pw-published-date[^>]*\>\<span>([^<]*)\</span>',
+      'class="pw-published-date[^>]*\>\<span\>([^<]*)\</span\>',
     ];
     let val = this.#_mapper(list, body, "0");
     if (val.match(/^[0-9]*$/)) {
@@ -225,9 +237,9 @@ export class MorePages implements HTMLTransformable {
 
   #_extractAuthor(body: string): string {
     let list = [
-      '\<meta[ \\t]+name=["\']author["\'][ \\t]+content="([^"]+)"',
-      '\<meta[ \\t]+name=["\']copyright["\'][ \\t]+content="([^"]+)"',
-      '\<meta[ \\t]+name=["\']twitter:creator["\'][ \\t]+content="([^"]+)"',
+      '\<meta\\s+name=["\']author["\']\\s+content=["\']([^"]+)["\']',
+      '\<meta\\s+name=["\']copyright["\']\\s+content=["\']([^"]+)["\']',
+      '\<meta\\s+name=["\']twitter:creator["\']\\s+content=["\']([^"]+)["\']',
       "&copy; [0-9,]* ([^<\\n])|[Ⓒ ©] [0-9,]* ([^<\\n])|&#169; [0-9,]* ([^<\\n])|&#xA9; [0-9,]* ([^<\\n])",
       "Ⓒ [0-9,]* ([^<\\n])|&#9400; [0-9,]* ([^<\\n])|&#x24B8; [0-9,]* ([^<\\n])",
     ];
@@ -241,9 +253,9 @@ export class MorePages implements HTMLTransformable {
     // https://gist.github.com/lancejpollard/1978404
     // <meta name="og:title" content="The Rock"/>
     let list = [
-      "\<title>([^<]+)\<\\/title\>",
-      "\<h1[^>]*>([^<]+)\</h1\>",
-      '\<meta[ \\t]+name=["\']og:title["\'][ \\t]+content="([^"]+)"',
+      "\<title\>([^<]+)\<\\/title\>",
+      "\<h1[^>]*\>([^<]+)\</h1\>",
+      '\<meta\\s+name=["\']og:title["\']\\s+content="([^"]+)"',
     ];
     return this.#_mapper(list, body, valueOfUrl(url));
   }

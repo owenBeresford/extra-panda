@@ -1,7 +1,7 @@
 import { Curl } from "node-libcurl";
 
 import { log } from "../log-services";
-import { COOKIE_JAR, TIMEOUT, CURL_VERBOSE } from "./constants";
+import { COOKIE_JAR, TIMEOUT, CURL_VERBOSE, STRICT_NETWORKING } from "./constants";
 import type {
   successType,
   failureType,
@@ -97,7 +97,7 @@ export function exec_reference_url(
         );
         if (url !== ee.message) {
           await exec_reference_url(offset, ee.message, handler);
-        } else {
+        } else if(STRICT_NETWORKING) {
           throw new Error(
             "impossible situation, 4523586423424 (so I'm bailing)",
           );

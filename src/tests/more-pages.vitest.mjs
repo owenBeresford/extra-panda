@@ -175,7 +175,7 @@ describe("TEST references MorePages ", () => {
 
     assert.equal(new Date(0).getTime(), extractDate({}, "").getTime(), "step5");
 
-    // #leSigh  stdlib in other languages deal with this very common notation better,
+    // #leSigh stdlib in other languages deal with this very common notation better,
     html = '<div class="pw-published-date"><span>1st July 2025</span>';
     assert.isTrue(Number.isNaN(extractDate({}, html).getTime()), "step6");
 
@@ -189,16 +189,36 @@ describe("TEST references MorePages ", () => {
     obj.setOffset(0, "https://sample.url/11");
 
     let html = '<meta name="description" content="description 1.">';
-    assert.equal("description 1.", extractDescrip(html), "step1");
+    assert.equal("description 1.", extractDescrip(html, "TEST TITLE"), "step1");
 
     html = '<meta name="twitter:description" content="description 2.">';
-    assert.equal("description 2.", extractDescrip(html), "step2");
+    assert.equal("description 2.", extractDescrip(html, "TEST TITLE"), "step2");
 
     html = '<meta itemprop="description" content="description 3.">';
-    assert.equal("description 3.", extractDescrip(html), "step3");
+    assert.equal("description 3.", extractDescrip(html, "TEST TITLE"), "step3");
 
     html = '<meta property="og:description" content="description 4.">';
-    assert.equal("description 4.", extractDescrip(html), "step4");
+    assert.equal("description 4.", extractDescrip(html, "TEST TITLE"), "step4");
+
+    assert.equal("TEST TITLE", extractDescrip("<p> dfgdfg gad gdfg dgdfgad g</p>", "TEST TITLE"), "step5");
+
+	html=`<meta name="twitter:site" content="@code" />
+<meta name="description" content="Learn about Visual Studio Code editor features (code completion, debugging, snippets, linting) for Go." />
+<meta name="keywords" content="" />
+<meta name="ms.prod" content="vs-code" />
+<meta name="ms.TOCTitle" content="" />
+<meta name="ms.ContentId" content="6f06908a-6694-4fad-ac1e-fc6d9c5747ca" />
+<meta name="ms.date" content="07/09/2025" />
+<meta name="ms.topic" content="conceptual" />
+<!-- Twitter and Facebook OpenGraph Metadata-->
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="og:url" content="https://code.visualstudio.com/docs/languages/go" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Go in Visual Studio Code" />
+<meta property="og:description" content="Learn about Visual Studio Code editor features (code completion, debugging, snippets, linting) for Go." />
+<meta property="og:image" content="https://code.visualstudio.com/opengraphimg/opengraph-docs.png" />`;
+    assert.equal("Learn about Visual Studio Code editor features (code completion, debugging, snippets, linting) for Go.", extractDescrip(html, "TEST TITLE"), "step6");
+
   });
 
   // TODO check loop limiting in other regexp branches
