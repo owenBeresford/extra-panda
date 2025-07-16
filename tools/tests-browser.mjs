@@ -36,7 +36,7 @@ import { dirname, basename } from "path";
 import fs from "node:fs";
 import https from "https";
 
-import { chromium } from "playwright";
+import { chromium, firefox } from "playwright";
 import { expect } from "@playwright/test";
 import express from "express";
 
@@ -81,15 +81,16 @@ const BROWSER_HSH = {
   librewolf: [
     "/usr/bin/librewolf",
     // may need to recreate after a reboot
-    "--profile=tmp/js-test2",
-    "--new-instance",
+    "--profile",
+    "/tmp/js-test2",
+    //   "--new-instance",
     "--disable-pinch",
     //    run once with this enabled to create profile
     //     '--ProfileManager',
     // enable this for the RWD tests
     // --window-size width[,height]
-    "--remote-debugging-port=" + PORT_DEBUG,
-    "--new-tab",
+    "--remote-debugging-port",
+    PORT_DEBUG,
   ],
 };
 
@@ -253,12 +254,27 @@ function spinup_server() {
  
  * @protected
  * @param {string} debug_url
+ * @param {dunno, playwright api} browsr
  * @returns {Array} - [playwright.Context, ()=>void ]
  */
-async function spinup_playwright(debug_url) {
+async function spinup_playwright(debug_url, browsr) {
   // debug channel, not test node web service
-  const DBG = await chromium.connectOverCDP(debug_url);
-  if (!DBG.isConnected()) {
+  let DBG = null;
+  try {
+    if (browsr.name() === "chromium") {
+      DBG = await browsr.connectOverCDP(debug_url);
+    } else {
+      console.log("BEFORE HALT", browsr.connectAsync, browsr.connect);
+      DBG = await browsr.connect(debug_url);
+      console.log("AFTER HALT");
+    }
+  } catch (ee) {
+    console.log("TEST FAILED ", ee.message, "TEST FAILED");
+    process.exit(1);
+    //		return [null, ()=>{} ];
+  }
+
+  if (!BDG || !DBG.isConnected()) {
     throw new Error("Can't connect to captive browser");
   }
   const CTX = DBG.contexts();
@@ -290,22 +306,22 @@ async function spinup_browser(cmd, onSocket) {
   let buf = "",
     found = false;
 
-  process.argv.includes("librewolf") && console.log("WWWWW", cmd);
   const READ = (data) => {
     // being cautious on line buffering:
     buf += data;
-    process.argv.includes("librewolf") && console.log("WWWWW", buf);
     let tmp = buf.split("\n");
     for (let i = 0; i < tmp.length; i++) {
       //WebDriver BiDi listening on ws://127.0.0.1:9222
       if (!found && tmp[i].match(/^WebDriver BiDi listening on /)) {
         onSocket(tmp[i].match(/^WebDriver BiDi listening on ([^ ]+)$/)[1]);
         found = true;
+        buf = ""; // empty buffer after goal found
       }
 
       if (!found && tmp[i].match(/^DevTools listening on /)) {
         onSocket(tmp[i].match(/^DevTools listening on ([^ ]+)$/)[1]);
         found = true;
+        buf = "";
       }
     }
   };
@@ -586,7 +602,7 @@ async function runExtract(urn) {
  * @protected
  * @returns {void}
  */
-export async function runTests(tests) {
+export async function runTests(tests, args) {
   console.log(
     "[INFO] This suite takes about 1m to exec on a normal PC.  Opens many tabs in Chrome",
   );
@@ -595,15 +611,25 @@ export async function runTests(tests) {
     const grab = (data) => {
       dburl = data;
     };
-    const [CHILD, end0] = await spinup_browser(BROWSER, grab);
     const [ignored, end1] = spinup_server();
+    const [CHILD, end0] = await spinup_browser(BROWSER, grab);
     await delay(2000);
     // loading chrome on this fairly fast machine takes more than 1s,
     // there is a chrome that I am using already loaded, could be account creation being slow
     if (dburl === "") {
-      throw new Error("IO tangled, pls fix " + CHILD);
+      throw new Error("IO tangled, URL not found.  Pls fix " + CHILD);
     }
-    const [ctx, end2] = await spinup_playwright(dburl);
+
+    // ugly...
+    let target = chromium;
+    if (
+      args.indexOf("--browser") &&
+      args[args.indexOf("--browser") + 1] == "librewolf"
+    ) {
+      target = firefox;
+    }
+
+    const [ctx, end2] = await spinup_playwright(dburl, target);
     for (let i in tests) {
       dDelta = 0;
       const tExist = fs.statSync(
@@ -688,6 +714,7 @@ supports:
     --no-close          ~ do //not// close the tabs, or the browser.  Use to see what happens.
     --close             ~ for automated use, free() resources after use,  The default behaviour.  
     --extract-css       ~ Uses the value as an URN to use
+    --browser [name]    ~ Launches that named binary (hoping it supports playwright correctly) 
     --visual-tests-only ~ Just start the vis tests, implies no-close
 `;
   console.log(TEXT);
@@ -709,6 +736,6 @@ if (runDirectly(process)) {
     // this code is a test runner,
     // but is too complex.  So I may need to put a test on it
     // so this is safe to import as it doesn't auto execute
-    await runTests(TESTS);
+    await runTests(TESTS, process.argv);
   }
 }

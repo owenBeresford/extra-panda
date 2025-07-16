@@ -9,3 +9,4 @@ src/fixtures/cert.pem
 src/fixtures/csr.pem
 src/fixtures/private.key
 
+cookies.txt

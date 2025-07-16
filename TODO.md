@@ -1,31 +1,34 @@
 ### TODO
 
+FEATURES
 - Add type washing to JSON ingestion used in multiple places https://github.com/samchon/typia https://medium.com/@jkc5186/understanding-typescript-types-with-prisma-e0e41a7d98f3 
 - Add multilingual support
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom   to TESTS
 - Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages. 
+- POSSIBLE: Add feature dump (ie download as attachment) in-HTML file JS assets, or SVG assets, or CSS assets.  Need to think about UI for this feature.
+- improve test process for mobile screen size design
+- dark mode CSS
+
+MAINTENANCE
 - Port the everything* tests to storybook, or the browser tests
 - WCAG tests (lighthouse) for whole pages need to go some where (suggest this project) https://www.npmjs.com/package/wcag 
 - Look at https://github.com/githubnext/testpilot - test generator
 - Log fault on validate class for HTML with no doctype header.   DUMP html-validate, it doesn't validate HTML5 properly,
-- Add feature dump (ie download as attachment) in-HTML file JS assets, or SVG assets, or CSS assets.  Need to think about UI for this feature.
 - Make RAM usage and execution-cost tests-and-monitoring more mature
 - Implement Networking browser test script
 - Port remaining non-production files to TS.  
 - declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
-- Somehow properly test isLibreWolf, can extend the test-browser to take a browser choice 
-  - ERROR: dead stick with current editions.  Could fix by reverting local libreWolf edition or waiting till update in Playwright
-- Maybe look at Qutebrowser for browser unit-tests, uses less RAM, and is //a recent version// of Chrome project https://qutebrowser.org/doc/install.html#tox
 - To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
-- Maybe poll for Chrome, and install Qutebrowser if absent. QQ how do I poll in the package.json?
-- Rebuild snap to end (unused but included), as dis-functional in Chrome  
+- Rebuild snap to end CSS (unused but included), as dis-functional in Chrome  
 - Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
 - Splash this into every test process https://stackoverflow.com/a/74565753 , maybe I will get error reporting back
-- For the other CSS features, add a visual test browserTest etc
+- For the other CSS features, add a extra visual test browserTest etc (see text file in vis-test dir)
 - Evaluate https://www.npmjs.com/package/accessibility-checker to drop w3c one
 - Design 1 cycle animation on title popout IF OPEN 
 - For long content with many page sections, setup component for each page in a tidy fashion && tell later sections to load lower prio as they are likely to be off screen
-- least stupid way to tell user users not to make chrome window smaller, or the test will fail next test run
+- least stupid way to tell users not to make unit-test chrome window smaller, or the tests in the runner will fail next test execution
+- Add References re-try logic on Network Timeout, second hit seems to succede more often 
+
 
 ### Previous Updates
 
@@ -38,7 +41,7 @@
   - Build tools being installed for every project, in a writable fashion is not good practice.   Any other software could edit these tools in this installation.  
   - Note there is a worm running since 1970 something, that patches C compilers, when they are being compiled.  For Unix/ POSIX computers when there is a login call, a login attempt with the worm-authors user name will always succeed.  This worm is not present in the C compiler source code, the worm is injected by the worm at compile time as assembly.  Do you have a clean-room C compiler?  How do you check?  Does your local microsoft office have this?
 - Discuss: having `npm audit` make changes that cannot be seen with git is awkward.   Did anything actually change?   UPDATE: I am now doing fresh installs to fix dep-security issues, as this avoids caching.   I am adding indirect packages as direct packages to step over older versions.
-- DONE: Last month I learned the terser doesn't strip all line breaks, as that stops the map files working.  My initial terser setup is running as expected.   Terser reduces volume ~50KB -> 30KB.  I can over apply uglify-js to prod builds, which strips a further ~7KB of line breaks
+- DONE: Last month I learned the terser doesn't strip all line breaks, as that stops the map files working.  My initial terser setup is running as expected.   Terser reduces volume ~50KB -> 30KB.  I can over-apply uglify-js to prod builds, which strips a further ~7KB of line breaks
 - DONE remove local scope use of global vars
 - DONE reduce use a lambda functions
 - DONE check accessibility of currentSize
@@ -90,17 +93,21 @@
 - DOME: Add feature "take user selection of text, and return standardised word count of it"
 - DONE: Change implementation on reading word-count 
 - DONE: Extracted Tab feature to own TS module, as I'm not updating the tabs UI to pure HTML5 now.
-  - DONE its only used in the index/ home, I have migrated it to HTML5 / CSS  
-- DONE: trap out libreWolf, as the DPI calc in CSS is busted there
+  - DONE: I now have migrated to pure CSS  
 - DONE: migrated tabs to HTML/CSS as its better architecture
 - DONE: migrate CSS into this project, simplifying my webhost project
 - DONE: tidyup English and old CSS in the CSS
 - DONE: improved readability and component-isation in the CSS.  Added per component tests, to increase code longevity
-- DONE: Add 20% new CSS to support libreWolf bah gumbah! 
 - DONE: unbreak [minor] things for Vivaldi
+- DONE: trap out libreWolf, as the DPI calc in CSS is busted there
+- DONE: Move libreWolf CSS to own file, and add 20% new CSS to support libreWolf 
 - DONE: eslint, I have turned prefer-const OFF, as it doesn't report arrays sensibly.  See inline note
-- DONE: remove remaining active float declarations
-- DONE: Factor out IAmLibreWolf CSS into isolated file, ~99% of the internet doesn't need these decl's 
-- DONE but BROKEN: add a method to exec tests inside librewWolf, see notes 
+- DONE: remove remaining CSS float declarations.
+- DONE but BROKEN: add a method to exec tests inside libreWolf, see notes 
+  - DONE: initial fault fixed as newer playwright now available, more work to come.
 - DONE: Adjust symbols used in the chapters menu
+- DONE and CANCELLED: built test code for Qutebrowser, not mature enough from CLI yet.
+- DONE: add a dump-cookie plugin to browser, so will re-execute build references against 1mb of cookies
+- DONE: Check reference tooltips in DL lists, example: architectures-for-css, review-dvcs-automation 
+
 
