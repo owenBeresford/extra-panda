@@ -30,6 +30,7 @@ describe("TEST desktop-biblio", () => {
   it("go 2: markAllLinksUnknown", () => {
     const [dom, loc] = page("http://192.168.0.35/resource/reading-list", 2);
     let str = `
+<p role="status"> </p> 
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">2</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
 <p>sdf sdfsvxvc sf sdffsxjcghcgj jg fhfhsfh <sup><a href="gibgibgib">3</a> </sup> <sup><a href="gibgibgib">5</a> </sup> 
