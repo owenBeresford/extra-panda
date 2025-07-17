@@ -1355,22 +1355,8 @@ div.addReferences sup a.leanIn:before { left: calc( 18cqw - 32em ); }
 }
 
 /* many small cells for the DL mean the mouse hoovers do not work with paint optimisation */
-.addReferences:has(.lotsOfWords DL),
-.addReferences:has(.lotsOfWords DL > a[aria-label]::before),
-.addReferences.lotsOfWords:has(DL),
-.addReferences.lotsOfWords:has(DL > a[aria-label]::before),
-.addReferences.halferWords:has(DL),
-.addReferences.halferWords:has(DL > a[aria-label]::before),
-.addReferences:has(.halferWords DL),
-.addReferences:has(.halferWords DL > a[aria-label]::before) {
-  contain: layout;
-}
-.addReferences.fewWords:has(sup a[aria-label]),
-.addReferences.halferWords:has(sup a[aria-label]),
-.addReferences .halferWords:has(sup a[aria-label]),
-.addReferences .fewWords:has(sup a[aria-label]) {
-  contain: layout;
-}
+.addReferences:has(DL), .addReferences DL a[aria-label]::before, .addReferences:has(DL) a[aria-label]::before { contain:layout; }
+
 
 /** trimmings for links, not sure what file to put these in
 	SEE ALSO UTILS 

@@ -675,7 +675,10 @@
 /* I think I should replace this with a container CSS block */
 @media screen and (min-width: 1280px) {
   .DCVSautoContainer .betterDL dl dd,
-  .archi4CSSContainer .betterDL dl dd {
+  .archi4CSSContainer .betterDL dl dd,
+  .jsBehavContainer.betterDL dl dd,
+  .jsTestFWContainer.betterDL dl dd
+ {
     overflow-x: unset;
   }
 }
