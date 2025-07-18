@@ -677,8 +677,7 @@
   .DCVSautoContainer .betterDL dl dd,
   .archi4CSSContainer .betterDL dl dd,
   .jsBehavContainer.betterDL dl dd,
-  .jsTestFWContainer.betterDL dl dd
- {
+  .jsTestFWContainer.betterDL dl dd {
     overflow-x: unset;
   }
 }
