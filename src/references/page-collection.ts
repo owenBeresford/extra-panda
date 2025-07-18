@@ -100,4 +100,29 @@ export class PageCollection {
     this._loop++;
     // max value test somewhere
   }
+
+	public mapFails():Array<string> {
+		let out=[];
+		for(let i=0; i<this.src.length; i++) {
+			if(this.dst.title.match('HTTP_ERROR.*Timeout') ) {
+				out.push( this.src[i]);
+			}
+		}
+		return out;
+	}
+
+	public merge(other:PageCollection):void {
+		for(let i=0; i<this.dst.length; i++) {
+			if( this.dst[i].title.match('HTTP_ERROR') ) {
+				for(let j=0; j<other.resultsArray.length; j++ ) {
+					if(other.src[j]===this.src[i] &&
+						!other.dst[j].title.match('HTTP_ERROR') ) { 
+						this.dst[i]={ ...other.dst[j] };
+						break;
+						}
+				}
+			}
+		} 
+	}
+
 }
