@@ -274,7 +274,7 @@ async function spinup_playwright(debug_url, browsr) {
     //		return [null, ()=>{} ];
   }
 
-  if (!BDG || !DBG.isConnected()) {
+  if (!DBG || !DBG.isConnected()) {
     throw new Error("Can't connect to captive browser");
   }
   const CTX = DBG.contexts();
