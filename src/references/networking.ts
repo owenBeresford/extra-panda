@@ -16,6 +16,12 @@ import type {
   CurlHeadersBlob,
 } from "./types";
 
+
+let TO:number=TIMEOUT;
+export function setTimeout(nu:number=TIMEOUT):void {
+	TO=nu;
+}
+
 // This is a dup-file name, but different technology.  Built for different purposes
 // a boring net-work function, that supports cookie populations
 export function fetch2(
@@ -46,9 +52,9 @@ export function fetch2(
   curl.setOpt("COOKIEFILE", COOKIE_JAR);
   // sept 2024: Note official redirect tech, added in first version
   curl.setOpt("FOLLOWLOCATION", true);
-  curl.setOpt("TIMEOUT", TIMEOUT);
+  curl.setOpt("TIMEOUT", TO);
   curl.setOpt("VERBOSE", CURL_VERBOSE);
-  curl.setOpt("CONNECTTIMEOUT", TIMEOUT);
+  curl.setOpt("CONNECTTIMEOUT", TO);
 
   // scale out to other domains as needed
   // this will probably need to be a manual operation to know the URLs
@@ -107,6 +113,8 @@ export function exec_reference_url(
             "impossible situation, 4523586423424 (so I'm bailing)",
           );
         }
+        handler.failure("Unspecified failure.");
+		return null;
       })
   );
   //////////////////////////////////////////////////////////////////////////////////////////////////////
