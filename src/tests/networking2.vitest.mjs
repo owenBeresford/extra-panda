@@ -1,4 +1,5 @@
-import { assert, expect, describe, it } from "vitest";
+// the asserts are in the worker class
+import { describe, it } from "vitest";
 
 import { fetch2, exec_reference_url, delay } from "../references/networking";
 import { FakePage } from "../references/fake-page";

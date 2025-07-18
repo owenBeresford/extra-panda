@@ -12,6 +12,7 @@ describe("TEST references FirstPage ", () => {
     }).then(
       (dat) => {
         assert.equal(1, 0, "K@@@XX0N!!, KL@@@XX0N!! bad, wrong, test die now");
+		return false;
       },
       (err) => {
         assert.equal(
@@ -19,6 +20,7 @@ describe("TEST references FirstPage ", () => {
           err.toString(),
           "Error passed through to bad() CB successfully",
         );
+		return false;
       },
     );
     await Promise.all([tmp]);
@@ -32,6 +34,7 @@ describe("TEST references FirstPage ", () => {
     }).then(
       (dat) => {
         assert.equal([], dat, "parsed empty respoonse without error");
+		return false;
       },
       (err) => {
         assert.equal(
@@ -39,6 +42,7 @@ describe("TEST references FirstPage ", () => {
           1,
           "Class reported bad oUtput, as it had no data " + err,
         );
+		return false;
       },
     );
 
@@ -55,6 +59,7 @@ describe("TEST references FirstPage ", () => {
           dat,
           "parsed fake response without error",
         );
+		return false;
       },
       (err) => {
         assert.equal(1, 0, "K@@@XX0N!!, KL@@@XX0N!! bad, wrong, test die now");
@@ -73,6 +78,7 @@ describe("TEST references FirstPage ", () => {
           dat.toString(),
           "Error passed through to bad() CB successfully",
         );
+		return false;
       },
       (err) => {
         assert.equal(
@@ -80,6 +86,7 @@ describe("TEST references FirstPage ", () => {
           err.toString(),
           "Error passed through to bad() CB successfully" + err,
         );
+		return false;
       },
     );
 
