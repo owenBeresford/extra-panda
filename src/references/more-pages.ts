@@ -130,7 +130,11 @@ export class MorePages implements HTMLTransformable {
       date: 0,
     } as Reference;
     item = this.vendors(item, "");
-    this.data.save(item, this.offset);
+    if (this.data.resultsArray[this.offset] === false) {
+      this.data.save(item, this.offset);
+    } else {
+      log("warn", `Not overwriting offset ${this.offset} for ${this.url} .`);
+    }
     if (typeof this.CB == "function") {
       this.CB();
     }
@@ -163,7 +167,6 @@ export class MorePages implements HTMLTransformable {
 
   // from sept 2024, deal with fake redirects
   // my call to baseURL may cause issues in some old-school apps, but we'll see if this has effect in the real world.
-  /* eslint complexity: ["error", 30] */
   #_extractRedirect(
     body: string,
     redirect_limit: Readonly<number>,
@@ -214,7 +217,6 @@ export class MorePages implements HTMLTransformable {
     return ret;
   }
 
-  /* eslint complexity: ["error", 30] */
   #_extractDate(headers: CurlHeadersBlob, body: string): Date {
     if ("Last-Modified" in headers) {
       let tmp: string = headers["Last-Modified"] as string;
