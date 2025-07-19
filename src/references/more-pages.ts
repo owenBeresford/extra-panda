@@ -193,11 +193,11 @@ export class MorePages implements HTMLTransformable {
           // wiki often have escaped letters in URLs, #leSigh interwibbles
           return false;
         }
-		if(hit[i].substr(0, 1) === '/') {
+		if(hit[1].substr(0, 1) === '/') {
 			// do not allow relative redirects in output, #leSigh
 			return false;
 		}
-		if( (hit[1].length * 100 / current.length) <70 && current.includes(hit[i]))  {
+		if( (hit[1].length * 100 / current.length) <70 && current.includes(hit[1]))  {
 			log("warn", "Link "+current+" redirects to something much shorter");
 			// do not allow redirect to homepage (and was deep link)
 			// I may need to tune this threshold value.

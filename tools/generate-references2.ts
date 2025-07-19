@@ -18,7 +18,7 @@ import fs from "fs";
 import { BATCH_SZ } from "../src/references/constants";
 import { FirstPage } from "../src/references/first-page";
 import { MorePages } from "../src/references/more-pages";
-import { exec_reference_url, fetch2, delay } from "../src/references/networking";
+import { exec_reference_url, fetch2, delay, setMyTimeout } from "../src/references/networking";
 import { PageCollection } from "../src/references/page-collection";
 import { apply_vendors } from "../src/references/vendor-mod";
 import { TIMEOUT } from "../src/references/constants";
@@ -171,7 +171,7 @@ async function links2references(list: Array<string>): Promise<void> {
       `RETRYING ??/${BATCH_SZ} links in ${process.argv[3]}`,
     );
 
-    let cur = retry.offset(0);
+    cur = retry.offset(0);
     while (retry.morePages(cur)) {
       let batch = retry.currentBatch;
       for (let k = 0; k < BATCH_SZ; k++) {
