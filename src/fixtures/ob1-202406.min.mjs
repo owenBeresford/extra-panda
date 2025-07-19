@@ -387,46 +387,45 @@ async function ne(t2, r2, o2, i2) {
   if (Q = Object.assign(Q, { debug: e(o2) }, t2), 0 === r2.querySelectorAll(a).length) return void n("info", "This URL '" + o2.pathname + "' isn't marked-up for references, so skipped");
   const l2 = await Q.runFetch(b(Q.referencesCache, o2), true, o2);
   if (l2.ok && Array.isArray(l2.body)) {
-    const e2 = r2.querySelectorAll(s);
-    if (e2.length < l2.body.length) throw console.log("all refs in DOM", e2.length, "All refs in meta data", l2.body.length), new Error("Recompile the meta data for  " + o2.pathname);
-    const t3 = r2.querySelector("#biblio");
-    t3 && t3.setAttribute("style", ""), function(e3, t4) {
-      let n3 = e3.headers.get("last-modified");
-      if (!n3) return;
-      n3.indexOf("BST") > 0 && (n3 = n3.substring(0, n3.length - 4));
-      const r3 = new Date(n3).getTime();
+    if (r2.querySelectorAll(s).length < l2.body.length) throw new Error("Recompile the meta data for  " + o2.pathname);
+    const e2 = r2.querySelector("#biblio");
+    e2 && e2.setAttribute("style", ""), function(e3, t4) {
+      let n2 = e3.headers.get("last-modified");
+      if (!n2) return;
+      n2.indexOf("BST") > 0 && (n2 = n2.substring(0, n2.length - 4));
+      const r3 = new Date(n2).getTime();
       let o3 = new Date(r3), i3 = (o3.getFullYear() + "").substr(2), a2 = te[o3.getUTCMonth()];
       r3 > 0 && T(".addReading .ultraSkinny", '<span>Links <time datetime="' + r3 + '" title="When this was last recompiled' + o3.toLocaleDateString("en-GB", { hour12: false, dateStyle: "medium" }) + '">' + a2 + " '" + i3 + "</time> </span>", t4);
     }(l2, r2);
-    const n2 = function(e3) {
-      const t4 = ["[No author]", "Resource doesn't set a description tag.", "[No date]"], n3 = [];
+    const t3 = function(e3) {
+      const t4 = ["[No author]", "Resource doesn't set a description tag.", "[No date]"], n2 = [];
       for (let r3 = 0; r3 < e3.length; r3++) {
         if (null === e3[r3]) {
-          n3.push(Z(r3));
+          n2.push(Z(r3));
           continue;
         }
         const o3 = R(e3[r3].date, t4[2], true);
         let i3 = e3[r3].title + "", a2 = e3[r3].desc;
         a2 = A(a2, 80), i3 = i3.replace(".", ". "), i3 = A(i3, 80);
         let s2 = e3[r3].auth || t4[0];
-        "unknown" === e3[r3].auth && (s2 = t4[0]), s2.length > Q.maxAuthLen && (s2 = s2.substring(0, Q.maxAuthLen)), n3.push("Reference popup for link [" + (r3 + 1) + "]\n\n" + i3 + "\n" + s2 + " " + o3 + "\n\n" + a2);
+        "unknown" === e3[r3].auth && (s2 = t4[0]), s2.length > Q.maxAuthLen && (s2 = s2.substring(0, Q.maxAuthLen)), n2.push("Reference popup for link [" + (r3 + 1) + "]\n\n" + i3 + "\n" + s2 + " " + o3 + "\n\n" + a2);
       }
-      return n3;
+      return n2;
     }(l2.body);
-    !function(e3, t4, n3) {
+    !function(e3, t4, n2) {
       let r3 = 1;
       const o3 = Array.from(t4.querySelectorAll(s));
       if (e3.length > o3.length) throw t4.querySelector(a).classList.add(u), t4.querySelector("p[role=status]").textContent += " Recompile meta data. ", new Error("Too many references in meta-data for this article, pls recompile.");
-      for (let t5 = 0; t5 < e3.length; t5++) o3[t5].setAttribute("aria-label", "" + e3[t5]), ee(o3[t5], n3), Q.renumber && (o3[t5].textContent = "" + r3), r3++;
+      for (let t5 = 0; t5 < e3.length; t5++) o3[t5].setAttribute("aria-label", "" + e3[t5]), ee(o3[t5], n2), Q.renumber && (o3[t5].textContent = "" + r3), r3++;
       if (o3.length > e3.length) {
         t4.querySelector("p[role=status]").textContent += "Recompile meta data";
         let r4 = e3.length;
         for (; r4 < o3.length; ) {
           const e4 = Z(r4);
-          o3[r4].setAttribute("aria-label", "" + e4), ee(o3[r4], n3), Q.renumber && (o3[r4].textContent = "" + (r4 + 1)), r4++;
+          o3[r4].setAttribute("aria-label", "" + e4), ee(o3[r4], n2), Q.renumber && (o3[r4].textContent = "" + (r4 + 1)), r4++;
         }
       }
-    }(n2, r2, i2), r2.querySelector(a).classList.add(u);
+    }(t3, r2, i2), r2.querySelector(a).classList.add(u);
   } else {
     !function(e3, t3) {
       const n2 = y(t3), r3 = Array.from(e3.querySelectorAll(s));

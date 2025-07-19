@@ -3,6 +3,8 @@
 	This version takes 30-60s to execute, as I removed concurrency. 
 	Build your cookies.txt by running "get cookies.txt LOCALLY" plugin in Chrome, or similar plugin in other browsers
 	Update the COOKIE_JAR variable as needed,   do not store this file in /tmp/  ;-p
+	
+	This file is called ...2 as it is the second generation.
 
 * check URL each time its loaded
 * the log files in /tmp show trash sequencing
@@ -16,12 +18,18 @@ import fs from "fs";
 import { BATCH_SZ } from "../src/references/constants";
 import { FirstPage } from "../src/references/first-page";
 import { MorePages } from "../src/references/more-pages";
-import { exec_reference_url, fetch2 } from "../src/references/networking";
+import {
+  exec_reference_url,
+  fetch2,
+  delay,
+  setMyTimeout,
+} from "../src/references/networking";
 import { PageCollection } from "../src/references/page-collection";
-import type { Reference } from "../src/references/types";
 import { apply_vendors } from "../src/references/vendor-mod";
+import { TIMEOUT } from "../src/references/constants";
 import { HTTP_REDIRECT_LIMIT } from "../src/references/constants";
 import { log } from "../src/log-services";
+import type { Reference } from "../src/references/types";
 
 const [FN, URL1] = process_args(process.argv);
 
@@ -30,6 +38,14 @@ if (!process || !process.argv) {
   throw new Error();
 }
 
+/**
+ * process_args
+ * A Util to convert process.argv to useful return values 
+ 
+ * @param {Array<string>} args 
+ * @public
+ * @returns {Array<strings>}
+ */
 function process_args(args: Array<string>): Array<string> {
   if (args.length < 4 || args[2] !== "--url") {
     log(
@@ -61,6 +77,16 @@ function process_args(args: Array<string>): Array<string> {
   return [FN, URL1];
 }
 
+/**
+ * dump_to_disk
+ * A util to write data to a Wiki file
+ * Would look better in another filer, but it would be by-itself.
+ 
+ * @param {Readonly<Array<Reference | boolean>>}  data  
+ * @param {string} FN
+ * @public
+ * @returns {Promise<void>}
+ */
 function dump_to_disk(
   data: Readonly<Array<Reference | boolean>>,
   FN: string,
@@ -86,11 +112,7 @@ function dump_to_disk(
   if (data.includes(undefined) || data.includes(false)) {
     log(
       "warn",
-      "Write ERROR " +
-        process.cwd() +
-        "/" +
-        FN +
-        " May not have a undef in a references list",
+      `Write ERROR ${process.cwd()}/${FN} May not have a undef in a references list`,
     );
     return;
   }
@@ -107,6 +129,129 @@ function dump_to_disk(
   });
 }
 
+/**
+ * links2references
+ * "makes it work"
+ * It would read better if I pulled the output driver to an after effect.
+ 
+ * @param {Array<string>} list 
+ * @public
+ * @return {Promise<void>}
+ */
+async function links2references(list: Array<string>): Promise<void> {
+  const p3 = new PageCollection(list);
+  const trans1 = new MorePages(p3, apply_vendors, HTTP_REDIRECT_LIMIT);
+  log(
+    "debug",
+    `There are ${list.length}/${BATCH_SZ} links in ${process.argv[3]}`,
+  );
+
+  let cur = p3.offset(0);
+  while (p3.morePages(cur)) {
+    let batch = p3.currentBatch;
+    for (let k = 0; k < BATCH_SZ; k++) {
+      cur = p3.offset(k);
+      // this if trap will exec in the last batch
+      if (k >= batch.length) {
+        break;
+      }
+
+      trans1.setOffset(cur, batch[k]);
+      // the logic test has side-effects
+      if (!p3.mapRepeatDomain(batch[k], cur)) {
+        p3.zeroLoop();
+        await exec_reference_url(cur, batch[k], trans1);
+      }
+    }
+
+    // second safety against awkward last batches
+    if (cur > list.length) {
+      break;
+    }
+  }
+
+  await delay(TIMEOUT);
+  setMyTimeout(TIMEOUT * 2.5);
+  let retry: PageCollection = new PageCollection(p3.mapFails());
+  const trans2 = new MorePages(retry, apply_vendors, HTTP_REDIRECT_LIMIT);
+  log("debug", `RETRYING ??/${BATCH_SZ} links in ${process.argv[3]}`);
+
+  cur = retry.offset(0);
+  while (retry.morePages(cur)) {
+    let batch = retry.currentBatch;
+    for (let k = 0; k < BATCH_SZ; k++) {
+      cur = retry.offset(k);
+      // this if trap will exec in the last batch
+      if (k >= batch.length) {
+        break;
+      }
+
+      trans2.setOffset(cur, batch[k]);
+      // the logic test has side-effects
+      if (!retry.mapRepeatDomain(batch[k], cur)) {
+        retry.zeroLoop();
+        await exec_reference_url(cur, batch[k], trans2);
+      }
+    }
+
+    // second safety against awkward last batches
+    if (cur > list.length) {
+      break;
+    }
+  }
+
+  await delay(TIMEOUT);
+  p3.merge(retry);
+
+  let hasData = p3.resultsArray.filter((a) => !!a);
+  log("debug", "BEFORE got " + hasData.length + " input " + list.length);
+
+  if (hasData.length !== list.length) {
+    let attempts = 0;
+    const TRAP = await setInterval(function () {
+      let tmp = p3.resultsArray.filter((a) => !!a);
+      log(
+        "debug",
+        new Date().getUTCSeconds() +
+          `INTERVAL TICK, got ${tmp.length} done items, input ${list.length} items`,
+      );
+      if (
+        p3.resultsArray.length === list.length &&
+        !p3.resultsArray.includes(false)
+      ) {
+        log(
+          "debug",
+          new Date().getUTCSeconds() +
+            " INTERVAL TICK, CLOSING SCRIPT, seem to have data",
+        );
+
+        dump_to_disk(p3.resultsArray, FN);
+        clearInterval(TRAP);
+      }
+      attempts++;
+      if (attempts > 5) {
+        dump_to_disk(p3.resultsArray, FN);
+        clearInterval(TRAP);
+        console.warn("Please manually fix " + FN);
+      }
+    }, 5000);
+  } else {
+    dump_to_disk(p3.resultsArray, FN);
+  }
+}
+
+/**
+ * basicError
+ * A minimal error reporter
+ 
+ * @param {Error} e
+ * @public
+ * @returns {Promise<void>}
+ */
+function basicError(e: Error): Promise<void> {
+  log("warn", "Root error handler caught: " + e.message);
+}
+
 new Promise(function (good, bad): void {
   let p1 = new FirstPage(true);
   p1.promiseExits(good, bad, -1);
@@ -117,78 +262,4 @@ new Promise(function (good, bad): void {
     log("warn", "ERROR, ABORTING [-1] Network error with " + URL1 + " :: " + e);
     bad(e);
   }
-}).then(
-  async function (list: Array<string>): Promise<void> {
-    const p3 = new PageCollection(list);
-    const p2 = new MorePages(p3, apply_vendors, HTTP_REDIRECT_LIMIT);
-    log(
-      "debug",
-      "There are " +
-        list.length +
-        "/" +
-        BATCH_SZ +
-        " links in  " +
-        process.argv[3],
-    );
-
-    let cur = p3.offset(0);
-    while (p3.morePages(cur)) {
-      let batch = p3.currentBatch;
-      for (let k = 0; k < BATCH_SZ; k++) {
-        cur = p3.offset(k);
-        // this if trap will exec in the last batch
-        if (k >= batch.length) {
-          break;
-        }
-
-        p2.setOffset(cur, batch[k]);
-        // the logic test has side-effects
-        if (!p3.mapRepeatDomain(batch[k], cur)) {
-          p3.zeroLoop();
-          await exec_reference_url(cur, batch[k], p2);
-        }
-      }
-
-      // second safety against awkward last batches
-      if (cur > list.length) {
-        break;
-      }
-    }
-
-    let hasData = p3.resultsArray.filter((a) => !!a);
-    log("debug", "BEFORE got " + hasData.length + " input " + list.length);
-
-    if (hasData.length !== list.length) {
-      const TRAP = await setInterval(function () {
-        let tmp = p3.resultsArray.filter((a) => !!a);
-        log(
-          "debug",
-          new Date().getUTCSeconds() +
-            " INTERVAL TICK, got " +
-            tmp.length +
-            " done items, input " +
-            list.length +
-            " items",
-        );
-        if (
-          p3.resultsArray.length === list.length &&
-          !p3.resultsArray.includes(false)
-        ) {
-          log(
-            "debug",
-            new Date().getUTCSeconds() +
-              " INTERVAL TICK, CLOSING SCRIPT, seem to have data",
-          );
-
-          dump_to_disk(p3.resultsArray, FN);
-          clearInterval(TRAP);
-        }
-      }, 5000);
-    } else {
-      dump_to_disk(p3.resultsArray, FN);
-    }
-  },
-  function (e) {
-    log("warn", "Root error handler caught: " + e.message);
-  },
-);
+}).then(links2references, basicError);

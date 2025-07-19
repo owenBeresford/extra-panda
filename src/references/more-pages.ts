@@ -130,7 +130,11 @@ export class MorePages implements HTMLTransformable {
       date: 0,
     } as Reference;
     item = this.vendors(item, "");
-    this.data.save(item, this.offset);
+    if (this.data.resultsArray[this.offset] === false) {
+      this.data.save(item, this.offset);
+    } else {
+      log("warn", `Not overwriting offset ${this.offset} for ${this.url} .`);
+    }
     if (typeof this.CB == "function") {
       this.CB();
     }
@@ -163,7 +167,6 @@ export class MorePages implements HTMLTransformable {
 
   // from sept 2024, deal with fake redirects
   // my call to baseURL may cause issues in some old-school apps, but we'll see if this has effect in the real world.
-  /* eslint complexity: ["error", 30] */
   #_extractRedirect(
     body: string,
     redirect_limit: Readonly<number>,
@@ -190,6 +193,23 @@ export class MorePages implements HTMLTransformable {
           // wiki often have escaped letters in URLs, #leSigh interwibbles
           return false;
         }
+        if (hit[1].substr(0, 1) === "/") {
+          // do not allow relative redirects in output, #leSigh
+          return false;
+        }
+        if (
+          (hit[1].length * 100) / current.length < 70 &&
+          current.includes(hit[1])
+        ) {
+          log(
+            "warn",
+            "Link " + current + " redirects to something much shorter",
+          );
+          // do not allow redirect to homepage (and was deep link)
+          // I may need to tune this threshold value.
+          // I'm fairly sure the correct thing is log "bad link" and get it rechecked by a human
+          return false;
+        }
         if (loop < redirect_limit) {
           return new Error(hit[1]);
         }
@@ -214,7 +234,6 @@ export class MorePages implements HTMLTransformable {
     return ret;
   }
 
-  /* eslint complexity: ["error", 30] */
   #_extractDate(headers: CurlHeadersBlob, body: string): Date {
     if ("Last-Modified" in headers) {
       let tmp: string = headers["Last-Modified"] as string;

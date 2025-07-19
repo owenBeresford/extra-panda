@@ -157,7 +157,7 @@ describe("TEST dom-base", () => {
     const LIST1 = [...dom.getElementsByTagName("link")];
     appendCSSFile("/asset/unit-test.css", dom);
     const LIST2 = [...dom.getElementsByTagName("link")];
-    console.log("this should be complete treee", dom.head.outerHTML, LIST1);
+    //   console.log("this should be complete treee", dom.head.outerHTML, LIST1);
 
     assert.equal(LIST1.length + 1, LIST2.length, "assert #1");
   });

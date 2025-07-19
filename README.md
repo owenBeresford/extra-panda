@@ -124,7 +124,7 @@ Notes:
 - I am adding search params for testing, rather than a Mock, as I may want to use them during QA
 - It is expensive [in devtime] to create keyboard events in a different tab/ window.
 - [ESLINT] Why do I not tidy-up unused vars in this code base?  Most are in unit tests, its better readability if *standard* args are present, IMO (Promises, forEach or map etc)
-- I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together with `rebase`, it's a nul-point difference.  UPDATE: the expanded eslint config does make garbage changes on some files, I do not know why.  UPDATE2: I binary partition deleted to isolate  until the issue went away.
+- I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  I am committing compiler artefacts for tests, which need to be not prettier-d.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together with `rebase`, it's a nul-point difference.  UPDATE: the expanded eslint config does make garbage changes on some files, I do not know why.  UPDATE2: I binary partition deleted to isolate until the issue went away (see inline comment).
 - More recently, I made the eslint config more complex, and this reports extra details (see Github issue).
 
 #### Metrics that are important to goals

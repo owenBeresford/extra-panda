@@ -16,6 +16,11 @@ export default defineConfig({
 	enabled: false, 
 	name: "chromium", 
 			},
+/*
+ coverage: {
+      provider: 'v8'
+    },
+*/
   },
 });
 

@@ -6,10 +6,11 @@ FEATURES
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom   to TESTS
 - Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages. 
 - POSSIBLE: Add feature dump (ie download as attachment) in-HTML file JS assets, or SVG assets, or CSS assets.  Need to think about UI for this feature.
-- improve test process for mobile screen size design
-- dark mode CSS
+- Improve test process for mobile screen size design
+- Dark mode CSS
 
 MAINTENANCE
+- Least stupid way to tell users not to make unit-test chrome window smaller, or the tests in the runner will fail next test execution
 - Port the everything* tests to storybook, or the browser tests
 - WCAG tests (lighthouse) for whole pages need to go some where (suggest this project) https://www.npmjs.com/package/wcag 
 - Look at https://github.com/githubnext/testpilot - test generator
@@ -21,14 +22,13 @@ MAINTENANCE
 - To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
 - Rebuild snap to end CSS (unused but included), as dis-functional in Chrome  
 - Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
-- Splash this into every test process https://stackoverflow.com/a/74565753 , maybe I will get error reporting back
 - For the other CSS features, add a extra visual test browserTest etc (see text file in vis-test dir)
 - Evaluate https://www.npmjs.com/package/accessibility-checker to drop w3c one
 - Design 1 cycle animation on title popout IF OPEN 
 - For long content with many page sections, setup component for each page in a tidy fashion && tell later sections to load lower prio as they are likely to be off screen
-- least stupid way to tell users not to make unit-test chrome window smaller, or the tests in the runner will fail next test execution
 - Add References re-try logic on Network Timeout, second hit seems to succede more often 
-
+- Add ability to add test array of URLs to tool
+- UPDATE:: Internet suggests dropping Playwright for Puppeteer if specific browsers are needed. https://pptr.dev/webdriver-bidi https://www.npmjs.com/package/puppeteer-core
 
 ### Previous Updates
 

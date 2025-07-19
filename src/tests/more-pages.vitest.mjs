@@ -319,4 +319,33 @@ describe("TEST references MorePages ", () => {
       "sixth JS redir",
     );
   });
+
+  // TODO check loop limiting in other regexp branches
+  it("go 7.1: MorePages extractRedirect haxxy web bits", () => {
+    let current = "https://first.url/page11#testing?werwer=fghfhf&qwe=cbcb";
+    const obj2 = new PageCollection([]);
+    const obj = new MorePages(obj2, NullVendorMod, 666);
+    obj.setOffset(0, current);
+
+    let html = "<script> location='/page11'; </script>";
+    assert.equal(
+      false,
+      extractRedirect(html, 3, current, 0),
+      "redirect to relative URL",
+    );
+
+    html = "<script> location='https://first.url/'; </script>";
+    assert.equal(
+      false,
+      extractRedirect(html, 3, current, 0),
+      "exec back to a homepage ",
+    );
+
+    html = "<script> location='https://second.url/'; </script>";
+    assert.equal(
+      "object",
+      typeof extractRedirect(html, 3, current, 0),
+      "exec a company buyout ",
+    );
+  });
 });

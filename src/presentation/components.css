@@ -1354,9 +1354,14 @@ div.addReferences sup a.leanIn:before { left: calc( 18cqw - 32em ); }
   color: white;
 }
 
-/* many small cells for the DL mean the mouse hoovers do not work with paint optimisation */
-.addReferences:has(DL), .addReferences DL a[aria-label]::before, .addReferences:has(DL) a[aria-label]::before { contain:layout; }
-
+/* Many small cells for the DL mean the mouse hoovers do not work with paint optimisation.
+	If I had any tables, I would need to add the same.	
+*/
+.addReferences:has(DL),
+.addReferences DL a[aria-label]::before,
+.addReferences:has(DL) a[aria-label]::before {
+  contain: layout;
+}
 
 /** trimmings for links, not sure what file to put these in
 	SEE ALSO UTILS 

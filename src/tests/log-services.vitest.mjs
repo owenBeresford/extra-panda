@@ -7,14 +7,17 @@ const { log, debug, domLog, enableLogCounter } = TEST_ONLY;
 describe("TEST networking", () => {
   it("go 1: enableLogCounter", (cnx) => {
     cnx.skip();
+    // this is test code, used in other tests
   });
 
   it("go 2: debug", (cnx) => {
     cnx.skip();
+    // a getter :-)
   });
 
   it("go 4: domlog", (cnx) => {
     cnx.skip();
+    // just an output, no decisions, requires DOM so can't be run here
   });
 
   it("go 3: log", () => {

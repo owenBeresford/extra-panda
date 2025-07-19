@@ -81,7 +81,7 @@ describe("TEST references PageCollection ", () => {
 
     let item2 = Object.assign({}, item, { url: "" });
     expect(() => pc.save(item2, 1)).toThrowError(
-      new Error("Why does the incomming data have no URL? 1"),
+      new Error("Why does the incoming data have no URL? 1"),
     );
   });
 
@@ -159,10 +159,228 @@ describe("TEST references PageCollection ", () => {
     );
     assert.equal(
       true,
-      pc.mapRepeatDomain("https://site.tld/page1?wer=dfg^fdh=dret", 5),
+      pc.mapRepeatDomain("https://site.tld/page1?wer=dfg&fdh=dret", 5),
       "step3",
     );
     assert.equal(false, pc.mapRepeatDomain("https://fourth.url/", 6), "step4");
+  });
+
+  it("go 6: mapFails ", () => {
+    const pc = new PageCollection(makeTestData(7));
+    let sample = pc.currentBatch;
+    let deaded = {
+      url: "mumbles",
+      desc: "HTTP_ERROR, sfs Timeout",
+      title: "HTTP_ERROR, sfs Timeout",
+      auth: "me",
+      date: 1343565678,
+    };
+    let liveo = {
+      url: "mumbles",
+      desc: "dfsdfs fsf sdfsf sdf sdfs sdf sdf",
+      title: "sdfs dfs sdfsdf sdfs fsdf sfs f sf",
+      auth: "me",
+      date: 1343565678,
+    };
+    pc.save(Object.assign({}, deaded, { url: sample[0] }), 0);
+    pc.save(Object.assign({}, deaded, { url: sample[1] }), 1);
+    pc.save(Object.assign({}, liveo, { url: sample[2] }), 2);
+    pc.save(Object.assign({}, deaded, { url: sample[3] }), 3);
+    pc.save(Object.assign({}, liveo, { url: sample[4] }), 4);
+    pc.save(Object.assign({}, liveo, { url: sample[5] }), 5);
+    pc.save(Object.assign({}, deaded, { url: sample[6] }), 6);
+
+    let ret = pc.mapFails();
+    assert.equal(4, ret.length, "step1");
+    assert.equal("https://site.tld/page0", ret[0], "step2");
+    assert.equal("https://site.tld/page1", ret[1], "step3");
+    assert.equal("https://site.tld/page3", ret[2], "step4");
+    assert.equal("https://site.tld/page6", ret[3], "step5");
+  });
+
+  it("go 6.1: mapFails ", () => {});
+
+  it("go 7: merge ", () => {
+    const pc1 = new PageCollection(makeTestData(8));
+    let sample = pc1.currentBatch;
+    let deaded = {
+      url: "mumbles",
+      desc: "HTTP_ERROR, sfs Timeout",
+      title: "HTTP_ERROR, sfs Timeout",
+      auth: "me",
+      date: 1343565678,
+    };
+    let liveo = {
+      url: "mumbles",
+      desc: "dfsdfs fsf sdfsf sdf sdfs sdf sdf",
+      title: "sdfs dfs sdfsdf sdfs fsdf sfs f sf",
+      auth: "me",
+      date: 1343565678,
+    };
+    pc1.save(Object.assign({}, deaded, { url: sample[0] }), 0);
+    pc1.save(Object.assign({}, deaded, { url: sample[1] }), 1);
+    pc1.save(Object.assign({}, liveo, { url: sample[2] }), 2);
+    pc1.save(Object.assign({}, deaded, { url: sample[3] }), 3);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 4);
+    pc1.save(Object.assign({}, liveo, { url: sample[5] }), 5);
+    pc1.save(Object.assign({}, deaded, { url: sample[6] }), 6);
+    pc1.save(Object.assign({}, deaded, { url: sample[6] }), 7);
+
+    const pc2 = new PageCollection(makeTestData(8));
+    pc2.save(Object.assign({}, liveo, { url: sample[0] }), 0);
+    pc2.save(Object.assign({}, liveo, { url: sample[1] }), 1);
+    pc2.save(Object.assign({}, liveo, { url: sample[2] }), 2);
+    pc2.save(Object.assign({}, liveo, { url: sample[3] }), 3);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 4);
+    pc2.save(Object.assign({}, liveo, { url: sample[5] }), 5);
+    pc2.save(Object.assign({}, liveo, { url: sample[6] }), 6);
+    pc2.save(Object.assign({}, liveo, { url: sample[6] }), 7);
+
+    pc1.merge(pc2);
+    assert(
+      pc1.resultsArray.length,
+      8,
+      "Have right size data afterwards step 0",
+    );
+    for (let i in pc1.resultsArray) {
+      assert(pc1.resultsArray[i].desc, liveo.desc, "step #1 - " + i);
+      assert(pc1.resultsArray[i].title, liveo.title, "step #2 - " + i);
+    }
+  });
+
+  // larger data that won't fit in a single 'page'
+  it("go 7.1: merge {cross batch boundary}", () => {
+    const pc1 = new PageCollection(makeTestData(24));
+    let sample = pc1.currentBatch;
+    let deaded = {
+      url: "mumbles",
+      desc: "HTTP_ERROR, sfs Timeout",
+      title: "HTTP_ERROR, sfs Timeout",
+      auth: "me",
+      date: 1343565678,
+    };
+    let liveo = {
+      url: "mumbles",
+      desc: "dfsdfs fsf sdfsf sdf sdfs sdf sdf",
+      title: "sdfs dfs sdfsdf sdfs fsdf sfs f sf",
+      auth: "me",
+      date: 1343565678,
+    };
+    pc1.save(Object.assign({}, deaded, { url: sample[0] }), 0);
+    pc1.save(Object.assign({}, deaded, { url: sample[1] }), 1);
+    pc1.save(Object.assign({}, liveo, { url: sample[2] }), 2);
+    pc1.save(Object.assign({}, deaded, { url: sample[3] }), 3);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 4);
+    pc1.save(Object.assign({}, liveo, { url: sample[5] }), 5);
+    pc1.save(Object.assign({}, deaded, { url: sample[6] }), 6);
+    pc1.save(Object.assign({}, deaded, { url: sample[6] }), 7);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 8);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 9);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 10);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 11);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 12);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 13);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 14);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 15);
+    pc1.save(Object.assign({}, deaded, { url: sample[6] }), 16);
+    pc1.save(Object.assign({}, deaded, { url: sample[6] }), 17);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 18);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 19);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 20);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 21);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 22);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 23);
+
+    const pc2 = new PageCollection(makeTestData(24));
+    pc2.save(Object.assign({}, liveo, { url: sample[0] }), 0);
+    pc2.save(Object.assign({}, liveo, { url: sample[1] }), 1);
+    pc2.save(Object.assign({}, liveo, { url: sample[2] }), 2);
+    pc2.save(Object.assign({}, liveo, { url: sample[3] }), 3);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 4);
+    pc2.save(Object.assign({}, liveo, { url: sample[5] }), 5);
+    pc2.save(Object.assign({}, liveo, { url: sample[6] }), 6);
+    pc2.save(Object.assign({}, liveo, { url: sample[6] }), 7);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 8);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 9);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 10);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 11);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 12);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 13);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 14);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 15);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 16);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 17);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 18);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 19);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 20);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 21);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 22);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 23);
+
+    assert(
+      pc1.resultsArray.length,
+      16,
+      "Have right size data afterwards step #0",
+    );
+    pc1.merge(pc2);
+    assert(
+      pc1.resultsArray.length,
+      16,
+      "Have right size data afterwards step #1",
+    );
+    for (let i in pc1.resultsArray) {
+      assert(pc1.resultsArray[i].desc, liveo.desc, "step #2 - " + i);
+      assert(pc1.resultsArray[i].title, liveo.title, "step #3 - " + i);
+    }
+  });
+
+  it("go 7.1: merge {cross batch boundary}", () => {
+    const pc1 = new PageCollection(makeTestData(24));
+    let sample = pc1.currentBatch;
+    let deaded = {
+      url: "mumbles",
+      desc: "HTTP_ERROR, sfs Timeout",
+      title: "HTTP_ERROR, sfs Timeout",
+      auth: "me",
+      date: 1343565678,
+    };
+    let liveo = {
+      url: "mumbles",
+      desc: "dfsdfs fsf sdfsf sdf sdfs sdf sdf",
+      title: "sdfs dfs sdfsdf sdfs fsdf sfs f sf",
+      auth: "me",
+      date: 1343565678,
+    };
+    pc1.save(Object.assign({}, deaded, { url: sample[0] }), 0);
+    pc1.save(Object.assign({}, deaded, { url: sample[1] }), 1);
+    pc1.save(Object.assign({}, liveo, { url: sample[2] }), 2);
+    pc1.save(Object.assign({}, deaded, { url: sample[3] }), 3);
+    pc1.save(Object.assign({}, liveo, { url: sample[4] }), 4);
+    pc1.save(Object.assign({}, liveo, { url: sample[5] }), 5);
+    pc1.save(Object.assign({}, deaded, { url: sample[6] }), 6);
+
+    const pc2 = new PageCollection(makeTestData(24));
+    pc2.save(Object.assign({}, liveo, { url: sample[0] }), 0);
+    pc2.save(Object.assign({}, liveo, { url: sample[1] }), 1);
+    pc2.save(Object.assign({}, liveo, { url: sample[2] }), 2);
+    pc2.save(Object.assign({}, liveo, { url: sample[3] }), 3);
+    pc2.save(Object.assign({}, liveo, { url: sample[4] }), 4);
+    pc2.save(Object.assign({}, liveo, { url: sample[5] }), 5);
+    pc2.save(Object.assign({}, liveo, { url: sample[6] }), 6);
+
+    assert(
+      pc1.resultsArray.length,
+      8,
+      "Have right size data afterwards step #0",
+    );
+    expect(() => pc1.merge(pc2)).toThrowError(
+      new Error("Cannot merge partially completed data "),
+    );
+    assert(
+      pc1.resultsArray.length,
+      8,
+      "Have right size data afterwards step #0",
+    );
   });
 });
 
