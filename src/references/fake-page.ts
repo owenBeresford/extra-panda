@@ -24,14 +24,15 @@ export class FakePage implements HTMLTransformable {
 
   // the "100 category" for HTTP codes, i.e. 2, 4, 5
   public set state(no: number) {
+	console.log("Running setState with "+no);
     this._state = no;
   }
 
   public success(statusCode: string, data: string): void {
     // also param headers:Headers
-    console.log("WWWW ", statusCode, data);
+    console.log("WWWW ", statusCode, cleanHTTPstatus(statusCode), this._state);
     assert.equal(
-      this.state,
+      this._state,
       cleanHTTPstatus(statusCode),
       "Server returned desired results " + statusCode,
     );
@@ -40,7 +41,7 @@ export class FakePage implements HTMLTransformable {
       this.CB();
     }
 
-    if (cleanHTTPstatus(statusCode) !== this.state) {
+    if (cleanHTTPstatus(statusCode) !== this._state) {
       this.bad(new Error("Recieved " + statusCode));
     } else {
       this.good([]);
@@ -53,7 +54,7 @@ export class FakePage implements HTMLTransformable {
     if (typeof this.CB === "function") {
       this.CB();
     }
-    assert.equal(this.state, 5, "Server returned desired results ");
+    assert.equal(this._state, 5, "Server returned desired results "+msg);
     this.bad("Error " + msg);
   }
 
