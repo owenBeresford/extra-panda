@@ -54,15 +54,23 @@ describe("TEST references PageCollection ", () => {
     const pc = new PageCollection(makeTestData(4));
     let item = {
       url: "https://site.tld/page4",
-      desc: "TEST DATE: I have no idea",
-      title: "TEST DATE: I have no idea",
+      desc: "TEST DATA: I have no idea",
+      title: "TEST DATA: I have no idea",
       auth: "me",
       date: 0,
     };
+
     pc.save(item, 3);
+    pc.save(Object.assign({}, item, { title: "HTTP_ERROR, banzai!!" }), 1);
+
     assert.deepEqual(
       pc.resultsArray,
-      [false, false, false, item],
+      [
+        false,
+        Object.assign({}, item, { title: "HTTP_ERROR, banzai!!" }),
+        false,
+        item,
+      ],
       "item was saved, and can be seen",
     );
     try {
@@ -71,17 +79,18 @@ describe("TEST references PageCollection ", () => {
       assert.equal(1, 1, "Expected exception seen");
     }
 
-    expect(() => pc.save(item, 10)).toThrowError(
-      new Error("Why overwrite slot 10"),
-    );
     pc.save(item, 2);
     expect(() => pc.save(item, 2)).toThrowError(
       new Error("Why overwrite slot 2"),
     );
 
+    expect(() => pc.save(item, 1)).not.toThrowError(
+      new Error("Why overwrite slot 1"),
+    );
+
     let item2 = Object.assign({}, item, { url: "" });
-    expect(() => pc.save(item2, 1)).toThrowError(
-      new Error("Why does the incoming data have no URL? 1"),
+    expect(() => pc.save(item2, 0)).toThrowError(
+      new Error("Why does the incoming data have no URL? 0"),
     );
   });
 

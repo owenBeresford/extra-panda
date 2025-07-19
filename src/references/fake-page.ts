@@ -24,7 +24,7 @@ export class FakePage implements HTMLTransformable {
 
   // the "100 category" for HTTP codes, i.e. 2, 4, 5
   public set state(no: number) {
-	console.log("Running setState with "+no);
+    console.log("Running setState with " + no);
     this._state = no;
   }
 
@@ -54,7 +54,7 @@ export class FakePage implements HTMLTransformable {
     if (typeof this.CB === "function") {
       this.CB();
     }
-    assert.equal(this._state, 5, "Server returned desired results "+msg);
+    assert.equal(this._state, 5, "Server returned desired results " + msg);
     this.bad("Error " + msg);
   }
 
