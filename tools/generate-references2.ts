@@ -3,6 +3,8 @@
 	This version takes 30-60s to execute, as I removed concurrency. 
 	Build your cookies.txt by running "get cookies.txt LOCALLY" plugin in Chrome, or similar plugin in other browsers
 	Update the COOKIE_JAR variable as needed,   do not store this file in /tmp/  ;-p
+	
+	This file is called ...2 as it is the second generation.
 
 * check URL each time its loaded
 * the log files in /tmp show trash sequencing
@@ -16,9 +18,10 @@ import fs from "fs";
 import { BATCH_SZ } from "../src/references/constants";
 import { FirstPage } from "../src/references/first-page";
 import { MorePages } from "../src/references/more-pages";
-import { exec_reference_url, fetch2 } from "../src/references/networking";
+import { exec_reference_url, fetch2, delay } from "../src/references/networking";
 import { PageCollection } from "../src/references/page-collection";
 import { apply_vendors } from "../src/references/vendor-mod";
+import { TIMEOUT } from "../src/references/constants";
 import { HTTP_REDIRECT_LIMIT } from "../src/references/constants";
 import { log } from "../src/log-services";
 import type { Reference } from "../src/references/types";
@@ -159,7 +162,8 @@ async function links2references(list: Array<string>): Promise<void> {
       }
     }
 
-	await delay(3000);
+	await delay( TIMEOUT );
+	setMyTimeout( TIMEOUT*2.5 );
 	let retry:PageCollection=new PageCollection( p3.mapFails() );
 	const trans2 = new MorePages(retry, apply_vendors, HTTP_REDIRECT_LIMIT);
     log(
@@ -191,8 +195,7 @@ async function links2references(list: Array<string>): Promise<void> {
       }
     }
 
-	await delay(3000);
-	// slow function
+	await delay( TIMEOUT );
 	p3.merge( retry);
 
     let hasData = p3.resultsArray.filter((a) => !!a);
@@ -230,6 +233,19 @@ async function links2references(list: Array<string>): Promise<void> {
     }
 }
 
+/**
+ * basicError
+ * A minimal error reporter
+ 
+ * @param {Error} e
+ * @public
+ * @returns {Promise<void>}
+ */
+function basicError(e:Error):Promise<void> {
+   log("warn", "Root error handler caught: " + e.message);
+}
+
+
 new Promise(function (good, bad): void {
   let p1 = new FirstPage(true);
   p1.promiseExits(good, bad, -1);
@@ -240,8 +256,4 @@ new Promise(function (good, bad): void {
     log("warn", "ERROR, ABORTING [-1] Network error with " + URL1 + " :: " + e);
     bad(e);
   }
-}).then( links2references ,
-  function (e):Promise<void> {
-    log("warn", "Root error handler caught: " + e.message);
-  }
-);
+}).then( links2references , basicError );

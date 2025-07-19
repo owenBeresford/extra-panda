@@ -16,9 +16,9 @@ import type {
   CurlHeadersBlob,
 } from "./types";
 
-
+// counter for the timeout
 let TO:number=TIMEOUT;
-export function setTimeout(nu:number=TIMEOUT):void {
+export function setMyTimeout(nu:number=TIMEOUT):void {
 	TO=nu;
 }
 
@@ -120,6 +120,7 @@ export function exec_reference_url(
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
-async function delay(ms: number): Promise<void> {
+export async function delay(ms: number): Promise<void> {
   return new Promise((good, bad) => setTimeout(good, ms));
 }
+
