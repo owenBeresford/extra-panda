@@ -322,7 +322,6 @@ describe("TEST references MorePages ", () => {
 
   // TODO check loop limiting in other regexp branches
   it("go 7.1: MorePages extractRedirect haxxy web bits", () => {
-
     let current = "https://first.url/page11#testing?werwer=fghfhf&qwe=cbcb";
     const obj2 = new PageCollection([]);
     const obj = new MorePages(obj2, NullVendorMod, 666);
@@ -345,10 +344,8 @@ describe("TEST references MorePages ", () => {
     html = "<script> location='https://second.url/'; </script>";
     assert.equal(
       "object",
-      typeof extractRedirect(html, 3, current, 0), 
+      typeof extractRedirect(html, 3, current, 0),
       "exec a company buyout ",
     );
   });
-
 });
-

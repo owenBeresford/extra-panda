@@ -36,8 +36,8 @@ export class PageCollection {
     if (typeof this.dst[offset] !== "boolean") {
       throw new Error("Why overwrite slot " + offset);
     }
-	// would like to not need code like this, but it is fail early branching
-    if (item.url === "" || item.url===undefined || item.url===false) {
+    // would like to not need code like this, but it is fail early branching
+    if (item.url === "" || item.url === undefined || item.url === false) {
       throw new Error("Why does the incoming data have no URL? " + offset);
     }
 
@@ -102,33 +102,34 @@ export class PageCollection {
     // max value test somewhere
   }
 
-	public mapFails():Array<string> {
-		let out=[];
-		for(let i=0; i<this.src.length; i++) {
-			if(this.dst[i].title.match('HTTP_ERROR.*Timeout') ) {
-				out.push( this.src[i] );
-			}
-		}
-		return out;
-	}
+  public mapFails(): Array<string> {
+    let out = [];
+    for (let i = 0; i < this.src.length; i++) {
+      if (this.dst[i].title.match("HTTP_ERROR.*Timeout")) {
+        out.push(this.src[i]);
+      }
+    }
+    return out;
+  }
 
-	public merge(other:PageCollection):void {
-		if(this.dst.includes(false) || this.dst.includes(undefined) ) {
-			// there is low odds the offsets will be correct in other if its not complete
-			throw new Error("Cannot merge partially completed data ");
-		}
+  public merge(other: PageCollection): void {
+    if (this.dst.includes(false) || this.dst.includes(undefined)) {
+      // there is low odds the offsets will be correct in other if its not complete
+      throw new Error("Cannot merge partially completed data ");
+    }
 
-		for(let i=0; i<this.dst.length; i++) {
-			if( this.dst[i].title.match('HTTP_ERROR') ) {
-				for(let j=0; j<other.dst.length; j++ ) {
-					if(other.src[j]===this.src[i] &&
-						!other.dst[j].title.match('HTTP_ERROR') ) { 
-						this.dst[i]={ ...other.dst[j] };
-						break;
-					}
-				}
-			}
-		} 
-	}
-
+    for (let i = 0; i < this.dst.length; i++) {
+      if (this.dst[i].title.match("HTTP_ERROR")) {
+        for (let j = 0; j < other.dst.length; j++) {
+          if (
+            other.src[j] === this.src[i] &&
+            !other.dst[j].title.match("HTTP_ERROR")
+          ) {
+            this.dst[i] = { ...other.dst[j] };
+            break;
+          }
+        }
+      }
+    }
+  }
 }

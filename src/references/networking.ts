@@ -17,9 +17,9 @@ import type {
 } from "./types";
 
 // counter for the timeout
-let TO:number=TIMEOUT;
-export function setMyTimeout(nu:number=TIMEOUT):void {
-	TO=nu;
+let TO: number = TIMEOUT;
+export function setMyTimeout(nu: number = TIMEOUT): void {
+  TO = nu;
 }
 
 // This is a dup-file name, but different technology.  Built for different purposes
@@ -114,7 +114,7 @@ export function exec_reference_url(
           );
         }
         handler.failure("Unspecified failure.");
-		return null;
+        return null;
       })
   );
   //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,4 +123,3 @@ export function exec_reference_url(
 export async function delay(ms: number): Promise<void> {
   return new Promise((good, bad) => setTimeout(good, ms));
 }
-
