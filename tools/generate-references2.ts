@@ -18,7 +18,12 @@ import fs from "fs";
 import { BATCH_SZ } from "../src/references/constants";
 import { FirstPage } from "../src/references/first-page";
 import { MorePages } from "../src/references/more-pages";
-import { exec_reference_url, fetch2, delay, setMyTimeout } from "../src/references/networking";
+import {
+  exec_reference_url,
+  fetch2,
+  delay,
+  setMyTimeout,
+} from "../src/references/networking";
 import { PageCollection } from "../src/references/page-collection";
 import { apply_vendors } from "../src/references/vendor-mod";
 import { TIMEOUT } from "../src/references/constants";
@@ -82,7 +87,10 @@ function process_args(args: Array<string>): Array<string> {
  * @public
  * @returns {Promise<void>}
  */
-function dump_to_disk( data: Readonly<Array<Reference | boolean>>, FN: string, ): Promise<void> {
+function dump_to_disk(
+  data: Readonly<Array<Reference | boolean>>,
+  FN: string,
+): Promise<void> {
   let template = `
 {{pagemeta
 |Name                = Should NOT be visible ~ JSON output.
@@ -131,106 +139,105 @@ function dump_to_disk( data: Readonly<Array<Reference | boolean>>, FN: string, )
  * @return {Promise<void>}
  */
 async function links2references(list: Array<string>): Promise<void> {
-    const p3 = new PageCollection(list);
-    const trans1 = new MorePages(p3, apply_vendors, HTTP_REDIRECT_LIMIT);
-    log(
-      "debug",
-      `There are ${list.length}/${BATCH_SZ} links in ${process.argv[3]}`,
-    );
+  const p3 = new PageCollection(list);
+  const trans1 = new MorePages(p3, apply_vendors, HTTP_REDIRECT_LIMIT);
+  log(
+    "debug",
+    `There are ${list.length}/${BATCH_SZ} links in ${process.argv[3]}`,
+  );
 
-    let cur = p3.offset(0);
-    while (p3.morePages(cur)) {
-      let batch = p3.currentBatch;
-      for (let k = 0; k < BATCH_SZ; k++) {
-        cur = p3.offset(k);
-        // this if trap will exec in the last batch
-        if (k >= batch.length) {
-          break;
-        }
-
-        trans1.setOffset(cur, batch[k]);
-        // the logic test has side-effects
-        if (!p3.mapRepeatDomain(batch[k], cur)) {
-          p3.zeroLoop();
-          await exec_reference_url(cur, batch[k], trans1);
-        }
+  let cur = p3.offset(0);
+  while (p3.morePages(cur)) {
+    let batch = p3.currentBatch;
+    for (let k = 0; k < BATCH_SZ; k++) {
+      cur = p3.offset(k);
+      // this if trap will exec in the last batch
+      if (k >= batch.length) {
+        break;
       }
 
-      // second safety against awkward last batches
-      if (cur > list.length) {
-        break;
+      trans1.setOffset(cur, batch[k]);
+      // the logic test has side-effects
+      if (!p3.mapRepeatDomain(batch[k], cur)) {
+        p3.zeroLoop();
+        await exec_reference_url(cur, batch[k], trans1);
       }
     }
 
-	await delay( TIMEOUT );
-	setMyTimeout( TIMEOUT*2.5 );
-	let retry:PageCollection=new PageCollection( p3.mapFails() );
-	const trans2 = new MorePages(retry, apply_vendors, HTTP_REDIRECT_LIMIT);
-    log(
-      "debug",
-      `RETRYING ??/${BATCH_SZ} links in ${process.argv[3]}`,
-    );
+    // second safety against awkward last batches
+    if (cur > list.length) {
+      break;
+    }
+  }
 
-    cur = retry.offset(0);
-    while (retry.morePages(cur)) {
-      let batch = retry.currentBatch;
-      for (let k = 0; k < BATCH_SZ; k++) {
-        cur = retry.offset(k);
-        // this if trap will exec in the last batch
-        if (k >= batch.length) {
-          break;
-        }
+  await delay(TIMEOUT);
+  setMyTimeout(TIMEOUT * 2.5);
+  let retry: PageCollection = new PageCollection(p3.mapFails());
+  const trans2 = new MorePages(retry, apply_vendors, HTTP_REDIRECT_LIMIT);
+  log("debug", `RETRYING ??/${BATCH_SZ} links in ${process.argv[3]}`);
 
-        trans2.setOffset(cur, batch[k]);
-        // the logic test has side-effects
-        if (!retry.mapRepeatDomain(batch[k], cur)) {
-          retry.zeroLoop();
-          await exec_reference_url(cur, batch[k], trans2);
-        }
+  cur = retry.offset(0);
+  while (retry.morePages(cur)) {
+    let batch = retry.currentBatch;
+    for (let k = 0; k < BATCH_SZ; k++) {
+      cur = retry.offset(k);
+      // this if trap will exec in the last batch
+      if (k >= batch.length) {
+        break;
       }
 
-      // second safety against awkward last batches
-      if (cur > list.length) {
-        break;
+      trans2.setOffset(cur, batch[k]);
+      // the logic test has side-effects
+      if (!retry.mapRepeatDomain(batch[k], cur)) {
+        retry.zeroLoop();
+        await exec_reference_url(cur, batch[k], trans2);
       }
     }
 
-	await delay( TIMEOUT );
-	p3.merge( retry);
+    // second safety against awkward last batches
+    if (cur > list.length) {
+      break;
+    }
+  }
 
-    let hasData = p3.resultsArray.filter((a) => !!a);
-    log("debug", "BEFORE got " + hasData.length + " input " + list.length);
+  await delay(TIMEOUT);
+  p3.merge(retry);
 
-    if (hasData.length !== list.length) {
-      let attempts = 0;
-      const TRAP = await setInterval(function () {
-        let tmp = p3.resultsArray.filter((a) => !!a);
+  let hasData = p3.resultsArray.filter((a) => !!a);
+  log("debug", "BEFORE got " + hasData.length + " input " + list.length);
+
+  if (hasData.length !== list.length) {
+    let attempts = 0;
+    const TRAP = await setInterval(function () {
+      let tmp = p3.resultsArray.filter((a) => !!a);
+      log(
+        "debug",
+        new Date().getUTCSeconds() +
+          `INTERVAL TICK, got ${tmp.length} done items, input ${list.length} items`,
+      );
+      if (
+        p3.resultsArray.length === list.length &&
+        !p3.resultsArray.includes(false)
+      ) {
         log(
-          "debug", new Date().getUTCSeconds() +
-         `INTERVAL TICK, got ${tmp.length} done items, input ${list.length} items`,
+          "debug",
+          new Date().getUTCSeconds() +
+            " INTERVAL TICK, CLOSING SCRIPT, seem to have data",
         );
-        if (
-          p3.resultsArray.length === list.length &&
-          !p3.resultsArray.includes(false)
-        ) {
-          log(
-            "debug", new Date().getUTCSeconds() +
-              " INTERVAL TICK, CLOSING SCRIPT, seem to have data",
-          );
 
-          dump_to_disk(p3.resultsArray, FN);
-          clearInterval(TRAP);
-        }
-        attempts++;
-        if (attempts > 5) {
-          dump_to_disk(p3.resultsArray, FN);
-          clearInterval(TRAP);
-          console.warn("Please manually fix " + FN);
-        }
-      }, 5000);
-    } else {
-      dump_to_disk(p3.resultsArray, FN);
-    }
+        dump_to_disk(p3.resultsArray, FN);
+        clearInterval(TRAP);
+      }
+      attempts++;
+      if (attempts > 5) {
+        dump_to_disk(p3.resultsArray, FN);
+        clearInterval(TRAP);
+        console.warn("Please manually fix " + FN);
+      }
+    }, 5000);
+  } else {
+    dump_to_disk(p3.resultsArray, FN);
+  }
 }
 
 /**
@@ -241,10 +248,9 @@ async function links2references(list: Array<string>): Promise<void> {
  * @public
  * @returns {Promise<void>}
  */
-function basicError(e:Error):Promise<void> {
-   log("warn", "Root error handler caught: " + e.message);
+function basicError(e: Error): Promise<void> {
+  log("warn", "Root error handler caught: " + e.message);
 }
-
 
 new Promise(function (good, bad): void {
   let p1 = new FirstPage(true);
@@ -256,4 +262,4 @@ new Promise(function (good, bad): void {
     log("warn", "ERROR, ABORTING [-1] Network error with " + URL1 + " :: " + e);
     bad(e);
   }
-}).then( links2references , basicError );
+}).then(links2references, basicError);
