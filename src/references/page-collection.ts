@@ -110,7 +110,8 @@ export class PageCollection {
   public mapFails(): Array<string> {
     let out = [];
     for (let i = 0; i < this.src.length; i++) {
-      if (this.dst[i].title.match("HTTP_ERROR.*Timeout")) {
+      if (this.dst[i].title.match("HTTP_ERROR.*Timeout") ||
+		this.dst[i].title.match('HTTP_ERROR.*resolve host name') ) {
         out.push(this.src[i]);
       }
     }
