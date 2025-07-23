@@ -34,9 +34,14 @@ export class PageCollection {
       "save(): Invalid reference offset " + offset,
     );
     if (typeof this.dst[offset] !== "boolean") {
-      throw new Error("Why overwrite slot " + offset);
+      if (
+        (!"title") in this.dst[offset] ||
+        !this.dst[offset].title.includes("HTTP_ERROR")
+      ) {
+        throw new Error("Why overwrite slot " + offset);
+      }
     }
-    // would like to not need code like this, but it is fail early branching
+    // would like to not need code like this, but it is fail early branching, compared to runtime loading the webpage.
     if (item.url === "" || item.url === undefined || item.url === false) {
       throw new Error("Why does the incoming data have no URL? " + offset);
     }
@@ -105,7 +110,8 @@ export class PageCollection {
   public mapFails(): Array<string> {
     let out = [];
     for (let i = 0; i < this.src.length; i++) {
-      if (this.dst[i].title.match("HTTP_ERROR.*Timeout")) {
+      if (this.dst[i].title.match("HTTP_ERROR.*Timeout") ||
+		this.dst[i].title.match('HTTP_ERROR.*resolve host name') ) {
         out.push(this.src[i]);
       }
     }
