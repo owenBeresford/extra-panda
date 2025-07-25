@@ -31,7 +31,11 @@ export class FakePage implements HTMLTransformable {
 
   public success(statusCode: string, data: string): void {
     // also param headers:Headers
-    console.log("WWWW ", {"raw":statusCode, "cooked":cleanHTTPstatus(statusCode), "target":this._state});
+    console.log("WWWW ", {
+      raw: statusCode,
+      cooked: cleanHTTPstatus(statusCode),
+      target: this._state,
+    });
     assert.equal(
       this._state,
       cleanHTTPstatus(statusCode),
@@ -43,7 +47,7 @@ export class FakePage implements HTMLTransformable {
     }
 
     if (cleanHTTPstatus(statusCode) !== this._state) {
-      this.bad(new Error("Recieved " + statusCode) );
+      this.bad(new Error("Recieved " + statusCode));
     } else {
       this.good([]);
     }
@@ -57,8 +61,11 @@ export class FakePage implements HTMLTransformable {
       this.CB();
     }
     assert.equal(this._state, 5, "Server returned desired results " + msg);
-	if(this._state === 5) { this.good([]); }
-    else { this.bad("Error: " + msg); }
+    if (this._state === 5) {
+      this.good([]);
+    } else {
+      this.bad("Error: " + msg);
+    }
   }
 
   public promiseExits(good: PromiseCB, bad: PromiseCB, offset: number): void {
