@@ -31,7 +31,7 @@ describe("TEST references networking2 ", () => {
     });
   });
 
-  it.sequential("go 1.1: networking fetch2(bad IP) ", () => {
+  it.sequential("go 1.1: networking fetch2(bad IP) ", async () => {
     return new Promise(async (good, bad) => {
       const FP2 = new FakePage();
       FP2.promiseExits(good, bad, -1);
