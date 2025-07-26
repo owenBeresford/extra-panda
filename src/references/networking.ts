@@ -1,4 +1,5 @@
 import { Curl } from "node-libcurl";
+import type { NetworkInterfaceInfo } from "@types/node";
 
 import { log } from "../log-services";
 import {
@@ -14,6 +15,7 @@ import type {
   HTMLTransformable,
   TaggedCurl,
   CurlHeadersBlob,
+  IPListable, 
 } from "./types";
 
 // counter for the timeout
@@ -131,3 +133,40 @@ export function exec_reference_url(
 export async function delay(ms: number): Promise<void> {
   return new Promise((good, bad) => setTimeout(good, ms));
 }
+
+  // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+  // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
+function ifIP4(dat:string):string|number {
+	if(typeof dat ==="string") { return "IPv4"; }
+	else { return 4; }
+}
+
+/**
+ * mapInterfaces
+ * Function to list IP4 interfaces locally available
+ * Used in tests 
+ * A no-value rewrite to be more functional would make it run faster and be shorter.  I don't need network device names
+
+ * @link https://stackoverflow.com/a/8440736
+ * @public
+ * @returns {IPListable}
+ */
+export function mapInterfaces(nets:Record<string, NetworkInterfaceInfo> ):IPListable {
+  const out:IPListable = {};
+
+  for (const nom of Object.keys(nets)) {
+    for (const net of nets[nom]) {
+      if (net.family === ifIP4(net.family ) && !net.internal) {
+        if (!(nom in out)) {
+          out[nom] = [];
+        }
+        out[nom].push(net.address);
+        if (!out.first) {
+          out["first"] = [net.address];
+        }
+      }
+    }
+  }
+  return out;
+}
+

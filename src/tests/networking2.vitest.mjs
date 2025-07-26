@@ -1,23 +1,28 @@
 // the asserts are in the worker class
 import { describe, it, vi } from "vitest";
+import { networkInterfaces } from "node:os";
 
-import { fetch2, exec_reference_url, delay } from "../references/networking";
+import {
+  fetch2,
+  exec_reference_url,
+  delay,
+  mapInterfaces,
+} from "../references/networking";
 import { FakePage } from "../references/fake-page";
 
 vi.setConfig({ testTimeout: 0 });
-// IOIO pull LAN IPs out, use LAN IP lookup function from somewhere
 
 describe("TEST references networking2 ", () => {
+  const LAN_IP = "http://" + mapInterfaces(networkInterfaces() )["first"][0]+"/";
+  const BAD_IP = "http://192.168.66.66/";
+
   it.sequential("go 1: networking fetch2 ", async () => {
     return new Promise(async (good, bad) => {
       const FP1 = new FakePage();
       FP1.promiseExits(good, bad, -1);
       FP1.setState(2);
-      let URL = "http://192.168.1.218/resource/contact-me";
-      let d1 = new Date();
+      let URL = LAN_IP + "resource/contact-me";
       await fetch2(URL, FP1.success, FP1.failure, FP1.assignClose);
-      let d2 = new Date();
-      console.log("First fetch claims ", d2 - d1);
 
       /*    // this shows that the asserts in the fake module are happening
 	FP1.setState(5);
@@ -30,12 +35,9 @@ describe("TEST references networking2 ", () => {
     return new Promise(async (good, bad) => {
       const FP2 = new FakePage();
       FP2.promiseExits(good, bad, -1);
-      let URL = "http://192.168.128.0/resource/contact-me";
+      let URL = BAD_IP + "resource/contact-me";
       FP2.setState(5);
-      let d1 = new Date();
       await fetch2(URL, FP2.success, FP2.failure, FP2.assignClose);
-      let d2 = new Date();
-      console.log("second fetch claims ", d2 - d1);
     }).catch((err) => {
       assert.notEqual(err.message, "");
     });
@@ -47,10 +49,7 @@ describe("TEST references networking2 ", () => {
       FP3.promiseExits(good, bad, -1);
       let URL = "https://en.wikipedia.org/wiki/Sturgeon%27s_law";
       FP3.setState(2);
-      let d1 = new Date();
       await fetch2(URL, FP3.success, FP3.failure, FP3.assignClose);
-      let d2 = new Date();
-      console.log("third fetch claims ", d2 - d1);
     });
   });
 
@@ -61,10 +60,7 @@ describe("TEST references networking2 ", () => {
       let URL = "https://github.com/owenBeresford/extra-panda/";
 
       FP4.setState(2);
-      let d1 = new Date();
       await fetch2(URL, FP4.success, FP4.failure, FP4.assignClose);
-      let d2 = new Date();
-      console.log("fourth fetch claims ", d2 - d1);
     });
   });
 
@@ -75,12 +71,38 @@ describe("TEST references networking2 ", () => {
       let URL = "https://stackoverflow.com/questions/";
 
       FP4.setState(2);
-      let d1 = new Date();
       await fetch2(URL, FP4.success, FP4.failure, FP4.assignClose);
-      let d2 = new Date();
-      console.log("sixth fetch claims ", d2 - d1);
     });
   });
+
+  it.sequential("go 1.6: networking fetch2( medium ) ", async () => {
+    return new Promise(async (good, bad) => {
+      const FP4 = new FakePage();
+      FP4.promiseExits(good, bad, -1);
+      let URL = "https://medium.com/in-the-weeds";
+
+      FP4.setState(2);
+      await fetch2(URL, FP4.success, FP4.failure, FP4.assignClose);
+    });
+  });
+
+
+
+  it.sequential("go 2: exec_reference_url(good URL) ", async () => {
+    const FP5 = new FakePage();
+    FP5.setState(2);
+    let URL = LAN_IP + "resource/contact-me";
+    await exec_reference_url(0, URL, FP5);
+  });
+
+  it.sequential("go 2: exec_reference_urli(bad URL) ", async () => {
+    const FP5 = new FakePage();
+    FP5.setState(5);
+    let URL = BAD_IP + "resource/contact-me";
+    await exec_reference_url(0, URL, FP5);
+  });
+
+
 
   it.sequential("go 1.4: networking fetch2( Elsevier) ", async () => {
     return new Promise(async (good, bad) => {
@@ -89,24 +111,9 @@ describe("TEST references networking2 ", () => {
       let URL = "https://www.sciencedirect.com/science/";
 
       FP4.setState(2);
-      let d1 = new Date();
       await fetch2(URL, FP4.success, FP4.failure, FP4.assignClose);
-      let d2 = new Date();
-      console.log("sixth fetch claims ", d2 - d1);
     });
   });
 
-  it.sequential("go 2: exec_reference_url(good URL) ", async () => {
-    const FP5 = new FakePage();
-    FP5.setState(2);
-    let URL = "http://192.168.1.218/resource/contact-me";
-    await exec_reference_url(0, URL, FP5);
-  });
-
-  it.sequential("go 2: exec_reference_urli(bad URL) ", async () => {
-    const FP5 = new FakePage();
-    FP5.setState(5);
-    let URL = "http://192.168.218i.0/resource/contact-me";
-    await exec_reference_url(0, URL, FP5);
-  });
 });
+
