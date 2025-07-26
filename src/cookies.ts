@@ -1,11 +1,12 @@
 import type { Cookieable } from "./all-types";
 import { APPEARANCE_COOKIE } from "./immutables";
 import { accessCookie } from "./networking";
+import { log } from './log-services';
 
 /**
  * COOKIE
  * A class to allow access to cookies.
- * This version is mostly used by FF and odd browsers.
+ * Codebase cannot use Chrome builtin plugins and TS, so all browsers use this
  *
  * IMPURE & uses globals
  * source code copied from: then **amended**
@@ -34,7 +35,7 @@ export class QOOKIE implements Cookieable {
       const d1 = new Date();
       d1.setTime(d1.getTime() + expDays * 24 * 60 * 60 * 1000);
       expires = "expires=" + d1.toUTCString();
-    }
+    } 
     document.cookie = nom + "=" + cValue + "; " + expires + "; path=/ ;secure";
   }
 
