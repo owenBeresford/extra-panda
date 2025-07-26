@@ -1,11 +1,12 @@
 import type { Cookieable } from "./all-types";
 import { APPEARANCE_COOKIE } from "./immutables";
 import { accessCookie } from "./networking";
+import { log } from "./log-services";
 
 /**
  * COOKIE
  * A class to allow access to cookies.
- * This version is mostly used by FF and odd browsers.
+ * Codebase cannot use Chrome builtin plugins and TS, so all browsers use this
  *
  * IMPURE & uses globals
  * source code copied from: then **amended**

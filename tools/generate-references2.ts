@@ -34,7 +34,10 @@ import type { Reference } from "../src/references/types";
 const [FN, URL1] = process_args(process.argv);
 
 if (!process || !process.argv) {
-  log("error", "This references tool is for the CLI/Node, not a browser");
+  log(
+    "error",
+    "This references tool is for the CLI and Node only, not a browser.   It loads node only features.",
+  );
   throw new Error();
 }
 

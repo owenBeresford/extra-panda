@@ -1,4 +1,5 @@
 import { assert, expect, describe, it } from "vitest";
+
 import { cleanHTTPstatus } from "./string-manip";
 import type {
   HTMLTransformable,
@@ -12,6 +13,8 @@ export class FakePage implements HTMLTransformable {
   protected bad: PromiseCB;
   protected CB: wrappedCloseType;
   protected _state: number;
+  protected startDate: Date;
+  protected stopDate: Date;
 
   public constructor() {
     this.assignClose = this.assignClose.bind(this);
@@ -27,11 +30,11 @@ export class FakePage implements HTMLTransformable {
   public setState(no: number) {
     console.log("Running setState with " + no);
     this._state = no;
+    this.startDate = new Date();
   }
 
   public success(statusCode: string, data: string): void {
     // also param headers:Headers
-    console.log("WWWW ", {"raw":statusCode, "cooked":cleanHTTPstatus(statusCode), "target":this._state});
     assert.equal(
       this._state,
       cleanHTTPstatus(statusCode),
@@ -42,8 +45,14 @@ export class FakePage implements HTMLTransformable {
       this.CB();
     }
 
+    this.stopDate = new Date();
+    console.log(
+      "[DEBUG] success network duration :" +
+        (this.stopDate - this.startDate) +
+        "ms. ",
+    );
     if (cleanHTTPstatus(statusCode) !== this._state) {
-      this.bad(new Error("Recieved " + statusCode) );
+      this.bad(new Error("Recieved " + statusCode));
     } else {
       this.good([]);
     }
@@ -53,12 +62,21 @@ export class FakePage implements HTMLTransformable {
     console.warn(msg, "and ", this._state);
 
     if (typeof this.CB === "function") {
-      console.log("failure(): Running cURL close");
+      console.log("[DEBUG] failure(): Running cURL close");
       this.CB();
     }
     assert.equal(this._state, 5, "Server returned desired results " + msg);
-	if(this._state === 5) { this.good([]); }
-    else { this.bad("Error: " + msg); }
+    this.stopDate = new Date();
+    console.log(
+      "[DEBUG] failure network duration :" +
+        (this.stopDate - this.startDate) +
+        "ms. ",
+    );
+    if (this._state === 5) {
+      this.good([]);
+    } else {
+      this.bad("Error: " + msg);
+    }
   }
 
   public promiseExits(good: PromiseCB, bad: PromiseCB, offset: number): void {

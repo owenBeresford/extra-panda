@@ -30,7 +30,7 @@ export function getFetch(): Fetchable {
  * This behaves as a VERY SIMPLE middle-ware.
  * @param {string|URL} url
  * @param {boolean} trap ~ return null rather than an exception
- * @param {Location =location} loc
+ * @param {boolean} ldebug
  * @public
  * @throws {Error} = predictably, in case of network issue
  * @returns {Promise<SimpleResponse>}
@@ -38,10 +38,21 @@ export function getFetch(): Fetchable {
 export async function runFetch(
   url: string,
   trap: boolean,
-  loc: Location,
+  ldebug: boolean,
 ): Promise<SimpleResponse> {
   const f: Fetch = getFetch() as Fetch;
-  const ldebug = debug(loc);
+  const returnBad = (trap: boolean, err: Error): SimpleResponse | void => {
+    if (trap) {
+      return {
+        body: "nothing",
+        headers: {} as Headers,
+        ok: false,
+      } as SimpleResponse;
+    } else {
+      throw err;
+    }
+  };
+
   try {
     const trans: Response = (await f(url, {
       credentials: "same-origin",
@@ -50,15 +61,7 @@ export async function runFetch(
       if (ldebug) {
         log("warn", "Failed to communicate with " + url);
       }
-      if (trap) {
-        return {
-          body: "nothing",
-          headers: {} as Headers,
-          ok: false,
-        } as SimpleResponse;
-      } else {
-        throw new Error("ERROR getting asset " + url);
-      }
+      return returnBad(trap, new Error("ERROR getting asset " + url));
     }
     if (trans.status === 404) {
       throw new Error("got HTTP 404");
@@ -82,20 +85,15 @@ export async function runFetch(
       body: payload,
       headers: trans.headers,
       ok: true,
-    };
+    } as SimpleResponse;
   } catch (e) {
     if (ldebug) {
       log("error", "KLAXON, KLAXON failed: " + url + " " + e.toString());
     }
-    if (trap) {
-      return {
-        body: "nothing",
-        headers: {} as Headers,
-        ok: false,
-      } as SimpleResponse;
-    } else {
-      throw new Error("ERROR getting asset " + url + " " + e.toString());
-    }
+    return returnBad(
+      trap,
+      new Error("ERROR getting asset " + url + " " + e.toString()),
+    );
   }
 }
 
@@ -128,7 +126,6 @@ export function accessCookie(): Cookieable {
   //  }
   // ELSE:
   if (typeof document !== "undefined") {
-    //		const { QOOKIE } =import('./cookies');
     return new QOOKIE();
   } else {
     // void implementation for unit tests

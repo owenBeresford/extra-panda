@@ -1,4 +1,5 @@
 import { Curl } from "node-libcurl";
+import type { NetworkInterfaceInfo } from "@types/node";
 
 import { log } from "../log-services";
 import {
@@ -14,6 +15,7 @@ import type {
   HTMLTransformable,
   TaggedCurl,
   CurlHeadersBlob,
+  IPListable,
 } from "./types";
 
 // counter for the timeout
@@ -44,17 +46,16 @@ export function fetch2(
 
   curl.setOpt("HTTPHEADER", [
     "upgrade-insecure-requests: 1",
-	"Referrer-policy: strict-origin-when-cross-origin",
-	"accept-language: en-GB,en;q=0.9,nl;q=0.8,de-DE;q=0.7,de;q=0.6",
-	"user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
-	'sec-ch-ua: "Not)A;Brand";v="8", "Chromium";v="138"',
-	"sec-ch-ua-mobile: ?0",
-	'sec-ch-ua-platform: "Windows"',
-	"sec-fetch-dest: document",
-	"sec-fetch-mode: navigate",
-	"sec-fetch-site: cross-site",
-	"sec-fetch-user: ?1"
-
+    "Referrer-policy: strict-origin-when-cross-origin",
+    "accept-language: en-GB,en;q=0.9,nl;q=0.8,de-DE;q=0.7,de;q=0.6",
+    "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+    'sec-ch-ua: "Not)A;Brand";v="8", "Chromium";v="138"',
+    "sec-ch-ua-mobile: ?0",
+    'sec-ch-ua-platform: "Windows"',
+    "sec-fetch-dest: document",
+    "sec-fetch-mode: navigate",
+    "sec-fetch-site: cross-site",
+    "sec-fetch-user: ?1",
   ]);
   curl.setOpt("URL", url);
   curl.setOpt("COOKIEJAR", COOKIE_JAR);
@@ -122,7 +123,7 @@ export function exec_reference_url(
             "impossible situation, 4523586423424 (so I'm bailing)",
           );
         }
-        handler.failure("Unspecified failure "+ee.message);
+        handler.failure("Unspecified failure " + ee.message);
         return null;
       })
   );
@@ -131,4 +132,45 @@ export function exec_reference_url(
 
 export async function delay(ms: number): Promise<void> {
   return new Promise((good, bad) => setTimeout(good, ms));
+}
+
+// Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+// 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
+function ifIP4(dat: string): string | number {
+  if (typeof dat === "string") {
+    return "IPv4";
+  } else {
+    return 4;
+  }
+}
+
+/**
+ * mapInterfaces
+ * Function to list IP4 interfaces locally available
+ * Used in tests 
+ * A no-value rewrite to be more functional would make it run faster and be shorter.  I don't need network device names
+
+ * @link https://stackoverflow.com/a/8440736
+ * @public
+ * @returns {IPListable}
+ */
+export function mapInterfaces(
+  nets: Record<string, NetworkInterfaceInfo>,
+): IPListable {
+  const out: IPListable = {};
+
+  for (const nom of Object.keys(nets)) {
+    for (const net of nets[nom]) {
+      if (net.family === ifIP4(net.family) && !net.internal) {
+        if (!(nom in out)) {
+          out[nom] = [];
+        }
+        out[nom].push(net.address);
+        if (!out.first) {
+          out["first"] = [net.address];
+        }
+      }
+    }
+  }
+  return out;
 }

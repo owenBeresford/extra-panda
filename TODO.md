@@ -18,7 +18,7 @@ MAINTENANCE
 - Make RAM usage and execution-cost tests-and-monitoring more mature
 - Implement Networking browser test script
 - Port remaining non-production files to TS.  
-- declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
+- Declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
 - To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
 - Rebuild snap to end CSS (unused but included), as dis-functional in Chrome  
 - Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
@@ -29,6 +29,7 @@ MAINTENANCE
 - Add References re-try logic on Network Timeout, second hit seems to succede more often 
 - Add ability to add test array of URLs to tool
 - UPDATE:: Internet suggests dropping Playwright for Puppeteer if specific browsers are needed. https://pptr.dev/webdriver-bidi https://www.npmjs.com/package/puppeteer-core
+
 
 ### Previous Updates
 
@@ -109,5 +110,5 @@ MAINTENANCE
 - DONE and CANCELLED: built test code for Qutebrowser, not mature enough from CLI yet.
 - DONE: add a dump-cookie plugin to browser, so will re-execute build references against 1mb of cookies
 - DONE: Check reference tooltips in DL lists, example: architectures-for-css, review-dvcs-automation 
-
+- DONE: Add feature so tests use A LOCAL IP, not a fixed string 
 
