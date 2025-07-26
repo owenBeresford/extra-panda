@@ -371,7 +371,7 @@ export async function createBiblio(
   const data: SimpleResponse = await OPTS.runFetch(
     makeRefUrl(OPTS.referencesCache, loc),
     true,
-    loc,
+    debug(loc),
   );
   if (!data.ok || !Array.isArray(data.body)) {
     markAllLinksUnknown(dom, loc);

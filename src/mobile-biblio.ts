@@ -188,7 +188,7 @@ export async function createBiblio(
   const dat = await OPTS.runFetch(
     makeRefUrl(OPTS.referencesCache, loc),
     true,
-    loc,
+    debug(loc),
   );
   if (!dat.ok || !Array.isArray(dat.body)) {
     const html =
