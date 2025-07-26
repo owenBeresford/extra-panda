@@ -43,24 +43,23 @@ function h(e2, t2, n2, r2) {
   const i2 = JSON.stringify({ ft: e2, fs: t2, dn: n2, cr: r2 });
   o2.set(l, i2, 365.254);
 }
-async function p(t2, r2, o2) {
-  const i2 = function() {
+async function p(e2, t2, r2) {
+  const o2 = function() {
     if ("undefined" != typeof window) return window.fetch;
     if ("function" == typeof fetch) return fetch;
     throw n("error", "Please stop using old versions of node."), new Error("Please stop using old versions of Node");
-  }(), a2 = e(o2);
+  }(), i2 = (e3, t3) => {
+    if (e3) return { body: "nothing", headers: {}, ok: false };
+    throw t3;
+  };
   try {
-    const e2 = await i2(t2, { credentials: "same-origin" });
-    if (!e2.ok) {
-      if (a2 && n("warn", "Failed to communicate with " + t2), r2) return { body: "nothing", headers: {}, ok: false };
-      throw new Error("ERROR getting asset " + t2);
-    }
-    if (404 === e2.status) throw new Error("got HTTP 404");
-    let o3 = "";
-    return o3 = e2.headers.get("content-type").toLowerCase().startsWith("application/json") ? await e2.json() : await e2.text(), a2 && n("info", "Successful JSON transaction " + t2), { body: o3, headers: e2.headers, ok: true };
-  } catch (e2) {
-    if (a2 && n("error", "KLAXON, KLAXON failed: " + t2 + " " + e2.toString()), r2) return { body: "nothing", headers: {}, ok: false };
-    throw new Error("ERROR getting asset " + t2 + " " + e2.toString());
+    const a2 = await o2(e2, { credentials: "same-origin" });
+    if (!a2.ok) return r2 && n("warn", "Failed to communicate with " + e2), i2(t2, new Error("ERROR getting asset " + e2));
+    if (404 === a2.status) throw new Error("got HTTP 404");
+    let s2 = "";
+    return s2 = a2.headers.get("content-type").toLowerCase().startsWith("application/json") ? await a2.json() : await a2.text(), r2 && n("info", "Successful JSON transaction " + e2), { body: s2, headers: a2.headers, ok: true };
+  } catch (o3) {
+    return r2 && n("error", "KLAXON, KLAXON failed: " + e2 + " " + o3.toString()), i2(t2, new Error("ERROR getting asset " + e2 + " " + o3.toString()));
   }
 }
 function g() {
@@ -128,12 +127,12 @@ function T(e2, t2, r2) {
     n("error", e3.toString()), window.noop++;
   }
 }
-function k(e2) {
+function v(e2) {
   if (void 0 === e2) return false;
   const t2 = e2.getComputedStyle.toString().includes("[native code]");
   return !("boolean" != typeof t2 || !t2);
 }
-function v(e2, t2, n2) {
+function k(e2, t2, n2) {
   var r2 = false;
   try {
     e2.createEvent("TouchEvent"), r2 = true;
@@ -144,7 +143,7 @@ function v(e2, t2, n2) {
 }
 function x(e2, t2, r2) {
   try {
-    if (!k(r2)) return -1;
+    if (!v(r2)) return -1;
     return e2.getBoundingClientRect()[t2];
   } catch (e3) {
     return n("error", "Missing data:" + e3.message), -1;
@@ -178,7 +177,7 @@ function N(e2, t2, n2) {
     e2.createEvent("TouchEvent");
     if (r2.has("mobile")) return E(r2.get("mobile") ?? "");
     let t3 = d;
-    return v(e2, n2.navigator, n2) && (t3 = 1.11 * d), M(e2, n2) > t3;
+    return k(e2, n2.navigator, n2) && (t3 = 1.11 * d), M(e2, n2) > t3;
   } catch (e3) {
     return !(!r2.has("mobile") || !E(r2.get("mobile") ?? ""));
   }
@@ -234,7 +233,7 @@ async function H(t2, r2, o2, i2) {
   const a2 = "group-XXX" === U.name || U.name === "group-" + U.group, s2 = "group" + U.group;
   if (N(r2, o2, i2) && !a2) 1 === r2.querySelectorAll(".adjacentWidget .adjacentItem").length && (r2.querySelector(".adjacentWidget p").style.display = "none"), T("#" + s2, "<p>As mobile View, use the full page link to the left</p>", r2);
   else {
-    const e2 = await U.runFetch(U.meta, true, o2);
+    const e2 = await U.runFetch(U.meta, true, U.debug);
     if (!("ok" in e2) || !e2.ok || !Array.isArray(e2.body)) return n("info", "There doesn't seem to be a group meta data file."), void T("#" + s2, "<p>Internal error. Hopefully this will be fixed shortly. </p>", r2);
     if (a2) {
       const t3 = function(e3, t4, n2, r3, o3) {
@@ -288,7 +287,7 @@ function J(e2, t2, r2, o2) {
   let a2 = i2.value;
   const s2 = i2.getAttribute("data-url");
   if ("" === a2 || null === a2) return false;
-  if (a2 = "https://" + a2 + "/share?text=I+think+this+is+important+" + s2, n("info", "Trying to open mastodon server, " + a2), !k(o2)) throw Error("Test passed, for " + a2);
+  if (a2 = "https://" + a2 + "/share?text=I+think+this+is+important+" + s2, n("info", "Trying to open mastodon server, " + a2), !v(o2)) throw Error("Test passed, for " + a2);
   return t2.querySelector("#popup").close(), o2.open(a2, "_blank"), N(t2, r2, o2) && B(0, t2, r2, o2), false;
 }
 function $(e2, t2, n2) {
@@ -310,10 +309,10 @@ function $(e2, t2, n2) {
   Y(e2.querySelector("#hideMasto"), _, e2, n2);
 }
 function G(e2, t2, n2) {
-  return k(n2) && t2.querySelector("#popup").showModal(), t2.querySelector("#popup input").focus(), false;
+  return v(n2) && t2.querySelector("#popup").showModal(), t2.querySelector("#popup input").focus(), false;
 }
 function _(e2, t2, n2) {
-  return k(n2) && t2.querySelector("#popup").close(), false;
+  return v(n2) && t2.querySelector("#popup").close(), false;
 }
 function Y(e2, t2, n2, r2) {
   e2.addEventListener("click", (e3) => (t2(e3, n2, r2), false)), e2.addEventListener("touch", (e3) => (t2(e3, n2, r2), false)), e2.addEventListener("keypress", (e3) => (t2(e3, n2, r2), false));
@@ -326,7 +325,7 @@ async function V(t2, r2, o2) {
   if (z = Object.assign(z, { debug: e(o2) }, t2), 0 === r2.querySelectorAll(a).length) return void n("info", "URL '" + o2.pathname + "' isn't marked-up for references, so skipped");
   const s2 = r2.querySelector("#biblio");
   s2 && s2.setAttribute("style", ""), r2.querySelector(z.gainingElement + " *").replaceChildren(), T(z.gainingElement, '<h2 class="biblioSection">References (for mobile UI)</h2> \n<p>The references embedded in the text are displayed here. </p>', r2);
-  const l2 = await z.runFetch(b(z.referencesCache, o2), true, o2);
+  const l2 = await z.runFetch(b(z.referencesCache, o2), true, e(o2));
   if (l2.ok && Array.isArray(l2.body)) {
     const e2 = function(e3) {
       let t3 = '<aside role="footnote"><ol class="mobileBiblio">';
@@ -385,7 +384,7 @@ function ee(e2, t2) {
 const te = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 async function ne(t2, r2, o2, i2) {
   if (Q = Object.assign(Q, { debug: e(o2) }, t2), 0 === r2.querySelectorAll(a).length) return void n("info", "This URL '" + o2.pathname + "' isn't marked-up for references, so skipped");
-  const l2 = await Q.runFetch(b(Q.referencesCache, o2), true, o2);
+  const l2 = await Q.runFetch(b(Q.referencesCache, o2), true, e(o2));
   if (l2.ok && Array.isArray(l2.body)) {
     if (r2.querySelectorAll(s).length < l2.body.length) throw new Error("Recompile the meta data for  " + o2.pathname);
     const e2 = r2.querySelector("#biblio");
@@ -541,7 +540,7 @@ await async function(t2, r2, o2, i2) {
   }(r2, i2), function(t3, n2, r3) {
     const o3 = N(t3, n2, r3);
     if (!w(n2.host) && !o3) return;
-    if (v(t3, r3.navigator, r3) && !o3) return;
+    if (k(t3, r3.navigator, r3) && !o3) return;
     o3 && (t3.querySelector("#sendMasto").textContent = "Share article");
     const i3 = ['<li id="shareClose"> <i class="fa fa-cancel" aria-hidden="true"></i> </li>	<li> <a class="hunchUp" id="copyURL"><i class="fa fa-copy" aria-hidden="true"></i><span class="hunchUp"> copy<br /> URL</span> </a> </li>'], a3 = ["shareMenuTrigger", "siteChartLink", "rssLink"], s3 = Array.from(t3.querySelectorAll(".SMshareWidget a")), l2 = !w(n2.host) && !e(n2), c3 = t3.querySelector(".SMshareWidget");
     for (const e2 in s3) {
@@ -569,7 +568,7 @@ await async function(t2, r2, o2, i2) {
     if (n2.ft = n2.ft.replaceAll("%38", ";"), n2.cr = n2.cr.replaceAll("%38", ";"), n2.dn = n2.dn.replaceAll("%38", ";"), n2.fs = n2.fs.replaceAll("%38", ";"), !n2.ft || !n2.fs) return;
     const r3 = "body, .annoyingBody { font-family: " + n2.ft + "; font-size: " + n2.fs + "; direction:" + n2.dn + "; }", o3 = e2.createElement("style");
     o3.setAttribute("id", "client-set-css"), o3.innerText = r3, e2.getElementsByTagName("head")[0].append(o3);
-  }(r2), se(r2), O(1040, r2, o2, i2), v(r2, i2.navigator, i2) && function(e2, t3) {
+  }(r2), se(r2), O(1040, r2, o2, i2), k(r2, i2.navigator, i2) && function(e2, t3) {
     let n2 = t3.createElement("link");
     n2.setAttribute("rel", "stylesheet"), n2.setAttribute("href", e2), t3.head.appendChild(n2);
   }("/asset/librewolf.min.css", r2), !N(r2, o2, i2) && "/resource/home" !== o2.pathname && r2.querySelectorAll(".reading").length < 2 && function(t3, r3, o3) {
@@ -636,7 +635,7 @@ export {
   X as currentSize,
   r as domLog,
   ce as hasBeenRun,
-  v as isLibreWolf,
+  k as isLibreWolf,
   N as isMobile,
   n as log,
   p as runFetch,
