@@ -13,7 +13,8 @@ import { FakePage } from "../references/fake-page";
 vi.setConfig({ testTimeout: 0 });
 
 describe("TEST references networking2 ", () => {
-  const LAN_IP = "http://" + mapInterfaces(networkInterfaces() )["first"][0]+"/";
+  const LAN_IP =
+    "http://" + mapInterfaces(networkInterfaces())["first"][0] + "/";
   const BAD_IP = "http://192.168.66.66/";
 
   it.sequential("go 1: networking fetch2 ", async () => {
@@ -86,8 +87,6 @@ describe("TEST references networking2 ", () => {
     });
   });
 
-
-
   it.sequential("go 2: exec_reference_url(good URL) ", async () => {
     const FP5 = new FakePage();
     FP5.setState(2);
@@ -102,8 +101,6 @@ describe("TEST references networking2 ", () => {
     await exec_reference_url(0, URL, FP5);
   });
 
-
-
   it.sequential("go 1.4: networking fetch2( Elsevier) ", async () => {
     return new Promise(async (good, bad) => {
       const FP4 = new FakePage();
@@ -114,6 +111,4 @@ describe("TEST references networking2 ", () => {
       await fetch2(URL, FP4.success, FP4.failure, FP4.assignClose);
     });
   });
-
 });
-

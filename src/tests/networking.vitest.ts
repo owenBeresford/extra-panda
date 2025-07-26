@@ -9,13 +9,14 @@ const { getFetch, accessCookie, delay, runFetch } = TEST_ONLY;
 vi.setConfig({ testTimeout: 0 });
 
 describe("TEST networking", () => {
-  const LAN_IP = "http://" + mapInterfaces(networkInterfaces() )["first"][0]+"/";
+  const LAN_IP =
+    "http://" + mapInterfaces(networkInterfaces())["first"][0] + "/";
   const BAD_IP = "http://192.168.66.66/";
 
   it.sequential("go 1: getFetch", () => {
     assert.equal(typeof getFetch, "function", "assert #1");
     assertType<Fetchable>(getFetch(), "assert #2");
-	// didnt crash, this takes no param, so is *very* thin margin on a unit-test
+    // didnt crash, this takes no param, so is *very* thin margin on a unit-test
   });
 
   it.sequential("go 2: accessCookie ", () => {
@@ -25,34 +26,32 @@ describe("TEST networking", () => {
     // the cookie stuff is quite low cyclometric complexity
   });
 
-
   it.sequential("go 3: runFetch", async () => {
-      let URL = LAN_IP + "resource/contact-me";
-      let ret=await runFetch(URL, false, true );
-		assert.equal(ret.ok, true, "assert #5" );
-		assert.equal(typeof ret.body, "string", "assert #6" );
-		assert.isAbove(ret.body.length, 100,  "assert #7");
+    let URL = LAN_IP + "resource/contact-me";
+    let ret = await runFetch(URL, false, true);
+    assert.equal(ret.ok, true, "assert #5");
+    assert.equal(typeof ret.body, "string", "assert #6");
+    assert.isAbove(ret.body.length, 100, "assert #7");
   });
 
   it.sequential("go 3.1: runFetch", async () => {
-      let URL = LAN_IP + "resource/contact-me";
-      let ret=await runFetch(URL, true, true );
-		assert.equal(ret.ok, true, "assert #8" );
-		assert.equal(typeof ret.body, "string", "assert #9" );
-		assert.isAbove(ret.body.length, 100,  "assert #10");
+    let URL = LAN_IP + "resource/contact-me";
+    let ret = await runFetch(URL, true, true);
+    assert.equal(ret.ok, true, "assert #8");
+    assert.equal(typeof ret.body, "string", "assert #9");
+    assert.isAbove(ret.body.length, 100, "assert #10");
   });
 
   it.sequential("go 3.2: runFetch", async () => {
-      let URL = BAD_IP + "resource/contact-me";
-      let ret=await runFetch(URL, true, true );
-		assert.equal(ret.ok, false, "assert #11" );
-		assert.equal(typeof ret.body, "string", "assert #12" );
-		assert.isBelow(ret.body.length, 100,  "assert #13");
+    let URL = BAD_IP + "resource/contact-me";
+    let ret = await runFetch(URL, true, true);
+    assert.equal(ret.ok, false, "assert #11");
+    assert.equal(typeof ret.body, "string", "assert #12");
+    assert.isBelow(ret.body.length, 100, "assert #13");
   });
 
-
   it.sequential("go 4: delay", async () => {
-	console.warn("go4, DELAY: This step takes ~12s ");
+    console.warn("go4, DELAY: This step takes ~12s ");
 
     let d1 = new Date();
     await delay(1_000);
@@ -68,8 +67,5 @@ describe("TEST networking", () => {
     await delay(10_000);
     d2 = new Date();
     assert.isBelow(d1.getTime() + 10_000 - d2.getTime(), 10, "assert #15");
-
   });
-
-
 });

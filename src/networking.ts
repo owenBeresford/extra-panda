@@ -41,17 +41,17 @@ export async function runFetch(
   ldebug: boolean,
 ): Promise<SimpleResponse> {
   const f: Fetch = getFetch() as Fetch;
-	const returnBad=(trap:boolean, err:Error ):SimpleResponse|void =>{
-		if(trap) {
-	      return {
-	        body: "nothing",
-	        headers: {} as Headers,
-	        ok: false,
-	      } as SimpleResponse;
-		} else {
-			throw err;
-		}
-	};
+  const returnBad = (trap: boolean, err: Error): SimpleResponse | void => {
+    if (trap) {
+      return {
+        body: "nothing",
+        headers: {} as Headers,
+        ok: false,
+      } as SimpleResponse;
+    } else {
+      throw err;
+    }
+  };
 
   try {
     const trans: Response = (await f(url, {
@@ -61,7 +61,7 @@ export async function runFetch(
       if (ldebug) {
         log("warn", "Failed to communicate with " + url);
       }
-		return returnBad(trap, new Error("ERROR getting asset " + url) );
+      return returnBad(trap, new Error("ERROR getting asset " + url));
     }
     if (trans.status === 404) {
       throw new Error("got HTTP 404");
@@ -90,7 +90,10 @@ export async function runFetch(
     if (ldebug) {
       log("error", "KLAXON, KLAXON failed: " + url + " " + e.toString());
     }
-	return returnBad(trap, new Error("ERROR getting asset " + url + " " + e.toString() ));
+    return returnBad(
+      trap,
+      new Error("ERROR getting asset " + url + " " + e.toString()),
+    );
   }
 }
 

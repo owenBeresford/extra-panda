@@ -15,7 +15,7 @@ import type {
   HTMLTransformable,
   TaggedCurl,
   CurlHeadersBlob,
-  IPListable, 
+  IPListable,
 } from "./types";
 
 // counter for the timeout
@@ -134,11 +134,14 @@ export async function delay(ms: number): Promise<void> {
   return new Promise((good, bad) => setTimeout(good, ms));
 }
 
-  // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
-  // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
-function ifIP4(dat:string):string|number {
-	if(typeof dat ==="string") { return "IPv4"; }
-	else { return 4; }
+// Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+// 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
+function ifIP4(dat: string): string | number {
+  if (typeof dat === "string") {
+    return "IPv4";
+  } else {
+    return 4;
+  }
 }
 
 /**
@@ -151,12 +154,14 @@ function ifIP4(dat:string):string|number {
  * @public
  * @returns {IPListable}
  */
-export function mapInterfaces(nets:Record<string, NetworkInterfaceInfo> ):IPListable {
-  const out:IPListable = {};
+export function mapInterfaces(
+  nets: Record<string, NetworkInterfaceInfo>,
+): IPListable {
+  const out: IPListable = {};
 
   for (const nom of Object.keys(nets)) {
     for (const net of nets[nom]) {
-      if (net.family === ifIP4(net.family ) && !net.internal) {
+      if (net.family === ifIP4(net.family) && !net.internal) {
         if (!(nom in out)) {
           out[nom] = [];
         }
@@ -169,4 +174,3 @@ export function mapInterfaces(nets:Record<string, NetworkInterfaceInfo> ):IPList
   }
   return out;
 }
-

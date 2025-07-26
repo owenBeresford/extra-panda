@@ -27,43 +27,40 @@ describe("TEST networking", async () => {
     );
   });
 
- it("test 2: accessCookie ", async () => {
+  it("test 2: accessCookie ", async () => {
     const TEST_NAME = "BROWSER TEST func[1] accessCookie";
     await wrap(
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
-		// not called document, so get TEST mock
-		let obj=accessCookie();
-		expect(typeof obj.set).toBe( "function");
-		expect(typeof obj.get).toBe("function");
+        // not called document, so get TEST mock
+        let obj = accessCookie();
+        expect(typeof obj.set).toBe("function");
+        expect(typeof obj.get).toBe("function");
         await delay(100);
       },
     );
   });
 
- it("test 2.1: accessCookie ", async () => {
+  it("test 2.1: accessCookie ", async () => {
     const TEST_NAME = "BROWSER TEST func[1] accessCookie";
     await wrap(
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (document, location, window) => {
-		let obj=accessCookie();
-		expect(typeof obj.set).toBe("function");
-		expect(typeof obj.get).toBe("function");
-console.log("in tests, before functions", document.cookie);
-		expect(document.cookie.length).toBe( 0);   // string length
-		expect( obj.get('TEST1') ).toBe( "");
-		obj.set('TEST1', "readme.please", 2);
-console.log("in tests, after set functions", document.cookie);
-		expect(document.cookie.length).toBeGreaterThan( 7);
-//		expect. equal(document.cookies , , "can run on empty cookies");
+        let obj = accessCookie();
+        expect(typeof obj.set).toBe("function");
+        expect(typeof obj.get).toBe("function");
+        expect(document.cookie.length).toBe(0); // string length
+        expect(obj.get("TEST1")).toBe("");
+        obj.set("TEST1", "readme.please", 2);
+        expect(document.cookie.length).toBeGreaterThan(7);
+        //		expect. equal(document.cookies , , "can run on empty cookies");
+        // should test obj.clear, don't think its used
         await delay(100);
       },
     );
   });
-
-
 });
 
 await execTest(run);

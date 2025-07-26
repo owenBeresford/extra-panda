@@ -1,7 +1,7 @@
 import type { Cookieable } from "./all-types";
 import { APPEARANCE_COOKIE } from "./immutables";
 import { accessCookie } from "./networking";
-import { log } from './log-services';
+import { log } from "./log-services";
 
 /**
  * COOKIE
@@ -35,7 +35,7 @@ export class QOOKIE implements Cookieable {
       const d1 = new Date();
       d1.setTime(d1.getTime() + expDays * 24 * 60 * 60 * 1000);
       expires = "expires=" + d1.toUTCString();
-    } 
+    }
     document.cookie = nom + "=" + cValue + "; " + expires + "; path=/ ;secure";
   }
 

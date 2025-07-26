@@ -494,7 +494,11 @@ export async function createAdjacentChart(
       dom,
     );
   } else {
-    const data: SimpleResponse = await OPTS.runFetch(OPTS.meta, true, OPTS.debug);
+    const data: SimpleResponse = await OPTS.runFetch(
+      OPTS.meta,
+      true,
+      OPTS.debug,
+    );
     if (!("ok" in data) || !data.ok || !Array.isArray(data.body)) {
       log("info", "There doesn't seem to be a group meta data file.");
       appendIsland(

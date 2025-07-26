@@ -54,6 +54,5 @@ export type CurlHeadersBlob = Record<string, string> & {
 
 export type VendorModPassthru = (item: Reference, body: string) => Reference;
 
-type NameString ="first" | string;
+type NameString = "first" | string;
 export type IPListable = Record<NameString, Array<string>>;
- 
