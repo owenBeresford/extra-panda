@@ -1,5 +1,5 @@
 export const COOKIE_JAR = "/var/www/oab1/cookies.txt";
-export const TIMEOUT = 3; // seconds
+export const TIMEOUT = 5; // seconds
 export const BATCH_SZ = 7;
 export const CURL_VERBOSE = false;
 export const LINK_MIN_NO = 4;
