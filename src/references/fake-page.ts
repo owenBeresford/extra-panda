@@ -1,7 +1,7 @@
 import { assert, expect, describe, it } from "vitest";
 
 import { cleanHTTPstatus } from "./string-manip";
-import { log } from '../log-services';
+import { log } from "../log-services";
 import type {
   HTMLTransformable,
   PromiseCB,
@@ -14,11 +14,11 @@ export class FakePage implements HTMLTransformable {
   protected bad: PromiseCB;
   protected CB: wrappedCloseType;
   protected _state: number;
-	protected debug:boolean;
+  protected debug: boolean;
   protected startDate: Date;
   protected stopDate: Date;
 
-  public constructor(dbg:boolean=false) {
+  public constructor(dbg: boolean = false) {
     this.assignClose = this.assignClose.bind(this);
     this.success = this.success.bind(this);
     this.failure = this.failure.bind(this);
@@ -26,7 +26,7 @@ export class FakePage implements HTMLTransformable {
 
     this.CB = false;
     this._state = 0;
-	this.debug=dbg;
+    this.debug = dbg;
   }
 
   // the "100 category" for HTTP codes, i.e. 2, 4, 5
@@ -37,9 +37,9 @@ export class FakePage implements HTMLTransformable {
   }
 
   public success(statusCode: string, data: string): void {
-	if(this.debug) {
-		log("debug", "dump of http transaction"+ statusCode, data, "XXXX" );
-	}
+    if (this.debug) {
+      log("debug", "dump of http transaction" + statusCode, data, "XXXX");
+    }
 
     // also param headers:Headers
     assert.equal(
@@ -66,9 +66,9 @@ export class FakePage implements HTMLTransformable {
   }
 
   public failure(msg: Error | string): void {
-	if(this.debug) {
-	    log("debug", msg+ " and "+ this._state);
-	}
+    if (this.debug) {
+      log("debug", msg + " and " + this._state);
+    }
 
     if (typeof this.CB === "function") {
       console.log("[DEBUG] failure(): Running cURL close");

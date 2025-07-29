@@ -216,16 +216,13 @@ async function links2references(list: Array<string>): Promise<void> {
       let tmp = p3.resultsArray.filter((a) => !!a);
       log(
         "debug",
-          `INTERVAL TICK, got ${tmp.length} done items, input ${list.length} items`,
+        `INTERVAL TICK, got ${tmp.length} done items, input ${list.length} items`,
       );
       if (
         p3.resultsArray.length === list.length &&
         !p3.resultsArray.includes(false)
       ) {
-        log(
-          "debug",
-            " INTERVAL TICK, CLOSING SCRIPT, seem to have data",
-        );
+        log("debug", " INTERVAL TICK, CLOSING SCRIPT, seem to have data");
 
         dump_to_disk(p3.resultsArray, FN);
         clearInterval(TRAP);

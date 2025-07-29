@@ -63,12 +63,12 @@ export class FirstPage implements HTMLTransformable {
         return;
       }
     }
-	for(let i in list ) {
-		// #leSigh.   The Wiki library converts these to HTML entities, as part of UTF-8 safety
-		if(list[i].includes( "&amp;") ) {
-			list[i]= decodeURI(list[1]);
-		}
-	}
+    for (let i in list) {
+      // #leSigh.   The Wiki library converts these to HTML entities, as part of UTF-8 safety
+      if (list[i].includes("&amp;")) {
+        list[i] = decodeURI(list[1]);
+      }
+    }
     this.good(list);
   }
 

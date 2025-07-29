@@ -134,7 +134,12 @@ export class MorePages implements HTMLTransformable {
       this.data.save(item, this.offset);
     } else {
       log("warn", `Not overwriting offset ${this.offset} for ${this.url} .`);
-		console.log("Current", this.data.resultsArray[this.offset], "new data", item);
+      console.log(
+        "Current",
+        this.data.resultsArray[this.offset],
+        "new data",
+        item,
+      );
     }
     if (typeof this.CB == "function") {
       this.CB();
