@@ -150,6 +150,7 @@ async function links2references(list: Array<string>): Promise<void> {
   );
 
   let cur = p3.offset(0);
+
   while (p3.morePages(cur)) {
     let batch = p3.currentBatch;
     for (let k = 0; k < BATCH_SZ; k++) {
@@ -177,7 +178,7 @@ async function links2references(list: Array<string>): Promise<void> {
   setMyTimeout(TIMEOUT * 2.5);
   let retry: PageCollection = new PageCollection(p3.mapFails());
   const trans2 = new MorePages(retry, apply_vendors, HTTP_REDIRECT_LIMIT);
-  log("debug", `RETRYING ??/${BATCH_SZ} links in ${process.argv[3]}`);
+  log("info", `RETRYING ??/${BATCH_SZ} links in ${process.argv[3]}`);
 
   cur = retry.offset(0);
   while (retry.morePages(cur)) {
@@ -215,7 +216,6 @@ async function links2references(list: Array<string>): Promise<void> {
       let tmp = p3.resultsArray.filter((a) => !!a);
       log(
         "debug",
-        new Date().getUTCSeconds() +
           `INTERVAL TICK, got ${tmp.length} done items, input ${list.length} items`,
       );
       if (
@@ -224,7 +224,6 @@ async function links2references(list: Array<string>): Promise<void> {
       ) {
         log(
           "debug",
-          new Date().getUTCSeconds() +
             " INTERVAL TICK, CLOSING SCRIPT, seem to have data",
         );
 

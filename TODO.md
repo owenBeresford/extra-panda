@@ -16,7 +16,6 @@ MAINTENANCE
 - Look at https://github.com/githubnext/testpilot - test generator
 - Log fault on validate class for HTML with no doctype header.   DUMP html-validate, it doesn't validate HTML5 properly,
 - Make RAM usage and execution-cost tests-and-monitoring more mature
-- Implement Networking browser test script
 - Port remaining non-production files to TS.  
 - Declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
 - To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
@@ -26,7 +25,6 @@ MAINTENANCE
 - Evaluate https://www.npmjs.com/package/accessibility-checker to drop w3c one
 - Design 1 cycle animation on title popout IF OPEN 
 - For long content with many page sections, setup component for each page in a tidy fashion && tell later sections to load lower prio as they are likely to be off screen
-- Add References re-try logic on Network Timeout, second hit seems to succede more often 
 - Add ability to add test array of URLs to tool
 - UPDATE:: Internet suggests dropping Playwright for Puppeteer if specific browsers are needed. https://pptr.dev/webdriver-bidi https://www.npmjs.com/package/puppeteer-core
 
@@ -108,7 +106,8 @@ MAINTENANCE
   - DONE: initial fault fixed as newer playwright now available, more work to come.
 - DONE: Adjust symbols used in the chapters menu
 - DONE and CANCELLED: built test code for Qutebrowser, not mature enough from CLI yet.
-- DONE: add a dump-cookie plugin to browser, so will re-execute build references against 1mb of cookies
+- DONE: add a dump-cookie plugin to browser, so can re-execute build-references against 1mb of cookies "not bot", "normal interwibbies"
 - DONE: Check reference tooltips in DL lists, example: architectures-for-css, review-dvcs-automation 
 - DONE: Add feature so tests use A LOCAL IP, not a fixed string 
-
+- DONE:  References re-try logic on Network Timeout, second hit seems to succede more often 
+ 
