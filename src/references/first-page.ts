@@ -71,6 +71,11 @@ export class FirstPage implements HTMLTransformable {
     }
     this.good(list);
   }
+// above de-encoding
+// add url filter  towardsdatascience + medium => scribe.rip, sciencedirect=>arxiv  alibabacloud=>??
+// strip UTM if found
+
+
 
   public failure(msg: Error | string): void {
     log("warn", "" + msg);

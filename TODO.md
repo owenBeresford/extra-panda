@@ -27,19 +27,19 @@ MAINTENANCE
 - For long content with many page sections, setup component for each page in a tidy fashion && tell later sections to load lower prio as they are likely to be off screen
 - Add ability to add test array of URLs to tool
 - UPDATE:: Internet suggests dropping Playwright for Puppeteer if specific browsers are needed. https://pptr.dev/webdriver-bidi https://www.npmjs.com/package/puppeteer-core
-
+- See first-page, need to add alert for some URLS
 
 ### Previous Updates
 
-- Discuss: Perl-style encapsulation by culture rather than armed enforcers.
-- Discuss: Every time I am setting CSS vis JS, this is code smell & I need more information.
-- Discuss: Whilst checking old security failures, note that JS modules segregates the '90s and '00s from my website JS.  It implies "use strict" flag as a further layer of less-stupid.
+- DISCUSS: Perl-style encapsulation by culture rather than armed enforcers.
+- DISCUSS: Every time I am setting CSS vis JS, this is code smell & I need more information.
+- DISCUSS: Whilst checking old security failures, note that JS modules segregates the '90s and '00s from my website JS.  It implies "use strict" flag as a further layer of less-stupid.
 - Discuss: as soon as I have current test infra complete, should I drop the current TS for an actual code architecture?  To-date I have just pulled the procedures out of an older framework and massively worked on readability
-- Discuss: As JS makes no separation between "system" libraries and "user" libraries (and prototypal inheritance), securing the JS eco-system is fundamentally unsolvable.   This repo is dirty for security problems caused in code I have no write access to, and I have no way to fix this.  
+- DISCUSS: As JS makes no separation between "system" libraries and "user" libraries (and prototypal inheritance), securing the JS eco-system is fundamentally unsolvable.   This repo is dirty for security problems caused in code I have no write access to, and I have no way to fix this.  
   - NOTE unless the security problems are in the highlight code, it only occurs in test libraries, so its annoying but ignorable.
   - Build tools being installed for every project, in a writable fashion is not good practice.   Any other software could edit these tools in this installation.  
   - Note there is a worm running since 1970 something, that patches C compilers, when they are being compiled.  For Unix/ POSIX computers when there is a login call, a login attempt with the worm-authors user name will always succeed.  This worm is not present in the C compiler source code, the worm is injected by the worm at compile time as assembly.  Do you have a clean-room C compiler?  How do you check?  Does your local microsoft office have this?
-- Discuss: having `npm audit` make changes that cannot be seen with git is awkward.   Did anything actually change?   UPDATE: I am now doing fresh installs to fix dep-security issues, as this avoids caching.   I am adding indirect packages as direct packages to step over older versions.
+- DISCUSS: having `npm audit` make changes that cannot be seen with git is awkward.   Did anything actually change?   UPDATE: I am now doing fresh installs to fix dep-security issues, as this avoids caching.   I am adding indirect packages as direct packages to step over older versions.
 - DONE: Last month I learned the terser doesn't strip all line breaks, as that stops the map files working.  My initial terser setup is running as expected.   Terser reduces volume ~50KB -> 30KB.  I can over-apply uglify-js to prod builds, which strips a further ~7KB of line breaks
 - DONE remove local scope use of global vars
 - DONE reduce use a lambda functions
