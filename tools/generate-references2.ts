@@ -174,40 +174,40 @@ async function links2references(list: Array<string>): Promise<void> {
     }
   }
 
-  if( ENABLE_RETRY) {
-  await delay(TIMEOUT);
-  setMyTimeout(TIMEOUT * 2.5);
-  let retry: PageCollection = new PageCollection(p3.mapFails());
-  const trans2 = new MorePages(retry, apply_vendors, HTTP_REDIRECT_LIMIT);
-  log("info", `RETRYING ??/${BATCH_SZ} links in ${process.argv[3]}`);
+  if (ENABLE_RETRY) {
+    await delay(TIMEOUT);
+    setMyTimeout(TIMEOUT * 2.5);
+    let retry: PageCollection = new PageCollection(p3.mapFails());
+    const trans2 = new MorePages(retry, apply_vendors, HTTP_REDIRECT_LIMIT);
+    log("info", `RETRYING ??/${BATCH_SZ} links in ${process.argv[3]}`);
 
-  cur = retry.offset(0);
-  while (retry.morePages(cur)) {
-    let batch = retry.currentBatch;
-    for (let k = 0; k < BATCH_SZ; k++) {
-      cur = retry.offset(k);
-      // this if trap will exec in the last batch
-      if (k >= batch.length) {
+    cur = retry.offset(0);
+    while (retry.morePages(cur)) {
+      let batch = retry.currentBatch;
+      for (let k = 0; k < BATCH_SZ; k++) {
+        cur = retry.offset(k);
+        // this if trap will exec in the last batch
+        if (k >= batch.length) {
+          break;
+        }
+
+        trans2.setOffset(cur, batch[k]);
+        // the logic test has side-effects
+        if (!retry.mapRepeatDomain(batch[k], cur)) {
+          retry.zeroLoop();
+          await exec_reference_url(cur, batch[k], trans2);
+        }
+      }
+
+      // second safety against awkward last batches
+      if (cur > list.length) {
         break;
       }
-
-      trans2.setOffset(cur, batch[k]);
-      // the logic test has side-effects
-      if (!retry.mapRepeatDomain(batch[k], cur)) {
-        retry.zeroLoop();
-        await exec_reference_url(cur, batch[k], trans2);
-      }
     }
 
-    // second safety against awkward last batches
-    if (cur > list.length) {
-      break;
-    }
+    await delay(TIMEOUT);
+    p3.merge(retry);
   }
-
-  await delay(TIMEOUT);
-  p3.merge(retry);
-	}
 
   let hasData = p3.resultsArray.filter((a) => !!a);
   log("debug", "BEFORE got " + hasData.length + " input " + list.length);

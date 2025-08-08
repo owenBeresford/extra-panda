@@ -44,6 +44,9 @@ export function fetch2(
   // this is confusing to read, this registers the curl->close CB for later on
   close(CB);
 
+  /*
+	To be able to check references, changing these headers sometimes helps
+*/
   curl.setOpt("HTTPHEADER", [
     "upgrade-insecure-requests: 1",
     "Referrer-policy: strict-origin-when-cross-origin",

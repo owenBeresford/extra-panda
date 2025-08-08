@@ -120,7 +120,6 @@ describe("TEST references networking2 ", () => {
     });
   });
 
-
   it.sequential("go 2: exec_reference_url(good URL) ", async () => {
     const FP5 = new FakePage();
     FP5.setState(2);

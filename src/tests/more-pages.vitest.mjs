@@ -319,7 +319,7 @@ describe("TEST references MorePages ", () => {
       "sixth JS redir",
     );
 
-	html=`<!DOCTYPE html><html lang="en-US">
+    html = `<!DOCTYPE html><html lang="en-US">
 <head>
 <title>Just a moment...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -353,13 +353,11 @@ if (window.history && window.history.replaceState) {
 	a.onload = function() {history.replaceState(null, null, ogU);}}document.getElementsByTagName('head')[0].appendChild(a);}());</script>
 </body>
 </html>`;
-	assert.equal(
+    assert.equal(
       "object",
       typeof extractRedirect(html, 3, current, 0),
       "sixth JS redir",
     );
-
-
   });
 
   // TODO check loop limiting in other regexp branches
