@@ -20,21 +20,21 @@ MAINTENANCE
 - Declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
 - To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
 - Rebuild snap to end CSS (unused but included), as dis-functional in Chrome  
+- Design 1 cycle animation on title popout IF OPEN 
 - Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
 - For the other CSS features, add a extra visual test browserTest etc (see text file in vis-test dir)
 - Evaluate https://www.npmjs.com/package/accessibility-checker to drop w3c one
-- Design 1 cycle animation on title popout IF OPEN 
 - For long content with many page sections, setup component for each page in a tidy fashion && tell later sections to load lower prio as they are likely to be off screen
 - Add ability to add test array of URLs to tool
 - UPDATE:: Internet suggests dropping Playwright for Puppeteer if specific browsers are needed. https://pptr.dev/webdriver-bidi https://www.npmjs.com/package/puppeteer-core
-- See first-page, need to add alert for some URLS
+- references: add patch mode (e.g. only broken ones)
 
 ### Previous Updates
 
 - DISCUSS: Perl-style encapsulation by culture rather than armed enforcers.
 - DISCUSS: Every time I am setting CSS vis JS, this is code smell & I need more information.
 - DISCUSS: Whilst checking old security failures, note that JS modules segregates the '90s and '00s from my website JS.  It implies "use strict" flag as a further layer of less-stupid.
-- Discuss: as soon as I have current test infra complete, should I drop the current TS for an actual code architecture?  To-date I have just pulled the procedures out of an older framework and massively worked on readability
+- DISCUSS: as soon as I have current test infra complete, should I drop the current TS for an actual code architecture?  To-date I have just pulled the procedures out of an older framework and massively worked on readability
 - DISCUSS: As JS makes no separation between "system" libraries and "user" libraries (and prototypal inheritance), securing the JS eco-system is fundamentally unsolvable.   This repo is dirty for security problems caused in code I have no write access to, and I have no way to fix this.  
   - NOTE unless the security problems are in the highlight code, it only occurs in test libraries, so its annoying but ignorable.
   - Build tools being installed for every project, in a writable fashion is not good practice.   Any other software could edit these tools in this installation.  
@@ -110,4 +110,5 @@ MAINTENANCE
 - DONE: Check reference tooltips in DL lists, example: architectures-for-css, review-dvcs-automation 
 - DONE: Add feature so tests use A LOCAL IP, not a fixed string 
 - DONE:  References re-try logic on Network Timeout, second hit seems to succede more often 
- 
+- DONE: add 'URL washing' to make them easier to use, if the article author neglected this step. 
+
