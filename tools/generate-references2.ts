@@ -26,7 +26,7 @@ import {
 } from "../src/references/networking";
 import { PageCollection } from "../src/references/page-collection";
 import { apply_vendors } from "../src/references/vendor-mod";
-import { TIMEOUT } from "../src/references/constants";
+import { TIMEOUT, ENABLE_RETRY } from "../src/references/constants";
 import { HTTP_REDIRECT_LIMIT } from "../src/references/constants";
 import { log } from "../src/log-services";
 import type { Reference } from "../src/references/types";
@@ -174,6 +174,7 @@ async function links2references(list: Array<string>): Promise<void> {
     }
   }
 
+  if( ENABLE_RETRY) {
   await delay(TIMEOUT);
   setMyTimeout(TIMEOUT * 2.5);
   let retry: PageCollection = new PageCollection(p3.mapFails());
@@ -206,6 +207,7 @@ async function links2references(list: Array<string>): Promise<void> {
 
   await delay(TIMEOUT);
   p3.merge(retry);
+	}
 
   let hasData = p3.resultsArray.filter((a) => !!a);
   log("debug", "BEFORE got " + hasData.length + " input " + list.length);
@@ -251,6 +253,14 @@ function basicError(e: Error): Promise<void> {
   log("warn", "Root error handler caught: " + e.message);
 }
 
+/*
+	if args as such
+		read last argv as file
+		make PageCollection of bad references
+		pass to links2references
+	else 
+		promise below
+*/
 new Promise(function (good, bad): void {
   let p1 = new FirstPage(true);
   p1.promiseExits(good, bad, -1);
