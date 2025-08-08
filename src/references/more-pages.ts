@@ -189,6 +189,9 @@ export class MorePages implements HTMLTransformable {
       "<script>\\s*location\\.replace\\([\"']([^'\"]+)['\"]\\)",
       "<script>\\s*location\\.replaceState\\(null,[ ]*['\"]{2},[ ]*(['\"](.*)['\"])\\)",
       "<script>\\s*location\\.replaceState\\({[^}]*},[ ]*['\"]{2},[ ]*['\"](.*)['\"]\\)",
+      "<script>\\s*location\\.replaceState\\(null,[ ]*null,[ ]*(['\"](.*)['\"])\\)",
+      "location\\.replaceState\\(null,[ ]*null,[ ]*(['\"](.*)['\"])+ window._cf_chl_opt.cOgUHash\\)",
+      "history\\.replaceState\\(null,[ ]*null,[ ]*(['\"](.*)['\"])[ ]*\\+[ ]*window._cf_chl_opt.cOgUHash\\)",
       '<link\\s+rel=["\']canonical["\']\\s+href="([^"]+)"',
     ];
 
