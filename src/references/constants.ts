@@ -6,3 +6,6 @@ export const LINK_MIN_NO = 4;
 export const HTTP_REDIRECT_LIMIT = 3;
 export const HTTP_ACCEPT = 2; // (ie 200 range)
 export const STRICT_NETWORKING = 0;
+export const EXTRA_URL_FILTERING=1;
+export const ENABLE_RETRY=1;
+

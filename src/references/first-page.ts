@@ -1,7 +1,9 @@
 import { parse } from "node-html-parser";
 import { log } from "../log-services";
-import { LINK_MIN_NO, HTTP_ACCEPT } from "./constants";
+import { decodeEntities } from '../string-base';
+import { LINK_MIN_NO, HTTP_ACCEPT, EXTRA_URL_FILTERING } from "./constants";
 import { cleanHTTPstatus } from "./string-manip";
+
 import type {
   HTMLTransformable,
   PromiseCB,
@@ -63,17 +65,11 @@ export class FirstPage implements HTMLTransformable {
         return;
       }
     }
-    for (let i in list) {
-      // #leSigh.   The Wiki library converts these to HTML entities, as part of UTF-8 safety
-      if (list[i].includes("&amp;")) {
-        list[i] = decodeURI(list[1]);
-      }
-    }
+	if(EXTRA_URL_FILTERING ) {
+		list=this.urlCleaning( list );
+	}
     this.good(list);
   }
-  // above de-encoding
-  // add url filter  towardsdatascience + medium => scribe.rip, sciencedirect=>arxiv  alibabacloud=>??
-  // strip UTM if found
 
   public failure(msg: Error | string): void {
     log("warn", "" + msg);
@@ -92,4 +88,47 @@ export class FirstPage implements HTMLTransformable {
   public assignClose(cb: wrappedCloseType): void {
     this.CB = cb;
   }
+
+// todo: add thing for Puny code
+// todo: URL encoding
+	public urlCleaning(list:Array<string>):Array<string> {
+	    for (let i in list) {
+    	  // #leSigh.   The Wiki library converts these to HTML entities, as part of UTF-8 safety
+	      if (list[i].includes("&amp;")) {
+    	    list[i] = decodeEntities(  decodeURI(list[i]));
+	      }
+
+// @see ["discussion on google link tracking" https://www.analyticsmania.com/post/utm-parameters-in-google-analytics-4/} 
+	      if (list[i].includes("&utm_") || list[i].includes("?utm_")) {
+			let target=new URLSearchParams( list[i].substring( list[i].indexOf('?') ));
+			let keys=Array.from(target.keys());
+			for(let i=0; i<keys.length; i++) {
+				if( keys[i].includes('utm_') ) {
+					target.delete( keys[i] );
+				}
+			}
+			let tmp=list[i].substring(0,  list[i].indexOf('?') );
+			list[i]= tmp+ target.toString();
+	      }
+			if( list[i].includes('en-US') || list[i].includes('en_US') ) {
+				// cant automate this, as not all sites include all languages
+				// for MSFT or Goog, the odds are reasonable
+				log("warn", "URL '"+ list[i]+"' is in USA format, try UK version");
+			}
+			if( list[i].includes('towardsdatascience') ) {
+				list[i]=list[i].replace('towardsdatascience.com', "scribe.rip");
+			}
+			if( list[i].includes('medium.com') ) {
+				list[i]=list[i].replace('medium.com', "scribe.rip");
+			}
+			if( list[i].includes('sciencedirect.com') ) {
+				throw new Error("Klaaxon, source article better "+list[i]);
+			}
+			if( list[i].includes('www.alibabacloud') ) {
+				throw new Error("Klaaxon, source article better "+list[i]);
+			}
+		}
+		return list;
+	}
+
 }
