@@ -109,6 +109,18 @@ describe("TEST references networking2 ", () => {
     });
   });
 
+  it.sequential("go 1.9: networking fetch2( drupal) ", async () => {
+    return new Promise(async (good, bad) => {
+      const FP4 = new FakePage(true);
+      FP4.promiseExits(good, bad, -1);
+      let URL = "https://www.drupal.org/security/secure-configuration";
+
+      FP4.setState(2);
+      await fetch2(URL, FP4.success, FP4.failure, FP4.assignClose);
+    });
+  });
+
+
   it.sequential("go 2: exec_reference_url(good URL) ", async () => {
     const FP5 = new FakePage();
     FP5.setState(2);
