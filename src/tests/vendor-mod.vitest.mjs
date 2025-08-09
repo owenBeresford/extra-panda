@@ -17,6 +17,7 @@ const {
   mod_medium,
   mod_scribe,
   mod_npmjs,
+  mod_pdf,
 } = TEST_ONLY;
 
 describe("TEST references vendor-mod", () => {
