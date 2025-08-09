@@ -359,12 +359,9 @@ if (window.history && window.history.replaceState) {
       "sixth JS redir",
     );
     assert.isTrue(
-       extractRedirect(html, 3, current, 0).message.startsWith('https://'),
+      extractRedirect(html, 3, current, 0).message.startsWith("https://"),
       "sixth JS redir",
     );
-
-
-
   });
 
   // TODO check loop limiting in other regexp branches
