@@ -6,9 +6,6 @@
 	
 	This file is called ...2 as it is the second generation.
 
-* check URL each time its loaded
-* the log files in /tmp show trash sequencing
-* leSigh JS pointers
 */
 
 // https://stackoverflow.com/questions/17276206/list-all-js-global-variables-used-by-site-not-all-defined
@@ -31,8 +28,6 @@ import { HTTP_REDIRECT_LIMIT } from "../src/references/constants";
 import { log } from "../src/log-services";
 import type { Reference } from "../src/references/types";
 
-const [FN, URL1] = process_args(process.argv);
-
 if (!process || !process.argv) {
   log(
     "error",
@@ -40,6 +35,7 @@ if (!process || !process.argv) {
   );
   throw new Error();
 }
+const [FN, URL1, enablePatch] = process_args(process.argv);
 
 /**
  * process_args
@@ -49,27 +45,29 @@ if (!process || !process.argv) {
  * @public
  * @returns {Array<strings>}
  */
-function process_args(args: Array<string>): Array<string> {
+function process_args(args: Array<string>): Array<string | boolean> {
   if (args.length < 4 || args[2] !== "--url") {
     log(
       "warn",
-      "Pass URL as --url <blah> --out <blah>" + args.join(", ") + "   ",
+      "Pass URL as --url <blah> --out <blah> \n" + args.join(", ") + "   ",
     );
     process.exit(1);
   }
-  if (args.length < 6 || args[4] !== "--out") {
+  if (args.length < 6 || !["--out", "--patch" ].includes( args[4] ) ) {
     log(
       "warn",
-      "Pass URL as --url <blah> --out <blah>" + args.join(", ") + "   ",
+      "Pass URL as --url <blah> --out <blah> \n" + args.join(", ") + "   ",
     );
     process.exit(1);
   }
 
+	let patch=false;
   let URL1 = "";
   let FN = "";
   try {
     URL1 = args[3];
     FN = args[5];
+	patch=args.includes('--patch');
   } catch (e) {
     log(
       "warn",
@@ -77,7 +75,7 @@ function process_args(args: Array<string>): Array<string> {
     );
     process.exit(1);
   }
-  return [FN, URL1];
+  return [FN, URL1, patch];
 }
 
 /**
@@ -150,7 +148,6 @@ async function links2references(list: Array<string>): Promise<void> {
   );
 
   let cur = p3.offset(0);
-
   while (p3.morePages(cur)) {
     let batch = p3.currentBatch;
     for (let k = 0; k < BATCH_SZ; k++) {
@@ -261,14 +258,81 @@ function basicError(e: Error): Promise<void> {
 	else 
 		promise below
 */
-new Promise(function (good, bad): void {
-  let p1 = new FirstPage(true);
-  p1.promiseExits(good, bad, -1);
-  try {
-    log("debug", "DEBUG: [-1] " + URL1);
-    fetch2(URL1, p1.success, p1.failure, p1.assignClose);
-  } catch (e) {
-    log("warn", "ERROR, ABORTING [-1] Network error with " + URL1 + " :: " + e);
-    bad(e);
-  }
-}).then(links2references, basicError);
+if( enablePatch ){
+	let stat=fs.lstatSync( FN );
+	if(! stat.isFile()) {
+		throw new Error("May only patch existing files, not  "+FN);
+	}
+
+	const wholeFile = fs.readFileSync(FN, 'utf8');	
+	let wonky:Array<string>=[];
+	let low:number=wholeFile.indexOf('{{plain root');
+	let high:number= wholeFile.indexOf('}}', low);
+	let str:string=wholeFile.substring(low , high).trim();
+	let ORIG=JSON.parse( str);   // types??, err hehe
+	for(let i=0; i<ORIG.length; i++ ) {
+		if(ORIG[i].desc.contains('HTTP_ERROR')) {
+			wonky.push( ORIG[i].url );
+			// keep original object for updating values
+		}
+	}
+
+    const pc3 = new PageCollection( wonky);
+    const trans3 = new MorePages(pc3, apply_vendors, HTTP_REDIRECT_LIMIT);
+	log( "debug", `There are ${wonky.length}/${BATCH_SZ} links in ${FN }` );
+	let cur = pc3.offset(0);
+	while (pc3.morePages(cur)) {
+	    let batch = pc3.currentBatch;
+	    for (let k = 0; k < BATCH_SZ; k++) {
+	      cur = pc3.offset(k);
+	      // this if trap will exec in the last batch
+	      if (k >= batch.length) {
+	        break;
+	      }
+
+	      trans3.setOffset(cur, batch[k]);
+	       pc3.zeroLoop();
+	       await exec_reference_url(cur, batch[k], trans3);
+    	}
+
+    // second safety against awkward last batches
+	  if (cur > wonky.length) {
+        break;
+      }
+   }
+	
+	let matched=0;
+	for(let k=0; k< pc3.resultsArray.length; k++ ) {
+		for(let l=0; l<ORIG.length; l++) {
+			if(ORIG[l].url===pc3.resultsArray[k].url ) {
+				if(!pc3.resultsArray[k].desc.includes('HTTP_ERROR') &&
+					ORIG[l].desc.includes('HTTP_ERROR') ) {
+					ORIG[l]=Object.assign({}, pc3.resultsArray[k]);
+					matched++;
+				}
+				break;
+			}
+		}
+	}
+	if(matched!==pc3.resultsArray.length) {
+		console.log("KLAAXXX0n, KLAAAXXX0N \n", 
+					JSON.stringify(pc3.resultsArray ), "\n", 
+					JSON.stringify(ORIG), "\n"
+					);
+		throw new Error("problems, see log mesasage");
+	}
+    dump_to_disk(ORIG, FN);
+
+} else {
+	new Promise(function (good, bad): void {
+			let p1 = new FirstPage(true);
+			p1.promiseExits(good, bad, -1);
+			try {
+				log("debug", "DEBUG: [-1] " + URL1);
+				fetch2(URL1, p1.success, p1.failure, p1.assignClose);
+			} catch (e) {
+				log("warn", "ERROR, ABORTING [-1] Network error with " + URL1 + " :: " + e);
+				bad(e);
+			}
+	}).then(links2references, basicError);
+}
