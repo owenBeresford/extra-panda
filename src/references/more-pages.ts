@@ -205,7 +205,7 @@ export class MorePages implements HTMLTransformable {
         if (hit[1].substr(0, 1) === "/") {
           if (list[i].includes("history\\.")) {
             // it may be more readable to isolate this entire matching option
-			// #leSigh again
+            // #leSigh again
             let host = current.substring(0, current.indexOf("/", 9));
             hit[1] = host + hit[1];
           } else {
