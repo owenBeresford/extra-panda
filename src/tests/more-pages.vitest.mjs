@@ -358,6 +358,13 @@ if (window.history && window.history.replaceState) {
       typeof extractRedirect(html, 3, current, 0),
       "sixth JS redir",
     );
+    assert.isTrue(
+       extractRedirect(html, 3, current, 0).message.startsWith('https://'),
+      "sixth JS redir",
+    );
+
+
+
   });
 
   // TODO check loop limiting in other regexp branches

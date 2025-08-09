@@ -189,9 +189,9 @@ export class MorePages implements HTMLTransformable {
       "<script>\\s*location\\.replace\\([\"']([^'\"]+)['\"]\\)",
       "<script>\\s*location\\.replaceState\\(null,[ ]*['\"]{2},[ ]*(['\"](.*)['\"])\\)",
       "<script>\\s*location\\.replaceState\\({[^}]*},[ ]*['\"]{2},[ ]*['\"](.*)['\"]\\)",
-      "<script>\\s*location\\.replaceState\\(null,[ ]*null,[ ]*(['\"](.*)['\"])\\)",
-      "location\\.replaceState\\(null,[ ]*null,[ ]*(['\"](.*)['\"])+ window._cf_chl_opt.cOgUHash\\)",
-      "history\\.replaceState\\(null,[ ]*null,[ ]*(['\"](.*)['\"])[ ]*\\+[ ]*window._cf_chl_opt.cOgUHash\\)",
+      "<script>\\s*location\\.replaceState\\(null,[ ]*null,[ ]*['\"](.*)['\"]\\)",
+      "location\\.replaceState\\(null,[ ]*null,[ ]*['\"](.*)['\"]+ window._cf_chl_opt.cOgUHash\\)",
+      "history\\.replaceState\\(null,[ ]*null,[ ]*['\"](.*)['\"][ ]*\\+[ ]*window._cf_chl_opt.cOgUHash\\)",
       '<link\\s+rel=["\']canonical["\']\\s+href="([^"]+)"',
     ];
 
@@ -203,8 +203,14 @@ export class MorePages implements HTMLTransformable {
           return false;
         }
         if (hit[1].substr(0, 1) === "/") {
+			if( list[i].includes('history\\.')) {
+			// it may be mioer readableto isolate this entire matching case
+				let host=current.substring(0, current.indexOf('/', 9));
+				hit[1]=host+hit[1];
+			} else {
           // do not allow relative redirects in output, #leSigh
           return false;
+			}
         }
         if (
           (hit[1].length * 100) / current.length < 70 &&
