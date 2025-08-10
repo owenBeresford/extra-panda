@@ -1,9 +1,81 @@
-import { assert, describe, it } from "vitest";
+import { assert, describe, it, expect } from "vitest";
 
 import { FirstPage } from "../references/first-page";
 
 // no test for promiseExits, assignClose,
 describe("TEST references FirstPage ", () => {
+  // this unit test would work well with a skelgen, no DOM involved
+  it("go 4: URL washing ", () => {
+    const obj = new FirstPage(false);
+    const BASE_URL = "https://192.168.1.123/";
+    let reqt = [BASE_URL + "?t1=34534&amp;t2=dgdg"],
+      resp = [],
+      expt = [BASE_URL + "?t1=34534&t2=dgdg"];
+    resp = obj.urlCleaning(reqt);
+    assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
+    assert.deepEqual(resp, expt, "step #1");
+
+    (reqt = [BASE_URL + "?t1=34534&amp;t2=dgdgi&amp;t3=erterte&amp;t4=sdfsdf"]),
+      (resp = []),
+      (expt = [BASE_URL + "?t1=34534&t2=dgdgi&t3=erterte&t4=sdfsdf"]);
+    resp = obj.urlCleaning(reqt);
+    assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
+    assert.deepEqual(resp, expt, "step #2");
+
+    (reqt = [BASE_URL + "?utm_source=wfsf&utm_medium=sefsdf&utm_term=dgdfgd"]),
+      (resp = []),
+      (expt = [BASE_URL + ""]);
+    resp = obj.urlCleaning(reqt);
+    assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
+    assert.deepEqual(resp, expt, "step #3");
+
+    (reqt = [
+      BASE_URL + "?q=ertert&utm_source=wfsf&utm_medium=sefsdf&utm_term=dgdfgd",
+    ]),
+      (resp = []),
+      (expt = [BASE_URL + "q=ertert"]);
+    resp = obj.urlCleaning(reqt);
+    assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
+    assert.deepEqual(resp, expt, "step #4");
+
+    (reqt = [
+      BASE_URL +
+        "?q=ertert&utm_source=wfsf&utm_medium=sefsdf&utm_term=dgdfgd&sort=-2",
+    ]),
+      (resp = []),
+      (expt = [BASE_URL + "q=ertert&sort=-2"]);
+    resp = obj.urlCleaning(reqt);
+    assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
+    assert.deepEqual(resp, expt, "step #5");
+
+    (reqt = [BASE_URL + "?q=utm_+keywords"]),
+      (resp = []),
+      (expt = [BASE_URL + "?q=utm_+keywords"]);
+    resp = obj.urlCleaning(reqt);
+    assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
+    assert.deepEqual(resp, expt, "step #6");
+
+    (reqt = ["https://towardsdatascience.com?dfgdfg=dgdgd"]),
+      (resp = []),
+      (expt = ["https://scribe.rip?dfgdfg=dgdgd"]);
+    resp = obj.urlCleaning(reqt);
+    assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
+    assert.deepEqual(resp, expt, "step #7");
+
+    (reqt = ["https://medium.com?dfgdfg=dgdgd"]),
+      (resp = []),
+      (expt = ["https://scribe.rip?dfgdfg=dgdgd"]);
+    resp = obj.urlCleaning(reqt);
+    assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
+    assert.deepEqual(resp, expt, "step #8");
+
+    reqt = ["https://sciencedirect.com?dfgdfg=dgdgd"];
+    expect(() => obj.urlCleaning(reqt)).toThrowError("sciencedirect");
+
+    reqt = ["https://www.alibabacloud.cn?dfgdfg=dgdgd"];
+    expect(() => obj.urlCleaning(reqt)).toThrowError("alibabacloud");
+  });
+
   it("go 1: FirstPage failure ", async () => {
     let tmp = new Promise((good, bad) => {
       const obj = new FirstPage(false);

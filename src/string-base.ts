@@ -233,6 +233,60 @@ export function booleanMap(str: string | number): boolean {
   throw new Error("Unknown data " + str);
 }
 
+/*
+list of entities taken from 
+https://developer.mozilla.org/en-US/docs/Glossary/Character_reference
+*/
+export function decodeEntities(str: string): string {
+  const SWAPIES: Readonly<Record<string, string>> = {
+    "&lt;": "<",
+    "&gt;": ">",
+    "&quot;": '"',
+    "&apos;": "'",
+    "&nbsp;": " ",
+    "&ndash;": "–",
+    "&mdash;": "—",
+    "&copy;": "©",
+    "&reg;": "®",
+    "&trade;": "™",
+    "&asymp;": "≈",
+    "&ne;": "≠",
+    "&pound;": "£",
+    "&euro;": "€",
+    "&deg;": "°",
+    "&amp;": "&",
+  };
+  for (let i in SWAPIES) {
+    str = str.replaceAll(i, SWAPIES[i]);
+  }
+  return str;
+}
+
+export function encodeEntities(str: string): string {
+  const SWAPIES: Readonly<Record<string, string>> = {
+    "&": "&amp;",
+    "<": "&lti;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&apos;",
+    " ": "&nbsp;",
+    "–": "&ndash;",
+    "—": "&mdash;",
+    "©": "&copy;",
+    "®": "&reg;",
+    "™": "&trade;",
+    "≈": "&asymp;",
+    "≠": "&ne;",
+    "£": "&pound;",
+    "€": "&euro;",
+    "°": "&deg;",
+  };
+  for (let i in SWAPIES) {
+    str = str.replaceAll(i, SWAPIES[i]);
+  }
+  return str;
+}
+
 /**
  * test_name
  * Make a unique name. used in the browser unit tests.

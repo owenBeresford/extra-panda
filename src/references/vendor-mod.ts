@@ -174,6 +174,17 @@ function mod_parli(item: Reference, body?: string): Reference {
   return item2;
 }
 
+function mod_pdf(item: Reference, body?: string): Reference {
+  let item2 = {
+    url: item.url,
+    desc: "Cannot extract meta-data from PDF at present",
+    title: item.title,
+    auth: "Unknown",
+    date: item.date,
+  };
+  return item2;
+}
+
 const _f1 = function (
   name: string,
   target: ModSymbol,
@@ -199,6 +210,7 @@ export function apply_vendors(item: Reference, body: string): Reference {
     _f1("mongodb.com", "auth", mod_mongodb),
     _f1("codepen.io", "auth", mod_codepen),
     _f1("parliament.uk", "auth", mod_parli),
+    _f1(".pdf", "auth", mod_pdf),
   ] as const;
   const VENDORS_LENGTH = VENDORS.length;
 

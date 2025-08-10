@@ -44,6 +44,9 @@ export function fetch2(
   // this is confusing to read, this registers the curl->close CB for later on
   close(CB);
 
+  /*
+	To be able to check references, changing these headers sometimes helps
+*/
   curl.setOpt("HTTPHEADER", [
     "upgrade-insecure-requests: 1",
     "Referrer-policy: strict-origin-when-cross-origin",
@@ -82,6 +85,8 @@ export function fetch2(
   }
 }
 
+// ESlint doesn't support a Promise impl that says its async
+// maybe I should create @types/ProductionGradePromise which extends Promise and does
 export function exec_reference_url(
   offset: number,
   url: string,
@@ -109,7 +114,6 @@ export function exec_reference_url(
         bad(e);
       }
     })
-      ///////////////////////////////////////////////////////////////////////////////////////////////////////
       // sept 2024, this is preferred catch point
       .catch(async function (ee) {
         log(
@@ -117,17 +121,17 @@ export function exec_reference_url(
           "REDIRECT [" + offset + "] of " + url + " to " + ee.message,
         );
         if (url !== ee.message) {
-          await exec_reference_url(offset, ee.message, handler);
+          return await exec_reference_url(offset, ee.message, handler);
         } else if (STRICT_NETWORKING) {
           throw new Error(
             "impossible situation, 4523586423424 (so I'm bailing)",
           );
         }
         handler.failure("Unspecified failure " + ee.message);
+        // Eslint asked for a return statement on this function
         return null;
       })
   );
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 export async function delay(ms: number): Promise<void> {
@@ -146,9 +150,11 @@ function ifIP4(dat: string): string | number {
 
 /**
  * mapInterfaces
- * Function to list IP4 interfaces locally available
+ * Function to list IP4 interfaces locally availablei, 
+ * bias towards Eth IP4 by using first slot
  * Used in tests 
- * A no-value rewrite to be more functional would make it run faster and be shorter.  I don't need network device names
+ * A no-value rewrite to be more functional would make it run faster and be shorter.  
+ * I don't need network device names
 
  * @link https://stackoverflow.com/a/8440736
  * @public

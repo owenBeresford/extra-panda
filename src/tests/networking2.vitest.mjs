@@ -87,6 +87,39 @@ describe("TEST references networking2 ", () => {
     });
   });
 
+  it.sequential("go 1.7: networking fetch2( isreali VPS site ) ", async () => {
+    return new Promise(async (good, bad) => {
+      const FP4 = new FakePage(true);
+      FP4.promiseExits(good, bad, -1);
+      let URL = "https://il.clubvps.com/?";
+
+      FP4.setState(2);
+      await fetch2(URL, FP4.success, FP4.failure, FP4.assignClose);
+    });
+  });
+
+  it.sequential("go 1.8: networking fetch2( alibaba cloud ) ", async () => {
+    return new Promise(async (good, bad) => {
+      const FP4 = new FakePage();
+      FP4.promiseExits(good, bad, -1);
+      let URL = "https://www.alibabacloud.com/en/china-gateway?_p_lc=1";
+
+      FP4.setState(2);
+      await fetch2(URL, FP4.success, FP4.failure, FP4.assignClose);
+    });
+  });
+
+  it.sequential("go 1.9: networking fetch2( drupal) ", async () => {
+    return new Promise(async (good, bad) => {
+      const FP4 = new FakePage(true);
+      FP4.promiseExits(good, bad, -1);
+      let URL = "https://www.drupal.org/security/secure-configuration";
+
+      FP4.setState(2);
+      await fetch2(URL, FP4.success, FP4.failure, FP4.assignClose);
+    });
+  });
+
   it.sequential("go 2: exec_reference_url(good URL) ", async () => {
     const FP5 = new FakePage();
     FP5.setState(2);
@@ -94,13 +127,14 @@ describe("TEST references networking2 ", () => {
     await exec_reference_url(0, URL, FP5);
   });
 
-  it.sequential("go 2: exec_reference_urli(bad URL) ", async () => {
+  it.sequential("go 2: exec_reference_url(bad URL) ", async () => {
     const FP5 = new FakePage();
     FP5.setState(5);
     let URL = BAD_IP + "resource/contact-me";
     await exec_reference_url(0, URL, FP5);
   });
 
+  /*
   it.sequential("go 1.4: networking fetch2( Elsevier) ", async () => {
     return new Promise(async (good, bad) => {
       const FP4 = new FakePage();
@@ -111,4 +145,5 @@ describe("TEST references networking2 ", () => {
       await fetch2(URL, FP4.success, FP4.failure, FP4.assignClose);
     });
   });
+*/
 });

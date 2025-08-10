@@ -16,32 +16,29 @@ MAINTENANCE
 - Look at https://github.com/githubnext/testpilot - test generator
 - Log fault on validate class for HTML with no doctype header.   DUMP html-validate, it doesn't validate HTML5 properly,
 - Make RAM usage and execution-cost tests-and-monitoring more mature
-- Implement Networking browser test script
 - Port remaining non-production files to TS.  
 - Declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
 - To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
 - Rebuild snap to end CSS (unused but included), as dis-functional in Chrome  
+- Design 1 cycle animation on title popout IF OPEN 
 - Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
 - For the other CSS features, add a extra visual test browserTest etc (see text file in vis-test dir)
 - Evaluate https://www.npmjs.com/package/accessibility-checker to drop w3c one
-- Design 1 cycle animation on title popout IF OPEN 
 - For long content with many page sections, setup component for each page in a tidy fashion && tell later sections to load lower prio as they are likely to be off screen
-- Add References re-try logic on Network Timeout, second hit seems to succede more often 
 - Add ability to add test array of URLs to tool
 - UPDATE:: Internet suggests dropping Playwright for Puppeteer if specific browsers are needed. https://pptr.dev/webdriver-bidi https://www.npmjs.com/package/puppeteer-core
 
-
 ### Previous Updates
 
-- Discuss: Perl-style encapsulation by culture rather than armed enforcers.
-- Discuss: Every time I am setting CSS vis JS, this is code smell & I need more information.
-- Discuss: Whilst checking old security failures, note that JS modules segregates the '90s and '00s from my website JS.  It implies "use strict" flag as a further layer of less-stupid.
-- Discuss: as soon as I have current test infra complete, should I drop the current TS for an actual code architecture?  To-date I have just pulled the procedures out of an older framework and massively worked on readability
-- Discuss: As JS makes no separation between "system" libraries and "user" libraries (and prototypal inheritance), securing the JS eco-system is fundamentally unsolvable.   This repo is dirty for security problems caused in code I have no write access to, and I have no way to fix this.  
+- DISCUSS: Perl-style encapsulation by culture rather than armed enforcers.
+- DISCUSS: Every time I am setting CSS vis JS, this is code smell & I need more information.
+- DISCUSS: Whilst checking old security failures, note that JS modules segregates the '90s and '00s from my website JS.  It implies "use strict" flag as a further layer of less-stupid.
+- DISCUSS: as soon as I have current test infra complete, should I drop the current TS for an actual code architecture?  To-date I have just pulled the procedures out of an older framework and massively worked on readability
+- DISCUSS: As JS makes no separation between "system" libraries and "user" libraries (and prototypal inheritance), securing the JS eco-system is fundamentally unsolvable.   This repo is dirty for security problems caused in code I have no write access to, and I have no way to fix this.  
   - NOTE unless the security problems are in the highlight code, it only occurs in test libraries, so its annoying but ignorable.
   - Build tools being installed for every project, in a writable fashion is not good practice.   Any other software could edit these tools in this installation.  
   - Note there is a worm running since 1970 something, that patches C compilers, when they are being compiled.  For Unix/ POSIX computers when there is a login call, a login attempt with the worm-authors user name will always succeed.  This worm is not present in the C compiler source code, the worm is injected by the worm at compile time as assembly.  Do you have a clean-room C compiler?  How do you check?  Does your local microsoft office have this?
-- Discuss: having `npm audit` make changes that cannot be seen with git is awkward.   Did anything actually change?   UPDATE: I am now doing fresh installs to fix dep-security issues, as this avoids caching.   I am adding indirect packages as direct packages to step over older versions.
+- DISCUSS: having `npm audit` make changes that cannot be seen with git is awkward.   Did anything actually change?   UPDATE: I am now doing fresh installs to fix dep-security issues, as this avoids caching.   I am adding indirect packages as direct packages to step over older versions.
 - DONE: Last month I learned the terser doesn't strip all line breaks, as that stops the map files working.  My initial terser setup is running as expected.   Terser reduces volume ~50KB -> 30KB.  I can over-apply uglify-js to prod builds, which strips a further ~7KB of line breaks
 - DONE remove local scope use of global vars
 - DONE reduce use a lambda functions
@@ -94,7 +91,7 @@ MAINTENANCE
 - DOME: Add feature "take user selection of text, and return standardised word count of it"
 - DONE: Change implementation on reading word-count 
 - DONE: Extracted Tab feature to own TS module, as I'm not updating the tabs UI to pure HTML5 now.
-  - DONE: I now have migrated to pure CSS  
+-       DONE: I now have migrated to pure CSS  
 - DONE: migrated tabs to HTML/CSS as its better architecture
 - DONE: migrate CSS into this project, simplifying my webhost project
 - DONE: tidyup English and old CSS in the CSS
@@ -105,10 +102,15 @@ MAINTENANCE
 - DONE: eslint, I have turned prefer-const OFF, as it doesn't report arrays sensibly.  See inline note
 - DONE: remove remaining CSS float declarations.
 - DONE but BROKEN: add a method to exec tests inside libreWolf, see notes 
-  - DONE: initial fault fixed as newer playwright now available, more work to come.
+-      DONE: initial fault fixed as newer playwright now available, more work to come.
 - DONE: Adjust symbols used in the chapters menu
 - DONE and CANCELLED: built test code for Qutebrowser, not mature enough from CLI yet.
-- DONE: add a dump-cookie plugin to browser, so will re-execute build references against 1mb of cookies
-- DONE: Check reference tooltips in DL lists, example: architectures-for-css, review-dvcs-automation 
+- DONE: Import References features to this code repo
+-      Make more readable, and migrate to TS
+-      Add re-try logic on Network Timeout, second hit seems to succede more often 
+-      Add a dump-cookie plugin to browser, so can re-execute build-references against 1mb of cookies "not bot", "normal interwibbies"
+-      Build for patch mode for existing reference files
+-      Add a basic validator for redirects, in-case the linked website is emitting bad redirects
+- DONE: Check reference tooltips in DL lists, examples: architectures-for-css, review-dvcs-automation 
 - DONE: Add feature so tests use A LOCAL IP, not a fixed string 
 

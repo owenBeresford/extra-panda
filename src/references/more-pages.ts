@@ -99,6 +99,9 @@ export class MorePages implements HTMLTransformable {
       this.data.loop,
     );
     if (typeof redir !== "boolean") {
+// this will crash out in case of a malformed redirect
+// better solution https://www.npmjs.com/package/is-valid-domain
+	  let IGNORED=new URL( redir.message);
       this.data.incLoop();
       this.url = redir.message;
       this.bad(redir);
@@ -134,6 +137,12 @@ export class MorePages implements HTMLTransformable {
       this.data.save(item, this.offset);
     } else {
       log("warn", `Not overwriting offset ${this.offset} for ${this.url} .`);
+      console.log(
+        "Current",
+        this.data.resultsArray[this.offset],
+        "new data",
+        item,
+      );
     }
     if (typeof this.CB == "function") {
       this.CB();
@@ -183,6 +192,9 @@ export class MorePages implements HTMLTransformable {
       "<script>\\s*location\\.replace\\([\"']([^'\"]+)['\"]\\)",
       "<script>\\s*location\\.replaceState\\(null,[ ]*['\"]{2},[ ]*(['\"](.*)['\"])\\)",
       "<script>\\s*location\\.replaceState\\({[^}]*},[ ]*['\"]{2},[ ]*['\"](.*)['\"]\\)",
+      "<script>\\s*location\\.replaceState\\(null,[ ]*null,[ ]*['\"](.*)['\"]\\)",
+      "location\\.replaceState\\(null,[ ]*null,[ ]*['\"](.*)['\"]+ window._cf_chl_opt.cOgUHash\\)",
+      "history\\.replaceState\\(null,[ ]*null,[ ]*['\"](.*)['\"][ ]*\\+[ ]*window._cf_chl_opt.cOgUHash\\)",
       '<link\\s+rel=["\']canonical["\']\\s+href="([^"]+)"',
     ];
 
@@ -194,8 +206,15 @@ export class MorePages implements HTMLTransformable {
           return false;
         }
         if (hit[1].substr(0, 1) === "/") {
-          // do not allow relative redirects in output, #leSigh
-          return false;
+          if (list[i].includes("history\\.")) {
+            // it may be more readable to isolate this entire matching option
+            // #leSigh again
+            let host = current.substring(0, current.indexOf("/", 9));
+            hit[1] = host + hit[1];
+          } else {
+            // do not allow relative redirects in output, #leSigh
+            return false;
+          }
         }
         if (
           (hit[1].length * 100) / current.length < 70 &&
