@@ -27,7 +27,6 @@ MAINTENANCE
 - For long content with many page sections, setup component for each page in a tidy fashion && tell later sections to load lower prio as they are likely to be off screen
 - Add ability to add test array of URLs to tool
 - UPDATE:: Internet suggests dropping Playwright for Puppeteer if specific browsers are needed. https://pptr.dev/webdriver-bidi https://www.npmjs.com/package/puppeteer-core
-- references: add patch mode (e.g. only broken ones)
 
 ### Previous Updates
 
@@ -92,7 +91,7 @@ MAINTENANCE
 - DOME: Add feature "take user selection of text, and return standardised word count of it"
 - DONE: Change implementation on reading word-count 
 - DONE: Extracted Tab feature to own TS module, as I'm not updating the tabs UI to pure HTML5 now.
-  - DONE: I now have migrated to pure CSS  
+-       DONE: I now have migrated to pure CSS  
 - DONE: migrated tabs to HTML/CSS as its better architecture
 - DONE: migrate CSS into this project, simplifying my webhost project
 - DONE: tidyup English and old CSS in the CSS
@@ -103,12 +102,15 @@ MAINTENANCE
 - DONE: eslint, I have turned prefer-const OFF, as it doesn't report arrays sensibly.  See inline note
 - DONE: remove remaining CSS float declarations.
 - DONE but BROKEN: add a method to exec tests inside libreWolf, see notes 
-  - DONE: initial fault fixed as newer playwright now available, more work to come.
+-      DONE: initial fault fixed as newer playwright now available, more work to come.
 - DONE: Adjust symbols used in the chapters menu
 - DONE and CANCELLED: built test code for Qutebrowser, not mature enough from CLI yet.
-- DONE: add a dump-cookie plugin to browser, so can re-execute build-references against 1mb of cookies "not bot", "normal interwibbies"
-- DONE: Check reference tooltips in DL lists, example: architectures-for-css, review-dvcs-automation 
+- DONE: Import References features to this code repo
+-      Make more readable, and migrate to TS
+-      Add re-try logic on Network Timeout, second hit seems to succede more often 
+-      Add a dump-cookie plugin to browser, so can re-execute build-references against 1mb of cookies "not bot", "normal interwibbies"
+-      Build for patch mode for existing reference files
+-      Add a basic validator for redirects, in-case the linked website is emitting bad redirects
+- DONE: Check reference tooltips in DL lists, examples: architectures-for-css, review-dvcs-automation 
 - DONE: Add feature so tests use A LOCAL IP, not a fixed string 
-- DONE:  References re-try logic on Network Timeout, second hit seems to succede more often 
-- DONE: add 'URL washing' to make them easier to use, if the article author neglected this step. 
 

@@ -99,6 +99,9 @@ export class MorePages implements HTMLTransformable {
       this.data.loop,
     );
     if (typeof redir !== "boolean") {
+// this will crash out in case of a malformed redirect
+// better solution https://www.npmjs.com/package/is-valid-domain
+	  let IGNORED=new URL( redir.message);
       this.data.incLoop();
       this.url = redir.message;
       this.bad(redir);
