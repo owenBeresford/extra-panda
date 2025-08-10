@@ -72,7 +72,7 @@ describe("TEST references FirstPage ", () => {
     reqt = ["https://sciencedirect.com?dfgdfg=dgdgd"];
     expect(() => obj.urlCleaning(reqt)).toThrowError("sciencedirect");
 
-    reqt = ["https://alibabacloud.cn?dfgdfg=dgdgd"];
+    reqt = ["https://www.alibabacloud.cn?dfgdfg=dgdgd"];
     expect(() => obj.urlCleaning(reqt)).toThrowError("alibabacloud");
   });
 
