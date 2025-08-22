@@ -433,8 +433,6 @@ input.addArrow:hover + i.specialPointer {
   --fgr: 37;
   --fgg: 37;
   --fgb: 37;
-  --fgcontrast: 1;
-  --bgcontrast: 0.8;
 }
 
 @media screen and (min-resolution: 150dpi) {

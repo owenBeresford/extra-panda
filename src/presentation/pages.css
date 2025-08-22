@@ -406,9 +406,7 @@
    WARN, WARN: if you copy and paste, check the commas at EOL
  */
 .tabContainer:has(#tabArticles > input[type="radio"]:checked) #panelArticles ul,
-.tabContainer:has(#tabProjects > input[type="radio"]:checked)
-  #panelProjects
-  ul {
+.tabContainer:has(#tabProjects > input[type="radio"]:checked) #panelProjects  ul {
   display: inline-block;
   transition: all 0.5s ease;
   min-width: 90%;

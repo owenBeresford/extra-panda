@@ -669,12 +669,17 @@ This is big screen mac, should work with wide versions
   container-name: titleMenu;
   container-type: normal;
 }
-/* if i set  container-type: size; then the container layout wrap works correctly, 
+/* if I set  container-type: size; then the container layout wrap works correctly, 
 					but the computed positioning via the right edge does not
 					I can probably run without that, as there are no EXCEEDINGLY long titles */
 .headingsWidget:not(:has(.titleList > *)) {
   display: none;
 }
+
+.headingsWidget[open]:focus, .headingsWidget[open]:focus-within {
+  z-index: 10;
+}
+
 .headingsWidget[open] summary div {
   padding-right: 4px;
   width: calc(100% - 2.3em);
@@ -690,22 +695,27 @@ This is big screen mac, should work with wide versions
   border: 1px solid var(--scroll1);
 }
 .titleList a {
-  width: calc(100% - 2em);
+  max-width: calc(600px - 2em);
+	width:fit-content;
   display: inline-block;
   padding: 0.4em 1em;
+  overflow-x:hidden;
 }
 .linksWidget:has(.linksWidget[open]) .titleList {
   margin-top: 4em;
 }
 
-@container titleMenu (min-width:1024px ) {
+@container titleMenu (min-width:600px ) {
   .headingsWidget {
     container-type: size;
   }
   .headingsWidget[open] .titleList li {
-    max-width: 100vw;
+    max-width: 600px;
     white-space: normal;
   }
+  .titleList a {
+  width: calc( 600px - 2em);
+	}
 }
 
 /** broswerTest
