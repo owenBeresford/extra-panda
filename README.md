@@ -163,7 +163,7 @@ I have replaced the local CSS with better organised CSS to make it more readable
 - Revalidate against TSC, as types became invalid.
 - Refactor cookie code for readability.
 - Do more code readability changes.
-- DONE: Add jest-lite/ browser unit-tests for the skip() sections in vitest.  These are often behaviour centric tests.
+- DONE: Add jest-lite/ browser unit-tests for the skip() sections in vitest tests.  These are often behaviour centric tests.
 - As the suite sits in Nov 2024, it takes about a minute to exec on a fast PC.   Most of the exec delay is **sleep()** due to the many process model in these tests.
 - I have added template files, for later extension.  
 - TODO: Want to add some CSS tests for crucial UI processes, like z-index.
@@ -175,7 +175,7 @@ I have replaced the local CSS with better organised CSS to make it more readable
 <details>
 <summary> Engineering details (return of..) </summary>
 I imported another feature from into this repo, made it more readable and added better tests.
-Note when using node-libCurl, there is something not lined-up with standard Vite.   Vite cannot load / handle the library files.
+Note when using node-libCurl, there is something not lined-up with standard Vite.   Vite cannot load / handle the library files that are compiled Clang code.
 If I run the TS files via node-vite, there is no visible compiler step, and it links the Clang lib correctly.  To run new tool, please use handling added to package.json  
 
 

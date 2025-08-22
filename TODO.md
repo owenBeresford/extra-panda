@@ -108,6 +108,7 @@ MAINTENANCE
 - DONE: Adjust symbols used in the chapters menu
 - DONE and CANCELLED: built test code for Qutebrowser, not mature enough from CLI yet.
 - DONE: Import References features to this code repo
+-      This code is to supply rich decorated links to users, and check that links are live.  It is run when publishing a new article and annually (approx) to filter expired URLs / content.   
 -      Make more readable, and migrate to TS
 -      Add re-try logic on Network Timeout, second hit seems to succede more often 
 -      Add a dump-cookie plugin to browser, so can re-execute build-references against 1mb of cookies "not bot", "normal interwibbies"
