@@ -215,6 +215,10 @@
   width: 500px;
   margin: 1em auto;
 }
+.whyMongoContainer figure img { width:500px; height:300px; margin-left:calc( 50% - 250px ); } 
+.whyMongoContainer .fullScreen img { height: 200%; width: 200%; margin-left:2em; }
+.whyMongoContainer .fullScreen { left:initial; right:initial; } 
+
 
 /* now called commercial features */
 .basicWebsiteContainer.fewWords > ul > li {
@@ -679,3 +683,4 @@
     overflow-x: unset;
   }
 }
+
