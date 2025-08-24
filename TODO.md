@@ -29,7 +29,7 @@ MAINTENANCE
 - BUG: effects.ts, addBashSamples():: backticks in bash samples get swallowed due to them being quote delimiters as well as valid bash scripting
 - UPDATE:: Internet suggests dropping Playwright for Puppeteer if specific browsers are needed. https://pptr.dev/webdriver-bidi https://www.npmjs.com/package/puppeteer-core
 - TEST THIS CODE https://github.com/egm0121/jest-test-gen?tab=readme-ov-file https://www.npmjs.com/package/jest-test-gen/v/0.0.10  https://github.com/ed4becky/jest-unit-test-generator 
-
+- Add python syntax highlighter
 
 ### Previous Updates
 
