@@ -7,6 +7,7 @@ These URLs below are running when either of the following is run:
 OR
 ` node ./node_modules/.bin/vite-node tools/test-browser.ts --visual-tests-only `
 
+Currently 24 Ui samples to look at the CSS and its interactions
 
 https://127.0.0.1:8081/vis/access-src-test.html
 https://127.0.0.1:8081/vis/button-bar-test.html
@@ -21,26 +22,25 @@ https://127.0.0.1:8081/vis/home-test.html
 https://127.0.0.1:8081/vis/mastodon-widget-test.html
 https://127.0.0.1:8081/vis/mobile-menu-test.html
 https://127.0.0.1:8081/vis/better-dl-test.html
+https://127.0.0.1:8081/vis/dl-intermediate-test.html
 https://127.0.0.1:8081/vis/keywords-widget-test.html
 https://127.0.0.1:8081/vis/menu-test.html
 https://127.0.0.1:8081/vis/pop-over-widget-test.html
 https://127.0.0.1:8081/vis/browser-test-test.html
 https://127.0.0.1:8081/vis/expand-diagram-test.html
+https://127.0.0.1:8081/vis/list-test.html
+https://127.0.0.1:8081/vis/highlight-test.html
+https://127.0.0.1:8081/vis/big-arrow-test.html
+https://127.0.0.1:8081/vis/addreferences-test.html
+https://127.0.0.1:8081/vis/button-bar-test.html
 
 To look at::
+* test for tabs
+* tab CSS as this is now CSS
 * rewrite adjacent bar
 * Create groupIndex test separate to content
 * SMshare
 * maquette widget
-* quiteWide DL 
-* highlight
-* addReferences including leaning classes
-* tab CSS as this is now CSS
 * contact me page, due to weird process
-* appearance page, maybe reCSS this one
-* test for improved lists
-* test for tabs
-* test for big arrows on forms
 * pullout ans tidyup the just HTML + CSS for forms
-* test for button bars
 
