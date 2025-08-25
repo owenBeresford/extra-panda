@@ -33,12 +33,13 @@
   }
   .IAmLibreWolf .linksWidget .dfl li a,
   .IAmLibreWolf .linksWidget .titleList li a {
-    width: calc(100% - 2em);
+    width: fit-content;
+    max-width: calc(600px - 2em);
   }
   .IAmLibreWolf .linksWidget .dfl li,
   .IAmLibreWolf .linksWidget .titleList li {
-    width: calc(100% - 2em);
-    max-width: calc(100% - 2em);
+    width: fit-content;
+    max-width: calc(600px - 2em);
   }
   .IAmLibreWolf .articleHeader nav.row {
     display: flex;
@@ -47,13 +48,11 @@
   .IAmLibreWolf .articleHeader .fullWidth {
     width: auto;
   }
-  .IAmLibreWolf .linksWidget .dfl li a,
-  .IAmLibreWolf .linksWidget .titleList li a {
+  .IAmLibreWolf .linksWidget .dfl li a {
     width: calc(100% - 2em);
   }
-  .IAmLibreWolf .linksWidget .dfl li,
-  .IAmLibreWolf .linksWidget .titleList li {
-    width: calc(100% - 2em);
+  .IAmLibreWolf .linksWidget .dfl li {
+    width: fit-content;
     max-width: calc(100% - 2em);
   }
 

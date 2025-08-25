@@ -2,7 +2,7 @@
 <html lang="en-GB" class="noJS" itemscope itemtype="http://schema.org/Article">
   <head>
     <!-- This website is written by a guy who claims to have lots of specialised technical skills, but this website only partially demonstrates them.  This website is a vehicle for about 240,000 words, please read some of them. -->
-    <title>Menu test</title>
+    <title>Highlight test</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.06" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -17,23 +17,23 @@
       content="lSgIe7Nm0H0RYQ2ktQ4vr5Jz0iYGhQd7cTWoVDg3Xss"
     />
     <link href="/asset/favicon-32x32.png" rel="icon" type="image/png" />
-    <meta itemprop="name" content="Menu test" />
+    <meta itemprop="name" content="Highlight test" />
     <meta
       itemprop="description"
       content="Visual test, do not publish to the internet"
     />
     <meta name="twitter:site" content="@channelOwen" />
-    <meta name="twitter:title" content="Menu test" />
+    <meta name="twitter:title" content="Highlight test" />
     <meta
       name="twitter:description"
       content="Visual test, do not publish to the internet"
     />
     <meta name="twitter:creator" content="@channelOwen" />
-    <meta property="og:title" content="Menu test" />
+    <meta property="og:title" content="Highlight test" />
     <meta property="og:type" content="article" />
     <meta
       property="og:url"
-      content="https://owenberesford.me.uk/resource/menu-test"
+      content="https://owenberesford.me.uk/resource/highlight-test"
     />
     <meta
       property="og:description"
@@ -47,7 +47,7 @@
     <meta property="article:modified_time" content="Aug '25" />
     <link
       rel="canonical"
-      href="https://owenberesford.me.uk/resource/menu-test"
+      href="https://owenberesford.me.uk/resource/highlight-test"
     />
     <!-- the below track is just a generic cheese track, but the style fits. progressive + uplifting tone.  I do not own the rights or anything. 
 TODO: magic tune selection against some index/DB -->
@@ -61,7 +61,7 @@ TODO: magic tune selection against some index/DB -->
       {
         "@context": "https://ogp.me/ns/article#",
         "@type": "Article",
-        "name": "Menu test",
+        "name": "Highlight test",
         "article:published_time": "24th of Aug 2025, 20:40:42",
         "article:modified_time": "Aug '25",
         "article:section": "technology",
@@ -78,7 +78,7 @@ TODO: magic tune selection against some index/DB -->
       <div class="after_menu articleContent">
         <main id="main">
           <article>
-            <div class="blocker">
+            <div class="blocker addBashSamples">
               <div class="halferWords">
                 <p>
                   This is a page to act as a manual test for the new menu CSS.
@@ -90,238 +90,100 @@ TODO: magic tune selection against some index/DB -->
                 <h5 id="toc0">Expected Behaviours</h5>
                 <ul class="ulbasic">
                   <li>
-                    The menu should start open for short numbers of items
-                    (&lt;=5), and closed for longer ones.
+                    I need to manually add in a extra JS and CSS file. Each one
+                    of thee files has been compiled to support a single
+                    languages, see `npm run build` and the scripting it runs.
+                  </li>
+                  <li>This feature uses JS and CSS.</li>
+                  <li>
+                    A section to highlight is either a pair backticks (a single
+                    line) or a CODE block (multi-line).
                   </li>
                   <li>
-                    The menu should hide on mobile, as not enough room for it
+                    Single line samples need to be inside a
+                    <i>addBashSamples</i> container to be seen.
                   </li>
                   <li>
-                    The menu should have hover events for key and mouse inputs
+                    CODE blocks need the class “highlight” and a “lang”
+                    attribute. Pls see extra-panda docs for currently supported
+                    languages.
                   </li>
                   <li>
-                    I created menu specific symbols for the header menu to look
-                    similar to other components. This does not look like the
-                    technology used to make it.
+                    The highlighter should colour all the keywords, and special
+                    punctuation.
                   </li>
                   <li>
-                    The menu should auto scale width, up to threshold, currently
-                    600px
+                    Highlighted CODE blocks are understood tobe in PRE
+                    formatted, so white space is preserved.
+                  </li>
+                  <li>
+                    A single click will highlight entire region to make copying
+                    easier (also work on touch).
+                  </li>
+                  <li>
+                    Multi line blocks will get a $ marker
                     <ul class="ulbasic">
-                      <li>
-                        I fidget about the hard-coded literal in the CSS here
-                      </li>
+                      <li>DONE make that bash only</li>
                     </ul>
                   </li>
                   <li>
-                    The marker should be left aligned, and be sensibly placed/
-                    balanced
+                    Due to expectations of PRE formatting, CODE blocks expand to
+                    fit the content.
                   </li>
                   <li>
-                    <del
-                      >LIMITATION: This menu wasn't designed for multiple menus
-                      per page, and the will hide each other</del
-                    >
-                    <ul class="ulbasic">
-                      <li>FIXED</li>
-                    </ul>
+                    When used with Columns this may need
+                    <strong>manual effort</strong> to be readable. Could break
+                    the columns or use single-line highlighting.
                   </li>
                   <li>
-                    LIMITATION: If there is N menus per page, the lower
-                    on-screen menus may fall off the end of the page. This
-                    widget isn't designed for this use-case.
-                    <ul class="ulbasic">
-                      <li>
-                        TODO: Add warn about many items in menus. Problem with
-                        warning: menu will start closed on page-load, so I can't
-                        compute its size without editing the DOM. No progress
-                        todate.
-                      </li>
-                    </ul>
+                    I can add further languages, but this is a build step.
                   </li>
                 </ul>
               </div>
               <br />
               <br />
               <div class="testComponent">
-                [original]
-                <div class="column linksWidget">
-                  <details class="linksWidget" id="pageMenu">
-                    <summary
-                      class="defaultLinksTrigger fa-"
-                      aria-haspopup="menu"
-                    >
-                      <span class="sr-only">Menu</span>
-                    </summary>
+                <p>
+                  blither blyther blayther blither blither BLITHER bläther
+                  blääther<br />
+                  bleh bleh `purple text` bleh bleh bleh<br />
+                  blither blyther blayther blither blither BLITHER bläther
+                  blääther<br />
+                  blah blah `broken line, <br />
+                  still works`<br />
+                  blither blyther blayther blither blither BLITHER bläther
+                  blääther
+                </p>
 
-                    <menu class="dfl">
-                      <li>Additional features</li>
-                      <li>
-                        <a href="/resource/home"
-                          ><i class="fa fa-angle-left" aria-hidden="true"></i>
-                          Home</a
-                        >
-                      </li>
-                      <li><a href="/resource/search">Search 🔎 </a></li>
-                      <li><a href="/resource/appearance">Appearance </a></li>
-                      <li><a href="/resource/contact-me">Contact me 📞 </a></li>
-                      <li><a href="#contentGroup">📜 Similar articles</a></li>
-                    </menu>
-                  </details>
-                  <details class="headingsWidget">
-                    <summary><div>Chapters</div></summary>
-                    <menu class="titleList">
-                      <li>
-                        <a href="#toc0"
-                          >Startups that plant trees/ improve biosphere</a
-                        >
-                      </li>
-                      <li>
-                        <a href="#toc1"
-                          >Startups that do transport, EV/ trains</a
-                        >
-                      </li>
-                      <li><a href="#toc2">Startups that do packaging</a></li>
-                      <li>
-                        <a href="#toc3">Startups that do power tech/ solar</a>
-                      </li>
-                      <li>
-                        <a href="#toc4"
-                          >Startups for greener buildings/ proptech</a
-                        >
-                      </li>
-                      <li><a href="#toc5">Startups for waste</a></li>
-                      <li><a href="#toc6">Startups for supply chain</a></li>
-                      <li><a href="#toc7">“green recruiters”</a></li>
-                      <li>
-                        <a href="#toc8"
-                          >Paperwork: carbon reporting/ risk charting/ finance/
-                          trading</a
-                        >
-                      </li>
-                    </menu>
-                  </details>
-                  <br />
-                </div>
-                <br />
-                [wide]
-                <div class="column linksWidget">
-                  <details class="headingsWidget">
-                    <summary><div>Chapters</div></summary>
-                    <menu class="titleList">
-                      <li>
-                        <a href="#toc0"
-                          >Startups that plant trees/ improve biosphere</a
-                        >
-                      </li>
-                      <li>
-                        <a href="#toc1"
-                          >Startups that do transport, EV/ trains</a
-                        >
-                      </li>
-                      <li><a href="#toc2">Startups that do packaging</a></li>
-                      <li>
-                        <a href="#toc3">Startups that do power tech/ solar</a>
-                      </li>
-                      <li>
-                        <a href="#toc4"
-                          >Startups for greener buildings/ proptech</a
-                        >
-                      </li>
-                      <li><a href="#toc5">Startups for waste</a></li>
-                      <li><a href="#toc6">Startups for supply chain</a></li>
-                      <li><a href="#toc7">“green recruiters”</a></li>
-                      <li>
-                        <a href="#toc8"
-                          >Paperwork: carbon reporting/ risk charting/ finance/
-                          trading fghfgh ss hsg hsghsf sghs sfghsh
-                        </a>
-                      </li>
-                    </menu>
-                  </details>
-                  <br />
-                </div>
-                <br />
-                [skinny]
-                <div class="column linksWidget">
-                  <details class="headingsWidget">
-                    <summary><div>Chapters</div></summary>
-                    <menu class="titleList">
-                      <li><a href="#toc0">OO</a></li>
-                      <li><a href="#toc1">DDD</a></li>
-                      <li><a href="#toc2">CC</a></li>
-                      <li><a href="#toc3">BB</a></li>
-                      <li><a href="#toc4">AA</a></li>
-                      <li><a href="#toc5">GG</a></li>
-                      <li><a href="#toc6">EE</a></li>
-                      <li><a href="#toc7">GG</a></li>
-                      <li><a href="#toc8">PP</a></li>
-                    </menu>
-                  </details>
-                  <br />
-                </div>
-                <br />
-                [short]
-                <div class="column linksWidget">
-                  <details class="headingsWidget" open>
-                    <summary><div>Chapters</div></summary>
-                    <menu class="titleList">
-                      <li><a href="#toc0">OO</a></li>
-                      <li><a href="#toc1">DDD</a></li>
-                      <li><a href="#toc2">CC</a></li>
-                    </menu>
-                  </details>
-                  <br />
-                </div>
-                <br />
-                [very wide]
-                <div class="column linksWidget">
-                  <details class="headingsWidget">
-                    <summary><div>Chapters</div></summary>
-                    <menu class="titleList">
-                      <li>
-                        <a href="#toc0"
-                          >Startups that plant trees/ improve biosphere</a
-                        >
-                      </li>
-                      <li>
-                        <a href="#toc1"
-                          >Startups that do transport, EV/ trains</a
-                        >
-                      </li>
-                      <li><a href="#toc2">Startups that do packaging</a></li>
-                      <li>
-                        <a href="#toc3">Startups that do power tech/ solar</a>
-                      </li>
-                      <li>
-                        <a href="#toc4"
-                          >Startups for greener buildings/ proptech</a
-                        >
-                      </li>
-                      <li><a href="#toc5">Startups for waste</a></li>
-                      <li><a href="#toc6">Startups for supply chain</a></li>
-                      <li><a href="#toc7">“green recruiters”</a></li>
-                      <li>
-                        <a href="#toc8"
-                          >Paperwork: carbon reporting/ risk charting/ finance/
-                          trading fghfgh ss hsg hsghsf sghs sfghsh idfg dgdrg
-                          agadg adfgad gad gadfg fga gadf gadfga dfgadg adfgadf
-                          gadg adfg gadg adfgad fgadg adfgad fgadg adfgad fgag
-                          adfgadg ag aadfg agad fgafg afg adfga dfgadfg adg adga
-                          dgad fgadg adfg adfga dfga dfgadg adfg dfg afg adfga
-                          dfgadfg adgad fgad gag adfgadf gadfg adg adgad gadg
-                          adg adfgad fgadg ag adfgadfg adfga dgadfg adfga dfga
-                          dfgadf gafg ag adfgadfg adfgadga dfgad gadg adfg
-                          adgadfg adfga dfgad gadg adfga gadfg adgh sghs
-                          fhjshsfhsfghsf hsf hsfh sfh sfh sfgh sfgh sfgh
-                          sfghsfgh sfh sfhs fh sfhsfh sfghsfhsfghsfh sfgh sfhsfh
-                          sfgh sfh sfhs fghsfgh sfgh sfghsfhsfh sfghsfhsfh
-                        </a>
-                      </li>
-                    </menu>
-                  </details>
-                  <br />
-                </div>
+                <p>Maybe I should use IpsumLorem here.</p>
+
+                <p>here be CODE blocks:</p>
+                <p>
+                  blither bliither blïther bliïïther
+                  <code class="highlight" lang="bash">
+                    d1=`ls -t -1 "$SRC_DIR/$x" "$OUT/$x2.html" 2>/dev/null |head
+                    -n 1 ` newFile=0 if [ ! -f "$OUT/$x2.html" ]; then echo
+                    "Doing new page $x2" >>$ERR newFile=1 curl -Ss $LOCAL/$x2 >
+                    $OUT/$x2.html elif [ -f "$d1" -a "$d1" == "$SRC_DIR/$x" ];
+                    then echo "Doing full page $x2 (age difference)" >>$ERR curl
+                    -Ss $LOCAL/$x2 > $OUT/$x2.html else echo " HTML Skipping $x
+                    $d1 as it doesn't seem to have changed" >>$ERR fi
+                  </code>
+                </p>
+
+                <p>
+                  blither bliither blïther bliïïther I think the SQL
+                  highlighting is a bit partial
+                  <code class="highlight" lang="sql">
+                    insert into weak_verbs( weak_word, reference, parent_fid,
+                    desc ) values ("goodverb", 0, -1, "made up word here" ),
+                    ("childverb", 0, 0, "made up word here" ), ("refverb", 1,
+                    -1, "made up word here" ), ("brokenverb", -1, -1, "made up
+                    word here" );
+                  </code>
+                </p>
+
+                <p>blither bliither blïther bliïïther</p>
               </div>
             </div>
           </article>
@@ -332,7 +194,7 @@ TODO: magic tune selection against some index/DB -->
         <nav id="navBar" class="row">
           <div class="column">
             <div class="top-bar fullWidth">
-              <header><h1>Menu test</h1></header>
+              <header><h1>Highlight test</h1></header>
               <p role="status" class="bigScreenOnly">
                 Visual test, do not publish to the internet
               </p>
@@ -368,7 +230,7 @@ TODO: magic tune selection against some index/DB -->
                 </span>
                 <span class="bigScreenOnly">Share: </span>
                 <a
-                  href="https://twitter.com/intent/tweet?text=I+think+this+is+important+https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fmenu-test"
+                  href="https://twitter.com/intent/tweet?text=I+think+this+is+important+https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fhighlight-test"
                   title="Share this resource on your twitter account."
                   target="_blank"
                   class="bigScreenOnly"
@@ -395,7 +257,7 @@ TODO: magic tune selection against some index/DB -->
                   ><span class="sr-only">Mastodon</span>
                 </a>
                 <a
-                  href="https://www.reddit.com/submit?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fmenu-test"
+                  href="https://www.reddit.com/submit?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fhighlight-test"
                   target="_blank"
                   title="Share this article with your Reddit audience"
                   class="bigScreenOnly"
@@ -407,7 +269,7 @@ TODO: magic tune selection against some index/DB -->
                   ><span class="sr-only">Reddit </span>
                 </a>
                 <a
-                  href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fmenu-test"
+                  href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fhighlight-test"
                   target="_blank"
                   class="bigScreenOnly"
                   title="Share current article with your linked-in audience."
@@ -422,7 +284,7 @@ TODO: magic tune selection against some index/DB -->
                   title="Share current article with Hacker news/ Y combinator audience"
                   target="_blank"
                   class="bigScreenOnly"
-                  href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fmenu-test&amp;t=Menu+test"
+                  href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fhighlight-test&amp;t=Highlight+test"
                 >
                   <i
                     class="fa fa-hacker-news"
@@ -434,7 +296,7 @@ TODO: magic tune selection against some index/DB -->
                 </a>
                 <a
                   title="Share this article with your Xing audience."
-                  href="https://www.xing.com/spi/shares/new?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fmenu-test"
+                  href="https://www.xing.com/spi/shares/new?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fhighlight-test"
                   target="_blank"
                   class="bigScreenOnly"
                   ><i
@@ -450,17 +312,17 @@ TODO: magic tune selection against some index/DB -->
                 <span
                   >Edited
                   <time
-                    title="Page edited on 2025-08-20T13:19:38"
-                    datetime="2025-08-20T13:19:38"
+                    title="Page edited on 2025-08-23T13:15:44"
+                    datetime="2025-08-23T13:15:44"
                     >Aug '25</time
                   >
                 </span>
                 <span
                   >Created
                   <time
-                    datetime="2025-03-27T00:00:00"
+                    datetime="2025-06-27T00:00:00"
                     title="If the value says 03-03-2015; its wrong but that is when this project was moved to the current git project"
-                    >Mar '25</time
+                    >Jun '25</time
                   >
                 </span>
               </span>
@@ -478,7 +340,7 @@ TODO: magic tune selection against some index/DB -->
                 <input
                   id="mastodonserver"
                   maxlength="50"
-                  data-url="https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fmenu-test"
+                  data-url="https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fhighlight-test"
                   type="text"
                   value=""
                   placeholder="mastodon.social"
@@ -562,8 +424,8 @@ TODO: magic tune selection against some index/DB -->
             >contact me</a
           >. Last modified
           <time
-            title="Page modified on 2025-08-20T13:19:38"
-            datetime="2025-08-20T13:19:38"
+            title="Page modified on 2025-08-23T13:15:44"
+            datetime="2025-08-23T13:15:44"
             >Aug '25</time
           >.
         </p>
@@ -589,19 +451,8 @@ TODO: magic tune selection against some index/DB -->
       </div>
     </footer>
     <script type="module" src="/asset/ob1-202406.min.mjs"></script>
-    <style>
-      .halferWords {
-        height: 40em;
-      }
-      .testComponent {
-        margin-top: -50em;
-        text-align: right;
-      }
-      @media screen and (max-height: 900px) {
-        .testComponent {
-          margin-top: -60em;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="/asset/hljs.min.css" />
+    <script type="module" src="/asset/highlight-bash.mjs"></script>
+    <script type="module" src="/asset/highlight-sql.mjs"></script>
   </body>
 </html>

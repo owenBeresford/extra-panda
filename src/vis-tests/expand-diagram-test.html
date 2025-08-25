@@ -2,7 +2,7 @@
 <html lang="en-GB" class="noJS" itemscope itemtype="http://schema.org/Article">
   <head>
     <!-- This website is written by a guy who claims to have lots of specialised technical skills, but this website only partially demonstrates them.  This website is a vehicle for about 240,000 words, please read some of them. -->
-    <title>Menu test</title>
+    <title>Expand diagram test</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.06" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -17,23 +17,23 @@
       content="lSgIe7Nm0H0RYQ2ktQ4vr5Jz0iYGhQd7cTWoVDg3Xss"
     />
     <link href="/asset/favicon-32x32.png" rel="icon" type="image/png" />
-    <meta itemprop="name" content="Menu test" />
+    <meta itemprop="name" content="Expand diagram test" />
     <meta
       itemprop="description"
       content="Visual test, do not publish to the internet"
     />
     <meta name="twitter:site" content="@channelOwen" />
-    <meta name="twitter:title" content="Menu test" />
+    <meta name="twitter:title" content="Expand diagram test" />
     <meta
       name="twitter:description"
       content="Visual test, do not publish to the internet"
     />
     <meta name="twitter:creator" content="@channelOwen" />
-    <meta property="og:title" content="Menu test" />
+    <meta property="og:title" content="Expand diagram test" />
     <meta property="og:type" content="article" />
     <meta
       property="og:url"
-      content="https://owenberesford.me.uk/resource/menu-test"
+      content="https://owenberesford.me.uk/resource/expand-diagram-test"
     />
     <meta
       property="og:description"
@@ -47,7 +47,7 @@
     <meta property="article:modified_time" content="Aug '25" />
     <link
       rel="canonical"
-      href="https://owenberesford.me.uk/resource/menu-test"
+      href="https://owenberesford.me.uk/resource/expand-diagram-test"
     />
     <!-- the below track is just a generic cheese track, but the style fits. progressive + uplifting tone.  I do not own the rights or anything. 
 TODO: magic tune selection against some index/DB -->
@@ -61,7 +61,7 @@ TODO: magic tune selection against some index/DB -->
       {
         "@context": "https://ogp.me/ns/article#",
         "@type": "Article",
-        "name": "Menu test",
+        "name": "Expand diagram test",
         "article:published_time": "24th of Aug 2025, 20:40:42",
         "article:modified_time": "Aug '25",
         "article:section": "technology",
@@ -90,238 +90,109 @@ TODO: magic tune selection against some index/DB -->
                 <h5 id="toc0">Expected Behaviours</h5>
                 <ul class="ulbasic">
                   <li>
-                    The menu should start open for short numbers of items
-                    (&lt;=5), and closed for longer ones.
+                    This should support smaller inline images, and full-screen
+                    variants.
                   </li>
                   <li>
-                    The menu should hide on mobile, as not enough room for it
+                    The transition to full=screen should be reversible and
+                    repeatable.
+                  </li>
+                  <li>The smaller size should be about the column width.</li>
+                  <li>
+                    There should be care with image formats, so the any text in
+                    the image is readable.
                   </li>
                   <li>
-                    The menu should have hover events for key and mouse inputs
+                    The capacity to make the image bigger only makes sense on
+                    bigScreen devices. All well-known phones have touch scaling.
+                    So the button should be tagged with bigScreenOnly class
                   </li>
                   <li>
-                    I created menu specific symbols for the header menu to look
-                    similar to other components. This does not look like the
-                    technology used to make it.
+                    If possible, a single image should be used. It can be scaled
+                    DOWN to the smaller image if there is no animation or
+                    effects overlapping it.
                   </li>
                   <li>
-                    The menu should auto scale width, up to threshold, currently
-                    600px
-                    <ul class="ulbasic">
-                      <li>
-                        I fidget about the hard-coded literal in the CSS here
-                      </li>
-                    </ul>
+                    The each size should maintain aspect ratio (experience shows
+                    marketeers find this hard).
                   </li>
                   <li>
-                    The marker should be left aligned, and be sensibly placed/
-                    balanced
+                    Possibly warn if screen/ browser aspect-ratio is awkward
                   </li>
                   <li>
-                    <del
-                      >LIMITATION: This menu wasn't designed for multiple menus
-                      per page, and the will hide each other</del
-                    >
-                    <ul class="ulbasic">
-                      <li>FIXED</li>
-                    </ul>
+                    IMPORTANT: work out something for scroll to image
+                    (position:relative gone amok)
                   </li>
-                  <li>
-                    LIMITATION: If there is N menus per page, the lower
-                    on-screen menus may fall off the end of the page. This
-                    widget isn't designed for this use-case.
-                    <ul class="ulbasic">
-                      <li>
-                        TODO: Add warn about many items in menus. Problem with
-                        warning: menu will start closed on page-load, so I can't
-                        compute its size without editing the DOM. No progress
-                        todate.
-                      </li>
-                    </ul>
-                  </li>
+                  <li>EXTENSION: my magic “image broken marker”</li>
                 </ul>
               </div>
               <br />
-              <br />
-              <div class="testComponent">
-                [original]
-                <div class="column linksWidget">
-                  <details class="linksWidget" id="pageMenu">
-                    <summary
-                      class="defaultLinksTrigger fa-"
-                      aria-haspopup="menu"
-                    >
-                      <span class="sr-only">Menu</span>
-                    </summary>
 
-                    <menu class="dfl">
-                      <li>Additional features</li>
-                      <li>
-                        <a href="/resource/home"
-                          ><i class="fa fa-angle-left" aria-hidden="true"></i>
-                          Home</a
-                        >
-                      </li>
-                      <li><a href="/resource/search">Search 🔎 </a></li>
-                      <li><a href="/resource/appearance">Appearance </a></li>
-                      <li><a href="/resource/contact-me">Contact me 📞 </a></li>
-                      <li><a href="#contentGroup">📜 Similar articles</a></li>
-                    </menu>
-                  </details>
-                  <details class="headingsWidget">
-                    <summary><div>Chapters</div></summary>
-                    <menu class="titleList">
-                      <li>
-                        <a href="#toc0"
-                          >Startups that plant trees/ improve biosphere</a
-                        >
-                      </li>
-                      <li>
-                        <a href="#toc1"
-                          >Startups that do transport, EV/ trains</a
-                        >
-                      </li>
-                      <li><a href="#toc2">Startups that do packaging</a></li>
-                      <li>
-                        <a href="#toc3">Startups that do power tech/ solar</a>
-                      </li>
-                      <li>
-                        <a href="#toc4"
-                          >Startups for greener buildings/ proptech</a
-                        >
-                      </li>
-                      <li><a href="#toc5">Startups for waste</a></li>
-                      <li><a href="#toc6">Startups for supply chain</a></li>
-                      <li><a href="#toc7">“green recruiters”</a></li>
-                      <li>
-                        <a href="#toc8"
-                          >Paperwork: carbon reporting/ risk charting/ finance/
-                          trading</a
-                        >
-                      </li>
-                    </menu>
-                  </details>
-                  <br />
+              <div class="halferWords">
+                <br />
+                Build 1 static
+                <figure id="fig1">
+                  <figcaption>[Image title]</figcaption>
+                  <img
+                    src="/asset/react-data-flow.webp"
+                    title="[Fixed description, please do not think of this as content]"
+                  />
+                </figure>
+                <br />
+
+                <br />Build 4, static
+                <div class="row">
+                  <figure class="column">
+                    <figcaption>[Fixed title]:</figcaption>
+                    <code lang="xml" class="highlight"> SAMPLE </code>
+                  </figure>
+                  <figure class="column">
+                    <figcaption>[Fixed render title]:</figcaption>
+                    <code lang="xml"> SAMPLE </code>
+                  </figure>
                 </div>
                 <br />
-                [wide]
-                <div class="column linksWidget">
-                  <details class="headingsWidget">
-                    <summary><div>Chapters</div></summary>
-                    <menu class="titleList">
-                      <li>
-                        <a href="#toc0"
-                          >Startups that plant trees/ improve biosphere</a
-                        >
-                      </li>
-                      <li>
-                        <a href="#toc1"
-                          >Startups that do transport, EV/ trains</a
-                        >
-                      </li>
-                      <li><a href="#toc2">Startups that do packaging</a></li>
-                      <li>
-                        <a href="#toc3">Startups that do power tech/ solar</a>
-                      </li>
-                      <li>
-                        <a href="#toc4"
-                          >Startups for greener buildings/ proptech</a
-                        >
-                      </li>
-                      <li><a href="#toc5">Startups for waste</a></li>
-                      <li><a href="#toc6">Startups for supply chain</a></li>
-                      <li><a href="#toc7">“green recruiters”</a></li>
-                      <li>
-                        <a href="#toc8"
-                          >Paperwork: carbon reporting/ risk charting/ finance/
-                          trading fghfgh ss hsg hsghsf sghs sfghsh
-                        </a>
-                      </li>
-                    </menu>
-                  </details>
-                  <br />
+
+                <br />
+                Build 2
+                <figure id="fig2">
+                  <img
+                    id="image2"
+                    src="/asset/react-data-flow.webp"
+                    alt="[Fixed description, please do not think of this as content]"
+                    loading="lazy"
+                  />
+                  <figcaption>
+                    [Image title]
+                    <a
+                      href="https://google.co.uk"
+                      title="An article describing unidirectional dataflow."
+                      >[outbound link to src]</a
+                    >
+                    <span class="button bigScreenOnly" id="biggerBtn"
+                      >Expand image</span
+                    >
+                  </figcaption>
+                </figure>
+                <br />
+
+                <br />
+                Build 3
+                <div class="maquette">
+                  <figure id="fig3" class="graphBox">
+                    [The graph is not loading in this interaction demo]
+                    <figcaption>
+                      [Image title]
+                      <span class="button bigScreenOnly" id="biggerBtn2"
+                        >Maximise</span
+                      >
+                    </figcaption>
+                  </figure>
                 </div>
                 <br />
-                [skinny]
-                <div class="column linksWidget">
-                  <details class="headingsWidget">
-                    <summary><div>Chapters</div></summary>
-                    <menu class="titleList">
-                      <li><a href="#toc0">OO</a></li>
-                      <li><a href="#toc1">DDD</a></li>
-                      <li><a href="#toc2">CC</a></li>
-                      <li><a href="#toc3">BB</a></li>
-                      <li><a href="#toc4">AA</a></li>
-                      <li><a href="#toc5">GG</a></li>
-                      <li><a href="#toc6">EE</a></li>
-                      <li><a href="#toc7">GG</a></li>
-                      <li><a href="#toc8">PP</a></li>
-                    </menu>
-                  </details>
-                  <br />
-                </div>
+
                 <br />
-                [short]
-                <div class="column linksWidget">
-                  <details class="headingsWidget" open>
-                    <summary><div>Chapters</div></summary>
-                    <menu class="titleList">
-                      <li><a href="#toc0">OO</a></li>
-                      <li><a href="#toc1">DDD</a></li>
-                      <li><a href="#toc2">CC</a></li>
-                    </menu>
-                  </details>
-                  <br />
-                </div>
-                <br />
-                [very wide]
-                <div class="column linksWidget">
-                  <details class="headingsWidget">
-                    <summary><div>Chapters</div></summary>
-                    <menu class="titleList">
-                      <li>
-                        <a href="#toc0"
-                          >Startups that plant trees/ improve biosphere</a
-                        >
-                      </li>
-                      <li>
-                        <a href="#toc1"
-                          >Startups that do transport, EV/ trains</a
-                        >
-                      </li>
-                      <li><a href="#toc2">Startups that do packaging</a></li>
-                      <li>
-                        <a href="#toc3">Startups that do power tech/ solar</a>
-                      </li>
-                      <li>
-                        <a href="#toc4"
-                          >Startups for greener buildings/ proptech</a
-                        >
-                      </li>
-                      <li><a href="#toc5">Startups for waste</a></li>
-                      <li><a href="#toc6">Startups for supply chain</a></li>
-                      <li><a href="#toc7">“green recruiters”</a></li>
-                      <li>
-                        <a href="#toc8"
-                          >Paperwork: carbon reporting/ risk charting/ finance/
-                          trading fghfgh ss hsg hsghsf sghs sfghsh idfg dgdrg
-                          agadg adfgad gad gadfg fga gadf gadfga dfgadg adfgadf
-                          gadg adfg gadg adfgad fgadg adfgad fgadg adfgad fgag
-                          adfgadg ag aadfg agad fgafg afg adfga dfgadfg adg adga
-                          dgad fgadg adfg adfga dfga dfgadg adfg dfg afg adfga
-                          dfgadfg adgad fgad gag adfgadf gadfg adg adgad gadg
-                          adg adfgad fgadg ag adfgadfg adfga dgadfg adfga dfga
-                          dfgadf gafg ag adfgadfg adfgadga dfgad gadg adfg
-                          adgadfg adfga dfgad gadg adfga gadfg adgh sghs
-                          fhjshsfhsfghsf hsf hsfh sfh sfh sfgh sfgh sfgh
-                          sfghsfgh sfh sfhs fh sfhsfh sfghsfhsfghsfh sfgh sfhsfh
-                          sfgh sfh sfhs fghsfgh sfgh sfghsfhsfh sfghsfhsfh
-                        </a>
-                      </li>
-                    </menu>
-                  </details>
-                  <br />
-                </div>
+                Build 5 (just CSS) XXX XXX XXX
               </div>
             </div>
           </article>
@@ -332,7 +203,7 @@ TODO: magic tune selection against some index/DB -->
         <nav id="navBar" class="row">
           <div class="column">
             <div class="top-bar fullWidth">
-              <header><h1>Menu test</h1></header>
+              <header><h1>Expand diagram test</h1></header>
               <p role="status" class="bigScreenOnly">
                 Visual test, do not publish to the internet
               </p>
@@ -368,7 +239,7 @@ TODO: magic tune selection against some index/DB -->
                 </span>
                 <span class="bigScreenOnly">Share: </span>
                 <a
-                  href="https://twitter.com/intent/tweet?text=I+think+this+is+important+https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fmenu-test"
+                  href="https://twitter.com/intent/tweet?text=I+think+this+is+important+https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fexpand-diagram-test"
                   title="Share this resource on your twitter account."
                   target="_blank"
                   class="bigScreenOnly"
@@ -395,7 +266,7 @@ TODO: magic tune selection against some index/DB -->
                   ><span class="sr-only">Mastodon</span>
                 </a>
                 <a
-                  href="https://www.reddit.com/submit?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fmenu-test"
+                  href="https://www.reddit.com/submit?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fexpand-diagram-test"
                   target="_blank"
                   title="Share this article with your Reddit audience"
                   class="bigScreenOnly"
@@ -407,7 +278,7 @@ TODO: magic tune selection against some index/DB -->
                   ><span class="sr-only">Reddit </span>
                 </a>
                 <a
-                  href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fmenu-test"
+                  href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fexpand-diagram-test"
                   target="_blank"
                   class="bigScreenOnly"
                   title="Share current article with your linked-in audience."
@@ -422,7 +293,7 @@ TODO: magic tune selection against some index/DB -->
                   title="Share current article with Hacker news/ Y combinator audience"
                   target="_blank"
                   class="bigScreenOnly"
-                  href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fmenu-test&amp;t=Menu+test"
+                  href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fexpand-diagram-test&amp;t=Expand+diagram+test"
                 >
                   <i
                     class="fa fa-hacker-news"
@@ -434,7 +305,7 @@ TODO: magic tune selection against some index/DB -->
                 </a>
                 <a
                   title="Share this article with your Xing audience."
-                  href="https://www.xing.com/spi/shares/new?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fmenu-test"
+                  href="https://www.xing.com/spi/shares/new?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fexpand-diagram-test"
                   target="_blank"
                   class="bigScreenOnly"
                   ><i
@@ -450,8 +321,8 @@ TODO: magic tune selection against some index/DB -->
                 <span
                   >Edited
                   <time
-                    title="Page edited on 2025-08-20T13:19:38"
-                    datetime="2025-08-20T13:19:38"
+                    title="Page edited on 2025-08-22T19:35:17"
+                    datetime="2025-08-22T19:35:17"
                     >Aug '25</time
                   >
                 </span>
@@ -478,7 +349,7 @@ TODO: magic tune selection against some index/DB -->
                 <input
                   id="mastodonserver"
                   maxlength="50"
-                  data-url="https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fmenu-test"
+                  data-url="https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Fexpand-diagram-test"
                   type="text"
                   value=""
                   placeholder="mastodon.social"
@@ -562,8 +433,8 @@ TODO: magic tune selection against some index/DB -->
             >contact me</a
           >. Last modified
           <time
-            title="Page modified on 2025-08-20T13:19:38"
-            datetime="2025-08-20T13:19:38"
+            title="Page modified on 2025-08-22T19:35:17"
+            datetime="2025-08-22T19:35:17"
             >Aug '25</time
           >.
         </p>
@@ -590,18 +461,108 @@ TODO: magic tune selection against some index/DB -->
     </footer>
     <script type="module" src="/asset/ob1-202406.min.mjs"></script>
     <style>
-      .halferWords {
-        height: 40em;
+      figure img {
+        width: 300px;
+        height: 180px;
       }
-      .testComponent {
-        margin-top: -50em;
-        text-align: right;
+      .fullScreen {
+        background-color: rgb(240, 255, 255);
+        border: #333 1px solid;
+        display: block;
+        position: relative;
+        top: 10vmin;
+        left: calc(50% - 600px);
+        right: calc(50% - 600px);
+        min-height: max(600px, 100%);
+        max-height: 100%;
+        z-index: 1;
       }
-      @media screen and (max-height: 900px) {
-        .testComponent {
-          margin-top: -60em;
+      .fullScreen img {
+        height: 200%;
+        width: 200%;
+      }
+
+      @media screen and (min-resolution: 150dpi) {
+        .fullScreen {
+          left: 5%;
+          right: 5%;
+          min-height: 300px;
+          top: 5vmin;
         }
       }
+      .fullScreen figcaption {
+        text-align: center;
+      }
+      .fullScreen figcaption span {
+        margin-left: 1em;
+      }
+
+      .graphBox {
+        display: block;
+        margin-top: 1em;
+        margin-bottom: 2em;
+        min-width: 600px;
+        height: 300px;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        --bgr: 204;
+        --bgg: 204;
+        --bgb: 255;
+        --fgr: 37;
+        --fgg: 37;
+        --fgb: 37;
+      }
+      .row .column code {
+        display: block;
+        width: 300px;
+        height: 150px;
+        --bgr: 204;
+        --bgg: 204;
+        --bgb: 255;
+        --fgr: 37;
+        --fgg: 37;
+        --fgb: 37;
+      }
+
+      .graphBox.fullScreen {
+        background-color: rgb(240, 255, 255);
+        border: #333 1px solid;
+        display: block;
+        position: relative;
+        top: 10vmin;
+        left: calc(50% - 600px);
+        right: calc(50% - 600px);
+        min-height: max(600px, 100%);
+        max-height: 100%;
+        z-index: 1;
+        width: max(1200px, 100%);
+        max-width: max(1200px, 100%);
+        height: max(600px, 70vh);
+      }
+
+      body:has(.fullScreen),
+      .annoyingBody:has(.fullScreen) {
+        --fgcontrast: 3;
+      }
+      .fullScreen {
+        --fgcontrast: 1;
+      }
     </style>
+    <script type="module">
+      import { hasBeenRun, initExpandImage } from "/asset/ob1-202406.min.mjs";
+
+      function mount() {
+        // need this function for 2 calls ands the string values
+        initExpandImage("#fig2", "#biggerBtn", document);
+        initExpandImage("#fig3", "#biggerBtn2", document);
+      }
+
+      if (hasBeenRun() === 0) {
+        document.pageStartup = mount;
+      } else {
+        mount();
+      }
+    </script>
   </body>
 </html>

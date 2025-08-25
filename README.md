@@ -163,7 +163,7 @@ I have replaced the local CSS with better organised CSS to make it more readable
 - Revalidate against TSC, as types became invalid.
 - Refactor cookie code for readability.
 - Do more code readability changes.
-- DONE: Add jest-lite/ browser unit-tests for the skip() sections in vitest.  These are often behaviour centric tests.
+- DONE: Add jest-lite/ browser unit-tests for the skip() sections in vitest tests.  These are often behaviour centric tests.
 - As the suite sits in Nov 2024, it takes about a minute to exec on a fast PC.   Most of the exec delay is **sleep()** due to the many process model in these tests.
 - I have added template files, for later extension.  
 - TODO: Want to add some CSS tests for crucial UI processes, like z-index.
@@ -175,22 +175,22 @@ I have replaced the local CSS with better organised CSS to make it more readable
 <details>
 <summary> Engineering details (return of..) </summary>
 I imported another feature from into this repo, made it more readable and added better tests.
-Note when using node-libCurl, there is something not lined-up with standard Vite.   Vite cannot load / handle the library files.
+Note when using node-libCurl, there is something not lined-up with standard Vite.   Vite cannot load / handle the library files that are compiled Clang code.
 If I run the TS files via node-vite, there is no visible compiler step, and it links the Clang lib correctly.  To run new tool, please use handling added to package.json  
 
 
 </details>
 <details>
 <summary>There is CSS here?</summary>
-This project now holds the CSS used to style the site.   There is a slow moving change to move as much display logic into CSS as this is still presentation work.  I have structured the CSS to modern standards (2008 knowledge !== 2025 knowledge).   Most of my previous experience is "making a new feature with current tools" (each time).  
+This project now holds the CSS used to style the site.   There is a slow moving change to move as much display logic into CSS as this is still presentation work.  I have structured the CSS to modern standards (2008 knowledge !== 2025 knowledge).   Most of my previous work experience is "making a new feature with current tools" (each time).  
 
 - I moved the CSS into this project, and rationalised it.
 - The standards and browsers have moved since my first edition, and using newer CSS features works better.
-- I have refactored the CSS to make it more readable, rather than minimum-spend "append abit more to the end".  Across this project, my investment was all on English texts.   
+- I have refactored the CSS to make it more readable, rather than minimum-spend "append abit more to the end".  Across this project, my investment was all focused on English texts.   
 - For browsers in 2005-8, I thought that CSS via HTML IDs worked better.   This may have been true for MSIE 5-6, but is false today.   I have reduced the number of HTML IDs used as CSS selectors.   
 - I restructured the CSS into "features", rather than cloud of unique IDs/ class names.   I think I have improved the names used so it will be more clear to any readers.   As the size increases, the flat-namespace cloud was getting harder and harder to read.
 - I have removed various old commented CSS, and also aggregated all my ideas notes into a single ideas file that I might read [ever].
-- In 2022, I pulled any CSS blobs from the articles into the single CSS sheet, as I was hoping this would mean I could factor common sections and have less code.  This has worked somewhat.
+- In 2022, I pulled any CSS blobs from the articles into the single CSS sheet, as I was hoping this would mean I could factor common sections and have less code.  ''This has worked somewhat.''
 - I discarded SOME older work when I imported Foundation [https://get.foundation/sites/docs/installation.html installation] [https://get.foundation/sites/docs/ docs] in 2017.   Most of the current CSS volume is Foundation
 The articles with no extra/ dedicated CSS are composed of "standard components".  This is 25 features ~ all with enough RWD support:
 
@@ -215,8 +215,10 @@ The articles with no extra/ dedicated CSS are composed of "standard components".
 - mobilePopupWidget ~ vis ~ for mobile only ~ the above SM links, but optimised for mobile.
 
 - articleHeader     ~ via wholeArticle ~ CSS component to build the document headers.
-- browserTest       ~ no-vis ~ Articles that includes technical features should include a test report on what browsers support the technology.  This renders it.
-- lotsOfWords       ~ no-vis ~ a full-width block
+- browserTest       ~ Articles that includes technical features should include a test report on what browsers support the technology.  This renders it.
+- fullScreen
+- XXX XXX
+- lotsOfWords       ~ no-vis ~ a full-width block that adds columns
 - quiteWide         ~ no-vis ~ a 70em / 1120px block 
 - halferWords       ~ no-vis ~ a 48em / 680px block
 - fewWords          ~ no-vis ~ a 30em / 480px block  
@@ -231,6 +233,11 @@ I am integrity-testing CSS for
 - ff
 - edge (periodically)
 - librewolf - this is the most popular FOS user-centric browser, AFAIK (i.e. not widely-used Chrome ad-ware, or new FF LLM-adware) 
+
+Q) Would I recommend building a project style system like this?  
+A) For an atypical and long-life project ~ like my boring site is ~ it's probably inevitable.  Across time I have added many small features.  
+Moving the CSS into components with consistent testing is useful for site stability and maturity.  
+I would suggest using off the shelf components to reduce effort on irrelevances.  
 
 </details>
 <details>
@@ -278,6 +285,22 @@ I ought to improve this process.  These are the tests that build their own GUI/ 
 - ''dump-css'' number 1 or 2               Currently disabled in the codebase
 - ''aspect''   used with ''dump-css''
 - ''debug-layout'' in the HTML rendering engine
+
+#### Syntax highlighting languages this project is setup for
+
+This list can be extended with little effort.   All these languages are written as lower case names 
+- bash
+- conf - I think technically this is called "apache conf format", its common to older projects that cross several OS 
+- css
+- go
+- html
+- js  - this can be spelt "javascript", or js" 
+- perl
+- php
+- sql
+- ts  - this can be spelt "typescript", or "ts"
+- xml
+If you want to highlight JSON, use JS formatter.
 
 #### Known CSS containers that this code processes
 

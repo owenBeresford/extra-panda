@@ -2,6 +2,13 @@ The following URL should be looked at for manual tests.
 I could automatically open the tabs,
  but think that would be annoying if you only want to look at 1 file
 
+These URLs below are running when either of the following is run:
+` node tools/test-browser.mjs --visual-tests-only `
+OR
+` node ./node_modules/.bin/vite-node tools/test-browser.ts --visual-tests-only `
+
+Currently 24 Ui samples to look at the CSS and its interactions
+
 https://127.0.0.1:8081/vis/access-src-test.html
 https://127.0.0.1:8081/vis/button-bar-test.html
 https://127.0.0.1:8081/vis/list-test.html
@@ -15,21 +22,25 @@ https://127.0.0.1:8081/vis/home-test.html
 https://127.0.0.1:8081/vis/mastodon-widget-test.html
 https://127.0.0.1:8081/vis/mobile-menu-test.html
 https://127.0.0.1:8081/vis/better-dl-test.html
+https://127.0.0.1:8081/vis/dl-intermediate-test.html
 https://127.0.0.1:8081/vis/keywords-widget-test.html
 https://127.0.0.1:8081/vis/menu-test.html
 https://127.0.0.1:8081/vis/pop-over-widget-test.html
+https://127.0.0.1:8081/vis/browser-test-test.html
+https://127.0.0.1:8081/vis/expand-diagram-test.html
+https://127.0.0.1:8081/vis/list-test.html
+https://127.0.0.1:8081/vis/highlight-test.html
+https://127.0.0.1:8081/vis/big-arrow-test.html
+https://127.0.0.1:8081/vis/addreferences-test.html
+https://127.0.0.1:8081/vis/button-bar-test.html
 
-look at::
+To look at::
+* test for tabs
+* tab CSS as this is now CSS
 * rewrite adjacent bar
 * Create groupIndex test separate to content
 * SMshare
-* headings menu?? 
-* browserTest widget
 * maquette widget
-* quiteWide DL 
-* highlight
-* addReferences including leaning classes
-* tab CSS as this is now CSS
 * contact me page, due to weird process
-* appearance page, maybe reCSS this one
+* pullout ans tidyup the just HTML + CSS for forms
 

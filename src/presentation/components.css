@@ -27,9 +27,6 @@
   margin-bottom: 0.2em;
   margin-left: 1em;
 }
-.footWidget a {
-  text-decoration: underline;
-}
 
 @media screen and (min-resolution: 150dpi) {
   .footWidget p {
@@ -669,12 +666,18 @@ This is big screen mac, should work with wide versions
   container-name: titleMenu;
   container-type: normal;
 }
-/* if i set  container-type: size; then the container layout wrap works correctly, 
+/* if I set  container-type: size; then the container layout wrap works correctly, 
 					but the computed positioning via the right edge does not
 					I can probably run without that, as there are no EXCEEDINGLY long titles */
 .headingsWidget:not(:has(.titleList > *)) {
   display: none;
 }
+
+.headingsWidget[open]:focus,
+.headingsWidget[open]:focus-within {
+  z-index: 10;
+}
+
 .headingsWidget[open] summary div {
   padding-right: 4px;
   width: calc(100% - 2.3em);
@@ -690,21 +693,26 @@ This is big screen mac, should work with wide versions
   border: 1px solid var(--scroll1);
 }
 .titleList a {
-  width: calc(100% - 2em);
+  max-width: calc(600px - 2em);
+  width: fit-content;
   display: inline-block;
   padding: 0.4em 1em;
+  overflow-x: hidden;
 }
 .linksWidget:has(.linksWidget[open]) .titleList {
   margin-top: 4em;
 }
 
-@container titleMenu (min-width:1024px ) {
+@container titleMenu (min-width:600px ) {
   .headingsWidget {
     container-type: size;
   }
   .headingsWidget[open] .titleList li {
-    max-width: 100vw;
+    max-width: 600px;
     white-space: normal;
+  }
+  .titleList a {
+    width: calc(600px - 2em);
   }
 }
 
@@ -750,7 +758,6 @@ This is big screen mac, should work with wide versions
   margin: 0.5em;
 }
 .adjacentWidget a.button {
-  text-decoration: underline;
   font-weight: bold;
 }
 .adjacentWidget > p {
@@ -888,6 +895,7 @@ a.adjacentItem:hover:before {
   margin-left: 1em;
   min-width: 7.5em;
 }
+
 p.buttonBar a:first-child {
   margin-left: 0px;
 }
@@ -1103,6 +1111,12 @@ but this is a permanent effect, so with is better choice in this library
   scrollbar-color: var(--scroll1) transparent;
 }
 
+/* that space char is working hard, this is two selectors */
+.popOverWidget .lotsOfText details.singlePopup:not(open),
+.popOverWidget.lotsOfText details.singlePopup:not(open) {
+  width: inherit;
+}
+
 @media screen and (min-width: 1200px) {
   .popOverWidget details[open] {
     width: 60em;
@@ -1242,7 +1256,7 @@ https://css-tricks.com/books/greatest-css-tricks/pin-scrolling-to-bottom/
   scrollbar-color: var(--scroll1) transparent;
 }
 .shake,
-.highlight::before {
+[lang="bash"].highlight::before {
   content: "$ ";
 }
 code,
@@ -1251,10 +1265,6 @@ code.highlight {
 }
 code[lang="html"].highlight {
   line-height: 1;
-}
-code[lang="html"].highlight::before,
-.highlight.wide::before {
-  content: "";
 }
 
 /** addReferences
@@ -1361,6 +1371,65 @@ div.addReferences sup a.leanIn:before { left: calc( 18cqw - 32em ); }
 .addReferences DL a[aria-label]::before,
 .addReferences:has(DL) a[aria-label]::before {
   contain: layout;
+}
+
+/*
+	Used in bout 5 files, all tagged with addImages
+*/
+figure img {
+  width: 300px;
+  height: 180px;
+}
+.fullScreen {
+  background-color: rgb(240, 255, 255);
+  border: #333 1px solid;
+  display: block;
+  position: relative;
+  top: 10vmin;
+  left: calc(50% - 600px);
+  right: calc(50% - 600px);
+  min-height: max(600px, 100%);
+  max-height: 100%;
+  z-index: 1;
+}
+.fullScreen img {
+  height: 200%;
+  width: 200%;
+}
+@media screen and (min-resolution: 150dpi) {
+  .fullScreen {
+    left: 5%;
+    right: 5%;
+    min-height: 300px;
+    top: 5vmin;
+  }
+}
+.fullScreen figcaption {
+  text-align: center;
+}
+.fullScreen figcaption span {
+  margin-left: 1em;
+}
+
+body:has(.fullScreen),
+.annoyingBody:has(.fullScreen) {
+  --fgcontrast: 3;
+}
+.fullScreen {
+  --fgcontrast: 1;
+}
+
+/* re-apply everything for a mac 
+This is big screen mac, should work with wide versions
+*/
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+    body:has(.fullScreen),
+    .annoyingBody:has(.fullScreen) {
+      --fgcontrast: 1;
+    }
+    /* this induces a colour mixing issue in Mac */
+  }
 }
 
 /** trimmings for links, not sure what file to put these in

@@ -26,7 +26,10 @@ MAINTENANCE
 - Evaluate https://www.npmjs.com/package/accessibility-checker to drop w3c one
 - For long content with many page sections, setup component for each page in a tidy fashion && tell later sections to load lower prio as they are likely to be off screen
 - Add ability to add test array of URLs to tool
+- BUG: effects.ts, addBashSamples():: backticks in bash samples get swallowed due to them being quote delimiters as well as valid bash scripting
 - UPDATE:: Internet suggests dropping Playwright for Puppeteer if specific browsers are needed. https://pptr.dev/webdriver-bidi https://www.npmjs.com/package/puppeteer-core
+- TEST THIS CODE https://github.com/egm0121/jest-test-gen?tab=readme-ov-file https://www.npmjs.com/package/jest-test-gen/v/0.0.10  https://github.com/ed4becky/jest-unit-test-generator 
+- Add python syntax highlighter
 
 ### Previous Updates
 
@@ -106,6 +109,7 @@ MAINTENANCE
 - DONE: Adjust symbols used in the chapters menu
 - DONE and CANCELLED: built test code for Qutebrowser, not mature enough from CLI yet.
 - DONE: Import References features to this code repo
+-      This code is to supply rich decorated links to users, and check that links are live.  It is run when publishing a new article and annually (approx) to filter expired URLs / content.   
 -      Make more readable, and migrate to TS
 -      Add re-try logic on Network Timeout, second hit seems to succede more often 
 -      Add a dump-cookie plugin to browser, so can re-execute build-references against 1mb of cookies "not bot", "normal interwibbies"
