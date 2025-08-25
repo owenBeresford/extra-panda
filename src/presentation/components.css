@@ -27,9 +27,6 @@
   margin-bottom: 0.2em;
   margin-left: 1em;
 }
-.footWidget a {
-  text-decoration: underline;
-}
 
 @media screen and (min-resolution: 150dpi) {
   .footWidget p {
@@ -676,7 +673,8 @@ This is big screen mac, should work with wide versions
   display: none;
 }
 
-.headingsWidget[open]:focus, .headingsWidget[open]:focus-within {
+.headingsWidget[open]:focus,
+.headingsWidget[open]:focus-within {
   z-index: 10;
 }
 
@@ -696,10 +694,10 @@ This is big screen mac, should work with wide versions
 }
 .titleList a {
   max-width: calc(600px - 2em);
-	width:fit-content;
+  width: fit-content;
   display: inline-block;
   padding: 0.4em 1em;
-  overflow-x:hidden;
+  overflow-x: hidden;
 }
 .linksWidget:has(.linksWidget[open]) .titleList {
   margin-top: 4em;
@@ -714,8 +712,8 @@ This is big screen mac, should work with wide versions
     white-space: normal;
   }
   .titleList a {
-  width: calc( 600px - 2em);
-	}
+    width: calc(600px - 2em);
+  }
 }
 
 /** broswerTest
@@ -760,7 +758,6 @@ This is big screen mac, should work with wide versions
   margin: 0.5em;
 }
 .adjacentWidget a.button {
-  text-decoration: underline;
   font-weight: bold;
 }
 .adjacentWidget > p {
@@ -898,7 +895,6 @@ a.adjacentItem:hover:before {
   margin-left: 1em;
   min-width: 7.5em;
 }
-.buttonBar .button { text-decoration:underline; }
 
 p.buttonBar a:first-child {
   margin-left: 0px;
@@ -1116,9 +1112,9 @@ but this is a permanent effect, so with is better choice in this library
 }
 
 /* that space char is working hard, this is two selectors */
-.popOverWidget .lotsOfText details.singlePopup:not( open ),
-.popOverWidget.lotsOfText details.singlePopup:not( open )   {
-	width:inherit;
+.popOverWidget .lotsOfText details.singlePopup:not(open),
+.popOverWidget.lotsOfText details.singlePopup:not(open) {
+  width: inherit;
 }
 
 @media screen and (min-width: 1200px) {
@@ -1380,30 +1376,61 @@ div.addReferences sup a.leanIn:before { left: calc( 18cqw - 32em ); }
 /*
 	Used in bout 5 files, all tagged with addImages
 */
-figure img { width:300px; height:180px; }
-.fullScreen { background-color:rgb(240, 255, 255); border:#333 1px solid; display:block; position:relative; top:10vmin; 
-             left:calc( 50% - 600px ); right:calc( 50% - 600px ); min-height:max( 600px, 100% ); max-height:100%; z-index:1; }
-.fullScreen img { height:200%; width:200%; }
-@media screen and (min-resolution: 150dpi) {
-        .fullScreen { left:5%; right:5%; min-height:300px; top:5vmin; }         
+figure img {
+  width: 300px;
+  height: 180px;
 }
-.fullScreen figcaption { text-align:center; }
-.fullScreen figcaption span { margin-left:1em; }
+.fullScreen {
+  background-color: rgb(240, 255, 255);
+  border: #333 1px solid;
+  display: block;
+  position: relative;
+  top: 10vmin;
+  left: calc(50% - 600px);
+  right: calc(50% - 600px);
+  min-height: max(600px, 100%);
+  max-height: 100%;
+  z-index: 1;
+}
+.fullScreen img {
+  height: 200%;
+  width: 200%;
+}
+@media screen and (min-resolution: 150dpi) {
+  .fullScreen {
+    left: 5%;
+    right: 5%;
+    min-height: 300px;
+    top: 5vmin;
+  }
+}
+.fullScreen figcaption {
+  text-align: center;
+}
+.fullScreen figcaption span {
+  margin-left: 1em;
+}
 
-body:has( .fullScreen ), .annoyingBody:has( .fullScreen )  { --fgcontrast: 3.0; }
-.fullScreen { --fgcontrast: 1; }
+body:has(.fullScreen),
+.annoyingBody:has(.fullScreen) {
+  --fgcontrast: 3;
+}
+.fullScreen {
+  --fgcontrast: 1;
+}
 
 /* re-apply everything for a mac 
 This is big screen mac, should work with wide versions
 */
 @media not all and (min-resolution: 0.001dpcm) {
   @supports (-webkit-appearance: none) {
-	body:has( .fullScreen ), .annoyingBody:has( .fullScreen )  { --fgcontrast: 1.0; }
-/* this induces a colour mixing issue in Mac */
+    body:has(.fullScreen),
+    .annoyingBody:has(.fullScreen) {
+      --fgcontrast: 1;
+    }
+    /* this induces a colour mixing issue in Mac */
   }
 }
-
-
 
 /** trimmings for links, not sure what file to put these in
 	SEE ALSO UTILS 

@@ -21,7 +21,6 @@ h5 a {
   padding: 0.3em 0em;
   display: inline-block;
   width: 8em;
-  text-decoration: underline;
 }
 @media screen and (min-resolution: 150dpi) {
   .reading {
@@ -223,4 +222,8 @@ This is big screen mac, should work with wide versions
 */
 @view-transition {
   navigation: auto;
+}
+
+a[href] {
+  text-decoration: underline;
 }
