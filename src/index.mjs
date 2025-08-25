@@ -55,6 +55,6 @@ export {
   currentSize,
   calcScreenDPI,
   isLibreWolf,
-  initExpandImage, 
+  initExpandImage,
   SELF_VERSION,
 };

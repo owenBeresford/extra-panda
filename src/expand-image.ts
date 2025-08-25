@@ -13,10 +13,26 @@
  * @public
  * @return {void}
  */
-export function initExpandImage(imgId:string, btnId:string, dom:Document ):void {
-	const TMP=dom.querySelector( btnId);
-	TMP.addEventListener('mousedown', ()=> { return trigger( btnId, imgId ); }, {capture:true, passive:true });
-	TMP.addEventListener('touchstart', ()=> { return trigger( btnId, imgId ); }, {capture:true, passive:true });
+export function initExpandImage(
+  imgId: string,
+  btnId: string,
+  dom: Document,
+): void {
+  const TMP = dom.querySelector(btnId);
+  TMP.addEventListener(
+    "mousedown",
+    () => {
+      return trigger(btnId, imgId);
+    },
+    { capture: true, passive: true },
+  );
+  TMP.addEventListener(
+    "touchstart",
+    () => {
+      return trigger(btnId, imgId);
+    },
+    { capture: true, passive: true },
+  );
 }
 
 /**
@@ -30,18 +46,21 @@ export function initExpandImage(imgId:string, btnId:string, dom:Document ):void 
  * @protected
  * @return {boolean}
  */
-function trigger(btnId:string, imgId:string, clsName:string="fullScreen" ):boolean {
-	const TMP=document.querySelector( imgId );
-	const TMP2=document.querySelector( btnId );
-	if( TMP.classList.contains(clsName ) ) {
-		TMP.classList.remove( clsName);
-		TMP2.innerText="Expand image";
-	} else {
-		TMP.classList.add( clsName);
-		TMP2.innerText="Revert image";
-	}
-	return false;
+function trigger(
+  btnId: string,
+  imgId: string,
+  clsName: string = "fullScreen",
+): boolean {
+  const TMP = document.querySelector(imgId);
+  const TMP2 = document.querySelector(btnId);
+  if (TMP.classList.contains(clsName)) {
+    TMP.classList.remove(clsName);
+    TMP2.innerText = "Expand image";
+  } else {
+    TMP.classList.add(clsName);
+    TMP2.innerText = "Revert image";
+  }
+  return false;
 }
 
-export const TEST_ONLY ={ trigger,  initExpandImage };
-
+export const TEST_ONLY = { trigger, initExpandImage };
