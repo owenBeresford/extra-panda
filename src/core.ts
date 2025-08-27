@@ -10,7 +10,7 @@ import {
   createAdjacentChart,
 } from "./adjacent";
 import { initMastodon } from "./mastodon";
-import { initTabs, initTabs_OLD } from "./tabs";
+import { initTabs, tabInit_OLD } from "./tabs";
 import { isLocal, standardisedWordCount } from "./string-base";
 import {
   isMobile,
@@ -210,7 +210,7 @@ export async function siteCore(
   } else {
     // disabled in that version, as I ported to HTML/CSS
 
-    initTabs_OLD(dom, loc);
+    tabInit_OLD(dom, loc);
   }
 
   if (loc.pathname.match("group-")) {
