@@ -1556,9 +1556,7 @@ p > a + a {
 sup:nth-child(1) {
   margin-left: inherit;
 }
-sup a[aria-label],
-.reading,
-footer a {
+sup a[aria-label] {
   text-decoration: underline;
 }
 @media screen and (min-resolution: 150dpi) {
