@@ -111,7 +111,7 @@
   }
 
   .IAmLibreWolf.homeContainer
-    .tabContainer
+    .tab2Container
     .tabsHeader:has(label > input[type="radio"]:checked)
     .tabContent
     ul {
@@ -120,13 +120,15 @@
     min-width: auto;
   }
 
-  .IAmLibreWolf.homeContainer .column.tabContainer {
+  .IAmLibreWolf.homeContainer .column.tab2Container {
     min-width: min(100%, 550px);
     top: -13em;
   }
  .IAmLibreWolf .articleHeader .fullWidth {
     width: calc( 95% - 420px );
 	} 
+
+ .tab2Container section { margin-top:1em; }
 
 }
 
@@ -179,7 +181,7 @@
   }
 
   .IAmLibreWolf.homeContainer
-    .tabContainer
+    .tab2Container
     .tabsHeader:has(label > input[type="radio"]:checked)
     .tabContent
     ul {
