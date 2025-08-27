@@ -653,7 +653,7 @@ mask:linear-gradient(-60deg,#000 30%,#0005,#000 70%) right/350% 100%;
 .tab2Container .transform_shimmer {
   mask:linear-gradient(-75deg,#000 46%, #0008,#000 54%) right/310% 100%;
   background-repeat: no-repeat;
-  animation: shimmer 3.3s infinite;
+  animation: shimmer 15s 1;
 }
 
 .tab2Container .transform_shimmer:focus-within,
@@ -664,11 +664,19 @@ mask:linear-gradient(-60deg,#000 30%,#0005,#000 70%) right/350% 100%;
 .tab2Container label:has(:checked).transform_shimmer {
   mask:linear-gradient(-75deg, #000 46%, #0009,#000 54%) right/310% 50%;
 /*  mask:linear-gradient(-75deg, #fff 46%, #00ff, #fff 54%) right/310% 50%; */
-  animation: shimmer 3.3s infinite;
+  animation: shimmer 15s infinite;
 } 
 
+.tab2Container .myUglyFace {
+  mask:linear-gradient(-75deg,#000 46%, #0008,#000 54%) right/310% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 3.3s 1;
+}
+
 @keyframes shimmer {
-  100% { mask-position:left; }
+  10% { mask-position:initial; }
+  20% { mask-position:left; }
+  30% { mask-position:initial; }
 }
 
 }
