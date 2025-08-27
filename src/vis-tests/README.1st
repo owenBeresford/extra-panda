@@ -33,10 +33,9 @@ https://127.0.0.1:8081/vis/highlight-test.html
 https://127.0.0.1:8081/vis/big-arrow-test.html
 https://127.0.0.1:8081/vis/addreferences-test.html
 https://127.0.0.1:8081/vis/button-bar-test2.html
+https://127.0.0.1:8081/vis/tab-test.html
 
 To look at::
-* test for tabs
-* tab CSS as this is now CSS
 * rewrite adjacent bar
 * Create groupIndex test separate to content
 * SMshare
