@@ -13,6 +13,10 @@
   font-size: 100%;
 }
 
+.IAmLibreWolf .articleHeader nav.row a i {
+	margin: 0.6em .5em;
+}
+
 @media screen and (min-resolution: 150dpi) {
   .IAmLibreWolf .halferWords {
     width: 60em;
@@ -120,6 +124,10 @@
     min-width: min(100%, 550px);
     top: -13em;
   }
+ .IAmLibreWolf .articleHeader .fullWidth {
+    width: calc( 95% - 420px );
+	} 
+
 }
 
 @media screen and (min-resolution: 200dpi) {
