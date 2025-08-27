@@ -1432,6 +1432,111 @@ This is big screen mac, should work with wide versions
   }
 }
 
+/**  tabComponent will now be real.
+
+*/
+.tab2Container {
+	/* define sizes per use */
+	min-width: min(100%, 400px);
+	max-width: 40%;
+	flex: inherit;
+	outline: none;
+}
+
+@media screen and (min-resolution: 150dpi) {
+  .column.tab2Container {
+    max-width: fit-content;
+  }
+}
+
+
+.tab2Container .tabContent {
+  border-top: 1px solid #e6e6e6;
+  max-width: 25em;
+  width: fit-content;
+  display: inline-block;
+  background: inherit;
+}
+
+.tab2Container label {
+  white-space: nowrap;
+  margin-top: 1em;
+  padding: 1em;
+  min-width: 8em;
+  text-align: center;
+}
+
+
+
+.tab2Container .tabHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.tab2Container .tabHeader label {
+  background-color: rgba(
+    calc(var(--bgr) * var(--bgcontrast)),
+    calc(var(--bgg) * var(--bgcontrast)),
+    calc(var(--bgb) * var(--bgcontrast)),
+    1
+  );
+}
+.tab2Container .tabHeader label:active {
+	border:3px solid black;
+}
+.tab2Container .tabHeader label:has( [type="radio"]:checked )  {
+	font-weight: bolder;
+}
+
+/* practice border, finished properly */
+.tab2Container .tabHeader label:has( input[type="radio"]:active ) {
+	border:4px dashed red ;
+}
+
+.tab2Container .tabHeader label:focus-visible {
+	border:4px dashed #33dd66;
+    outline: #33dd66 dashed 4px;
+}
+
+
+.tab2Container .tabContent {
+	display:none;
+}
+
+/* this can be statically deployed for upto 6 tabs per row, as long the data-id is present.
+	less drama on testing for STUPID spelling errors */
+.tab2Container:has( input[type="radio"][value="1"]:checked )> .tabContent[data-id="1"],
+.tab2Container:has( input[type="radio"][value="2"]:checked )> .tabContent[data-id="2"],
+.tab2Container:has( input[type="radio"][value="3"]:checked )> .tabContent[data-id="3"],
+.tab2Container:has( input[type="radio"][value="4"]:checked )> .tabContent[data-id="4"],
+.tab2Container:has( input[type="radio"][value="5"]:checked )> .tabContent[data-id="5"],
+.tab2Container:has( input[type="radio"][value="6"]:checked )> .tabContent[data-id="6"]
+ {
+  display: inline-block;
+  transition: all 0.5s ease;
+  min-width: 90%;
+  max-width: 100%;
+	margin-left:1.74em;
+}
+
+.tab2Container label,
+.homeContainer .fakeTab {
+  display: inline-block;
+  width: fit-content;
+  height: fit-content;
+  margin-left: 1em;
+}
+.tab2Container label:first-child {
+	margin-left:inherit;
+}
+
+.tab2Container input[type="radio"] {
+  visibility: hidden;
+  appearance: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
 /** trimmings for links, not sure what file to put these in
 	SEE ALSO UTILS 
 	80% of files */
