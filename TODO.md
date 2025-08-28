@@ -31,6 +31,7 @@ MAINTENANCE
 - TEST THIS CODE https://github.com/egm0121/jest-test-gen?tab=readme-ov-file https://www.npmjs.com/package/jest-test-gen/v/0.0.10  https://github.com/ed4becky/jest-unit-test-generator 
 - Add python syntax highlighter
 - Investigate adding aria-current on bigger docs https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-current 
+- re-add aria-hidden attrib, #leSigh
 
 ### Previous Updates
 
