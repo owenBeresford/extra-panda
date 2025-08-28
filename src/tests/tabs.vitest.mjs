@@ -1,17 +1,17 @@
 import { assert, describe, it } from "vitest";
 
-import { createEvent, enableGetEventListeners } from "./vitest-addons";
+import { createEvent, enableGetEventListeners, getCSSAttr } from "./vitest-addons";
 import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../tabs";
 import { appendIsland } from "../dom-base";
 
-const { tabChange, initTabs } = TEST_ONLY;
+const { tabChange, initTabs, tabInit_OLD } = TEST_ONLY;
 // see HTML driven version, but fails as it needs Js for exclusive group https://codepen.io/anon/pen/YPyPVY
 
 describe("TEST tabs", () => {
-  it("go 1: tabChange ", () => {
+  it.skip("go 1: tabChange OLD", () => {
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/home?debug=1",
+      "http://192.168.1.218/resource/home?debug=1",
       3,
     );
     let str = `<div class="chunkArticles column tabComponent">
@@ -176,9 +176,9 @@ describe("TEST tabs", () => {
     );
   });
 
-  it("go 2: initTabs ", () => {
+  it.skip("go 2: initTabs OLD ", () => {
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/home?debug=1",
+      "http://192.168.1.218/resource/home?debug=1",
       3,
     );
     let str = `<div class="chunkArticles column tabComponent">
@@ -252,12 +252,12 @@ describe("TEST tabs", () => {
     );
   });
 
-  it("go 2.1: initTabs ", () => {
+  it.skip("go 2.1: initTabs OLD", () => {
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/home?debug=1#blockProjects",
+      "http://192.168.1.218/resource/home?debug=1#blockProjects",
       3,
     );
-    let str = `<div class="chunkArticles column tabCopmponent">
+    let str = `<div class="chunkArticles column tab2Component">
 <ul class="tabList tabs" data-tab="" role="tablist">
 <li class="tab-title is-active" role="presentation"> <a id="clickArticles" href="#blockArticles" role="tab" aria-selected="true" aria-controls="blockArticles"> Articles</a></li>
 <li class="tab-title" role="presentation"> <a id="clickProjects" href="#blockProjects" role="tab" aria-selected="true" aria-controls="blockProjects"> Projects</a> </li>
@@ -316,4 +316,67 @@ describe("TEST tabs", () => {
       "There is a handler for each modailty of input on this tab",
     );
   });
+
+  it("go 3: initTabs", () => {
+    const [dom, loc, win] = page(
+      "http://192.168.1.218/resource/home?debug=1#projects",
+      3,
+    );
+    let str = `<div class="chunkArticles column tab2Container">
+<header class="tabHeader" role="tablist">
+		<span role="presentation" class="fakeTab" style="left:0em;" rel="me">
+			 <img src="/asset/ob1.webp" role="presentation" aria-hidden="true" class="myUglyFace" loading="lazy" width="100" height="100" alt="Many bloggers say adding a photo of yourself makes it look more authentic. IMO, my face is not a reason to hire me."> 
+		</span>
+
+		<label title="This should be the list of most important articles on this site.  I hope I have updated it" class="transform_shimmer" role="tab" id="tabArticles" aria-controls="panelArticles" tabindex="0">
+			Articles <input id="articles" type="radio" value="1" checked="" name="tabs">
+		</label>
+		<label title="My roles, publications and OSS projects" class="transform_shimmer" role="tab" id="tabProjects" aria-controls="panelProjects" tabindex="0">
+			 Projects <input id="projects" type="radio" value="2" name="tabs">
+		</label>
+</header>
+
+<section id="blockArticles" data-id="1" role="tabpanel" aria-hidden="false" >
+<br>
+<ul class="ulbasic">
+    <li><a href="#">SSS 1</a></li>
+    <li><a href="#">SSS 2</a></li>
+    <li><a href="#">SSS 3</a></li>
+    <li><a href="#">SSS 4</a></li>
+</ul>
+</section>
+
+<section id="blockProjects" data-id="2" role="tabpanel" aria-hidden="true" >
+<br>
+<ul class="ulbasic">
+    <li>Short role <a href="#">DDD 1</a></li>
+    <li>Short role <a href="#">DDD 2</a></li>
+    <li>Short role <a href="#">DDD 3</a></li>
+    <li>Short role <a href="#">DDD 4</a></li>
+</ul>
+</section>
+
+</div>
+`;
+    appendIsland("#point2", str, dom);
+
+    initTabs(dom, loc);
+
+    assert.equal(
+		getCSSAttr("#panelProjects","display", dom, win),
+		"block"
+				);  
+    assert.equal(
+		getCSSAttr("#panelArticles","display", dom, win),
+		"none"
+				);  
+	
+
+
+    const PROJECTS = dom.querySelector("#panelProjects");
+    const ARTICLES = dom.querySelector("#panelArticles");
+
+  });
+
+
 });
