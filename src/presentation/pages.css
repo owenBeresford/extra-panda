@@ -268,6 +268,17 @@
   display: flex;
   flex-direction: row;
 }
+@media screen and (min-resolution: 150dpi) {
+
+  .homeContainer .home.icerow {
+    height: fit-content;
+  }
+
+  .homeContainer .home.icerow .column.tab2Container {
+    max-width: fit-content;
+  }
+}
+
 .homeContainer .home.column {
   flex: 2 1 0px;
 }
@@ -277,6 +288,16 @@
   text-align: right;
   border-radius: 50px;
 }
+.homeContainer .tab2Container {
+	margin-top:-14em;
+}
+
+@media screen and (min-resolution: 150dpi) {
+.homeContainer .tab2Container {
+	margin-top:-9em;
+}
+}
+
 .homeContainer .articleHeader .column {
   margin-left: 0px;
   padding-left: 0px;
@@ -366,6 +387,7 @@
   }
 }
 
+/**
 .tabContainer {
   position: relative;
   top: -14em;
@@ -413,12 +435,6 @@
   );
 }
 
-/* I first made a nice properly nested structure, with no HTML IDs in the CSS, and automatic scaling if you added new tabs
-	Google is complaining, so here is an alternative with HTML IDs everywhere, 
-		and the CSS will need to be patched if you add another tab
-
-   WARN, WARN: if you copy and paste, check the commas at EOL
- */
 .tabContainer:has(#tabArticles > input[type="radio"]:checked) #panelArticles ul,
 .tabContainer:has(#tabProjects > input[type="radio"]:checked)
   #panelProjects
@@ -434,8 +450,6 @@
     max-width: 100%;
     min-width: 90%;
   }
-
-  /* vague to set both tabs */
   .tabContainer .tabContent:has(label > input[type="radio"]:checked) ul {
     min-width: 90vw;
   }
@@ -467,6 +481,8 @@
   max-width: 40%;
   flex: inherit;
 }
+*/
+
 .homeContainer .SMshareWidget {
   flex: inherit;
 }
@@ -478,11 +494,11 @@
 }
 /* test on more phones, I need to use this value, that doesn't work in the fake phone in chrome */
 @media screen and (min-resolution: 150dpi) {
-  .tabContainer label,
-  .tabContainer .fakeTab {
+  .tab2Container label,
+  .tab2Container .fakeTab {
     top: 0em;
   }
-  .tabContainer span[rel="me"].fakeTab {
+  .homeContainer span[rel="me"].fakeTab {
     margin-left: 0em;
     padding-left: 0em;
   }

@@ -10,7 +10,7 @@ import {
   createAdjacentChart,
 } from "./adjacent";
 import { initMastodon } from "./mastodon";
-import { initTabs, newInitState } from "./tabs";
+import { initTabs, tabInit_OLD } from "./tabs";
 import { isLocal, standardisedWordCount } from "./string-base";
 import {
   isMobile,
@@ -206,11 +206,11 @@ export async function siteCore(
   if (matchVersion("1.0.4")) {
     // if you search for unique symbols in the compile source,
     // the initTabs code isn't present
-    newInitState(dom, loc);
+    initTabs(dom, loc);
   } else {
     // disabled in that version, as I ported to HTML/CSS
 
-    initTabs(dom, loc);
+    tabInit_OLD(dom, loc);
   }
 
   if (loc.pathname.match("group-")) {

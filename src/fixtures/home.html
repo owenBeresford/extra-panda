@@ -111,8 +111,8 @@
                   </a>
                 </div>
               </div>
-              <div class="column tabContainer" role="tablist">
-                <header class="tabHeader">
+              <div class="column tab2Container" >
+                <header class="tabHeader" role="tablist" >
                   <span
                     role="presentation"
                     class="fakeTab"
@@ -135,13 +135,15 @@
                     title="This should be the list of most important articles on this site.  I hope I have updated it"
                     role="tab"
                     id="tabArticles"
+					class="transform_shimmer"
                     aria-controls="panelArticles"
+					tabindex="0"
                   >
                     Articles
                     <input
                       id="articles"
                       type="radio"
-                      value="articles"
+                      value="1"
                       checked
                       name="tabs"
                     />
@@ -150,13 +152,15 @@
                     title="My roles, publications and OSS projects"
                     role="tab"
                     id="tabProjects"
+					class="transform_shimmer"
                     aria-controls="panelProjects"
+					tabindex="0"
                   >
                     Projects
                     <input
                       id="projects"
                       type="radio"
-                      value="projects"
+                      value="2"
                       name="tabs"
                     />
                   </label>
@@ -167,6 +171,8 @@
                   role="tabpanel"
                   aria-labelledby="tabArticles"
                   id="panelArticles"
+					data-id="1"
+					tabindex="-1"
                 >
                   <ul class="ulbasic">
                     <li>
@@ -453,6 +459,8 @@
                   role="tabpanel"
                   aria-labelledby="tabProjects"
                   id="panelProjects"
+					data-id="2"
+					tabindex="-1"
                 >
                   <ul class="ulbasic">
                     <li>

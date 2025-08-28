@@ -588,6 +588,7 @@ a.adjacentItem:before,
   background-color: rgb(245, 245, 245);
 }
 
+/*
 .tabContainer label {
   --bgr: 0;
   --bgg: 73;
@@ -608,6 +609,82 @@ a.adjacentItem:before,
   --fgg: 37;
   --fgb: 37;
 }
+ */
+
+.tab2Container .tabHeader label {
+  --bgr: 0;
+  --bgg: 73;
+  --bgb: 135;
+  --fgr: 245;
+  --fgg: 245;
+  --fgb: 245;
+  --fgcontrast: 0.95;
+  --bgcontrast: 1;
+}
+
+.tab2Container .tabHeader label:hover {	
+  --bgcontrast: 0.9;
+} 
+
+.tab2Container .tabHeader label:has( input:checked ) {
+  --bgr: 185;
+  --bgg: 222;
+  --bgb: 250;
+  --fgr: 37;
+  --fgg: 37;
+  --fgb: 37;
+}
+/* 
+One of the places I used this, I used border-top to make the tab body look connected to the tab label
+*/
+
+/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 
+	animation */
+
+/*	derived from https://gitlab.com/-/snippets/2389392 
+	needs a pale background as the shimmer textures,
+	look at inline colours, which are "amount masked"?  
+
+mask:linear-gradient(-60deg,#000 30%,#0005,#000 70%) right/350% 100%;
+
+*/
+@media screen and (prefers-reduced-motion: no-preference) {
+
+.tab2Container .transform_shimmer {
+  mask:linear-gradient(-75deg,#000 46%, #0008,#000 54%) right/310% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 15s 1;
+}
+
+.tab2Container .transform_shimmer:focus-within,
+ .tab2Container .transform_shimmer:hover  	  {
+  mask:linear-gradient(-75deg, #000 43%, #000a, #000 58%) right/310% 100%;
+}
+ 
+.tab2Container label:has(:checked).transform_shimmer {
+  mask:linear-gradient(-75deg, #000 46%, #0009,#000 54%) right/310% 50%;
+/*  mask:linear-gradient(-75deg, #fff 46%, #00ff, #fff 54%) right/310% 50%; */
+  animation: shimmer 15s infinite;
+} 
+
+.tab2Container .myUglyFace {
+  mask:linear-gradient(-75deg,#000 46%, #0008,#000 54%) right/310% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 3.3s 1;
+}
+
+@keyframes shimmer {
+  10% { mask-position:initial; }
+  20% { mask-position:left; }
+  30% { mask-position:initial; }
+}
+
+}
+
+/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
+
+
+
 
 .linksWidget[open] .defaultLinksTrigger {
   --bgr: 0;

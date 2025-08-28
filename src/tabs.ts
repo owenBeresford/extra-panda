@@ -1,7 +1,28 @@
 import { log } from "./log-services";
 import type { MultiFuncArg, MiscEvent } from "./all-types";
 
+
 let OPTS = {};
+const SPACE:string='Space';
+const COMPONENT_NAME:string=".tab2Container";
+
+function keybHandler(evt:KeyboardEvent, dom:Document):boolean {
+	// I could add support for tab, but then cycle to next tab AND select tab are the same.
+	if( evt.code==SPACE ) {
+		let obj=dom.querySelector( COMPONENT_NAME+' .tabHeader label:focus-within');  
+		if(obj) {
+			let obj2=dom.querySelector(
+				 COMPONENT_NAME+' .tabHeader label:focus-within input[type="radio"]'
+											);  
+			obj2.checked = !obj2.checked;
+			
+			// This makes Chrome work better, for some reason it jumps down about 1 browser height
+			obj.scrollIntoView(false);
+		}
+	}
+	return false;
+}
+
 /**
  * _map
  * Add several event listeners, just a utility
@@ -26,13 +47,14 @@ function _map(where: HTMLElement, action: MultiFuncArg): void {
  * @returns {boolean}
  */
 function hasTabs(dom: Document): boolean {
-  const tabs = dom.querySelectorAll(".tabComponent");
+  const tabs = dom.querySelectorAll( COMPONENT_NAME );
+	if(tabs.length >1) { log("warn", COMPONENT_NAME+":: Features may work weird on this page, "); }
   return tabs.length > 0;
 }
 
 /**
- * newInitState
- * this is tabInit v4
+ * initTabs
+ * this is tabInit v5
  * Force a tab name in the location.hash to be honored.
  
  * @param {Document} dom
@@ -40,7 +62,11 @@ function hasTabs(dom: Document): boolean {
  * @public
  * @returns {void}
  */
-export function newInitState(dom: Document, loc: Location): void {
+export function initTabs(dom: Document, loc: Location): void {
+	if( dom.querySelector( COMPONENT_NAME)) {
+		log("info", "Keybaord events enabled for "+ COMPONENT_NAME);
+		dom.addEventListener("keydown", (evt)=> { return keybHandler(evt, dom ); } , false);
+	}
   if (!loc.hash) {
     return;
   }
@@ -50,6 +76,7 @@ export function newInitState(dom: Document, loc: Location): void {
   ) as HTMLInputElement;
   if (JUMP && JUMP.tagName === "INPUT") {
     JUMP.checked = true;
+
   } else {
     log("error", "tabInit v4: failed to find " + loc.hash + " element");
   }
@@ -65,7 +92,7 @@ export function newInitState(dom: Document, loc: Location): void {
  * @public
  * @returns {void}
  */
-export function initTabs(dom: Document, loc: Location): void {
+export function tabInit_OLD (dom: Document, loc: Location): void {
   const tabs = dom.querySelectorAll(".tabComponent");
   for (let i = 0; i < tabs.length; i++) {
     const btns: Array<HTMLElement> = Array.from(
@@ -88,6 +115,7 @@ export function initTabs(dom: Document, loc: Location): void {
  * tabChange
  * Change which tab is visible
  * I don't think this needs exporting, aside from tests
+ * @deprecated
  * @param {string|MiscEvent} id - HTML id for the menu
  * @param {Document } dom
  * @protected
@@ -178,8 +206,10 @@ function injectOpts(a: object): void {
  */
 export const TEST_ONLY = {
   injectOpts,
-  tabChange,
-  hasTabs,
-  newInitState,
   initTabs,
+  hasTabs,
+
+//  tabChange,
+	tabInit_OLD,
+//  newInitState,
 };

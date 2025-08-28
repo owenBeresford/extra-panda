@@ -66,11 +66,17 @@ export function appendIsland(
  * @returns {void}
  */
 export function ready(callback: GenericEventHandler, dom: Document): void {
-  if (dom.readyState !== "loading") {
+	console.assert( 
+			typeof dom !== "undefined", 
+			"Startup ready() needs two param, document in the second" 
+					);
+  if ( dom.readyState !== "loading") {
     const e = dom.createEvent("htmlevents");
     callback(e);
+	return;
   } else if (dom.addEventListener) {
     dom.addEventListener("DOMContentLoaded", callback);
+	return;
   }
   throw new Error("Unknown JS interpreter, can't register code");
 }

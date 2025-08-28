@@ -218,6 +218,12 @@ function spinup_server() {
       headers: { "Content-Type": "text/css;charset=UTF-8" },
     });
   });
+  app.get("/fonts/fontello.woff2", function (req, res) {
+    res.sendFile(path.join(DIR_FIXTURES, "fontello.woff2"), {
+      dotfiles: "deny",
+      headers: { "Content-Type": "font/woff2" },
+    });
+  });
 
   app.get("/scripts/:nom", function (req, res) {
     let detect = fs.statSync(path.join(DIR_TESTS, req.params.nom), {
@@ -729,7 +735,7 @@ if (runDirectly(process)) {
   } else if (process.argv.includes("--visual-tests-only")) {
     const [ignored, end1] = spinup_server();
     console.log(
-      "Running the visualisation test on \n\t\thttps://127.0.0.1:8081/vis/\nRead src/vis-test/README.1st for filenames",
+      "Running the visualisation test on \n\t\thttps://127.0.0.1:8081/vis/\nRead src/vis-tests/README.1st for filenames",
     );
     // end1() func not called
   } else {

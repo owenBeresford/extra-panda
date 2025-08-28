@@ -30,6 +30,8 @@ MAINTENANCE
 - UPDATE:: Internet suggests dropping Playwright for Puppeteer if specific browsers are needed. https://pptr.dev/webdriver-bidi https://www.npmjs.com/package/puppeteer-core
 - TEST THIS CODE https://github.com/egm0121/jest-test-gen?tab=readme-ov-file https://www.npmjs.com/package/jest-test-gen/v/0.0.10  https://github.com/ed4becky/jest-unit-test-generator 
 - Add python syntax highlighter
+- Investigate adding aria-current on bigger docs https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-current 
+- re-add aria-hidden attrib, #leSigh
 
 ### Previous Updates
 
@@ -89,19 +91,19 @@ MAINTENANCE
 - DONE: Improve output driver on my runner, dealing with delays etc.
 - DONE: Improve cookie code for modern internet, and improve cookie readability.
 - DONE: Add a test that includes the index.mjs, or that is a critical fail point. 
-- DONE: Add ability to read current tab from location.hash
 - DONE: Make mobile menu for SM invalidate desktop menu for SM, as both interactions doesn't make sense
 - DOME: Add feature "take user selection of text, and return standardised word count of it"
 - DONE: Change implementation on reading word-count 
 - DONE: Extracted Tab feature to own TS module, as I'm not updating the tabs UI to pure HTML5 now.
--       DONE: I now have migrated to pure CSS  
-- DONE: migrated tabs to HTML/CSS as its better architecture
+-       Add ability to read current tab from location.hash
+-       Migrated to pure CSS  
+-       Build non-hacky tabs as realistic CSS.  My solution has useful accessibility
 - DONE: migrate CSS into this project, simplifying my webhost project
 - DONE: tidyup English and old CSS in the CSS
 - DONE: improved readability and component-isation in the CSS.  Added per component tests, to increase code longevity
 - DONE: unbreak [minor] things for Vivaldi
 - DONE: trap out libreWolf, as the DPI calc in CSS is busted there
-- DONE: Move libreWolf CSS to own file, and add 20% new CSS to support libreWolf 
+-       Move libreWolf CSS to own file, and add 20% new CSS to support libreWolf 
 - DONE: eslint, I have turned prefer-const OFF, as it doesn't report arrays sensibly.  See inline note
 - DONE: remove remaining CSS float declarations.
 - DONE but BROKEN: add a method to exec tests inside libreWolf, see notes 
@@ -115,6 +117,5 @@ MAINTENANCE
 -      Add a dump-cookie plugin to browser, so can re-execute build-references against 1mb of cookies "not bot", "normal interwibbies"
 -      Build for patch mode for existing reference files
 -      Add a basic validator for redirects, in-case the linked website is emitting bad redirects
-- DONE: Check reference tooltips in DL lists, examples: architectures-for-css, review-dvcs-automation 
 - DONE: Add feature so tests use A LOCAL IP, not a fixed string 
 

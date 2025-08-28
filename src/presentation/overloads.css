@@ -227,3 +227,9 @@ This is big screen mac, should work with wide versions
 a[href] {
   text-decoration: underline;
 }
+
+a[href^="#toc"] {
+  text-decoration: inherit;
+
+}
+

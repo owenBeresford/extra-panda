@@ -21,6 +21,7 @@ import {
   currentSize,
   calcScreenDPI,
   isLibreWolf,
+	ready,
 } from "./dom-base";
 import { storeAppearance } from "./cookies";
 import { SELF_VERSION, matchVersion } from "./immutables";
@@ -55,6 +56,7 @@ export {
   currentSize,
   calcScreenDPI,
   isLibreWolf,
+	ready,
   initExpandImage,
   SELF_VERSION,
 };
