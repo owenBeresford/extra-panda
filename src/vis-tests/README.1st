@@ -7,7 +7,7 @@ These URLs below are running when either of the following is run:
 OR
 ` node ./node_modules/.bin/vite-node tools/test-browser.ts --visual-tests-only `
 
-Currently 24 Ui samples to look at the CSS and its interactions
+Currently 27 UI samples to look at the CSS and its interactions
 
 https://127.0.0.1:8081/vis/access-src-test.html
 https://127.0.0.1:8081/vis/button-bar-test.html
@@ -21,7 +21,7 @@ https://127.0.0.1:8081/vis/adjacent-widget-test.html
 https://127.0.0.1:8081/vis/home-test.html
 https://127.0.0.1:8081/vis/mastodon-widget-test.html
 https://127.0.0.1:8081/vis/mobile-menu-test.html
-https://127.0.0.1:8081/vis/better-dl-test.html
+https://127.0.0.1:8081/vis/better-d:l-test.html
 https://127.0.0.1:8081/vis/dl-intermediate-test.html
 https://127.0.0.1:8081/vis/keywords-widget-test.html
 https://127.0.0.1:8081/vis/menu-test.html
@@ -34,12 +34,14 @@ https://127.0.0.1:8081/vis/big-arrow-test.html
 https://127.0.0.1:8081/vis/addreferences-test.html
 https://127.0.0.1:8081/vis/button-bar-test2.html
 https://127.0.0.1:8081/vis/tab-test.html
+https://127.0.0.1:8081/vis/columns-test.html
+https://127.0.0.1:8081/vis/decorative-links-test.html
+
 
 To look at::
-* rewrite adjacent bar
 * Create groupIndex test separate to content
 * SMshare
 * maquette widget
 * contact me page, due to weird process
-* pullout ans tidyup the just HTML + CSS for forms
+* pullout and tidyup the just HTML + CSS for forms
 
