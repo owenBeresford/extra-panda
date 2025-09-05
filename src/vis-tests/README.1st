@@ -7,7 +7,7 @@ These URLs below are running when either of the following is run:
 OR
 ` node ./node_modules/.bin/vite-node tools/test-browser.ts --visual-tests-only `
 
-Currently 27 UI samples to look at the CSS and its interactions
+Currently 29 UI samples to look at the CSS and its interactions
 
 https://127.0.0.1:8081/vis/access-src-test.html
 https://127.0.0.1:8081/vis/button-bar-test.html
@@ -35,7 +35,9 @@ https://127.0.0.1:8081/vis/addreferences-test.html
 https://127.0.0.1:8081/vis/button-bar-test2.html
 https://127.0.0.1:8081/vis/tab-test.html
 https://127.0.0.1:8081/vis/columns-test.html
+https://127.0.0.1:8081/vis/columns-long-test.html
 https://127.0.0.1:8081/vis/decorative-links-test.html
+https://127.0.0.1:8081/vis/cell-test.html
 
 
 To look at::
