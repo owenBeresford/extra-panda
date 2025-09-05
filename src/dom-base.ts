@@ -206,10 +206,10 @@ export function isLibreWolf(
     console.warn("Is this librewolf?, could tell me if this is wrong.");
     if (!dom.body.classList.contains("IAmLibreWolf")) {
       dom.body.classList.add("IAmLibreWolf");
-      (
-        dom.querySelector('.fullWidth p[role="status"]') as HTMLElement
-      ).innerHTML +=
+		const tmp:HTMLElement=dom.querySelector('.fullWidth p[role="status"]') as HTMLElement;
+		if(tmp) { tmp.innerHTML +=
         " &nbsp; Is this librewolf?  Could you tell me if this is wrong.";
+		}
     }
     return true;
   }
