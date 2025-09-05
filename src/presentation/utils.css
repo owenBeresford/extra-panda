@@ -283,25 +283,35 @@ This is big screen mac, should work with wide versions
   }
 }
 
-.lotsOfWords {
-  column-gap: 1em;
-  column-count: 7;
-  columns: 7 25em;
-}
+/* replacement columns, pls see vis-tests/archi-test */
+.lotsOfWords { line-height:1.6; font-size:1em; text-align:justify; column-count: 2; column-width:55ch; 
+			margin-left:auto; margin-right:auto;  }
+.lotsOfWords p { line-height:1.6; }
 .lotsOfWords:has(code.highlight) {
   column-width: 28em;
 }
-@media screen and (min-width: 1000px) {
-  .lotsOfWords {
-    column-gap: 2em;
-    margin-bottom: 2em;
-  }
+
+/* 473px == 60ch with that font & chromium/ubuntu
+   433px == 55ch on same 
+*/
+@media screen and (min-resolution: 150dpi) and (max-width:800px) {
+	.lotsOfWords { column-width:calc( 100vw - 2em ); column-count:1; }
+} 
+@media screen and (min-width:1024px) {
+ 	.lotsOfWords { width:890px; margin-bottom:2em }
 }
-@media screen and (min-resolution: 150dpi) {
-  .lotsOfWords {
-    margin-left: 0.5em;
-  }
+@media screen and (min-width:1350px) {
+	.lotsOfWords { column-count:3; width:1350px; } 
 }
+@media screen and (min-width:1366px) {
+	.lotsOfWords { column-gap:1.6em; }
+}
+@media screen and (min-width:1820px) {	
+	.lotsOfWords { column-count:4; width:1820px; }
+}
+
+
+
 
 .halferWords {
   width: 680px;
@@ -368,10 +378,8 @@ This is big screen mac, should work with wide versions
 hr.blocker {
   width: 90%;
 }
-@media screen and (min-width: 900px) {
-  .blocker {
-    margin: 1em;
-  }
+.blocker {
+  margin: 1em;
 }
 
 /* used here as the wiki-engine proffers it, without the Wiki, this is unneeded  

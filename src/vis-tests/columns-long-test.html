@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en-GB" class="noJS" itemscope itemtype="http://schema.org/Article">
+<head>
+<!-- This website is written by a guy who claims to have lots of specialised technical skills, but this website only partially demonstrates them.  This website is a vehicle for about 240,000 words, please read some of them. -->
+<title>Agile Architectures</title>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.06" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="en-GB" />
+<meta name="Author" content="Owen Beresford" />
+<link href="/asset/favicon-32x32.png" rel="icon" type="image/png" />
+<link rel="stylesheet" href="/asset/ob1.min.css" />
+
+</head>
+<body id="body" class="annoyingBody" data-access="0">
+ <div class="h4_page wholeArticle">
+  <div class="after_menu articleContent">
+   <main id="main">
+    <article>
+     <div class="blocker acceptablePRE" >
+<p>I recently went to a short course on architectures, and engineering tools.  I now have another cert for my file.  This is an article about the course and the teaching, I do not intend to write out the course material.  I write my reflections on the supplied information.  Writing these is important but quite time expensive, or one tends not to apply the course material to one's process.<br />
+The course notes and quite a few papers are provided free access via <a href="https://www.gilb.com" target="_blank">T Gilb's website</a>.  If you are interested in your own study, please contact T Gilb, who is focussing more on courses than contracts at present.  There was a supplementary course on the Friday on communications, but I needed to get back to work.</p>
+
+
+<div class="lotsOf Words nuText">
+
+<h3 class="dontend" id="toc0"> <a href="#toc0" title="Jump to this section." > Core precepts <sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h3>
+<p>T Gilb is an Agile coach; that is he encourages business to revise architecture so it is compliant to Agile process.   I claim to be able to follow Agile, which is the majority of what T Gilb's activity objectives are, and has been paid for doing them.  However T Gilb is doing them on a scale substantially larger than me; apparently on the scale that he is contracted for, failure is quite common.  I normally justify my expense.  He states that this is mostly to do with the first level documentation, which people are very busy writing, but they write wrongly/ with an ineffective approach.<br />
+In all of his experience, it is always necessary to model a large number of stakeholders, all of whom want different things.  His process is numerically focussed, so he can state he only fails when there is data not supplied to him.  To clarify that, he will focus his budget on the best known method to build the most important thing; but if he is mis-communicated the most important thing, he will fail to produce a valuable outcome.   The large number of stakeholders mean any requirements and process will be quite complex to compute.  Again his analytical technique carries this concept.  He focusses on the most important stakeholder, and their most important ten goals.  This provides a known improvement, on the biggest thing.  As he normally controls his budget situation, further objectives can be pursued afterwards.  I will supply this document to my paperwork-shy “agile” colleges (as an example of paperwork being a useful tool to generate the right results, inside an Agile environment.  If you can't type, docs are slow, but so is coding).   As an extension of this, correctness is important, accuracy is important, precision isn't.  My idea which is <em>roughly</em> four times faster, is still worth investing in; but if it costs more than the return to work out precisely the gain, it isn't worth investing in, not even the paperwork.</p>
+
+<p>He states something I had never analysed before: We are rarely building a new system ~ we are building a better version of what we have.  For example banking hasn't changed since the 1800s, new computer systems are deployed every few years which decrease costs, increases performance and increases the userbase.  We ~ the technical people ~ should only sell on these values.  The new systems MUST perform better than the current one (unlike the 5wd for a cheque to clear, done by a PC; which was 3wd in the 1970s, done by hand).  He also talked about the difference between engineering and science.  My first degree is in computer science, I make experiments, and write it up afterwards.  Failure is an allowed outcome, as I am doing something new.  With engineering, I am building towards definite goals, with a known and tested process.  This is spending someone's money to give them something; failure isn't one of the options.</p>
+
+<p>T Gilb's modus operandi is to take the current architecture and redraft it so it an Agile architecture.  To decompose the majority of sentences into three heaps: functions, qualities and solutions.  There should be NO solutions in the initial specification.  These are choices which should come later in the process.  As just written, the functions are largely predictable, and should not be affected by marketplace competition.  If you provide a different thing, the users wanting the original thing will ignore you; if you provide a better thing than your competition, they will talk with you.  To purge the solutions, which are likely to be listed; keep asking “why” (a la the Japanese management technique <sup><a href="https://amorebeautifulquestion.com/ask-why-five-times/" target="_blank">1</a></sup>). To clarify that with an example, you do not want a password on your system, it's poor usability; you want a secure system, with data integrity.  As everything is rendered to a number, there should be consistent quality in the specification.  This means it is easier to produce the right thing.</p>
+
+
+</div>
+<hr />
+<div class="lotsOf Words nuText">
+<p>There should be no attachment to solutions, and these should not be listed in the requirements.  If this process is followed, one may try a solution, if it doesn't work, swap it out for a second.  It was not discussed how this plays with iterative development.  T Gilb's process goal is the biggest known-cost changes come first, so there is some visible improvement to the system, this occurs at the start.  K Gilb states that all features can be free at a really low quality, so small quick alterations allow “a solution”.  The iterative structures were designed for “new systems”, so whatever solution one presented was a new thing.</p>
+
+
+<h3 class="dontend" id="toc1"> <a href="#toc1" title="Jump to this section." > What are my words/ communication? <sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h3>
+<p>This section is under this title, as T Gilb uses more structured language than I do.  He adds emphasis to certain terms.  The words he uses are to reduce length, and after good definition, quite orthogonal to each other.</p>
+
+<p>For the last several years, I have been doing implementation planning with the titles “whut”, “why”, “how”.  About 60 or 70% of “how” is how to test.   These documents are as concise as practical; not massively formal; and support the fact I write better English when I do it at a separate time to writing code.  They either live in the code repository along with the source, or in the project tracking software.<br />
+I am not in an architect role at present, and so not doing architecture.  As a comparison ~ at MS ~ although under a developer role; I did large amount of non-feature value creation.  I changed what the directors (who also did client work) needed to do, in order to present solutions.  To take a single example, I spent about 2wd to remove about 0.5wd on every subsequent piece of work, by redefining the process (and automating 50% of it).  If one is using the light weight Agile process, this is as much of an “architect” role as the company needed.<br />
+In future, I will try to get the commercial people (representative of the actual external clients) to have “value” section on larger bits of work.  What are the values and goals that I am fulfilling?  This is one of the points that T Gilb describes for reducing failure.<br />
+T Gilb is actually retired, and so had his education a long time ago.  The “time and motion” studies <sup><a href="https://en.wikipedia.org/wiki/Time_and_motion_study" target="_blank">1</a></sup>  were fashionable in the 1950/1960s.  His initial understanding of “management” and “engineering” is influenced from this time ~ everything should be calculatable as a number.  To broaden the scope of his abilities, he is also was applying the numerical analysis perspective to words.  Weighted terms for the Gilbs are “clear”, “quantitative”, “clarify”, “define”, and “concrete”; but they wheren't mentioned in the presentation.   As they are selling a management and concentration process, rather than skills in any domain; detail on language used is universally important.  They claim to push for all key nouns in documents being defined, to reduce ambiguity; and I suppose reducing verbosity (when a word is defined precisely; it may cover several sentences, which would otherwise be needed).  <br />
+The biggest difference between this and other processes that I have read is the enforcement of quantitative output, for the initial change request.  From a developer or designers perspective this generates definite bounds on what is required, so the right solution is justifiable.   If you need to effect a large change in outcomes, it is obvious you need to effect a change in the way you do things.  Numerical analysis on this stage is therefore valuable.  Conversely a small change, shouldn't require a rewrite of anything.  Being able to use the consultants' skills, so that management to express their goals in terms of quantifiable results, not emotive ambitions, is very useful.  This does balance the quantitative analysis on the developers activities/ performance.  The quantified changes listed the in specification should also list the quantified change the competition have done recently / are expected to do.</p>
+
+
+</div>
+<hr />
+<div class="lotsOf Words nuText">
+<p>T Gilb dislikes the terms “MUST” and “SHALL” (with “MUST NOT” and “SHALL NOT”).  He states these are inflexible, and fail to support the number of different concurrent requirements that need consideration.  Looking at his stakeholder analysis, I would tend to agree with that.  I have only seen these terms used in RFC, where I think they are justified.  If all parties are going to communicate, they MUST talk the same language (pun intentional).  Sensible RFC do not constrain your implementation (e.g. RFC 2866 <sup><a href="https://www.rfc-editor.org/rfc/rfc2866" target="_blank">1</a></sup>), but some of the commercially created ones are someone's implementation plan, with the confidential bits stripped <a href="https://owenberesford.me.uk/resource/architecture#note1" target="_blank">1</a>.  RFC are not supposed to be implementation plans, or requirements lists.  They are supposed to be detailed contracts for the boundaries between entities.  A document on what software MUST do, so any any piece of compliant software may talk with any other compliant software.  What use is SQL if we don't agree how to say things?</p>
+
+
+<h3 class="dontend" id="toc2"> <a href="#toc2" title="Jump to this section." > What do I gain <sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h3>
+<p>For writing requirements (not implementation plans), one lists impacts (not transforms).  Having a written quantified scale on what change is needed, T Gilb does a few estimates on what change could be performed to effect these.  The documents he uses have many conditional clauses in them, and resemble CSS.  Where the proposed solutions and the supplied resources don't match, he renegotiates ~ early before much is spent.  His paperwork process allows this type of discussion after a few days.  One of other terms is “ambition”.  Due to there being a large number of stakeholders, renegotiation is quite common.  For example, if one is commissioned to rebuild the interior of a public use mansion, and the owner is thinking of a large spiral staircase in marble; the stakeholder for legal compliance will need to be consulted for the best way to still keep them happy for wheelchair access.  The person paying is clearly the most important stakeholder, but legal requirements cannot be avoided.</p>
+
+
+</div>
+<p>T Gilb has a symbol for scales, which looks like an old technology pole ladder; or a slider dial.  As everything is quantified, it is clearer/ faster to read in graphical form.  His quantified scales look like this:</p>
+  
+<pre class="codeBlock literal">
+    Past [2012, en_UK, DataElements=All, Purpose=Testing]
+		40% ± 30% percentage of code tested <- TsG
+
+    NewProcessReleaseDate [late2013, en_UK, DataElements=All, Purpose=Testing]
+		60% ± 10% percentage of code tested <- OAB1
+    NewProcessReleaseDate [late2013, ES, DataElements=All, Purpose=Testing]
+		30% ± 10% percentage of code tested <- OAB1
+    NewProcessReleaseDate [late2013, cn_HK, DataElements=All, Purpose=Testing]
+		30% ± 10% percentage of code tested <- OAB1
+</pre>
+</br />
+<div class="lotsOf Words nuText lastSection">
+<p>To express that in English, the testing must be completed to a known saturation, or it is not much use.   Not everything needs to be tested, which is why the target is only 60%.  With the example, there is definite bounds on the change needed so “does it work” is simple to compute.  The big reason for this change to reduce ambiguity on what is tested is so that we can sign things off.  My initials are on the new state, as I set the required saturation (its the ratio between utility code, and decision making code; one needs to test the latter).  After all the decision making code is tested in English, some testing is needed for other languages, but not as much.  I hope it is obvious which requirements representation are most useful, and which can be speed-read.<br />
+As previously stated everything is accurate, but not necessarily precise.  A good example of this trend is GPS (when co-ord are quoted to 4 or 5 DP).  Note, every datum is notorised with a source, so we may check its validity.  Otherwise “nameless authority” leads to lack of taking responsibility, and quality dropping off.</p>
+
+
+</div>
+<br /><br />
+</div>
+    </article>
+   </main>
+
+  </div>
+  <fieldset class="articleHeader">
+	<legend></legend>
+	<nav id="navBar" class="row">
+			<div class="column">
+				<div class="top-bar fullWidth">
+					<header><h1>Architectures and Agile</h1></header>
+			    	<p role="status" class="bigScreenOnly">Warning: this is old content. &nbsp; &nbsp;   </p>
+				</div>
+				<div id="shareGroup" class="metaWidget row addReading">
+					<span class="SMshareWidget"> 
+						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
+						<a id="rssLink" href="https://owenberesford.me.uk/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i><span class="sr-only">RSS</span></a> 
+						<span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow" aria-haspopup="menu" > Share </span>
+						<span class="bigScreenOnly">Share: </span>
+                        <a href="https://twitter.com/intent/tweet?text=I+think+this+is+important+https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Farchitecture" title="Share this resource on your twitter account." target="_blank" class="bigScreenOnly"> <i class="fa fa-twitter" aria-label="Share this resource on your twitter account." aria-hidden="true"></i><span class="sr-only">Twitter</span></a>
+						<a href="#" id="mastoTrigger" class="masto bigScreenOnly" title="Share this article with *your* mastodon instance" aria-haspopup="dialog" >	<i class="fa fa-mastodon" aria-label="Share this article on *your* mastodon instance." aria-hidden="true"></i><span class="sr-only">Mastodon</span> </a>
+						<a href="https://www.reddit.com/submit?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Farchitecture" target="_blank" title="Share this article with your Reddit audience" class="bigScreenOnly" ><i aria-label="Share this article with your Reddit audience." class="fa fa-reddit-square" aria-hidden="true"></i><span class="sr-only">Reddit </span> </a>
+						<a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Farchitecture" target="_blank" class="bigScreenOnly" title="Share current article with your linked-in audience." ><i class="fa fa-linkedin-square" aria-hidden="true" aria-label="Share this article with your linked-in audience."></i><span class="sr-only">Linkedin</span> </a>
+						<a title="Share current article with Hacker news/ Y combinator audience" target="_blank" class="bigScreenOnly" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Farchitecture&amp;t=Agile+Architectures"> <i class="fa fa-hacker-news" aria-label="Share this article with your Y combinator audience." aria-hidden="true"> </i><span class="sr-only">Hacker news</span> </a>
+						<a title="Share this article with your Xing audience." href="https://www.xing.com/spi/shares/new?url=https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Farchitecture" target="_blank" class="bigScreenOnly" ><i class="fa fa-xing-square" aria-hidden="true" aria-label="Share this article with your Xing audience."></i><span class="sr-only">Xing</span> </a>
+					</span>
+
+					<span class="ultraSkinny bigScreenOnly"> 
+						<span>Edited <time title="Page edited on 2025-06-10T09:54:33" datetime="2025-06-10T09:54:33">Jun '25</time>
+						</span>
+						<span>Created <time datetime="2015-03-03T00:00:00" title="If the value says 03-03-2015; its wrong but that is when this project was moved to the current git project" ><strong> &gt;7 Years ago</strong></time> </span>
+					</span>
+
+				</div>
+			</div>
+			<dialog id="popup" class="mastodonWidget bigScreenOnly">
+				<form method="dialog" enctype="multipart/form-data" action="." name="mastoSelection"  >
+					<label for="mastodonserver">your server: 
+						<input id="mastodonserver" maxlength="50" data-url="https%3A%2F%2Fowenberesford.me.uk%2Fresource%2Farchitecture" type="text" value="" placeholder="mastodon.social" />  
+					</label> 
+					<span id="sendMasto" class="button masto" title="Share article to *your* mastodon server">Share article now</span>
+					<span class="button trimmed" id="hideMasto" title="Close popup"> <i class="fa fa-cancel" aria-hidden="true"></i> Cancel </span>
+				</form>
+			</dialog>
+	
+	<div class="bigScreenOnly column linksWidget">
+		<details class="linksWidget" id="pageMenu">
+			<summary class="defaultLinksTrigger fa-" aria-haspopup="menu"> <span class="sr-only">Menu</span> </summary>
+
+			<menu class="dfl">
+			<li>Additional features</li>
+<li><a href="/resource/home"><i class="fa fa-angle-left" aria-hidden="true"></i> Home</a> </li> 
+<li><a href="/resource/search">Search 🔎 </a></li>
+<li><a href="/resource/appearance">Appearance </a></li>
+<li><a href="/resource/contact-me">Contact me 📞 </a></li>
+<li><a href="#contentGroup">📜 Similar articles</a></li>
+			</menu>
+		</details>
+		<details open class="headingsWidget"><summary class="fa-"><div>Chapters</div></summary><menu class="titleList">
+<li><a href="#toc0">Core precepts</a></li>
+<li><a href="#toc1">What are my words/ communication?</a></li>
+<li><a href="#toc2">What do I gain</a></li>
+</menu>
+</details><br />
+
+	</div>
+	<!-- /div -->
+	</nav>
+</fieldset>
+ </div> 
+ <footer class="row footWidget"> 
+	<div class="column leftFooter"> 
+		<a href="https://www.plainenglish.co.uk/services.html" target="_blank" title="They, er, don't have a service for >200,000 word sites, so no logo.">Campaign for Plain English</a><br />
+		My profile: <a href="https://www.linkedin.com/in/owen-beresford-bb6ab030/" target="_blank" aria-label="my linked-in" title="Load my linked-in profile" ><i class="fixLinkedSq fa fa-linkedin-square" aria-hidden="true" aria-label="Open my linked in profile" ></i><span class="sr-only">linkedin</span></a>  
+	</div> 
+	<div class="column bigColumn">
+		<p> Page rendered <time title="Page rendered on 2025-09-01T09:03:51" datetime="2025-09-01T09:03:51">1st of Sep 2025, 9:03:51</time>, Copyright &copy; 2022 Owen Beresford, <a class="" href="https://owenberesford.me.uk/resource/contact-me">contact me</a>.  Last modified <time title="Page modified on 2025-06-10T09:54:33" datetime="2025-06-10T09:54:33">Jun '25</time>.
+	    <p>Read the generous <a rel="license" href="https://owenberesford.me.uk/resource/licence" title="Load the license term; but not that interesting">licence terms</a>, if you feel the need, there is a <a href="https://owenberesford.me.uk/resource/privacy#" title="Load the privacy terms" >privacy here</a>.    View the <a href="https://owenberesford.me.uk/resource/site-chart#" title="Load a page showing all the articles on this site">site map</a>.  <a href="#pageMenu">Jump to menu</a>
+	</div>
+ </footer>
+<script type="module" src="/asset/ob1-202406.min.mjs" ></script>  
+<style>
+/* gosls: 1 text blob, rendered as correct columns to screen size. 
+PLAN B https://stackoverflow.com/questions/43115822/can-i-make-a-css-grid-with-dynamic-number-of-rows-or-columns
+
+scroll bars!!
+ */
+@media screen and (max-width:700px) and (orientation:portrait) {
+	.codeBlock.literal:before { content:"Please use landscape for this diagram"; background:var(--errorbg); color:var(--starkfg); font-size:2em; padding:1em; display:block; }
+}
+
+.nuText { line-height:1.6; font-size:1em; text-align:justify; column-count: 2; column-width:55ch; 
+			margin-left:auto; margin-right:auto;  }
+.nuText p { line-height:1.6; }
+.lastSection:after { color:grey; }
+
+/* 473px == 60ch with that font & chromium/ubuntu
+   433px == 55ch on same 
+*/
+@media screen and (max-width:1024px) {
+  .blocker { margin: 1em; }
+}
+@media screen and (min-resolution: 150dpi) and (max-width:800px) {
+	.nuText { column-width:calc( 100% - 2em ); column-count:1; }
+	.lastSection:after { content:"1col for <800";  }
+} 
+@media screen and (min-width:1024px) {
+ 	.nuText { width:890px; }
+	.lastSection:after { content:"2col for 1024";  }
+}
+@media screen and (min-width:1350px) {
+	.nuText { column-count:3; width:1350px; } 
+	.lastSection:after { content:"3col for 1350"; }
+}
+@media screen and (min-width:1366px) {
+	.nuText { column-gap:1.6em;  }
+	.lastSection:after { content:"3col for 1366";  }
+}
+@media screen and (min-width:1536px) {
+	.nuText {  }
+	.lastSection:after { content:"3col for 1536";  }
+}
+
+@media screen and (min-width:1820px) {	
+	.nuText { column-count:4; width:1820px; }
+	.lastSection:after { content:"4col for 1820";  }
+}
+
+/* I think that over 2,000px wide will look crap, as I'm not writing many 5,000 word articles. 
+ie columns very short  */
+
+</style>
+</body>
+</html>
