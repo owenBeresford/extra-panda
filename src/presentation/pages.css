@@ -269,7 +269,6 @@
   flex-direction: row;
 }
 @media screen and (min-resolution: 150dpi) {
-
   .homeContainer .home.icerow {
     height: fit-content;
   }
@@ -289,13 +288,13 @@
   border-radius: 50px;
 }
 .homeContainer .tab2Container {
-	margin-top:-14em;
+  margin-top: -14em;
 }
 
 @media screen and (min-resolution: 150dpi) {
-.homeContainer .tab2Container {
-	margin-top:-9em;
-}
+  .homeContainer .tab2Container {
+    margin-top: -9em;
+  }
 }
 
 .homeContainer .articleHeader .column {

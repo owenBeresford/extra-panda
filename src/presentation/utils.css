@@ -265,7 +265,7 @@ This is big screen mac, should work with wide versions
     width: fit-content;
     max-width: 100vw;
   }
-/*
+  /*
   .annoyingBody .tabs-content p,
   .annoyingBody .tabs-content li,
   .annoyingBody .tabs-content a {
@@ -284,9 +284,18 @@ This is big screen mac, should work with wide versions
 }
 
 /* replacement columns, pls see vis-tests/archi-test */
-.lotsOfWords { line-height:1.6; font-size:1em; text-align:justify; column-count: 2; column-width:55ch; 
-			margin-left:auto; margin-right:auto;  }
-.lotsOfWords p { line-height:1.6; }
+.lotsOfWords {
+  line-height: 1.6;
+  font-size: 1em;
+  text-align: justify;
+  column-count: 2;
+  column-width: 55ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.lotsOfWords p {
+  line-height: 1.6;
+}
 .lotsOfWords:has(code.highlight) {
   column-width: 28em;
 }
@@ -294,24 +303,35 @@ This is big screen mac, should work with wide versions
 /* 473px == 60ch with that font & chromium/ubuntu
    433px == 55ch on same 
 */
-@media screen and (min-resolution: 150dpi) and (max-width:800px) {
-	.lotsOfWords { column-width:calc( 100vw - 2em ); column-count:1; }
-} 
-@media screen and (min-width:1024px) {
- 	.lotsOfWords { width:890px; margin-bottom:2em }
+@media screen and (min-resolution: 150dpi) and (max-width: 800px) {
+  .lotsOfWords {
+    column-width: calc(100vw - 2em);
+    column-count: 1;
+  }
 }
-@media screen and (min-width:1350px) {
-	.lotsOfWords { column-count:3; width:1350px; } 
+@media screen and (min-width: 1024px) {
+  .lotsOfWords {
+    width: 890px;
+    margin-bottom: 2em;
+  }
 }
-@media screen and (min-width:1366px) {
-	.lotsOfWords { column-gap:1.6em; }
+@media screen and (min-width: 1350px) {
+  .lotsOfWords {
+    column-count: 3;
+    width: 1350px;
+  }
 }
-@media screen and (min-width:1820px) {	
-	.lotsOfWords { column-count:4; width:1820px; }
+@media screen and (min-width: 1366px) {
+  .lotsOfWords {
+    column-gap: 1.6em;
+  }
 }
-
-
-
+@media screen and (min-width: 1820px) {
+  .lotsOfWords {
+    column-count: 4;
+    width: 1820px;
+  }
+}
 
 .halferWords {
   width: 680px;
