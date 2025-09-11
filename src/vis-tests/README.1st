@@ -7,7 +7,7 @@ These URLs below are running when either of the following is run:
 OR
 ` node ./node_modules/.bin/vite-node tools/test-browser.ts --visual-tests-only `
 
-Currently 27 UI samples to look at the CSS and its interactions
+Currently 29 UI samples to look at the CSS and its interactions
 
 https://127.0.0.1:8081/vis/access-src-test.html
 https://127.0.0.1:8081/vis/button-bar-test.html
@@ -18,10 +18,11 @@ https://127.0.0.1:8081/vis/foot-widget-test.html
 https://127.0.0.1:8081/vis/log-widget-test.html
 https://127.0.0.1:8081/vis/mobile-biblio-test.html
 https://127.0.0.1:8081/vis/adjacent-widget-test.html
-https://127.0.0.1:8081/vis/home-test.html
+https://127.0.0.1:8081/vis/home-test.html                OLD HTML/CSS SKIP THIS
+https://127.0.0.1:8081/vis/home-test2.html
 https://127.0.0.1:8081/vis/mastodon-widget-test.html
 https://127.0.0.1:8081/vis/mobile-menu-test.html
-https://127.0.0.1:8081/vis/better-d:l-test.html
+https://127.0.0.1:8081/vis/better-dl-test.html
 https://127.0.0.1:8081/vis/dl-intermediate-test.html
 https://127.0.0.1:8081/vis/keywords-widget-test.html
 https://127.0.0.1:8081/vis/menu-test.html
@@ -35,7 +36,9 @@ https://127.0.0.1:8081/vis/addreferences-test.html
 https://127.0.0.1:8081/vis/button-bar-test2.html
 https://127.0.0.1:8081/vis/tab-test.html
 https://127.0.0.1:8081/vis/columns-test.html
+https://127.0.0.1:8081/vis/columns-long-test.html
 https://127.0.0.1:8081/vis/decorative-links-test.html
+https://127.0.0.1:8081/vis/cell-test.html
 
 
 To look at::

@@ -231,7 +231,7 @@ export class MorePages implements HTMLTransformable {
           return false;
         }
         if (loop < redirect_limit) {
-          return new Error(hit[1]);
+          return new Error( decodeURI( hit[1]) );
         }
         return false;
       }

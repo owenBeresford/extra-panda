@@ -147,7 +147,15 @@ function q(e2, t2, n2) {
   } catch (e3) {
     n2.noop++;
   }
-  return !(!(t2 && "Gecko" === t2.product && t2.maxTouchPoints > 0) || r2) && (console.warn("Is this librewolf?, could tell me if this is wrong."), e2.body.classList.contains("IAmLibreWolf") || (e2.body.classList.add("IAmLibreWolf"), e2.querySelector('.fullWidth p[role="status"]').innerHTML += " &nbsp; Is this librewolf?  Could you tell me if this is wrong."), true);
+  if (t2 && "Gecko" === t2.product && t2.maxTouchPoints > 0 && !r2) {
+    if (console.warn("Is this librewolf?, could tell me if this is wrong."), !e2.body.classList.contains("IAmLibreWolf")) {
+      e2.body.classList.add("IAmLibreWolf");
+      const t3 = e2.querySelector('.fullWidth p[role="status"]');
+      t3 && (t3.innerHTML += " &nbsp; Is this librewolf?  Could you tell me if this is wrong.");
+    }
+    return true;
+  }
+  return false;
 }
 function x(e2, t2, r2) {
   try {

@@ -1,6 +1,10 @@
 import { assert, describe, it } from "vitest";
 
-import { createEvent, enableGetEventListeners, getCSSAttr } from "./vitest-addons";
+import {
+  createEvent,
+  enableGetEventListeners,
+  getCSSAttr,
+} from "./vitest-addons";
 import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../tabs";
 import { appendIsland } from "../dom-base";
@@ -362,21 +366,10 @@ describe("TEST tabs", () => {
 
     initTabs(dom, loc);
 
-    assert.equal(
-		getCSSAttr("#panelProjects","display", dom, win),
-		"block"
-				);  
-    assert.equal(
-		getCSSAttr("#panelArticles","display", dom, win),
-		"none"
-				);  
-	
-
+    assert.equal(getCSSAttr("#panelProjects", "display", dom, win), "block");
+    assert.equal(getCSSAttr("#panelArticles", "display", dom, win), "none");
 
     const PROJECTS = dom.querySelector("#panelProjects");
     const ARTICLES = dom.querySelector("#panelArticles");
-
   });
-
-
 });

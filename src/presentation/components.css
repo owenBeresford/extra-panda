@@ -759,7 +759,12 @@ This is big screen mac, should work with wide versions
 }
 
 /* Tag name is needed as the class is used in two places. */
-ul.adjacentList li a { vertical-align:center; align-content: center; min-width: 9em; min-height: 4em; }
+ul.adjacentList li a {
+  vertical-align: middle;
+  align-content: center;
+  min-width: 9em;
+  min-height: 4em;
+}
 
 .adjacentWidget a.button {
   font-weight: bold;
@@ -890,7 +895,6 @@ a.adjacentItem:hover:before {
   text-align: center;
   padding: 0em 2em;
   width: 900px;
-  text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1116,8 +1120,8 @@ but this is a permanent effect, so with is better choice in this library
 }
 
 /* that space char is working hard, this is two selectors */
-.popOverWidget .lotsOfText details.singlePopup:not(open),
-.popOverWidget.lotsOfText details.singlePopup:not(open) {
+.popOverWidget .lotsOfWords details.singlePopup:not(open),
+.popOverWidget.lotsOfWords details.singlePopup:not(open) {
   width: inherit;
 }
 
@@ -1223,6 +1227,92 @@ https://css-tricks.com/books/greatest-css-tricks/pin-scrolling-to-bottom/
 }
 .logWidget ul {
   margin-left: 0px;
+}
+
+/* new component!! no articles to date 
+CURRENTLY setup for 25em SQ.
+Consider moving the widths to a CSS var
+*/
+.cell {
+  display: block;
+  border: solid 1px var(--scroll1);
+  margin-bottom: 1em;
+  margin-right: 1em;
+  width: fit-content;
+  max-width: 50em;
+  min-width: 25em;
+  min-height: 25em;
+  height: max-content;
+  max-height: 50em;
+  background-image: var(--bg-logo);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+  container-name: cell;
+  /* ADD TO RELEVANT uses:  container-type: inline-size; */
+}
+@media screen and (min-resolution: 150dpi) {
+  .cell {
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+}
+
+.cell .header {
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  align-self: center;
+  vertical-align: middle;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cell .mask {
+  background-color: rgba(254, 254, 254, 1);
+  opacity: 0.75;
+  /* more complex shadows and effects can be added to the mask*/
+  /*	mask-image: linear-gradient(130deg, rgba(254, 254, 254, 1), rgba(254,254,254, 0.2) 30%, rgba(254,254, 254, 0)); */
+  width: 100%;
+  height: auto;
+  min-height: 25em;
+  /*  position: absolute; */
+  z-index: initial;
+}
+
+.cell .stage1 {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  background-color: transparent;
+}
+.cell .stage1 * {
+  background-color: transparent;
+}
+
+/*  SAMPLE USAGE
+.itsABox { display:flex; flex-direction:row; }
+.itsABox .cell { min-width:8em; min-height:8em; background-color:salmon; container-type: inline-size; }
+@media screen and (min-resolution: 150dpi) {
+	.itsABox { display:flex; flex-direction:column; }
+}
+*/
+
+/* smaller sizes option, this boundary may need to be revised */
+@container cell (width < 10em) {
+  .cell .header {
+    background-color: lime;
+    font-weight: bolder;
+    position: relative;
+    top: inherit;
+    left: inherit;
+    margin-left: 50%;
+    margin-top: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 /* highlight widget 
@@ -1432,7 +1522,6 @@ This is big screen mac, should work with wide versions
     .annoyingBody:has(.fullScreen) {
       --fgcontrast: 1;
     }
-    /* this induces a colour mixing issue in Mac */
   }
 }
 
@@ -1440,11 +1529,11 @@ This is big screen mac, should work with wide versions
 
 */
 .tab2Container {
-	/* define sizes per use */
-	min-width: min(100%, 400px);
-	max-width: 40%;
-	flex: inherit;
-	outline: none;
+  /* define sizes per use */
+  min-width: min(100%, 400px);
+  max-width: 40%;
+  flex: inherit;
+  outline: none;
 }
 
 @media screen and (min-resolution: 150dpi) {
@@ -1452,7 +1541,6 @@ This is big screen mac, should work with wide versions
     max-width: fit-content;
   }
 }
-
 
 .tab2Container .tabContent {
   border-top: 1px solid #e6e6e6;
@@ -1470,8 +1558,6 @@ This is big screen mac, should work with wide versions
   text-align: center;
 }
 
-
-
 .tab2Container .tabHeader {
   display: flex;
   flex-direction: row;
@@ -1486,41 +1572,45 @@ This is big screen mac, should work with wide versions
   );
 }
 .tab2Container .tabHeader label:active {
-	border:3px solid black;
+  border: 3px solid black;
 }
-.tab2Container .tabHeader label:has( [type="radio"]:checked )  {
-	font-weight: bolder;
+.tab2Container .tabHeader label:has([type="radio"]:checked) {
+  font-weight: bolder;
 }
 
 /* practice border, finished properly */
-.tab2Container .tabHeader label:has( input[type="radio"]:active ) {
-	border:4px dashed red ;
+.tab2Container .tabHeader label:has(input[type="radio"]:active) {
+  border: 4px dashed red;
 }
 
 .tab2Container .tabHeader label:focus-visible {
-	border:4px dashed #33dd66;
-    outline: #33dd66 dashed 4px;
+  border: 4px dashed #33dd66;
+  outline: #33dd66 dashed 4px;
 }
 
-
 .tab2Container .tabContent {
-	display:none;
+  display: none;
 }
 
 /* this can be statically deployed for upto 6 tabs per row, as long the data-id is present.
 	less drama on testing for STUPID spelling errors */
-.tab2Container:has( input[type="radio"][value="1"]:checked )> .tabContent[data-id="1"],
-.tab2Container:has( input[type="radio"][value="2"]:checked )> .tabContent[data-id="2"],
-.tab2Container:has( input[type="radio"][value="3"]:checked )> .tabContent[data-id="3"],
-.tab2Container:has( input[type="radio"][value="4"]:checked )> .tabContent[data-id="4"],
-.tab2Container:has( input[type="radio"][value="5"]:checked )> .tabContent[data-id="5"],
-.tab2Container:has( input[type="radio"][value="6"]:checked )> .tabContent[data-id="6"]
- {
+.tab2Container:has(input[type="radio"][value="1"]:checked)
+  > .tabContent[data-id="1"],
+.tab2Container:has(input[type="radio"][value="2"]:checked)
+  > .tabContent[data-id="2"],
+.tab2Container:has(input[type="radio"][value="3"]:checked)
+  > .tabContent[data-id="3"],
+.tab2Container:has(input[type="radio"][value="4"]:checked)
+  > .tabContent[data-id="4"],
+.tab2Container:has(input[type="radio"][value="5"]:checked)
+  > .tabContent[data-id="5"],
+.tab2Container:has(input[type="radio"][value="6"]:checked)
+  > .tabContent[data-id="6"] {
   display: inline-block;
   transition: all 0.5s ease;
   min-width: 90%;
   max-width: 100%;
-	margin-left:1.74em;
+  margin-left: 1.74em;
 }
 
 .tab2Container label,
@@ -1531,7 +1621,7 @@ This is big screen mac, should work with wide versions
   margin-left: 1em;
 }
 .tab2Container label:first-child {
-	margin-left:inherit;
+  margin-left: inherit;
 }
 
 .tab2Container input[type="radio"] {
@@ -1570,7 +1660,6 @@ sup a[aria-label] {
   a sup:has(i.invert) {
     font-size: 50%;
   }
-  sub,
   sup {
     font-size: 130%;
   }

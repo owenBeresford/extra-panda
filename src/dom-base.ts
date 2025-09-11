@@ -66,17 +66,17 @@ export function appendIsland(
  * @returns {void}
  */
 export function ready(callback: GenericEventHandler, dom: Document): void {
-	console.assert( 
-			typeof dom !== "undefined", 
-			"Startup ready() needs two param, document in the second" 
-					);
-  if ( dom.readyState !== "loading") {
+  console.assert(
+    typeof dom !== "undefined",
+    "Startup ready() needs two param, document in the second",
+  );
+  if (dom.readyState !== "loading") {
     const e = dom.createEvent("htmlevents");
     callback(e);
-	return;
+    return;
   } else if (dom.addEventListener) {
     dom.addEventListener("DOMContentLoaded", callback);
-	return;
+    return;
   }
   throw new Error("Unknown JS interpreter, can't register code");
 }
@@ -206,10 +206,13 @@ export function isLibreWolf(
     console.warn("Is this librewolf?, could tell me if this is wrong.");
     if (!dom.body.classList.contains("IAmLibreWolf")) {
       dom.body.classList.add("IAmLibreWolf");
-      (
-        dom.querySelector('.fullWidth p[role="status"]') as HTMLElement
-      ).innerHTML +=
-        " &nbsp; Is this librewolf?  Could you tell me if this is wrong.";
+      const tmp: HTMLElement = dom.querySelector(
+        '.fullWidth p[role="status"]',
+      ) as HTMLElement;
+      if (tmp) {
+        tmp.innerHTML +=
+          " &nbsp; Is this librewolf?  Could you tell me if this is wrong.";
+      }
     }
     return true;
   }

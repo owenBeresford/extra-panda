@@ -7,71 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.06" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Language" content="en-GB" />
-    <meta name="Author" content="Owen Beresford" />
-    <meta
-      name="Description"
-      content="Visual test, do not publish to the internet"
-    />
-    <meta
-      name="google-site-verification"
-      content="lSgIe7Nm0H0RYQ2ktQ4vr5Jz0iYGhQd7cTWoVDg3Xss"
-    />
     <link href="/asset/favicon-32x32.png" rel="icon" type="image/png" />
-    <meta itemprop="name" content="Tab test" />
-    <meta
-      itemprop="description"
-      content="Visual test, do not publish to the internet"
-    />
-    <meta name="twitter:site" content="@channelOwen" />
-    <meta name="twitter:title" content="Tab test" />
-    <meta
-      name="twitter:description"
-      content="Visual test, do not publish to the internet"
-    />
-    <meta name="twitter:creator" content="@channelOwen" />
-    <meta property="og:title" content="Tab test" />
-    <meta property="og:type" content="article" />
-    <meta
-      property="og:url"
-      content="https://owenberesford.me.uk/resource/tab-test"
-    />
-    <meta
-      property="og:description"
-      content="Visual test, do not publish to the internet"
-    />
-    <meta property="og:site_name" content="OwenBeresford's very wordy site" />
     <meta
       property="article:published_time"
       content="27th of Aug 2025, 15:32:33"
     />
     <meta property="article:modified_time" content="Aug '25" />
-    <link
-      rel="canonical"
-      href="https://owenberesford.me.uk/resource/tab-test"
-    />
-    <!-- the below track is just a generic cheese track, but the style fits. progressive + uplifting tone.  I do not own the rights or anything. 
-TODO: magic tune selection against some index/DB -->
-    <meta
-      property="og:audio"
-      content="https://www.youtube.com/watch?v=Brl7WmHDG-E"
-    />
-
     <link rel="stylesheet" href="/asset/ob1.min.css" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://ogp.me/ns/article#",
-        "@type": "Article",
-        "name": "Tab test",
-        "article:published_time": "27th of Aug 2025, 15:32:33",
-        "article:modified_time": "Aug '25",
-        "article:section": "technology",
-
-        "author": {
-          "@type": "Person",
-          "name": "Owen Beresford"
-        }
-      }
-    </script>
   </head>
   <body id="body" class="annoyingBody" data-access="9">
     <div class="h4_page wholeArticle">
@@ -638,8 +580,12 @@ TODO: magic tune selection against some index/DB -->
             let obj2 = document.querySelector(
               '.tab2Container .tabHeader label:focus-within input[type="radio"]',
             );
-            obj2.checked = !obj2.checked;
-
+			if(typeof obj2.checked =='boolean') {
+			    obj2.checked = !obj2.checked;
+			} else {
+			    obj2.checked = true;
+			}
+console.log("SFSFSDF ", obj2.checked, '.tab2Container .tabHeader label:focus-within input[type="radio"]');
             // This makes Chrome work better, for some reason it jumps down about 1 browser height
             obj.scrollIntoView(false);
           }

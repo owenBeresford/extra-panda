@@ -625,11 +625,11 @@ a.adjacentItem:before,
   --bgcontrast: 1;
 }
 
-.tab2Container .tabHeader label:hover {	
+.tab2Container .tabHeader label:hover {
   --bgcontrast: 0.9;
-} 
+}
 
-.tab2Container .tabHeader label:has( input:checked ) {
+.tab2Container .tabHeader label:has(input:checked) {
   --bgr: 185;
   --bgg: 222;
   --bgb: 250;
@@ -652,42 +652,43 @@ mask:linear-gradient(-60deg,#000 30%,#0005,#000 70%) right/350% 100%;
 
 */
 @media screen and (prefers-reduced-motion: no-preference) {
+  .tab2Container .transform_shimmer {
+    mask: linear-gradient(-75deg, #000 46%, #0008, #000 54%) right/310% 100%;
+    background-repeat: no-repeat;
+    animation: shimmer 15s 1;
+  }
 
-.tab2Container .transform_shimmer {
-  mask:linear-gradient(-75deg,#000 46%, #0008,#000 54%) right/310% 100%;
-  background-repeat: no-repeat;
-  animation: shimmer 15s 1;
-}
+  .tab2Container .transform_shimmer:focus-within,
+  .tab2Container .transform_shimmer:hover {
+    mask: linear-gradient(-75deg, #000 43%, #000a, #000 58%) right/310% 100%;
+  }
 
-.tab2Container .transform_shimmer:focus-within,
- .tab2Container .transform_shimmer:hover  	  {
-  mask:linear-gradient(-75deg, #000 43%, #000a, #000 58%) right/310% 100%;
-}
- 
-.tab2Container label:has(:checked).transform_shimmer {
-  mask:linear-gradient(-75deg, #000 46%, #0009,#000 54%) right/310% 50%;
-/*  mask:linear-gradient(-75deg, #fff 46%, #00ff, #fff 54%) right/310% 50%; */
-  animation: shimmer 15s infinite;
-} 
+  .tab2Container label:has(:checked).transform_shimmer {
+    mask: linear-gradient(-75deg, #000 46%, #0009, #000 54%) right/310% 50%;
+    /*  mask:linear-gradient(-75deg, #fff 46%, #00ff, #fff 54%) right/310% 50%; */
+    animation: shimmer 15s infinite;
+  }
 
-.tab2Container .myUglyFace {
-  mask:linear-gradient(-75deg,#000 46%, #0008,#000 54%) right/310% 100%;
-  background-repeat: no-repeat;
-  animation: shimmer 3.3s 1;
-}
+  .tab2Container .myUglyFace {
+    mask: linear-gradient(-75deg, #000 46%, #0008, #000 54%) right/310% 100%;
+    background-repeat: no-repeat;
+    animation: shimmer 3.3s 1;
+  }
 
-@keyframes shimmer {
-  10% { mask-position:initial; }
-  20% { mask-position:left; }
-  30% { mask-position:initial; }
-}
-
+  @keyframes shimmer {
+    10% {
+      mask-position: initial;
+    }
+    20% {
+      mask-position: left;
+    }
+    30% {
+      mask-position: initial;
+    }
+  }
 }
 
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
-
-
-
 
 .linksWidget[open] .defaultLinksTrigger {
   --bgr: 0;
