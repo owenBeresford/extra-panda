@@ -51,8 +51,8 @@ describe("TEST networking", async () => {
         let obj = accessCookie();
         expect(typeof obj.set).toBe("function");
         expect(typeof obj.get).toBe("function");
-		document.cookie=""; // a cookie is set in another test
-console.log("Current cookie is ", document.cookie);
+        document.cookie = ""; // a cookie is set in another test
+        console.log("Current cookie is ", document.cookie);
         expect(document.cookie.length).toBe(0); // string length
         expect(obj.get("TEST1")).toBe("");
         obj.set("TEST1", "readme.please", 2);

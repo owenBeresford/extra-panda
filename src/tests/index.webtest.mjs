@@ -67,7 +67,8 @@ describe("BROWSER TEST index ", async () => {
           step1,
           step2,
           "LOG_USAGE" in win.console,
-          win.console.LOG_USAGE, WATCH
+          win.console.LOG_USAGE,
+          WATCH,
         );
 
         expect(step2 - step1).toBe(1);

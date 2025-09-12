@@ -13,8 +13,8 @@ I do not see *why* this doesn't out of the box, it should do.
 
 let OPTS = {};
 const SPACE: string = "Space";
-const LEFT_ARROW:string = "ArrowLeft";
-const RIGHT_ARROW:string = "ArrowRight";
+const LEFT_ARROW: string = "ArrowLeft";
+const RIGHT_ARROW: string = "ArrowRight";
 const COMPONENT_NAME: string = ".tab2Container";
 
 /**
@@ -28,51 +28,61 @@ const COMPONENT_NAME: string = ".tab2Container";
  * @public
  * @return {boolean}
  */
-function keybHandler(evt: KeyboardEvent, dom: Document, nom:string=COMPONENT_NAME): boolean {
+function keybHandler(
+  evt: KeyboardEvent,
+  dom: Document,
+  nom: string = COMPONENT_NAME,
+): boolean {
   if (evt.code == SPACE) {
-    let obj = dom.querySelector(
-      nom + " .tabHeader label:focus-within",
-    );
+    let obj = dom.querySelector(nom + " .tabHeader label:focus-within");
     if (obj) {
       let obj2 = dom.querySelector(
         nom + ' .tabHeader label:focus-within input[type="radio"]',
       );
-		// I think this is needed due to JSDOM.
-		//   every-time I extract Nodes from a webpage, the value exists. 
-	  if(typeof obj2.checked =='boolean') {
-		  obj2.checked = !obj2.checked;
-	  } else {
-		  obj2.checked = true;
-	  }
+      // I think this is needed due to JSDOM.
+      //   every-time I extract Nodes from a webpage, the value exists.
+      if (typeof obj2.checked == "boolean") {
+        obj2.checked = !obj2.checked;
+      } else {
+        obj2.checked = true;
+      }
 
       // This makes Chrome work better, for some reason it jumps down about 1 browser height
       obj.scrollIntoView(false);
     }
   }
-	if(evt.code == LEFT_ARROW || evt.code == RIGHT_ARROW) {
-	const action=function(obj:Array<HTMLElement>, offset:number, limit:number, delta:number):boolean {
-		if(offset===limit) { return false; }
-		offset+=delta;
-		obj[ offset].focus();
-		return false;
-	}
+  if (evt.code == LEFT_ARROW || evt.code == RIGHT_ARROW) {
+    const action = function (
+      obj: Array<HTMLElement>,
+      offset: number,
+      limit: number,
+      delta: number,
+    ): boolean {
+      if (offset === limit) {
+        return false;
+      }
+      offset += delta;
+      obj[offset].focus();
+      return false;
+    };
 
-     let obj2 = dom.querySelector(
-      nom + " .tabHeader label:focus-within",
-     );
-	 if(!obj2) { // discard presses on other components
-		return false;
-		}
-	 let obj = Array.from( obj2.parentNode.querySelectorAll(
-    	  ":scope label",
-    	));
-	 for(let i=0; i<obj.length; i++) {
-		if(obj[i]===obj2 ) {
-			if(evt.code == LEFT_ARROW) { return action(obj, i, 0, -1); }
-			if(evt.code == RIGHT_ARROW) { return action(obj, i, obj.length-1, 1); }
-		}
-		}
-	}
+    let obj2 = dom.querySelector(nom + " .tabHeader label:focus-within");
+    if (!obj2) {
+      // discard presses on other components
+      return false;
+    }
+    let obj = Array.from(obj2.parentNode.querySelectorAll(":scope label"));
+    for (let i = 0; i < obj.length; i++) {
+      if (obj[i] === obj2) {
+        if (evt.code == LEFT_ARROW) {
+          return action(obj, i, 0, -1);
+        }
+        if (evt.code == RIGHT_ARROW) {
+          return action(obj, i, obj.length - 1, 1);
+        }
+      }
+    }
+  }
   return false;
 }
 
@@ -118,7 +128,11 @@ function hasTabs(dom: Document): boolean {
  * @public
  * @returns {void}
  */
-export function initTabs(nom:string=COMPONENT_NAME, dom: Document, loc: Location): void {
+export function initTabs(
+  nom: string = COMPONENT_NAME,
+  dom: Document,
+  loc: Location,
+): void {
   if (dom.querySelector(nom)) {
     log("info", "Keybaord events enabled for " + nom);
     dom.addEventListener(

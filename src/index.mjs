@@ -15,7 +15,7 @@ import { siteCore, hasBeenRun } from "./core";
 import { runFetch, delay } from "./networking";
 import { log, domLog } from "./log-services";
 import { initExpandImage } from "./expand-image";
-import { initTabs } from './tabs';
+import { initTabs } from "./tabs";
 import {
   appendIsland,
   isMobile,

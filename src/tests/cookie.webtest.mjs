@@ -54,7 +54,7 @@ describe("TEST cookies", async () => {
           cr: "green",
         });
         expect(dom.cookie).toBe(APPEARANCE_COOKIE + "=" + tmp);
-		dom.cookie="";
+        dom.cookie = "";
         await delay(100);
       },
     );

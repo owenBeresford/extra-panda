@@ -127,7 +127,7 @@ function v(e2, t2, r2) {
     n("error", e3.toString()), window.noop++;
   }
 }
-function T(e2, t2) {
+function k(e2, t2) {
   if (console.assert(void 0 !== t2, "Startup ready() needs two param, document in the second"), "loading" === t2.readyState) {
     if (!t2.addEventListener) throw new Error("Unknown JS interpreter, can't register code");
     t2.addEventListener("DOMContentLoaded", e2);
@@ -135,7 +135,7 @@ function T(e2, t2) {
     e2(t2.createEvent("htmlevents"));
   }
 }
-function k(e2) {
+function T(e2) {
   if (void 0 === e2) return false;
   const t2 = e2.getComputedStyle.toString().includes("[native code]");
   return !("boolean" != typeof t2 || !t2);
@@ -159,7 +159,7 @@ function q(e2, t2, n2) {
 }
 function x(e2, t2, r2) {
   try {
-    if (!k(r2)) return -1;
+    if (!T(r2)) return -1;
     return e2.getBoundingClientRect()[t2];
   } catch (e3) {
     return n("error", "Missing data:" + e3.message), -1;
@@ -303,7 +303,7 @@ function $(e2, t2, r2, o2) {
   let a2 = i2.value;
   const s2 = i2.getAttribute("data-url");
   if ("" === a2 || null === a2) return false;
-  if (a2 = "https://" + a2 + "/share?text=I+think+this+is+important+" + s2, n("info", "Trying to open mastodon server, " + a2), !k(o2)) throw Error("Test passed, for " + a2);
+  if (a2 = "https://" + a2 + "/share?text=I+think+this+is+important+" + s2, n("info", "Trying to open mastodon server, " + a2), !T(o2)) throw Error("Test passed, for " + a2);
   return t2.querySelector("#popup").close(), o2.open(a2, "_blank"), M(t2, r2, o2) && B(0, t2, r2, o2), false;
 }
 function G(e2, t2, n2) {
@@ -325,10 +325,10 @@ function G(e2, t2, n2) {
   Y(e2.querySelector("#hideMasto"), K, e2, n2);
 }
 function _(e2, t2, n2) {
-  return k(n2) && t2.querySelector("#popup").showModal(), t2.querySelector("#popup input").focus(), false;
+  return T(n2) && t2.querySelector("#popup").showModal(), t2.querySelector("#popup input").focus(), false;
 }
 function K(e2, t2, n2) {
-  return k(n2) && t2.querySelector("#popup").close(), false;
+  return T(n2) && t2.querySelector("#popup").close(), false;
 }
 function Y(e2, t2, n2, r2) {
   e2.addEventListener("click", (e3) => (t2(e3, n2, r2), false)), e2.addEventListener("touch", (e3) => (t2(e3, n2, r2), false)), e2.addEventListener("keypress", (e3) => (t2(e3, n2, r2), false));
@@ -337,19 +337,19 @@ function V(e2, t2, n2, r2, o2) {
   e2.addEventListener("click", (e3) => (t2(e3, n2, r2, o2), false)), e2.addEventListener("touch", (e3) => (t2(e3, n2, r2, o2), false)), e2.addEventListener("keypress", (e3) => (t2(e3, n2, r2, o2), false));
 }
 const z = "Space", Q = ".tab2Container";
-function Z(e2, t2) {
-  if (e2.querySelector(Q) && (n("info", "Keybaord events enabled for " + Q), e2.addEventListener("keydown", (t3) => function(e3, t4) {
-    if (e3.code == z) {
-      let e4 = t4.querySelector(Q + " .tabHeader label:focus-within");
+function Z(e2 = Q, t2, r2) {
+  if (t2.querySelector(e2) && (n("info", "Keybaord events enabled for " + e2), t2.addEventListener("keydown", (n2) => function(e3, t3, n3 = Q) {
+    if (console.log("RUNNING keyb on " + n3), e3.code == z) {
+      let e4 = t3.querySelector(n3 + " .tabHeader label:focus-within");
       if (e4) {
-        let n2 = t4.querySelector(Q + ' .tabHeader label:focus-within input[type="radio"]');
-        n2.checked = !n2.checked, e4.scrollIntoView(false);
+        let r3 = t3.querySelector(n3 + ' .tabHeader label:focus-within input[type="radio"]');
+        "boolean" == typeof r3.checked ? r3.checked = !r3.checked : r3.checked = true, e4.scrollIntoView(false);
       }
     }
     return false;
-  }(t3, e2), false)), !t2.hash) return;
-  const r2 = e2.querySelector(t2.hash);
-  r2 && "INPUT" === r2.tagName ? r2.checked = true : n("error", "tabInit v4: failed to find " + t2.hash + " element");
+  }(n2, t2, e2), false)), !r2.hash) return;
+  const o2 = t2.querySelector(r2.hash);
+  o2 && "INPUT" === o2.tagName ? o2.checked = true : n("error", "tabInit v4: failed to find " + r2.hash + " element");
 }
 let ee = { referencesCache: "/resource/XXX-references", gainingElement: "#biblio", losingElement: ".addReferences", renumber: 1, forceToEnd: 1, maxDescripLen: 230, maxAuthLen: 65, debug: true, runFetch: p };
 async function te(t2, r2, o2) {
@@ -624,7 +624,7 @@ await async function(t2, r2, o2, i2) {
     c3 = Math.round(c3);
     const u2 = '<a class="reading" title="The text is ' + (l2 + s3) + ' normalised words long.  Link is a longer version of this reading guide guesstimate." href="/resource/jQuery-reading-duration">To read: ' + c3 + i3.timeFormat + "</a>";
     v(i3.target, u2, r3);
-  }({ dataLocation: "#main", target: ".addReading .SMshareWidget", debug: a2, refresh: true }, r2, o2), Z(r2, o2), o2.pathname.match("group-")) {
+  }({ dataLocation: "#main", target: ".addReading .SMshareWidget", debug: a2, refresh: true }, r2, o2), Z(void 0, r2, o2), o2.pathname.match("group-")) {
     const e2 = function(e3, t3) {
       const n2 = t3.pathname.split("/group-");
       if (Array.isArray(n2) && n2.length > 1 && "XXX" !== n2[1]) return n2[1];
@@ -671,10 +671,11 @@ export {
   r as domLog,
   he as hasBeenRun,
   pe as initExpandImage,
+  Z as initTabs,
   q as isLibreWolf,
   M as isMobile,
   n as log,
-  T as ready,
+  k as ready,
   p as runFetch,
   h as storeAppearance
 };
