@@ -1,26 +1,78 @@
 import { log } from "./log-services";
 import type { MultiFuncArg, MiscEvent } from "./all-types";
 
+/*
+THis module is to add keyboard modality for tabs.
+
+@see [https://w3c.github.io/aria/#tablist]
+@see [https://www.w3.org/WAI/ARIA/apg/patterns/tabs/]
+
+I do not see *why* this doesn't out of the box, it should do. 
+
+*/
+
 let OPTS = {};
 const SPACE: string = "Space";
+const LEFT_ARROW:string = "ArrowLeft";
+const RIGHT_ARROW:string = "ArrowRight";
 const COMPONENT_NAME: string = ".tab2Container";
 
-function keybHandler(evt: KeyboardEvent, dom: Document): boolean {
-  // I could add support for tab, but then cycle to next tab AND select tab are the same.
+/**
+ * keybHandler
+ * A boring event handler, HTML5 seems not to do this by default
+   THIS IS JUST BOILER PLATE.  IMPURE.
+ 
+ * @param {KeyboardEvent} evt
+ * @param {Document} dom
+ * @param {string=COMPONENT_NAME} nom
+ * @public
+ * @return {boolean}
+ */
+function keybHandler(evt: KeyboardEvent, dom: Document, nom:string=COMPONENT_NAME): boolean {
   if (evt.code == SPACE) {
     let obj = dom.querySelector(
-      COMPONENT_NAME + " .tabHeader label:focus-within",
+      nom + " .tabHeader label:focus-within",
     );
     if (obj) {
       let obj2 = dom.querySelector(
-        COMPONENT_NAME + ' .tabHeader label:focus-within input[type="radio"]',
+        nom + ' .tabHeader label:focus-within input[type="radio"]',
       );
-      obj2.checked = !obj2.checked;
+		// I think this is needed due to JSDOM.
+		//   every-time I extract Nodes from a webpage, the value exists. 
+	  if(typeof obj2.checked =='boolean') {
+		  obj2.checked = !obj2.checked;
+	  } else {
+		  obj2.checked = true;
+	  }
 
       // This makes Chrome work better, for some reason it jumps down about 1 browser height
       obj.scrollIntoView(false);
     }
   }
+	if(evt.code == LEFT_ARROW || evt.code == RIGHT_ARROW) {
+	const action=function(obj:Array<HTMLElement>, offset:number, limit:number, delta:number):boolean {
+		if(offset===limit) { return false; }
+		offset+=delta;
+		obj[ offset].focus();
+		return false;
+	}
+
+     let obj2 = dom.querySelector(
+      nom + " .tabHeader label:focus-within",
+     );
+	 if(!obj2) { // discard presses on other components
+		return false;
+		}
+	 let obj = Array.from( obj2.parentNode.querySelectorAll(
+    	  ":scope label",
+    	));
+	 for(let i=0; i<obj.length; i++) {
+		if(obj[i]===obj2 ) {
+			if(evt.code == LEFT_ARROW) { return action(obj, i, 0, -1); }
+			if(evt.code == RIGHT_ARROW) { return action(obj, i, obj.length-1, 1); }
+		}
+		}
+	}
   return false;
 }
 
@@ -60,18 +112,19 @@ function hasTabs(dom: Document): boolean {
  * this is tabInit v5
  * Force a tab name in the location.hash to be honored.
  
+ * @param {string =COMPONENT_NAME} nom
  * @param {Document} dom
  * @param {Location} loc
  * @public
  * @returns {void}
  */
-export function initTabs(dom: Document, loc: Location): void {
-  if (dom.querySelector(COMPONENT_NAME)) {
-    log("info", "Keybaord events enabled for " + COMPONENT_NAME);
+export function initTabs(nom:string=COMPONENT_NAME, dom: Document, loc: Location): void {
+  if (dom.querySelector(nom)) {
+    log("info", "Keybaord events enabled for " + nom);
     dom.addEventListener(
       "keydown",
       (evt) => {
-        return keybHandler(evt, dom);
+        return keybHandler(evt, dom, nom);
       },
       false,
     );

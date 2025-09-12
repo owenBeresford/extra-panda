@@ -205,8 +205,8 @@ export async function siteCore(
 
   if (matchVersion("1.0.4")) {
     // if you search for unique symbols in the compile source,
-    // the initTabs code isn't present
-    initTabs(dom, loc);
+    // the tabInit_OLD code isn't present
+    initTabs(undefined, dom, loc);
   } else {
     // disabled in that version, as I ported to HTML/CSS
 
