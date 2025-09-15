@@ -105,7 +105,7 @@ describe("TEST BROWSER CSS based tabs", () => {
     );
   });
 
-  it("go 2: initTabs", async () => {
+  it("go 2: initTabs + mouse events", async () => {
     const TEST_NAME = "BROWSER TEST func[1] setInitState ";
     return await wrap(
       TEST_NAME,
@@ -202,6 +202,54 @@ describe("TEST BROWSER CSS based tabs", () => {
       },
     );
   });
+
+  it("go 3: keys", async (ctx) => {
+    const TEST_NAME = "BROWSER TEST func[1] checking keyboard input ";
+    return await wrap(
+      TEST_NAME,
+      "/home.html#projects",
+      async (dom, loc, win) => {
+        expect(
+          getCSSAttr(
+            '.tab2Container:has( input[value="2"]:checked ) .tabContent[data-id="2"] ',
+            "display",
+            dom,
+            win,
+          ),
+        ).toBe("inline-block");
+        expect(
+          getCSSAttr(
+            '.tab2Container .tabContent[data-id="1"] ',
+            "display",
+            dom,
+            win,
+          ),
+        ).toBe("none");
+
+        expect(
+          getCSSAttr(
+            '.tab2Container .tabHeader label:has( input[value="2"]:checked )',
+            "background-color",
+            dom,
+            win,
+          ),
+        ).toBe(PALE_BLUE);
+        expect(
+          getCSSAttr(
+            '.tab2Container .tabHeader label:has( input[value="1"] )',
+            "background-color",
+            dom,
+            win,
+          ),
+        ).toBe(DEEP_BLUE);
+
+      	ctx.skip("Test not impl yet");
+        await delay(100);
+      },
+    );
+  });
+
+
 });
 
 execTest(run);
