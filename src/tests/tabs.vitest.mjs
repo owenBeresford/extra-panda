@@ -296,7 +296,7 @@ describe("TEST tabs", () => {
 `;
     appendIsland("#point2", str, dom);
 
-    tabInit_OLD(undefined,  dom, loc);
+    tabInit_OLD(undefined, dom, loc);
 
     const PROJECTS = dom.querySelector("#blockProjects");
     assert.equal(
@@ -364,7 +364,7 @@ describe("TEST tabs", () => {
 `;
     appendIsland("#point2", str, dom);
 
-//    initTabs(undefined, dom, loc);
+    //    initTabs(undefined, dom, loc);
     initTabs(".tab2Container", dom, loc);
 
     assert.equal(getCSSAttr("#panelProjects", "display", dom, win), "block");

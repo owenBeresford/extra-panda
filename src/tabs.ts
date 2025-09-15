@@ -49,13 +49,13 @@ function keybHandler(
       }
 
       // This makes Chrome work better, for some reason it jumps down about 1 browser height
-// IOIO add thing to only scroll when the element is less than 100vh tall
+      // IOIO add thing to only scroll when the element is less than 100vh tall
       obj.scrollIntoView(false);
     }
   }
   if (evt.code == LEFT_ARROW || evt.code == RIGHT_ARROW) {
     const action = function (
-      obj: Array<HTMLElement>, 
+      obj: Array<HTMLElement>,
       offset: number,
       limit: number,
       delta: number,
@@ -150,11 +150,10 @@ export function initTabs(
   }
 
   const JUMP: HTMLInputElement = dom.querySelector(
-    loc.hash
+    loc.hash,
   ) as HTMLInputElement;
   if (JUMP && JUMP.tagName == "INPUT") {
     JUMP.checked = true;
-
   } else {
     log("error", "tabInit v4: failed to find " + loc.hash + " element");
   }

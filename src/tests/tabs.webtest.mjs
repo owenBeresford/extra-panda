@@ -53,18 +53,18 @@ describe("TEST BROWSER CSS based tabs", () => {
           ),
         ).toBe(DEEP_BLUE);
 
-		const scrollTop = dom.documentElement.scrollTop || dom.body.scrollTop || 0;
-		const TARGET=dom.querySelector("#projects");
+        // const scrollTop =   dom.documentElement.scrollTop || dom.body.scrollTop || 0;
+        // const TARGET = dom.querySelector("#projects");
         const EVT1 = new MouseEvent("click", {
           view: win,
           bubbles: true,
           cancelable: true,
-//			clientX: TARGET.getClientRects().left + 16,
-//			clientY: TARGET.getClientRects().top + scrollTop + 16,
+          //			clientX: TARGET.getClientRects().left + 16,
+          //			clientY: TARGET.getClientRects().top + scrollTop + 16,
         });
 
         // this handler is supposed to be sync
-        expect( TARGET.dispatchEvent(EVT1) ).toBe(true);
+        expect(TARGET.dispatchEvent(EVT1)).toBe(true);
 
         expect(
           getCSSAttr(
@@ -136,7 +136,6 @@ describe("TEST BROWSER CSS based tabs", () => {
             dom,
             win,
           ),
-
         ).toBe(PALE_BLUE);
         expect(
           getCSSAttr(
@@ -147,18 +146,18 @@ describe("TEST BROWSER CSS based tabs", () => {
           ),
         ).toBe(DEEP_BLUE);
 
-//		const scrollTop = dom.documentElement.scrollTop || dom.body.scrollTop || 0;
-//		const TARGET=dom.querySelector(".tab2Container label:has( #articles )");
+        //		const scrollTop = dom.documentElement.scrollTop || dom.body.scrollTop || 0;
+        //		const TARGET=dom.querySelector(".tab2Container label:has( #articles )");
         const EVT1 = new MouseEvent("click", {
           view: win,
           bubbles: true,
           cancelable: true,
-//			clientX: TARGET.getClientRects().left + 16,
-//			clientY: TARGET.getClientRects().top + scrollTop + 16,
+          //			clientX: TARGET.getClientRects().left + 16,
+          //			clientY: TARGET.getClientRects().top + scrollTop + 16,
         });
 
         // this handler is supposed to be sync
-        expect( TARGET.dispatchEvent(EVT1) ).toBe(true);
+        expect(TARGET.dispatchEvent(EVT1)).toBe(true);
         await delay(1000);
 
         expect(
@@ -195,7 +194,9 @@ describe("TEST BROWSER CSS based tabs", () => {
         ).toBe(DEEP_BLUE);
 
         expect(getCSSAttr("#panelProjects", "display", dom, win)).toBe("none");
-        expect(getCSSAttr("#panelArticles", "display", dom, win)).toBe("inline-block");
+        expect(getCSSAttr("#panelArticles", "display", dom, win)).toBe(
+          "inline-block",
+        );
 
         await delay(100);
       },
