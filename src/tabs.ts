@@ -2,7 +2,7 @@ import { log } from "./log-services";
 import type { MultiFuncArg, MiscEvent } from "./all-types";
 
 /*
-THis module is to add keyboard modality for tabs.
+This module is to add keyboard modality for tabs.
 
 @see [https://w3c.github.io/aria/#tablist]
 @see [https://www.w3.org/WAI/ARIA/apg/patterns/tabs/]
@@ -21,7 +21,8 @@ const COMPONENT_NAME: string = ".tab2Container";
  * keybHandler
  * A boring event handler, HTML5 seems not to do this by default
    THIS IS JUST BOILER PLATE.  IMPURE.
- 
+
+ * NOTE todate I have no support for vertical tabs, maybe a mobile user would like them. 
  * @param {KeyboardEvent} evt
  * @param {Document} dom
  * @param {string=COMPONENT_NAME} nom
@@ -40,7 +41,7 @@ function keybHandler(
         nom + ' .tabHeader label:focus-within input[type="radio"]',
       );
       // I think this is needed due to JSDOM.
-      //   every-time I extract Nodes from a webpage, the value exists.
+      //   every-time I extract input elements from a webpage, the value exists.
       if (typeof obj2.checked == "boolean") {
         obj2.checked = !obj2.checked;
       } else {
@@ -48,12 +49,13 @@ function keybHandler(
       }
 
       // This makes Chrome work better, for some reason it jumps down about 1 browser height
+// IOIO add thing to only scroll when the element is less than 100vh tall
       obj.scrollIntoView(false);
     }
   }
   if (evt.code == LEFT_ARROW || evt.code == RIGHT_ARROW) {
     const action = function (
-      obj: Array<HTMLElement>,
+      obj: Array<HTMLElement>, 
       offset: number,
       limit: number,
       delta: number,
@@ -134,7 +136,7 @@ export function initTabs(
   loc: Location,
 ): void {
   if (dom.querySelector(nom)) {
-    log("info", "Keybaord events enabled for " + nom);
+    log("info", "Keybaord events enabled for " + nom, loc.hash);
     dom.addEventListener(
       "keydown",
       (evt) => {
@@ -148,10 +150,11 @@ export function initTabs(
   }
 
   const JUMP: HTMLInputElement = dom.querySelector(
-    loc.hash,
+    loc.hash
   ) as HTMLInputElement;
-  if (JUMP && JUMP.tagName === "INPUT") {
+  if (JUMP && JUMP.tagName == "INPUT") {
     JUMP.checked = true;
+
   } else {
     log("error", "tabInit v4: failed to find " + loc.hash + " element");
   }
