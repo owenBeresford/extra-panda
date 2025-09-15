@@ -92,7 +92,7 @@ export function readingDuration(
   const h1 =
     '<a class="reading" title="The text is ' +
     (code + plain) +
-    ' normalised words long.  Link is a longer version of this reading guide guesstimate." href="/resource/jQuery-reading-duration">To read: ' +
+    ' normalised words long.  Link is a longer version of this reading guide guesstimate." href="/resource/text-reading-duration">To read: ' +
     duration +
     options.timeFormat +
     "</a>";
