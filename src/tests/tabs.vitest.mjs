@@ -221,7 +221,7 @@ describe("TEST tabs", () => {
     appendIsland("#point2", str, dom);
 
     enableGetEventListeners(dom);
-    initTabs(dom, loc);
+    tabInit_OLD(undefined, dom, loc);
 
     const PROJECTS = dom.querySelector("#clickProjects");
 
@@ -296,7 +296,7 @@ describe("TEST tabs", () => {
 `;
     appendIsland("#point2", str, dom);
 
-    initTabs(dom, loc);
+    tabInit_OLD(undefined,  dom, loc);
 
     const PROJECTS = dom.querySelector("#blockProjects");
     assert.equal(
@@ -340,7 +340,7 @@ describe("TEST tabs", () => {
 		</label>
 </header>
 
-<section id="blockArticles" data-id="1" role="tabpanel" aria-hidden="false" >
+<section id="panelArticles" data-id="1" role="tabpanel" aria-hidden="false" >
 <br>
 <ul class="ulbasic">
     <li><a href="#">SSS 1</a></li>
@@ -350,7 +350,7 @@ describe("TEST tabs", () => {
 </ul>
 </section>
 
-<section id="blockProjects" data-id="2" role="tabpanel" aria-hidden="true" >
+<section id="panelProjects" data-id="2" role="tabpanel" aria-hidden="true" >
 <br>
 <ul class="ulbasic">
     <li>Short role <a href="#">DDD 1</a></li>
@@ -364,7 +364,8 @@ describe("TEST tabs", () => {
 `;
     appendIsland("#point2", str, dom);
 
-    initTabs(dom, loc);
+//    initTabs(undefined, dom, loc);
+    initTabs(".tab2Container", dom, loc);
 
     assert.equal(getCSSAttr("#panelProjects", "display", dom, win), "block");
     assert.equal(getCSSAttr("#panelArticles", "display", dom, win), "none");

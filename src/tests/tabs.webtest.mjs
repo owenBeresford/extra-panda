@@ -4,7 +4,6 @@ import { execTest, wrap } from "./page-seed-playwright";
 import { delay } from "../networking";
 // import { log, domLog } from "../log-services";
 import { getCSSAttr } from "./vitest-addons";
-// import { TEST_ONLY } from "../tabs";
 
 describe("TEST BROWSER CSS based tabs", () => {
   if (typeof process !== "undefined") {
@@ -54,13 +53,19 @@ describe("TEST BROWSER CSS based tabs", () => {
           ),
         ).toBe(DEEP_BLUE);
 
+		const scrollTop = dom.documentElement.scrollTop || dom.body.scrollTop || 0;
+		const TARGET=dom.querySelector("#projects");
         const EVT1 = new MouseEvent("click", {
+          view: win,
           bubbles: true,
           cancelable: true,
-          view: win,
+//			clientX: TARGET.getClientRects().left + 16,
+//			clientY: TARGET.getClientRects().top + scrollTop + 16,
         });
+
         // this handler is supposed to be sync
-        expect(dom.querySelector("#projects").dispatchEvent(EVT1)).toBe(true);
+        expect( TARGET.dispatchEvent(EVT1) ).toBe(true);
+
         expect(
           getCSSAttr(
             '.tab2Container:has( input[value="2"] ) .tabContent[data-id="2"]',
@@ -104,7 +109,7 @@ describe("TEST BROWSER CSS based tabs", () => {
     const TEST_NAME = "BROWSER TEST func[1] setInitState ";
     return await wrap(
       TEST_NAME,
-      "/home.html?debug=1#projects",
+      "/home.html#projects",
       async (dom, loc, win) => {
         expect(
           getCSSAttr(
@@ -131,6 +136,7 @@ describe("TEST BROWSER CSS based tabs", () => {
             dom,
             win,
           ),
+
         ).toBe(PALE_BLUE);
         expect(
           getCSSAttr(
@@ -141,19 +147,20 @@ describe("TEST BROWSER CSS based tabs", () => {
           ),
         ).toBe(DEEP_BLUE);
 
+//		const scrollTop = dom.documentElement.scrollTop || dom.body.scrollTop || 0;
+//		const TARGET=dom.querySelector(".tab2Container label:has( #articles )");
         const EVT1 = new MouseEvent("click", {
+          view: win,
           bubbles: true,
           cancelable: true,
-          view: win,
+//			clientX: TARGET.getClientRects().left + 16,
+//			clientY: TARGET.getClientRects().top + scrollTop + 16,
         });
+
         // this handler is supposed to be sync
-        expect(
-          dom
-            .querySelector(".tab2Container label:has( #articles) ")
-            .dispatchEvent(EVT1),
-        ).toBe(true);
+        expect( TARGET.dispatchEvent(EVT1) ).toBe(true);
         await delay(1000);
-        // the artiifical mouse events do no seem to work.
+
         expect(
           getCSSAttr(
             '.tab2Container:has( input[value="1"]:checked ) .tabContent[data-id="1"]',
@@ -187,10 +194,8 @@ describe("TEST BROWSER CSS based tabs", () => {
           ),
         ).toBe(DEEP_BLUE);
 
-        expect(getCSSAttr("#panelProjects", "display", dom, win)).toBe(
-          "inline-block",
-        );
-        expect(getCSSAttr("#panelArticles", "display", dom, win)).toBe("none");
+        expect(getCSSAttr("#panelProjects", "display", dom, win)).toBe("none");
+        expect(getCSSAttr("#panelArticles", "display", dom, win)).toBe("inline-block");
 
         await delay(100);
       },
