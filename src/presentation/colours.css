@@ -637,10 +637,6 @@ a.adjacentItem:before,
   --fgg: 37;
   --fgb: 37;
 }
-/* 
-One of the places I used this, I used border-top to make the tab body look connected to the tab label
-*/
-
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 
 	animation */
 
@@ -690,6 +686,9 @@ mask:linear-gradient(-60deg,#000 30%,#0005,#000 70%) right/350% 100%;
 
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
 
+/* 
+One of the places I used this, I used border-top to make the tab body look connected to the tab label
+*/
 .linksWidget[open] .defaultLinksTrigger {
   --bgr: 0;
   --bgg: 73;

@@ -580,12 +580,16 @@
             let obj2 = document.querySelector(
               '.tab2Container .tabHeader label:focus-within input[type="radio"]',
             );
-			if(typeof obj2.checked =='boolean') {
-			    obj2.checked = !obj2.checked;
-			} else {
-			    obj2.checked = true;
-			}
-console.log("SFSFSDF ", obj2.checked, '.tab2Container .tabHeader label:focus-within input[type="radio"]');
+            if (typeof obj2.checked == "boolean") {
+              obj2.checked = !obj2.checked;
+            } else {
+              obj2.checked = true;
+            }
+            console.log(
+              "SFSFSDF ",
+              obj2.checked,
+              '.tab2Container .tabHeader label:focus-within input[type="radio"]',
+            );
             // This makes Chrome work better, for some reason it jumps down about 1 browser height
             obj.scrollIntoView(false);
           }

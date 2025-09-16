@@ -283,7 +283,12 @@ This is big screen mac, should work with wide versions
   }
 }
 
-/* replacement columns, pls see vis-tests/archi-test */
+/* replacement columns, pls see vis-tests/archi-test 
+	Its annoying that my initial 2012 solution did have stable column widths
+	and the 2017 "improvement" dropped conservation on widths for improved render speed 
+	
+	This (v4) re-introduces common screen-size dedicated optimisations, so the CSS is longer.
+*/
 .lotsOfWords {
   line-height: 1.6;
   font-size: 1em;
@@ -351,7 +356,7 @@ This is big screen mac, should work with wide versions
     margin: 1em 0em;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
   .halferWords {
     width: 100vw;
   }
@@ -394,12 +399,10 @@ This is big screen mac, should work with wide versions
 /* IOIO RENAME */
 .blocker {
   clear: both;
+  margin: 1em;
 }
 hr.blocker {
   width: 90%;
-}
-.blocker {
-  margin: 1em;
 }
 
 /* used here as the wiki-engine proffers it, without the Wiki, this is unneeded  

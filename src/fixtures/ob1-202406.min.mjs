@@ -124,10 +124,10 @@ function v(e2, t2, r2) {
     }
     return e2.append(n2.content);
   } catch (e3) {
-    n("error", e3.toString()), window.noop++;
+    n("error", e3.toString()), "object" == typeof window && window.noop++;
   }
 }
-function T(e2, t2) {
+function k(e2, t2) {
   if (console.assert(void 0 !== t2, "Startup ready() needs two param, document in the second"), "loading" === t2.readyState) {
     if (!t2.addEventListener) throw new Error("Unknown JS interpreter, can't register code");
     t2.addEventListener("DOMContentLoaded", e2);
@@ -135,7 +135,7 @@ function T(e2, t2) {
     e2(t2.createEvent("htmlevents"));
   }
 }
-function k(e2) {
+function T(e2) {
   if (void 0 === e2) return false;
   const t2 = e2.getComputedStyle.toString().includes("[native code]");
   return !("boolean" != typeof t2 || !t2);
@@ -159,7 +159,7 @@ function q(e2, t2, n2) {
 }
 function x(e2, t2, r2) {
   try {
-    if (!k(r2)) return -1;
+    if (!T(r2)) return -1;
     return e2.getBoundingClientRect()[t2];
   } catch (e3) {
     return n("error", "Missing data:" + e3.message), -1;
@@ -215,19 +215,19 @@ function X(e2, t2) {
 }
 "object" != typeof window || "noop" in window || (window.noop = 0);
 let j = { name: "", meta: "", perRow: 10, titleLimit: 40, rendered: false, iteration: 0, group: "system", count: 1, debug: true, runFetch: p };
-function I(e2, t2, n2, r2 = true) {
+function W(e2, t2, n2, r2 = true) {
   let o2 = "", i2 = n2.pathname.split("/").pop();
   const a2 = new URLSearchParams(n2.search);
   return "group-XXX" === i2 && a2.has("first") && (i2 = a2.get("first") ?? "logic-error"), t2 ? a2.has("first") ? o2 += n2.pathname.replace("group-XXX", i2 + "-meta") : o2 += n2.pathname.replace(i2, e2 + "-meta") : o2 += n2.pathname.replace(i2, e2), r2 && (o2 += n2.search + n2.hash), o2;
 }
-function P(e2, t2) {
+function I(e2, t2) {
   let n2 = "button";
   return e2 && (n2 += " lower"), n2;
 }
-function F(e2, t2) {
+function P(e2, t2) {
   return t2 + "" + e2.replace(/[^a-zA-Z0-9_]/g, "_");
 }
-function W(e2) {
+function F(e2) {
   let t2 = e2;
   return e2.lastIndexOf("#") > 0 && (t2 = e2.substring(0, e2.lastIndexOf("#"))), e2.lastIndexOf("?") > 0 && (t2 = e2.substring(0, e2.lastIndexOf("?"))), t2.split("/").pop() ?? "";
 }
@@ -244,8 +244,8 @@ function H(e2, t2, n2, r2, o2) {
   return j.name === "group-" + j.group || (t2 === e2 && (o2 = r2), r2 > 0 && o2 > 0 && n2 > 0 && r2 >= n2 - 1 && (r2 = 0)), [o2, n2, r2];
 }
 async function J(t2, r2, o2, i2) {
-  if (j = Object.assign(j, { name: y(o2), meta: I(j.group, ".json", o2, false), debug: e(o2), runFetch: p }, t2), "system" === j.group) throw new Error("Must set the article group, and not to 'system'.");
-  j.meta = I(j.group, ".json", o2, false);
+  if (j = Object.assign(j, { name: y(o2), meta: W(j.group, ".json", o2, false), debug: e(o2), runFetch: p }, t2), "system" === j.group) throw new Error("Must set the article group, and not to 'system'.");
+  j.meta = W(j.group, ".json", o2, false);
   const a2 = "group-XXX" === j.name || j.name === "group-" + j.group, s2 = "group" + j.group;
   if (M(r2, o2, i2) && !a2) 1 === r2.querySelectorAll(".adjacentWidget .adjacentItem").length && (r2.querySelector(".adjacentWidget p").style.display = "none"), v("#" + s2, "<p>As mobile View, use the full page link to the left</p>", r2);
   else {
@@ -255,7 +255,7 @@ async function J(t2, r2, o2, i2) {
       const t3 = function(e3, t4, n2, r3, o3) {
         let i3 = "";
         for (const a3 in e3) {
-          const s3 = F(a3, t4), l2 = M(n2, r3, o3) ? "<br />" : "";
+          const s3 = P(a3, t4), l2 = M(n2, r3, o3) ? "<br />" : "";
           let c2 = e3[a3].desc;
           c2.length > 235 && (c2 = c2.substr(0, 235) + "..."), i3 += '<a class="adjacentItem" href="' + e3[a3].url + '" title="' + c2 + '"> <span class="button">' + e3[a3].title + '</span><p id="adjacent' + s3 + '" >Author: ' + e3[a3].auth + " &nbsp; &nbsp; &nbsp;" + l2 + "  Last edit: " + R(e3[a3].date, "Unknown time", true) + " <br />Description: " + c2 + " </p></a>\n";
         }
@@ -270,14 +270,14 @@ async function J(t2, r2, o2, i2) {
     } else {
       const t3 = function(e3) {
         let t4 = -1, n2 = j.perRow, r3 = [], o3 = 0, i3 = 0;
-        for ([t4, n2, o3] = H(W(e3[0].url), j.name, e3.length, o3, t4); o3 < e3.length; o3++) {
+        for ([t4, n2, o3] = H(F(e3[0].url), j.name, e3.length, o3, t4); o3 < e3.length; o3++) {
           const a3 = e3[o3].title;
           if (a3 && t4 >= 0 && n2 > 0) {
             r3[i3] = { auth: e3[o3].auth, date: R(e3[o3].date, "[Unknown time]", true), url: e3[o3].url, offset: o3, title: e3[o3].title.substr(0, j.titleLimit), desc: e3[o3].desc }, a3.length > j.titleLimit && (r3[i3].title += "...");
             const t5 = e3[o3].desc;
             t5.length > 235 && (r3[i3].desc = t5.substr(0, 235) + "..."), n2--, i3++;
           }
-          if ([t4, n2, o3] = H(W(e3[o3].url), j.name, n2, o3, t4), r3.length === e3.length) break;
+          if ([t4, n2, o3] = H(F(e3[o3].url), j.name, n2, o3, t4), r3.length === e3.length) break;
           if (r3.length >= j.perRow) break;
         }
         return r3;
@@ -285,7 +285,7 @@ async function J(t2, r2, o2, i2) {
       v("#" + s2, function(e3, t4) {
         let n2 = '<ul class="adjacentList">\n';
         for (const r3 in e3) {
-          const o3 = F(r3, t4), i3 = P(e3[r3].desc.length > 110), a3 = "Title: " + e3[r3].title + "\nAuthor: " + e3[r3].auth + " &nbsp; &nbsp; Last edit: " + e3[r3].date + "\nDescription: " + e3[r3].desc;
+          const o3 = P(r3, t4), i3 = I(e3[r3].desc.length > 110), a3 = "Title: " + e3[r3].title + "\nAuthor: " + e3[r3].auth + " &nbsp; &nbsp; Last edit: " + e3[r3].date + "\nDescription: " + e3[r3].desc;
           n2 += '<li> <a id="link' + o3 + '" class="' + i3 + '" href="' + e3[r3].url + '" aria-label="' + a3 + '" >' + e3[r3].title + "</a> </li>\n";
         }
         return 0 === e3.length ? n2 += "<li> Article doesn't seem setup correctly.</li></ul>" : n2 += '<li><a class="adjacentItem button" href="/resource/group-XXX?first=' + t4 + '" aria-label="This article lists all items in ' + t4 + ' group."> See full list </a></li></ul>', n2;
@@ -303,7 +303,7 @@ function $(e2, t2, r2, o2) {
   let a2 = i2.value;
   const s2 = i2.getAttribute("data-url");
   if ("" === a2 || null === a2) return false;
-  if (a2 = "https://" + a2 + "/share?text=I+think+this+is+important+" + s2, n("info", "Trying to open mastodon server, " + a2), !k(o2)) throw Error("Test passed, for " + a2);
+  if (a2 = "https://" + a2 + "/share?text=I+think+this+is+important+" + s2, n("info", "Trying to open mastodon server, " + a2), !T(o2)) throw Error("Test passed, for " + a2);
   return t2.querySelector("#popup").close(), o2.open(a2, "_blank"), M(t2, r2, o2) && B(0, t2, r2, o2), false;
 }
 function G(e2, t2, n2) {
@@ -325,10 +325,10 @@ function G(e2, t2, n2) {
   Y(e2.querySelector("#hideMasto"), K, e2, n2);
 }
 function _(e2, t2, n2) {
-  return k(n2) && t2.querySelector("#popup").showModal(), t2.querySelector("#popup input").focus(), false;
+  return T(n2) && t2.querySelector("#popup").showModal(), t2.querySelector("#popup input").focus(), false;
 }
 function K(e2, t2, n2) {
-  return k(n2) && t2.querySelector("#popup").close(), false;
+  return T(n2) && t2.querySelector("#popup").close(), false;
 }
 function Y(e2, t2, n2, r2) {
   e2.addEventListener("click", (e3) => (t2(e3, n2, r2), false)), e2.addEventListener("touch", (e3) => (t2(e3, n2, r2), false)), e2.addEventListener("keypress", (e3) => (t2(e3, n2, r2), false));
@@ -336,27 +336,39 @@ function Y(e2, t2, n2, r2) {
 function V(e2, t2, n2, r2, o2) {
   e2.addEventListener("click", (e3) => (t2(e3, n2, r2, o2), false)), e2.addEventListener("touch", (e3) => (t2(e3, n2, r2, o2), false)), e2.addEventListener("keypress", (e3) => (t2(e3, n2, r2, o2), false));
 }
-const z = "Space", Q = ".tab2Container";
-function Z(e2, t2) {
-  if (e2.querySelector(Q) && (n("info", "Keybaord events enabled for " + Q), e2.addEventListener("keydown", (t3) => function(e3, t4) {
+const z = "Space", Q = "ArrowLeft", Z = "ArrowRight", ee = ".tab2Container";
+function te(e2 = ee, t2, r2) {
+  if (t2.querySelector(e2) && (n("info", "Keybaord events enabled for " + e2, r2.hash), t2.addEventListener("keydown", (n2) => function(e3, t3, n3 = ee) {
     if (e3.code == z) {
-      let e4 = t4.querySelector(Q + " .tabHeader label:focus-within");
+      let e4 = t3.querySelector(n3 + " .tabHeader label:focus-within");
       if (e4) {
-        let n2 = t4.querySelector(Q + ' .tabHeader label:focus-within input[type="radio"]');
-        n2.checked = !n2.checked, e4.scrollIntoView(false);
+        let r3 = t3.querySelector(n3 + ' .tabHeader label:focus-within input[type="radio"]');
+        "boolean" == typeof r3.checked ? r3.checked = !r3.checked : r3.checked = true, e4.scrollIntoView(false);
+      }
+    }
+    if (e3.code == Q || e3.code == Z) {
+      const r3 = function(e4, t4, n4, r4) {
+        return t4 === n4 || e4[t4 += r4].focus(), false;
+      };
+      let o3 = t3.querySelector(n3 + " .tabHeader label:focus-within");
+      if (!o3) return false;
+      let i2 = Array.from(o3.parentNode.querySelectorAll(":scope label"));
+      for (let t4 = 0; t4 < i2.length; t4++) if (i2[t4] === o3) {
+        if (e3.code == Q) return r3(i2, t4, 0, -1);
+        if (e3.code == Z) return r3(i2, t4, i2.length - 1, 1);
       }
     }
     return false;
-  }(t3, e2), false)), !t2.hash) return;
-  const r2 = e2.querySelector(t2.hash);
-  r2 && "INPUT" === r2.tagName ? r2.checked = true : n("error", "tabInit v4: failed to find " + t2.hash + " element");
+  }(n2, t2, e2), false)), !r2.hash) return;
+  const o2 = t2.querySelector(r2.hash);
+  console.log("ERWERWERWE ", o2, o2.tagName, r2.hash), o2 && "INPUT" == o2.tagName ? (o2.checked = true, console.log("ERWERWERWE has been set")) : n("error", "tabInit v4: failed to find " + r2.hash + " element");
 }
-let ee = { referencesCache: "/resource/XXX-references", gainingElement: "#biblio", losingElement: ".addReferences", renumber: 1, forceToEnd: 1, maxDescripLen: 230, maxAuthLen: 65, debug: true, runFetch: p };
-async function te(t2, r2, o2) {
-  if (ee = Object.assign(ee, { debug: e(o2) }, t2), 0 === r2.querySelectorAll(a).length) return void n("info", "URL '" + o2.pathname + "' isn't marked-up for references, so skipped");
+let ne = { referencesCache: "/resource/XXX-references", gainingElement: "#biblio", losingElement: ".addReferences", renumber: 1, forceToEnd: 1, maxDescripLen: 230, maxAuthLen: 65, debug: true, runFetch: p };
+async function re(t2, r2, o2) {
+  if (ne = Object.assign(ne, { debug: e(o2) }, t2), 0 === r2.querySelectorAll(a).length) return void n("info", "URL '" + o2.pathname + "' isn't marked-up for references, so skipped");
   const s2 = r2.querySelector("#biblio");
-  s2 && s2.setAttribute("style", ""), r2.querySelector(ee.gainingElement + " *").replaceChildren(), v(ee.gainingElement, '<h2 class="biblioSection">References (for mobile UI)</h2> \n<p>The references embedded in the text are displayed here. </p>', r2);
-  const l2 = await ee.runFetch(b(ee.referencesCache, o2), true, e(o2));
+  s2 && s2.setAttribute("style", ""), r2.querySelector(ne.gainingElement + " *").replaceChildren(), v(ne.gainingElement, '<h2 class="biblioSection">References (for mobile UI)</h2> \n<p>The references embedded in the text are displayed here. </p>', r2);
+  const l2 = await ne.runFetch(b(ne.referencesCache, o2), true, e(o2));
   if (l2.ok && Array.isArray(l2.body)) {
     const e2 = function(e3) {
       let t3 = '<aside role="footnote"><ol class="mobileBiblio">';
@@ -380,28 +392,28 @@ async function te(t2, r2, o2) {
         let a2 = e3[r3].title + "";
         a2 = a2.replace(".", ".  ");
         let s3 = e3[r3].desc + "";
-        s3.length > ee.maxDescripLen && (s3 = s3.substring(0, ee.maxDescripLen));
+        s3.length > ne.maxDescripLen && (s3 = s3.substring(0, ne.maxDescripLen));
         let l3 = e3[r3].auth || t3[0];
-        "unknown" === e3[r3].auth && (l3 = t3[0]), l3.length > ee.maxAuthLen && (l3 = l3.substring(0, ee.maxAuthLen)), n2.push({ auth: l3, date: o3, desc: s3, offset: parseInt(r3, 10), title: a2, url: e3[r3].url });
+        "unknown" === e3[r3].auth && (l3 = t3[0]), l3.length > ne.maxAuthLen && (l3 = l3.substring(0, ne.maxAuthLen)), n2.push({ auth: l3, date: o3, desc: s3, offset: parseInt(r3, 10), title: a2, url: e3[r3].url });
       }
       return n2;
     }(l2.body));
     !function(e3, t3) {
-      if (!ee.renumber) return;
-      const n2 = Array.from(t3.querySelectorAll(ee.losingElement + " sup a"));
-      for (let e4 = 0; e4 < n2.length; e4++) n2[e4].textContent = "" + (e4 + 1), ee.forceToEnd && (n2[e4].href = "#biblio");
-    }(l2.body, r2), v(ee.gainingElement, e2, r2);
+      if (!ne.renumber) return;
+      const n2 = Array.from(t3.querySelectorAll(ne.losingElement + " sup a"));
+      for (let e4 = 0; e4 < n2.length; e4++) n2[e4].textContent = "" + (e4 + 1), ne.forceToEnd && (n2[e4].href = "#biblio");
+    }(l2.body, r2), v(ne.gainingElement, e2, r2);
   } else {
     const e2 = '<p class="error">Unable to get bibliographic data for this article.</p>';
-    v(ee.gainingElement, e2, r2), n("warn", "Unable to get meta data " + b(ee.referencesCache, o2), JSON.stringify(Array.from(l2.headers.entries())));
+    v(ne.gainingElement, e2, r2), n("warn", "Unable to get meta data " + b(ne.referencesCache, o2), JSON.stringify(Array.from(l2.headers.entries())));
   }
 }
-let ne = { indexUpdated: 0, gainingElement: "#biblio", referencesCache: "/resource/XXX-references", renumber: 1, maxAuthLen: 65, debug: true, runFetch: p };
-function re(e2) {
+let oe = { indexUpdated: 0, gainingElement: "#biblio", referencesCache: "/resource/XXX-references", renumber: 1, maxAuthLen: 65, debug: true, runFetch: p };
+function ie(e2) {
   const t2 = "HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.";
   return "Reference popup for link [" + (e2 + 1) + "]\n\nHTTP_ERROR, Site admin: recompile this meta file, as this is a new link.\n " + R(+/* @__PURE__ */ new Date("07-June-2024"), "not used", true) + "\n\n" + t2;
 }
-function oe(e2, t2) {
+function ae(e2, t2) {
   if (null === e2) return;
   const n2 = x(e2, "left", t2), r2 = x(e2, "top", t2);
   if (-1 === n2 && -1 === r2) return;
@@ -412,10 +424,10 @@ function oe(e2, t2) {
   l2 < 650 ? e2.classList.add("leanCentre") : (n2 > a2 + l2 - u2 && e2.classList.add("leanLeft"), n2 < a2 + u2 && e2.classList.add("leanRight"), e2.classList.contains("leanRight") && e2.classList.contains("leanLeft") && (e2.classList.remove("leanRight"), e2.classList.remove("leanLeft"), e2.classList.add("leanCentre")));
   r2 < s2 - d2 && e2.classList.add("leanDown"), r2 > s2 + Math.round(x(o2, "height", t2)) && e2.classList.add("leanUp");
 }
-const ie = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-async function ae(t2, r2, o2, i2) {
-  if (ne = Object.assign(ne, { debug: e(o2) }, t2), 0 === r2.querySelectorAll(a).length) return void n("info", "This URL '" + o2.pathname + "' isn't marked-up for references, so skipped");
-  const l2 = await ne.runFetch(b(ne.referencesCache, o2), true, e(o2));
+const se = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+async function le(t2, r2, o2, i2) {
+  if (oe = Object.assign(oe, { debug: e(o2) }, t2), 0 === r2.querySelectorAll(a).length) return void n("info", "This URL '" + o2.pathname + "' isn't marked-up for references, so skipped");
+  const l2 = await oe.runFetch(b(oe.referencesCache, o2), true, e(o2));
   if (l2.ok && Array.isArray(l2.body)) {
     if (r2.querySelectorAll(s).length < l2.body.length) throw new Error("Recompile the meta data for  " + o2.pathname);
     const e2 = r2.querySelector("#biblio");
@@ -424,21 +436,21 @@ async function ae(t2, r2, o2, i2) {
       if (!n2) return;
       n2.indexOf("BST") > 0 && (n2 = n2.substring(0, n2.length - 4));
       const r3 = new Date(n2).getTime();
-      let o3 = new Date(r3), i3 = (o3.getFullYear() + "").substr(2), a2 = ie[o3.getUTCMonth()];
+      let o3 = new Date(r3), i3 = (o3.getFullYear() + "").substr(2), a2 = se[o3.getUTCMonth()];
       r3 > 0 && v(".addReading .ultraSkinny", '<span>Links <time datetime="' + r3 + '" title="When this was last recompiled' + o3.toLocaleDateString("en-GB", { hour12: false, dateStyle: "medium" }) + '">' + a2 + " '" + i3 + "</time> </span>", t4);
     }(l2, r2);
     const t3 = function(e3) {
       const t4 = ["[No author]", "Resource doesn't set a description tag.", "[No date]"], n2 = [];
       for (let r3 = 0; r3 < e3.length; r3++) {
         if (null === e3[r3]) {
-          n2.push(re(r3));
+          n2.push(ie(r3));
           continue;
         }
         const o3 = R(e3[r3].date, t4[2], true);
         let i3 = e3[r3].title + "", a2 = e3[r3].desc;
         a2 = S(a2, 80), i3 = i3.replace(".", ". "), i3 = S(i3, 80);
         let s2 = e3[r3].auth || t4[0];
-        "unknown" === e3[r3].auth && (s2 = t4[0]), s2.length > ne.maxAuthLen && (s2 = s2.substring(0, ne.maxAuthLen)), n2.push("Reference popup for link [" + (r3 + 1) + "]\n\n" + i3 + "\n" + s2 + " " + o3 + "\n\n" + a2);
+        "unknown" === e3[r3].auth && (s2 = t4[0]), s2.length > oe.maxAuthLen && (s2 = s2.substring(0, oe.maxAuthLen)), n2.push("Reference popup for link [" + (r3 + 1) + "]\n\n" + i3 + "\n" + s2 + " " + o3 + "\n\n" + a2);
       }
       return n2;
     }(l2.body);
@@ -446,13 +458,13 @@ async function ae(t2, r2, o2, i2) {
       let r3 = 1;
       const o3 = Array.from(t4.querySelectorAll(s));
       if (e3.length > o3.length) throw t4.querySelector(a).classList.add(u), t4.querySelector("p[role=status]").textContent += " Recompile meta data. ", new Error("Too many references in meta-data for this article, pls recompile.");
-      for (let t5 = 0; t5 < e3.length; t5++) o3[t5].setAttribute("aria-label", "" + e3[t5]), oe(o3[t5], n2), ne.renumber && (o3[t5].textContent = "" + r3), r3++;
+      for (let t5 = 0; t5 < e3.length; t5++) o3[t5].setAttribute("aria-label", "" + e3[t5]), ae(o3[t5], n2), oe.renumber && (o3[t5].textContent = "" + r3), r3++;
       if (o3.length > e3.length) {
         t4.querySelector("p[role=status]").textContent += "Recompile meta data";
         let r4 = e3.length;
         for (; r4 < o3.length; ) {
-          const e4 = re(r4);
-          o3[r4].setAttribute("aria-label", "" + e4), oe(o3[r4], n2), ne.renumber && (o3[r4].textContent = "" + (r4 + 1)), r4++;
+          const e4 = ie(r4);
+          o3[r4].setAttribute("aria-label", "" + e4), ae(o3[r4], n2), oe.renumber && (o3[r4].textContent = "" + (r4 + 1)), r4++;
         }
       }
     }(t3, r2, i2), r2.querySelector(a).classList.add(u);
@@ -472,10 +484,10 @@ HTTP_ERROR, no valid file called ${n2}-references.json found.
       o3 && o3.innerText && !o3.innerText.match(/ERROR: No valid references file found/) && (o3.innerText += "ERROR: No valid references file found.");
     }(r2, o2);
     const e2 = '<p class="error">Unable to get bibliographic data for this article.</p>';
-    v(ne.gainingElement, e2, r2), n("warn", "Unable to get meta data " + b(ne.referencesCache, o2), JSON.stringify(Array.from(l2.headers.entries())));
+    v(oe.gainingElement, e2, r2), n("warn", "Unable to get meta data " + b(oe.referencesCache, o2), JSON.stringify(Array.from(l2.headers.entries())));
   }
 }
-function se(e2, t2, n2) {
+function ce(e2, t2, n2) {
   t2.querySelectorAll("article a").forEach(function(r2) {
     "git" === m(r2).trim().toLowerCase() && (r2.textContent = "", v(r2, '<i class="fa fa-github" aria-hidden="true"></i> \n		 <span class="sr-only">git</span>', t2), e2 ? (r2.setAttribute("aria-label", function(e3) {
       const t3 = new URL(e3);
@@ -488,16 +500,16 @@ function se(e2, t2, n2) {
         n3 = e4[0], r3 = "The " + e4[0] + " project";
       }
       return "Reference popup for link [*]\n\n" + r3 + "\n" + n3 + " [recent time]\n\nA Github project ~ text auto generated without scrapping.";
-    }(r2.getAttribute("href"))), oe(r2, n2)) : r2.setAttribute("title", "Link to a github project."));
+    }(r2.getAttribute("href"))), ae(r2, n2)) : r2.setAttribute("title", "Link to a github project."));
   });
 }
-function le(e2, t2) {
+function ue(e2, t2) {
   let n2 = 0;
   return t2.querySelectorAll(e2).forEach(function(e3) {
     n2 += A(m(e3));
   }), n2;
 }
-function ce(e2, t2) {
+function de(e2, t2) {
   switch (e2.tagName) {
     case "IMG":
       return e2.getAttribute("src");
@@ -509,7 +521,7 @@ function ce(e2, t2) {
       throw new Error("Unknown element, " + e2.tagName);
   }
 }
-function ue(e2, t2) {
+function fe(e2, t2) {
   const n2 = e2.target, r2 = function(e3, t3) {
     if (e3.tagName === t3) return e3;
     for (; e3.tagName !== t3; ) {
@@ -534,14 +546,14 @@ function ue(e2, t2) {
   }
   return false;
 }
-function de(e2) {
+function he(e2) {
   const t2 = Array.from(e2.querySelectorAll(".popOverWidget details"));
   t2.length && (n("info", "Modal widget found, extra UI features added"), t2.forEach(function(t3) {
     t3.addEventListener("click", function(t4) {
-      return ue(t4, e2);
+      return fe(t4, e2);
     });
   }), e2.body.addEventListener("click", function(t3) {
-    return ue(t3, e2);
+    return fe(t3, e2);
   }), e2.body.addEventListener("keydown", function(t3) {
     return function(e3, t4) {
       if ("Escape" === e3.code || "Escape" === e3.key) {
@@ -553,23 +565,23 @@ function de(e2) {
     }(t3, e2);
   }));
 }
-let fe = { pageInitRun: 0 };
-function he() {
-  return fe.pageInitRun;
+let pe = { pageInitRun: 0 };
+function ge() {
+  return pe.pageInitRun;
 }
-function pe(e2, t2, n2) {
+function me(e2, t2, n2) {
   const r2 = n2.querySelector(t2);
-  r2.addEventListener("mousedown", () => ge(t2, e2), { capture: true, passive: true }), r2.addEventListener("touchstart", () => ge(t2, e2), { capture: true, passive: true });
+  r2.addEventListener("mousedown", () => ye(t2, e2), { capture: true, passive: true }), r2.addEventListener("touchstart", () => ye(t2, e2), { capture: true, passive: true });
 }
-function ge(e2, t2, n2 = "fullScreen") {
+function ye(e2, t2, n2 = "fullScreen") {
   const r2 = document.querySelector(t2), o2 = document.querySelector(e2);
   return r2.classList.contains(n2) ? (r2.classList.remove(n2), o2.innerText = "Expand image") : (r2.classList.add(n2), o2.innerText = "Revert image"), false;
 }
 await async function(t2, r2, o2, i2) {
-  fe = Object.assign(fe, {}, t2);
+  pe = Object.assign(pe, {}, t2);
   const a2 = e(o2);
-  if (fe.pageInitRun) return void n("warn", "Extra panda should not be run more than once per page");
-  fe.pageInitRun = 1;
+  if (pe.pageInitRun) return void n("warn", "Extra panda should not be run more than once per page");
+  pe.pageInitRun = 1;
   const s2 = Array.from(r2.querySelectorAll(".noJS"));
   for (let e2 = 0; e2 < s2.length; e2++) s2[e2].classList.remove("noJS");
   !function(e2, t3) {
@@ -590,9 +602,9 @@ await async function(t2, r2, o2, i2) {
     i3.unshift('<nav class="mobilePopupWidget" id="mobileMenu"> <menu>'), i3.push("</menu></nav>"), v("#navBar", i3.join("\n"), t3);
   }(r2, o2, i2), G(r2, o2, i2);
   const c2 = null !== r2.querySelector(".addReferences");
-  if (se(c2, r2, i2), function(e2, t3, n2) {
+  if (ce(c2, r2, i2), function(e2, t3, n2) {
     t3.querySelectorAll("article a").forEach(function(r3) {
-      "docs" === m(r3).trim().toLowerCase() && (r3.textContent = "", v(r3, '<i class="fa fa-book-open" aria-hidden="true"></i>\n		 <span class="sr-only">docs</span>', t3), r3.setAttribute(e2 ? "aria-label" : "title", "Link to the project docs; it may be a git page, or a separate webpage. "), e2 && oe(r3, n2));
+      "docs" === m(r3).trim().toLowerCase() && (r3.textContent = "", v(r3, '<i class="fa fa-book-open" aria-hidden="true"></i>\n		 <span class="sr-only">docs</span>', t3), r3.setAttribute(e2 ? "aria-label" : "title", "Link to the project docs; it may be a git page, or a separate webpage. "), e2 && ae(r3, n2));
     });
   }(c2, r2, i2), function(e2) {
     const t3 = Array.from(e2.querySelectorAll(".addArrow"));
@@ -607,24 +619,24 @@ await async function(t2, r2, o2, i2) {
     if (n2.ft = n2.ft.replaceAll("%38", ";"), n2.cr = n2.cr.replaceAll("%38", ";"), n2.dn = n2.dn.replaceAll("%38", ";"), n2.fs = n2.fs.replaceAll("%38", ";"), !n2.ft || !n2.fs) return;
     const r3 = "body, .annoyingBody { font-family: " + n2.ft + "; font-size: " + n2.fs + "; direction:" + n2.dn + "; }", o3 = e2.createElement("style");
     o3.setAttribute("id", "client-set-css"), o3.innerText = r3, e2.getElementsByTagName("head")[0].append(o3);
-  }(r2), de(r2), N(1040, r2, o2, i2), q(r2, i2.navigator, i2) && function(e2, t3) {
+  }(r2), he(r2), N(1040, r2, o2, i2), q(r2, i2.navigator, i2) && function(e2, t3) {
     let n2 = t3.createElement("link");
     n2.setAttribute("rel", "stylesheet"), n2.setAttribute("href", e2), t3.head.appendChild(n2);
   }("/asset/librewolf.min.css", r2), !M(r2, o2, i2) && "/resource/home" !== o2.pathname && r2.querySelectorAll(".reading").length < 2 && function(t3, r3, o3) {
-    const i3 = Object.assign({}, { timeFormat: "m", dataLocation: ".blocker", target: "#shareGroup .SMshareWidget", wordPerMin: 275, codeSelector: "code", refresh: false, debug: e(o3) }, t3), a3 = i3.dataLocation + " img, " + i3.dataLocation + " source, " + i3.dataLocation + " object", s3 = le(i3.dataLocation, r3);
+    const i3 = Object.assign({}, { timeFormat: "m", dataLocation: ".blocker", target: "#shareGroup .SMshareWidget", wordPerMin: 275, codeSelector: "code", refresh: false, debug: e(o3) }, t3), a3 = i3.dataLocation + " img, " + i3.dataLocation + " source, " + i3.dataLocation + " object", s3 = ue(i3.dataLocation, r3);
     if (!s3) return;
     let l2 = 0;
-    i3.codeSelector && (l2 += le(i3.codeSelector, r3));
+    i3.codeSelector && (l2 += ue(i3.codeSelector, r3));
     let c3 = s3 - l2 + 2 * l2;
-    if (c3 += 5 * Array.from(new Set(Array.from(r3.querySelectorAll(a3)).map(ce))).length, c3 = Math.ceil(c3 / i3.wordPerMin), c3 < 1) return void n("info", "No reading time displayed for this article");
+    if (c3 += 5 * Array.from(new Set(Array.from(r3.querySelectorAll(a3)).map(de))).length, c3 = Math.ceil(c3 / i3.wordPerMin), c3 < 1) return void n("info", "No reading time displayed for this article");
     if (i3.refresh) {
       const e2 = r3.querySelector(i3.target + " a.reading");
       e2 && e2.parentNode.removeChild(e2);
     }
     c3 = Math.round(c3);
-    const u2 = '<a class="reading" title="The text is ' + (l2 + s3) + ' normalised words long.  Link is a longer version of this reading guide guesstimate." href="/resource/jQuery-reading-duration">To read: ' + c3 + i3.timeFormat + "</a>";
+    const u2 = '<a class="reading" title="The text is ' + (l2 + s3) + ' normalised words long.  Link is a longer version of this reading guide guesstimate." href="/resource/text-reading-duration">To read: ' + c3 + i3.timeFormat + "</a>";
     v(i3.target, u2, r3);
-  }({ dataLocation: "#main", target: ".addReading .SMshareWidget", debug: a2, refresh: true }, r2, o2), Z(r2, o2), o2.pathname.match("group-")) {
+  }({ dataLocation: "#main", target: ".addReading .SMshareWidget", debug: a2, refresh: true }, r2, o2), te(void 0, r2, o2), o2.pathname.match("group-")) {
     const e2 = function(e3, t3) {
       const n2 = t3.pathname.split("/group-");
       if (Array.isArray(n2) && n2.length > 1 && "XXX" !== n2[1]) return n2[1];
@@ -636,9 +648,9 @@ await async function(t2, r2, o2, i2) {
       }
       throw new Error("KLAXON, KLAXON, I do not know how to build an adjacent list for " + t3.href);
     }(null, o2);
-    e2 && await J({ group: e2, debug: a2, runFetch: "adjacentRunFetch" in fe ? fe.adjacentRunFetch : p }, r2, o2, i2);
+    e2 && await J({ group: e2, debug: a2, runFetch: "adjacentRunFetch" in pe ? pe.adjacentRunFetch : p }, r2, o2, i2);
   } else {
-    M(r2, o2, i2) ? await te({ debug: a2, renumber: 1, runFetch: "mobileRunFetch" in fe ? fe.mobileRunFetch : p }, r2, o2) : await ae({ debug: a2, renumber: 1, runFetch: "desktopRunFetch" in fe ? fe.desktopRunFetch : p }, r2, o2, i2);
+    M(r2, o2, i2) ? await re({ debug: a2, renumber: 1, runFetch: "mobileRunFetch" in pe ? pe.mobileRunFetch : p }, r2, o2) : await le({ debug: a2, renumber: 1, runFetch: "desktopRunFetch" in pe ? pe.desktopRunFetch : p }, r2, o2, i2);
     const e2 = function(e3, t3 = document) {
       const n2 = t3.querySelector(e3);
       if (!n2) return [];
@@ -648,7 +660,7 @@ await async function(t2, r2, o2, i2) {
       return o3 = o3.map((e4, t4) => e4.trim()), "XXX" === o3[0] && o3.shift(), [...o3];
     }("div#contentGroup", r2);
     if (0 === e2.length) n("info", "This URL '" + o2.pathname + "' has no Adjacent groups defined.");
-    else for (let t3 = 0; t3 < e2.length; t3++) await J({ group: e2[t3], debug: a2, iteration: t3, count: e2.length, runFetch: "adjacentRunFetch" in fe ? fe.adjacentRunFetch : p }, r2, o2, i2);
+    else for (let t3 = 0; t3 < e2.length; t3++) await J({ group: e2[t3], debug: a2, iteration: t3, count: e2.length, runFetch: "adjacentRunFetch" in pe ? pe.adjacentRunFetch : p }, r2, o2, i2);
   }
   e(o2, "select") && (n("info", "select and word count feature is ENABLED.  Access= <alt> + w"), r2.body.addEventListener("keydown", (e2) => {
     "w" === e2.key && e2.altKey && n("info", "Word count of selection: " + A(function(e3) {
@@ -669,12 +681,13 @@ export {
   U as calcScreenDPI,
   X as currentSize,
   r as domLog,
-  he as hasBeenRun,
-  pe as initExpandImage,
+  ge as hasBeenRun,
+  me as initExpandImage,
+  te as initTabs,
   q as isLibreWolf,
   M as isMobile,
   n as log,
-  T as ready,
+  k as ready,
   p as runFetch,
   h as storeAppearance
 };

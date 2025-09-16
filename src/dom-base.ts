@@ -50,7 +50,9 @@ export function appendIsland(
     }
   } catch (e) {
     log("error", e.toString());
-    window.noop++;
+    if (typeof window == "object") {
+      window.noop++;
+    }
   }
 }
 

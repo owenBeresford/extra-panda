@@ -184,6 +184,13 @@ function spinup_server() {
       headers: { "Content-Type": "text/html;charset=UTF-8" },
     });
   });
+  app.get("/tab2.html", function (req, res) {
+    res.sendFile(path.join(DIR_FIXTURES, "tab2.html"), {
+      dotfiles: "deny",
+      headers: { "Content-Type": "text/html;charset=UTF-8" },
+    });
+  });
+
   app.get("/home2.html", function (req, res) {
     res.sendFile(path.join(DIR_FIXTURES, "home2.html"), {
       dotfiles: "deny",
