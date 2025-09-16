@@ -133,8 +133,8 @@ body {
 }
 
 .footWidget p a:hover {
-  background:var( --attentionbg );
-  color:#000;
+  background: var(--attentionbg);
+  color: #000;
 }
 
 /* the extra selectors are needed to override a thing in foundation */
