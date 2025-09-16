@@ -11,7 +11,7 @@ describe("TEST BROWSER CSS based tabs", () => {
   }
   const DEEP_BLUE = "rgb(0, 73, 135)";
   const PALE_BLUE = "rgb(185, 222, 250)";
-  const PALE_BLUE2 =  "rgb(215, 242, 250)"; // used for product-engineer portfolio 
+  const PALE_BLUE2 = "rgb(215, 242, 250)"; // used for product-engineer portfolio
 
   it("go 1: default first state", async () => {
     const TEST_NAME = "BROWSER TEST func[1] default first state ";
@@ -148,7 +148,9 @@ describe("TEST BROWSER CSS based tabs", () => {
         ).toBe(DEEP_BLUE);
 
         //		const scrollTop = dom.documentElement.scrollTop || dom.body.scrollTop || 0;
-       	const TARGET=dom.querySelector(".tab2Container label:has( #articles )");
+        const TARGET = dom.querySelector(
+          ".tab2Container label:has( #articles )",
+        );
         const EVT1 = new MouseEvent("click", {
           view: win,
           bubbles: true,
@@ -204,88 +206,85 @@ describe("TEST BROWSER CSS based tabs", () => {
     );
   });
 
-// ********  I think this is barred for security reasons  **********
-// I am writing tests to check accessability from a keyboard, 
-//    ...but the same code could automate logins for illegal goals
-// the kent dodds library should work as planC
-// I am ignoring the option to fake the entire event stream ie symbol down -> up -> next symbol down....
-// https://testing-library.com/docs/user-event/keyboard/
-// https://stackoverflow.com/questions/66404791/simulating-keyboard-events-with-javascript
-// https://stackoverflow.com/questions/596481/is-it-possible-to-simulate-key-press-events-programmatically
+  // ********  I think this is barred for security reasons  **********
+  // I am writing tests to check accessability from a keyboard,
+  //    ...but the same code could automate logins for illegal goals
+  // the kent dodds library should work as planC
+  // I am ignoring the option to fake the entire event stream ie symbol down -> up -> next symbol down....
+  // https://testing-library.com/docs/user-event/keyboard/
+  // https://stackoverflow.com/questions/66404791/simulating-keyboard-events-with-javascript
+  // https://stackoverflow.com/questions/596481/is-it-possible-to-simulate-key-press-events-programmatically
   it("go 3: keys", async (ctx) => {
     const TEST_NAME = "BROWSER TEST func[1] checking keyboard input DEFECTIVE ";
-    return await wrap(
-      TEST_NAME,
-      "/tab2.html",
-      async (dom, loc, win) => {
-		let rootNode=".portfolioContainer";
-        expect(
-          getCSSAttr(
-            rootNode+':has( input[value="employ"]:checked ) .tabContent#panelEmploy *',
-            "display",
-            dom,
-            win,
-          ),
-        ).toBe("block");
-        expect(
-          getCSSAttr(
-            rootNode+' .tabContent#panelOpen *',
-            "display",
-            dom,
-            win,
-          ),
-        ).toBe("none");
+    return await wrap(TEST_NAME, "/tab2.html", async (dom, loc, win) => {
+      let rootNode = ".portfolioContainer";
+      expect(
+        getCSSAttr(
+          rootNode +
+            ':has( input[value="employ"]:checked ) .tabContent#panelEmploy *',
+          "display",
+          dom,
+          win,
+        ),
+      ).toBe("block");
+      expect(
+        getCSSAttr(rootNode + " .tabContent#panelOpen *", "display", dom, win),
+      ).toBe("none");
 
-        expect(
-          getCSSAttr(
-            rootNode+' .tabHeader label:has( input[value="employ"]:checked )',
-            "background-color",
-            dom,
-            win,
-          ),
-        ).toBe(PALE_BLUE2);
-        expect(
-          getCSSAttr(
-             rootNode+' .tabHeader label:has( input[value="open"] )',
-            "background-color",
-            dom,
-            win,
-          ),
-        ).toBe(DEEP_BLUE);
-        expect(
-          getCSSAttr(
-             rootNode+' .tabHeader label:has( input[value="personal"] )',
-            "background-color",
-            dom,
-            win,
-          ),
-        ).toBe(DEEP_BLUE);
+      expect(
+        getCSSAttr(
+          rootNode + ' .tabHeader label:has( input[value="employ"]:checked )',
+          "background-color",
+          dom,
+          win,
+        ),
+      ).toBe(PALE_BLUE2);
+      expect(
+        getCSSAttr(
+          rootNode + ' .tabHeader label:has( input[value="open"] )',
+          "background-color",
+          dom,
+          win,
+        ),
+      ).toBe(DEEP_BLUE);
+      expect(
+        getCSSAttr(
+          rootNode + ' .tabHeader label:has( input[value="personal"] )',
+          "background-color",
+          dom,
+          win,
+        ),
+      ).toBe(DEEP_BLUE);
 
-		const TAB= new KeyboardEvent("keypress", {
-			key: "Tab", 
-			code: "Tab", 
-			keyCode: 9, 
-			which: 9, 
-		    shiftKey: false,
-		    ctrlKey: false,  
-		    metaKey: false  
-		  });
-		const SPACE= new KeyboardEvent("keypress", {
-			key: "Space", 
-			code: "Space", 
-			keyCode: 32, 
-			which: 32, 
-		    shiftKey: false,
-		    ctrlKey: false,  
-		    metaKey: false  
-		  });
-		dom.dispatchEvent( TAB);
-		dom.dispatchEvent( TAB);
-		dom.dispatchEvent( TAB);
-		dom.querySelector(rootNode +' .tabHeader label:has( input[value="open"] )').dispatchEvent( SPACE);
-// no change observed in the DOM.
-		ctx.skip("Test not impl yet, pls see comments");
-/*
+      const TAB = new KeyboardEvent("keypress", {
+        key: "Tab",
+        code: "Tab",
+        keyCode: 9,
+        which: 9,
+        shiftKey: false,
+        ctrlKey: false,
+        metaKey: false,
+      });
+      const SPACE = new KeyboardEvent("keypress", {
+        key: "Space",
+        code: "Space",
+        keyCode: 32,
+        which: 32,
+        shiftKey: false,
+        ctrlKey: false,
+        metaKey: false,
+      });
+      dom.dispatchEvent(TAB);
+      dom.dispatchEvent(TAB);
+      dom.dispatchEvent(TAB);
+      dom
+        .querySelector(
+          rootNode + ' .tabHeader label:has( input[value="open"] )',
+        )
+        .dispatchEvent(SPACE);
+      // no change observed in the DOM.
+      ctx.skip("Test not impl yet, pls see comments");
+      /*
 // to create test tab * N, + space => change tab
         expect(
           getCSSAttr(
@@ -381,12 +380,9 @@ describe("TEST BROWSER CSS based tabs", () => {
           ),
         ).toBe("block");
 */
-        await delay(100);
-      },
-    );
+      await delay(100);
+    });
   });
-
-
 });
 
 execTest(run);
