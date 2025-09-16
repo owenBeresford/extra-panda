@@ -6,8 +6,10 @@ FEATURES
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom   to TESTS
 - Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages. 
 - POSSIBLE: Add feature dump (ie download as attachment) in-HTML file JS assets, or SVG assets, or CSS assets.  Need to think about UI for this feature.
+   - Added a version for JS, disabled for production see index.mjs
 - Improve test process for mobile screen size design
 - Dark mode CSS
+- Add new darkarts goal: **** FOR TESTING, not cracking,**** correct simulation of keyboard input to show keyboard accessibility works correctly.
 
 MAINTENANCE
 - Least stupid way to tell users not to make unit-test chrome window smaller, or the tests in the runner will fail next test execution
@@ -31,7 +33,7 @@ MAINTENANCE
 - TEST THIS CODE https://github.com/egm0121/jest-test-gen?tab=readme-ov-file https://www.npmjs.com/package/jest-test-gen/v/0.0.10  https://github.com/ed4becky/jest-unit-test-generator 
 - Add python syntax highlighter
 - Investigate adding aria-current on bigger docs https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-current 
-- re-add aria-hidden attrib, #leSigh
+- re-add aria-hidden attrib, #leSigh required JS #leSigh
 
 ### Previous Updates
 
@@ -115,7 +117,8 @@ MAINTENANCE
 -      Make more readable, and migrate to TS
 -      Add re-try logic on Network Timeout, second hit seems to succede more often 
 -      Add a dump-cookie plugin to browser, so can re-execute build-references against 1mb of cookies "not bot", "normal interwibbies"
--      Build for patch mode for existing reference files
 -      Add a basic validator for redirects, in-case the linked website is emitting bad redirects
+-      Build for patch mode for existing reference files
 - DONE: Add feature so tests use A LOCAL IP, not a fixed string 
+- DONE: Add process for keyboard based UI
 
