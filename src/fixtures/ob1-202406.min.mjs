@@ -215,19 +215,19 @@ function X(e2, t2) {
 }
 "object" != typeof window || "noop" in window || (window.noop = 0);
 let j = { name: "", meta: "", perRow: 10, titleLimit: 40, rendered: false, iteration: 0, group: "system", count: 1, debug: true, runFetch: p };
-function W(e2, t2, n2, r2 = true) {
+function I(e2, t2, n2, r2 = true) {
   let o2 = "", i2 = n2.pathname.split("/").pop();
   const a2 = new URLSearchParams(n2.search);
   return "group-XXX" === i2 && a2.has("first") && (i2 = a2.get("first") ?? "logic-error"), t2 ? a2.has("first") ? o2 += n2.pathname.replace("group-XXX", i2 + "-meta") : o2 += n2.pathname.replace(i2, e2 + "-meta") : o2 += n2.pathname.replace(i2, e2), r2 && (o2 += n2.search + n2.hash), o2;
 }
-function I(e2, t2) {
+function P(e2, t2) {
   let n2 = "button";
   return e2 && (n2 += " lower"), n2;
 }
-function P(e2, t2) {
+function F(e2, t2) {
   return t2 + "" + e2.replace(/[^a-zA-Z0-9_]/g, "_");
 }
-function F(e2) {
+function W(e2) {
   let t2 = e2;
   return e2.lastIndexOf("#") > 0 && (t2 = e2.substring(0, e2.lastIndexOf("#"))), e2.lastIndexOf("?") > 0 && (t2 = e2.substring(0, e2.lastIndexOf("?"))), t2.split("/").pop() ?? "";
 }
@@ -244,8 +244,8 @@ function H(e2, t2, n2, r2, o2) {
   return j.name === "group-" + j.group || (t2 === e2 && (o2 = r2), r2 > 0 && o2 > 0 && n2 > 0 && r2 >= n2 - 1 && (r2 = 0)), [o2, n2, r2];
 }
 async function J(t2, r2, o2, i2) {
-  if (j = Object.assign(j, { name: y(o2), meta: W(j.group, ".json", o2, false), debug: e(o2), runFetch: p }, t2), "system" === j.group) throw new Error("Must set the article group, and not to 'system'.");
-  j.meta = W(j.group, ".json", o2, false);
+  if (j = Object.assign(j, { name: y(o2), meta: I(j.group, ".json", o2, false), debug: e(o2), runFetch: p }, t2), "system" === j.group) throw new Error("Must set the article group, and not to 'system'.");
+  j.meta = I(j.group, ".json", o2, false);
   const a2 = "group-XXX" === j.name || j.name === "group-" + j.group, s2 = "group" + j.group;
   if (M(r2, o2, i2) && !a2) 1 === r2.querySelectorAll(".adjacentWidget .adjacentItem").length && (r2.querySelector(".adjacentWidget p").style.display = "none"), v("#" + s2, "<p>As mobile View, use the full page link to the left</p>", r2);
   else {
@@ -255,7 +255,7 @@ async function J(t2, r2, o2, i2) {
       const t3 = function(e3, t4, n2, r3, o3) {
         let i3 = "";
         for (const a3 in e3) {
-          const s3 = P(a3, t4), l2 = M(n2, r3, o3) ? "<br />" : "";
+          const s3 = F(a3, t4), l2 = M(n2, r3, o3) ? "<br />" : "";
           let c2 = e3[a3].desc;
           c2.length > 235 && (c2 = c2.substr(0, 235) + "..."), i3 += '<a class="adjacentItem" href="' + e3[a3].url + '" title="' + c2 + '"> <span class="button">' + e3[a3].title + '</span><p id="adjacent' + s3 + '" >Author: ' + e3[a3].auth + " &nbsp; &nbsp; &nbsp;" + l2 + "  Last edit: " + R(e3[a3].date, "Unknown time", true) + " <br />Description: " + c2 + " </p></a>\n";
         }
@@ -270,14 +270,14 @@ async function J(t2, r2, o2, i2) {
     } else {
       const t3 = function(e3) {
         let t4 = -1, n2 = j.perRow, r3 = [], o3 = 0, i3 = 0;
-        for ([t4, n2, o3] = H(F(e3[0].url), j.name, e3.length, o3, t4); o3 < e3.length; o3++) {
+        for ([t4, n2, o3] = H(W(e3[0].url), j.name, e3.length, o3, t4); o3 < e3.length; o3++) {
           const a3 = e3[o3].title;
           if (a3 && t4 >= 0 && n2 > 0) {
             r3[i3] = { auth: e3[o3].auth, date: R(e3[o3].date, "[Unknown time]", true), url: e3[o3].url, offset: o3, title: e3[o3].title.substr(0, j.titleLimit), desc: e3[o3].desc }, a3.length > j.titleLimit && (r3[i3].title += "...");
             const t5 = e3[o3].desc;
             t5.length > 235 && (r3[i3].desc = t5.substr(0, 235) + "..."), n2--, i3++;
           }
-          if ([t4, n2, o3] = H(F(e3[o3].url), j.name, n2, o3, t4), r3.length === e3.length) break;
+          if ([t4, n2, o3] = H(W(e3[o3].url), j.name, n2, o3, t4), r3.length === e3.length) break;
           if (r3.length >= j.perRow) break;
         }
         return r3;
@@ -285,7 +285,7 @@ async function J(t2, r2, o2, i2) {
       v("#" + s2, function(e3, t4) {
         let n2 = '<ul class="adjacentList">\n';
         for (const r3 in e3) {
-          const o3 = P(r3, t4), i3 = I(e3[r3].desc.length > 110), a3 = "Title: " + e3[r3].title + "\nAuthor: " + e3[r3].auth + " &nbsp; &nbsp; Last edit: " + e3[r3].date + "\nDescription: " + e3[r3].desc;
+          const o3 = F(r3, t4), i3 = P(e3[r3].desc.length > 110), a3 = "Title: " + e3[r3].title + "\nAuthor: " + e3[r3].auth + " &nbsp; &nbsp; Last edit: " + e3[r3].date + "\nDescription: " + e3[r3].desc;
           n2 += '<li> <a id="link' + o3 + '" class="' + i3 + '" href="' + e3[r3].url + '" aria-label="' + a3 + '" >' + e3[r3].title + "</a> </li>\n";
         }
         return 0 === e3.length ? n2 += "<li> Article doesn't seem setup correctly.</li></ul>" : n2 += '<li><a class="adjacentItem button" href="/resource/group-XXX?first=' + t4 + '" aria-label="This article lists all items in ' + t4 + ' group."> See full list </a></li></ul>', n2;
@@ -361,7 +361,7 @@ function te(e2 = ee, t2, r2) {
     return false;
   }(n2, t2, e2), false)), !r2.hash) return;
   const o2 = t2.querySelector(r2.hash);
-  console.log("ERWERWERWE ", o2, o2.tagName, r2.hash), o2 && "INPUT" == o2.tagName ? (o2.checked = true, console.log("ERWERWERWE has been set")) : n("error", "tabInit v4: failed to find " + r2.hash + " element");
+  o2 && "INPUT" == o2.tagName ? o2.checked = true : n("error", "tabInit v4: failed to find " + r2.hash + " element");
 }
 let ne = { referencesCache: "/resource/XXX-references", gainingElement: "#biblio", losingElement: ".addReferences", renumber: 1, forceToEnd: 1, maxDescripLen: 230, maxAuthLen: 65, debug: true, runFetch: p };
 async function re(t2, r2, o2) {
