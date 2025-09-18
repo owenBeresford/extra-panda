@@ -133,7 +133,9 @@ body {
 }
 
 .footWidget p a:hover {
-  background: var(--attentionbg);
+  --bgr: 240;
+  --bgg: 255;
+  --bgb: 255;
   color: #000;
 }
 
