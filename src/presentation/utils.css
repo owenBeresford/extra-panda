@@ -52,7 +52,7 @@
 	every page */
 .articleContent {
   align-self: stretch;
-  min-height: calc(100vh - 18em); /* 18em == 14 for header and 4 for footer */
+  min-height: calc(100vh - 20em); /* 18em == 14 for header and 6 for footer */
   max-height: max-content; /* avoid clipping if possible */
 }
 
