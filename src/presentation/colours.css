@@ -132,6 +132,13 @@ body {
   --bgb: 115;
 }
 
+.footWidget p a:hover {
+  --bgr: 240;
+  --bgg: 255;
+  --bgb: 255;
+  color: #000;
+}
+
 /* the extra selectors are needed to override a thing in foundation */
 body *,
 .top-bar,

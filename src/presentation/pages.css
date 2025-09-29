@@ -305,7 +305,8 @@
   max-width: 100%;
 }
 .homeContainer .wholeArticle {
-  margin: 15px;
+  margin: 1em;
+  min-height: calc(100vh - 6em);
 }
 .homeContainer span[rel="me"] {
   margin: initial;

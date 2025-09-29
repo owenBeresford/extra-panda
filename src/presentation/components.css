@@ -27,6 +27,17 @@
   margin-bottom: 0.2em;
   margin-left: 1em;
 }
+.footWidget p,
+.footWidget .leftFooter {
+  line-height: 1.8;
+}
+
+.footWidget a {
+  padding: 1em;
+}
+.footWidget a:has( i.fa-linkedin-square ) {
+  padding: 0.8em 1em;
+}
 
 @media screen and (min-resolution: 150dpi) {
   .footWidget p {
