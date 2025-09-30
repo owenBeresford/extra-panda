@@ -127,7 +127,7 @@ function v(e2, t2, r2) {
     n("error", e3.toString()), "object" == typeof window && window.noop++;
   }
 }
-function k(e2, t2) {
+function T(e2, t2) {
   if (console.assert(void 0 !== t2, "Startup ready() needs two param, document in the second"), "loading" === t2.readyState) {
     if (!t2.addEventListener) throw new Error("Unknown JS interpreter, can't register code");
     t2.addEventListener("DOMContentLoaded", e2);
@@ -135,7 +135,7 @@ function k(e2, t2) {
     e2(t2.createEvent("htmlevents"));
   }
 }
-function T(e2) {
+function k(e2) {
   if (void 0 === e2) return false;
   const t2 = e2.getComputedStyle.toString().includes("[native code]");
   return !("boolean" != typeof t2 || !t2);
@@ -147,7 +147,7 @@ function q(e2, t2, n2) {
   } catch (e3) {
     n2.noop++;
   }
-  if (t2 && "Gecko" === t2.product && t2.maxTouchPoints > 0 && !r2) {
+  if (console.log("isLIBREWOLF ", { DNT: t2.doNotTrack, nav: t2, product: t2.product, touchPoint: t2.maxTouchPoints, canTouch: r2 }, "unspecified" == t2.doNotTrack), console.dir(t2), t2 && "Gecko" === t2.product && "unspecified" === t2.doNotTrack && !r2) {
     if (console.warn("Is this librewolf?, could tell me if this is wrong."), !e2.body.classList.contains("IAmLibreWolf")) {
       e2.body.classList.add("IAmLibreWolf");
       const t3 = e2.querySelector('.fullWidth p[role="status"]');
@@ -159,7 +159,7 @@ function q(e2, t2, n2) {
 }
 function x(e2, t2, r2) {
   try {
-    if (!T(r2)) return -1;
+    if (!k(r2)) return -1;
     return e2.getBoundingClientRect()[t2];
   } catch (e3) {
     return n("error", "Missing data:" + e3.message), -1;
@@ -169,7 +169,7 @@ function C(e2, t2) {
   const n2 = e2.getBoundingClientRect();
   return [Math.round(t2.scrollY + n2.top), Math.round(t2.scrollX + n2.left)];
 }
-async function O(e2, t2, r2) {
+async function N(e2, t2, r2) {
   try {
     if (!r2.navigator.clipboard) throw new Error("No clipboard available");
     await r2.navigator.clipboard.writeText(t2.href);
@@ -177,7 +177,7 @@ async function O(e2, t2, r2) {
     n("error", "FAILED: copy URL feature borked " + e3.message + "\nIt will fail on a HTTP site.");
   }
 }
-function N(e2 = 1040, t2, n2, r2) {
+function O(e2 = 1040, t2, n2, r2) {
   if (t2.querySelector(".maquetteContainer") && function(e3, t3) {
     const n3 = new URLSearchParams(e3.search);
     if (n3.has("width")) return parseInt(n3.get("width") ?? "", 10);
@@ -243,7 +243,7 @@ function D(e2) {
 function H(e2, t2, n2, r2, o2) {
   return j.name === "group-" + j.group || (t2 === e2 && (o2 = r2), r2 > 0 && o2 > 0 && n2 > 0 && r2 >= n2 - 1 && (r2 = 0)), [o2, n2, r2];
 }
-async function J(t2, r2, o2, i2) {
+async function B(t2, r2, o2, i2) {
   if (j = Object.assign(j, { name: y(o2), meta: I(j.group, ".json", o2, false), debug: e(o2), runFetch: p }, t2), "system" === j.group) throw new Error("Must set the article group, and not to 'system'.");
   j.meta = I(j.group, ".json", o2, false);
   const a2 = "group-XXX" === j.name || j.name === "group-" + j.group, s2 = "group" + j.group;
@@ -293,7 +293,7 @@ async function J(t2, r2, o2, i2) {
     }
   }
 }
-function B(e2, t2, n2, r2) {
+function J(e2, t2, n2, r2) {
   if (!w(n2.host) && !M(t2, n2, r2)) return false;
   const o2 = t2.querySelector("#shareMenu");
   return o2 && !o2.classList.replace("mobilePopupWidgetOpen", "mobilePopupWidget") && o2.classList.replace("mobilePopupWidget", "mobilePopupWidgetOpen"), false;
@@ -303,8 +303,8 @@ function $(e2, t2, r2, o2) {
   let a2 = i2.value;
   const s2 = i2.getAttribute("data-url");
   if ("" === a2 || null === a2) return false;
-  if (a2 = "https://" + a2 + "/share?text=I+think+this+is+important+" + s2, n("info", "Trying to open mastodon server, " + a2), !T(o2)) throw Error("Test passed, for " + a2);
-  return t2.querySelector("#popup").close(), o2.open(a2, "_blank"), M(t2, r2, o2) && B(0, t2, r2, o2), false;
+  if (a2 = "https://" + a2 + "/share?text=I+think+this+is+important+" + s2, n("info", "Trying to open mastodon server, " + a2), !k(o2)) throw Error("Test passed, for " + a2);
+  return t2.querySelector("#popup").close(), o2.open(a2, "_blank"), M(t2, r2, o2) && J(0, t2, r2, o2), false;
 }
 function G(e2, t2, n2) {
   let r2 = e2.querySelector("#navBar #mastoTrigger");
@@ -319,16 +319,16 @@ function G(e2, t2, n2) {
   }
   r2 = e2.querySelector("#copyURL"), r2 && function(e3, t3, n3, r3, o3) {
     e3.addEventListener("click", async (e4) => (await t3(n3, r3, o3), false)), e3.addEventListener("touch", async (e4) => (await t3(n3, r3, o3), false)), e3.addEventListener("keypress", async (e4) => (await t3(n3, r3, o3), false));
-  }(r2, O, e2, t2, n2), V(e2.querySelector("#popup #sendMasto"), $, e2, t2, n2);
+  }(r2, N, e2, t2, n2), V(e2.querySelector("#popup #sendMasto"), $, e2, t2, n2);
   const o2 = Array.from(e2.querySelectorAll("#shareMenuTrigger, #shareClose"));
-  for (const r3 in o2) V(o2[r3], B, e2, t2, n2);
+  for (const r3 in o2) V(o2[r3], J, e2, t2, n2);
   Y(e2.querySelector("#hideMasto"), K, e2, n2);
 }
 function _(e2, t2, n2) {
-  return T(n2) && t2.querySelector("#popup").showModal(), t2.querySelector("#popup input").focus(), false;
+  return k(n2) && t2.querySelector("#popup").showModal(), t2.querySelector("#popup input").focus(), false;
 }
 function K(e2, t2, n2) {
-  return T(n2) && t2.querySelector("#popup").close(), false;
+  return k(n2) && t2.querySelector("#popup").close(), false;
 }
 function Y(e2, t2, n2, r2) {
   e2.addEventListener("click", (e3) => (t2(e3, n2, r2), false)), e2.addEventListener("touch", (e3) => (t2(e3, n2, r2), false)), e2.addEventListener("keypress", (e3) => (t2(e3, n2, r2), false));
@@ -619,7 +619,7 @@ await async function(t2, r2, o2, i2) {
     if (n2.ft = n2.ft.replaceAll("%38", ";"), n2.cr = n2.cr.replaceAll("%38", ";"), n2.dn = n2.dn.replaceAll("%38", ";"), n2.fs = n2.fs.replaceAll("%38", ";"), !n2.ft || !n2.fs) return;
     const r3 = "body, .annoyingBody { font-family: " + n2.ft + "; font-size: " + n2.fs + "; direction:" + n2.dn + "; }", o3 = e2.createElement("style");
     o3.setAttribute("id", "client-set-css"), o3.innerText = r3, e2.getElementsByTagName("head")[0].append(o3);
-  }(r2), he(r2), N(1040, r2, o2, i2), q(r2, i2.navigator, i2) && function(e2, t3) {
+  }(r2), he(r2), O(1040, r2, o2, i2), q(r2, i2.navigator, i2) && function(e2, t3) {
     let n2 = t3.createElement("link");
     n2.setAttribute("rel", "stylesheet"), n2.setAttribute("href", e2), t3.head.appendChild(n2);
   }("/asset/librewolf.min.css", r2), !M(r2, o2, i2) && "/resource/home" !== o2.pathname && r2.querySelectorAll(".reading").length < 2 && function(t3, r3, o3) {
@@ -648,7 +648,7 @@ await async function(t2, r2, o2, i2) {
       }
       throw new Error("KLAXON, KLAXON, I do not know how to build an adjacent list for " + t3.href);
     }(null, o2);
-    e2 && await J({ group: e2, debug: a2, runFetch: "adjacentRunFetch" in pe ? pe.adjacentRunFetch : p }, r2, o2, i2);
+    e2 && await B({ group: e2, debug: a2, runFetch: "adjacentRunFetch" in pe ? pe.adjacentRunFetch : p }, r2, o2, i2);
   } else {
     M(r2, o2, i2) ? await re({ debug: a2, renumber: 1, runFetch: "mobileRunFetch" in pe ? pe.mobileRunFetch : p }, r2, o2) : await le({ debug: a2, renumber: 1, runFetch: "desktopRunFetch" in pe ? pe.desktopRunFetch : p }, r2, o2, i2);
     const e2 = function(e3, t3 = document) {
@@ -660,7 +660,7 @@ await async function(t2, r2, o2, i2) {
       return o3 = o3.map((e4, t4) => e4.trim()), "XXX" === o3[0] && o3.shift(), [...o3];
     }("div#contentGroup", r2);
     if (0 === e2.length) n("info", "This URL '" + o2.pathname + "' has no Adjacent groups defined.");
-    else for (let t3 = 0; t3 < e2.length; t3++) await J({ group: e2[t3], debug: a2, iteration: t3, count: e2.length, runFetch: "adjacentRunFetch" in pe ? pe.adjacentRunFetch : p }, r2, o2, i2);
+    else for (let t3 = 0; t3 < e2.length; t3++) await B({ group: e2[t3], debug: a2, iteration: t3, count: e2.length, runFetch: "adjacentRunFetch" in pe ? pe.adjacentRunFetch : p }, r2, o2, i2);
   }
   e(o2, "select") && (n("info", "select and word count feature is ENABLED.  Access= <alt> + w"), r2.body.addEventListener("keydown", (e2) => {
     "w" === e2.key && e2.altKey && n("info", "Word count of selection: " + A(function(e3) {
@@ -687,7 +687,7 @@ export {
   q as isLibreWolf,
   M as isMobile,
   n as log,
-  k as ready,
+  T as ready,
   p as runFetch,
   h as storeAppearance
 };
