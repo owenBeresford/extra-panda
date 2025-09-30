@@ -351,19 +351,10 @@ This is big screen mac, should work with wide versions
 }
 @media screen and (min-resolution: 150dpi) {
   .halferWords {
-    width: 100vw;
+    width: min(calc(100vw - 2em), 700px);
     align-self: stretch;
+	justify-items:center;
     margin: 1em 0em;
-  }
-}
-@media screen and (max-width: 700px) {
-  .halferWords {
-    width: 100vw;
-  }
-}
-@media screen and (min-resolution: 150dpi) {
-  .halferWords {
-    margin-left: 0.5em;
   }
 }
 
@@ -380,19 +371,9 @@ This is big screen mac, should work with wide versions
 }
 @media screen and (min-resolution: 150dpi) {
   .fewWords {
-    width: 100vw;
+    width: min(calc(100vw - 2em), 600px);
     margin-left: 0;
     margin-right: 0;
-  }
-}
-@media screen and (max-width: 600px) {
-  .fewWords {
-    width: 100vw;
-  }
-}
-@media screen and (min-resolution: 150dpi) {
-  .fewWords {
-    margin-left: 0.5em;
   }
 }
 
