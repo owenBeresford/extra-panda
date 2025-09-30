@@ -276,6 +276,9 @@
   .homeContainer .home.icerow .column.tab2Container {
     max-width: fit-content;
   }
+
+  .homeContainer .top-bar.fullWidth { display:none; }
+  
 }
 
 .homeContainer .home.column {
@@ -293,7 +296,7 @@
 
 @media screen and (min-resolution: 150dpi) {
   .homeContainer .tab2Container {
-    margin-top: -9em;
+    margin-top: 0em;
   }
 }
 
@@ -367,11 +370,12 @@
     padding-left: 0px;
     padding-right: 0px;
   }
+/*
   .homeContainer .tabContent {
     width: 100%;
     max-width: 100%;
   }
-
+*/
   .homeContainer nav.row a {
     font-size: 120%;
     padding: 0.3em 0.3em;
@@ -509,6 +513,7 @@
   }
   .homeContainer .metaWidget span.ultraSkinny {
     width: auto;
+	display:none;
   }
 }
 

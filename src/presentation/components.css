@@ -34,6 +34,7 @@
 
 .footWidget a {
   padding: 1em;
+  background-color:transparent;
 }
 .footWidget a:has( i.fa-linkedin-square ) {
   padding: 0.8em 1em;

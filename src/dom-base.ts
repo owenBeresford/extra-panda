@@ -204,7 +204,8 @@ export function isLibreWolf(
     win.noop++;
   }
 
-  if (nav && nav.product === "Gecko" && nav.maxTouchPoints > 0 && !canTouch) {
+  // Chrome + FF have dNT as null in 2025-09
+  if (nav && nav.product === "Gecko" && nav.doNotTrack==="unspecified" && !canTouch) {
     console.warn("Is this librewolf?, could tell me if this is wrong.");
     if (!dom.body.classList.contains("IAmLibreWolf")) {
       dom.body.classList.add("IAmLibreWolf");

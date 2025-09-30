@@ -147,7 +147,7 @@ function q(e2, t2, n2) {
   } catch (e3) {
     n2.noop++;
   }
-  if (t2 && "Gecko" === t2.product && t2.maxTouchPoints > 0 && !r2) {
+  if (t2 && "Gecko" === t2.product && "unspecified" === t2.doNotTrack && !r2) {
     if (console.warn("Is this librewolf?, could tell me if this is wrong."), !e2.body.classList.contains("IAmLibreWolf")) {
       e2.body.classList.add("IAmLibreWolf");
       const t3 = e2.querySelector('.fullWidth p[role="status"]');
