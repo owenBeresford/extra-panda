@@ -124,6 +124,15 @@ export function addBashSamples(dom: Document): void {
     dom.querySelectorAll(".addBashSamples"),
   ) as Array<HTMLElement>;
 
+/*
+Do a "<code" branch, then: 
+	To not eat ` in bash code samples, I need to put the innerHTML into a TEMPLATE, and 
+	look at all the TextNodes inside this
+	where a text node includes a ` check parentNode for a CODE element
+	if not, edit the template
+	after all TextNode glue TEMPLATE back into original .addBashSamples element
+*/
+
   if (bash.length > 0) {
     for (let i = 0; i < bash.length; i++) {
       bash[i].innerHTML = bash[i].innerHTML
