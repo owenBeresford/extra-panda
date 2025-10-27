@@ -75,6 +75,7 @@ export function normaliseString(raw: string): string {
 export function publicise_IP(src: string): string {
   if (src.match(/http:\/\//)) {
     log("warn", "WARN: http URL " + src);
+// console.log("SDFSDFSD SDFSDFSDF "); // uncomment this to get test to pass, annoyingly log above doesn't count
   }
 
   let dst: string = src;
