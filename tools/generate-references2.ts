@@ -266,12 +266,13 @@ if (enablePatch) {
 
   const wholeFile = fs.readFileSync(FN, "utf8");
   let wonky: Array<string> = [];
-  let low: number = wholeFile.indexOf("{{plain root");
+  const MARKER="{{plain root";
+  let low: number = wholeFile.indexOf(MARKER)+ MARKER.length;
   let high: number = wholeFile.indexOf("}}", low);
   let str: string = wholeFile.substring(low, high).trim();
   let ORIG = JSON.parse(str); // types??, err hehe
   for (let i = 0; i < ORIG.length; i++) {
-    if (ORIG[i].desc.contains("HTTP_ERROR")) {
+    if (ORIG[i].desc.includes("HTTP_ERROR")) {
       wonky.push(ORIG[i].url);
       // keep original object for updating values
     }
@@ -316,7 +317,7 @@ if (enablePatch) {
       }
     }
   }
-  if (matched !== pc3.resultsArray.length) {
+  if (matched !== wonky.length) {
     console.log(
       "KLAAXXX0n, KLAAAXXX0N \n",
       JSON.stringify(pc3.resultsArray),
