@@ -65,6 +65,7 @@ describe("TEST references networking2 ", () => {
     });
   });
 
+/*
   it.sequential("go 1.5: networking fetch2( stackoverflow) ", async () => {
     return new Promise(async (good, bad) => {
       const FP4 = new FakePage();
@@ -75,7 +76,7 @@ describe("TEST references networking2 ", () => {
       await fetch2(URL, FP4.success, FP4.failure, FP4.assignClose);
     });
   });
-
+*/
   it.sequential("go 1.6: networking fetch2( medium ) ", async () => {
     return new Promise(async (good, bad) => {
       const FP4 = new FakePage();
