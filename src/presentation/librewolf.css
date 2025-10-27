@@ -19,8 +19,8 @@
 
 @media screen and (min-resolution: 150dpi) {
   .IAmLibreWolf .halferWords {
-    width: 60em;
     max-width: 50%;
+    width: 60em;
     align-self: stretch;
     margin: 1em 0em;
     margin-left: auto;

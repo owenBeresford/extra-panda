@@ -351,7 +351,7 @@ This is big screen mac, should work with wide versions
 }
 @media screen and (min-resolution: 150dpi) {
   .halferWords {
-    width: min(calc(100vw - 2em), 700px);
+    width: min(calc(100vw - 2em), 680px);
     align-self: stretch;
 	justify-items:center;
     margin: 1em 0em;
