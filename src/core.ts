@@ -22,14 +22,23 @@ import {
   duplicateSelection,
 } from "./dom-base";
 import { createBiblio as mobileCreateBiblio } from "./mobile-biblio";
-import { createBiblio as desktopCreateBiblio } from "./desktop-biblio";
+import {
+  createBiblio as desktopCreateBiblio,
+  justCounts,
+} from "./desktop-biblio";
 import {
   addOctoCats,
   addBooks,
   addFancyButtonArrow,
   addBashSamples,
 } from "./effect";
-import { ENABLE_SELECT, matchVersion } from "./immutables";
+import {
+  ENABLE_SELECT,
+  matchVersion,
+  BIBLIO_DESKTOP_ENABLED,
+  BIBLIO_COUNTS_ENABLED,
+  BIBLIO_OPERATIONAL,
+} from "./immutables";
 import { readingDuration } from "./reading";
 import { modalInit } from "./modal";
 import { applyAppearance } from "./cookies";
@@ -240,16 +249,21 @@ export async function siteCore(
         loc,
       );
     } else {
-      await desktopCreateBiblio(
-        {
-          debug: ldebug,
-          renumber: 1,
-          runFetch: "desktopRunFetch" in OPTS ? OPTS.desktopRunFetch : runFetch,
-        },
-        dom,
-        loc,
-        win,
-      );
+      if (BIBLIO_COUNTS_ENABLED === BIBLIO_OPERATIONAL) {
+        justCounts(dom);
+      } else {
+        await desktopCreateBiblio(
+          {
+            debug: ldebug,
+            renumber: 1,
+            runFetch:
+              "desktopRunFetch" in OPTS ? OPTS.desktopRunFetch : runFetch,
+          },
+          dom,
+          loc,
+          win,
+        );
+      }
     }
 
     const grp: Array<string> = listContentGroup("div#contentGroup", dom);
