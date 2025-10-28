@@ -36,6 +36,7 @@
   padding: 1em;
   background-color:transparent;
 }
+
 .footWidget a:has( i.fa-linkedin-square ) {
   padding: 0.8em 1em;
 }
@@ -657,6 +658,7 @@ This is big screen mac, should work with wide versions
   font-size: 1.7em;
   width: 1.3em;
   text-align: left;
+  display:inline-block;
   vertical-align: sub;
 }
 
@@ -698,6 +700,30 @@ This is big screen mac, should work with wide versions
     width 2s ease-out;
 }
 
+/* https://www.sarasoueidan.com/blog/css-scrollspy/ 
+  Question. if you are a lo-to-no sight person, are menus any use?
+  This CSS reports which bit of the body text is on viewport, in the menu, 
+			...your speech UI doesn't use a screen.
+  Speech is a very temporally ordered structure, text less so.   
+     What is a matching metaphor that would assist the current document position?
+  Quite a few audio mixers, youtube etc have a horizontal scrollbar to show offset . . . 
+			maybe less use in this situation
+
+  Also note, not available on FF derived codebases in 2025.
+  Its an addon, not an essential interaction
+*/
+@supports( scroll-target-group: auto ) { 
+.linksWidget .headingsWidget .titleList { scroll-target-group: auto; }
+.linksWidget .headingsWidget .titleList li a { 
+		display:inline-block; min-width:var(--menu-width, 260px); 
+		width: calc(100% - calc(3em + 4px) ); max-width: var(--menu-width, 260px); 
+   		} 
+.linksWidget .headingsWidget .titleList li:has( :target-current )::before { 
+		content:"🖝"; font-size:150%; line-height:0.7; vertical-align: sub; 
+		position: relative; top: -16px; left: 0px; } 
+:target-current { font-style:italic; }
+} 
+
 .titleList {
   list-style: none;
   padding-left: 0;
@@ -726,6 +752,11 @@ This is big screen mac, should work with wide versions
   .titleList a {
     width: calc(600px - 2em);
   }
+}
+
+@supports( scroll-target-group: auto ) { 
+	.headingsWidget summary { min-width:var(--menu-width, 260px); }
+	.titleList a { padding-left: 0.1em; }
 }
 
 /** broswerTest
@@ -1132,10 +1163,11 @@ but this is a permanent effect, so with is better choice in this library
 }
 
 /* that space char is working hard, this is two selectors */
-.popOverWidget .lotsOfWords details.singlePopup:not(open),
-.popOverWidget.lotsOfWords details.singlePopup:not(open) {
+.popOverWidget .lotsOfWords details.singlePopup:not([open]),
+.popOverWidget.lotsOfWords details.singlePopup:not([open]) {
   width: inherit;
 }
+
 
 @media screen and (min-width: 1200px) {
   .popOverWidget details[open] {
