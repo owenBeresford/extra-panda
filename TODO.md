@@ -32,7 +32,6 @@ MAINTENANCE
 - UPDATE:: Internet suggests dropping Playwright for Puppeteer if specific browsers are needed. https://pptr.dev/webdriver-bidi https://www.npmjs.com/package/puppeteer-core
 - TEST THIS CODE https://github.com/egm0121/jest-test-gen?tab=readme-ov-file https://www.npmjs.com/package/jest-test-gen/v/0.0.10  https://github.com/ed4becky/jest-unit-test-generator 
 - Add python syntax highlighter
-- Investigate adding aria-current on bigger docs https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-current 
 - re-add aria-hidden attrib, #leSigh required JS #leSigh
 
 ### Previous Updates
@@ -121,4 +120,6 @@ MAINTENANCE
 -      Build for patch mode for existing reference files
 - DONE: Add feature so tests use A LOCAL IP, not a fixed string 
 - DONE: Add process for keyboard based UI
+- DONE: added short term hack for modalPopups inside lotsOfWords, as otherwise the width is computed wrongly
+- DONE: Investigate adding aria-current on bigger articles, to mark current location
 

@@ -61,8 +61,7 @@ export function addOctoCats(refs: boolean, dom: Document, win: Window): void {
       a.textContent = "";
       appendIsland(
         a,
-        `<i class="fa fa-github" aria-hidden="true"></i> 
-		 <span class="sr-only">git</span>`,
+        `<i class="fa fa-github" aria-hidden="true"></i><span class="sr-only">git</span>`,
         dom,
       );
       if (refs) {
@@ -94,8 +93,7 @@ export function addBooks(refs: boolean, dom: Document, win: Window): void {
       a.textContent = "";
       appendIsland(
         a,
-        `<i class="fa fa-book-open" aria-hidden="true"></i>
-		 <span class="sr-only">docs</span>`,
+        `<i class="fa fa-book-open" aria-hidden="true"></i><span class="sr-only">docs</span>`,
         dom,
       );
       // I am injecting this here, as the HTML renderer doesn't add titles to links
@@ -125,6 +123,15 @@ export function addBashSamples(dom: Document): void {
   const bash: Array<HTMLElement> = Array.from(
     dom.querySelectorAll(".addBashSamples"),
   ) as Array<HTMLElement>;
+
+/*
+Do a "<code" branch, then: 
+	To not eat ` in bash code samples, I need to put the innerHTML into a TEMPLATE, and 
+	look at all the TextNodes inside this
+	where a text node includes a ` check parentNode for a CODE element
+	if not, edit the template
+	after all TextNode glue TEMPLATE back into original .addBashSamples element
+*/
 
   if (bash.length > 0) {
     for (let i = 0; i < bash.length; i++) {

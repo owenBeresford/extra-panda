@@ -16,6 +16,7 @@ body {
   --scroll1: darkgrey;
   --scroll2: slategrey;
   --attentionbg: #2ba6cb;
+  --menu-width:260px;
 }
 
 @media screen and (prefers-contrast: more) {
@@ -133,11 +134,24 @@ body {
 }
 
 .footWidget p a:hover {
-  --bgr: 240;
-  --bgg: 255;
-  --bgb: 255;
   color: #000;
 }
+
+/* verify then replicate to general A */
+.footWidget a:hover, .footWidget a:active {
+  --bgcontrast:2;
+  --bgr: 220;
+  --bgg: 225;
+  --bgb: 255;
+  background-color: rgba(
+    calc(var(--bgr) * var(--bgcontrast)),
+    calc(var(--bgg) * var(--bgcontrast)),
+    calc(var(--bgb) * var(--bgcontrast)),
+    1
+  );
+
+}
+
 
 /* the extra selectors are needed to override a thing in foundation */
 body *,

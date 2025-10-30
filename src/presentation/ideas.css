@@ -58,3 +58,10 @@ https://github.com/LivKing/Inclusive-Sans?
 https://www.oliviaking.com/inclusive-sans
 https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-alternates
 */
+
+/* https://www.sarasoueidan.com/blog/css-scrollspy/ */
+:target-current::before { content:"🖝"; font-size:150%; line-height:0.7;  }
+:target-current { font-style:italic; }
+.linksWidget .headingsWidget .titleList { scroll-target-group: auto; }
+
+

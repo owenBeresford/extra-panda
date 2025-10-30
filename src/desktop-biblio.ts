@@ -58,7 +58,7 @@ function markAllLinksUnknown(dom: Document, loc: Location): void {
   const MSG: HTMLElement = dom.querySelector("p[role=status]") as HTMLElement;
   if (
     MSG &&
-    MSG.innerText &&
+    typeof MSG.innerText !== "object" &&
     !MSG.innerText.match(/ERROR: No valid references file found/)
   ) {
     MSG.innerText += "ERROR: No valid references file found.";
@@ -318,6 +318,18 @@ function addMetaAge(xhr: SimpleResponse, dom: Document): void {
   }
 }
 
+export function justCounts(dom: Document): void {
+  const TMP: Array<HTMLElement> = Array.from(
+    dom.querySelectorAll(ALL_REFERENCE_LINKS),
+  );
+  for (let i = 0; i < TMP.length; i++) {
+    // if-trap to avoid git links, docs links etc
+    if (TMP[i].innerText.match(/[0-9]+/)) {
+      TMP[i].innerText = (i+1);
+    }
+  }
+}
+
 const UI_TEXT_MONTHS: Readonly<Array<string>> = [
   "Jan",
   "Feb",
@@ -433,6 +445,7 @@ export const TEST_ONLY = {
   normaliseData,
   applyDOMpositions,
   mapPositions,
+  justCounts,
   addMetaAge,
   createBiblio,
 };
