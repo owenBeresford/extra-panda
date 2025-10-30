@@ -325,7 +325,7 @@ export function justCounts(dom: Document): void {
   for (let i = 0; i < TMP.length; i++) {
     // if-trap to avoid git links, docs links etc
     if (TMP[i].innerText.match(/[0-9]+/)) {
-      TMP[i].innerText = i;
+      TMP[i].innerText = (i+1);
     }
   }
 }
