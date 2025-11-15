@@ -578,7 +578,7 @@ await async function(t2, r2, o2, i2) {
   } else {
     M(r2, o2, i2) ? await te({ debug: a2, renumber: 1, runFetch: "mobileRunFetch" in ce ? ce.mobileRunFetch : p }, r2, o2) : function(e3) {
       const t3 = Array.from(e3.querySelectorAll(s));
-      for (let e4 = 0; e4 < t3.length; e4++) t3[e4].innerText.match(/[0-9]+/) && (t3[e4].innerText = e4 + 1);
+      for (let e4 = 0; e4 < t3.length; e4++) g(t3[e4]).match(/[0-9]+/) && (t3[e4].innerText = e4 + 1);
     }(r2);
     const e2 = function(e3, t3 = document) {
       const n2 = t3.querySelector(e3);
