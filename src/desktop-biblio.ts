@@ -12,6 +12,7 @@ import {
   articleName,
   addLineBreaks,
   makeRefUrl,
+  pullout,
 } from "./string-base";
 import { log, debug } from "./log-services";
 import { runFetch } from "./networking";
@@ -59,7 +60,7 @@ function markAllLinksUnknown(dom: Document, loc: Location): void {
   if (
     MSG &&
     typeof MSG.innerText !== "object" &&
-    !MSG.innerText.match(/ERROR: No valid references file found/)
+    !pullout(MSG).match(/ERROR: No valid references file found/)
   ) {
     MSG.innerText += "ERROR: No valid references file found.";
   }
@@ -324,7 +325,7 @@ export function justCounts(dom: Document): void {
   );
   for (let i = 0; i < TMP.length; i++) {
     // if-trap to avoid git links, docs links etc
-    if (TMP[i].innerText.match(/[0-9]+/)) {
+    if ( pullout(TMP[i]).match(/[0-9]+/)) {
       TMP[i].innerText = (i+1);
     }
   }
