@@ -196,7 +196,8 @@ export class MorePages implements HTMLTransformable {
       "<script>\\s*location\\.replaceState\\(null,[ ]*null,[ ]*['\"](.*)['\"]\\)",
       "location\\.replaceState\\(null,[ ]*null,[ ]*['\"](.*)['\"]+ window._cf_chl_opt.cOgUHash\\)",
       "history\\.replaceState\\(null,[ ]*null,[ ]*['\"](.*)['\"][ ]*\\+[ ]*window._cf_chl_opt.cOgUHash\\)",
-      '<link\\s+rel=["\']canonical["\']\\s+href="([^"]+)"',
+// I'm disabling the canonical link, as too many people put random things in this
+//      '<link\\s+rel=["\']canonical["\']\\s+href="([^"]+)"',
     ];
 
     for (let i = 0; i < list.length; i++) {
@@ -230,8 +231,17 @@ export class MorePages implements HTMLTransformable {
           // I'm fairly sure the correct thing is log "bad link" and get it rechecked by a human
           return false;
         }
+			// #leSigh   yes this happens more often than it should
+			if( hit[1].includes("//", 9) ) {
+	        	log(
+            "warn",
+            "Looks like malformed URL (probably caononical URL) with '//' in the middle "+hit[1]
+       		    );
+				return false;
+			}
+
         if (loop < redirect_limit) {
-          return new Error(decodeURI(hit[1]));
+			return new Error(decodeURI(hit[1]));
         }
         return false;
       }
