@@ -12,8 +12,14 @@ elif [ $# -ne 2 ]; then
 	exit 1
 fi
 
+if [ "10" -gt "`grep stackoverflow /var/www/oab1/cookies.txt | wc -l`" ]; then
+	echo "Please check logged in status for stack-overflow"
+	exit 3
+fi
+
+
 # SAMPLE: "node node_modules/.bin/vite-node tools/generate-references2.ts --url http://192.168.1.218/resource/elixir-toolkit  --out /tmp/hfhfhf4.wiki"
 node ./node_modules/.bin/vite-node tools/generate-references2.ts --url http://$myip/resource/$1 --out $2 
- 
+# add --patch to CLI where needed
 
 
