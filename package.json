@@ -26,7 +26,7 @@
     "build:extract-css": "export NODE_ENV=production; node ./node_modules/.bin/vite --config ./vite.config.lib.ts build; node ./node_modules/.bin/vite --config ./vite.config.tests.ts build tools/test-browser.ts;",
     "#ignore-this-line4": "if you use the previous commend, this is how to exec it",
     "css": "export NODE_ENV=development; node dist/tests-browser.mjs --extract-css $1 ",
-	"refs":"./tools/.references.bash $*"
+	"refs":"./tools/references.bash $*"
   },
   "repository": {
     "type": "git",
