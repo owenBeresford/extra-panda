@@ -121,7 +121,7 @@ export class FirstPage implements HTMLTransformable {
         list[i] = list[i].replace("towardsdatascience.com", "scribe.rip");
       }
       if (list[i].includes("medium.com")) {
-        list[i] = list[i].replace("medium.com", "scribe.rip");
+        list[i] = list[i].replace("://medium.com", "://scribe.rip");
       }
       if (list[i].includes("sciencedirect.com")) {
         throw new Error("Klaaxon, source article better " + list[i]);
