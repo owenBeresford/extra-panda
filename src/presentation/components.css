@@ -756,6 +756,7 @@ This is big screen mac, should work with wide versions
 
 @supports( scroll-target-group: auto ) { 
 	.headingsWidget summary { min-width:var(--menu-width, 260px); }
+	.headingsWidget:not( [open] ) summary { min-width:auto; }
 	.titleList a { padding-left: 0.1em; }
 }
 
@@ -1411,6 +1412,7 @@ code[lang="html"].highlight {
 .addReferences a {
   padding: 0.3em;
   display: inline-block;
+  padding-top: 0.1em;
 }
 .addReferences a[aria-label]:before {
   columns: inherit;
