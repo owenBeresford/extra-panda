@@ -20,6 +20,7 @@ node node_modules/.bin/vite --config vite.config.lang-xml.ts build
 node node_modules/.bin/vite --config vite.config.lang-sql.ts build 
 node node_modules/.bin/vite --config vite.config.lang-ts.ts build 
 node node_modules/.bin/vite --config vite.config.lang-perl.ts build 
+node node_modules/.bin/vite --config vite.config.lang-python.ts build 
 node node_modules/.bin/vite --config vite.config.lang-css.ts build
 if [ -f dist/magic-strin* ]; then
 	rm dist/magic-string*
