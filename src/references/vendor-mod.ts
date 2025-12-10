@@ -60,7 +60,7 @@ function mod_medium(item: Reference, body: string): Reference {
   if (hit && hit.length) {
     item2.date = new Date(hit[1]).getTime() / 1000;
   }
-  return item;
+  return item2;
 }
 
 function mod_github(item: Reference, body?: string): Reference {
