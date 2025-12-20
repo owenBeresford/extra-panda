@@ -489,6 +489,55 @@ export function appendCSSFile(fn: string, dom: Document): void {
   dom.head.appendChild(nu);
 }
 
+/**
+ * assignCSSBlob
+ * Inject CSS text into DOM, with a name, so is unique
+ 
+ * @param {string} dat
+ * @param {string} id
+ * @param {Document} dom
+ * @public
+ * @return {void}
+ */
+export function assignCSSBlob(dat:string, id:string, dom:Document):void {
+	if(dom.querySelector("#"+id) !==null ) {
+		throw new Error("CSS blob already exists, you have a logic error");
+	}  
+  const STYLE = dom.createElement("style");
+  STYLE.setAttribute("id", id);
+  STYLE.innerText = dat;
+  dom.getElementsByTagName("head")[0].append(STYLE);
+} 
+
+/**
+ * textNodesUnder
+ * Return a list of TextNodes from a starting Element
+ * LOOK AT REFERENCES FROM THIS LIST suspect manual object-tidyup advised
+ * Not exported, PURE
+ 
+ * @see https://www.devasking.com/issue/find-all-text-nodes
+ * @param {HTMLElement} el
+ * @public
+ * @return {Array<HTMLElement>}
+ */
+export function textNodesUnder(el:HTMLElement, dom:Document):Array<HTMLElement> {
+  if(! ('createTreeWalker' in dom) || !dom.createTreeWalker) {
+    throw new Error("Miding features in Document class");
+  }
+  let n:Node|null, 
+	a:Array<HTMLElement>=[], 
+// NodeFilter.SHOW_TEXT==4    but this doesn't work in the Test env
+	walk:TreeWalker =dom.createTreeWalker(el, 4, null, false);
+  while(n=walk.nextNode() ) {
+	if( n.nodeValue.trim().length ) {
+		a.push( n as HTMLElement);
+	}
+	}
+  return a;
+}
+
+
+
 //////////////////////////////////////////////// testing /////////////////////////////////////////////////////////////
 // no injectOpts as it wouldn't make sense
 
@@ -538,5 +587,7 @@ export const TEST_ONLY = {
   ready,
   calcScreenDPI,
   currentSize,
-  appendCSSFile,
+  assignCSSBlob,
+  appendCSSFile, 
+  textNodesUnder,
 };

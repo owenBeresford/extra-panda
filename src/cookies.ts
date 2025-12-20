@@ -2,6 +2,7 @@ import type { Cookieable } from "./all-types";
 import { APPEARANCE_COOKIE } from "./immutables";
 import { accessCookie } from "./networking";
 import { log } from "./log-services";
+import { assignCSSBlob } from './dom-base';
 
 /**
  * COOKIE
@@ -140,10 +141,7 @@ export function applyAppearance(dom: Document): void {
     dat2["dn"] +
     "; }";
 
-  const STYLE = dom.createElement("style");
-  STYLE.setAttribute("id", "client-set-css");
-  STYLE.innerText = CSS;
-  dom.getElementsByTagName("head")[0].append(STYLE);
+	assignCSSBlob(CSS, "client-set-css", dom)
 }
 
 /////////////////////////////////////////////////// testing ///////////////////////////////////////////////

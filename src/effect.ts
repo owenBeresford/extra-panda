@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { appendIsland } from "./dom-base";
+import { appendIsland, textNodesUnder } from "./dom-base";
 import { pullout } from "./string-base";
 import { applyDOMpositions } from "./desktop-biblio";
 
@@ -132,16 +132,33 @@ Do a "<code" branch, then:
 	if not, edit the template
 	after all TextNode glue TEMPLATE back into original .addBashSamples element
 */
-
   if (bash.length > 0) {
     for (let i = 0; i < bash.length; i++) {
-      bash[i].innerHTML = bash[i].innerHTML
+		if( bash[i].querySelectorAll('CODE').length===0 ) {
+		    bash[i].innerHTML = bash[i].innerHTML
         .replaceAll(
           r1,
           '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>',
         )
         .replaceAll(r2, "//");
-    }
+		
+		} else {
+
+		const list:Array<HTMLElement> = textNodesUnder(bash[i], dom);
+		for(let j=0; j<list.length; j++) {
+			if( list[j].parentNode.tagName!=="CODE" ) {
+	    list[j].innerHTML = list[j].innerHTML
+        .replaceAll(
+          r1,
+          '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>',
+        )
+        .replaceAll(r2, "//");
+			
+			}
+			}
+		
+		}
+      }
   }
 }
 
@@ -177,5 +194,5 @@ export const TEST_ONLY = {
   addOctoCats,
   addBooks,
   addBashSamples,
-  addFancyButtonArrow,
+  addFancyButtonArrow, 
 };
