@@ -191,29 +191,74 @@ describe("TEST effects", () => {
     appendIsland("#point2", str1, dom);
     appendIsland("#point2", str2, dom);
     addBashSamples(dom);
-    assert(
-      dom.querySelector("#point2").textContent,
+    assert.equal(
+      dom.querySelector("#point2").innerHTML,
       str3,
       "Mapping bash samples correctly",
     );
   });
 
+  it("go 3.1: addBashSamples HARDER", () => {
+	let ADDON="`cat /etc/SECRETS.HERE | rot13 `";
+    let str1 = `
+<p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</a>
+	 / /sfsdfs sfsfs sfsfs sfsdf sfsdfsf <a href="sdfsdf" title="sdfsdfsdf">TEST2</a> 
+<p>sfs sdfsfs sdfsdf fsdfsdf sfsdfs sfsfs sfsfs sfsdf sfsdfsf  <a href="sdfsdf" title="sdfsdfsdf">docs</a>
+<p>sfs //sdfsfs sdfsdf// fsdfsdf sfsdfs sfsfs sfsfs sfsdf sfsdfsf  <a href="sdfs df" title="sdfsdfsdf">DOCS</a>
+      <a id="thing1" href="sdfs df" title="sdfsdfsdf">docs</a>
+      <a id="thing1" href="sdfs df" title="sdfsdfsdf">git</a>
+	<CODE>
+		# ibble uibbile obboloe
+		set val=${ADDON}
+	</CODE>
+`;
+    let str2 =
+      "<p > sdfsfds `gdfgdgd1dfgdfgdfgd` sdfs fsf s sfsdfsdfsdfs</p><p>fsdfsdfsd `sdfsdfsdf`  ";
+    let str3 = `
+<p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</a>
+	 //sfsdfs sfsfs sfsfs sfsdf sfsdfsf <a href="sdfsdf" title="sdfsdfsdf">TEST2</a> 
+<p>sfs sdfsfs sdfsdf fsdfsdf sfsdfs sfsfs sfsfs sfsdf sfsdfsf  <a href="sdfsdf" title="sdfsdfsdf">docs</a>
+<p>sfs //sdfsfs sdfsdf// fsdfsdf sfsdfs sfsfs sfsfs sfsdf sfsdfsf  <a href="sdfs df" title="sdfsdfsdf">DOCS</a>
+      <a id="thing1" href="sdfs df" title="sdfsdfsdf">docs</a>
+      <a id="thing1" href="sdfs df" title="sdfsdfsdf">git</a>
+	<CODE>
+		# ibble uibbile obboloe
+		set val=${ADDON}
+	</CODE>
+	 <p> sdfsfds <code class="bashSample" title="Quote from a bash; will add copy button">gdfgdgd1dfgdfgdfgd</code>  sdfs fsf s sfsdfsdfsdfs</p><p>fsdfsdfsd <code class="bashSample" title="Quote from a bash; will add copy button">sdfsdfsdf</code> `;
+
+    const [dom] = page("http://192.68.0.35/", 1);
+    appendIsland("#point2", str1, dom);
+    appendIsland("#point2", str2, dom);
+    addBashSamples(dom);
+
+console.log("WWWW ", dom.querySelector("#point2").innerHTML );
+
+    assert.equal(
+      dom.querySelector("#point2").innerHTML,
+      str3,
+      "Mapping bash samples correctly HARDER",
+    );
+
+  });
+
   it("go 4: addArrows", () => {
     const [dom] = page("http://192.68.0.35/", 1);
     let str1 = `
-<p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</>
+<p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</a>
 <div class="addArrow">
 sf sfsfs sdsdf sfsfsf sfs 
 </div>
 `;
     let str2 = `
-<p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</>
-<div class="addArrow">
+<p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</a>
+</p><div class="addArrow">
 sf sfsfs sdsdf sfsfsf sfs 
-</div><i class="fa fa-play specialPointer " aria-hidden="true"></i>
-`;
+</div>
+<i class="fa fa-play specialPointer" aria-hidden="true"></i>`;
     appendIsland("#point2", str1, dom);
     addFancyButtonArrow(dom);
-    assert(dom.querySelector("#point2").textContent, str2, "Mapping addArrow");
+    assert.equal(dom.querySelector("#point2").innerHTML, str2, "Mapping addArrow");
   });
 });
+
