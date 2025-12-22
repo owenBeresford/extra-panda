@@ -1,7 +1,8 @@
 import type { Cookieable } from "./all-types";
 import { APPEARANCE_COOKIE } from "./immutables";
 import { accessCookie } from "./networking";
-import { log } from "./log-services";
+// import { log } from "./log-services";
+import { assignCSSBlob } from "./dom-base";
 
 /**
  * COOKIE
@@ -29,7 +30,7 @@ export class QOOKIE implements Cookieable {
    * @public
    * @returns {void}
    */
-  public set(nom: string, cValue: string, expDays: number): void {
+  public static set(nom: string, cValue: string, expDays: number): void {
     let expires = "";
     if (expDays) {
       const d1 = new Date();
@@ -47,7 +48,7 @@ export class QOOKIE implements Cookieable {
    * @public
    * @returns {string}
    */
-  public get(nom: string): string {
+  public static get(nom: string): string {
     const name = nom + "=";
     const cDecoded = decodeURIComponent(document.cookie);
     const cArr = cDecoded.split("; ");
@@ -69,7 +70,7 @@ export class QOOKIE implements Cookieable {
      * @public
      * @returns {void}
      */
-  public wipe(nom: string): void {
+  public static wipe(nom: string): void {
     const d1 = new Date();
     d1.setTime(d1.getTime() + 8 * 60 * 60 * 1000);
     const expires = "expires=" + d1.toUTCString();
@@ -140,10 +141,7 @@ export function applyAppearance(dom: Document): void {
     dat2["dn"] +
     "; }";
 
-  const STYLE = dom.createElement("style");
-  STYLE.setAttribute("id", "client-set-css");
-  STYLE.innerText = CSS;
-  dom.getElementsByTagName("head")[0].append(STYLE);
+  assignCSSBlob(CSS, "client-set-css", dom);
 }
 
 /////////////////////////////////////////////////// testing ///////////////////////////////////////////////

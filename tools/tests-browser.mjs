@@ -117,7 +117,7 @@ const BROWSER = choose_browser(process.argv, BROWSER_HSH);
  
  * @param {string} dn
  * @public
- * @return {Array<string>}
+ * @returns {Array<string>}
  */
 function listFiles(dn) {
   let ret = [];
@@ -413,7 +413,7 @@ function should_close_tabs(args) {
  * @param {Array<string>} args - ref to process.args
  * @param {object of Array<string>} browsers - as defined at the top
  * @public
- * @return {Array<string>}
+ * @returns {Array<string>}
  */
 function choose_browser(args, browsers) {
   let ret = browsers["chrome"];

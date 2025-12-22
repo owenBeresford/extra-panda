@@ -3,7 +3,7 @@ import type { Fetchable, Fetch, SimpleResponse, Cookieable } from "./all-types";
 // this uses document as an in-code literal,
 // I have an alternative dynamic load if this static load breaks anything.
 import { QOOKIE } from "./cookies";
-import { debug, log } from "./log-services";
+import { log } from "./log-services";
 
 /**
  * getFetch

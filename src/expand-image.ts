@@ -11,7 +11,7 @@
  * @param {string} btnId
  * @param {Document } dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function initExpandImage(
   imgId: string,
@@ -44,7 +44,7 @@ export function initExpandImage(
  * @param {string} imgId
  * @param {string ="fullScreen"} clsName
  * @protected
- * @return {boolean}
+ * @returns {boolean}
  */
 function trigger(
   btnId: string,

@@ -319,14 +319,22 @@ function addMetaAge(xhr: SimpleResponse, dom: Document): void {
   }
 }
 
+/**
+ * justCounts
+ * Correct Harvard tags, so the follow the entire doc
+ 
+ * @param {Document} dom
+ * @public
+ * @returns {void}
+ */
 export function justCounts(dom: Document): void {
   const TMP: Array<HTMLElement> = Array.from(
     dom.querySelectorAll(ALL_REFERENCE_LINKS),
   );
   for (let i = 0; i < TMP.length; i++) {
     // if-trap to avoid git links, docs links etc
-    if ( pullout(TMP[i]).match(/[0-9]+/)) {
-      TMP[i].innerText = (i+1);
+    if (pullout(TMP[i]).match(/[0-9]+/)) {
+      TMP[i].innerText = i + 1;
     }
   }
 }

@@ -368,8 +368,7 @@ describe("TEST tabs", () => {
     initTabs(".tab2Container", dom, loc);
 
     assert.equal(getCSSAttr("#panelArticles", "display", dom, win), "block");
-// JSDOM doesn't seem to force uniqueness on input[type=radio]::checked
-//    assert.equal(getCSSAttr("#panelProjects", "display", dom, win), "none");
-
+    // JSDOM doesn't seem to force uniqueness on input[type=radio]::checked
+    //    assert.equal(getCSSAttr("#panelProjects", "display", dom, win), "none");
   });
 });

@@ -50,9 +50,9 @@ export const ENABLE_SELECT = "select";
 // how many PX in an EM
 export const EM_SZ = 16;
 
-export const BIBLIO_DESKTOP_ENABLED=1;
-export const BIBLIO_COUNTS_ENABLED=2;
-export const BIBLIO_OPERATIONAL= BIBLIO_COUNTS_ENABLED;
+export const BIBLIO_DESKTOP_ENABLED = 1;
+export const BIBLIO_COUNTS_ENABLED = 2;
+export const BIBLIO_OPERATIONAL = BIBLIO_COUNTS_ENABLED;
 
 // CSS Class used to turn on broken link reporting
 //  This class is not present before the refs file is at the client side to avoid an entire page of errors

@@ -353,7 +353,7 @@ This is big screen mac, should work with wide versions
   .halferWords {
     width: min(calc(100vw - 2em), 680px);
     align-self: stretch;
-	justify-items:center;
+    justify-items: center;
     margin: 1em 0em;
   }
 }

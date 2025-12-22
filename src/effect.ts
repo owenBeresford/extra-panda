@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { appendIsland } from "./dom-base";
+import { appendIsland, allDescendants } from "./dom-base";
 import { pullout } from "./string-base";
 import { applyDOMpositions } from "./desktop-biblio";
 
@@ -124,7 +124,7 @@ export function addBashSamples(dom: Document): void {
     dom.querySelectorAll(".addBashSamples"),
   ) as Array<HTMLElement>;
 
-/*
+  /*
 Do a "<code" branch, then: 
 	To not eat ` in bash code samples, I need to put the innerHTML into a TEMPLATE, and 
 	look at all the TextNodes inside this
@@ -132,10 +132,43 @@ Do a "<code" branch, then:
 	if not, edit the template
 	after all TextNode glue TEMPLATE back into original .addBashSamples element
 */
-
   if (bash.length > 0) {
     for (let i = 0; i < bash.length; i++) {
-      bash[i].innerHTML = bash[i].innerHTML
+      if (bash[i].querySelectorAll("code").length === 0) {
+        bash[i].innerHTML = bash[i].innerHTML
+          .replaceAll(
+            r1,
+            '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>',
+          )
+          .replaceAll(r2, "//");
+      } else {
+        _editTextNodes(allDescendants(bash[i]));
+      }
+    }
+  }
+}
+
+/**
+ * _editTextNodes
+ * A util to walk the list of nodes and edit text. 
+ * May get some logic moved to args in future
+
+ * @param {Iterable<HTMLElement>} list
+ * @public
+ * @returns {void}
+ */
+function _editTextNodes(list: Iterable<HTMLElement>): void {
+  const r1 = new RegExp("`([^`]+)`", "g");
+  const r2 = new RegExp("/ /", "g");
+
+  let cur; // type of an iterable response
+  while ((cur = list.next() && cur && cur.done === false)) {
+    let cur2: HTMLElement = cur.value;
+    if (
+      cur2.nodeType === Node.TEXT_NODE &&
+      cur2.parentNode.tagName !== "CODE"
+    ) {
+      cur2.parentNode.innerHTML = cur2.parentNode.innerHTML
         .replaceAll(
           r1,
           '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>',

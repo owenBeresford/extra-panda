@@ -311,7 +311,7 @@ describe("TEST references MorePages ", () => {
       typeof extractRedirect(html, 3, current, 0),
       "fitth JS redir",
     );
-/*
+    /*
     html = '<link rel="canonical" href="https://first.url/page99" />';
     assert.equal(
       "object",

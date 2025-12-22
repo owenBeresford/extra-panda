@@ -18,6 +18,8 @@ const {
   isFullstack,
   copyURL,
   appendCSSFile,
+  assignCSSBlob,
+  textNodesUnder,
 } = TEST_ONLY;
 
 describe("TEST dom-base", () => {
@@ -753,5 +755,57 @@ d
       false === isLibreWolf(dom, win.navigator),
       "this JSDOM instance is not librewolf.",
     );
+  });
+
+  it("go 11: assignCSSBlob", () => {
+    // the CSS isn't validated in this test, OR the code-under-test
+    // there are other tools to do that,
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+
+    assert.equal(dom.querySelectorAll("style").length, 0, "test1");
+    assignCSSBlob(
+      '.unknownClass { some:setting; some2:"setting";}',
+      "test1",
+      dom,
+    );
+    assert.equal(dom.querySelectorAll("style").length, 1, "test1");
+
+    try {
+      assignCSSBlob(
+        '.unknownClass { some:setting; some2:"setting";}',
+        "test1",
+        dom,
+      );
+    } catch (e) {}
+    assert.equal(dom.querySelectorAll("style").length, 1, "test2");
+
+    assignCSSBlob(
+      '.unknownClass { some:setting; some2:"setting";}',
+      "test2",
+      dom,
+    );
+    assert.equal(dom.querySelectorAll("style").length, 2, "test3");
+  });
+
+  it("go 12: textNodesUnder", (context) => {
+    // the CSS isn't validated in this test, OR the code-under-test
+    // there are other tools to do that,
+    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const STR = `<ul id="test1">
+<li>dfgdfg
+<li>dfgdgdgqwq
+<li>dfgdfgdgdgqwq
+<li>sfsfsdfsdfsfsqwqw
+</ul><p id="test2"></p>`;
+    appendIsland("#point2", STR, dom);
+    let START = dom.querySelector("#test1");
+    let RET = textNodesUnder(START, dom);
+    assert.isTrue(Array.isArray(RET), "test1");
+    assert.equal(RET.length, 4, "test1");
+
+    START = dom.querySelector("#test2");
+    assert.equal(textNodesUnder(START, dom).length, 0, "test2");
+
+    // export function textNodesUnder(el:HTMLElement, dom:Document):Array<HTMLElement>
   });
 });

@@ -35,7 +35,6 @@ import {
 import {
   ENABLE_SELECT,
   matchVersion,
-  BIBLIO_DESKTOP_ENABLED,
   BIBLIO_COUNTS_ENABLED,
   BIBLIO_OPERATIONAL,
 } from "./immutables";

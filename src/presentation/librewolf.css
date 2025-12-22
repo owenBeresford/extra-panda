@@ -133,11 +133,11 @@
   }
 }
 
-@media screen and (min-resolution: 150dpi) and (min-width:700px) {
-	.IAmLibreWolf .halferWords {
-		margin-left:auto;
-		margin-right:auto;
-	}
+@media screen and (min-resolution: 150dpi) and (min-width: 700px) {
+  .IAmLibreWolf .halferWords {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 @media screen and (min-resolution: 200dpi) {
