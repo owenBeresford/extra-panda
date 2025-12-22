@@ -319,7 +319,6 @@ function addMetaAge(xhr: SimpleResponse, dom: Document): void {
   }
 }
 
-
 /**
  * justCounts
  * Correct Harvard tags, so the follow the entire doc

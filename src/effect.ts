@@ -142,8 +142,7 @@ Do a "<code" branch, then:
           )
           .replaceAll(r2, "//");
       } else {
-        _editTextNodes( allDescendants(bash[i]));
-		
+        _editTextNodes(allDescendants(bash[i]));
       }
     }
   }
@@ -158,25 +157,25 @@ Do a "<code" branch, then:
  * @public
  * @returns {void}
  */
-function _editTextNodes(list:Iterable<HTMLElement>):void { 
-	const r1 = new RegExp("`([^`]+)`", "g");
-  	const r2 = new RegExp("/ /", "g");
+function _editTextNodes(list: Iterable<HTMLElement>): void {
+  const r1 = new RegExp("`([^`]+)`", "g");
+  const r2 = new RegExp("/ /", "g");
 
-        let cur; // type of an iterable response
-        while ((cur = list.next() && cur && cur.done === false)) {
-          let cur2: HTMLElement = cur.value;
-          if (
-            cur2.nodeType === Node.TEXT_NODE &&
-            cur2.parentNode.tagName !== "CODE"
-          ) {
-            cur2.parentNode.innerHTML = cur2.parentNode.innerHTML
-              .replaceAll(
-                r1,
-                '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>',
-              )
-              .replaceAll(r2, "//");
-          }
-       }
+  let cur; // type of an iterable response
+  while ((cur = list.next() && cur && cur.done === false)) {
+    let cur2: HTMLElement = cur.value;
+    if (
+      cur2.nodeType === Node.TEXT_NODE &&
+      cur2.parentNode.tagName !== "CODE"
+    ) {
+      cur2.parentNode.innerHTML = cur2.parentNode.innerHTML
+        .replaceAll(
+          r1,
+          '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>',
+        )
+        .replaceAll(r2, "//");
+    }
+  }
 }
 
 /**
