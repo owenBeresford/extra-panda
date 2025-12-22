@@ -1,4 +1,5 @@
 import { assert, describe, it } from "vitest";
+import { TEST_MACHINE } from "../immutables";
 
 import { page } from "./page-seed-vite";
 /// import { Fetchable, Cookieable } from "../all-types";
@@ -199,13 +200,13 @@ dg ag aga gdgadfg`;
   });
 
   it("go 7: articleName", () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
+    const [dom, loc] = page(TEST_MACHINE+"resource/home", 2);
     assert.equal(articleName({ pathname: "" }), "<name>", "assert #3");
     assert.equal(articleName(loc), "home", "assert #4");
   });
 
   it("go 8: makeRefUrl", () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/react18-notes", 2);
+    const [dom, loc] = page(TEST_MACHINE+"resource/react18-notes", 2);
     assert.equal(
       makeRefUrl("/resources/XXX-references", loc),
       "/resources/react18-notes-references",
@@ -215,7 +216,7 @@ dg ag aga gdgadfg`;
 
   it("go 8.1 makeRefUrl", () => {
     const [dom, loc] = page(
-      "http://192.168.0.35/resource/react18-notes?variable=value",
+      TEST_MACHINE+"resource/react18-notes?variable=value",
       2,
     );
     assert.equal(
@@ -227,7 +228,7 @@ dg ag aga gdgadfg`;
 
   it("go 8.2 makeRefUrl", () => {
     const [dom, loc] = page(
-      "http://192.168.0.35/resource/react18-notes#results",
+      TEST_MACHINE+"resource/react18-notes#results",
       2,
     );
     assert.equal(
@@ -239,7 +240,7 @@ dg ag aga gdgadfg`;
 
   it("go 8.3 makeRefUrl", () => {
     const [dom, loc] = page(
-      "http://192.168.0.35/resource/react18-notes?variable=value#results",
+      TEST_MACHINE+"resource/react18-notes?variable=value#results",
       2,
     );
     assert.equal(

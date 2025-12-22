@@ -1,6 +1,7 @@
 import { assert, describe, it, expect } from "vitest";
 
 import { page } from "./page-seed-vite";
+import { TEST_MACHINE } from "../immutables";
 import { TEST_ONLY } from "../extractor/output-formats";
 
 const { hash2CSSblock, hash2CSS, hash2json, output } = TEST_ONLY;

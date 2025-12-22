@@ -535,37 +535,6 @@ export function* allDescendants(nd: HTMLElement): Iterable<HTMLElement> {
   }
 }
 
-/**
- * textNodesUnder
- * Return a list of TextNodes from a starting Element
- * PURE
-
- * @deprecated 
- * BROKEN SOLUTION, but good for RAM usage https://www.devasking.com/issue/find-all-text-nodes
- * @param {HTMLElement} el
- * @param {Document} dom
- * @public
- * @returns {Array<HTMLElement>}
- */
-export function textNodesUnder(
-  el: HTMLElement,
-  dom: Document,
-): Array<HTMLElement> {
-  if (!("createTreeWalker" in dom) || !dom.createTreeWalker) {
-    throw new Error("Miding features in Document class");
-  }
-  let n: Node | null,
-    a: Array<HTMLElement> = [],
-    // NodeFilter.SHOW_TEXT==4    but this doesn't work in the Test env
-    walk: TreeWalker = dom.createTreeWalker(el, 4, null, false);
-  while ((n = walk.nextNode())) {
-    if (n.nodeValue.trim().length) {
-      a.push(n as HTMLElement);
-    }
-  }
-  return a;
-}
-
 //////////////////////////////////////////////// testing /////////////////////////////////////////////////////////////
 // no injectOpts as it wouldn't make sense
 

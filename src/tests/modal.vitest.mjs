@@ -4,12 +4,13 @@ import { page } from "./page-seed-vite";
 import { enableGetEventListeners } from "./vitest-addons";
 import { TEST_ONLY } from "../modal";
 import { appendIsland, isFullstack } from "../dom-base";
+import { TEST_MACHINE } from "../immutables";
 
 const { modalInit } = TEST_ONLY;
 
 describe("TEST modal ", () => {
   it("go 1: HTMLDetailsClick", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
 
     let str = `
 <div class="blocker popOverWidget">
@@ -58,7 +59,7 @@ describe("TEST modal ", () => {
   });
 
   it("go 1.1: HTMLDetailsClick", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     let str = `
 <div class="blocker popOverWidget">
 <details class="singlePopup">

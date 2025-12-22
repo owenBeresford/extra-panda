@@ -2,6 +2,7 @@ import { assert, describe, it } from "vitest";
 import { JSDOM } from "jsdom";
 
 import { page } from "./page-seed-vite";
+import { TEST_MACHINE } from "../immutables";
 
 import { TEST_ONLY } from "../dom-base";
 const {
@@ -24,7 +25,7 @@ const {
 
 describe("TEST dom-base", () => {
   it("go 2: isFullStack", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page( TEST_MACHINE+"resource/home", 3);
 
     assert.isTrue(false === isFullstack(win), "A plain Node instance is false");
     if (process && process.env) {
@@ -41,7 +42,7 @@ describe("TEST dom-base", () => {
   });
 
   it("go 4: mapAttribute", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     if (!isFullstack(win)) {
       context.skip();
     }
@@ -63,10 +64,10 @@ describe("TEST dom-base", () => {
   });
 
   it("go 5:  copyURL ", async (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page( TEST_MACHINE+"resource/home", 3);
     let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
-  <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
+  <input id="mastodonserver" value="panda.testing" data-url="${TEST_MACHINE}resource/home?" /> 
   </dialog>`;
     appendIsland("#point2", str, dom);
 
@@ -79,10 +80,10 @@ describe("TEST dom-base", () => {
   });
 
   it("go 6: calcScreenDPI ", async (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
-  <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
+  <input id="mastodonserver" value="panda.testing" data-url="${TEST_MACHINE}resource/home?" /> 
   </dialog>`;
     appendIsland("#point2", str, dom);
     if (!isFullstack(win)) {
@@ -94,12 +95,12 @@ describe("TEST dom-base", () => {
 
   it("go 7: screenWidth ", async (context) => {
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/home?width=150",
+      TEST_MACHINE+"resource/home?width=150",
       3,
     );
     let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
-  <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
+  <input id="mastodonserver" value="panda.testing" data-url="${TEST_MACHINE}resource/home?" /> 
   </dialog>`;
     appendIsland("#point2", str, dom);
     assert.equal(screenWidth(loc, win), 150, "Assert #x,");
@@ -112,7 +113,7 @@ describe("TEST dom-base", () => {
   });
 
   it("go 5: appendIsland ", () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
+    const [dom, loc] = page(TEST_MACHINE+"resource/home", 2);
 
     let str = "<h2>WWWWW WWWWW</h2>";
     appendIsland("#point1", str, dom);
@@ -131,7 +132,7 @@ describe("TEST dom-base", () => {
   });
 
   it("go 6: setIsland ", () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
+    const [dom, loc] = page(TEST_MACHINE+"resource/home", 2);
 
     let str = "<h2>WWWWW WWWWW</h2>";
     appendIsland("#point1", str, dom);
@@ -152,7 +153,7 @@ describe("TEST dom-base", () => {
   });
 
   it("go 11: appendCSSFile ", () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
+    const [dom, loc] = page(TEST_MACHINE+"resource/home", 2);
 
     let str = "<h2>WWWWW WWWWW</h2>";
     appendIsland("#point1", str, dom);
@@ -165,7 +166,7 @@ describe("TEST dom-base", () => {
   });
 
   it("go 7:  docOffsets ", () => {
-    const [dom] = page("http://192.168.0.35/resource/home", 1);
+    const [dom] = page(TEST_MACHINE+"resource/home", 1);
     let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -220,7 +221,7 @@ describe("TEST dom-base", () => {
 
   it("go 10: expandDetails", () => {
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/home?width=1100",
+      TEST_MACHINE+"resource/home?width=1100",
       3,
     );
     let str = `<div class="maquetteContainer">
@@ -257,7 +258,7 @@ d
 
   it("go 10.1: expandDetails", () => {
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/home?width=600",
+      TEST_MACHINE+"resource/home?width=600",
       3,
     );
     let str = `<div class="maquetteContainer">
@@ -294,7 +295,7 @@ d
 
   it("go 10.2: expandDetails", () => {
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/home?width=1100",
+      TEST_MACHINE+"resource/home?width=1100",
       3,
     );
     let str = `<div class="maquetteContainer">
@@ -330,7 +331,7 @@ d
   });
 
   it("go 8: applyVolume", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -388,7 +389,7 @@ d
   });
 
   it("go 8.1: applyVolume", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     let str = `<div class="halferWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -446,7 +447,7 @@ d
   });
 
   it("go 8.2: applyVolume", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     let str = `<div class="halferWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -530,7 +531,7 @@ d
   });
 
   it("go 8.3: applyVolume", () => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     let str = `<div class="some words">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -587,7 +588,7 @@ d
   });
 
   it("go 9: getArticleWidth", () => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -635,7 +636,7 @@ d
   });
 
   it("go 9.1: getArticleWidth", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -685,7 +686,7 @@ d
   });
 
   it("go 9.2: getArticleWidth", () => {
-    const URL = "http://192.168.0.35/resource/home";
+    const URL = TEST_MACHINE+"resource/home";
     // NOTE no addReferences block
     const JSDOM1 = new JSDOM(
       `<!DOCTYPE html>
@@ -749,7 +750,7 @@ d
   });
 
   it("go 10: isLibreWolf", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
 
     assert.isTrue(
       false === isLibreWolf(dom, win.navigator),
@@ -760,7 +761,7 @@ d
   it("go 11: assignCSSBlob", () => {
     // the CSS isn't validated in this test, OR the code-under-test
     // there are other tools to do that,
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
 
     assert.equal(dom.querySelectorAll("style").length, 0, "test1");
     assignCSSBlob(
@@ -790,7 +791,7 @@ d
   it("go 12: textNodesUnder", (context) => {
     // the CSS isn't validated in this test, OR the code-under-test
     // there are other tools to do that,
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     const STR = `<ul id="test1">
 <li>dfgdfg
 <li>dfgdgdgqwq

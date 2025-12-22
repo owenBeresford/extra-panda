@@ -1,6 +1,7 @@
 // the asserts are in the worker class
 import { describe, it, vi } from "vitest";
 import { networkInterfaces } from "node:os";
+import { TEST_MACHINE } from "../immutables";
 
 import {
   fetch2,
@@ -15,7 +16,7 @@ vi.setConfig({ testTimeout: 0 });
 describe("TEST references networking2 ", () => {
   const LAN_IP =
     "http://" + mapInterfaces(networkInterfaces())["first"][0] + "/";
-  const BAD_IP = "http://192.168.66.66/";
+  const BAD_IP = TEST_MACHINE;
 
   it.sequential("go 1: networking fetch2 ", async () => {
     return new Promise(async (good, bad) => {

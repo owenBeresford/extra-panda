@@ -2,6 +2,7 @@ import { assert, expect, describe, it } from "vitest";
 
 import { PageCollection } from "../references/page-collection";
 import { BATCH_SZ } from "../references/constants";
+import { TEST_MACHINE } from "../immutables";
 
 // no test for promiseExits, assignClose, resultsArray
 describe("TEST references PageCollection ", () => {

@@ -3,6 +3,7 @@ import { networkInterfaces } from "node:os";
 
 import type { Cookieable, Fetchable } from "../all-types";
 import { TEST_ONLY } from "../networking";
+import { TEST_MACHINE } from "../immutables";
 import { mapInterfaces } from "../references/networking";
 
 const { getFetch, accessCookie, delay, runFetch } = TEST_ONLY;
@@ -11,7 +12,7 @@ vi.setConfig({ testTimeout: 0 });
 describe("TEST networking", () => {
   const LAN_IP =
     "http://" + mapInterfaces(networkInterfaces())["first"][0] + "/";
-  const BAD_IP = "http://192.168.66.66/";
+  const BAD_IP = TEST_MACHINE;
 
   it.sequential("go 1: getFetch", () => {
     assert.equal(typeof getFetch, "function", "assert #1");

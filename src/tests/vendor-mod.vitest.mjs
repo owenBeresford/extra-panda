@@ -1,6 +1,7 @@
 import { assert, describe, it } from "vitest";
 
 import { TEST_ONLY } from "../references/vendor-mod";
+import { TEST_MACHINE } from "../immutables";
 // all these functions are used in this test
 const {
   apply_vendors,

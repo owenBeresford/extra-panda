@@ -1,5 +1,6 @@
 import { describe, expect, it, run } from "jest-lite";
 
+import { TEST_MACHINE } from "../immutables";
 import { execTest, wrap } from "./page-seed-playwright";
 import { createKeyEvent } from "./vitest-addons";
 import { TEST_ONLY } from "../log-services";

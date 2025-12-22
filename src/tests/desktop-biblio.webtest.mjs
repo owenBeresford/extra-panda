@@ -4,6 +4,7 @@ import { execTest, wrap } from "./page-seed-playwright";
 import { appendIsland } from "../dom-base";
 import { delay } from "../networking";
 import { TEST_ONLY } from "../desktop-biblio";
+import { TEST_MACHINE } from "../immutables";
 
 const { applyDOMpositions } = TEST_ONLY;
 

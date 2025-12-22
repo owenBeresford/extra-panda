@@ -2,6 +2,7 @@ import { expect, describe, it, run } from "jest-lite";
 
 import { execTest, wrap } from "./page-seed-playwright";
 import { delay } from "../networking";
+import { TEST_MACHINE } from "../immutables";
 // import { log, domLog } from "../log-services";
 import { getCSSAttr } from "./vitest-addons";
 

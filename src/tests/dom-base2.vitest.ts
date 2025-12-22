@@ -1,5 +1,6 @@
 import { assert, describe, it, assertType } from "vitest";
 
+import { TEST_MACHINE } from "../immutables";
 import { TEST_ONLY } from "../dom-base";
 const { currentSize } = TEST_ONLY;
 

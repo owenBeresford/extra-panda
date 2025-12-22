@@ -2,6 +2,7 @@ import { assert, describe, it } from "vitest";
 
 import { PageCollection } from "../references/page-collection";
 import { TEST_ONLY } from "../references/more-pages";
+import { TEST_MACHINE } from "../immutables";
 const {
   MorePages,
   extractTitle,

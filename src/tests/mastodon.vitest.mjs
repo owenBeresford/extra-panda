@@ -2,6 +2,7 @@ import { assert, describe, it } from "vitest";
 
 import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../mastodon";
+import { TEST_MACHINE } from "../immutables";
 import { appendIsland, isFullstack } from "../dom-base";
 import { enableGetEventListeners, createEvent } from "./vitest-addons";
 
@@ -18,7 +19,7 @@ const {
 describe("TEST mastodon", () => {
   it("go 1: openShare", () => {
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/home?mobile=1",
+      TEST_MACHINE+"resource/home?mobile=1",
       3,
     );
     let str = `<div id="shareMenu" class="mobilePopupWidget"></div>`;
@@ -68,7 +69,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 2: shareMastodon", () => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
 	<dialog id="popup">
 	<input id="id1" type="submit" value="Post now" />
@@ -87,7 +88,7 @@ describe("TEST mastodon", () => {
 
   it("go 2.1: shareMastodon", () => {
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/home?mobile=1",
+      TEST_MACHINE+"resource/home?mobile=1",
       3,
     );
     let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
@@ -108,7 +109,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 3: openMastodon", () => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
 	<dialog id="popup">
 	<input id="id1" type="submit" value="Post now" />
@@ -127,7 +128,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 4: closeMastodon", () => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
 	<dialog id="popup" open>
 	<input id="id1" type="submit" value="Post now" />
@@ -146,7 +147,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 6:  accessVisibility", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     if (!isFullstack(win)) {
       context.skip();
     }
@@ -160,7 +161,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 6.1: accessVisibility", (context) => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     if (!isFullstack(win)) {
       context.skip();
     }
@@ -175,7 +176,7 @@ describe("TEST mastodon", () => {
   });
 
   it("go 7: _map4", () => {
-    const [dom, loc, win] = page("http://192.168.0.35/resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
     let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
 	<dialog id="popup" >
 	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
@@ -211,7 +212,7 @@ describe("TEST mastodon", () => {
 
   it("go 8: initMastodon", () => {
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/home?mobile=0",
+      TEST_MACHINE+"resource/home?mobile=0",
       3,
     );
     let str = `<nav id="navBar">

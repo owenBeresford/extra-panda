@@ -1,5 +1,6 @@
 import { assert, describe, it } from "vitest";
 
+import { TEST_MACHINE } from "../immutables";
 import { TEST_ONLY } from "../log-services";
 
 const { log, debug, domLog, enableLogCounter } = TEST_ONLY;

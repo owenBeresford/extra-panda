@@ -60,7 +60,7 @@ export const SHOW_ERROR = "showBiblioErrors";
 
 // TS doesn't have an IPaddr type?
 // ...Pretend I have patched String type.   #blerg
-// export const TEST_MACHINE = "192.168.0.35";
+export const TEST_MACHINE = "http://192.168.1.218/";
 
 /**
   According to the internet a current phone is likely to have a PPI of over 300
