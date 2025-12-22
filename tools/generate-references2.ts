@@ -137,7 +137,7 @@ function dump_to_disk(
  
  * @param {Array<string>} list 
  * @public
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 async function links2references(list: Array<string>): Promise<void> {
   const p3 = new PageCollection(list);
