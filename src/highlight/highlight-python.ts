@@ -16,9 +16,11 @@ hljs.registerLanguage("python", (hl: HLJSApi): Language => {
  * @returns {void}
  */
 export function execHighlight(dom: Document = document): void {
-  dom.querySelectorAll('code[lang="python"], code[lang="py3"]').forEach((el: HTMLElement): void => {
-    hljs.highlightElement(el);
-  });
+  dom
+    .querySelectorAll('code[lang="python"], code[lang="py3"]')
+    .forEach((el: HTMLElement): void => {
+      hljs.highlightElement(el);
+    });
 }
 
 if (typeof window.process === "undefined") {

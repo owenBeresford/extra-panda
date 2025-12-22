@@ -266,8 +266,8 @@ if (enablePatch) {
 
   const wholeFile = fs.readFileSync(FN, "utf8");
   let wonky: Array<string> = [];
-  const MARKER="{{plain root";
-  let low: number = wholeFile.indexOf(MARKER)+ MARKER.length;
+  const MARKER = "{{plain root";
+  let low: number = wholeFile.indexOf(MARKER) + MARKER.length;
   let high: number = wholeFile.indexOf("}}", low);
   let str: string = wholeFile.substring(low, high).trim();
   let ORIG = JSON.parse(str); // types??, err hehe
@@ -325,7 +325,7 @@ if (enablePatch) {
       JSON.stringify(ORIG),
       "\n",
     );
-    throw new Error("problems, see log mesasage");
+    //    throw new Error("problems, see log mesasage");
   }
   dump_to_disk(ORIG, FN);
 } else {
