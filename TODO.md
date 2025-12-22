@@ -33,6 +33,7 @@ MAINTENANCE
 - UPDATE:: Internet suggests dropping Playwright for Puppeteer if specific browsers are needed. https://pptr.dev/webdriver-bidi https://www.npmjs.com/package/puppeteer-core
 - TEST THIS CODE https://github.com/egm0121/jest-test-gen?tab=readme-ov-file https://www.npmjs.com/package/jest-test-gen/v/0.0.10  https://github.com/ed4becky/jest-unit-test-generator 
 - re-add aria-hidden attrib, #leSigh required JS #leSigh
+- https://codepen.io/t_afif/pen/dPMBMBE
 
 ### Previous Updates
 
