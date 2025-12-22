@@ -65,7 +65,7 @@ describe("TEST references networking2 ", () => {
     });
   });
 
-/*
+  /*
   it.sequential("go 1.5: networking fetch2( stackoverflow) ", async () => {
     return new Promise(async (good, bad) => {
       const FP4 = new FakePage();
