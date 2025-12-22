@@ -502,7 +502,7 @@ export function appendCSSFile(fn: string, dom: Document): void {
  * @param {string} id
  * @param {Document} dom
  * @public
- * @return {void}
+ * @returns {void}
  */
 export function assignCSSBlob(dat: string, id: string, dom: Document): void {
   if (dom.querySelector("#" + id) !== null) {
@@ -523,7 +523,8 @@ export function assignCSSBlob(dat: string, id: string, dom: Document): void {
  * @see https://stackoverflow.com/questions/2712136/how-do-i-make-this-loop-all-children-recursively
  * @param {HTMLElement} nd
  * @public
- * @return {Iterable<HTMLElement>}
+ * @yields {a list of recursive children elements of param}
+ * @returns {Iterable<HTMLElement>}
  */
 export function* allDescendants(nd: HTMLElement): Iterable<HTMLElement> {
   for (let i = 0; i < nd.childNodes.length; i++) {
@@ -542,8 +543,9 @@ export function* allDescendants(nd: HTMLElement): Iterable<HTMLElement> {
  * @deprecated 
  * BROKEN SOLUTION, but good for RAM usage https://www.devasking.com/issue/find-all-text-nodes
  * @param {HTMLElement} el
+ * @param {Document} dom
  * @public
- * @return {Array<HTMLElement>}
+ * @returns {Array<HTMLElement>}
  */
 export function textNodesUnder(
   el: HTMLElement,

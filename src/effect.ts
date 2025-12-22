@@ -142,7 +142,26 @@ Do a "<code" branch, then:
           )
           .replaceAll(r2, "//");
       } else {
-        const list: Iterable<HTMLElement> = allDescendants(bash[i]);
+        _editTextNodes( allDescendants(bash[i]));
+		
+      }
+    }
+  }
+}
+
+/**
+ * _editTextNodes
+ * A util to walk the list of nodes and edit text. 
+ * May get some logic moved to args in future
+
+ * @param {Iterable<HTMLElement>} list
+ * @public
+ * @returns {void}
+ */
+function _editTextNodes(list:Iterable<HTMLElement>):void { 
+	const r1 = new RegExp("`([^`]+)`", "g");
+  	const r2 = new RegExp("/ /", "g");
+
         let cur; // type of an iterable response
         while ((cur = list.next() && cur && cur.done === false)) {
           let cur2: HTMLElement = cur.value;
@@ -157,10 +176,7 @@ Do a "<code" branch, then:
               )
               .replaceAll(r2, "//");
           }
-        }
-      }
-    }
-  }
+       }
 }
 
 /**

@@ -237,6 +237,15 @@ export function booleanMap(str: string | number): boolean {
 list of entities taken from 
 https://developer.mozilla.org/en-US/docs/Glossary/Character_reference
 */
+
+/**
+ * decodeEntities
+ * Convert common entities into utf8 letters
+ 
+ * @param {string} str
+ * @public
+ * @returns {string}
+ */
 export function decodeEntities(str: string): string {
   const SWAPIES: Readonly<Record<string, string>> = {
     "&lt;": "<",
@@ -262,6 +271,14 @@ export function decodeEntities(str: string): string {
   return str;
 }
 
+/**
+ * encodeEntities
+ * Convert utf8 letters into common entities 
+ 
+ * @param {string} str
+ * @public
+ * @returns {string}
+ */
 export function encodeEntities(str: string): string {
   const SWAPIES: Readonly<Record<string, string>> = {
     "&": "&amp;",

@@ -27,7 +27,7 @@ const COMPONENT_NAME: string = ".tab2Container";
  * @param {Document} dom
  * @param {string=COMPONENT_NAME} nom
  * @public
- * @return {boolean}
+ * @returns {boolean}
  */
 function keybHandler(
   evt: KeyboardEvent,
