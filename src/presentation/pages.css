@@ -277,8 +277,9 @@
     max-width: fit-content;
   }
 
-  .homeContainer .top-bar.fullWidth { display:none; }
-  
+  .homeContainer .top-bar.fullWidth {
+    display: none;
+  }
 }
 
 .homeContainer .home.column {
@@ -370,7 +371,7 @@
     padding-left: 0px;
     padding-right: 0px;
   }
-/*
+  /*
   .homeContainer .tabContent {
     width: 100%;
     max-width: 100%;
@@ -513,7 +514,7 @@
   }
   .homeContainer .metaWidget span.ultraSkinny {
     width: auto;
-	display:none;
+    display: none;
   }
 }
 

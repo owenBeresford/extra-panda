@@ -66,8 +66,14 @@ access to tech via https://youwouldntsteala.website/editor.html
 */
 
 /* https://www.sarasoueidan.com/blog/css-scrollspy/ */
-:target-current::before { content:"🖝"; font-size:150%; line-height:0.7;  }
-:target-current { font-style:italic; }
-.linksWidget .headingsWidget .titleList { scroll-target-group: auto; }
-
-
+:target-current::before {
+  content: "🖝";
+  font-size: 150%;
+  line-height: 0.7;
+}
+:target-current {
+  font-style: italic;
+}
+.linksWidget .headingsWidget .titleList {
+  scroll-target-group: auto;
+}
