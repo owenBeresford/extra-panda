@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { appendIsland, textNodesUnder } from "./dom-base";
+import { appendIsland, allDescendants } from "./dom-base";
 import { pullout } from "./string-base";
 import { applyDOMpositions } from "./desktop-biblio";
 
@@ -124,7 +124,7 @@ export function addBashSamples(dom: Document): void {
     dom.querySelectorAll(".addBashSamples"),
   ) as Array<HTMLElement>;
 
-/*
+  /*
 Do a "<code" branch, then: 
 	To not eat ` in bash code samples, I need to put the innerHTML into a TEMPLATE, and 
 	look at all the TextNodes inside this
@@ -134,31 +134,32 @@ Do a "<code" branch, then:
 */
   if (bash.length > 0) {
     for (let i = 0; i < bash.length; i++) {
-		if( bash[i].querySelectorAll('CODE').length===0 ) {
-		    bash[i].innerHTML = bash[i].innerHTML
-        .replaceAll(
-          r1,
-          '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>',
-        )
-        .replaceAll(r2, "//");
-		
-		} else {
-
-		const list:Array<HTMLElement> = textNodesUnder(bash[i], dom);
-		for(let j=0; j<list.length; j++) {
-			if( list[j].parentNode.tagName!=="CODE" ) {
-	    list[j].innerHTML = list[j].innerHTML
-        .replaceAll(
-          r1,
-          '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>',
-        )
-        .replaceAll(r2, "//");
-			
-			}
-			}
-		
-		}
+      if (bash[i].querySelectorAll("code").length === 0) {
+        bash[i].innerHTML = bash[i].innerHTML
+          .replaceAll(
+            r1,
+            '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>',
+          )
+          .replaceAll(r2, "//");
+      } else {
+        const list: Iterable<HTMLElement> = allDescendants(bash[i]);
+        let cur; // type of an iterable response
+        while ((cur = list.next() && cur && cur.done === false)) {
+          let cur2: HTMLElement = cur.value;
+          if (
+            cur2.nodeType === Node.TEXT_NODE &&
+            cur2.parentNode.tagName !== "CODE"
+          ) {
+            cur2.parentNode.innerHTML = cur2.parentNode.innerHTML
+              .replaceAll(
+                r1,
+                '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>',
+              )
+              .replaceAll(r2, "//");
+          }
+        }
       }
+    }
   }
 }
 
@@ -194,5 +195,5 @@ export const TEST_ONLY = {
   addOctoCats,
   addBooks,
   addBashSamples,
-  addFancyButtonArrow, 
+  addFancyButtonArrow,
 };

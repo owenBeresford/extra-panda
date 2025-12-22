@@ -2,7 +2,7 @@ import type { Cookieable } from "./all-types";
 import { APPEARANCE_COOKIE } from "./immutables";
 import { accessCookie } from "./networking";
 import { log } from "./log-services";
-import { assignCSSBlob } from './dom-base';
+import { assignCSSBlob } from "./dom-base";
 
 /**
  * COOKIE
@@ -141,7 +141,7 @@ export function applyAppearance(dom: Document): void {
     dat2["dn"] +
     "; }";
 
-	assignCSSBlob(CSS, "client-set-css", dom)
+  assignCSSBlob(CSS, "client-set-css", dom);
 }
 
 /////////////////////////////////////////////////// testing ///////////////////////////////////////////////

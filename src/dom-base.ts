@@ -205,7 +205,12 @@ export function isLibreWolf(
   }
 
   // Chrome + FF have dNT as null in 2025-09
-  if (nav && nav.product === "Gecko" && nav.doNotTrack==="unspecified" && !canTouch) {
+  if (
+    nav &&
+    nav.product === "Gecko" &&
+    nav.doNotTrack === "unspecified" &&
+    !canTouch
+  ) {
     console.warn("Is this librewolf?, could tell me if this is wrong.");
     if (!dom.body.classList.contains("IAmLibreWolf")) {
       dom.body.classList.add("IAmLibreWolf");
@@ -499,44 +504,65 @@ export function appendCSSFile(fn: string, dom: Document): void {
  * @public
  * @return {void}
  */
-export function assignCSSBlob(dat:string, id:string, dom:Document):void {
-	if(dom.querySelector("#"+id) !==null ) {
-		throw new Error("CSS blob already exists, you have a logic error");
-	}  
+export function assignCSSBlob(dat: string, id: string, dom: Document): void {
+  if (dom.querySelector("#" + id) !== null) {
+    throw new Error("CSS blob already exists, you have a logic error");
+  }
   const STYLE = dom.createElement("style");
   STYLE.setAttribute("id", id);
   STYLE.innerText = dat;
   dom.getElementsByTagName("head")[0].append(STYLE);
-} 
+}
+
+/**
+ * allDescendants
+ * Return an iterator of TextNodes from a starting Element
+ * Sequence not guaranteed  
+ * PURE
+ 
+ * @see https://stackoverflow.com/questions/2712136/how-do-i-make-this-loop-all-children-recursively
+ * @param {HTMLElement} nd
+ * @public
+ * @return {Iterable<HTMLElement>}
+ */
+export function* allDescendants(nd: HTMLElement): Iterable<HTMLElement> {
+  for (let i = 0; i < nd.childNodes.length; i++) {
+    // I have set this with var, as collisions/ redefines should be avoided
+    var child = nd.childNodes[i];
+    allDescendants(child);
+    yield child;
+  }
+}
 
 /**
  * textNodesUnder
  * Return a list of TextNodes from a starting Element
- * LOOK AT REFERENCES FROM THIS LIST suspect manual object-tidyup advised
- * Not exported, PURE
- 
- * @see https://www.devasking.com/issue/find-all-text-nodes
+ * PURE
+
+ * @deprecated 
+ * BROKEN SOLUTION, but good for RAM usage https://www.devasking.com/issue/find-all-text-nodes
  * @param {HTMLElement} el
  * @public
  * @return {Array<HTMLElement>}
  */
-export function textNodesUnder(el:HTMLElement, dom:Document):Array<HTMLElement> {
-  if(! ('createTreeWalker' in dom) || !dom.createTreeWalker) {
+export function textNodesUnder(
+  el: HTMLElement,
+  dom: Document,
+): Array<HTMLElement> {
+  if (!("createTreeWalker" in dom) || !dom.createTreeWalker) {
     throw new Error("Miding features in Document class");
   }
-  let n:Node|null, 
-	a:Array<HTMLElement>=[], 
-// NodeFilter.SHOW_TEXT==4    but this doesn't work in the Test env
-	walk:TreeWalker =dom.createTreeWalker(el, 4, null, false);
-  while(n=walk.nextNode() ) {
-	if( n.nodeValue.trim().length ) {
-		a.push( n as HTMLElement);
-	}
-	}
+  let n: Node | null,
+    a: Array<HTMLElement> = [],
+    // NodeFilter.SHOW_TEXT==4    but this doesn't work in the Test env
+    walk: TreeWalker = dom.createTreeWalker(el, 4, null, false);
+  while ((n = walk.nextNode())) {
+    if (n.nodeValue.trim().length) {
+      a.push(n as HTMLElement);
+    }
+  }
   return a;
 }
-
-
 
 //////////////////////////////////////////////// testing /////////////////////////////////////////////////////////////
 // no injectOpts as it wouldn't make sense
@@ -588,6 +614,7 @@ export const TEST_ONLY = {
   calcScreenDPI,
   currentSize,
   assignCSSBlob,
-  appendCSSFile, 
+  appendCSSFile,
   textNodesUnder,
+  allDescendants,
 };
