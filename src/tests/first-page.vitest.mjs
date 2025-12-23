@@ -1,5 +1,6 @@
 import { assert, describe, it, expect } from "vitest";
 
+import { TEST_MACHINE } from "../immutables";
 import { FirstPage } from "../references/first-page";
 
 // no test for promiseExits, assignClose,

@@ -3,12 +3,13 @@ import { assert, describe, it } from "vitest";
 import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../core";
 import { appendIsland } from "../dom-base";
+import { TEST_MACHINE } from "../immutables";
 
 const { burgerMenu, initPopupMobile } = TEST_ONLY;
 
 describe("TEST core", () => {
   it("go 1: burgerMeu", () => {
-    const [dom, loc] = page("http://192.168.0.35/resource/home", 2);
+    const [dom, loc] = page(TEST_MACHINE+"resource/home", 2);
     let str = `<fieldset class="h4_menu column bigScreenOnly">
 <legend><span id="pageMenu"><i class="fa fa-ob1burger" aria-hidden="true"></i> </span></legend>
 <menu class="h4_lean">
@@ -69,13 +70,13 @@ describe("TEST core", () => {
 
   it("go 5: initPopupMobile", () => {
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/home?mobile=1&debug=1",
+      TEST_MACHINE+"resource/home?mobile=1&debug=1",
       3,
     );
     let str = `<div id="navBar"> 
 <span class="SMshareWidget"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
-						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
+						<a id="rssLink" href="${TEST_MACHINE}resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
 						<span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
 						<span class="bigScreenOnly">Share: </span>
                         <a href="https://twitter.com/intent/tweet?text=I+think+this+is+important+https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" title="Share this resource on your twitter account." target="_blank" class="bigScreenOnly"> <i class="fa fa-twitter" aria-label="Share this resource on your twitter account." aria-hidden="true"></i></a>
@@ -87,7 +88,7 @@ describe("TEST core", () => {
 					</span>
 	<dialog id="popup" >
 	<span id="sendMasto">TICK</span> <span id="hideMasto">CROSS</span>
-	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
+	<input id="mastodonserver" value="panda.testing" data-url="${TEST_MACHINE}resource/home?" /> 
 	</dialog>
 
 </div>`;
@@ -101,13 +102,13 @@ describe("TEST core", () => {
 
   it("go 5.1: initPopupMobile", () => {
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/home?mobile=0&debug=1",
+      TEST_MACHINE+"resource/home?mobile=0&debug=1",
       3,
     );
     let str = `<div id="navBar">
 <span class="SMshareWidget"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
-						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
+						<a id="rssLink" href="${TEST_MACHINE}resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
 						<span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
 						<span class="bigScreenOnly">Share: </span>
                         <a href="https://twitter.com/intent/tweet?text=I+think+this+is+important+https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" title="Share this resource on your twitter account." target="_blank" class="bigScreenOnly"> <i class="fa fa-twitter" aria-label="Share this resource on your twitter account." aria-hidden="true"></i></a>
@@ -119,7 +120,7 @@ describe("TEST core", () => {
 					</span>
 	<dialog id="popup" >
 	<span id="sendMasto">TICK</span> <span id="hideMasto">CROSS</span>
-	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
+	<input id="mastodonserver" value="panda.testing" data-url="${TEST_MACHINE}resource/home?" /> 
 	</dialog> 
 
  </div>`;
@@ -138,7 +139,7 @@ describe("TEST core", () => {
     let str = `<div id="navBar">
 				<span class="SMshareWidget"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
-						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
+						<a id="rssLink" href="${TEST_MACHINE}resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
 						<span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
 						<span class="bigScreenOnly">Share: </span>
                         <a href="https://twitter.com/intent/tweet?text=I+think+this+is+important+https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" title="Share this resource on your twitter account." target="_blank" class="bigScreenOnly"> <i class="fa fa-twitter" aria-label="Share this resource on your twitter account." aria-hidden="true"></i></a>
@@ -150,7 +151,7 @@ describe("TEST core", () => {
 					</span>
 	<dialog id="popup" >
 	<span id="sendMasto">TICK</span> <span id="hideMasto">CROSS</span>
-	<input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/resource/home?" /> 
+	<input id="mastodonserver" value="panda.testing" data-url="${TEST_MACHINE}resource/home?" /> 
 	</dialog> 
 
  </div>`;

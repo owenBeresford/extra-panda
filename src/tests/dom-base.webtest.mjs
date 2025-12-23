@@ -3,6 +3,7 @@ import { expect, describe, it, run } from "jest-lite";
 import { execTest, wrap } from "./page-seed-playwright";
 import { delay } from "../networking";
 import { TEST_ONLY } from "../dom-base";
+import { TEST_MACHINE } from "../immutables";
 const {
   appendIsland,
   setIsland,
@@ -106,7 +107,7 @@ describe("TEST BROWSER dom-base", async () => {
         win.noop = 0;
         let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
-  <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/home?" /> 
+  <input id="mastodonserver" value="panda.testing" data-url="${TEST_MACHINE}resource/home?" /> 
   </dialog>`;
         appendIsland(".home.icerow", str, dom);
         expect(await copyURL(dom, loc, win)).toBe(undefined); // "assert #14");
@@ -131,7 +132,7 @@ describe("TEST BROWSER dom-base", async () => {
         win.noop = 0;
         let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
-  <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/home?" /> 
+  <input id="mastodonserver" value="panda.testing" data-url"${TEST_MACHINE}home?" /> 
   </dialog>`;
         appendIsland(".home.icerow", str, dom);
 
@@ -152,7 +153,7 @@ describe("TEST BROWSER dom-base", async () => {
         win.noop = 0;
         let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
-  <input id="mastodonserver" value="panda.testing" data-url="http://192.168.0.66/home?" /> 
+  <input id="mastodonserver" value="panda.testing" data-url"${TEST_MACHINE}home?" /> 
   </dialog>`;
         appendIsland(".home.icerow", str, dom);
         expect(screenWidth(loc, win)).toBe(150); //  "Assert #x,");
@@ -802,7 +803,7 @@ d
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
         win.noop = 0;
-        //        const URL = "http://192.168.0.35/resource/home";
+        //        const URL = TEST_MACHINE+"resource/home";
         // NOTE no addReferences block
         let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>

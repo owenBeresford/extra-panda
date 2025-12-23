@@ -2,6 +2,7 @@ import { delay } from "../networking";
 import { log, domLog } from "../log-services";
 import { appendIsland } from "../dom-base";
 import { test_name } from "../string-base";
+import { TEST_MACHINE } from "../immutables";
 import type { PageGeneration } from "./page-seed-vite";
 
 type Actionable = (dom: Document, loc: Location, win: Window) => Promise<void>;

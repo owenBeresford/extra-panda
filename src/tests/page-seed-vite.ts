@@ -1,5 +1,6 @@
 import type { HtmlValidator } from "html-validator";
 import type { JSDOM as JSDOMClass } from "@types/jsdom";
+import { TEST_MACHINE } from "../immutables";
 const { default: validator } = await import("html-validator");
 const { JSDOM } = await import("jsdom");
 

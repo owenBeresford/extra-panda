@@ -4,6 +4,7 @@ import { page, validateHTML } from "./page-seed-vite";
 import { TEST_ONLY } from "../core";
 import { accessCookie } from "../networking";
 import { appendIsland } from "../dom-base";
+import { TEST_MACHINE } from "../immutables";
 import { enableGetEventListeners } from "./vitest-addons";
 
 const { siteCore, injectOpts } = TEST_ONLY;
@@ -22,13 +23,13 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     }
 
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/architecture?mobile=0&debug=1",
+      TEST_MACHINE+"resource/architecture?mobile=0&debug=1",
       3,
     );
     let str = `<p role="status">PING</p>   <div id="navBar"> 
 				<span class="SMshareWidget"> 
 						<a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
-						<a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
+						<a id="rssLink" href="${TEST_MACHINE}resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
 						<span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
 						<span class="bigScreenOnly">Share: </span>
                         <a href="https://twitter.com/intent/tweet?text=I+think+this+is+important+https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" title="Share this resource on your twitter account." target="_blank" class="bigScreenOnly"> <i class="fa fa-twitter" aria-label="Share this resource on your twitter account." aria-hidden="true"></i></a>
@@ -395,13 +396,13 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     }
 
     const [dom, loc, win] = page(
-      "http://192.168.0.35/resource/home?mobile=1&debug=1",
+      TEST_MACHINE+"resource/home?mobile=1&debug=1",
       3,
     );
     let str = `<p role="status">PING</p> <div id="navBar"> 
         <span class="SMshareWidget"> 
             <a id="siteChartLink" class="button smallScreenOnly" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
-            <a id="rssLink" href="https://192.168.0.35/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
+            <a id="rssLink" href="${TEST_MACHINE}resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i> </a> 
             <span class="button smallScreenOnly" id="shareMenuTrigger" rel="nofollow"> Share </span>
             <span class="bigScreenOnly">Share: </span>
                         <a href="https://twitter.com/intent/tweet?text=I+think+this+is+important+https%3A%2F%2F192.168.0.35%2Fresource%2F3d-effects-maquette" title="Share this resource on your twitter account." target="_blank" class="bigScreenOnly"> <i class="fa fa-twitter" aria-label="Share this resource on your twitter account." aria-hidden="true"></i></a>

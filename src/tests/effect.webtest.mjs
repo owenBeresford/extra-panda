@@ -5,6 +5,7 @@ import { enableGetEventListeners } from "./vitest-addons";
 import { appendIsland } from "../dom-base";
 import { delay } from "../networking";
 import { domLog } from "../log-services";
+import { TEST_MACHINE } from "../immutables";
 import { TEST_ONLY } from "../effect";
 
 const { addBashSamples } = TEST_ONLY;

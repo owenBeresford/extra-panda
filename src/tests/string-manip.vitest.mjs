@@ -1,5 +1,6 @@
 import { assert, expect, describe, it, vi } from "vitest";
 
+import { TEST_MACHINE } from "../immutables";
 import { TEST_ONLY } from "../references/string-manip";
 const { publicise_IP, valueOfUrl, normaliseString, baseURL, cleanHTTPstatus } =
   TEST_ONLY;

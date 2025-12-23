@@ -5,6 +5,7 @@ import {
   enableGetEventListeners,
   getCSSAttr,
 } from "./vitest-addons";
+import { TEST_MACHINE } from "../immutables";
 import { page } from "./page-seed-vite";
 import { TEST_ONLY } from "../tabs";
 import { appendIsland } from "../dom-base";

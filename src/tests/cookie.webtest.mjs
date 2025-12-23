@@ -3,6 +3,7 @@ import { expect, describe, it, run } from "jest-lite";
 import { execTest, wrap } from "./page-seed-playwright";
 import { delay } from "../networking";
 import { TEST_ONLY } from "../cookies";
+import { TEST_MACHINE } from "../immutables";
 
 const { QOOKIE, storeAppearance, applyAppearance } = TEST_ONLY;
 

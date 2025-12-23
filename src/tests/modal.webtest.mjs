@@ -9,6 +9,7 @@ import { describe, expect, it, run } from "jest-lite";
 //
 // it would be possible to put each expect in its own try/catch,
 
+import { TEST_MACHINE } from "../immutables";
 import { execTest, wrap } from "./page-seed-playwright";
 import { enableGetEventListeners } from "./vitest-addons";
 import { appendIsland } from "../dom-base";
