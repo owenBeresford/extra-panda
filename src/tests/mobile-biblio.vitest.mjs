@@ -62,28 +62,28 @@ describe("TEST mobile-biblio", () => {
       },
     ];
     let dat2 = `<aside role="footnote"><ol class="mobileBiblio"><li>
-<a href=TEST_MACHINE+"resource/article1"> 
+<a href="${TEST_MACHINE}resource/article1"> 
 <h5>fg gdsg fgdfgdf gdfg dfg dg </h5>
 <span>sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf</span>
 <span>by racheal on 1st-june-2001</span>
 </a>
 </li>
 <li>
-<a href=TEST_MACHINE+"resource/article2"> 
+<a href="${TEST_MACHINE}resource/article2"> 
 <h5>fg gdsg fgdfgg dfgdfg dg ad</h5>
 <span>sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf</span>
 <span>by racheal on 1st-june-2002</span>
 </a>
 </li>
 <li>
-<a href=TEST_MACHINE+"resource/article3"> 
+<a href="${TEST_MACHINE}resource/article3"> 
 <h5>dfg dg dfg dfgdfg dg ad</h5>
 <span>sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf</span>
 <span>by racheal on 1st-june-2003</span>
 </a>
 </li>
 <li>
-<a href=TEST_MACHINE+"resource/article4"> 
+<a href="${TEST_MACHINE}resource/article4"> 
 <h5>fg gdsg fgdfgdf dfgdfg dg ad</h5>
 <span>sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf</span>
 <span>by racheal on 1st-june-2004</span>
