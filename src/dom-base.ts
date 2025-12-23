@@ -530,7 +530,7 @@ export function* allDescendants(nd: HTMLElement): Iterable<HTMLElement> {
   for (let i = 0; i < nd.childNodes.length; i++) {
     // I have set this with var, as collisions/ redefines should be avoided
     var child = nd.childNodes[i];
-    allDescendants(child);
+    yield * allDescendants(child);
     yield child;
   }
 }
@@ -586,6 +586,5 @@ export const TEST_ONLY = {
   currentSize,
   assignCSSBlob,
   appendCSSFile,
-  textNodesUnder,
   allDescendants,
 };

@@ -20,7 +20,7 @@ const {
   copyURL,
   appendCSSFile,
   assignCSSBlob,
-  textNodesUnder,
+  allDescendants,
 } = TEST_ONLY;
 
 describe("TEST dom-base", () => {
@@ -788,6 +788,7 @@ d
     assert.equal(dom.querySelectorAll("style").length, 2, "test3");
   });
 
+/*
   it("go 12: textNodesUnder", (context) => {
     // the CSS isn't validated in this test, OR the code-under-test
     // there are other tools to do that,
@@ -809,4 +810,29 @@ d
 
     // export function textNodesUnder(el:HTMLElement, dom:Document):Array<HTMLElement>
   });
+*/
+  it("go 12: allDescendants", (context) => {
+    // the CSS isn't validated in this test, OR the code-under-test
+    // there are other tools to do that,
+    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const STR = `<ul id="test1">
+<li>dfgdfg
+<li>dfgdgdgqwq
+<li>dfgdfgdgdgqwq
+<li>sfsfsdfsdfsfsqwqw
+</ul><p id="test2"></p>`;
+    appendIsland("#point2", STR, dom);
+    let START = dom.querySelector("#test1");
+    let RET = allDescendants(START);
+    assert.isFalse( Object.is(RET, null), "test1");
+    assert.isFalse( Object.is(RET, false), "test1");
+	let ANNOYING=Array.from(RET); 
+    assert.equal(ANNOYING.length, 9, "test1");
+
+    START = dom.querySelector("#test2");
+    assert.equal( Array.from(allDescendants(START)).length, 0, "test2");
+
+    // export function textNodesUnder(el:HTMLElement, dom:Document):Array<HTMLElement>
+  });
+
 });
