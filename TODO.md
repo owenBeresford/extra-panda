@@ -29,7 +29,6 @@ MAINTENANCE
 - Evaluate https://www.npmjs.com/package/accessibility-checker to drop w3c one
 - For long content with many page sections, setup component for each page in a tidy fashion && tell later sections to load lower prio as they are likely to be off screen
 - Add ability to add test array of URLs to tool
-- BUG: effects.ts, addBashSamples():: backticks in bash samples get swallowed due to them being quote delimiters as well as valid bash scripting
 - UPDATE:: Internet suggests dropping Playwright for Puppeteer if specific browsers are needed. https://pptr.dev/webdriver-bidi https://www.npmjs.com/package/puppeteer-core
 - TEST THIS CODE https://github.com/egm0121/jest-test-gen?tab=readme-ov-file https://www.npmjs.com/package/jest-test-gen/v/0.0.10  https://github.com/ed4becky/jest-unit-test-generator 
 - re-add aria-hidden attrib, #leSigh required JS #leSigh
@@ -124,4 +123,5 @@ MAINTENANCE
 - DONE: added short term hack for modalPopups inside lotsOfWords, as otherwise the width is computed wrongly
 - DONE: Investigate adding aria-current on bigger articles, to mark current location
 - DONE: Add python syntax highlighter
+- DONE: effects.ts, addBashSamples():: backticks in bash samples get swallowed due to them being quote delimiters  and bash scripting
 
