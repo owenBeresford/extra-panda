@@ -9,7 +9,7 @@ FEATURES
    - Added a version for JS, disabled for production see index.mjs
 - Improve test process for mobile screen size design
 - Dark mode CSS
-- Look at making some domains use HEAD not GET
+- For large images (SVG), look at svg-pan-zoom https://www.npmjs.com/package/svg-pan-zoom UI deno https://deepwiki.com/tmgthb/Autonomous-Agents/3.3-react-based-agent-frameworks
 - Add new darkarts goal: **** FOR TESTING, not cracking,**** correct simulation of keyboard input to show keyboard accessibility works correctly.
 
 MAINTENANCE
@@ -32,7 +32,7 @@ MAINTENANCE
 - UPDATE:: Internet suggests dropping Playwright for Puppeteer if specific browsers are needed. https://pptr.dev/webdriver-bidi https://www.npmjs.com/package/puppeteer-core
 - TEST THIS CODE https://github.com/egm0121/jest-test-gen?tab=readme-ov-file https://www.npmjs.com/package/jest-test-gen/v/0.0.10  https://github.com/ed4becky/jest-unit-test-generator 
 - re-add aria-hidden attrib, #leSigh required JS #leSigh
-- https://codepen.io/t_afif/pen/dPMBMBE
+- A bland demo, JS diagram features  https://codepen.io/t_afif/pen/dPMBMBE (I thought it was all CSS initially, so was very interested)
 
 ### Previous Updates
 
@@ -124,4 +124,5 @@ MAINTENANCE
 - DONE: Investigate adding aria-current on bigger articles, to mark current location
 - DONE: Add python syntax highlighter
 - DONE: effects.ts, addBashSamples():: backticks in bash samples get swallowed due to them being quote delimiters  and bash scripting
+- DONE In references, look at making some domains use HEAD not GET 
 

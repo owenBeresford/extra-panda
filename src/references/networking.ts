@@ -7,6 +7,7 @@ import {
   TIMEOUT,
   CURL_VERBOSE,
   STRICT_NETWORKING,
+  EXTRA_URL_FILTERING,
 } from "./constants";
 import type {
   successType,
@@ -44,9 +45,15 @@ export function fetch2(
   // this is confusing to read, this registers the curl->close CB for later on
   close(CB);
 
+  curl.setOpt("CUSTOMREQUEST", "GET");
+  curl.setOpt("URL", url);
+  if (EXTRA_URL_FILTERING) {
+    curl = urlFiltering(url, curl);
+  }
+
   /*
 	To be able to check references, changing these headers sometimes helps
-*/
+   */
   curl.setOpt("HTTPHEADER", [
     "upgrade-insecure-requests: 1",
     "Referrer-policy: strict-origin-when-cross-origin",
@@ -60,7 +67,7 @@ export function fetch2(
     "sec-fetch-site: cross-site",
     "sec-fetch-user: ?1",
   ]);
-  curl.setOpt("URL", url);
+
   curl.setOpt("COOKIEJAR", COOKIE_JAR);
   curl.setOpt("COOKIEFILE", COOKIE_JAR);
   // sept 2024: Note official redirect tech, added in first version
@@ -69,11 +76,6 @@ export function fetch2(
   curl.setOpt("VERBOSE", CURL_VERBOSE);
   curl.setOpt("CONNECTTIMEOUT", TO);
 
-  // scale out to other domains as needed
-  // this will probably need to be a manual operation to know the URLs
-  if (url.match("unicode.org")) {
-    curl.setOpt(Curl.option.RANGE, "0-10000");
-  }
   if (url.match(".pdf")) {
     curl.setOpt("TIMEOUT", TIMEOUT * 3.3);
   }
@@ -140,7 +142,7 @@ export async function delay(ms: number): Promise<void> {
 
 // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
 // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
-function ifIP4(dat: string): string | number {
+function ifIP4(dat: string|number): string | number {
   if (typeof dat === "string") {
     return "IPv4";
   } else {
@@ -180,3 +182,38 @@ export function mapInterfaces(
   }
   return out;
 }
+
+// not exported, just type-safety on edits
+type EDIT_REQUEST= (c:Client)=>void;
+
+/**
+ * urlFiltering
+ * A util to edit cURL requests depending on target URL, should lead to lower failure
+ * UPDATE as needed 
+
+ * @param {string} url
+ * @param {Curl} client
+ * @public
+ * @return {Client} - class from node-libCurl
+ */
+function urlFiltering(url: string, client: Curl): Curl {
+// check return values on these lamda.  #leSigh, pointer, or lack of them
+  const HOT_URLS:Record<string,EDIT_REQUEST> = {
+    "unicode.org": () => {
+      client.setOpt(Curl.option.RANGE, "0-10000");
+    },
+    "stackoverflow.com": () => {
+      client.setOpt(Curl.option.CUSTOMREQUEST, "HEAD");
+    },
+  };
+
+  Object.keys(HOT_URLS).map(function (a:any, b:number):void {
+    if (url.match(a)) {
+      HOT_URLS[a](client);
+    }
+  });
+  return client;
+}
+
+export const TEST_ONLY = { urlFiltering }
+
