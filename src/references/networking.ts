@@ -33,7 +33,7 @@ export function fetch2(
   bad1: failureType,
   close: closeType,
 ): void {
-  const curl: TaggedCurl = new Curl();
+  let curl: TaggedCurl = new Curl();
   curl.isClose = false;
   let CB = (): void => {
     if (!curl.isClose) {
@@ -184,7 +184,7 @@ export function mapInterfaces(
 }
 
 // not exported, just type-safety on edits
-type EDIT_REQUEST= (c:Client)=>void;
+type EDIT_REQUEST= (c:TaggedCurl)=>void;
 
 /**
  * urlFiltering
@@ -192,11 +192,11 @@ type EDIT_REQUEST= (c:Client)=>void;
  * UPDATE as needed 
 
  * @param {string} url
- * @param {Curl} client
+ * @param {TaggedCurl} client
  * @public
- * @return {Client} - class from node-libCurl
+ * @return {TaggedCurl} - my local edit type
  */
-function urlFiltering(url: string, client: Curl): Curl {
+function urlFiltering(url: string, client: TaggedCurl): TaggedCurl {
 // check return values on these lamda.  #leSigh, pointer, or lack of them
   const HOT_URLS:Record<string,EDIT_REQUEST> = {
     "unicode.org": () => {
