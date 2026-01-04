@@ -103,7 +103,7 @@ export function storeAppearance(
   fs = fs.replaceAll(";", "%38");
 
   const json: string = JSON.stringify({ ft: ft, fs: fs, dn: dir, cr: clr });
-  COOKIE.set(APPEARANCE_COOKIE, json, 365.254);
+  QOOKIE.set(APPEARANCE_COOKIE, json, 365.254);
 }
 
 /**
@@ -116,7 +116,7 @@ export function storeAppearance(
 export function applyAppearance(dom: Document): void {
   const COOKIE: Cookieable = accessCookie();
 
-  const dat: string = COOKIE.get(APPEARANCE_COOKIE);
+  const dat: string = QOOKIE.get(APPEARANCE_COOKIE);
   if (!dat) {
     return;
   }
