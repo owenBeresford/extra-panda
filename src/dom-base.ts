@@ -6,10 +6,12 @@ import type {
   Scrollable,
   ScreenOffsetArray,
   BOUNDARY,
+  CBeffects,
 } from "./all-types";
 import { log } from "./log-services";
 import { MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./immutables";
 import { booleanMap } from "./string-base";
+// import { renderBashTextNodes } from './effects'; 
 
 if (typeof window === "object" && !("noop" in window)) {
   window.noop = 0 as number;
@@ -249,7 +251,7 @@ export function mapAttribute(
 
     const STYL = ele.getBoundingClientRect();
     return STYL[attrib];
-  } catch (e) {
+  } catch (e:Error) {
     log("error", "Missing data:" + e.message);
     return -1;
   }
@@ -514,26 +516,29 @@ export function assignCSSBlob(dat: string, id: string, dom: Document): void {
   dom.getElementsByTagName("head")[0].append(STYLE);
 }
 
+
 /**
  * allDescendants
  * Return an iterator of TextNodes from a starting Element
- * Sequence not guaranteed  
  * PURE
  
  * @see https://stackoverflow.com/questions/2712136/how-do-i-make-this-loop-all-children-recursively
  * @param {HTMLElement} nd
+ * @param {CBeffects} cb  - a callback to be applied to each node
  * @public
- * @yields {a list of recursive children elements of param}
  * @returns {Iterable<HTMLElement>}
  */
-export function* allDescendants(nd: HTMLElement): Iterable<HTMLElement> {
+export function allDescendants(nd: HTMLElement, cb:CBeffects):void  {
   for (let i = 0; i < nd.childNodes.length; i++) {
     // I have set this with var, as collisions/ redefines should be avoided
-    var child = nd.childNodes[i];
-    yield * allDescendants(child);
-    yield child;
+    var child:HTMLElement = nd.childNodes[i] as HTMLElement;
+	if(child.nodeType !== Node.TEXT_NODE ) {
+   		allDescendants(child, cb);
+	}
+    cb( child, nd );
   }
 }
+
 
 //////////////////////////////////////////////// testing /////////////////////////////////////////////////////////////
 // no injectOpts as it wouldn't make sense
