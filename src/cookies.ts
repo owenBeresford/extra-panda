@@ -30,14 +30,14 @@ export class QOOKIE implements Cookieable {
    * @public
    * @returns {void}
    */
-  public static set(nom: string, cValue: string, expDays: number): void {
+  public static set(nom: string, cValue: string, expDays: number, dom:Document): void {
     let expires = "";
     if (expDays) {
       const d1 = new Date();
       d1.setTime(d1.getTime() + expDays * 24 * 60 * 60 * 1000);
       expires = "expires=" + d1.toUTCString();
     }
-    document.cookie = nom + "=" + cValue + "; " + expires + "; path=/ ;secure";
+    dom.cookie = nom + "=" + cValue + "; " + expires + "; path=/ ;secure";
   }
 
   /**
@@ -48,9 +48,9 @@ export class QOOKIE implements Cookieable {
    * @public
    * @returns {string}
    */
-  public static get(nom: string): string {
+  public static get(nom: string, dom:Document): string {
     const name = nom + "=";
-    const cDecoded = decodeURIComponent(document.cookie);
+    const cDecoded = decodeURIComponent(dom.cookie);
     const cArr = cDecoded.split("; ");
     let res = "";
 
@@ -70,12 +70,12 @@ export class QOOKIE implements Cookieable {
      * @public
      * @returns {void}
      */
-  public static wipe(nom: string): void {
+  public static wipe(nom: string, dom:Document): void {
     const d1 = new Date();
     d1.setTime(d1.getTime() + 8 * 60 * 60 * 1000);
     const expires = "expires=" + d1.toUTCString();
-    document.cookie = nom + "= ; " + expires + "; path=/ ;secure";
-    document.cookie = nom + "= ; " + expires + "; path=/ ";
+    dom.cookie = nom + "= ; " + expires + "; path=/ ;secure";
+    dom.cookie = nom + "= ; " + expires + "; path=/ ";
   }
 }
 
@@ -95,15 +95,15 @@ export function storeAppearance(
   fs: string,
   dir: string,
   clr: string,
+  dom:Document=document,
 ): void {
-  const COOKIE: Cookieable = accessCookie();
   ft = ft.replaceAll(";", "%38");
   clr = clr.replaceAll(";", "%38");
   dir = dir.replaceAll(";", "%38");
   fs = fs.replaceAll(";", "%38");
 
   const json: string = JSON.stringify({ ft: ft, fs: fs, dn: dir, cr: clr });
-  QOOKIE.set(APPEARANCE_COOKIE, json, 365.254);
+  QOOKIE.set(APPEARANCE_COOKIE, json, 365.254, dom);
 }
 
 /**
@@ -116,7 +116,7 @@ export function storeAppearance(
 export function applyAppearance(dom: Document): void {
   const COOKIE: Cookieable = accessCookie();
 
-  const dat: string = QOOKIE.get(APPEARANCE_COOKIE);
+  const dat: string = QOOKIE.get(APPEARANCE_COOKIE, dom);
   if (!dat) {
     return;
   }
