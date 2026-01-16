@@ -11,7 +11,7 @@ import type {
 import { log } from "./log-services";
 import { MOBILE_MIN_PPI, EM_SZ, ALL_REFERENCE } from "./immutables";
 import { booleanMap } from "./string-base";
-// import { renderBashTextNodes } from './effects'; 
+// import { renderBashTextNodes } from './effects';
 
 if (typeof window === "object" && !("noop" in window)) {
   window.noop = 0 as number;
@@ -251,7 +251,7 @@ export function mapAttribute(
 
     const STYL = ele.getBoundingClientRect();
     return STYL[attrib];
-  } catch (e:Error) {
+  } catch (e: Error) {
     log("error", "Missing data:" + e.message);
     return -1;
   }
@@ -516,7 +516,6 @@ export function assignCSSBlob(dat: string, id: string, dom: Document): void {
   dom.getElementsByTagName("head")[0].append(STYLE);
 }
 
-
 /**
  * allDescendants
  * Return an iterator of TextNodes from a starting Element
@@ -528,17 +527,16 @@ export function assignCSSBlob(dat: string, id: string, dom: Document): void {
  * @public
  * @returns {Iterable<HTMLElement>}
  */
-export function allDescendants(nd: HTMLElement, cb:CBeffects):void  {
+export function allDescendants(nd: HTMLElement, cb: CBeffects): void {
   for (let i = 0; i < nd.childNodes.length; i++) {
     // I have set this with var, as collisions/ redefines should be avoided
-    var child:HTMLElement = nd.childNodes[i] as HTMLElement;
-	if(child.nodeType !== Node.TEXT_NODE ) {
-   		allDescendants(child, cb);
-	}
-    cb( child, nd );
+    var child: HTMLElement = nd.childNodes[i] as HTMLElement;
+    if (child.nodeType !== Node.TEXT_NODE) {
+      allDescendants(child, cb);
+    }
+    cb(child, nd);
   }
 }
-
 
 //////////////////////////////////////////////// testing /////////////////////////////////////////////////////////////
 // no injectOpts as it wouldn't make sense

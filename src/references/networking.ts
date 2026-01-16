@@ -142,7 +142,7 @@ export async function delay(ms: number): Promise<void> {
 
 // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
 // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
-function ifIP4(dat: string|number): string | number {
+function ifIP4(dat: string | number): string | number {
   if (typeof dat === "string") {
     return "IPv4";
   } else {
@@ -184,7 +184,7 @@ export function mapInterfaces(
 }
 
 // not exported, just type-safety on edits
-type EDIT_REQUEST= (c:TaggedCurl)=>void;
+type EDIT_REQUEST = (c: TaggedCurl) => void;
 
 /**
  * urlFiltering
@@ -197,8 +197,8 @@ type EDIT_REQUEST= (c:TaggedCurl)=>void;
  * @return {TaggedCurl} - my local edit type
  */
 function urlFiltering(url: string, client: TaggedCurl): TaggedCurl {
-// check return values on these lamda.  #leSigh, pointer, or lack of them
-  const HOT_URLS:Record<string,EDIT_REQUEST> = {
+  // check return values on these lamda.  #leSigh, pointer, or lack of them
+  const HOT_URLS: Record<string, EDIT_REQUEST> = {
     "unicode.org": () => {
       client.setOpt(Curl.option.RANGE, "0-10000");
     },
@@ -207,7 +207,7 @@ function urlFiltering(url: string, client: TaggedCurl): TaggedCurl {
     },
   };
 
-  Object.keys(HOT_URLS).map(function (a:any, b:number):void {
+  Object.keys(HOT_URLS).map(function (a: any, b: number): void {
     if (url.match(a)) {
       HOT_URLS[a](client);
     }
@@ -215,5 +215,4 @@ function urlFiltering(url: string, client: TaggedCurl): TaggedCurl {
   return client;
 }
 
-export const TEST_ONLY = { urlFiltering }
-
+export const TEST_ONLY = { urlFiltering };

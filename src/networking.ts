@@ -133,9 +133,14 @@ export function accessCookie(): Cookieable {
     // cookie behaviour is more complex than in the 90s.
     return {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      set(cName: string, cValue: string, expDays: number, dom:Document): void {},
+      set(
+        cName: string,
+        cValue: string,
+        expDays: number,
+        dom: Document,
+      ): void {},
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      get(cName: string, dom:Document): string {
+      get(cName: string, dom: Document): string {
         return "";
       },
     } as Cookieable;

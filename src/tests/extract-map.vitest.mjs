@@ -9,7 +9,7 @@ const { ExtractMap } = TEST_ONLY;
 
 describe("TEST generate CSS ", () => {
   it("go 5: Extract->compareTrees", () => {
-    const [dom, loc, win] = page(TEST_MACHINE+"", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "", 3);
     const OBJ = new ExtractMap(dom, win);
     assert.equal(OBJ instanceof ExtractMap, true, "bullet #9");
 
@@ -27,7 +27,7 @@ describe("TEST generate CSS ", () => {
   });
 
   it("go 5.1: Extract->compare", () => {
-    const [dom, loc, win] = page(TEST_MACHINE+"", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "", 3);
     const OBJ = new ExtractMap(dom, win);
 
     /*

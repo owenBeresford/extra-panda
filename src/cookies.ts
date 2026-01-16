@@ -30,7 +30,12 @@ export class QOOKIE implements Cookieable {
    * @public
    * @returns {void}
    */
-  public static set(nom: string, cValue: string, expDays: number, dom:Document): void {
+  public static set(
+    nom: string,
+    cValue: string,
+    expDays: number,
+    dom: Document,
+  ): void {
     let expires = "";
     if (expDays) {
       const d1 = new Date();
@@ -48,7 +53,7 @@ export class QOOKIE implements Cookieable {
    * @public
    * @returns {string}
    */
-  public static get(nom: string, dom:Document): string {
+  public static get(nom: string, dom: Document): string {
     const name = nom + "=";
     const cDecoded = decodeURIComponent(dom.cookie);
     const cArr = cDecoded.split("; ");
@@ -70,7 +75,7 @@ export class QOOKIE implements Cookieable {
      * @public
      * @returns {void}
      */
-  public static wipe(nom: string, dom:Document): void {
+  public static wipe(nom: string, dom: Document): void {
     const d1 = new Date();
     d1.setTime(d1.getTime() + 8 * 60 * 60 * 1000);
     const expires = "expires=" + d1.toUTCString();
@@ -95,7 +100,7 @@ export function storeAppearance(
   fs: string,
   dir: string,
   clr: string,
-  dom:Document=document,
+  dom: Document = document,
 ): void {
   ft = ft.replaceAll(";", "%38");
   clr = clr.replaceAll(";", "%38");

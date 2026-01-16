@@ -17,7 +17,7 @@ describe("TEST cookies", () => {
   });
 
   it("go 2: storeAppearance ", (context) => {
-    const [dom, loc, win] = page(TEST_MACHINE+ "resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
     if (!isFullstack(win)) {
       context.skip();
     }
@@ -26,7 +26,7 @@ describe("TEST cookies", () => {
   });
 
   it("go 3: applyAppearance ", (context) => {
-    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
     if (!isFullstack(win)) {
       context.skip();
     }
@@ -34,4 +34,3 @@ describe("TEST cookies", () => {
     // look at values in   dom.cookies
   });
 });
-

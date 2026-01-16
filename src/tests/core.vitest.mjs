@@ -9,7 +9,7 @@ const { burgerMenu, initPopupMobile } = TEST_ONLY;
 
 describe("TEST core", () => {
   it("go 1: burgerMeu", () => {
-    const [dom, loc] = page(TEST_MACHINE+"resource/home", 2);
+    const [dom, loc] = page(TEST_MACHINE + "resource/home", 2);
     let str = `<fieldset class="h4_menu column bigScreenOnly">
 <legend><span id="pageMenu"><i class="fa fa-ob1burger" aria-hidden="true"></i> </span></legend>
 <menu class="h4_lean">
@@ -70,7 +70,7 @@ describe("TEST core", () => {
 
   it("go 5: initPopupMobile", () => {
     const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/home?mobile=1&debug=1",
+      TEST_MACHINE + "resource/home?mobile=1&debug=1",
       3,
     );
     let str = `<div id="navBar"> 
@@ -102,7 +102,7 @@ describe("TEST core", () => {
 
   it("go 5.1: initPopupMobile", () => {
     const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/home?mobile=0&debug=1",
+      TEST_MACHINE + "resource/home?mobile=0&debug=1",
       3,
     );
     let str = `<div id="navBar">

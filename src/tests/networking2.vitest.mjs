@@ -3,7 +3,6 @@ import { describe, it, vi } from "vitest";
 import { networkInterfaces } from "node:os";
 import { TEST_MACHINE } from "../immutables";
 
-
 import {
   fetch2,
   exec_reference_url,
@@ -35,7 +34,7 @@ describe("TEST references networking2 ", () => {
     });
   });
 
-/*
+  /*
   it.sequential("go 1.1: networking fetch2(bad IP) ", async () => {
     return new Promise(async (good, bad) => {
       const FP2 = new FakePage();
@@ -133,7 +132,7 @@ describe("TEST references networking2 ", () => {
     await exec_reference_url(0, URL, FP5);
   });
 
-/*
+  /*
   it.sequential("go 2: exec_reference_url(bad URL) ", async () => {
     const FP5 = new FakePage();
     FP5.setState(5);

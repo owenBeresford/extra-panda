@@ -29,7 +29,7 @@ describe("TEST desktop-biblio", () => {
   });
 
   it("go 2: markAllLinksUnknown", () => {
-    const [dom, loc] = page(TEST_MACHINE+ "resource/reading-list", 2);
+    const [dom, loc] = page(TEST_MACHINE + "resource/reading-list", 2);
     let str = `
 <p role="status"> </p> 
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">2</a> </sup> sdfsf sdfsdf ssf sd
@@ -69,10 +69,7 @@ describe("TEST desktop-biblio", () => {
   });
 
   it("go 3: mapPositions", () => {
-    const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/reading-list",
-      3,
-    );
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/reading-list", 3);
     let str = `<p role="status"> PING</p>
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
@@ -147,7 +144,7 @@ describe("TEST desktop-biblio", () => {
   });
 
   it("go 4: addMetaAge", () => {
-    const [dom, loc] = page(TEST_MACHINE+"resource/reading-list", 2);
+    const [dom, loc] = page(TEST_MACHINE + "resource/reading-list", 2);
     let str = `
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
@@ -177,7 +174,7 @@ describe("TEST desktop-biblio", () => {
   });
 
   it("go 4.1: addMetaAge", () => {
-    const [dom, loc] = page(TEST_MACHINE+"resource/reading-list", 2);
+    const [dom, loc] = page(TEST_MACHINE + "resource/reading-list", 2);
     let str = `
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
@@ -207,7 +204,7 @@ describe("TEST desktop-biblio", () => {
   });
 
   it("go 4.2: addMetaAge", () => {
-    const [dom, loc] = page(TEST_MACHINE+"resource/reading-list", 2);
+    const [dom, loc] = page(TEST_MACHINE + "resource/reading-list", 2);
     let str = `
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
 <p>sdf sdfs <sup><a href="gibgibgib">3</a> </sup> dgdf dgd ga  agadgaddafg ag </p>
@@ -237,21 +234,21 @@ describe("TEST desktop-biblio", () => {
   });
 
   it("go 5: normaliseData", () => {
-    const [dom, loc] = page(TEST_MACHINE+"resource/reading-list", 2);
+    const [dom, loc] = page(TEST_MACHINE + "resource/reading-list", 2);
     let dat = [
       {
         date: +new Date("2024-03-01 09:00:00.0Z"),
         title: "fsdfs sfs fsdfsdf1",
         desc: "sf sfsf sdfsfsdf sdfs, dgdfgdf gdfgdfgdf",
         auth: "racheal",
-        url: TEST_MACHINE+"resource/adfsdf",
+        url: TEST_MACHINE + "resource/adfsdf",
       },
       {
         date: +new Date("2024-04-01 09:00:00.0Z"),
         title: "",
         desc: "",
         auth: "racheal2",
-        url: TEST_MACHINE+"resource/spamspam",
+        url: TEST_MACHINE + "resource/spamspam",
       },
       {
         date: +new Date("2024-05-01 09:00:00.0Z"),
@@ -259,14 +256,14 @@ describe("TEST desktop-biblio", () => {
           "fsdfs sfs fsdfsdf3i fgas dgadga dgd fgdg dag adfgad dfg dfg adgdg dfg ddzfh dth dh zd hzdfh zdhzdhzd h zdh zghsfj dfsf dhf sfh shsd hsthsthath dhsdthsths thsthsthsthsdthsthdths hs haeh ah h adh dhd had hah adh adh adh adhdh adth",
         desc: "sf sfsf sdfsfsdf sdfs, dgdfgdf gdfgdfgdfdhd hst hsth sdtha ethath aeth aehaeya yae aerae ae ae aey s YANE  GWYAE AA SE5NAEHSRT SE ZDHDRU ST HSRr srth ru s haeu er haes ese  sys thaeyu6rmae aernegarhrehd ne n5y eu4 zu,d tirsur7ia e47mr ae yr6 aere5 umr aeyarh ae5y ssrt es sruae s seu a5u aeu seuae5ua ea4n4je5y ae srey aw ey e enae sru 4wn r5 ea w7n srk6ue5uruw sumsr 4mrj sr6msr 54 ae",
         auth: "racheal",
-        url: TEST_MACHINE+"resource/eggs-and-spam",
+        url: TEST_MACHINE + "resource/eggs-and-spam",
       },
       {
         date: +new Date("2024-06-01 09:00:00.0Z"),
         title: "               fsdfs sfs fsdfsdf4                  ",
         desc: "sf %45 sfsf %20 sdfsfsdf&nbsp; sdfs, &lt;dgdfgdf&gt; gdfgdfgdf&nbsp;",
         auth: "racheal",
-        url: TEST_MACHINE+"resource/moar-spam",
+        url: TEST_MACHINE + "resource/moar-spam",
       },
     ];
     let dat2 = [
@@ -309,7 +306,7 @@ sf %45 sfsf %20 sdfsfsdf&nbsp; sdfs, &lt;dgdfgdf&gt; gdfgdfgdf&nbsp;`,
         title: "fsdfs sfs fsdfsdf1",
         desc: "sf sfsf sdfsfsdf sdfs, dgdfgdf gdfgdfgdf",
         auth: "racheal",
-        url: TEST_MACHINE+"resource/adfsdf",
+        url: TEST_MACHINE + "resource/adfsdf",
       },
       null,
       null,
@@ -338,10 +335,7 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
   });
 
   it("go 6: applyDOMpositions", (context) => {
-    const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/reading-list",
-      3,
-    );
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/reading-list", 3);
     let str = `<span id="uniq1">GDG</span>
 <span id="uniq2">WER</span>
 <span id="uniq3">IOP</span>
@@ -381,10 +375,7 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
   });
 
   it("go 7: createBiblio", async () => {
-    const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/reading-list",
-      3,
-    );
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/reading-list", 3);
     let str = `
 <div id="biblio" style="display:none;"></div>
 <p>sdf sdfs <sup><a href="gibgibgib">1</a> </sup> <sup><a href="gibgibgib">44</a> </sup> sdfsf sdfsdf ssf sd
@@ -431,7 +422,7 @@ HTTP_ERROR, Site admin: recompile this meta file, as this is a new link.`,
   });
 
   it("go 7.1: createBiblio ", async () => {
-    const url = TEST_MACHINE+"resource/reading-list";
+    const url = TEST_MACHINE + "resource/reading-list";
     const brwr = new JSDOM(
       `<html>
 <head><title>test1</title></head>

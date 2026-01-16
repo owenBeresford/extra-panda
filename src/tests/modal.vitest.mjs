@@ -10,7 +10,7 @@ const { modalInit } = TEST_ONLY;
 
 describe("TEST modal ", () => {
   it("go 1: HTMLDetailsClick", (context) => {
-    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
 
     let str = `
 <div class="blocker popOverWidget">
@@ -59,7 +59,7 @@ describe("TEST modal ", () => {
   });
 
   it("go 1.1: HTMLDetailsClick", (context) => {
-    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
     let str = `
 <div class="blocker popOverWidget">
 <details class="singlePopup">

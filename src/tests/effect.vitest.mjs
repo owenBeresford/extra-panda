@@ -114,7 +114,7 @@ describe("TEST effects", () => {
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">git</a>
 `;
 
-      const [dom] = page(TEST_MACHINE+"", 1);
+      const [dom] = page(TEST_MACHINE + "", 1);
       appendIsland("#point2", str1, dom);
       addBooks(false, dom);
       assert(
@@ -141,7 +141,7 @@ describe("TEST effects", () => {
       <a id="thing1" href="sdfs df" aria-label="Link to the project docs; it may be a git page, or a separate webpage."><i class="fa fa-book-open" aria-hidden="true"></i></a>
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">git</a>
 `;
-      const [dom] = page(TEST_MACHINE+"", 1);
+      const [dom] = page(TEST_MACHINE + "", 1);
       appendIsland("#point2", str1, dom);
       addBooks(true, dom);
       assert(
