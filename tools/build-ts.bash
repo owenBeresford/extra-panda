@@ -18,6 +18,7 @@ node node_modules/.bin/vite --config vite.config.lang-js.ts build
 node node_modules/.bin/vite --config vite.config.lang-php.ts build 
 node node_modules/.bin/vite --config vite.config.lang-xml.ts build 
 node node_modules/.bin/vite --config vite.config.lang-sql.ts build 
+node node_modules/.bin/vite --config vite.config.lang-yml.ts build 
 node node_modules/.bin/vite --config vite.config.lang-ts.ts build 
 node node_modules/.bin/vite --config vite.config.lang-perl.ts build 
 node node_modules/.bin/vite --config vite.config.lang-python.ts build 

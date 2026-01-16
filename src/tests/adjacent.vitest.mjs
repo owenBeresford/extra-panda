@@ -199,7 +199,7 @@ describe("TEST adjacent", () => {
   });
 
   it("go 6: listContentGroup", () => {
-    const [dom, loc] = page(TEST_MACHINE+"resource/code-metrics", 2);
+    const [dom, loc] = page(TEST_MACHINE + "resource/code-metrics", 2);
     setIsland(
       "#point2",
       '<div id="testbar" data-group="engineering, uitools"></div>',
@@ -312,10 +312,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
 <a class="adjacentItem" href="http://www.seconddata.com/" title="sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf"> <span class="button">DDDSFDSDF ddd 45646</span><p id="adjacentengineering1" >Author:  &nbsp; &nbsp; &nbsp;  Last edit:  03-March-2024  <br />Description: sfs sfs sdfsf sfs sf sfs fsfsf sfdsfsdfs fsf sfs fsfsfsf sfsfs fsf sdfs sfsfsfs fsf sdf </p></a>
 <a class="adjacentItem" href="http://www.thirddata.com/" title="sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg..."> <span class="button">DDDSFDSDF ddd fsfd fgd dgdfg ggadg adfg agd adgdafg adgad dag dg adfgdag dagdg dagadg dfgdag dgd dfg dfgdg gdfg dgdgdfgdfgdfgdfgdfg dgd gd gdfgdgdfgdfgd dfgdfgdfgzdfgdfgdg</span><p id="adjacentengineering2" >Author: gdgdg &nbsp; &nbsp; &nbsp;  Last edit:  04-March-2024  <br />Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg dfg dfgdf dfg dfg dfgdfgd dfg dgdg dg dfgdfg dg dg dg dg dfg dfg dfgdgd fdfg dg dg dfgdgdg dg dgd gdg dfg dfg dg dgdgdddfgdg dfgdg dg dgdgdgdg dfg dgdgdgd d d dgdfgdfg... </p></a>
 `;
-    const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/code-metrics",
-      3,
-    );
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/code-metrics", 3);
     assert.deepEqual(
       convert2IndexHTML(d1, "engineering", dom, loc, win),
       d2,
@@ -326,7 +323,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
   it("go 11: extractGroup", () => {
     //	 extractGroup(  ele: HTMLElement | null, loc: Location = location, dom: Document = document): string
     const [dom, loc, win, jsdom] = page(
-      TEST_MACHINE+"resource/code-metrics",
+      TEST_MACHINE + "resource/code-metrics",
       4,
     );
     let str = `<div class="top-bar fullwidth"><header><h1>i'm set</h1> </header> </div>  
@@ -359,7 +356,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
     );
 
     jsdom.reconfigure({
-      url: TEST_MACHINE+"resource/group-XXX?first=martech",
+      url: TEST_MACHINE + "resource/group-XXX?first=martech",
     });
     assert.equal(
       extractGroup(dom.querySelector("#thing1"), loc),
@@ -367,7 +364,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
       "step #29",
     );
 
-    jsdom.reconfigure({ url: TEST_MACHINE+"resource/group-research" });
+    jsdom.reconfigure({ url: TEST_MACHINE + "resource/group-research" });
     assert.equal(
       extractGroup(dom.querySelector("#thing1"), loc),
       "research",
@@ -376,7 +373,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
   });
 
   it("go 9: updatelabels", () => {
-    const [dom, loc] = page(TEST_MACHINE+"resource/code-metrics", 2);
+    const [dom, loc] = page(TEST_MACHINE + "resource/code-metrics", 2);
     let str = `<div class="top-bar fullWidth"><header><h1>I'm set</h1> </header> </div>  
 				<div class="adjacentWidget"><p>Im set too</p> </div> `;
     appendIsland("#point2", str, dom);
@@ -408,10 +405,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
   });
 
   it("go 10: createAdjacentChart", async () => {
-    const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/code-metrics",
-      3,
-    );
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/code-metrics", 3);
     let str = `
 <div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
@@ -443,10 +437,7 @@ Description: sfsdgadg adg adg dgdg dgadg adg dfg g dafgg ad dgdg dfgdgdg dfg  dg
   });
 
   it("go 10.1: createAdjacentChart", async () => {
-    const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/code-metrics",
-      3,
-    );
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/code-metrics", 3);
     let str = `
 <div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
@@ -499,10 +490,7 @@ Description: What concepts or areas of development are important.    This is a h
   });
 
   it("go 10.2: createAdjacentChart", async () => {
-    const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/code-metrics",
-      3,
-    );
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/code-metrics", 3);
     let str = `
 <div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
@@ -559,10 +547,7 @@ Description: What concepts or areas of development are important.    This is a h
   });
 
   it("go 10.3: createAdjacentChart", async () => {
-    const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/code-metrics",
-      3,
-    );
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/code-metrics", 3);
     let str = `
 <div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>
@@ -654,10 +639,7 @@ Description: Performance benchmark for PHP operations.">PHP benchmark 2017</a> <
   });
 
   it("go 10.4: createAdjacentChart", async () => {
-    const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/code-metrics",
-      3,
-    );
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/code-metrics", 3);
     let str = `
 <div class="adjacentWidget" id="groupengineering">
 <p>TEST</p>

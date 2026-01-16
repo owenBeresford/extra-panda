@@ -23,6 +23,7 @@ import {
   calcScreenDPI,
   isLibreWolf,
   ready,
+  assignCSSBlob,
 } from "./dom-base";
 import { storeAppearance } from "./cookies";
 import { SELF_VERSION, matchVersion } from "./immutables";
@@ -52,6 +53,7 @@ export {
   domLog,
   hasBeenRun,
   appendIsland,
+  assignCSSBlob,
   isMobile,
   storeAppearance,
   currentSize,

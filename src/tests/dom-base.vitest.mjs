@@ -25,7 +25,7 @@ const {
 
 describe("TEST dom-base", () => {
   it("go 2: isFullStack", (context) => {
-    const [dom, loc, win] = page( TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
 
     assert.isTrue(false === isFullstack(win), "A plain Node instance is false");
     if (process && process.env) {
@@ -42,7 +42,7 @@ describe("TEST dom-base", () => {
   });
 
   it("go 4: mapAttribute", (context) => {
-    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
     if (!isFullstack(win)) {
       context.skip();
     }
@@ -64,7 +64,7 @@ describe("TEST dom-base", () => {
   });
 
   it("go 5:  copyURL ", async (context) => {
-    const [dom, loc, win] = page( TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
     let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
   <input id="mastodonserver" value="panda.testing" data-url="${TEST_MACHINE}resource/home?" /> 
@@ -80,7 +80,7 @@ describe("TEST dom-base", () => {
   });
 
   it("go 6: calcScreenDPI ", async (context) => {
-    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
     let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
   <input id="mastodonserver" value="panda.testing" data-url="${TEST_MACHINE}resource/home?" /> 
@@ -94,10 +94,7 @@ describe("TEST dom-base", () => {
   });
 
   it("go 7: screenWidth ", async (context) => {
-    const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/home?width=150",
-      3,
-    );
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home?width=150", 3);
     let str = `<div id="shareMenu" class="mobilePopupWidget"> </div> 
   <dialog id="popup" open>
   <input id="mastodonserver" value="panda.testing" data-url="${TEST_MACHINE}resource/home?" /> 
@@ -113,7 +110,7 @@ describe("TEST dom-base", () => {
   });
 
   it("go 5: appendIsland ", () => {
-    const [dom, loc] = page(TEST_MACHINE+"resource/home", 2);
+    const [dom, loc] = page(TEST_MACHINE + "resource/home", 2);
 
     let str = "<h2>WWWWW WWWWW</h2>";
     appendIsland("#point1", str, dom);
@@ -132,7 +129,7 @@ describe("TEST dom-base", () => {
   });
 
   it("go 6: setIsland ", () => {
-    const [dom, loc] = page(TEST_MACHINE+"resource/home", 2);
+    const [dom, loc] = page(TEST_MACHINE + "resource/home", 2);
 
     let str = "<h2>WWWWW WWWWW</h2>";
     appendIsland("#point1", str, dom);
@@ -153,7 +150,7 @@ describe("TEST dom-base", () => {
   });
 
   it("go 11: appendCSSFile ", () => {
-    const [dom, loc] = page(TEST_MACHINE+"resource/home", 2);
+    const [dom, loc] = page(TEST_MACHINE + "resource/home", 2);
 
     let str = "<h2>WWWWW WWWWW</h2>";
     appendIsland("#point1", str, dom);
@@ -166,7 +163,7 @@ describe("TEST dom-base", () => {
   });
 
   it("go 7:  docOffsets ", () => {
-    const [dom] = page(TEST_MACHINE+"resource/home", 1);
+    const [dom] = page(TEST_MACHINE + "resource/home", 1);
     let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -220,10 +217,7 @@ describe("TEST dom-base", () => {
   });
 
   it("go 10: expandDetails", () => {
-    const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/home?width=1100",
-      3,
-    );
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home?width=1100", 3);
     let str = `<div class="maquetteContainer">
 <details >
 <summary>A title</summary>
@@ -257,10 +251,7 @@ d
   });
 
   it("go 10.1: expandDetails", () => {
-    const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/home?width=600",
-      3,
-    );
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home?width=600", 3);
     let str = `<div class="maquetteContainer">
 <details >
 <summary>A title</summary>
@@ -294,10 +285,7 @@ d
   });
 
   it("go 10.2: expandDetails", () => {
-    const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/home?width=1100",
-      3,
-    );
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home?width=1100", 3);
     let str = `<div class="maquetteContainer">
 <details class="singlePopup">
 <summary>A title</summary>
@@ -331,7 +319,7 @@ d
   });
 
   it("go 8: applyVolume", (context) => {
-    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
     let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -389,7 +377,7 @@ d
   });
 
   it("go 8.1: applyVolume", (context) => {
-    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
     let str = `<div class="halferWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -447,7 +435,7 @@ d
   });
 
   it("go 8.2: applyVolume", (context) => {
-    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
     let str = `<div class="halferWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -531,7 +519,7 @@ d
   });
 
   it("go 8.3: applyVolume", () => {
-    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
     let str = `<div class="some words">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -588,7 +576,7 @@ d
   });
 
   it("go 9: getArticleWidth", () => {
-    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
     let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -636,7 +624,7 @@ d
   });
 
   it("go 9.1: getArticleWidth", (context) => {
-    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
     let str = `<div class="lotsOfWords">
 <h2 id="item1">dfg dfgdgdfg dfg dgdfgdf g</h2>
 <h5 id="item2">dfg dfgdgdfg dfg dgdfgdf g</h5>
@@ -686,7 +674,7 @@ d
   });
 
   it("go 9.2: getArticleWidth", () => {
-    const URL = TEST_MACHINE+"resource/home";
+    const URL = TEST_MACHINE + "resource/home";
     // NOTE no addReferences block
     const JSDOM1 = new JSDOM(
       `<!DOCTYPE html>
@@ -750,7 +738,7 @@ d
   });
 
   it("go 10: isLibreWolf", (context) => {
-    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
 
     assert.isTrue(
       false === isLibreWolf(dom, win.navigator),
@@ -761,7 +749,7 @@ d
   it("go 11: assignCSSBlob", () => {
     // the CSS isn't validated in this test, OR the code-under-test
     // there are other tools to do that,
-    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
 
     assert.equal(dom.querySelectorAll("style").length, 0, "test1");
     assignCSSBlob(
@@ -788,7 +776,7 @@ d
     assert.equal(dom.querySelectorAll("style").length, 2, "test3");
   });
 
-/*
+  /*
   it("go 12: textNodesUnder", (context) => {
     // the CSS isn't validated in this test, OR the code-under-test
     // there are other tools to do that,
@@ -814,7 +802,7 @@ d
   it("go 12: allDescendants", (context) => {
     // the CSS isn't validated in this test, OR the code-under-test
     // there are other tools to do that,
-    const [dom, loc, win] = page(TEST_MACHINE+"resource/home", 3);
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/home", 3);
     const STR = `<ul id="test1">
 <li>dfgdfg
 <li>dfgdgdgqwq
@@ -824,15 +812,14 @@ d
     appendIsland("#point2", STR, dom);
     let START = dom.querySelector("#test1");
     let RET = allDescendants(START);
-    assert.isFalse( Object.is(RET, null), "test1");
-    assert.isFalse( Object.is(RET, false), "test1");
-	let ANNOYING=Array.from(RET); 
+    assert.isFalse(Object.is(RET, null), "test1");
+    assert.isFalse(Object.is(RET, false), "test1");
+    let ANNOYING = Array.from(RET);
     assert.equal(ANNOYING.length, 9, "test1");
 
     START = dom.querySelector("#test2");
-    assert.equal( Array.from(allDescendants(START)).length, 0, "test2");
+    assert.equal(Array.from(allDescendants(START)).length, 0, "test2");
 
     // export function textNodesUnder(el:HTMLElement, dom:Document):Array<HTMLElement>
   });
-
 });

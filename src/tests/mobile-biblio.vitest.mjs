@@ -33,28 +33,28 @@ describe("TEST mobile-biblio", () => {
   it("go 2: render", () => {
     let dat = [
       {
-        url: TEST_MACHINE+"resource/article1",
+        url: TEST_MACHINE + "resource/article1",
         title: "fg gdsg fgdfgdf gdfg dfg dg ",
         desc: "sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf",
         auth: "racheal",
         date: "1st-june-2001",
       },
       {
-        url: TEST_MACHINE+"resource/article2",
+        url: TEST_MACHINE + "resource/article2",
         title: "fg gdsg fgdfgg dfgdfg dg ad",
         desc: "sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf",
         auth: "racheal",
         date: "1st-june-2002",
       },
       {
-        url: TEST_MACHINE+"resource/article3",
+        url: TEST_MACHINE + "resource/article3",
         title: "dfg dg dfg dfgdfg dg ad",
         desc: "sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf",
         auth: "racheal",
         date: "1st-june-2003",
       },
       {
-        url: TEST_MACHINE+"resource/article4",
+        url: TEST_MACHINE + "resource/article4",
         title: "fg gdsg fgdfgdf dfgdfg dg ad",
         desc: "sfsdf df sdffsdf sfsdfs sdfsdfs dfsfsdfsdfsdf",
         auth: "racheal",
@@ -103,35 +103,35 @@ describe("TEST mobile-biblio", () => {
         title: "sdfsdfs sdfsdfsfs",
         desc: "sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         auth: "racheal",
-        url: TEST_MACHINE+"resource/article1",
+        url: TEST_MACHINE + "resource/article1",
       },
       {
         date: +new Date("2000-04-01 09:00:00 Z"),
         title: "sdfsdfs 23423432",
         desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         auth: "racheal",
-        url: TEST_MACHINE+"resource/article2",
+        url: TEST_MACHINE + "resource/article2",
       },
       {
         date: 0,
         title: "sdfsdfs 23423432",
         desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         auth: "",
-        url: TEST_MACHINE+"resource/article3",
+        url: TEST_MACHINE + "resource/article3",
       },
       {
         date: +new Date("2000-05-01 09:00:00 Z"),
         title: "sdfsdfs 23423432",
         desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         auth: false,
-        url: TEST_MACHINE+"resource/article4",
+        url: TEST_MACHINE + "resource/article4",
       },
       {
         date: +new Date("2000-04-01 09:00:00 Z"),
         title: "sdfsdfs w32dd2",
         desc: null,
         auth: "racheal",
-        url: TEST_MACHINE+"resource/article5",
+        url: TEST_MACHINE + "resource/article5",
       },
     ];
     let dat2 = [
@@ -141,7 +141,7 @@ describe("TEST mobile-biblio", () => {
         desc: "sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         offset: 0,
         title: "sdfsdfs sdfsdfsfs",
-        url: TEST_MACHINE+"resource/article1",
+        url: TEST_MACHINE + "resource/article1",
       },
       {
         auth: "racheal",
@@ -149,7 +149,7 @@ describe("TEST mobile-biblio", () => {
         date: " 01-April-2000 ",
         offset: 1,
         title: "sdfsdfs 23423432",
-        url: TEST_MACHINE+"resource/article2",
+        url: TEST_MACHINE + "resource/article2",
       },
       {
         desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jd",
@@ -157,7 +157,7 @@ describe("TEST mobile-biblio", () => {
         auth: "[No author]",
         date: "[No date]",
         offset: 2,
-        url: TEST_MACHINE+"resource/article3",
+        url: TEST_MACHINE + "resource/article3",
       },
       {
         auth: "[No author]",
@@ -165,7 +165,7 @@ describe("TEST mobile-biblio", () => {
         desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jd",
         offset: 3,
         title: "sdfsdfs 23423432",
-        url: TEST_MACHINE+"resource/article4",
+        url: TEST_MACHINE + "resource/article4",
       },
       {
         auth: "racheal",
@@ -173,7 +173,7 @@ describe("TEST mobile-biblio", () => {
         desc: "null",
         offset: 4,
         title: "sdfsdfs w32dd2",
-        url: TEST_MACHINE+"resource/article5",
+        url: TEST_MACHINE + "resource/article5",
       },
     ];
 
@@ -184,35 +184,35 @@ describe("TEST mobile-biblio", () => {
         title: "sdfsdfs sdfsdfsfs",
         desc: "sf sdfs fsdfs dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         auth: "racheal",
-        url: TEST_MACHINE+"resource/article1",
+        url: TEST_MACHINE + "resource/article1",
       },
       {
         date: +new Date("2000-04-01 09:00:00 Z"),
         title: "sdfsdfs 23423432",
         desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         auth: "racheal",
-        url: TEST_MACHINE+"resource/article2",
+        url: TEST_MACHINE + "resource/article2",
       },
       {
         date: 0,
         title: "sdfsdfs 23423432",
         desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         auth: "",
-        url: TEST_MACHINE+"resource/article3",
+        url: TEST_MACHINE + "resource/article3",
       },
       {
         date: +new Date("2000-05-01 09:00:00 Z"),
         title: "sdfsdfs 23423432",
         desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jdty jdtykdtyjd tjdt dyjd tjsyjdtyk sj srh ssr srjs rjsrt srjahs ryjdtyjdtyfyukdguilfyjdk7idt jtdh sr dj s tir r idj dtj ha dtyr aedtyjsth ssrt dthsr srth srt ersr6u sthsrtj srhsrtj tyhsr hsrthsrth sr heahs rhs hsrh aeh strh aer serh ae dfsf sdfsdfs fsdfsdf ssdfsd fsdf sdf ssdfs dfsdfsdf sdf sdf sdfs fsdf sdfsdfs dfsd fsdf sdfsdfsdf sfsdfsdfs",
         auth: false,
-        url: TEST_MACHINE+"resource/article4",
+        url: TEST_MACHINE + "resource/article4",
       },
       {
         date: +new Date("2000-04-01 09:00:00 Z"),
         title: "sdfsdfs w32dd2",
         desc: null,
         auth: "racheal",
-        url: TEST_MACHINE+"resource/article5",
+        url: TEST_MACHINE + "resource/article5",
       },
       null,
       null,
@@ -224,7 +224,7 @@ describe("TEST mobile-biblio", () => {
         title: "sdfsdfs sdfsdfsfs",
         date: " 01-March-2000 ",
         auth: "racheal",
-        url: TEST_MACHINE+"resource/article1",
+        url: TEST_MACHINE + "resource/article1",
       },
       {
         offset: 1,
@@ -232,7 +232,7 @@ describe("TEST mobile-biblio", () => {
         title: "sdfsdfs 23423432",
         date: " 01-April-2000 ",
         auth: "racheal",
-        url: TEST_MACHINE+"resource/article2",
+        url: TEST_MACHINE + "resource/article2",
       },
       {
         offset: 2,
@@ -240,7 +240,7 @@ describe("TEST mobile-biblio", () => {
         title: "sdfsdfs 23423432",
         date: "[No date]",
         auth: "[No author]",
-        url: TEST_MACHINE+"resource/article3",
+        url: TEST_MACHINE + "resource/article3",
       },
       {
         auth: "[No author]",
@@ -248,7 +248,7 @@ describe("TEST mobile-biblio", () => {
         desc: "sf sdfs fsdfsudfg dgadgd gdg afgad gadfg afgadg afgadgadf dghk gkdg dghj gs hag aerh adg zdgd gdg adga gdh ryjtha rg aerh r RUS RJD RHS TK RSTH SRJDRJS RTJDTYDGJDGKDTYJDtyjfyu kk kd jdyjdj sryj dtyjsrj srjt dyjdjdtkdtyjdt jdtys jd",
         offset: 3,
         title: "sdfsdfs 23423432",
-        url: TEST_MACHINE+"resource/article4",
+        url: TEST_MACHINE + "resource/article4",
       },
       {
         auth: "racheal",
@@ -256,7 +256,7 @@ describe("TEST mobile-biblio", () => {
         desc: "null",
         offset: 4,
         title: "sdfsdfs w32dd2",
-        url: TEST_MACHINE+"resource/article5",
+        url: TEST_MACHINE + "resource/article5",
       },
       {
         auth: "[No author]",
@@ -281,10 +281,7 @@ describe("TEST mobile-biblio", () => {
   });
 
   it("go 4: adjustDOM", () => {
-    const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/reading-list",
-      3,
-    );
+    const [dom, loc, win] = page(TEST_MACHINE + "resource/reading-list", 3);
     // function adjustDom(dat: Array<ReferenceType>, dom: Document): void
     let str = `
 <div id="biblio" style="display:none;">
@@ -315,7 +312,7 @@ describe("TEST mobile-biblio", () => {
   });
 
   it("go 3: createBiblio", async () => {
-    const [dom, loc] = page(TEST_MACHINE+"resource/reading-list", 2);
+    const [dom, loc] = page(TEST_MACHINE + "resource/reading-list", 2);
     let str = `
 <div id="biblio" style="display:none;">
 <p> here is old stuff
@@ -347,7 +344,7 @@ describe("TEST mobile-biblio", () => {
   });
 
   it("go 3.1: createBiblio ", async () => {
-    const url = TEST_MACHINE+"resource/reading-list";
+    const url = TEST_MACHINE + "resource/reading-list";
     const brwr = new JSDOM(
       `<html>
 <head><title>test1</title></head>

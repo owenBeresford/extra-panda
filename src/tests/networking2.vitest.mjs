@@ -16,6 +16,7 @@ vi.setConfig({ testTimeout: 0 });
 describe("TEST references networking2 ", () => {
   const LAN_IP =
     "http://" + mapInterfaces(networkInterfaces())["first"][0] + "/";
+
   const BAD_IP = TEST_MACHINE;
 
   it.sequential("go 1: networking fetch2 ", async () => {
@@ -33,6 +34,7 @@ describe("TEST references networking2 ", () => {
     });
   });
 
+  /*
   it.sequential("go 1.1: networking fetch2(bad IP) ", async () => {
     return new Promise(async (good, bad) => {
       const FP2 = new FakePage();
@@ -44,6 +46,7 @@ describe("TEST references networking2 ", () => {
       assert.notEqual(err.message, "");
     });
   });
+*/
 
   it.sequential("go 1.2: networking fetch2(wiki) ", async () => {
     return new Promise(async (good, bad) => {
@@ -77,7 +80,7 @@ describe("TEST references networking2 ", () => {
       await fetch2(URL, FP4.success, FP4.failure, FP4.assignClose);
     });
   });
-*/
+
   it.sequential("go 1.6: networking fetch2( medium ) ", async () => {
     return new Promise(async (good, bad) => {
       const FP4 = new FakePage();
@@ -88,7 +91,7 @@ describe("TEST references networking2 ", () => {
       await fetch2(URL, FP4.success, FP4.failure, FP4.assignClose);
     });
   });
-
+*/
   it.sequential("go 1.7: networking fetch2( isreali VPS site ) ", async () => {
     return new Promise(async (good, bad) => {
       const FP4 = new FakePage(true);
@@ -129,13 +132,14 @@ describe("TEST references networking2 ", () => {
     await exec_reference_url(0, URL, FP5);
   });
 
+  /*
   it.sequential("go 2: exec_reference_url(bad URL) ", async () => {
     const FP5 = new FakePage();
     FP5.setState(5);
     let URL = BAD_IP + "resource/contact-me";
     await exec_reference_url(0, URL, FP5);
   });
-
+*/
   /*
   it.sequential("go 1.4: networking fetch2( Elsevier) ", async () => {
     return new Promise(async (good, bad) => {

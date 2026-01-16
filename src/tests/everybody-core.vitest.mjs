@@ -23,7 +23,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     }
 
     const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/architecture?mobile=0&debug=1",
+      TEST_MACHINE + "resource/architecture?mobile=0&debug=1",
       3,
     );
     let str = `<p role="status">PING</p>   <div id="navBar"> 
@@ -396,7 +396,7 @@ describe("TEST core HARDCORE MODE (everything at once) ~ e'ribody jazz handz Now
     }
 
     const [dom, loc, win] = page(
-      TEST_MACHINE+"resource/home?mobile=1&debug=1",
+      TEST_MACHINE + "resource/home?mobile=1&debug=1",
       3,
     );
     let str = `<p role="status">PING</p> <div id="navBar"> 
