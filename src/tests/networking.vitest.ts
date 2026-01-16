@@ -12,7 +12,7 @@ vi.setConfig({ testTimeout: 0 });
 describe("TEST networking", () => {
   const LAN_IP =
     "http://" + mapInterfaces(networkInterfaces())["first"][0] + "/";
-  const BAD_IP = TEST_MACHINE;
+  const BAD_IP = "http://192.168.66.66";
 
   it.sequential("go 1: getFetch", () => {
     assert.equal(typeof getFetch, "function", "assert #1");
