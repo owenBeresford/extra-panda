@@ -175,3 +175,6 @@ export type BiblioProps = DesktopBiblioProps & MobileBiblioProps;
 
 // add other possible events here
 export type MiscEvent = MouseEvent | TouchEvent | KeyboardEvent;
+
+export type CBeffects= (a:HTMLElement, b:HTMLElement)=>void; 
+
