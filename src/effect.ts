@@ -1,5 +1,5 @@
 /*jslint white: true, browser: true, devel: true,  nomen: true, todo: true */
-import { appendIsland, allDescendants } from "./dom-base";
+import { appendIsland, allDescendants  } from "./dom-base";
 import { pullout } from "./string-base";
 import { applyDOMpositions } from "./desktop-biblio";
 
@@ -142,33 +142,36 @@ Do a "<code" branch, then:
           )
           .replaceAll(r2, "//");
       } else {
-        _editTextNodes(allDescendants(bash[i]));
+        allDescendants(bash[i], renderBashTextNodes);
       }
     }
   }
 }
 
+type ReducedRAMHTMLElement = HTMLElement & { isCode:boolean };
 /**
  * _editTextNodes
  * A util to walk the list of nodes and edit text. 
  * May get some logic moved to args in future
 
- * @param {Iterable<HTMLElement>} list
- * @public
+ * @DEPRECATED
+ * @param {Iterable<ReducedRAMHTMLElement >} list
+ * @private
  * @returns {void}
  */
-function _editTextNodes(list: Iterable<HTMLElement>): void {
+function _editTextNodes(list: Iterable<ReducedRAMHTMLElement >): void {
   const r1 = new RegExp("`([^`]+)`", "g");
   const r2 = new RegExp("/ /", "g");
+  let tmp:Array<ReducedRAMHTMLElement>=  Array.from(list);
 
-  let cur; // type of an iterable response
-  while ((cur = list.next() && cur && cur.done === false)) {
-    let cur2: HTMLElement = cur.value;
+  let cur:ReducedRAMHTMLElement ; // type of an iterable response
+  for (let i =0; i<tmp.length; i++ ) {
+    cur=tmp[i];
     if (
-      cur2.nodeType === Node.TEXT_NODE &&
-      cur2.parentNode.tagName !== "CODE"
+      cur.nodeType === Node.TEXT_NODE &&
+      !cur.isCode
     ) {
-      cur2.parentNode.innerHTML = cur2.parentNode.innerHTML
+       cur.parentNode.innerHTML = cur.parentNode.innerHTML
         .replaceAll(
           r1,
           '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>',
@@ -177,6 +180,34 @@ function _editTextNodes(list: Iterable<HTMLElement>): void {
     }
   }
 }
+
+/**
+ * renderBashTextNodes
+ * Edit Elements (detached from DOM) when they seem to have backricks in them
+
+ * very IMPURE
+ * @param {HTMLElement} el
+ * @param {HTMLElement } par
+ * @public
+ * @returns {void}
+ */
+export function renderBashTextNodes(el: HTMLElement, par:HTMLElement ):void {
+  const r1 = new RegExp("`([^`]+)`", "g");
+  const r2 = new RegExp("/ /", "g");
+
+    if (
+      el.nodeType === Node.TEXT_NODE &&
+      !par.tagName!=="CODE"
+    ) {
+      par.innerHTML = par.innerHTML
+        .replaceAll(
+          r1,
+          '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>',
+        )
+        .replaceAll(r2, "//");
+    }
+}
+
 
 /**
  * addFancyButtonArrow
@@ -211,4 +242,5 @@ export const TEST_ONLY = {
   addBooks,
   addBashSamples,
   addFancyButtonArrow,
+	renderBashTextNodes,
 };
