@@ -14,6 +14,9 @@ FEATURES
 
 MAINTENANCE
 - Least stupid way to tell users not to make unit-test chrome window smaller, or the tests in the runner will fail next test execution
+- Extend eslint config for https://web.dev/blog/eslint-baseline-integration
+- Move syntax highlighting until after page load, so UI loads faster
+- Add a webtest for mastodon feature
 - Port the everything* tests to storybook, or the browser tests
 - WCAG tests (lighthouse) for whole pages need to go some where (suggest this project) https://www.npmjs.com/package/wcag 
 - Look at https://github.com/githubnext/testpilot - test generator
