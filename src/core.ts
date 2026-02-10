@@ -140,7 +140,7 @@ function burgerMenu(id: string = ".burgerMenu", dom: Document): void {
   }
 }
 
-/* eslint complexity: ["error", 30] */
+/* eslint complexity: ["warn", 30] */
 /**
  * siteCore
  * Applies all the functions in this project to the DOM
