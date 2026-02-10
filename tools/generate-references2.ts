@@ -130,6 +130,7 @@ function dump_to_disk(
   });
 }
 
+/* eslint complexity: ["warn", 30] */
 /**
  * links2references
  * "makes it work"

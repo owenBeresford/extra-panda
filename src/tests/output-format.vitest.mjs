@@ -18,7 +18,6 @@ describe("TEST generate CSS ", () => {
     SRC = {
       font: '"jibber, jabber2"',
       "font-size": "0.8em",
-      font: '"jibber, jabber2"',
     };
     DST = `.test1 { font:"jibber, jabber2"; font-size:0.8em; }`;
     assert.equal(hash2CSS(".test1", SRC), DST, "bullet #2");
@@ -45,7 +44,6 @@ describe("TEST generate CSS ", () => {
     SRC = {
       font: '"jibber, jabber2"',
       "font-size": "0.8em",
-      font: '"jibber, jabber"',
     };
     DST = `{"font":"\\"jibber, jabber\\"","font-size":"0.8em"}`;
     assert.equal(hash2json(SRC), DST, "bullet #6");

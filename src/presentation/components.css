@@ -533,8 +533,18 @@ dialog.mastodonWidget a.button.masto {
   margin: 0.65em;
   margin-bottom: 0.1em;
 }
+input[type="submit"].button.masto {
+  width: fit-content;
+  padding: 0.8em;
+  font-size: 90%;
+}
 
 @media screen and (min-resolution: 150dpi) {
+  input[type="submit"].button.masto {
+    width: fit-content;
+    padding: 1em;
+  }
+
   dialog.mastodonWidget[open] {
     width: 95%;
     left: -2em;
@@ -567,6 +577,7 @@ dialog.mastodonWidget a.button.masto {
   .articleHeader .mastodonWidget span.button.trimmed i {
     width: 50px;
     margin: 0.5em 0.3em;
+    font-size: 90%;
   }
   .mastodonWidget .fa-cancel {
     margin: 0px;

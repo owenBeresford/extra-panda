@@ -53,6 +53,7 @@ describe("TEST references MorePages ", () => {
           dat.auth,
           "Error passed through to bad() CB successfully",
         );
+        return null;
       },
       (dat) => {
         assert.equal(
@@ -60,6 +61,7 @@ describe("TEST references MorePages ", () => {
           0,
           "K@@@XX0N!!, KL@@@XX0N!! bad, wrong, test die now::" + dat.message,
         );
+        return null;
       },
     );
 
@@ -82,6 +84,7 @@ describe("TEST references MorePages ", () => {
     }).then(
       (dat) => {
         assert.equal(1, 1, "Passed out right door.");
+        return null;
       },
       (err) => {
         assert.equal(
@@ -89,6 +92,7 @@ describe("TEST references MorePages ", () => {
           0,
           "K@@@XX0N!!, KL@@@XX0N!! bad, wrong, test die now " + err,
         );
+        return null;
       },
     );
 

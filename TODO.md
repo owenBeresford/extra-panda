@@ -14,13 +14,16 @@ FEATURES
 
 MAINTENANCE
 - Least stupid way to tell users not to make unit-test chrome window smaller, or the tests in the runner will fail next test execution
+- Extend eslint config for https://web.dev/blog/eslint-baseline-integration
+- Move syntax highlighting until after page load, so UI loads faster
+- Add a webtest for mastodon feature
 - Port the everything* tests to storybook, or the browser tests
 - WCAG tests (lighthouse) for whole pages need to go some where (suggest this project) https://www.npmjs.com/package/wcag 
 - Look at https://github.com/githubnext/testpilot - test generator
 - Log fault on validate class for HTML with no doctype header.   DUMP html-validate, it doesn't validate HTML5 properly,
 - Make RAM usage and execution-cost tests-and-monitoring more mature
 - Port remaining non-production files to TS.  
-- Declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://medium.com/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d 
+- Declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://scribe.rip/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d  https://scribe.rip/@joelmalone/get-jsx-to-recognise-your-custom-element-in-react-or-preact-bf08d7522208 
 - To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
 - Rebuild snap to end CSS (unused but included), as dis-functional in Chrome  
 - Design 1 cycle animation on title popout IF OPEN 

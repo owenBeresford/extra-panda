@@ -92,6 +92,7 @@ export class QOOKIE implements Cookieable {
  * @param {string} fs - font-size
  * @param {string} dir - direction, mostly unused
  * @param {string} clr - color scheme
+ * @param {Document} dom
  * @protected
  * @returns {void}
  */

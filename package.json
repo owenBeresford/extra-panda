@@ -33,7 +33,7 @@
     "url": "https://github.com/owenBeresford/extra-panda.git"
   },
   "author": "github user name: owen beresford",
-  "license": "ISC",
+  "license": "AGPL-3.0",
   "devDependencies": {
     "@eslint-community/eslint-utils": "^4.5.1",
     "@jest/globals": "^29.7.0",

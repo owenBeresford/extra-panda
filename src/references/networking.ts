@@ -47,9 +47,6 @@ export function fetch2(
 
   curl.setOpt("CUSTOMREQUEST", "GET");
   curl.setOpt("URL", url);
-  if (EXTRA_URL_FILTERING) {
-    curl = urlFiltering(url, curl);
-  }
 
   /*
 	To be able to check references, changing these headers sometimes helps
@@ -76,8 +73,8 @@ export function fetch2(
   curl.setOpt("VERBOSE", CURL_VERBOSE);
   curl.setOpt("CONNECTTIMEOUT", TO);
 
-  if (url.match(".pdf")) {
-    curl.setOpt("TIMEOUT", TIMEOUT * 3.3);
+  if (EXTRA_URL_FILTERING) {
+    curl = urlFiltering(url, curl);
   }
 
   curl.on("end", good1);
@@ -198,13 +195,21 @@ type EDIT_REQUEST = (c: TaggedCurl) => void;
  */
 function urlFiltering(url: string, client: TaggedCurl): TaggedCurl {
   // check return values on these lamda.  #leSigh, pointer, or lack of them
-  const HOT_URLS: Record<string, EDIT_REQUEST> = {
-    "unicode.org": () => {
+  let HOT_URLS: Record<string | RegExp, EDIT_REQUEST> = {
+    "unicode.org": (client) => {
+      // I think this doesn't work in node-libCurl
+      // Clang test code https://curl.se/libcurl/c/range.html
+      // when I run this I get back 0.5MB bytes, not 10K,
+      // might be a cloudflare issue ~ who host unicode.org
       client.setOpt(Curl.option.RANGE, "0-10000");
+      client.setOpt(Curl.option.TIMEOUT, TIMEOUT * 3.3);
     },
-    "stackoverflow.com": () => {
+    "stackoverflow.com": (client) => {
       client.setOpt(Curl.option.CUSTOMREQUEST, "HEAD");
     },
+  };
+  HOT_URLS[/\.pdf$/] = (client) => {
+    client.setOpt(Curl.option.TIMEOUT, TIMEOUT * 3.3);
   };
 
   Object.keys(HOT_URLS).map(function (a: any, b: number): void {

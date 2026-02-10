@@ -154,7 +154,7 @@ type ReducedRAMHTMLElement = HTMLElement & { isCode: boolean };
  * A util to walk the list of nodes and edit text. 
  * May get some logic moved to args in future
 
- * @DEPRECATED
+ * @deprecated  I changed the approach to renderBashTextNodes, so this is unused code
  * @param {Iterable<ReducedRAMHTMLElement >} list
  * @private
  * @returns {void}

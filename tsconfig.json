@@ -7,6 +7,7 @@
     "skipLibCheck": true,
     "module": "esnext",
     "allowJs": true,
+		"checkJs": true,
     "strict": true,
     "target": "es2022",
     "allowSyntheticDefaultImports": true,

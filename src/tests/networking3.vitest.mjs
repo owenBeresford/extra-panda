@@ -1,5 +1,5 @@
 // the asserts are in the worker class
-import { describe, it, vi } from "vitest";
+import { describe, it, vi, assert } from "vitest";
 import { networkInterfaces } from "node:os";
 import { Curl } from "node-libcurl";
 import { TEST_MACHINE } from "../immutables";
