@@ -1,6 +1,7 @@
 export const COOKIE_JAR = "/var/www/oab1/cookies.txt";
 export const TIMEOUT = 5; // seconds
 export const BATCH_SZ = 7;
+// it would be nice to set this on patch-mode enabled
 export const CURL_VERBOSE = false;
 export const LINK_MIN_NO = 4;
 export const HTTP_REDIRECT_LIMIT = 3;
