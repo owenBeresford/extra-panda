@@ -195,22 +195,22 @@ type EDIT_REQUEST = (c: TaggedCurl) => void;
  */
 function urlFiltering(url: string, client: TaggedCurl): TaggedCurl {
   // check return values on these lamda.  #leSigh, pointer, or lack of them
-  let HOT_URLS: Record<string|RegExp, EDIT_REQUEST> = {
+  let HOT_URLS: Record<string | RegExp, EDIT_REQUEST> = {
     "unicode.org": (client) => {
-// I think this doesn't work in node-libCurl
-// Clang test code https://curl.se/libcurl/c/range.html
-// when I run this I get back 0.5MB bytes, not 10K, 
-// might be a cloudflare issue ~ who host unicode.org 
+      // I think this doesn't work in node-libCurl
+      // Clang test code https://curl.se/libcurl/c/range.html
+      // when I run this I get back 0.5MB bytes, not 10K,
+      // might be a cloudflare issue ~ who host unicode.org
       client.setOpt(Curl.option.RANGE, "0-10000");
-	  client.setOpt(Curl.option.TIMEOUT, TIMEOUT * 3.3);
+      client.setOpt(Curl.option.TIMEOUT, TIMEOUT * 3.3);
     },
     "stackoverflow.com": (client) => {
       client.setOpt(Curl.option.CUSTOMREQUEST, "HEAD");
     },
   };
-	HOT_URLS[/\.pdf$/]= (client) => {
-	  client.setOpt(Curl.option.TIMEOUT, TIMEOUT * 3.3);
-	};
+  HOT_URLS[/\.pdf$/] = (client) => {
+    client.setOpt(Curl.option.TIMEOUT, TIMEOUT * 3.3);
+  };
 
   Object.keys(HOT_URLS).map(function (a: any, b: number): void {
     if (url.match(a)) {

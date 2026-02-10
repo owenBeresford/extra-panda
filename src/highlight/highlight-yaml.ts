@@ -17,7 +17,7 @@ hljs.registerLanguage("yaml", (hl: HLJSApi): Language => {
  */
 export function execHighlight(dom: Document = document): void {
   dom.querySelectorAll('code[lang="yaml"]').forEach((el: HTMLElement): void => {
-	hljs.highlightElement(el);
+    hljs.highlightElement(el);
   });
 }
 
