@@ -1412,6 +1412,9 @@ Consider moving the widths to a CSS var
   user-select: all;
   hyphenate-character: "↩";
 }
+/* plain backticks are left with this.  But larger samples look better isolated */
+.addBashSamples details code { display:block; }
+
 .halferWords .highlight:not([lang]),
 .highlight.wide,
 .fewWords .highlight:not([lang]) {
