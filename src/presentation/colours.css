@@ -243,6 +243,8 @@ ol li::before {
   --bgg: 73;
   --bgb: 135;
 }
+
+/* deprecated in favour of .pulloutWidget and .pullout[34] */
 .pullout {
   --bgr: 204;
   --bgg: 255;
@@ -800,3 +802,65 @@ One of the places I used this, I used border-top to make the tab body look conne
   --fgcontrast: 0.95;
   --bgcontrast: 1;
 }
+
+/* I am changing the pullout numbers as this has a different structure in the DOM, 
+		and they need to not get tangled. */
+aside.pulloutWidget .g1.pullout3, aside.pulloutWidget .g1.pullout3::before {
+    --bgr: 204;
+    --bgg: 255;
+    --bgb: 153;
+  border-bottom: solid 3px var(--starkfg);
+} 
+
+aside.pulloutWidget .g1.pullout4, aside.pulloutWidget .g1.pullout4::before {
+    --bgr: 215;
+    --bgg: 242;
+    --bgb: 250;
+  border-bottom: solid 3px var(--starkfg);
+} 
+
+aside.pulloutWidget:not(code) .g1::before  {
+   background-color: rgba(calc(var(--bgr) * var(--bgcontrast)), calc(var(--bgg) * var(--bgcontrast)), calc(var(--bgb) * var(--bgcontrast)), 1);
+    border-left-color: black;
+	border-top-color:black;
+}
+aside.pulloutWidget:not(code) .g1 { border-top-color:black; }
+
+
+section.warningWidget .g1, section.warningWidget .g1::before {
+    --bgr: 125;
+    --bgg: 0;
+    --bgb: 0;
+	--fgr:240;
+	--fgg:240;
+	--fgb:240;
+  border-bottom: solid 3px var(--starkfg);
+} 
+
+section.warningWidget:not(code) .g1::before  {
+   background-color: rgba(calc(var(--bgr) * var(--bgcontrast)), calc(var(--bgg) * var(--bgcontrast)), calc(var(--bgb) * var(--bgcontrast)), 1);
+    border-left-color: black;
+	border-top-color:black;
+}
+section.warningWidget:not(code) .g1 { border-top-color:black; }
+section.warningWidget .g1  a { color:var(--starkfg); }
+
+
+/* I wish i had --starkfg as RGBA */
+aside.pulloutWidget .g1.pullout3, aside.pulloutWidget .g1.pullout3 >*, 
+aside.pulloutWidget .g1.pullout4, aside.pulloutWidget .g1.pullout4 >* {
+  background-image: linear-gradient(
+    150deg,
+    rgba( var(--bgr), var(--bgg), var(--bgb), 100) 30%,
+    rgba(255, 255, 255, 100) 80%
+  );
+}
+
+section.warningWidget .g1, section.warningWidget .g1 >* {
+  background-image: linear-gradient(
+    150deg,
+    rgba( var(--bgr), var(--bgg), var(--bgb), 100) 30%,
+    rgba(54, 50, 50, 100) 80%
+  );
+}
+

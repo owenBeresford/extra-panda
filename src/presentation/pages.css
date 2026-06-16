@@ -555,13 +555,18 @@
   margin-bottom: 2em;
 }
 .paradigmShiftContainer i {
-  font-size: 110%;
+  font-size: 115%;
+  font-style: italic;
 }
 .paradigmShiftContainer .pullout {
   padding: 1em;
-  margin-left: 30%;
   display: block;
 }
+.paradigmShiftContainer .pullout a {
+  color:#fff;
+  text-decoration:underline;
+}
+
 .pharNotesContainer .halferWords ul,
 .pharNotesContainer .halferWords ol,
 .pharNotesContainer .halferWords p {
