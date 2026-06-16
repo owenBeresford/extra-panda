@@ -2,7 +2,7 @@
 
 FEATURES
 - Add type washing to JSON ingestion used in multiple places https://github.com/samchon/typia https://medium.com/@jkc5186/understanding-typescript-types-with-prisma-e0e41a7d98f3 
-- Add multilingual support
+- Add multilingual support to this project.  The SSR tool does have locale support.
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom   to TESTS
 - Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages. 
 - POSSIBLE: Add feature dump (ie download as attachment) in-HTML file JS assets, or SVG assets, or CSS assets.  Need to think about UI for this feature.
@@ -11,6 +11,7 @@ FEATURES
 - Dark mode CSS
 - For large images (SVG), look at svg-pan-zoom https://www.npmjs.com/package/svg-pan-zoom UI deno https://deepwiki.com/tmgthb/Autonomous-Agents/3.3-react-based-agent-frameworks
 - Add new darkarts goal: **** FOR TESTING, not cracking,**** correct simulation of keyboard input to show keyboard accessibility works correctly.
+- add vis-test for pulloutWidge and warningWidgett
 
 MAINTENANCE
 - Least stupid way to tell users not to make unit-test chrome window smaller, or the tests in the runner will fail next test execution
@@ -128,4 +129,4 @@ MAINTENANCE
 - DONE: Add python syntax highlighter
 - DONE: effects.ts, addBashSamples():: backticks in bash samples get swallowed due to them being quote delimiters  and bash scripting
 - DONE In references, look at making some domains use HEAD not GET 
-
+- DONE: some tools can't see robots.txt, fiddle with headers for this file to assist.
