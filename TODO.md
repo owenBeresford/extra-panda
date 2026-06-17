@@ -2,7 +2,7 @@
 
 FEATURES
 - Add type washing to JSON ingestion used in multiple places https://github.com/samchon/typia https://medium.com/@jkc5186/understanding-typescript-types-with-prisma-e0e41a7d98f3 
-- Add multilingual support
+- Add multilingual support to this project.  The SSR tool does have locale support.
 - Performance hack:: https://webreflection.medium.com/linkedom-a-jsdom-alternative-53dd8f699311 https://www.npmjs.com/package/linkedom   to TESTS
 - Build some solution to syntax highlighting for CSS and JS inside highlighting for other languages. 
 - POSSIBLE: Add feature dump (ie download as attachment) in-HTML file JS assets, or SVG assets, or CSS assets.  Need to think about UI for this feature.
@@ -128,4 +128,6 @@ MAINTENANCE
 - DONE: Add python syntax highlighter
 - DONE: effects.ts, addBashSamples():: backticks in bash samples get swallowed due to them being quote delimiters  and bash scripting
 - DONE In references, look at making some domains use HEAD not GET 
+- DONE: some tools can't see robots.txt, fiddle with headers for this file to assist.
+- DONE: Add better grade of notice/ warning / info that earlier builds.
 

@@ -169,7 +169,7 @@ I have replaced the local CSS with better organised CSS to make it more readable
 - TODO: Want to add some CSS tests for crucial UI processes, like z-index.
 - TODO: Make support for win32.
 - TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
-- Am I aware that Vitest supports a GUI mode? [✔].   It was doing that when I first started using this tool, see [https://vitest.dev/guide/ui.html].   Unless I read this feature wrongly, this is just an output driver, not running the modules in the browser.     
+- Am I aware that Vitest supports a GUI mode? [✔].   It was doing that when I first started using this tool, see [https://vitest.dev/guide/ui.html] [https://vitest.dev/config/browser/playwright.html#actiontimeout] ~ UPDATE: a solution, not unlike mine.   Unless I read this feature wrongly, this is just an output driver, not running the modules in the browser.     
 
 </details>
 <details>

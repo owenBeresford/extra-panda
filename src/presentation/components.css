@@ -101,6 +101,72 @@
   }
 }
 
+/* used in next two components */
+.g1 { height:100%; width:calc( 100% - 3em ); flex-basis:calc( 100% - 3em ); font-style: italic;
+	border-top-width:3px; border-top-style:solid; padding-top:0.3em; padding-right:0.5em; }
+
+/* new generation pullouts, now a component 
+ * This should disable most effects when CODE is present, as they fight for control.
+ * 	The .g1 exists as there more be more than 1 element inside  pullout, named as SVG G element
+ * 	The ASIDE is semantic. */
+aside.pulloutWidget:has(.g1) { display:flex; flex-direction:row; justify-content: end; position: relative; 
+					break-inside: avoid-column; max-width:70%; margin-left:2em; margin-bottom:0.5em; }
+@media screen and (max-width:600px)	{
+	aside.pulloutWidget:has(.g1) { max-width:95%; margin-left:2.5%; }
+}
+aside.pulloutWidget:not(code) .g1::before  {
+    content: "🖝";
+    display: block;
+    font-size: 300%;
+    line-height: 0.5;
+    width: 1.5em;
+    left: -0.5em;
+    top: -0.01em;
+    padding-top: 0.58em;
+    height: 100%;
+    position: absolute;
+    justify-items: stretch;
+    border-bottom-left-radius: 15%;
+    border: solid 3px transparent;
+}
+aside.pulloutWidget ul.ulbasic { margin-left:0px; }
+aside.pulloutWidget .g1  a { text-decoration:underline; }
+.lotsOfWords aside.pulloutWidget:has(.g1) { max-width:initial; }
+@media screen and (min-resolution: 150dpi) {
+	aside.pulloutWidget:not(code) .g1::before  {
+		content: " 👉";
+/*    	content: "✋"; */
+	}
+}
+
+/* new generation pullouts, now a component  */
+section.warningWidget { display:flex; flex-direction:row; justify-content: end; position: relative; 
+			break-inside: avoid-column; max-width:70%; margin-left:2em; margin-bottom:0.5em; }
+@media screen and (max-width:600px)	{
+	section.warningWidget:has(.g1) { max-width:95%; margin-left:2.5%; }
+}
+
+section.warningWidget:not(code) .g1::before  {
+    content: "⚠";
+    display: block;
+    font-size: 300%;
+    line-height: 0.5;
+    width: 1.5em;
+    left: -0.5em;
+    top: -0.01em;
+    padding-top: 0.58em;
+    height: 100%;
+    position: absolute;
+    justify-items: stretch;
+    border-bottom-left-radius: 15%;
+    border: solid 3px transparent;
+	font-weight:800;
+}
+section.warningWidget ul.ulbasic { margin-left:0px; }
+section.warningWidget .g1  a { text-decoration:underline; }
+.lotsOfWords section.warningWidget { max-width:initial; }
+
+
 /** shareGroup RENAME and rename metaWidget
 	every page */
 .metaWidget {
@@ -1412,6 +1478,9 @@ Consider moving the widths to a CSS var
   user-select: all;
   hyphenate-character: "↩";
 }
+/* plain backticks are left with this.  But larger samples look better isolated */
+.addBashSamples details code { display:block; }
+
 .halferWords .highlight:not([lang]),
 .highlight.wide,
 .fewWords .highlight:not([lang]) {
