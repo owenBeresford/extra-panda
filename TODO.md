@@ -11,7 +11,6 @@ FEATURES
 - Dark mode CSS
 - For large images (SVG), look at svg-pan-zoom https://www.npmjs.com/package/svg-pan-zoom UI deno https://deepwiki.com/tmgthb/Autonomous-Agents/3.3-react-based-agent-frameworks
 - Add new darkarts goal: **** FOR TESTING, not cracking,**** correct simulation of keyboard input to show keyboard accessibility works correctly.
-- add vis-test for pulloutWidge and warningWidgett
 
 MAINTENANCE
 - Least stupid way to tell users not to make unit-test chrome window smaller, or the tests in the runner will fail next test execution
@@ -130,3 +129,5 @@ MAINTENANCE
 - DONE: effects.ts, addBashSamples():: backticks in bash samples get swallowed due to them being quote delimiters  and bash scripting
 - DONE In references, look at making some domains use HEAD not GET 
 - DONE: some tools can't see robots.txt, fiddle with headers for this file to assist.
+- DONE: Add better grade of notice/ warning / info that earlier builds.
+
