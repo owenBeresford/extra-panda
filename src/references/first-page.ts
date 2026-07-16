@@ -118,10 +118,10 @@ export class FirstPage implements HTMLTransformable {
         log("warn", "URL '" + list[i] + "' is in USA format, try UK version");
       }
       if (list[i].includes("towardsdatascience")) {
-        list[i] = list[i].replace("towardsdatascience.com", "scribe.rip");
+        list[i] = list[i].replace("towardsdatascience.com", "scribe.r4fo.com");
       }
       if (list[i].includes("medium.com")) {
-        list[i] = list[i].replace("://medium.com", "://scribe.rip");
+        list[i] = list[i].replace("://medium.com", "://scribe.r4fo.com/");
       }
       if (list[i].includes("sciencedirect.com")) {
         throw new Error("Klaaxon, source article better " + list[i]);
