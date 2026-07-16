@@ -198,7 +198,7 @@ export function apply_vendors(item: Reference, body: string): Reference {
   const VENDORS: Readonly<Array<VendorRecord>> = [
     _f1("npmjs", "title", mod_npmjs),
     _f1("medium", "auth", mod_medium),
-    _f1("scribe.rip", "auth", mod_scribe),
+    _f1("scribe.r4fo.com", "auth", mod_scribe),
     _f1("github", "auth", mod_github),
     _f1("stackoverflow", "auth", mod_stackoverflow),
     _f1("wikipedia", "auth", mod_wikipedia),

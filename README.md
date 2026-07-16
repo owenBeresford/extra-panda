@@ -191,7 +191,7 @@ This project now holds the CSS used to style the site.   There is a slow moving 
 - I restructured the CSS into "features", rather than cloud of unique IDs/ class names.   I think I have improved the names used so it will be more clear to any readers.   As the size increases, the flat-namespace cloud was getting harder and harder to read.
 - I have removed various old commented CSS, and also aggregated all my ideas notes into a single ideas file that I might read [ever].
 - In 2022, I pulled any CSS blobs from the articles into the single CSS sheet, as I was hoping this would mean I could factor common sections and have less code.  ''This has worked somewhat.''
-- I discarded SOME older work when I imported Foundation [https://get.foundation/sites/docs/installation.html installation] [https://get.foundation/sites/docs/ docs] in 2017.   Most of the current CSS volume is Foundation
+- I discarded SOME older work when I imported [Foundation](https://get.foundation/sites/docs/installation.html installation) [docs](https://get.foundation/sites/docs/) in 2017.   Most of the current CSS volume is Foundation
 The articles with no extra/ dedicated CSS are composed of "standard components".  This is 25 features ~ all with enough RWD support:
 
 - accessSrc         ~ vis ~ right aligned container for source repo links. 
@@ -208,7 +208,7 @@ The articles with no extra/ dedicated CSS are composed of "standard components".
 - popOverWidget     ~ vis ~ A display popup that overlays the rest of the page, includes X-to-close.   Used to make pages seem less long on first glance.
 - linksWidget       ~ via heading ~ The CSS for the default menu on the top right of desktop mode.
 - headingsWidget    ~ vis ~ The menu of internal headings in the current article .
-- mastodonWidget    ~ vis ~ A feature with a DIALOG for choosing which [https://joinmastodon.org/servers Mastodon] server to send a SM link to.
+- mastodonWidget    ~ vis ~ A feature with a DIALOG for choosing which [Mastodon](https://joinmastodon.org/servers) server to send a SM link to.
 - SMshareWidget     ~ via meta ~ A container/ list for all the external links and the article meta data. 
 - metaWidget        ~ vis ~ A larger container for all the external links and the article meta data, contains previous element.
 - adjacentWidget    ~ vis ~ CSS container for the related content same-site links, appears at the end of the article.  Mostly big-screen only.
@@ -226,7 +226,7 @@ The articles with no extra/ dedicated CSS are composed of "standard components".
 Classes that start "add" normally just enable some feature, and have no CSS behaviour of their own.   There are some classes that are too simple and widely used to get a test.   
 **With the test script running the vis-tests are served as https://127.0.0.1:8081/vis/*   Unlike my site, they need a full file-name**.   Manual review from multiple devices and screen sizes is advised.    When running locally the "debug-layout" test capacity is useful.  
 
-I may refactor to eliminate the word Widget.   Some pages have extra features eg [https://owenberesford.me.uk/resource/form-no-js-maquette], but this is rarer than adjustments.
+I may refactor to eliminate the word Widget.   Some pages have extra features eg [Form with no JS](https://owenberesford.me.uk/resource/form-no-js-maquette), but this is rarer than adjustments.
 
 I am integrity-testing CSS for
 - chrome
