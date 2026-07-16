@@ -169,7 +169,7 @@ I have replaced the local CSS with better organised CSS to make it more readable
 - TODO: Want to add some CSS tests for crucial UI processes, like z-index.
 - TODO: Make support for win32.
 - TODO: Workout least stupid solution to test-harness needing unit tests, as its not simple code.
-- Am I aware that Vitest supports a GUI mode? [✔].   It was doing that when I first started using this tool, see [https://vitest.dev/guide/ui.html] [https://vitest.dev/config/browser/playwright.html#actiontimeout] ~ UPDATE: a solution, not unlike mine.   Unless I read this feature wrongly, this is just an output driver, not running the modules in the browser.     
+- Am I aware that Vitest supports a GUI mode? [✔].   It was doing that when I first started using this tool, see [Vitest UI](https://vitest.dev/guide/ui.html) [Playwright action timeout](https://vitest.dev/config/browser/playwright.html#actiontimeout) ~ UPDATE: a solution, not unlike mine.   Unless I read this feature wrongly, this is just an output driver, not running the modules in the browser.     
 
 </details>
 <details>
@@ -191,7 +191,7 @@ This project now holds the CSS used to style the site.   There is a slow moving 
 - I restructured the CSS into "features", rather than cloud of unique IDs/ class names.   I think I have improved the names used so it will be more clear to any readers.   As the size increases, the flat-namespace cloud was getting harder and harder to read.
 - I have removed various old commented CSS, and also aggregated all my ideas notes into a single ideas file that I might read [ever].
 - In 2022, I pulled any CSS blobs from the articles into the single CSS sheet, as I was hoping this would mean I could factor common sections and have less code.  ''This has worked somewhat.''
-- I discarded SOME older work when I imported [Foundation](https://get.foundation/sites/docs/installation.html installation) [docs](https://get.foundation/sites/docs/) in 2017.   Most of the current CSS volume is Foundation
+- I discarded SOME older work when I imported [Foundation notes](https://get.foundation/sites/docs/installation.html) [full docs](https://get.foundation/sites/docs/) in 2017.   Most of the current CSS volume is Foundation
 The articles with no extra/ dedicated CSS are composed of "standard components".  This is 25 features ~ all with enough RWD support:
 
 - accessSrc         ~ vis ~ right aligned container for source repo links. 
