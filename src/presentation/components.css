@@ -877,7 +877,10 @@ This is big screen mac, should work with wide versions
   .browserTestingContainer {
     width: 100vw;
   }
+
+  .halferWords .browserTestingContainer .singlePopup { width: fit-content; } 
 }
+
 
 /** adjacent  group holds list * X holds item * X 
 	Every page */
