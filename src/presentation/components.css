@@ -879,6 +879,8 @@ This is big screen mac, should work with wide versions
   }
 
   .halferWords .browserTestingContainer .singlePopup { width: fit-content; } 
+  .IAmLibreWolf .browserTestingContainer { width: auto; }
+
 }
 
 
