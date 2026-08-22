@@ -432,7 +432,8 @@ ol li::before {
   margin: 0;
 }
 
-.pullout, .pullout2 {
+.pullout,
+.pullout2 {
   padding-top: 0.5em;
   padding-right: 1em;
   padding-left: 1em;

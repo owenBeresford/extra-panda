@@ -47,8 +47,8 @@ export const ALL_REFERENCE_LINKS = ALL_REFERENCE + " sup a";
 // here for brandability
 export const APPEARANCE_COOKIE = "appearance";
 
-// name string for GET Param to enable WC feature. 
-// "Word counting", inside a text select 
+// name string for GET Param to enable WC feature.
+// "Word counting", inside a text select
 export const ENABLE_SELECT = "select";
 
 // how many PX in an EM
@@ -56,8 +56,8 @@ export const EM_SZ = 16;
 
 // values for the biblio feature, this renders the full tooltip
 export const BIBLIO_DESKTOP_ENABLED = 1;
-// otherwise just set the Harvard reference numbers correctly, as each Wiki text block starts at 1. 
-export const BIBLIO_COUNTS_ENABLED = 2; 
+// otherwise just set the Harvard reference numbers correctly, as each Wiki text block starts at 1.
+export const BIBLIO_COUNTS_ENABLED = 2;
 // current value
 export const BIBLIO_OPERATIONAL = BIBLIO_COUNTS_ENABLED;
 
