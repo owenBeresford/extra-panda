@@ -3,6 +3,9 @@
 export const SELF_VERSION = "1.0.4";
 export const SELF_VERSION_SECTIONS = [1, 0, 4];
 
+// quite a few flags are read from the URL params
+// need-to docs this aspect better
+
 /**
  * matchVersion
  * fake SemVer
@@ -45,17 +48,22 @@ export const ALL_REFERENCE_LINKS = ALL_REFERENCE + " sup a";
 export const APPEARANCE_COOKIE = "appearance";
 
 // name string for GET Param to enable WC feature.
+// "Word counting", inside a text select
 export const ENABLE_SELECT = "select";
 
 // how many PX in an EM
 export const EM_SZ = 16;
 
+// values for the biblio feature, this renders the full tooltip
 export const BIBLIO_DESKTOP_ENABLED = 1;
+// otherwise just set the Harvard reference numbers correctly, as each Wiki text block starts at 1.
 export const BIBLIO_COUNTS_ENABLED = 2;
+// current value
 export const BIBLIO_OPERATIONAL = BIBLIO_COUNTS_ENABLED;
 
 // CSS Class used to turn on broken link reporting
 //  This class is not present before the refs file is at the client side to avoid an entire page of errors
+//  so set in JS.
 export const SHOW_ERROR = "showBiblioErrors";
 
 // TS doesn't have an IPaddr type?

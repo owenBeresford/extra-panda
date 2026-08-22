@@ -212,7 +212,7 @@ export async function siteCore(
   }
 
   if (matchVersion("1.0.4")) {
-    // if you search for unique symbols in the compile source,
+    // if you search for unique symbols in the compiled source,
     // the tabInit_OLD code isn't present
     initTabs(undefined, dom, loc);
   } else {
