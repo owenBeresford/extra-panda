@@ -16,7 +16,7 @@
     "strictPropertyInitialization": false,
 	"strictFunctionTypes":true,
     "strictNullChecks": false,
-    "types": ["vitest/globals", "@types/node-fetch"],
+    "types": ["vitest/globals" ],
     "lib": [ "es2022" ]
   },
 
