@@ -44,7 +44,7 @@ describe("TEST cookies", async () => {
       TEST_NAME,
       "https://127.0.0.1:8081/home.html",
       async (dom, loc, win) => {
-        new QOOKIE().wipe(APPEARANCE_COOKIE);
+        QOOKIE.wipe(APPEARANCE_COOKIE, dom);
         storeAppearance("ubuntu", "12pt", "ltr", "green");
         expect(dom.cookie).not.toBe("");
 
