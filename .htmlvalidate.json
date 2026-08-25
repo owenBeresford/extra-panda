@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "html-validate:recommended"
+  ],
+
+  "rules": {
+  "aria": "1.3",
+    "close-order": "warn",
+    "void": ["warn", {"style": "omit"} ]
+  }
+}
+
