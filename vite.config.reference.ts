@@ -4,7 +4,6 @@ import { defineConfig } from "vite";
 import path, { dirname } from "path";
 import ts from "vite-plugin-ts";
 import { fileURLToPath } from "url";
-// import { terser } from "rollup-plugin-terser";
 import terser from "@rollup/plugin-terser";
 
 // https://stackoverflow.com/questions/69523560/using-vite-for-backend

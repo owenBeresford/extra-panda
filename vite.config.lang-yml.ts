@@ -4,7 +4,6 @@ import { defineConfig } from "vite";
 import path, { dirname } from "path";
 import ts from "vite-plugin-ts";
 import { fileURLToPath } from "url";
-// import { terser } from "rollup-plugin-terser";
 import terser from "@rollup/plugin-terser";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
