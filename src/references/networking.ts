@@ -191,7 +191,7 @@ type EDIT_REQUEST = (c: TaggedCurl) => void;
  * @param {string} url
  * @param {TaggedCurl} client
  * @public
- * @return {TaggedCurl} - my local edit type
+ * @returns {TaggedCurl} - my local edit type
  */
 function urlFiltering(url: string, client: TaggedCurl): TaggedCurl {
   // check return values on these lamda.  #leSigh, pointer, or lack of them
