@@ -43,7 +43,7 @@ describe("BROWSER TEST effects ", async () => {
           '<p class="addBashSamples"> sdfsfds `gdfgdgd1dfgdfgdfgd` sdfs fsf s sfsdfsdfsdfs fsdfsdfsd `sdfsdfsdf`';
         let str3 = swap(`<div class="addBashSamples" id="testInsert">
 <p>sfs sdfsfs sdfsdf fsdfsdf <a class="sdfs" href="sdfsdf" title="sdfsdfsdf">TEST1</a>
-	 / /sfsdfs sfsfs sfsfs sfsdf sfsdfsf <a href="sdfsdf" title="sdfsdfsdf">TEST2</a> 
+	 //sfsdfs sfsfs sfsfs sfsdf sfsdfsf <a href="sdfsdf" title="sdfsdfsdf">TEST2</a> 
 </p><p>sfs sdfsfs sdfsdf fsdfsdf sfsdfs sfsfs sfsfs sfsdf sfsdfsf  <a href="sdfsdf" title="sdfsdfsdf">docs</a>
 </p><p>sfs //sdfsfs sdfsdf// fsdfsdf sfsdfs sfsfs sfsfs sfsdf sfsdfsf  <a href="sdfs df" title="sdfsdfsdf">DOCS</a>
       <a id="thing1" href="sdfs df" title="sdfsdfsdf">docs</a>

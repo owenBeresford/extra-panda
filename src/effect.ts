@@ -142,12 +142,13 @@ Do a "<code" branch, then:
           )
           .replaceAll(r2, "//");
       } else {
-        allDescendants(bash[i], renderBashTextNodes);
+        allDescendants(bash[i], renderBashTextNodes, dom);
       }
     }
   }
 }
 
+// also depreacted
 type ReducedRAMHTMLElement = HTMLElement & { isCode: boolean };
 /**
  * _editTextNodes
@@ -180,25 +181,29 @@ function _editTextNodes(list: Iterable<ReducedRAMHTMLElement>): void {
 
 /**
  * renderBashTextNodes
- * Edit Elements (detached from DOM) when they seem to have backricks in them
+ * Edit Elements (detached from DOM) when they seem to have backticks in them
 
  * very IMPURE
  * @param {HTMLElement} el
  * @param {HTMLElement } par
+ * @param {Document} dom
  * @public
  * @returns {void}
  */
-export function renderBashTextNodes(el: HTMLElement, par: HTMLElement): void {
+export function renderBashTextNodes(el: HTMLElement, par: HTMLElement, dom:Document): void {
   const r1 = new RegExp("`([^`]+)`", "g");
   const r2 = new RegExp("/ /", "g");
 
-  if (el.nodeType === Node.TEXT_NODE && !par.tagName !== "CODE") {
-    par.innerHTML = par.innerHTML
-      .replaceAll(
-        r1,
-        '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>',
-      )
-      .replaceAll(r2, "//");
+  if (el.nodeType === Node.TEXT_NODE && par.tagName !== "CODE") {
+// not great perf, but will pass test.
+	const cur = dom.createElement("template");
+	cur.innerHTML = el.textContent
+		.replaceAll(
+        	r1,
+	        '<code class="bashSample" title="Quote from a bash; will add copy button">$1</code>',
+    	  )
+	   .replaceAll(r2, "//");
+	par.replaceChild(cur.content, el);
   }
 }
 
