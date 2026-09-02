@@ -1145,6 +1145,11 @@ p.buttonBar a:first-child {
 .maquetteContainer .maquette {
   width: 660px;
 }
+@media screen and (max-width: 640px) {
+  .maquetteContainer .maquette {
+	width:100vw;
+  }
+}
 .maquetteContainer .docs {
   min-width: 400px;
   max-width: 800px;
