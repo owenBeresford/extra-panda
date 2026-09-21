@@ -164,6 +164,10 @@ aside.pulloutWidget .g1 a {
   }
 }
 
+@supports (font: -apple-system-body) {
+   aside.pulloutWidget:not(code) .g1::before { content:"☛"; } 
+}
+
 /* new generation pullouts, now a component  */
 section.warningWidget {
   display: flex;
@@ -532,7 +536,7 @@ This is big screen mac, should work with wide versions
 .accordionWidget details:not([open]) {
   overflow-y: hidden;
 }
-.accordionWidget summary::marker {
+.accordionWidget summary::marker, .accordionWidget summary::-webkit-details-marker {
   color: var(--attentionbg);
   font-size: 1.5em;
 }
@@ -757,15 +761,21 @@ This is big screen mac, should work with wide versions
   padding: 0.3em 1em;
 }
 
-/** headingsWidget
+/** headingsWidget    This is generated text and doesn't show in the Wiki source
 	nearly every page */
 .headingsWidget summary {
   width: calc(100% - 2em);
   padding: 0px 1em;
   min-width: 7em;
+  list-style:none;
 }
 .headingsWidget summary::marker {
   content: "";
+  display:none;
+}
+.headingsWidget summary::-webkit-details-marker {
+	content:"";
+	display:none;
 }
 
 /* better symbols IMO...
@@ -851,6 +861,13 @@ This is big screen mac, should work with wide versions
   }
   :target-current {
     font-style: italic;
+  }
+  /* This is an override for mac Safari, 
+   * as the fonts in that browser don't seem to includes these UTF8 chars. */
+  @supports (font: -apple-system-body) {
+	  .linksWidget .headingsWidget .titleList li:has(:target-current)::before {
+    	content: ">>";
+	  }
   }
 }
 
@@ -1066,6 +1083,7 @@ a.adjacentItem.lower:before {
 a.adjacentItem:hover:before {
   opacity: 1;
   visibility: visible;
+  font-weight:normal;
 }
 @supports (-moz-transform: rotate(45deg)) {
   a.adjacentItem:hover:before {
@@ -1252,7 +1270,7 @@ p.buttonBar a:first-child {
   margin: 1em;
   margin-top: 0.1em;
 }
-.popOverWidget summary::marker {
+.popOverWidget summary::marker, .popOverWidget summary::-webkit-details-marker {
   font-size: 150%;
 }
 .popOverWidget details[open] {
