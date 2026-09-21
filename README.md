@@ -82,7 +82,9 @@ My work sequence has been:
 
 Pls note English is my first language #leSigh.
 
+
 ### Engineering changelog
+
 
 Software architecture
 * This code is properly modular, with isolation and encapsulation
@@ -127,7 +129,9 @@ Notes:
 - I think that most people do not need a commit for lint/prettier changes.  BUT I do this so I can see what changes /I/ made easily.  I am committing compiler artefacts for tests, which need to be not prettier-d.  Occasionally lint tools product non-compilable changes, but this is rare.  If all the commits are squashed together with `rebase`, it's a nul-point difference.  UPDATE: the expanded eslint config does make garbage changes on some files, I do not know why.  UPDATE2: I binary partition deleted to isolate until the issue went away (see inline comment).
 - More recently, I made the eslint config more complex, and this reports extra details (see Github issue).
 
+
 #### Metrics that are important to goals
+
 
 - OLD TECH (for the JS):: 
   - first bundle: 1MB flat
@@ -148,7 +152,10 @@ I have replaced the local CSS with better organised CSS to make it more readable
 <details open>
 <summary> Engineering details (...will never die. The child of...) </summary>
 
+
 #### Outsize late in project commit
+
+
 - The goal of this change is testing HTTPS only features (eg copy-and-paste) in a unit test AND testing CSS (eg z-index) features.   I never expected this thing to be useful in the longer term, just I couldn't find how to use some Vitest features.   UPDATE: as of 2025, the docs are updated, or a feature finished, or I found the information, in 2024 I was unable to find "how do I get a Page object in Vitest" (I also use playwright, but that architecture info isn't useful here).   This is a two-three day hack.
 - **This code isn't a reference, just due process on (boring) website features **   
 - Started to build another test harness, to be able to run Vitest in a browser.
@@ -226,13 +233,16 @@ The articles with no extra/ dedicated CSS are composed of "standard components".
 Classes that start "add" normally just enable some feature, and have no CSS behaviour of their own.   There are some classes that are too simple and widely used to get a test.   
 **With the test script running the vis-tests are served as https://127.0.0.1:8081/vis/*   Unlike my site, they need a full file-name**.   Manual review from multiple devices and screen sizes is advised.    When running locally the "debug-layout" test capacity is useful.  
 
+I have established a means to test on all common browsers, when I added/ extended the range of UTF8 icons.  Unfortunately fonts make this not portable #leSigh.  The major negative issue is I need a UAT instance to test my CSS changes before they go to production, as the test SaaS can only test the public internet.  UPDATE: the SaaS docs front-page mentions this obvious problem, and recommends SSH tunnels of your test instance.  However there would still need to be a public IP which I do not have here.   Shout out to [Browserling SaaS](https://www.browserling.com/) for this range of remotely accessible (I assume) VMs.  
+
 I may refactor to eliminate the word Widget.   Some pages have extra features eg [Form with no JS](https://owenberesford.me.uk/resource/form-no-js-maquette), but this is rarer than adjustments.
 
 I am integrity-testing CSS for
 - chrome
 - ff
-- edge (periodically)
 - librewolf - this is the most popular FOS user-centric browser, AFAIK (i.e. not widely-used Chrome ad-ware, or new FF LLM-adware) 
+- edge (periodically)
+- I need to get a Safari machine
 
 Q) Would I recommend building a project style system like this?  
 A) For an atypical and long-life project ~ like my boring site is ~ it's probably inevitable.  Across time I have added many small features.  
