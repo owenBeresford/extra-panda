@@ -93,7 +93,7 @@
   margin-bottom: 0;
 }
 
-.articleHeader .top-bar.fullWidth h1:first-letter {
+.articleHeader .top-bar.fullWidth h1::first-letter {
   text-transform: uppercase;
 } /* hack to capitalise title, if I havent */
 
@@ -124,7 +124,7 @@
     margin-left: 0.4em;
   }
   .articleHeader .mastodonWidget a.button {
-    margin-left: 0px;
+    margin-left: 0;
     width: 100vw;
   }
   .articleHeader .mastodonWidget a#hideMasto {
@@ -139,7 +139,7 @@
   }
   .articleHeader .fullWidth h1 {
     padding-top: 0.1em;
-    padding-left: 0em;
+    padding-left: 0;
     font-size: 2em;
   }
 }
@@ -215,8 +215,8 @@ This is big screen mac, should work with wide versions
     display: inline-block;
   }
   .articleHeader nav.row .mobilePopupWidgetOpen a i.fa-copy {
-    margin: 3px 0px;
-    padding: 0px;
+    margin: 3px 0;
+    padding: 0;
     position: relative;
     left: 0.1em;
   }
@@ -224,7 +224,7 @@ This is big screen mac, should work with wide versions
     margin-left: 0.4em;
   }
   .articleHeader nav.row .mastodonWidget a.button {
-    margin-left: 0px;
+    margin-left: 0;
     width: 100vw;
   }
   .articleHeader nav.row .mastodonWidget a#hideMasto {
@@ -259,24 +259,17 @@ This is big screen mac, should work with wide versions
   .annoyingBody li span,
   .annoyingBody li a,
   .annoyingBody p span,
-  .annoyingBody p sup a,
-  .annoyingBody p a {
+  .annoyingBody p a,
+  .annoyingBody p sup a   {
     font-size: 100%;
     width: fit-content;
     max-width: 100vw;
   }
-  /*
-  .annoyingBody .tabs-content p,
-  .annoyingBody .tabs-content li,
-  .annoyingBody .tabs-content a {
-    font-size: 100%;
-  }
-*/
   .annoyingBody .wholeArticle {
     width: fit-content;
   }
-  .annoyingBody p sup a,
-  .annoyingBody p a {
+  .annoyingBody p a, 
+  .annoyingBody p sup a {
     font-size: 100%;
     width: fit-content;
     max-width: 100vw;
@@ -293,8 +286,7 @@ This is big screen mac, should work with wide versions
   line-height: 1.6;
   font-size: 1em;
   text-align: justify;
-  column-count: 2;
-  column-width: 55ch;
+  columns: 2 55ch;
   margin-left: auto;
   margin-right: auto;
 }
@@ -310,8 +302,7 @@ This is big screen mac, should work with wide versions
 */
 @media screen and (min-resolution: 150dpi) and (max-width: 800px) {
   .lotsOfWords {
-    column-width: calc(100vw - 2em);
-    column-count: 1;
+    columns: 1 calc(100vw - 2em);
   }
 }
 @media screen and (min-width: 1024px) {
@@ -338,6 +329,14 @@ This is big screen mac, should work with wide versions
   }
 }
 
+/* used here as the wiki-engine proffers it, without the Wiki, this is unneeded  
+   used in every page with a list... nearly 90%? */
+.ulbasic,
+ol,
+ul {
+  list-style-type: none;
+}
+
 .halferWords {
   width: 680px;
   text-align: center;
@@ -354,7 +353,7 @@ This is big screen mac, should work with wide versions
     width: min(calc(100vw - 2em), 680px);
     align-self: stretch;
     justify-items: center;
-    margin: 1em 0em;
+    margin: 1em 0;
   }
 }
 
@@ -386,29 +385,22 @@ hr.blocker {
   width: 90%;
 }
 
-/* used here as the wiki-engine proffers it, without the Wiki, this is unneeded  
-   used in every page with a list... nearly 90%? */
-.ulbasic,
-ol,
-ul {
-  list-style-type: none;
-}
-.ulbasic li::before,
-ol li::before {
+ol li::before,
+.ulbasic li::before {
   content: "✨";
   display: inline-block;
   width: 1.5em;
 }
 
 .ul2 li::before {
-  content: attr(data-symbol, "✨");
+  content: attr(data-symbol string, "✨");
   display: inline-block;
   width: 1.5em;
 }
 .ul3 {
   list-style-type: "[✨]";
   /* the next is supported in Chrome, but not FF todate #leSigh */
-  list-style-type: attr(data-symbol);
+  list-style-type: attr(data-symbol string);
 }
 .ul3 li::marker, .ul3 li::-webkit-details-marker {
   display: inline-block;
@@ -434,10 +426,7 @@ ol li::before {
 
 .pullout,
 .pullout2 {
-  padding-top: 0.5em;
-  padding-right: 1em;
-  padding-left: 1em;
-  padding-bottom: 0.3em;
+  padding: 0.5em 1em 0.3em 1em;
 }
 .pullout i,
 .pullout2 i {
@@ -455,8 +444,8 @@ ol li::before {
 .addArrow {
   z-index: 3;
   position: relative;
-  border-bottom-right-radius: 0px;
-  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
   padding-right: 0.7em;
   min-width: 10em;
 }
@@ -482,10 +471,10 @@ ol li::before {
   padding-left: 20px;
   display: block;
   border-radius: 4px;
-  margin-top: 15px;
   width: 600px;
   text-align: right;
   margin: 0.5em auto;
+  margin-top: 15px;
 }
 
 /** settings for the symbol font, may be moved to overrides */
@@ -502,15 +491,14 @@ i.fa-remove {
   padding-left: 7px;
   padding-bottom: 7px;
   z-index: 2;
-  border-bottom: 0px;
-  border-left: 0px;
+  border-bottom: 0;
+  border-left: 0;
 }
 
 /* https://fontawesome.com/v4/accessibility/
    https://webaim.org/techniques/css/invisiblecontent/ 
 */
 .sr-only {
-  clip: rect(1px, 1px, 1px, 1px);
   clip-path: inset(50%);
   height: 1px;
   width: 1px;
@@ -519,6 +507,7 @@ i.fa-remove {
   overflow: hidden;
   padding: 0;
   position: absolute;
+  border:0;
 }
 /* Backup definition
 .sr-only { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
@@ -538,7 +527,7 @@ i.fa-remove {
 }
 
 .button.masto {
-  border-width: 0px;
+  border-width: 0;
   padding: 0.6em;
   vertical-align: baseline;
   margin: 0.65em;
