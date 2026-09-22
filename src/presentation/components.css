@@ -410,8 +410,9 @@ This is big screen mac, should work with wide versions
   max-width: 85%;
   margin-left: auto;
   margin-right: auto;
+  list-style: none;
 }
-.keywordsWidget::marker {
+.keywordsWidget::marker, .keywordsWidget::-webkit-details-marker {
   display: none;
   content: "";
 }
@@ -520,6 +521,7 @@ This is big screen mac, should work with wide versions
   */
 .accordionWidget summary {
   text-align: left;
+  list-style: none;
 }
 .accordionWidget summary a[href^="#"] {
   pointer-events: none;
@@ -723,18 +725,24 @@ This is big screen mac, should work with wide versions
   text-align: right;
   margin-left: auto;
   white-space: nowrap;
+  list-style: none;
 }
 .linksWidget.column {
   flex: 1 1 10em;
+}
+.defaultLinksTrigger {
+  list-style: none;	
 }
 .defaultLinksTrigger:before {
   content: "\e805";
   font-size: 1.5em;
   padding: 0.5em;
 }
-.defaultLinksTrigger::marker {
-  content: "";
+.defaultLinksTrigger::marker, .defaultLinksTrigger::-webkit-details-marker {
+	content:"";
+	display:none;
 }
+
 .linksWidget[open] .defaultLinksTrigger:before {
   content: "\e802";
 }
@@ -769,11 +777,7 @@ This is big screen mac, should work with wide versions
   min-width: 7em;
   list-style:none;
 }
-.headingsWidget summary::marker {
-  content: "";
-  display:none;
-}
-.headingsWidget summary::-webkit-details-marker {
+.headingsWidget summary::marker, .headingsWidget summary::-webkit-details-marker {
 	content:"";
 	display:none;
 }
@@ -808,6 +812,12 @@ This is big screen mac, should work with wide versions
   container-name: titleMenu;
   container-type: normal;
 }
+@supports (font: -apple-system-body) {
+	.headingsWidget {
+		top:3em;
+	}	
+}
+
 /* if I set  container-type: size; then the container layout wrap works correctly, 
 					but the computed positioning via the right edge does not
 					I can probably run without that, as there are no EXCEEDINGLY long titles */
@@ -866,10 +876,11 @@ This is big screen mac, should work with wide versions
    * as the fonts in that browser don't seem to includes these UTF8 chars. */
   @supports (font: -apple-system-body) {
 	  .linksWidget .headingsWidget .titleList li:has(:target-current)::before {
-    	content: ">>";
+    	content:"☛";
 	  }
   }
 }
+
 
 .titleList {
   list-style: none;
@@ -1134,8 +1145,9 @@ p.buttonBar a:first-child {
 }
 .mobilePopupWidget li {
   margin-bottom: 0.7em;
+  list-style: none;
 }
-.mobilePopupWidget li::marker {
+.mobilePopupWidget li::marker, .mobilePopupWidget li::webkit-details-marker  {
   display: none;
 }
 
@@ -1269,6 +1281,7 @@ p.buttonBar a:first-child {
   font-size: 130%;
   margin: 1em;
   margin-top: 0.1em;
+  list-style: none;
 }
 .popOverWidget summary::marker, .popOverWidget summary::-webkit-details-marker {
   font-size: 150%;

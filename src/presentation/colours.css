@@ -446,7 +446,7 @@ input.button.addArrow:hover {
 input.addArrow:hover + i.specialPointer {
   --fgcontrast: 1.1;
 }
-.popOverWidget summary::marker {
+.popOverWidget summary::marker, .popOverWidget summary::-webkit-details-marker {
   color: var(--attentionbg);
 }
 
@@ -776,7 +776,9 @@ One of the places I used this, I used border-top to make the tab body look conne
     --fgg: 245;
     --fgb: 245;
   }
-  .popOverWidget .maquetteContainer .docs summary::marker {
+  .popOverWidget .maquetteContainer .docs summary::marker, 
+  .popOverWidget .maquetteContainer .docs summary::-webkit-details-marker
+  {
     --fgr: 245;
     --fgg: 245;
     --fgb: 245;

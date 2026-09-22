@@ -410,7 +410,7 @@ ol li::before {
   /* the next is supported in Chrome, but not FF todate #leSigh */
   list-style-type: attr(data-symbol);
 }
-.ul3 li::marker {
+.ul3 li::marker, .ul3 li::-webkit-details-marker {
   display: inline-block;
   width: 1.5em;
   font-weight: bold;
