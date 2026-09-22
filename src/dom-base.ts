@@ -528,7 +528,11 @@ export function assignCSSBlob(dat: string, id: string, dom: Document): void {
  * @public
  * @returns {Iterable<HTMLElement>}
  */
-export function allDescendants(nd: HTMLElement, cb: CBeffects, dom:Document): void {
+export function allDescendants(
+  nd: HTMLElement,
+  cb: CBeffects,
+  dom: Document,
+): void {
   for (let i = 0; i < nd.childNodes.length; i++) {
     // I have set this with var, as collisions/ redefines should be avoided
     var child: HTMLElement = nd.childNodes[i] as HTMLElement;

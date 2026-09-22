@@ -260,7 +260,7 @@ This is big screen mac, should work with wide versions
   .annoyingBody li a,
   .annoyingBody p span,
   .annoyingBody p a,
-  .annoyingBody p sup a   {
+  .annoyingBody p sup a {
     font-size: 100%;
     width: fit-content;
     max-width: 100vw;
@@ -268,7 +268,7 @@ This is big screen mac, should work with wide versions
   .annoyingBody .wholeArticle {
     width: fit-content;
   }
-  .annoyingBody p a, 
+  .annoyingBody p a,
   .annoyingBody p sup a {
     font-size: 100%;
     width: fit-content;
@@ -402,7 +402,8 @@ ol li::before,
   /* the next is supported in Chrome, but not FF todate #leSigh */
   list-style-type: attr(data-symbol string);
 }
-.ul3 li::marker, .ul3 li::-webkit-details-marker {
+.ul3 li::marker,
+.ul3 li::-webkit-details-marker {
   display: inline-block;
   width: 1.5em;
   font-weight: bold;
@@ -507,7 +508,7 @@ i.fa-remove {
   overflow: hidden;
   padding: 0;
   position: absolute;
-  border:0;
+  border: 0;
 }
 /* Backup definition
 .sr-only { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }

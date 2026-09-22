@@ -165,7 +165,9 @@ aside.pulloutWidget .g1 a {
 }
 
 @supports (font: -apple-system-body) {
-   aside.pulloutWidget:not(code) .g1::before { content:"☛"; } 
+  aside.pulloutWidget:not(code) .g1::before {
+    content: "☛";
+  }
 }
 
 /* new generation pullouts, now a component  */
@@ -412,7 +414,8 @@ This is big screen mac, should work with wide versions
   margin-right: auto;
   list-style: none;
 }
-.keywordsWidget::marker, .keywordsWidget::-webkit-details-marker {
+.keywordsWidget::marker,
+.keywordsWidget::-webkit-details-marker {
   display: none;
   content: "";
 }
@@ -538,7 +541,8 @@ This is big screen mac, should work with wide versions
 .accordionWidget details:not([open]) {
   overflow-y: hidden;
 }
-.accordionWidget summary::marker, .accordionWidget summary::-webkit-details-marker {
+.accordionWidget summary::marker,
+.accordionWidget summary::-webkit-details-marker {
   color: var(--attentionbg);
   font-size: 1.5em;
 }
@@ -731,16 +735,17 @@ This is big screen mac, should work with wide versions
   flex: 1 1 10em;
 }
 .defaultLinksTrigger {
-  list-style: none;	
+  list-style: none;
 }
 .defaultLinksTrigger:before {
   content: "\e805";
   font-size: 1.5em;
   padding: 0.5em;
 }
-.defaultLinksTrigger::marker, .defaultLinksTrigger::-webkit-details-marker {
-	content:"";
-	display:none;
+.defaultLinksTrigger::marker,
+.defaultLinksTrigger::-webkit-details-marker {
+  content: "";
+  display: none;
 }
 
 .linksWidget[open] .defaultLinksTrigger:before {
@@ -775,11 +780,12 @@ This is big screen mac, should work with wide versions
   width: calc(100% - 2em);
   padding: 0px 1em;
   min-width: 7em;
-  list-style:none;
+  list-style: none;
 }
-.headingsWidget summary::marker, .headingsWidget summary::-webkit-details-marker {
-	content:"";
-	display:none;
+.headingsWidget summary::marker,
+.headingsWidget summary::-webkit-details-marker {
+  content: "";
+  display: none;
 }
 
 /* better symbols IMO...
@@ -813,9 +819,9 @@ This is big screen mac, should work with wide versions
   container-type: normal;
 }
 @supports (font: -apple-system-body) {
-	.headingsWidget {
-		top:3em;
-	}	
+  .headingsWidget {
+    top: 3em;
+  }
 }
 
 /* if I set  container-type: size; then the container layout wrap works correctly, 
@@ -875,12 +881,11 @@ This is big screen mac, should work with wide versions
   /* This is an override for mac Safari, 
    * as the fonts in that browser don't seem to includes these UTF8 chars. */
   @supports (font: -apple-system-body) {
-	  .linksWidget .headingsWidget .titleList li:has(:target-current)::before {
-    	content:"☛";
-	  }
+    .linksWidget .headingsWidget .titleList li:has(:target-current)::before {
+      content: "☛";
+    }
   }
 }
-
 
 .titleList {
   list-style: none;
@@ -1094,7 +1099,7 @@ a.adjacentItem.lower:before {
 a.adjacentItem:hover:before {
   opacity: 1;
   visibility: visible;
-  font-weight:normal;
+  font-weight: normal;
 }
 @supports (-moz-transform: rotate(45deg)) {
   a.adjacentItem:hover:before {
@@ -1147,7 +1152,8 @@ p.buttonBar a:first-child {
   margin-bottom: 0.7em;
   list-style: none;
 }
-.mobilePopupWidget li::marker, .mobilePopupWidget li::webkit-details-marker  {
+.mobilePopupWidget li::marker,
+.mobilePopupWidget li::webkit-details-marker {
   display: none;
 }
 
@@ -1177,7 +1183,7 @@ p.buttonBar a:first-child {
 }
 @media screen and (max-width: 640px) {
   .maquetteContainer .maquette {
-	width:100vw;
+    width: 100vw;
   }
 }
 .maquetteContainer .docs {
@@ -1272,7 +1278,10 @@ p.buttonBar a:first-child {
 */
 /* according to https://web.dev/blog/css-content-visibility-baseline
    the following allows the rendering to make choices better,
-	As this content becomes visible after page load, I don't know if this helps... */
+	As this content becomes visible after page load, I don't know if this helps... 
+
+              dialog:-internal-dialog-in-top-layer::backdrop
+ */
 .popOverWidget details {
   content-visibility: auto;
 }
@@ -1283,7 +1292,8 @@ p.buttonBar a:first-child {
   margin-top: 0.1em;
   list-style: none;
 }
-.popOverWidget summary::marker, .popOverWidget summary::-webkit-details-marker {
+.popOverWidget summary::marker,
+.popOverWidget summary::-webkit-details-marker {
   font-size: 150%;
 }
 .popOverWidget details[open] {
