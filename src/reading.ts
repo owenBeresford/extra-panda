@@ -42,7 +42,7 @@ export function readingDuration(
     {
       timeFormat: "m",
       dataLocation: ".blocker",
-      target: "#shareGroup .SMshareWidget",
+      target: "#shareGroup",
       wordPerMin: 275,
       codeSelector: "code",
       refresh: false,

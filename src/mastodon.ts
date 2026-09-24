@@ -136,13 +136,7 @@ export function initMastodon(dom: Document, loc: Location, win: Window): void {
   if (BUFFER) {
     _map4(BUFFER, copyURL, dom, loc, win);
   }
-  _map5(
-    dom.querySelector("#popup #sendMasto") as HTMLElement,
-    shareMastodon,
-    dom,
-    loc,
-    win,
-  );
+
   const BUFFER2: Array<HTMLElement> = Array.from(
     dom.querySelectorAll("#shareMenuTrigger, #shareClose"),
   ) as Array<HTMLElement>;
