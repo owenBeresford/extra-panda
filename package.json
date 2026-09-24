@@ -15,7 +15,7 @@
     "test:unit": "export NODE_ENV=development; node ./node_modules/.bin/vitest --typecheck run",
     "#ignore-lint-notes": "1 function is over complexity by 1 point. . .  && Its an arbitary limit",
     "lint": "./tools/lint.bash",
-	"css:list":"node ./node_modules/.bin/stylelint src/presentation/*.css",
+    "css:list": "node ./node_modules/.bin/stylelint src/presentation/*.css",
     "build:docs": "if [ ! -d './dist/docs' ]; then mkdir -p ./dist/docs; fi; node ./node_modules/.bin/typedoc --options ./typedoc.json --emit both --logLevel 3",
     "#ignore-this-line": "Edit values in this simple script if you have local security policy",
     "#ignore-this-line2": "NOTE: 'build:docs' after 'build' and 'test:web', as they purge the dist directory",
@@ -88,7 +88,8 @@
     "vitest": "^4.1.11"
   },
   "dependencies": {
-    "highlight.js": "^11.9.0"
+    "highlight.js": "^11.9.0",
+    "vite-plugin-singlefile": "^2.3.3"
   },
   "overrides": {
     "minimatch": "10.2.6",
