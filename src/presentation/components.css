@@ -1352,6 +1352,13 @@ but this is a permanent effect, so with is better choice in this library
   scrollbar-color: var(--scroll1) transparent;
 }
 
+/* these will generally be DETAILS */
+div.withScroll {
+  overflow-y: scroll;
+  overflow-x: scroll;
+  max-width:100vw; width:100vw;
+}
+
 /* that space char is working hard, this is two selectors */
 .popOverWidget .lotsOfWords details.singlePopup:not([open]),
 .popOverWidget.lotsOfWords details.singlePopup:not([open]) {
@@ -1576,6 +1583,8 @@ Consider moving the widths to a CSS var
 .addBashSamples details code {
   display: block;
 }
+
+.addBashSample details.keyWordsOnly code { display:inline-block; }
 
 .halferWords .highlight:not([lang]),
 .highlight.wide,

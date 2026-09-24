@@ -52,7 +52,7 @@
 	every page */
 .articleContent {
   align-self: stretch;
-  min-height: calc(100vh - 20em); /* 18em == 14 for header and 6 for footer */
+  min-height: calc(100vh - 17em); /* 18em == 14 for header and 6 for footer */
   max-height: max-content; /* avoid clipping if possible */
 }
 
@@ -155,7 +155,7 @@
 /* hack for landscape large phones & weird screen magnification laptops: suppress mobile flexing */
 @media only screen and (min-device-width: 800px) and (orientation: landscape) {
   .articleHeader {
-    height: 14em;
+    height: 11em;
     flex: inherit;
   }
   .articleHeader .row h1 {
