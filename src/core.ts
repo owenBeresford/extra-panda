@@ -68,10 +68,6 @@ function initPopupMobile(dom: Document, loc: Location, win: Window): void {
     return;
   }
 
-  if (MOBILE) {
-    (dom.querySelector("#sendMasto") as HTMLElement).textContent =
-      "Share article";
-  }
   const html: Array<string> = [
     `<li id="shareClose"> <i class="fa fa-cancel" aria-hidden="true"></i> </li>	<li> <a class="hunchUp" id="copyURL"><i class="fa fa-copy" aria-hidden="true"></i><span class="hunchUp"> copy<br /> URL</span> </a> </li>`,
   ];
@@ -180,8 +176,8 @@ export async function siteCore(
   }
 
   applyVolume(dom, win);
-  initPopupMobile(dom, loc, win);
-  initMastodon(dom, loc, win);
+ // initPopupMobile(dom, loc, win);
+ // initMastodon(dom, loc, win);
   const isRefs: boolean = dom.querySelector(".addReferences") !== null;
   addOctoCats(isRefs, dom, win);
   addBooks(isRefs, dom, win);
@@ -189,6 +185,7 @@ export async function siteCore(
   addBashSamples(dom);
   applyAppearance(dom);
   modalInit(dom);
+  // at some point add keyboard utils...
   expandDetails(1040, dom, loc, win);
   if (isLibreWolf(dom, win.navigator, win)) {
     appendCSSFile("/asset/librewolf.min.css", dom);
@@ -202,7 +199,7 @@ export async function siteCore(
     readingDuration(
       {
         dataLocation: "#main",
-        target: ".addReading .SMshareWidget",
+        target: "#addReading",
         debug: ldebug,
         refresh: true,
       },

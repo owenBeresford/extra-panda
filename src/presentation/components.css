@@ -164,6 +164,12 @@ aside.pulloutWidget .g1 a {
   }
 }
 
+@supports (font: -apple-system-body) {
+  aside.pulloutWidget:not(code) .g1::before {
+    content: "☛";
+  }
+}
+
 /* new generation pullouts, now a component  */
 section.warningWidget {
   display: flex;
@@ -406,8 +412,10 @@ This is big screen mac, should work with wide versions
   max-width: 85%;
   margin-left: auto;
   margin-right: auto;
+  list-style: none;
 }
-.keywordsWidget::marker {
+.keywordsWidget::marker,
+.keywordsWidget::-webkit-details-marker {
   display: none;
   content: "";
 }
@@ -516,6 +524,7 @@ This is big screen mac, should work with wide versions
   */
 .accordionWidget summary {
   text-align: left;
+  list-style: none;
 }
 .accordionWidget summary a[href^="#"] {
   pointer-events: none;
@@ -532,7 +541,8 @@ This is big screen mac, should work with wide versions
 .accordionWidget details:not([open]) {
   overflow-y: hidden;
 }
-.accordionWidget summary::marker {
+.accordionWidget summary::marker,
+.accordionWidget summary::-webkit-details-marker {
   color: var(--attentionbg);
   font-size: 1.5em;
 }
@@ -719,18 +729,25 @@ This is big screen mac, should work with wide versions
   text-align: right;
   margin-left: auto;
   white-space: nowrap;
+  list-style: none;
 }
 .linksWidget.column {
   flex: 1 1 10em;
+}
+.defaultLinksTrigger {
+  list-style: none;
 }
 .defaultLinksTrigger:before {
   content: "\e805";
   font-size: 1.5em;
   padding: 0.5em;
 }
-.defaultLinksTrigger::marker {
+.defaultLinksTrigger::marker,
+.defaultLinksTrigger::-webkit-details-marker {
   content: "";
+  display: none;
 }
+
 .linksWidget[open] .defaultLinksTrigger:before {
   content: "\e802";
 }
@@ -757,15 +774,18 @@ This is big screen mac, should work with wide versions
   padding: 0.3em 1em;
 }
 
-/** headingsWidget
+/** headingsWidget    This is generated text and doesn't show in the Wiki source
 	nearly every page */
 .headingsWidget summary {
   width: calc(100% - 2em);
   padding: 0px 1em;
   min-width: 7em;
+  list-style: none;
 }
-.headingsWidget summary::marker {
+.headingsWidget summary::marker,
+.headingsWidget summary::-webkit-details-marker {
   content: "";
+  display: none;
 }
 
 /* better symbols IMO...
@@ -798,6 +818,12 @@ This is big screen mac, should work with wide versions
   container-name: titleMenu;
   container-type: normal;
 }
+@supports (font: -apple-system-body) {
+  .headingsWidget {
+    top: 3em;
+  }
+}
+
 /* if I set  container-type: size; then the container layout wrap works correctly, 
 					but the computed positioning via the right edge does not
 					I can probably run without that, as there are no EXCEEDINGLY long titles */
@@ -851,6 +877,13 @@ This is big screen mac, should work with wide versions
   }
   :target-current {
     font-style: italic;
+  }
+  /* This is an override for mac Safari, 
+   * as the fonts in that browser don't seem to includes these UTF8 chars. */
+  @supports (font: -apple-system-body) {
+    .linksWidget .headingsWidget .titleList li:has(:target-current)::before {
+      content: "☛";
+    }
   }
 }
 
@@ -1066,6 +1099,7 @@ a.adjacentItem.lower:before {
 a.adjacentItem:hover:before {
   opacity: 1;
   visibility: visible;
+  font-weight: normal;
 }
 @supports (-moz-transform: rotate(45deg)) {
   a.adjacentItem:hover:before {
@@ -1116,8 +1150,10 @@ p.buttonBar a:first-child {
 }
 .mobilePopupWidget li {
   margin-bottom: 0.7em;
+  list-style: none;
 }
-.mobilePopupWidget li::marker {
+.mobilePopupWidget li::marker,
+.mobilePopupWidget li::webkit-details-marker {
   display: none;
 }
 
@@ -1147,7 +1183,7 @@ p.buttonBar a:first-child {
 }
 @media screen and (max-width: 640px) {
   .maquetteContainer .maquette {
-	width:100vw;
+    width: 100vw;
   }
 }
 .maquetteContainer .docs {
@@ -1242,7 +1278,10 @@ p.buttonBar a:first-child {
 */
 /* according to https://web.dev/blog/css-content-visibility-baseline
    the following allows the rendering to make choices better,
-	As this content becomes visible after page load, I don't know if this helps... */
+	As this content becomes visible after page load, I don't know if this helps... 
+
+              dialog:-internal-dialog-in-top-layer::backdrop
+ */
 .popOverWidget details {
   content-visibility: auto;
 }
@@ -1251,8 +1290,10 @@ p.buttonBar a:first-child {
   font-size: 130%;
   margin: 1em;
   margin-top: 0.1em;
+  list-style: none;
 }
-.popOverWidget summary::marker {
+.popOverWidget summary::marker,
+.popOverWidget summary::-webkit-details-marker {
   font-size: 150%;
 }
 .popOverWidget details[open] {
@@ -1309,6 +1350,13 @@ but this is a permanent effect, so with is better choice in this library
 .popOverWidget details.withScroll[open] {
   scrollbar-width: auto;
   scrollbar-color: var(--scroll1) transparent;
+}
+
+/* these will generally be DETAILS */
+div.withScroll {
+  overflow-y: scroll;
+  overflow-x: scroll;
+  max-width:100vw; width:100vw;
 }
 
 /* that space char is working hard, this is two selectors */
@@ -1535,6 +1583,8 @@ Consider moving the widths to a CSS var
 .addBashSamples details code {
   display: block;
 }
+
+.addBashSample details.keyWordsOnly code { display:inline-block; }
 
 .halferWords .highlight:not([lang]),
 .highlight.wide,

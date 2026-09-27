@@ -11,7 +11,10 @@ FEATURES
 - Dark mode CSS
 - For large images (SVG), look at svg-pan-zoom https://www.npmjs.com/package/svg-pan-zoom UI deno https://deepwiki.com/tmgthb/Autonomous-Agents/3.3-react-based-agent-frameworks
 - Add new darkarts goal: **** FOR TESTING, not cracking,**** correct simulation of keyboard input to show keyboard accessibility works correctly.
+  - Add a process for TESTING swipe events (not used on this static website).
+  - look at https://www.npmjs.com/package/webdriverio https://webdriver.io/  which should impl both types of Even.
 - build sample for CSS block-size, not 2D not 1D
+- medium links, replacement service seems borked, need to setup a new one.
 
 MAINTENANCE
 - Least stupid way to tell users not to make unit-test chrome window smaller, or the tests in the runner will fail next test execution

@@ -1,24 +1,28 @@
 import type { HtmlValidator } from "html-validator";
 import type { JSDOM as JSDOMClass } from "@types/jsdom";
 import { TEST_MACHINE } from "../immutables";
-// @see node_modules/html-validate/dist/types/browser.d.ts 
+// @see node_modules/html-validate/dist/types/browser.d.ts
 // as the online docs aren't relevant for code integration
 // https://html-validate.org/usage/flat-config.html
-import { HtmlValidate, Report, Message, ConfigData, Config } from "html-validate";
+import {
+  HtmlValidate,
+  Report,
+  Message,
+  ConfigData,
+  Config,
+} from "html-validate";
 const { JSDOM } = await import("jsdom");
 
-let conf:ConfigData={
-    root: true,
-    aria: "1.3",
-	extends: [ "html-validate:recommended" ],
-//    elements?: Array<string | Record<string, unknown>>,
-    plugins: [],
-//    transform?: TransformMap,
-    rules: { "no-trailing-whitespace": "off" },
-
+let conf: ConfigData = {
+  root: true,
+  aria: "1.3",
+  extends: ["html-validate:recommended"],
+  //    elements?: Array<string | Record<string, unknown>>,
+  plugins: [],
+  //    transform?: TransformMap,
+  rules: { "no-trailing-whitespace": "off" },
 } as ConfigData;
-const VALID=new HtmlValidate( conf);
-
+const VALID = new HtmlValidate(conf);
 
 export type PageGeneration = Window | Document | Location | JSDOMClass;
 
@@ -126,26 +130,26 @@ function page_fake(url: string = "", args: number = 1): Array<PageGeneration> {
  * @returns {Array<string>}
  */
 export function validateHTML(html: string): Array<string> {
-	let ret=VALID.validateStringSync(html );
-	let ret2:Array<string>=[];
-	
-	for(let i=0; i<ret.results.length; i++ ) {
-		for(let j=0; j< ret.results[i].messages.length; j++ ) {
-			let msg="";
-			if(ret.results[i].messages[j].selector) {
-				msg+=ret.results[i].messages[j].selector;
-			} else {
-				msg+="* ";
-			}
-			msg+=" ";
-			msg+=ret.results[i].messages[j].message;
+  let ret = VALID.validateStringSync(html);
+  let ret2: Array<string> = [];
 
-			ret2.push( msg );
-		}
-	}
-console.log("RESULTS", ret2 );	
+  for (let i = 0; i < ret.results.length; i++) {
+    for (let j = 0; j < ret.results[i].messages.length; j++) {
+      let msg = "";
+      if (ret.results[i].messages[j].selector) {
+        msg += ret.results[i].messages[j].selector;
+      } else {
+        msg += "* ";
+      }
+      msg += " ";
+      msg += ret.results[i].messages[j].message;
 
-/**
+      ret2.push(msg);
+    }
+  }
+  console.log("RESULTS", ret2);
+
+  /**
   // I do no know why WhatWG doesn't know Dialog tag
   // I have persistent disagreement on heading levels
   const lint: HtmlValidator.ParsedJsonAsValidationResults = await validator({
@@ -168,4 +172,3 @@ console.log("RESULTS", ret2 );
   // WARN: I have persistent disagreement on heading levels
   return ret2;
 }
-

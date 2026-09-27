@@ -5,12 +5,13 @@ import path, { dirname } from "path";
 import ts from "vite-plugin-ts";
 import { fileURLToPath } from "url";
 import terser from "@rollup/plugin-terser";
+import { viteSingleFile } from "vite-plugin-singlefile";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('vite').UserConfig} */
 export default defineConfig({
-  plugins: [ts()],
+  plugins: [ts(), viteSingleFile()],
   root: ".",
   server: {
     hmr: false,

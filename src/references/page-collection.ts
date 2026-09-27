@@ -34,12 +34,10 @@ export class PageCollection {
       "save(): Invalid reference offset " + offset,
     );
     if (typeof this.dst[offset] !== "boolean") {
-      if (
-        !(
-          !("title" in this.dst[offset]) ||
-          this.dst[offset].title.includes("HTTP_ERROR")
-        )
-      ) {
+      if (!(
+        !("title" in this.dst[offset]) ||
+        this.dst[offset].title.includes("HTTP_ERROR")
+      )) {
         throw new Error("Why overwrite slot " + offset);
       }
     }

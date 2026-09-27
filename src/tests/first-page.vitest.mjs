@@ -16,56 +16,58 @@ describe("TEST references FirstPage ", () => {
     assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
     assert.deepEqual(resp, expt, "step #1");
 
-    (reqt = [BASE_URL + "?t1=34534&amp;t2=dgdgi&amp;t3=erterte&amp;t4=sdfsdf"]),
+    ((reqt = [
+      BASE_URL + "?t1=34534&amp;t2=dgdgi&amp;t3=erterte&amp;t4=sdfsdf",
+    ]),
       (resp = []),
-      (expt = [BASE_URL + "?t1=34534&t2=dgdgi&t3=erterte&t4=sdfsdf"]);
+      (expt = [BASE_URL + "?t1=34534&t2=dgdgi&t3=erterte&t4=sdfsdf"]));
     resp = obj.urlCleaning(reqt);
     assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
     assert.deepEqual(resp, expt, "step #2");
 
-    (reqt = [BASE_URL + "?utm_source=wfsf&utm_medium=sefsdf&utm_term=dgdfgd"]),
+    ((reqt = [BASE_URL + "?utm_source=wfsf&utm_medium=sefsdf&utm_term=dgdfgd"]),
       (resp = []),
-      (expt = [BASE_URL + ""]);
+      (expt = [BASE_URL + ""]));
     resp = obj.urlCleaning(reqt);
     assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
     assert.deepEqual(resp, expt, "step #3");
 
-    (reqt = [
+    ((reqt = [
       BASE_URL + "?q=ertert&utm_source=wfsf&utm_medium=sefsdf&utm_term=dgdfgd",
     ]),
       (resp = []),
-      (expt = [BASE_URL + "q=ertert"]);
+      (expt = [BASE_URL + "q=ertert"]));
     resp = obj.urlCleaning(reqt);
     assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
     assert.deepEqual(resp, expt, "step #4");
 
-    (reqt = [
+    ((reqt = [
       BASE_URL +
         "?q=ertert&utm_source=wfsf&utm_medium=sefsdf&utm_term=dgdfgd&sort=-2",
     ]),
       (resp = []),
-      (expt = [BASE_URL + "q=ertert&sort=-2"]);
+      (expt = [BASE_URL + "q=ertert&sort=-2"]));
     resp = obj.urlCleaning(reqt);
     assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
     assert.deepEqual(resp, expt, "step #5");
 
-    (reqt = [BASE_URL + "?q=utm_+keywords"]),
+    ((reqt = [BASE_URL + "?q=utm_+keywords"]),
       (resp = []),
-      (expt = [BASE_URL + "?q=utm_+keywords"]);
+      (expt = [BASE_URL + "?q=utm_+keywords"]));
     resp = obj.urlCleaning(reqt);
     assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
     assert.deepEqual(resp, expt, "step #6");
 
-    (reqt = ["https://towardsdatascience.com?dfgdfg=dgdgd"]),
+    ((reqt = ["https://towardsdatascience.com?dfgdfg=dgdgd"]),
       (resp = []),
-      (expt = ["https://scribe.rip?dfgdfg=dgdgd"]);
+      (expt = ["https://scribe.rip?dfgdfg=dgdgd"]));
     resp = obj.urlCleaning(reqt);
     assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
     assert.deepEqual(resp, expt, "step #7");
 
-    (reqt = ["https://medium.com?dfgdfg=dgdgd"]),
+    ((reqt = ["https://medium.com?dfgdfg=dgdgd"]),
       (resp = []),
-      (expt = ["https://scribe.rip?dfgdfg=dgdgd"]);
+      (expt = ["https://scribe.rip?dfgdfg=dgdgd"]));
     resp = obj.urlCleaning(reqt);
     assert.equal(resp.length, 1, "URL cleaning has returned all URLs");
     assert.deepEqual(resp, expt, "step #8");

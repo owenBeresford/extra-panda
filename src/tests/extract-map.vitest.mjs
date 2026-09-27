@@ -17,12 +17,12 @@ describe("TEST generate CSS ", () => {
       s2 = { thing1: "bob", thing2: "sam", thing3: "andy" };
     assert.equal(OBJ.compareTrees(s1, s2), true, "bullet #10");
 
-    (s1 = { thing1: "bob", thing2: "sam", thing3: "andy", thing4: "kelli" }),
-      (s2 = { thing1: "bob", thing2: "sam", thing3: "andy", thing4: "kelii" });
+    ((s1 = { thing1: "bob", thing2: "sam", thing3: "andy", thing4: "kelli" }),
+      (s2 = { thing1: "bob", thing2: "sam", thing3: "andy", thing4: "kelii" }));
     assert.equal(OBJ.compareTrees(s1, s2), false, "bullet #11");
 
-    (s1 = { thing1: "bob", thing2: "sam", thing3: "andy", thing4: "racheal" }),
-      (s2 = { thing1: "bob", thing2: "sam", thing3: "andy" });
+    ((s1 = { thing1: "bob", thing2: "sam", thing3: "andy", thing4: "racheal" }),
+      (s2 = { thing1: "bob", thing2: "sam", thing3: "andy" }));
     assert.equal(OBJ.compareTrees(s1, s2), false, "bullet #12");
   });
 

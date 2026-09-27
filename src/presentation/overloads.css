@@ -1,3 +1,18 @@
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  font-family: inherit;
+}
+
 .button {
   padding: 0.65em 1em;
 }
@@ -18,9 +33,9 @@ h5 a {
 .reading {
   vertical-align: super;
   white-space: nowrap;
-  padding: 0.3em 0em;
+  padding: 0.3em 0;
   display: inline-block;
-  width: 8em;
+  width: 6em;
 }
 @media screen and (min-resolution: 150dpi) {
   .reading {
@@ -28,23 +43,22 @@ h5 a {
   }
 }
 
+.wideLink ul li sup a {
+  width: auto;
+}
 .wideLink ul li > a:first-of-type {
   display: inline-block;
   width: 12em;
   text-align: center;
   margin-right: 0.3em;
 }
-.wideLink ul li sup a {
-  width: auto;
-}
-
 details summary h3,
 details summary h4 {
   display: inline-block;
 }
 
 /** if a list item is splitted due to page wrapping, maybe unused now  */
-li.split:before {
+li.split::before {
   content: "…";
 }
 @media screen and (min-resolution: 150dpi) {
@@ -71,25 +85,11 @@ li.split:before {
 
 @media screen and (min-resolution: 150dpi) {
   .column {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
-h1,
-.h1,
-h2,
-.h2,
-h3,
-.h3,
-h4,
-.h4,
-h5,
-.h5,
-h6,
-.h6 {
-  font-family: inherit;
-}
 body,
 .annoyingBody {
   font-family: "ubuntu", sans-serif;
@@ -97,7 +97,7 @@ body,
 
 .fixLinkedSq {
   font-size: 200%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 #linkedinpix {
   width: 20px;
@@ -111,7 +111,7 @@ pre {
 del,
 .ulbasic del {
   --fgcontrast: 0.5;
-  color: rgba(
+  color: rgb(
     calc(var(--fgr) * var(--fgcontrast)),
     calc(var(--fgg) * var(--fgcontrast)),
     calc(var(--fgb) * var(--fgcontrast)),
@@ -158,8 +158,7 @@ i.specialPointer {
   .SMshareWidget a.bigScreenOnly,
   .SMshareWidget span.bigScreenOnly,
   .bigScreenOnly,
-  .ultraSkinny.bigScreenOnly,
-  .SMshareWidget a.bigScreenOnly {
+  .ultraSkinny.bigScreenOnly {
     display: none;
   }
   .smallScreenOnly {

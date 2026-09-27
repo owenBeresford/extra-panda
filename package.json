@@ -15,6 +15,7 @@
     "test:unit": "export NODE_ENV=development; node ./node_modules/.bin/vitest --typecheck run",
     "#ignore-lint-notes": "1 function is over complexity by 1 point. . .  && Its an arbitary limit",
     "lint": "./tools/lint.bash",
+    "css:list": "node ./node_modules/.bin/stylelint src/presentation/*.css",
     "build:docs": "if [ ! -d './dist/docs' ]; then mkdir -p ./dist/docs; fi; node ./node_modules/.bin/typedoc --options ./typedoc.json --emit both --logLevel 3",
     "#ignore-this-line": "Edit values in this simple script if you have local security policy",
     "#ignore-this-line2": "NOTE: 'build:docs' after 'build' and 'test:web', as they purge the dist directory",
@@ -35,7 +36,7 @@
   "author": "github user name: owen beresford",
   "license": "AGPL-3.0",
   "devDependencies": {
-    "@eslint-community/eslint-utils": "^4.5.1",
+    "@eslint-community/eslint-utils": "^4.10.1",
     "@jest/globals": "^29.7.0",
     "@ossiana/node-libcurl": "^1.9.9",
     "@playwright/test": "^1.48.2",
@@ -49,8 +50,8 @@
     "@vitest/ui": "^4.1.11",
     "brace-expansion": "^5.0.9",
     "chromium-bidi": "^3.0.0",
-    "esbuild": "^0.25.2",
-    "eslint": "^9.3.0",
+    "esbuild": "^0.28",
+    "eslint": "^9.39.5",
     "eslint-plugin-jest": "^28.10.0",
     "eslint-plugin-jsdoc": "^48.10.1",
     "eslint-plugin-no-floating-promise": "^2.0.0",
@@ -69,6 +70,8 @@
     "playwright": "^1.53.0",
     "prettier": "^3.2.5",
     "serialize-javascript": "^7.1.0",
+    "stylelint": "^17",
+    "stylelint-config-standard": "^40",
     "typedoc": "^0.26.4",
     "typedoc-plugin-extras": "^3.1.0",
     "typedoc-plugin-mdn-links": "^3.2.3",
@@ -79,13 +82,14 @@
     "uglifycss": "^0.0.29",
     "undici-types": "^7.11.0",
     "vite": "^8.2.2",
-    "vite-plugin-node-polyfills": "^0.28.0",
+    "vite-plugin-node-polyfills": "^0.2",
     "vite-plugin-ts": "^1.3.2-1",
     "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^4.1.11"
   },
   "dependencies": {
-    "highlight.js": "^11.9.0"
+    "highlight.js": "^11.9.0",
+    "vite-plugin-singlefile": "^2.3.3"
   },
   "overrides": {
     "minimatch": "10.2.6",
