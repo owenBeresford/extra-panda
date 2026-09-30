@@ -5,7 +5,7 @@ import { Curl } from "node-libcurl";
 import { TEST_MACHINE } from "../immutables";
 
 import {
-  fetch2,
+  fetch3,
   exec_reference_url,
   delay,
   mapInterfaces,
