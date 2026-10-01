@@ -176,8 +176,10 @@ export async function siteCore(
   }
 
   applyVolume(dom, win);
- // initPopupMobile(dom, loc, win);
- // initMastodon(dom, loc, win);
+  if (!matchVersion("1.0.5")) {
+    initPopupMobile(dom, loc, win);
+    initMastodon(dom, loc, win);
+  }
   const isRefs: boolean = dom.querySelector(".addReferences") !== null;
   addOctoCats(isRefs, dom, win);
   addBooks(isRefs, dom, win);

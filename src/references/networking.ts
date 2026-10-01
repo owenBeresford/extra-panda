@@ -20,10 +20,8 @@ import type {
   IPListable,
   RemoteConfig,
   RunExecReturn,
-  FileExecFlags
+  FileExecFlags,
 } from "./types";
-
-
 
 // counter for the timeout
 let TO: number = TIMEOUT;
@@ -33,44 +31,57 @@ export function setMyTimeout(nu: number = TIMEOUT): void {
 
 // a reimpl to use curel via CLI.
 // node natively cannot do HTTP2 as a client #leSigh
-export function fetch3( url: string,
+export function fetch3(
+  url: string,
   good1: successType,
   bad1: failureType,
   close: closeType,
 ): void {
-
-    function handler(error: Error, stdout: string|Buffer, stderr: string|Buffer): void {
-      if (error) {
-        console.error("cURL failed:", error.message);
-        return bad1(error);
-      }
-
-      // stderr has headers
-      // stdout has response body
-      let annoying1: string = (stdout as any) instanceof Buffer ? stdout.toString() : stdout;
-      let annoying2: string = (stderr as any) instanceof Buffer ? stderr.toString() : stderr;
-      let headers = parseHeaders(annoying2);
-      let h2 = new Headers();
-      try {
-        for (let i in headers.resp) {
-          if (i && i.length > 3) {
-            if (i.indexOf("HTTP/") === 0) {
-              // the parseInt is to cleanly strip whitespace
-              h2.append("code", "" + parseInt(i.substring(i.indexOf(" ")), 10));
-            } else {
-              h2.append(i, headers.resp[i]);
-            }
-          }
-        }
-      } catch (e: unknown) {
-        console.error("cURL failed: header not dealt with:", (e as Error).message);
-      }
-
-      // IOIO XXX think I need to readd the static value defined in CurlHeadersBlob to headers as they have different name here
-      return good1(h2.get("code"), annoying1.trim(), headers.resp as CurlHeadersBlob );
+  function handler(
+    error: Error,
+    stdout: string | Buffer,
+    stderr: string | Buffer,
+  ): void {
+    if (error) {
+      console.error("cURL failed:", error.message);
+      return bad1(error);
     }
 
-    const CURRENT_HEADERS:Array<string>=[
+    // stderr has headers
+    // stdout has response body
+    let annoying1: string =
+      (stdout as any) instanceof Buffer ? stdout.toString() : stdout;
+    let annoying2: string =
+      (stderr as any) instanceof Buffer ? stderr.toString() : stderr;
+    let headers = parseHeaders(annoying2);
+    let h2 = new Headers();
+    try {
+      for (let i in headers.resp) {
+        if (i && i.length > 3) {
+          if (i.indexOf("HTTP/") === 0) {
+            // the parseInt is to cleanly strip whitespace
+            h2.append("code", "" + parseInt(i.substring(i.indexOf(" ")), 10));
+          } else {
+            h2.append(i, headers.resp[i]);
+          }
+        }
+      }
+    } catch (e: unknown) {
+      console.error(
+        "cURL failed: header not dealt with:",
+        (e as Error).message,
+      );
+    }
+
+    // IOIO XXX think I need to readd the static value defined in CurlHeadersBlob to headers as they have different name here
+    return good1(
+      h2.get("code"),
+      annoying1.trim(),
+      headers.resp as CurlHeadersBlob,
+    );
+  }
+
+  const CURRENT_HEADERS: Array<string> = [
     "upgrade-insecure-requests: 1",
     "Referrer-policy: strict-origin-when-cross-origin",
     "accept-language: en-GB,en;q=0.9,nl;q=0.8,de-DE;q=0.7,de;q=0.6",
@@ -82,17 +93,17 @@ export function fetch3( url: string,
     "sec-fetch-mode: navigate",
     "sec-fetch-site: cross-site",
     "sec-fetch-user: ?1",
-    ];
+  ];
 
-    let annoying: RemoteConfig =  ({ timeout: 3_000_000 } as RemoteConfig);
-    let args: Array<string> = [ "-v", "-m" + annoying.timeout / 1_000, url];
-    args.push("-XGET" );
-    for(let i=0;i<CURRENT_HEADERS.length; i++) {
-      args.push(`-H'${CURRENT_HEADERS[i]}'` );
-    }
- 
-    const options: FileExecFlags = { windowsHide: true, shell: false };
-    execFile("/usr/bin/curl", args, options, handler);
+  let annoying: RemoteConfig = { timeout: 3_000_000 } as RemoteConfig;
+  let args: Array<string> = ["-v", "-m" + annoying.timeout / 1_000, url];
+  args.push("-XGET");
+  for (let i = 0; i < CURRENT_HEADERS.length; i++) {
+    args.push(`-H'${CURRENT_HEADERS[i]}'`);
+  }
+
+  const options: FileExecFlags = { windowsHide: true, shell: false };
+  execFile("/usr/bin/curl", args, options, handler);
 }
 
 /**
@@ -145,22 +156,22 @@ function parseHeader2(str: string): Array<string> {
   str2 = str2.trim();
   if (str2.indexOf(":") === -1) {
     if (str.indexOf("HTTP/") === 0) {
-      return ["status", str2.substring(str2.indexOf(" ") + 1, str2.length).trim()];
+      return [
+        "status",
+        str2.substring(str2.indexOf(" ") + 1, str2.length).trim(),
+      ];
     } else if (str.match(/^[A-Z]{3,} \//)) {
       return ["method", str.substring(0, str.indexOf(" "))];
     } else {
       return [str2];
     }
   } else {
-    return [str2.substring(0, str2.indexOf(":")).trim(), str2.substring(str2.indexOf(":") + 2, str2.length).trim()];
+    return [
+      str2.substring(0, str2.indexOf(":")).trim(),
+      str2.substring(str2.indexOf(":") + 2, str2.length).trim(),
+    ];
   }
 }
-
-
-
-
-
-
 
 // ESlint doesn't support a Promise impl that says its async
 // maybe I should create @types/ProductionGradePromise which extends Promise and does
@@ -178,7 +189,6 @@ export function exec_reference_url(
 
         log("debug", "[" + offset + "] " + url);
         fetch3(url, handler.success, handler.failure, handler.assignClose);
-	
       } catch (e) {
         log(
           "warn",

@@ -1,7 +1,7 @@
 // This is in production, so it should be higher than 1.0.0
 //    https://semver.org/
-export const SELF_VERSION = "1.0.4";
-export const SELF_VERSION_SECTIONS = [1, 0, 4];
+export const SELF_VERSION = "1.0.5";
+export const SELF_VERSION_SECTIONS = [1, 0, 5];
 
 // quite a few flags are read from the URL params
 // need-to docs this aspect better

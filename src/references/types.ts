@@ -57,7 +57,6 @@ export type VendorModPassthru = (item: Reference, body: string) => Reference;
 type NameString = "first" | string;
 export type IPListable = Record<NameString, Array<string>>;
 
-
 /**
         Interface for what params can be passed to fetch
         I added agent for differing HTTP implementations #leSigh
@@ -85,7 +84,7 @@ type ProcessEnv = typeof process;
 export interface FileExecFlags {
   cwd?: string | URL;
   env?: any;
-  encoding?: "ascii"| "buffer";
+  encoding?: "ascii" | "buffer";
   timeout?: number; // ms
   maxBuffer?: number;
   killSignal?: number; // | Signals;
@@ -96,5 +95,3 @@ export interface FileExecFlags {
   shell?: boolean | string;
   signal?: AbortSignal;
 }
-
-
