@@ -18,46 +18,10 @@ import type {
   TaggedCurl,
   CurlHeadersBlob,
   IPListable,
+  RemoteConfig,
+  RunExecReturn,
+  FileExecFlags
 } from "./types";
-
-/**
-        Interface for what params can be passed to fetch
-        I added agent for differing HTTP implementations #leSigh
-
-        @see https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-*/
-export interface RemoteConfig {
-  url: string;
-  timeout: number;
-  headers: Record<string, string>; // eg 'Content-Type': 'application/json'
-  mode: string; // allowed values no-cors, *cors, same-origin
-  method: string;
-  credentials: string;
-  agent?: any;
-}
-
-interface RunExecReturn {
-  reqt: Record<string, string>;
-  resp: Record<string, string>;
-}
-
-type ProcessEnv = typeof process;
-
-// I extracted Struct to make the code easier, so I had named fields.
-export interface FileExecFlags {
-  cwd?: string | URL;
-  env?: any;
-  encoding?: "ascii"| "buffer";
-  timeout?: number; // ms
-  maxBuffer?: number;
-  killSignal?: number; // | Signals;
-  uid?: number;
-  gid?: number;
-  windowsHide?: boolean;
-  windowsVerbatimArguments?: boolean;
-  shell?: boolean | string;
-  signal?: AbortSignal;
-}
 
 
 
@@ -66,65 +30,6 @@ let TO: number = TIMEOUT;
 export function setMyTimeout(nu: number = TIMEOUT): void {
   TO = nu;
 }
-
-/*
-// This is a dup-file name, but different technology.  Built for different purposes
-// a boring net-work function, that supports cookie populations
-export function fetch2(
-  url: string,
-  good1: successType,
-  bad1: failureType,
-  close: closeType,
-): void {
-  let curl: TaggedCurl = new Curl();
-  curl.isClose = false;
-  let CB = (): void => {
-    if (!curl.isClose) {
-      curl.close();
-      curl.isClose = true;
-    }
-  };
-  CB = CB.bind(this);
-  // this is confusing to read, this registers the curl->close CB for later on
-  close(CB);
-
-  curl.setOpt("CUSTOMREQUEST", "GET");
-  curl.setOpt("URL", url);
-
-	// To be able to check references, changing these headers sometimes helps
-  curl.setOpt("HTTPHEADER", [
-    "upgrade-insecure-requests: 1",
-    "Referrer-policy: strict-origin-when-cross-origin",
-    "accept-language: en-GB,en;q=0.9,nl;q=0.8,de-DE;q=0.7,de;q=0.6",
-    "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
-    'sec-ch-ua: "Not)A;Brand";v="8", "Chromium";v="138"',
-    "sec-ch-ua-mobile: ?0",
-    'sec-ch-ua-platform: "Windows"',
-    "sec-fetch-dest: document",
-    "sec-fetch-mode: navigate",
-    "sec-fetch-site: cross-site",
-    "sec-fetch-user: ?1",
-  ]);
-
-  curl.setOpt("COOKIEJAR", COOKIE_JAR);
-  curl.setOpt("COOKIEFILE", COOKIE_JAR);
-  // sept 2024: Note official redirect tech, added in first version
-  curl.setOpt("FOLLOWLOCATION", true);
-  curl.setOpt("TIMEOUT", TO);
-  curl.setOpt("VERBOSE", CURL_VERBOSE);
-  curl.setOpt("CONNECTTIMEOUT", TO);
-
-  if (EXTRA_URL_FILTERING) {
-    curl = urlFiltering(url, curl);
-  }
-
-  curl.on("end", good1);
-  curl.on("error", bad1);
-  if (!curl.isClose) {
-    curl.perform();
-  }
-}
- */ 
 
 // a reimpl to use curel via CLI.
 // node natively cannot do HTTP2 as a client #leSigh
