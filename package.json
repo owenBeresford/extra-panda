@@ -87,11 +87,13 @@
     "vite-plugin-singlefile": "^2.3.3",
     "vite-plugin-ts": "^1.3.2-1",
     "vite-tsconfig-paths": "^5.0.1",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.11",
+    "wakaru": "^1.12.0" 
   },
   "dependencies": {
     "highlight.js": "^11.9.0"
   },
+  "sideEffects":false,
   "overrides": {
     "minimatch": "10.2.6",
     "jest-circus": "^30.4.2",
