@@ -14,7 +14,8 @@ FEATURES
   - Add a process for TESTING swipe events (not used on this static website).
   - look at https://www.npmjs.com/package/webdriverio https://webdriver.io/  which should impl both types of Even.
 - build sample for CSS block-size, not 2D not 1D
-- medium links, replacement service seems borked, need to setup a new one.
+- medium links, replacement 3rd party service seems borked, need to setup a new one.
+https://medium.com/@robinviktorsson/setting-up-a-modern-typescript-project-with-vite-no-framework-07ea2d3a22b5
 
 MAINTENANCE
 - Least stupid way to tell users not to make unit-test chrome window smaller, or the tests in the runner will fail next test execution
@@ -134,4 +135,4 @@ MAINTENANCE
 - DONE In references, look at making some domains use HEAD not GET 
 - DONE: some tools can't see robots.txt, fiddle with headers for this file to assist.
 - DONE: Add better grade of notice/ warning / info that earlier builds.
-
+- DONE: Pretend I am writing in ASM to get dead code removal to work #leSigh.
