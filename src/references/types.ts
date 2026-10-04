@@ -56,3 +56,42 @@ export type VendorModPassthru = (item: Reference, body: string) => Reference;
 
 type NameString = "first" | string;
 export type IPListable = Record<NameString, Array<string>>;
+
+/**
+        Interface for what params can be passed to fetch
+        I added agent for differing HTTP implementations #leSigh
+
+        @see https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+*/
+export interface RemoteConfig {
+  url: string;
+  timeout: number;
+  headers: Record<string, string>; // eg 'Content-Type': 'application/json'
+  mode: string; // allowed values no-cors, *cors, same-origin
+  method: string;
+  credentials: string;
+  agent?: any;
+}
+
+export interface RunExecReturn {
+  reqt: Record<string, string>;
+  resp: Record<string, string>;
+}
+
+type ProcessEnv = typeof process;
+
+// I extracted Struct to make the code easier, so I had named fields.
+export interface FileExecFlags {
+  cwd?: string | URL;
+  env?: any;
+  encoding?: "ascii" | "buffer";
+  timeout?: number; // ms
+  maxBuffer?: number;
+  killSignal?: number; // | Signals;
+  uid?: number;
+  gid?: number;
+  windowsHide?: boolean;
+  windowsVerbatimArguments?: boolean;
+  shell?: boolean | string;
+  signal?: AbortSignal;
+}

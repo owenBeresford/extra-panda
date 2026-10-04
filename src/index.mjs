@@ -26,13 +26,11 @@ import {
   assignCSSBlob,
 } from "./dom-base";
 import { storeAppearance } from "./cookies";
-import { SELF_VERSION, matchVersion } from "./immutables";
 
 // this file is only used in the web-build
 await siteCore({}, document, location, window);
 
-// if (matchVersion("1.test-only")) {
-if (SELF_VERSION >= "1.test-only") {
+if (import.meta.env.VITE_SELF_VERSION >= "1.test-only") {
   // External module, this code should be masked out in production builds
   const { generate_CSS_file, dump_it } = await import("./extractor");
   let PARAMS = new URLSearchParams(location.search);
@@ -62,5 +60,5 @@ export {
   ready,
   initTabs,
   initExpandImage,
-  SELF_VERSION,
+//  SELF_VERSION,
 };

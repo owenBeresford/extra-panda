@@ -16,6 +16,7 @@ export default defineConfig({
   server: {
     hmr: false,
   },
+  // resolve.alias
   build: {
     minify: "terser",
     target: "es2022",

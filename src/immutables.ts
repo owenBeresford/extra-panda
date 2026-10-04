@@ -1,7 +1,10 @@
 // This is in production, so it should be higher than 1.0.0
 //    https://semver.org/
-export const SELF_VERSION = "1.0.4";
-export const SELF_VERSION_SECTIONS = [1, 0, 4];
+// code moved to .env.production as TS doesn't implement Clang very well.
+//declare var SELF_VERSION:string;
+//declare var SELF_VERSION_SECTIONS: array<number>;
+//export const SELF_VERSION = "1.0.5";
+//export const SELF_VERSION_SECTIONS = [1, 0, 5];
 
 // quite a few flags are read from the URL params
 // need-to docs this aspect better
@@ -33,7 +36,7 @@ false
  */
 export function matchVersion(target: string): boolean {
   // see samples, needs replacing before 1.0.10 is hit,
-  return SELF_VERSION >= target;
+  return import.meta.env.VITE_SELF_VERSION >= target;
 }
 
 // used in some client side created A.href

@@ -34,7 +34,6 @@ import {
 } from "./effect";
 import {
   ENABLE_SELECT,
-  matchVersion,
   BIBLIO_COUNTS_ENABLED,
   BIBLIO_OPERATIONAL,
 } from "./immutables";
@@ -53,7 +52,7 @@ let OPTS: CoreProps = {
  * Create the popup bar for mobile
  *
  * @param {Document =document} dom
- * @param {location =location} loc
+ * @param {Location =location} loc
  * @param {Window =window} win
  * @protected
  * @returns {void}
@@ -176,8 +175,10 @@ export async function siteCore(
   }
 
   applyVolume(dom, win);
- // initPopupMobile(dom, loc, win);
- // initMastodon(dom, loc, win);
+  if (import.meta.env.VITE_SELF_VERSION < "1.0.5") {
+    initPopupMobile(dom, loc, win);
+    initMastodon(dom, loc, win);
+  }
   const isRefs: boolean = dom.querySelector(".addReferences") !== null;
   addOctoCats(isRefs, dom, win);
   addBooks(isRefs, dom, win);
@@ -208,13 +209,12 @@ export async function siteCore(
     );
   }
 
-  if (matchVersion("1.0.4")) {
+  if (import.meta.env.VITE_SELF_VERSION >= "1.0.4") {
     // if you search for unique symbols in the compiled source,
     // the tabInit_OLD code isn't present
     initTabs(undefined, dom, loc);
   } else {
     // disabled in that version, as I ported to HTML/CSS
-
     tabInit_OLD(dom, loc);
   }
 

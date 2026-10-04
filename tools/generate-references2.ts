@@ -17,14 +17,13 @@ import { FirstPage } from "../src/references/first-page";
 import { MorePages } from "../src/references/more-pages";
 import {
   exec_reference_url,
-  fetch2,
+  fetch3,
   delay,
   setMyTimeout,
 } from "../src/references/networking";
 import { PageCollection } from "../src/references/page-collection";
 import { apply_vendors } from "../src/references/vendor-mod";
-import { TIMEOUT, ENABLE_RETRY } from "../src/references/constants";
-import { HTTP_REDIRECT_LIMIT } from "../src/references/constants";
+import { TIMEOUT, ENABLE_RETRY, HTTP_REDIRECT_LIMIT } from "../src/references/constants";
 import { log } from "../src/log-services";
 import type { Reference } from "../src/references/types";
 
@@ -335,7 +334,7 @@ if (enablePatch) {
     p1.promiseExits(good, bad, -1);
     try {
       log("debug", "DEBUG: [-1] " + URL1);
-      fetch2(URL1, p1.success, p1.failure, p1.assignClose);
+      fetch3(URL1, p1.success, p1.failure, p1.assignClose);
     } catch (e) {
       log(
         "warn",
