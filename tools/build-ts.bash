@@ -4,25 +4,26 @@ if [ -z "$PUBLICATION" ]; then
 	exit 1
 fi
 
+export LOCAL_BUILD_ARGS='--clearScreen false -m production -l info '
 # node ./node_modules/.bin/vite --config ./vite.config.reference.ts build 
-node ./node_modules/.bin/vite --config ./vite.config.lib.ts build 
+node ./node_modules/.bin/vite $LOCAL_BUILD_ARGS --config ./vite.config.lib.ts build 
 node ./node_modules/.bin/uglifyjs ./dist/ob1.mjs -o /tmp/ob1.min.mjs 
 # only needed in old copy of uglyfy
 # tail -n 11 ./dist/ob1.mjs >> /tmp/ob1.min.mjs 
 echo 'INFO: Generated /tmp/ob1.min.mjs as over compressed version if this helps'
-node node_modules/.bin/vite --config vite.config.lang-go.ts build 
-node node_modules/.bin/vite --config vite.config.lang-bash.ts build 
-node node_modules/.bin/vite --config vite.config.lang-conf.ts build 
-node node_modules/.bin/vite --config vite.config.lang-html.ts build 
-node node_modules/.bin/vite --config vite.config.lang-js.ts build 
-node node_modules/.bin/vite --config vite.config.lang-php.ts build 
-node node_modules/.bin/vite --config vite.config.lang-xml.ts build 
-node node_modules/.bin/vite --config vite.config.lang-sql.ts build 
-node node_modules/.bin/vite --config vite.config.lang-yml.ts build 
-node node_modules/.bin/vite --config vite.config.lang-ts.ts build 
-node node_modules/.bin/vite --config vite.config.lang-perl.ts build 
-node node_modules/.bin/vite --config vite.config.lang-python.ts build 
-node node_modules/.bin/vite --config vite.config.lang-css.ts build
+node node_modules/.bin/vite $LOCAL_BUILD_ARGS --config vite.config.lang-go.ts build 
+node node_modules/.bin/vite $LOCAL_BUILD_ARGS --config vite.config.lang-bash.ts build 
+node node_modules/.bin/vite $LOCAL_BUILD_ARGS --config vite.config.lang-conf.ts build 
+node node_modules/.bin/vite $LOCAL_BUILD_ARGS --config vite.config.lang-html.ts build 
+node node_modules/.bin/vite $LOCAL_BUILD_ARGS --config vite.config.lang-js.ts build 
+node node_modules/.bin/vite $LOCAL_BUILD_ARGS --config vite.config.lang-php.ts build 
+node node_modules/.bin/vite $LOCAL_BUILD_ARGS --config vite.config.lang-xml.ts build 
+node node_modules/.bin/vite $LOCAL_BUILD_ARGS --config vite.config.lang-sql.ts build 
+node node_modules/.bin/vite $LOCAL_BUILD_ARGS --config vite.config.lang-yml.ts build 
+node node_modules/.bin/vite $LOCAL_BUILD_ARGS --config vite.config.lang-ts.ts build 
+node node_modules/.bin/vite $LOCAL_BUILD_ARGS --config vite.config.lang-perl.ts build 
+node node_modules/.bin/vite $LOCAL_BUILD_ARGS --config vite.config.lang-python.ts build 
+node node_modules/.bin/vite $LOCAL_BUILD_ARGS --config vite.config.lang-css.ts build
 if [ -f dist/magic-strin* ]; then
 	rm dist/magic-string*
 fi
