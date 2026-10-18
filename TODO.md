@@ -12,9 +12,9 @@ FEATURES
 - For large images (SVG), look at svg-pan-zoom https://www.npmjs.com/package/svg-pan-zoom UI deno https://deepwiki.com/tmgthb/Autonomous-Agents/3.3-react-based-agent-frameworks
 - Add new darkarts goal: **** FOR TESTING, not cracking,**** correct simulation of keyboard input to show keyboard accessibility works correctly.
   - Add a process for TESTING swipe events (not used on this static website).
-  - look at https://www.npmjs.com/package/webdriverio https://webdriver.io/  which should impl both types of Even.
-- build sample for CSS block-size, not 2D not 1D
-- medium links, replacement 3rd party service seems borked, need to setup a new one.
+  - Look at https://www.npmjs.com/package/webdriverio https://webdriver.io/  which should impl both types of Even.
+- Build sample for CSS block-size, not 2D not 1D   https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/block-size
+- Medium links, replacement 3rd party service seems borked, need to setup a new one.
 https://medium.com/@robinviktorsson/setting-up-a-modern-typescript-project-with-vite-no-framework-07ea2d3a22b5
 
 MAINTENANCE
@@ -25,12 +25,13 @@ MAINTENANCE
 - Port the everything* tests to storybook, or the browser tests
 - WCAG tests (lighthouse) for whole pages need to go some where (suggest this project) https://www.npmjs.com/package/wcag 
 - Look at https://github.com/githubnext/testpilot - test generator
-- Log fault on validate class for HTML with no doctype header.   DUMP html-validate, it doesn't validate HTML5 properly,
+- Log fault on validate class for HTML with no doctype header.   
+   - DONE in 2026
 - Make RAM usage and execution-cost tests-and-monitoring more mature
 - Port remaining non-production files to TS.  
 - Declare namespace/module https://ncoughlin.com/posts/typescript-modules-namespaces  https://umatechnology.org/how-to-use-namespaces-in-typescript/  https://scribe.rip/@antonyagustineraj/demystifying-typescript-namespaces-structuring-your-code-like-a-pro-2edf7034016d  https://scribe.rip/@joelmalone/get-jsx-to-recognise-your-custom-element-in-react-or-preact-bf08d7522208 
 - To integrate checksum.bash into this repo better look at https://docs.npmjs.com/cli/v6/commands/npm-init?v=true
-- Rebuild snap to end CSS (unused but included), as dis-functional in Chrome  
+- Rebuild snap to end CSS (unused but included), as dis-functional in Chrome.  Try https://github.com/argyleink/ScrollSnapExplainers/tree/main/css-scroll-start  
 - Design 1 cycle animation on title popout IF OPEN 
 - Investigate https://www.npmjs.com/package/vite-plugin-conditional-compiler for removing css-extractor
 - For the other CSS features, add a extra visual test browserTest etc (see text file in vis-test dir)
@@ -131,8 +132,9 @@ MAINTENANCE
 - DONE: added short term hack for modalPopups inside lotsOfWords, as otherwise the width is computed wrongly
 - DONE: Investigate adding aria-current on bigger articles, to mark current location
 - DONE: Add python syntax highlighter
-- DONE: effects.ts, addBashSamples():: backticks in bash samples get swallowed due to them being quote delimiters  and bash scripting
+- DONE: effects.ts, addBashSamples():: backticks in bash samples get swallowed due to them being quote delimiters and bash scripting
 - DONE In references, look at making some domains use HEAD not GET 
-- DONE: some tools can't see robots.txt, fiddle with headers for this file to assist.
+- DONE: Some tools can't see robots.txt, fiddle with headers for this file to assist.
 - DONE: Add better grade of notice/ warning / info that earlier builds.
 - DONE: Pretend I am writing in ASM to get dead code removal to work #leSigh.
+
