@@ -60,5 +60,5 @@ export {
   ready,
   initTabs,
   initExpandImage,
-//  SELF_VERSION,
+  //  SELF_VERSION,
 };

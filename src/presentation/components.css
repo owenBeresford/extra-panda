@@ -4,8 +4,13 @@
   margin: 1.2em;
   text-align: center;
   font-size: 70%;
-  max-width: 100vw;
+  max-width: 100%;
 }
+.footWidget nav {
+  width: 100%;
+  max-width: 100%;
+}
+
 .footWidget .column {
   display: inline-block;
   height: 3.1em;
@@ -111,6 +116,8 @@
   border-top-style: solid;
   padding-top: 0.3em;
   padding-right: 0.5em;
+  break-inside: avoid-column;
+  page-break-inside: avoid;
 }
 
 /* new generation pullouts, now a component 
@@ -125,6 +132,9 @@ aside.pulloutWidget:has(.g1) {
   break-inside: avoid-column;
   max-width: 70%;
   margin-left: 2em;
+  /* this brakes layout busting into the 4th column.  Not sure what solution. */
+  page-break-inside: avoid;
+  height: max-content;
   margin-bottom: 0.5em;
 }
 @media screen and (max-width: 600px) {
@@ -577,6 +587,10 @@ This is big screen mac, should work with wide versions
   .SMshareWidget a.bigScreenOnly {
     display: none;
   }
+  .articleHeader .row.bigScreenOnly {
+    display: none;
+  }
+
   .SMshareWidget a {
     width: inherit;
   }
@@ -818,6 +832,46 @@ This is big screen mac, should work with wide versions
   container-name: titleMenu;
   container-type: normal;
 }
+
+@media screen and (min-resolution: 150dpi) {
+  .headingsWidget {
+    bottom: 2em;
+    right: 0.5em;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  @media screen and (min-width: 800px) {
+    .IAmLibreWolf .headingsWidget {
+      top: 2em;
+      bottom: initial;
+      display: block;
+    }
+  }
+}
+
+/* css for the scroll animation */
+html:has(.wholeArticle) {
+  scroll-behavior: smooth;
+}
+html:has(.wholeArticle) body {
+  --menu-width: 150px;
+}
+
+.articleContent div > h3[id]:target,
+.headingsWidget > nav > menu > li > a {
+  background-color: inherit;
+  transition: background-color 1.3s;
+}
+
+.articleContent:has(.headingsWidget > nav > menu > li > a:active)
+  div
+  > h3[id]:target,
+.headingsWidget > nav > menu > li > a:active {
+  background-color: var(--alert);
+  transition: background-color 0.1s ease;
+}
+
 @supports (font: -apple-system-body) {
   .headingsWidget {
     top: 3em;
@@ -838,10 +892,16 @@ This is big screen mac, should work with wide versions
 
 .headingsWidget[open] summary div {
   padding-right: 4px;
-  width: calc(100% - 2.3em);
+  width: calc(100% - 3.4em);
   transition:
     padding-right 0.5s ease-out,
     width 2s ease-out;
+}
+@media screen and (min-resolution: 150dpi) {
+  .headingsWidget summary div {
+    width: initial;
+    padding-right: 0em;
+  }
 }
 
 /* https://www.sarasoueidan.com/blog/css-scrollspy/ 
@@ -884,6 +944,11 @@ This is big screen mac, should work with wide versions
     .linksWidget .headingsWidget .titleList li:has(:target-current)::before {
       content: "☛";
     }
+  }
+}
+@media screen and (min-resolution: 150dpi) {
+  .linksWidget .headingsWidget .titleList li:has(:target-current)::before {
+    content: " 👉";
   }
 }
 
@@ -986,6 +1051,11 @@ ul.adjacentList li a {
   min-height: 4em;
 }
 
+.adjacentList p,
+.adjacentList noscript {
+  white-space: normal;
+}
+
 .adjacentWidget a.button {
   font-weight: bold;
 }
@@ -1016,7 +1086,7 @@ a.adjacentItem:before {
   text-align: left;
   white-space: pre-line;
   line-height: 1.5;
-  width: 40em;
+  width: min(40em, 100%);
   padding: 1em 1em;
   transition: opacity 0.3s ease-in-out;
   z-index: 2;
