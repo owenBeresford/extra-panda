@@ -20,6 +20,7 @@ import {
   appendCSSFile,
   expandDetails,
   duplicateSelection,
+  closeHoldingMenu,
 } from "./dom-base";
 import { createBiblio as mobileCreateBiblio } from "./mobile-biblio";
 import {
@@ -244,6 +245,12 @@ export async function siteCore(
         dom,
         loc,
       );
+
+		const LIST:Array<HTMLAnchorElement>=Array.from(dom.querySelectorAll("details.headingsWidget .titleList a"));
+		for(let i=0; i<LIST.length; i++) {
+			LIST[i].addEventListener("click", closeHoldingMenu );
+		}
+
     } else {
       if (BIBLIO_COUNTS_ENABLED === BIBLIO_OPERATIONAL) {
         justCounts(dom);
@@ -262,7 +269,7 @@ export async function siteCore(
       }
     }
 
-    const grp: Array<string> = listContentGroup("div#contentGroup", dom);
+    const grp: Array<string> = listContentGroup("#contentGroup", dom);
     if (grp.length === 0) {
       log(
         "info",
