@@ -11,6 +11,7 @@ h5,
 h6,
 .h6 {
   font-family: inherit;
+  break-inside: avoid;
 }
 
 .button {

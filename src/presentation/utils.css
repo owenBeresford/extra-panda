@@ -28,6 +28,11 @@
     max-height: max(100%, 90vh); /* avoid clipping */
   }
 }
+
+html:has( .wholeArticle ) {
+	scroll-behavior: smooth;
+}
+
 .wholeArticle h2 sup,
 .wholeArticle h3 sup,
 .wholeArticle h4 sup,

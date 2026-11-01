@@ -321,7 +321,7 @@
 }
 
 @media screen and (min-resolution: 150dpi) {
-  .homeContainer .after_menu.articleContent,
+  .homeContainer .articleContent,
   .h4_page.wholeArticle {
     min-width: calc(100vw - 24px);
     margin: 3px;
