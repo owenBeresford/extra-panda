@@ -17,7 +17,7 @@ body {
   --scroll2: slategrey;
   --attentionbg: #2ba6cb;
   --menu-width: 260px;
-  --alert:#FFE633;
+  --alert: #ffe633;
 }
 
 @media screen and (prefers-contrast: more) {

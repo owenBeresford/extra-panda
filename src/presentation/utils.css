@@ -29,8 +29,8 @@
   }
 }
 
-html:has( .wholeArticle ) {
-	scroll-behavior: smooth;
+html:has(.wholeArticle) {
+  scroll-behavior: smooth;
 }
 
 .wholeArticle h2 sup,

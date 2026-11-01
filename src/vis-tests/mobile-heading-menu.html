@@ -1,240 +1,450 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-GB" class="noJS" itemscope itemtype="http://schema.org/Article">
-<head>
-<!-- This website is written by a guy who claims to have lots of specialised technical skills, but this website only partially demonstrates them.  This website is a vehicle for about 280,000 words, please read some of them. -->
-<title>Mobile menu vis-test 2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="Content-Language" content="en-GB" />
-<meta name="Author" content="Owen Beresford" />
-<meta name="text-scale" content="scale" />
-<meta name="Description" content="Visual test, do not publish to the internet" />
-<meta name="google-site-verification" content="lSgIe7Nm0H0RYQ2ktQ4vr5Jz0iYGhQd7cTWoVDg3Xss" />
-<link href="/asset/favicon-32x32.png" rel="icon" type="image/png" />
-<meta itemprop="name" content="Mobile menu vis-test 2" />
-<meta itemprop="description" content="Visual test, do not publish to the internet" />
-<meta name="twitter:site" content="@channelOwen" />
-<meta name="twitter:title" content="Mobile menu vis-test 2" />
-<meta name="twitter:description" content="Visual test, do not publish to the internet" />
-<meta name="twitter:creator" content="@channelOwen" />
-<meta property="og:title" content="Mobile menu vis-test 2" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://owenberesford.me.uk/resource/mobile-css-menu2" />
-<meta property="og:description" content="Visual test, do not publish to the internet" />
-<meta property="og:site_name" content="OwenBeresford's very wordy site" />
-<meta property="article:published_time" content="2026-11-01T13:06:54" />
-<meta property="article:modified_time" content="Nov '26" />
-<link rel="canonical" href="https://owenberesford.me.uk/resource/mobile-css-menu2" />
-<link rel="me" href="https://fosstodon.org/@channelOwen" />
-<!-- the below track is just a generic cheese track, but the style fits. progressive + uplifting tone.  I do not own the rights or anything. 
+  <head>
+    <!-- This website is written by a guy who claims to have lots of specialised technical skills, but this website only partially demonstrates them.  This website is a vehicle for about 280,000 words, please read some of them. -->
+    <title>Mobile menu vis-test 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="en-GB" />
+    <meta name="Author" content="Owen Beresford" />
+    <meta name="text-scale" content="scale" />
+    <meta
+      name="Description"
+      content="Visual test, do not publish to the internet"
+    />
+    <meta
+      name="google-site-verification"
+      content="lSgIe7Nm0H0RYQ2ktQ4vr5Jz0iYGhQd7cTWoVDg3Xss"
+    />
+    <link href="/asset/favicon-32x32.png" rel="icon" type="image/png" />
+    <meta itemprop="name" content="Mobile menu vis-test 2" />
+    <meta
+      itemprop="description"
+      content="Visual test, do not publish to the internet"
+    />
+    <meta name="twitter:site" content="@channelOwen" />
+    <meta name="twitter:title" content="Mobile menu vis-test 2" />
+    <meta
+      name="twitter:description"
+      content="Visual test, do not publish to the internet"
+    />
+    <meta name="twitter:creator" content="@channelOwen" />
+    <meta property="og:title" content="Mobile menu vis-test 2" />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://owenberesford.me.uk/resource/mobile-css-menu2"
+    />
+    <meta
+      property="og:description"
+      content="Visual test, do not publish to the internet"
+    />
+    <meta property="og:site_name" content="OwenBeresford's very wordy site" />
+    <meta property="article:published_time" content="2026-11-01T13:06:54" />
+    <meta property="article:modified_time" content="Nov '26" />
+    <link
+      rel="canonical"
+      href="https://owenberesford.me.uk/resource/mobile-css-menu2"
+    />
+    <link rel="me" href="https://fosstodon.org/@channelOwen" />
+    <!-- the below track is just a generic cheese track, but the style fits. progressive + uplifting tone.  I do not own the rights or anything. 
 TODO: magic tune selection against some index/DB -->
-<meta property="og:audio" content="https://www.youtube.com/watch?v=Brl7WmHDG-E" />
+    <meta
+      property="og:audio"
+      content="https://www.youtube.com/watch?v=Brl7WmHDG-E"
+    />
 
-<link rel="stylesheet" href="/asset/ob1.min.css" />
-<script type="application/ld+json">
-  {
-    "@context": "https://ogp.me/ns/article#",
-    "@type": "Article",
-    "name": "Mobile menu vis-test 2",
-	"article:published_time":"2026-11-01T13:06:54", 
-    "article:modified_time":"Nov '26",
-    "article:section":"technology",
+    <link rel="stylesheet" href="/asset/ob1.min.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://ogp.me/ns/article#",
+        "@type": "Article",
+        "name": "Mobile menu vis-test 2",
+        "article:published_time": "2026-11-01T13:06:54",
+        "article:modified_time": "Nov '26",
+        "article:section": "technology",
 
-    "author": {
-      "@type": "Person",
-      "name": "Owen Beresford"
-    }
-  }
-</script>
-</head>
-<body id="body" class="annoyingBody" data-access="9">
- <div class="h4_page wholeArticle">
-  <div class="articleContent">
-   <main id="main">
-    <article>
-     <div class="blocker">
-<div class="halferWords">
-<p>This is a page to act as a manual test for the new menu CSS.  Bleg, skip.  The <i>most</i> #boring page 3va!!!1eleven.  Maybe the “skip” should exec <i>history.back()</i>. <br />
-NOTE: This test must be loaded with ?mobile=1 on the URL.</p>
+        "author": {
+          "@type": "Person",
+          "name": "Owen Beresford"
+        }
+      }
+    </script>
+  </head>
+  <body id="body" class="annoyingBody" data-access="9">
+    <div class="h4_page wholeArticle">
+      <div class="articleContent">
+        <main id="main">
+          <article>
+            <div class="blocker">
+              <div class="halferWords">
+                <p>
+                  This is a page to act as a manual test for the new menu CSS.
+                  Bleg, skip. The <i>most</i> #boring page 3va!!!1eleven. Maybe
+                  the “skip” should exec <i>history.back()</i>. <br />
+                  NOTE: This test must be loaded with ?mobile=1 on the URL.
+                </p>
 
+                <h5 id="toc0">
+                  Expected Behaviours
+                  <a href="#toc0" title="Jump to this section."
+                    ><sup
+                      ><i
+                        class="fa fa-link invert"
+                        aria-label="Jump this to this section."
+                        aria-hidden="true"
+                      ></i
+                    ></sup>
+                  </a>
+                </h5>
+                <ul class="ulbasic">
+                  <li>Menu starts folded, is visible, but not in way</li>
+                  <li>
+                    The menu is bottom aligned, to be more reachable one-handed,
+                    and it performs layout in a fashion that makes sense
+                  </li>
+                  <li>Mobile has no tab UI option (the key, not MWMD apps)</li>
+                  <li>The menu can be opened with a tap, or closed</li>
+                  <li>The GUI rendered should make the state clear</li>
+                  <li>
+                    The menu should fold upwards not downwards, as bottom
+                    aligned
+                  </li>
+                  <li>
+                    I should pay attention to titles, so it's easy to guess
+                    content
+                  </li>
+                  <li>The fonts should be readable.</li>
+                  <li>
+                    To assist dyslexic people, there are stripes on alternate
+                    items.
+                  </li>
+                  <li>
+                    The menu has the same solid-arrow to cross symbol on the
+                    state.
+                  </li>
+                  <li>The elements should have relevant aria-labels.</li>
+                  <li>The menu should work on a variety of screen sizes.</li>
+                  <li>
+                    Do something sensible if editing has meant that the named
+                    sections and the menus no longer match.
+                  </li>
+                  <li>The menu shouldn't fall off screen.</li>
+                  <li>
+                    Tapping to open the menu, then scrolling doesn't close the
+                    menu (like bigScreen would), the close button does. This is
+                    a fixed position menu, its fine.
+                  </li>
+                  <li>Should hi-light on selection of chapter, briefly</li>
+                  <li>
+                    Note this menu is in DOM element order, so at the end of the
+                    page. It is normally earlier in the DOM element list
+                  </li>
+                  <li>I applied a hack to disable the standard page menu.</li>
+                  <li>
+                    Also Note, the list header at the top of this list is one of
+                    the headers, but h5, so not lit up
+                  </li>
+                </ul>
 
-<h5 id="toc0">  Expected Behaviours <a href="#toc0" title="Jump to this section." ><sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h5>
-<ul class="ulbasic">
-    <li>Menu starts folded, is visible, but not in way</li>
-    <li>The menu is bottom aligned, to be more reachable one-handed, and it performs layout in a fashion that makes sense</li>
-    <li>Mobile has no tab UI option (the key, not MWMD apps)</li>
-    <li>The menu can be opened with a tap, or closed</li>
-    <li>The GUI rendered should make the state clear</li>
-    <li>The menu should fold upwards not downwards, as bottom aligned </li>
-    <li>I should pay attention to titles, so it's easy to guess content</li>
-    <li>The fonts should be readable.</li>
-    <li>To assist dyslexic people, there are stripes on alternate items.</li>
-    <li>The menu has the same solid-arrow to cross symbol on the state.</li>
-    <li>The elements should have relevant aria-labels.</li>
-    <li>The menu should work on a variety of screen sizes.</li>
-    <li>Do something sensible if editing has meant that the named sections and the menus no longer match.</li>
-    <li>The menu shouldn't fall off screen.</li>
-    <li>Tapping to open the menu, then scrolling doesn't close the menu (like bigScreen would), the close button does.  This is a fixed position menu, its fine.</li>
-    <li>Should hi-light on selection of chapter, briefly </li>
-    <li>Note this menu is in DOM element order, so at the end of the page.  It is normally earlier in the DOM element list</li>
-    <li>I applied a hack to disable the standard page menu.</li>
-    <li>Also Note, the list header at the top of this list is one of the headers, but h5, so not lit up</li>
-</ul>
+                <h3>first header</h3>
+                <br />
+                <h3 id="toc1">
+                  second header
+                  <a href="#toc1" title="Jump to this section."
+                    ><sup
+                      ><i
+                        class="fa fa-link invert"
+                        aria-label="Jump this to this section."
+                        aria-hidden="true"
+                      ></i
+                    ></sup>
+                  </a>
+                </h3>
+                <br />
+                <h3 id="toc2">
+                  third header
+                  <a href="#toc2" title="Jump to this section."
+                    ><sup
+                      ><i
+                        class="fa fa-link invert"
+                        aria-label="Jump this to this section."
+                        aria-hidden="true"
+                      ></i
+                    ></sup>
+                  </a>
+                </h3>
+                <br />
+                <h3 id="toc3">
+                  fourth header
+                  <a href="#toc3" title="Jump to this section."
+                    ><sup
+                      ><i
+                        class="fa fa-link invert"
+                        aria-label="Jump this to this section."
+                        aria-hidden="true"
+                      ></i
+                    ></sup>
+                  </a>
+                </h3>
+                <br />
 
+                <details id="testCode1" class="headingsWidget" open="">
+                  <summary class="fa-">
+                    <div aria-label="Open table of contents">Content</div>
+                  </summary>
+                  <nav aria-label="Table of contents of current article.">
+                    <menu class="titleList">
+                      <li><a href="#toc0">Natural Language Processing</a></li>
+                      <li><a href="#toc1">Interaction limits for NLP</a></li>
+                      <li><a href="#toc2">Major constraints</a></li>
+                      <li><a href="#toc3">Working Interactions</a></li>
+                      <li><a href="#toc4">Code samples (will FAIL)</a></li>
+                    </menu>
+                  </nav>
+                </details>
+              </div>
+            </div>
+          </article>
+        </main>
+      </div>
+      <fieldset class="articleHeader" role="navigation">
+        <legend></legend>
+        <nav id="navBar" class="row" aria-label="Site utilities.">
+          <div class="column">
+            <div class="top-bar fullWidth">
+              <header><h1>Mobile menu vis-test 2</h1></header>
+              <p role="status" class="bigScreenOnly">
+                Visual test, do not publish to the internet
+              </p>
+            </div>
+          </div>
 
+          <div class="column linksWidget" role="navigation">
+            <details class="linksWidget bigScreenOnly" id="pageMenu">
+              <summary class="defaultLinksTrigger fa-" aria-haspopup="menu">
+                <span class="sr-only">Site Menu</span>
+              </summary>
 
-<h3 > first header</h3><br />
-<h3 id="toc1"> second header  <a href="#toc1" title="Jump to this section." ><sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h3><br />
-<h3 id="toc2"> third header <a href="#toc2" title="Jump to this section." ><sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h3><br />
-<h3 id="toc3"> fourth header  <a href="#toc3" title="Jump to this section." ><sup><i class="fa fa-link invert" aria-label="Jump this to this section." aria-hidden="true"></i></sup> </a></h3><br />
+              <menu class="dfl">
+                <li>Additional features</li>
+                <li>
+                  <a href="/resource/home"
+                    ><i class="fa fa-angle-left" aria-hidden="true"></i> Home</a
+                  >
+                </li>
+                <li><a href="/resource/search">Search 🔎 </a></li>
+                <li><a href="/resource/appearance">Appearance </a></li>
+                <li><a href="/resource/contact-me">Contact me 📞 </a></li>
+                <li><a href="#contentGroup">📜 Similar articles</a></li>
+              </menu>
+            </details>
 
-<details id="testCode1" class="headingsWidget" open=""><summary class="fa-"><div aria-label="Open table of contents">Content</div></summary><nav aria-label="Table of contents of current article."><menu class="titleList">
-<li><a href="#toc0">Natural Language Processing</a></li>
-<li><a href="#toc1">Interaction limits for NLP</a></li>
-<li><a href="#toc2">Major constraints</a></li>
-<li><a href="#toc3">Working Interactions</a></li>
-<li><a href="#toc4">Code samples (will FAIL)</a></li>
-</menu>
-</nav>
-</details>
-</div>
-</div>
-    </article>
-   </main>
-	 
-  </div>
-  <fieldset class="articleHeader" role="navigation">
-	<legend></legend>
-	<nav id="navBar" class=" row" aria-label="Site utilities.">
-			<div class="column">
-				<div class="top-bar fullWidth">
-					<header><h1>Mobile menu vis-test 2</h1></header>
-			    	<p role="status" class="bigScreenOnly">  Visual test, do not publish to the internet  </p>
-				</div>
-			</div>
-	
-	<div class="column linksWidget" role="navigation">
-		<details class="linksWidget bigScreenOnly" id="pageMenu">
-			<summary class="defaultLinksTrigger fa-" aria-haspopup="menu"> <span class="sr-only">Site Menu</span> </summary>
+            <div id="shareGroup" class="row bigScreenOnly">
+              <a
+                id="siteChartLink"
+                href="/resource/site-chart"
+                title="open a webpage of what articles this site holds."
+                >Sitemap</a
+              >
+              <a
+                id="rssLink"
+                href="https://owenberesford.me.uk/resource/rss"
+                title="Access the sites RSS feed."
+              >
+                <i
+                  class="fa fa-rss"
+                  aria-label="Open the RSS for this site."
+                  aria-hidden="true"
+                ></i
+                ><span class="sr-only">RSS</span></a
+              >
+            </div>
+            <div class="row bigScreenOnly">
+              Edited&nbsp;
+              <time
+                title="Page edited on 2026-11-01T12:53:16"
+                datetime="2026-11-01T12:53:16"
+                >Nov '26</time
+              >
+            </div>
+            <div class="row" id="addReading"></div>
 
-			<menu class="dfl">
-			<li>Additional features</li>
-<li><a href="/resource/home"><i class="fa fa-angle-left" aria-hidden="true"></i> Home</a> </li> 
-<li><a href="/resource/search">Search 🔎 </a></li>
-<li><a href="/resource/appearance">Appearance </a></li>
-<li><a href="/resource/contact-me">Contact me 📞 </a></li>
-<li><a href="#contentGroup">📜 Similar articles</a></li>
-			</menu>
-		</details>
+            <details open class="headingsWidget">
+              <summary class="fa-">
+                <div aria-label="Open table of contents">Content</div>
+              </summary>
+              <nav aria-label="Table of contents of current article.">
+                <menu class="titleList">
+                  <li><a href="#toc0">first header</a></li>
+                  <li><a href="#toc1">second header</a></li>
+                  <li><a href="#toc2">third header</a></li>
+                  <li><a href="#toc3">fourth header</a></li>
+                </menu>
+              </nav>
+            </details>
+            <br />
+          </div>
+          <!-- /div -->
+        </nav>
+      </fieldset>
+    </div>
+    <div id="biblio" style="display: none">
+      <br class="blocker" />
+    </div>
+    <footer class="footWidget">
+      <nav aria-label="Utility links and traditional footer notes" class="row">
+        <div class="column leftFooter">
+          <p>
+            My profile:
+            <a
+              href="https://www.linkedin.com/in/owen-beresford-bb6ab030/"
+              target="_blank"
+              aria-label="my linked-in"
+              title="Load my linked-in profile"
+              ><i
+                class="fixLinkedSq fa fa-linkedin-square"
+                aria-hidden="true"
+                aria-label="Open my linked in profile"
+              ></i
+              ><span class="sr-only">linkedin</span></a
+            >
+            ~
+            <abbr
+              title="This content wasn't covered in my education, as it didn't exist at that point."
+              >Young tech</abbr
+            >
+            <a href="#pageMenu">Jump to menu</a>
+          </p>
+        </div>
+        <div class="column bigColumn">
+          <p>
+            Page rendered
+            <time
+              title="Page rendered on 2026-11-01T13:06:54"
+              datetime="2026-11-01T13:06:54"
+              >Nov '26</time
+            >, Copyright &copy; 2026 Owen Beresford,
+            <a class="" href="https://owenberesford.me.uk/resource/contact-me"
+              >contact me</a
+            >. Last modified
+            <time
+              title="Page modified on 2026-11-01T12:53:16"
+              datetime="2026-11-01T12:53:16"
+              >Nov '26</time
+            >. Created date
+            <time
+              title="Page modified on 2026-10-20T00:00:00"
+              datetime="2026-10-20T00:00:00"
+              >Oct '26</time
+            >.
+          </p>
+          <p>
+            Read the generous
+            <a
+              rel="license"
+              href="https://owenberesford.me.uk/resource/licence"
+              title="Load the license term; but not that interesting"
+              >licence terms</a
+            >, if you feel the need, there is a
+            <a
+              href="https://owenberesford.me.uk/resource/privacy#"
+              title="Load the privacy terms"
+              >privacy here</a
+            >. View the
+            <a
+              href="https://owenberesford.me.uk/resource/site-chart#"
+              title="Load a page showing all the articles on this site"
+              >site map</a
+            >.
+          </p>
+        </div>
+      </nav>
+    </footer>
+    <script type="module" src="/asset/ob1-202406.min.mjs"></script>
+    <style>
+      /* increase navs, not interesting */
+      .footWidget nav {
+        width: 100%;
+        max-width: 100%;
+      }
 
-			<div id="shareGroup" class="row bigScreenOnly">
-				<a id="siteChartLink" href="/resource/site-chart" title="open a webpage of what articles this site holds.">Sitemap</a>
-				<a id="rssLink" href="https://owenberesford.me.uk/resource/rss" title="Access the sites RSS feed."> <i class="fa fa-rss" aria-label="Open the RSS for this site." aria-hidden="true"></i><span class="sr-only">RSS</span></a> 
-		   </div>
-			<div class="row bigScreenOnly">Edited&nbsp; <time title="Page edited on 2026-11-01T12:53:16" datetime="2026-11-01T12:53:16">Nov '26</time> </div>
-			<div class="row" id="addReading"></div>
+      /* CSS to be a bottom menu  */
+      @media screen and (min-resolution: 150dpi) {
+        .articleHeader .row.bigScreenOnly {
+          display: none;
+        }
+        .headingsWidget[open] summary div {
+          width: calc(100% - 3.3em);
+        }
 
-		<details open class="headingsWidget"><summary class="fa-"><div aria-label="Open table of contents">Content</div></summary><nav aria-label="Table of contents of current article."><menu class="titleList">
-<li><a href="#toc0">first header</a></li>
-<li><a href="#toc1">second header</a></li>
-<li><a href="#toc2">third header</a></li>
-<li><a href="#toc3">fourth header</a></li>
-</menu>
-</nav></details><br />
+        .headingsWidget {
+          bottom: 2em;
+          right: 0.5em;
+          display: flex;
+          flex-direction: column-reverse;
+        }
 
-	</div>
-	<!-- /div -->
-	</nav>
-</fieldset>
- </div> 
- <div id="biblio" style="display:none;">
-    <br class="blocker" />
- </div>
- <footer class="footWidget"> 
- 	<nav aria-label="Utility links and traditional footer notes" class="row" >
-	<div class="column leftFooter"> 
-		<p>My profile: <a href="https://www.linkedin.com/in/owen-beresford-bb6ab030/" target="_blank" aria-label="my linked-in" title="Load my linked-in profile" ><i class="fixLinkedSq fa fa-linkedin-square" aria-hidden="true" aria-label="Open my linked in profile" ></i><span class="sr-only">linkedin</span></a> ~ <abbr title="This content wasn't covered in my education, as it didn't exist at that point.">Young tech</abbr> <a href="#pageMenu">Jump to menu</a>
-	</div> 
-	<div class="column bigColumn">
-		<p> Page rendered <time title="Page rendered on 2026-11-01T13:06:54" datetime="2026-11-01T13:06:54">Nov '26</time>, Copyright &copy; 2026 Owen Beresford, <a class="" href="https://owenberesford.me.uk/resource/contact-me">contact me</a>.  Last modified <time title="Page modified on 2026-11-01T12:53:16" datetime="2026-11-01T12:53:16">Nov '26</time>.  Created date <time title="Page modified on 2026-10-20T00:00:00" datetime="2026-10-20T00:00:00">Oct '26</time>.
-	    <p>Read the generous <a rel="license" href="https://owenberesford.me.uk/resource/licence" title="Load the license term; but not that interesting">licence terms</a>, if you feel the need, there is a <a href="https://owenberesford.me.uk/resource/privacy#" title="Load the privacy terms" >privacy here</a>.    View the <a href="https://owenberesford.me.uk/resource/site-chart#" title="Load a page showing all the articles on this site">site map</a>. 
-	</div>
- 	</nav>
- </footer>
-<script type="module" src="/asset/ob1-202406.min.mjs" ></script>  
-<style>
-/* increase navs, not interesting */
-.footWidget nav { width:100%; max-width:100%; }
+        @media screen and (min-width: 800px) {
+          .IAmLibreWolf .headingsWidget {
+            top: 2em;
+            bottom: initial;
+            display: block;
+          }
+        }
+        .headingsWidget summary div {
+          width: initial;
+          padding-right: 0em;
+        }
 
-/* CSS to be a bottom menu  */
-@media screen and (min-resolution: 150dpi) {
-  .articleHeader .row.bigScreenOnly {
-	display: none;
-  }
-  .headingsWidget[open] summary div { 
-      width: calc(100% - 3.3em);
-  }
+        .linksWidget
+          .headingsWidget
+          .titleList
+          li:has(:target-current)::before {
+          content: " 👉";
+        }
+      }
 
-  .headingsWidget {
-		bottom:2em; right: 0.5em;
-	    display: flex;
-	    flex-direction: column-reverse;
-	}
+      /* css for the scroll animation */
+      html:has(.wholeArticle) {
+        scroll-behavior: smooth;
+      }
+      html:has(.wholeArticle) body {
+        --menu-width: 150px;
+      }
 
-	@media screen and (min-width:800px) {
-    	.IAmLibreWolf .headingsWidget {
-			top:2em; bottom:initial;
-		    display: block;
-		}
-	}
-	.headingsWidget summary div {
-		width:initial;
-	    padding-right: 0em;
-	}
- 
-  .linksWidget .headingsWidget .titleList li:has(:target-current)::before {
-    content: " 👉";
-	}
-}	
-
-/* css for the scroll animation */
-html:has( .wholeArticle ) {
-	scroll-behavior: smooth; 
-}
-html:has( .wholeArticle ) body {
-	--menu-width:150px;
-}
-
-/**
+      /**
 I want yellow, both sides briefly lit, animation once, 
 ideally no hardcoded ids, but would accept this
 
 In the following code, expand out the other header types
-*/  
-.articleContent div>h3[id]:target, .headingsWidget>nav>menu>li> a {
-  background-color: inherit;
-  transition: background-color 1.3s;
-}
+*/
+      .articleContent div > h3[id]:target,
+      .headingsWidget > nav > menu > li > a {
+        background-color: inherit;
+        transition: background-color 1.3s;
+      }
 
-.articleContent:has( .headingsWidget>nav>menu>li>a:active ) div>h3[id]:target, .headingsWidget>nav>menu>li>a:active {
-  background-color:var(--alert);
-  transition: background-color 0.1s ease;
-}
-
-</style>
-<script type="module">
-import { ready, log } from '/asset/ob1-202406.min.mjs';
-ready(function() {
-	let tmp=Array.from(document.querySelectorAll('.headingsWidget'));
-	for(let i=0; i<tmp.length; i++) {
-// I would like to extend to swap the other menu however this will be too fiddly.
-		if(! tmp[i].getAttribute('id') ) {
-			tmp[i].parentNode.removeChild( tmp[i] ); 
-			log("info", "Removed the standard menu for my test one");
-		}
-	}
-
-}, document);
-</script>
-</body>
+      .articleContent:has(.headingsWidget > nav > menu > li > a:active)
+        div
+        > h3[id]:target,
+      .headingsWidget > nav > menu > li > a:active {
+        background-color: var(--alert);
+        transition: background-color 0.1s ease;
+      }
+    </style>
+    <script type="module">
+      import { ready, log } from "/asset/ob1-202406.min.mjs";
+      ready(function () {
+        let tmp = Array.from(document.querySelectorAll(".headingsWidget"));
+        for (let i = 0; i < tmp.length; i++) {
+          // I would like to extend to swap the other menu however this will be too fiddly.
+          if (!tmp[i].getAttribute("id")) {
+            tmp[i].parentNode.removeChild(tmp[i]);
+            log("info", "Removed the standard menu for my test one");
+          }
+        }
+      }, document);
+    </script>
+  </body>
 </html>

@@ -23,7 +23,11 @@ import {
 } from "../src/references/networking";
 import { PageCollection } from "../src/references/page-collection";
 import { apply_vendors } from "../src/references/vendor-mod";
-import { TIMEOUT, ENABLE_RETRY, HTTP_REDIRECT_LIMIT } from "../src/references/constants";
+import {
+  TIMEOUT,
+  ENABLE_RETRY,
+  HTTP_REDIRECT_LIMIT,
+} from "../src/references/constants";
 import { log } from "../src/log-services";
 import type { Reference } from "../src/references/types";
 

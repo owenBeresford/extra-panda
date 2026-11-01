@@ -552,23 +552,28 @@ export function allDescendants(
  * @public
  * @returns {void}
  */
-export function closeHoldingMenu(e:Event):void {
-	e.preventDefault();
-	// this is hardcoded, as e.target.closest is not a func, or e.currentTarget.closest
-	let ELE:HTMLDetailsElement = document.querySelector('.headingsWidget');
-	ELE.open=false;
-	
-	// the click call is messing things up, but I want slow scroll for better UX
-	if(e && e.target && e.target.tagName==="A" && e.isTrusted) {
-		if(! document.querySelector(e.currentTarget.getAttribute('href'))) {
-			log("error", "6843647623423 Menu not matching article structure.  get dev to fix"); 
-			return;
-		}
-		let tmp:DOMRect =document.querySelector( e.target.getAttribute('href') ).getBoundingClientRect();
-        window.scrollTo({ top: tmp.top, left: 0, behavior: "smooth", });
+export function closeHoldingMenu(e: Event): void {
+  e.preventDefault();
+  // this is hardcoded, as e.target.closest is not a func, or e.currentTarget.closest
+  let ELE: HTMLDetailsElement = document.querySelector(".headingsWidget");
+  ELE.open = false;
 
-		location.hash= e.target.getAttribute('href') ;
-	}
+  // the click call is messing things up, but I want slow scroll for better UX
+  if (e && e.target && e.target.tagName === "A" && e.isTrusted) {
+    if (!document.querySelector(e.currentTarget.getAttribute("href"))) {
+      log(
+        "error",
+        "6843647623423 Menu not matching article structure.  get dev to fix",
+      );
+      return;
+    }
+    let tmp: DOMRect = document
+      .querySelector(e.target.getAttribute("href"))
+      .getBoundingClientRect();
+    window.scrollTo({ top: tmp.top, left: 0, behavior: "smooth" });
+
+    location.hash = e.target.getAttribute("href");
+  }
 }
 
 //////////////////////////////////////////////// testing /////////////////////////////////////////////////////////////

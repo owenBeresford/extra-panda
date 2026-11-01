@@ -246,11 +246,12 @@ export async function siteCore(
         loc,
       );
 
-		const LIST:Array<HTMLAnchorElement>=Array.from(dom.querySelectorAll("details.headingsWidget .titleList a"));
-		for(let i=0; i<LIST.length; i++) {
-			LIST[i].addEventListener("click", closeHoldingMenu );
-		}
-
+      const LIST: Array<HTMLAnchorElement> = Array.from(
+        dom.querySelectorAll("details.headingsWidget .titleList a"),
+      );
+      for (let i = 0; i < LIST.length; i++) {
+        LIST[i].addEventListener("click", closeHoldingMenu);
+      }
     } else {
       if (BIBLIO_COUNTS_ENABLED === BIBLIO_OPERATIONAL) {
         justCounts(dom);
