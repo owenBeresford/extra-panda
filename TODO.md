@@ -16,6 +16,7 @@ FEATURES
 - Build sample for CSS block-size, not 2D not 1D   https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/block-size
 - Medium links, replacement 3rd party service seems borked, need to setup a new one.
 https://medium.com/@robinviktorsson/setting-up-a-modern-typescript-project-with-vite-no-framework-07ea2d3a22b5
+- Remove tree walking code for closest(), should be faster
 
 MAINTENANCE
 - Least stupid way to tell users not to make unit-test chrome window smaller, or the tests in the runner will fail next test execution
@@ -137,4 +138,4 @@ MAINTENANCE
 - DONE: Some tools can't see robots.txt, fiddle with headers for this file to assist.
 - DONE: Add better grade of notice/ warning / info that earlier builds.
 - DONE: Pretend I am writing in ASM to get dead code removal to work #leSigh.
-
+- DONE: Add a bottom menu in mobile, as scrolling took too long.
